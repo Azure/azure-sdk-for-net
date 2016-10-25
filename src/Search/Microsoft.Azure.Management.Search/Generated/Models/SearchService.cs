@@ -24,37 +24,64 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchService class.
         /// </summary>
-        /// <param name="location">The geographic location of the
-        /// resource.</param>
+        /// <param name="location">The geographic location of the resource.
+        /// This must be one of the supported and registered Azure Geo
+        /// Regions (for example, West US, East US, Southeast Asia, and so
+        /// forth).</param>
         /// <param name="sku">The SKU of the Search Service, which determines
         /// price tier and capacity limits.</param>
-        /// <param name="id">The ID of the resource.</param>
+        /// <param name="id">The ID of the resource. This can be used with the
+        /// Azure Resource Manager to link resources together.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The resource type.</param>
         /// <param name="tags">Tags to help categorize the resource in the
-        /// Azure Portal.</param>
+        /// Azure portal.</param>
         /// <param name="replicaCount">The number of replicas in the Search
         /// service. If specified, it must be a value between 1 and 12
         /// inclusive for standard SKUs or between 1 and 3 inclusive for
         /// basic SKU.</param>
         /// <param name="partitionCount">The number of partitions in the
         /// Search service; if specified, it can be 1, 2, 3, 4, 6, or 12.
-        /// Valid only for SKUs that have more than one partition.</param>
+        /// Values greater than 1 are only valid for standard SKUs. For
+        /// 'standard3' services with hostingMode set to 'highDensity', the
+        /// allowed values are between 1 and 3.</param>
         /// <param name="hostingMode">Applicable only for the standard3 SKU.
-        /// You can set this property to enable a single, high density
-        /// partition that allows up to 1000 indexes, which is much higher
+        /// You can set this property to enable up to 3 high density
+        /// partitions that allow up to 1000 indexes, which is much higher
         /// than the maximum indexes allowed for any other SKU. For the
         /// standard3 SKU, the value is either 'default' or 'highDensity'.
         /// For all other SKUs, this value must be 'default'. Possible values
         /// include: 'default', 'highDensity'</param>
-        /// <param name="status">The status of the Search service at the time
-        /// the operation was called. Possible values include: 'running',
-        /// 'provisioning', 'deleting', 'degraded', 'disabled',
+        /// <param name="status">The status of the Search service. Possible
+        /// values include: 'running': The Search service is running and no
+        /// provisioning operations are underway. 'provisioning': The Search
+        /// service is being provisioned or scaled up or down. 'deleting':
+        /// The Search service is being deleted. 'degraded': The Search
+        /// service is degraded. This can occur when the underlying search
+        /// units are not healthy. The Search service is most likely
+        /// operational, but performance might be slow and some requests
+        /// might be dropped. 'disabled': The Search service is disabled. In
+        /// this state, the service will reject all API requests. 'error':
+        /// The Search service is in an error state. If your service is in
+        /// the degraded, disabled, or error states, it means the Azure
+        /// Search team is actively investigating the underlying issue.
+        /// Dedicated services in these states are still chargeable based on
+        /// the number of search units provisioned. Possible values include:
+        /// 'running', 'provisioning', 'deleting', 'degraded', 'disabled',
         /// 'error'</param>
         /// <param name="statusDetails">The details of the Search service
         /// status.</param>
         /// <param name="provisioningState">The state of the last provisioning
-        /// operation performed on the Search service. Possible values
+        /// operation performed on the Search service. Provisioning is an
+        /// intermediate state that occurs while service capacity is being
+        /// established. After capacity is set up, provisioningState changes
+        /// to either 'succeeded' or 'failed'. Client applications can poll
+        /// provisioning status (the recommended polling interval is from 30
+        /// seconds to one minute) by using the Get Search Service operation
+        /// to see when an operation is completed. If you are using the free
+        /// service, this value tends to come back as 'succeeded' directly in
+        /// the call to Create Search service. This is because the free
+        /// service uses capacity that is already set up. Possible values
         /// include: 'succeeded', 'provisioning', 'failed'</param>
         public SearchService(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?))
             : base(location, id, name, type, tags)
@@ -78,16 +105,18 @@ namespace Microsoft.Azure.Management.Search.Models
 
         /// <summary>
         /// Gets or sets the number of partitions in the Search service; if
-        /// specified, it can be 1, 2, 3, 4, 6, or 12. Valid only for SKUs
-        /// that have more than one partition.
+        /// specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1
+        /// are only valid for standard SKUs. For 'standard3' services with
+        /// hostingMode set to 'highDensity', the allowed values are between
+        /// 1 and 3.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.partitionCount")]
         public int? PartitionCount { get; set; }
 
         /// <summary>
         /// Gets or sets applicable only for the standard3 SKU. You can set
-        /// this property to enable a single, high density partition that
-        /// allows up to 1000 indexes, which is much higher than the maximum
+        /// this property to enable up to 3 high density partitions that
+        /// allow up to 1000 indexes, which is much higher than the maximum
         /// indexes allowed for any other SKU. For the standard3 SKU, the
         /// value is either 'default' or 'highDensity'. For all other SKUs,
         /// this value must be 'default'. Possible values include: 'default',
@@ -97,9 +126,22 @@ namespace Microsoft.Azure.Management.Search.Models
         public HostingMode? HostingMode { get; set; }
 
         /// <summary>
-        /// Gets the status of the Search service at the time the operation
-        /// was called. Possible values include: 'running', 'provisioning',
-        /// 'deleting', 'degraded', 'disabled', 'error'
+        /// Gets the status of the Search service. Possible values include:
+        /// 'running': The Search service is running and no provisioning
+        /// operations are underway. 'provisioning': The Search service is
+        /// being provisioned or scaled up or down. 'deleting': The Search
+        /// service is being deleted. 'degraded': The Search service is
+        /// degraded. This can occur when the underlying search units are not
+        /// healthy. The Search service is most likely operational, but
+        /// performance might be slow and some requests might be dropped.
+        /// 'disabled': The Search service is disabled. In this state, the
+        /// service will reject all API requests. 'error': The Search service
+        /// is in an error state. If your service is in the degraded,
+        /// disabled, or error states, it means the Azure Search team is
+        /// actively investigating the underlying issue. Dedicated services
+        /// in these states are still chargeable based on the number of
+        /// search units provisioned. Possible values include: 'running',
+        /// 'provisioning', 'deleting', 'degraded', 'disabled', 'error'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
         public SearchServiceStatus? Status { get; private set; }
@@ -112,7 +154,16 @@ namespace Microsoft.Azure.Management.Search.Models
 
         /// <summary>
         /// Gets the state of the last provisioning operation performed on the
-        /// Search service. Possible values include: 'succeeded',
+        /// Search service. Provisioning is an intermediate state that occurs
+        /// while service capacity is being established. After capacity is
+        /// set up, provisioningState changes to either 'succeeded' or
+        /// 'failed'. Client applications can poll provisioning status (the
+        /// recommended polling interval is from 30 seconds to one minute) by
+        /// using the Get Search Service operation to see when an operation
+        /// is completed. If you are using the free service, this value tends
+        /// to come back as 'succeeded' directly in the call to Create Search
+        /// service. This is because the free service uses capacity that is
+        /// already set up. Possible values include: 'succeeded',
         /// 'provisioning', 'failed'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]

@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Search.Models
 
     /// <summary>
     /// Input of check name availability API.
+    /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
     /// </summary>
     public partial class CheckNameAvailabilityInput
     {
@@ -23,7 +24,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the CheckNameAvailabilityInput class.
         /// </summary>
-        /// <param name="name">The resource name to validate.</param>
+        /// <param name="name">The Search service name to validate. Search
+        /// service names must only contain lowercase letters, digits or
+        /// dashes, cannot use dash as the first two or last one characters,
+        /// cannot contain consecutive dashes, and must be between 2 and 60
+        /// characters in length.</param>
         public CheckNameAvailabilityInput(string name)
         {
             Name = name;
@@ -37,13 +42,18 @@ namespace Microsoft.Azure.Management.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the resource name to validate.
+        /// Gets or sets the Search service name to validate. Search service
+        /// names must only contain lowercase letters, digits or dashes,
+        /// cannot use dash as the first two or last one characters, cannot
+        /// contain consecutive dashes, and must be between 2 and 60
+        /// characters in length.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The type of the resource whose name is to be validated.
+        /// The type of the resource whose name is to be validated. This value
+        /// must always be 'searchServices'.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }

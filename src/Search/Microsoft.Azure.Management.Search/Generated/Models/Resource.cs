@@ -23,13 +23,16 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="location">The geographic location of the
-        /// resource.</param>
-        /// <param name="id">The ID of the resource.</param>
+        /// <param name="location">The geographic location of the resource.
+        /// This must be one of the supported and registered Azure Geo
+        /// Regions (for example, West US, East US, Southeast Asia, and so
+        /// forth).</param>
+        /// <param name="id">The ID of the resource. This can be used with the
+        /// Azure Resource Manager to link resources together.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The resource type.</param>
         /// <param name="tags">Tags to help categorize the resource in the
-        /// Azure Portal.</param>
+        /// Azure portal.</param>
         public Resource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
         {
             Id = id;
@@ -40,7 +43,8 @@ namespace Microsoft.Azure.Management.Search.Models
         }
 
         /// <summary>
-        /// Gets the ID of the resource.
+        /// Gets the ID of the resource. This can be used with the Azure
+        /// Resource Manager to link resources together.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
@@ -58,14 +62,16 @@ namespace Microsoft.Azure.Management.Search.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the geographic location of the resource.
+        /// Gets or sets the geographic location of the resource. This must be
+        /// one of the supported and registered Azure Geo Regions (for
+        /// example, West US, East US, Southeast Asia, and so forth).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets tags to help categorize the resource in the Azure
-        /// Portal.
+        /// portal.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }

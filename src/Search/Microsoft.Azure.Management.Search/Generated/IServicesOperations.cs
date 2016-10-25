@@ -28,11 +28,17 @@ namespace Microsoft.Azure.Management.Search
         /// the portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Search service to create or update. Search
+        /// service names must only contain lowercase letters, digits or
+        /// dashes, cannot use dash as the first two or last one characters,
+        /// cannot contain consecutive dashes, and must be between 2 and 60
+        /// characters in length. Search service names must be globally
+        /// unique since they are part of the service URI
+        /// (https://&lt;name&gt;.search.windows.net). You cannot change the
+        /// service name after the service is created.
         /// </param>
         /// <param name='service'>
-        /// The properties to set or update on the Search service.
+        /// The definition of the Search service to create or update.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -54,8 +60,8 @@ namespace Microsoft.Azure.Management.Search
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SearchService>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns the Search service with the given name in the given
-        /// resource group.
+        /// Gets the Search service with the given name in the given resource
+        /// group.
         /// <see href="https://msdn.microsoft.com/library/azure/dn832694.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -117,7 +123,7 @@ namespace Microsoft.Azure.Management.Search
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Returns a list of all Search services in the given resource group.
+        /// Gets a list of all Search services in the given resource group.
         /// <see href="https://msdn.microsoft.com/library/azure/dn832688.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -145,13 +151,18 @@ namespace Microsoft.Azure.Management.Search
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<SearchService>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Checks the availability of a resource name without creating the
-        /// resource. This is needed for resources where name is globally
-        /// unique, such as an Azure Search service.
+        /// Checks whether or not the given Search service name is available
+        /// for use. Search service names must be globally unique since they
+        /// are part of the service URI
+        /// (https://&lt;name&gt;.search.windows.net).
         /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
         /// </summary>
         /// <param name='name'>
-        /// The resource name to validate.
+        /// The Search service name to validate. Search service names must
+        /// only contain lowercase letters, digits or dashes, cannot use dash
+        /// as the first two or last one characters, cannot contain
+        /// consecutive dashes, and must be between 2 and 60 characters in
+        /// length.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation

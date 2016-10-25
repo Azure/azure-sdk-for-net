@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Search.Models
 
     /// <summary>
     /// Output of check name availability API.
+    /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
     /// </summary>
     public partial class CheckNameAvailabilityOutput
     {
@@ -28,11 +29,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="isNameAvailable">A value indicating whether the name
         /// is available.</param>
         /// <param name="reason">The reason why the name is not available.
-        /// 'Invalid' indicates the name provided does not match the resource
-        /// provider’s naming requirements (incorrect length, unsupported
-        /// characters, etc.). 'AlreadyExists' indicates that the name is
-        /// already in use and is therefore unavailable. Possible values
-        /// include: 'Invalid', 'AlreadyExists'</param>
+        /// 'Invalid' indicates the name provided does not match the naming
+        /// requirements (incorrect length, unsupported characters, etc.).
+        /// 'AlreadyExists' indicates that the name is already in use and is
+        /// therefore unavailable. Possible values include: 'Invalid',
+        /// 'AlreadyExists'</param>
         /// <param name="message">A message that explains why the name is
         /// invalid and provides resource naming requirements. Available only
         /// if 'Invalid' is returned in the 'reason' property.</param>
@@ -51,11 +52,10 @@ namespace Microsoft.Azure.Management.Search.Models
 
         /// <summary>
         /// Gets the reason why the name is not available. 'Invalid' indicates
-        /// the name provided does not match the resource provider’s naming
-        /// requirements (incorrect length, unsupported characters, etc.).
-        /// 'AlreadyExists' indicates that the name is already in use and is
-        /// therefore unavailable. Possible values include: 'Invalid',
-        /// 'AlreadyExists'
+        /// the name provided does not match the naming requirements
+        /// (incorrect length, unsupported characters, etc.). 'AlreadyExists'
+        /// indicates that the name is already in use and is therefore
+        /// unavailable. Possible values include: 'Invalid', 'AlreadyExists'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "reason")]
         public string Reason { get; private set; }
