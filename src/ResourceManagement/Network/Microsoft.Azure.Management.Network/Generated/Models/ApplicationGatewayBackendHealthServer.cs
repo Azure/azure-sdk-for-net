@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Health of backend server. Possible values include: 'Unknown',
-        /// 'Up', 'Down', 'Partial'
+        /// 'Healthy', 'Unhealthy', 'Partial'
         /// </summary>
         [JsonProperty(PropertyName = "health")]
         public string Health { get; set; }
