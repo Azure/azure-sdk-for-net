@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the TunnelConnectionHealth class.
         /// </summary>
-        public TunnelConnectionHealth(string tunnel = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), DateTime? lastConnectionEstablishedUtcTime = default(DateTime?))
+        public TunnelConnectionHealth(string tunnel = default(string), string connectionStatus = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), DateTime? lastConnectionEstablishedUtcTime = default(DateTime?))
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
-            EgressBytesTransferred = egressBytesTransferred;
             IngressBytesTransferred = ingressBytesTransferred;
+            EgressBytesTransferred = egressBytesTransferred;
             LastConnectionEstablishedUtcTime = lastConnectionEstablishedUtcTime;
         }
 
@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ConnectionStatus { get; set; }
 
         /// <summary>
-        /// The Egress Bytes Transferred in this connection
-        /// </summary>
-        [JsonProperty(PropertyName = "egressBytesTransferred")]
-        public long? EgressBytesTransferred { get; set; }
-
-        /// <summary>
         /// The Ingress Bytes Transferred in this connection
         /// </summary>
         [JsonProperty(PropertyName = "ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; set; }
+
+        /// <summary>
+        /// The Egress Bytes Transferred in this connection
+        /// </summary>
+        [JsonProperty(PropertyName = "egressBytesTransferred")]
+        public long? EgressBytesTransferred { get; set; }
 
         /// <summary>
         /// The time at which connection was established in Utc format.
