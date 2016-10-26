@@ -1,5 +1,5 @@
 {
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Allows programatic access to create SMT Gateways, Nodes, Sessions and remotely access PowerShell on a SMT Node.",
   "authors": [ "Microsoft" ],
   
