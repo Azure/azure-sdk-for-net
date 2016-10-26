@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the TunnelConnectionHealth class.
         /// </summary>
-        public TunnelConnectionHealth(string tunnel = default(string), string connectionStatus = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), DateTime? lastConnectionEstablishedUtcTime = default(DateTime?))
+        public TunnelConnectionHealth(string tunnel = default(string), string connectionStatus = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), string lastConnectionEstablishedUtcTime = default(string))
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// The time at which connection was established in Utc format.
         /// </summary>
         [JsonProperty(PropertyName = "lastConnectionEstablishedUtcTime")]
-        public DateTime? LastConnectionEstablishedUtcTime { get; set; }
+        public string LastConnectionEstablishedUtcTime { get; set; }
 
     }
 }
