@@ -8,12 +8,18 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// The Resource definition.
     /// </summary>
-    public partial class Resource : Microsoft.Rest.Azure.IResource
+    public partial class Resource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Resource class.
@@ -28,7 +34,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -65,7 +71,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Gets or sets resource tags
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
-        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -77,7 +83,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (Location == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
         }
     }
