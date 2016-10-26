@@ -72,6 +72,9 @@ The **master** branch contains the code generated from Hydra/Hyak.
  [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
  4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, 
  see the [AutoRest repository](https://github.com/Azure/autorest)
+     - The easiest way generate clients is to make sure your `generate.cmd` file refers to the latest version of AutoRest from the nightly feed: 
+[![AutoRest MyGet](https://img.shields.io/myget/autorest/vpre/autorest.svg?style=flat-square)](https://www.myget.org/gallery/autorest) and points to your Swagger spec file. Then you can just run the commandlet every time you need to generate the client.
+     - To avoid name conflicts, AutoRest uses fully qualified names when referring to .NET types in generated code. If you use `generate.cmd` to generate your client, it will run a post-generate step to reduce these names in your `/Generated` folder, making the code more readable. Make sure to use a nightly build `v0.17.1-Nightly20161026` or later to get completely reduced names.
  5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others. 
  6. **MANDATORY**: Add or update tests for the newly generated code.
  7. Once added to the Azure SDK for .NET, build your local package using command "msbuild build.proj /t:build;package /p:scope=YourService" 
