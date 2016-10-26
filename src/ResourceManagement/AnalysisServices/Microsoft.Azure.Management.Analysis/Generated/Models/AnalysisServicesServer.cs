@@ -8,12 +8,18 @@
 
 namespace Microsoft.Azure.Management.Analysis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Represents an instance of Analysis Services resource
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class AnalysisServicesServer : Resource
     {
         /// <summary>
@@ -38,7 +44,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Analysis Services resource</param>
         /// <param name="serverFullName">Full name of the Analysis Services
         /// resource</param>
-        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string provisioningState = default(string), string serverFullName = default(string))
+        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string provisioningState = default(string), string serverFullName = default(string))
             : base(location, sku, id, name, type, tags)
         {
             AsAdministrators = asAdministrators;

@@ -8,6 +8,9 @@
 
 namespace Microsoft.Azure.Management.Analysis.Models
 {
+    using Newtonsoft.Json;		
+    using Newtonsoft.Json.Converters;		
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuName.

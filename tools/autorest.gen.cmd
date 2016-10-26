@@ -12,7 +12,8 @@ if "%autoRestVersion%" gtr "0.17.0-Nightly20160707" set packageName=AutoRest
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set repoRoot=%~dp0..
-set autoRestExe=%repoRoot%\packages\autorest.%autoRestVersion%\tools\AutoRest.exe
+:set autoRestExe=%repoRoot%\packages\autorest.%autoRestVersion%\tools\AutoRest.exe
+set autoRestExe=C:\Code\autorest\src\core\AutoRest\bin\Debug\net451\win7-x64\AutoRest.exe
 set simplifier=%repoRoot%\tools\CodeSimplifier\CodeSimplifier.exe
 
 %repoRoot%\tools\nuget.exe install %packageName% %source% -Version %autoRestVersion% -o %repoRoot%\packages -verbosity quiet
