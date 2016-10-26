@@ -18,7 +18,7 @@ namespace Sql.Tests
             SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreate", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Get server metrics
-                IEnumerable<ServerMetric> serverMetrics = sqlClient.ServerUsages.ListByServer(resourceGroup.Name, server.Name);
+                IEnumerable<ServerMetric> serverMetrics = sqlClient.Servers.ListUsages(resourceGroup.Name, server.Name);
                 Assert.True(serverMetrics.Count(s => s.ResourceName == server.Name) > 1);
 
                 // Create a database and get metrics
@@ -28,7 +28,7 @@ namespace Sql.Tests
                     Location = server.Location
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
-                IEnumerable<DatabaseMetric> databaseMetrics = sqlClient.DatabaseUsages.ListByDatabase(resourceGroup.Name, server.Name, dbName);
+                IEnumerable<DatabaseMetric> databaseMetrics = sqlClient.Databases.ListUsages(resourceGroup.Name, server.Name, dbName);
                 Assert.True(databaseMetrics.Where(db => db.ResourceName == dbName).Count() == 1);
             });
         }

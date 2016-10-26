@@ -68,24 +68,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
-        /// Gets the IDatabaseUsagesOperations.
-        /// </summary>
-        public virtual IDatabaseUsagesOperations DatabaseUsages { get; private set; }
-
-        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerUpgradesOperations.
-        /// </summary>
-        public virtual IServerUpgradesOperations ServerUpgrades { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerUsagesOperations.
-        /// </summary>
-        public virtual IServerUsagesOperations ServerUsages { get; private set; }
 
         /// <summary>
         /// Gets the IElasticPoolsOperations.
@@ -93,64 +78,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
-        /// Gets the IElasticPoolActivityOperations.
-        /// </summary>
-        public virtual IElasticPoolActivityOperations ElasticPoolActivity { get; private set; }
-
-        /// <summary>
-        /// Gets the IElasticPoolDatabaseActivityOperations.
-        /// </summary>
-        public virtual IElasticPoolDatabaseActivityOperations ElasticPoolDatabaseActivity { get; private set; }
-
-        /// <summary>
-        /// Gets the IElasticPoolDatabasesOperations.
-        /// </summary>
-        public virtual IElasticPoolDatabasesOperations ElasticPoolDatabases { get; private set; }
-
-        /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
         /// </summary>
         public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolDatabasesOperations.
-        /// </summary>
-        public virtual IRecommendedElasticPoolDatabasesOperations RecommendedElasticPoolDatabases { get; private set; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolMetricsOperations.
-        /// </summary>
-        public virtual IRecommendedElasticPoolMetricsOperations RecommendedElasticPoolMetrics { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseServiceTierAdvisorsOperations.
-        /// </summary>
-        public virtual IDatabaseServiceTierAdvisorsOperations DatabaseServiceTierAdvisors { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerServiceObjectivesOperations.
-        /// </summary>
-        public virtual IServerServiceObjectivesOperations ServerServiceObjectives { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseTransparentDataEncryptionConfigurationsOperations.
-        /// </summary>
-        public virtual IDatabaseTransparentDataEncryptionConfigurationsOperations DatabaseTransparentDataEncryptionConfigurations { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseTransparentDataEncryptionsOperations.
-        /// </summary>
-        public virtual IDatabaseTransparentDataEncryptionsOperations DatabaseTransparentDataEncryptions { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseTransparentDataEncryptionActivityOperations.
-        /// </summary>
-        public virtual IDatabaseTransparentDataEncryptionActivityOperations DatabaseTransparentDataEncryptionActivity { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerFirewallRulesOperations.
-        /// </summary>
-        public virtual IServerFirewallRulesOperations ServerFirewallRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -354,23 +284,9 @@ namespace Microsoft.Azure.Management.Sql
         private void Initialize()
         {
             this.Databases = new DatabasesOperations(this);
-            this.DatabaseUsages = new DatabaseUsagesOperations(this);
             this.Servers = new ServersOperations(this);
-            this.ServerUpgrades = new ServerUpgradesOperations(this);
-            this.ServerUsages = new ServerUsagesOperations(this);
             this.ElasticPools = new ElasticPoolsOperations(this);
-            this.ElasticPoolActivity = new ElasticPoolActivityOperations(this);
-            this.ElasticPoolDatabaseActivity = new ElasticPoolDatabaseActivityOperations(this);
-            this.ElasticPoolDatabases = new ElasticPoolDatabasesOperations(this);
             this.RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
-            this.RecommendedElasticPoolDatabases = new RecommendedElasticPoolDatabasesOperations(this);
-            this.RecommendedElasticPoolMetrics = new RecommendedElasticPoolMetricsOperations(this);
-            this.DatabaseServiceTierAdvisors = new DatabaseServiceTierAdvisorsOperations(this);
-            this.ServerServiceObjectives = new ServerServiceObjectivesOperations(this);
-            this.DatabaseTransparentDataEncryptionConfigurations = new DatabaseTransparentDataEncryptionConfigurationsOperations(this);
-            this.DatabaseTransparentDataEncryptions = new DatabaseTransparentDataEncryptionsOperations(this);
-            this.DatabaseTransparentDataEncryptionActivity = new DatabaseTransparentDataEncryptionActivityOperations(this);
-            this.ServerFirewallRules = new ServerFirewallRulesOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

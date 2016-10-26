@@ -29,17 +29,17 @@ namespace Sql.Tests
                         StartIpAddress = SqlManagementTestUtilities.GenerateIpAddress(),
                         EndIpAddress = SqlManagementTestUtilities.GenerateIpAddress()
                     };
-                    sqlClient.ServerFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, rule);
+                    sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, rule);
                     rules.Add(firewallRuleName, rule);
                 }
 
                 foreach (var rule in rules)
                 {
-                    ServerFirewallRule response = sqlClient.ServerFirewallRules.Get(resourceGroup.Name, server.Name, rule.Key);
+                    ServerFirewallRule response = sqlClient.Servers.GetFirewallRule(resourceGroup.Name, server.Name, rule.Key);
                     SqlManagementTestUtilities.ValidateFirewallRule(rule.Value, response, rule.Key);
                 }
 
-                var listResponse = sqlClient.ServerFirewallRules.List(resourceGroup.Name, server.Name);
+                var listResponse = sqlClient.Servers.ListFirewallRules(resourceGroup.Name, server.Name);
                 Assert.Equal(rules.Count(), listResponse.Count());
 
                 foreach (var rule in listResponse)
@@ -70,7 +70,7 @@ namespace Sql.Tests
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "0.0.0.0"
                 };
-                var fr1 = sqlClient.ServerFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr1 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
 
                 // Create and validate Firewall Rule
@@ -81,7 +81,7 @@ namespace Sql.Tests
                     StartIpAddress = "1.1.1.1",
                     EndIpAddress = "1.1.2.2"
                 };
-                var fr2 = sqlClient.ServerFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr2 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr2, firewallRuleName);
 
                 // Create and validate Firewall Rule
@@ -92,12 +92,12 @@ namespace Sql.Tests
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "255.255.255.255"
                 };
-                var fr3 = sqlClient.ServerFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr3 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr3, firewallRuleName);
 
-                sqlClient.ServerFirewallRules.Delete(resourceGroup.Name, server.Name, fr1.Name);
-                sqlClient.ServerFirewallRules.Delete(resourceGroup.Name, server.Name, fr2.Name);
-                sqlClient.ServerFirewallRules.Delete(resourceGroup.Name, server.Name, fr3.Name);
+                sqlClient.Servers.DeleteFirewallRule(resourceGroup.Name, server.Name, fr1.Name);
+                sqlClient.Servers.DeleteFirewallRule(resourceGroup.Name, server.Name, fr2.Name);
+                sqlClient.Servers.DeleteFirewallRule(resourceGroup.Name, server.Name, fr3.Name);
             });
         }
 
@@ -117,7 +117,7 @@ namespace Sql.Tests
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "0.0.0.0"
                 };
-                var fr1 = sqlClient.ServerFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                var fr1 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
 
                 // Update Firewall Rule and Validate
@@ -126,7 +126,7 @@ namespace Sql.Tests
                     StartIpAddress = "1.1.1.1",
                     EndIpAddress = "255.255.255.255"
                 };
-                fr1 = sqlClient.ServerFirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
+                fr1 = sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
             });
         }

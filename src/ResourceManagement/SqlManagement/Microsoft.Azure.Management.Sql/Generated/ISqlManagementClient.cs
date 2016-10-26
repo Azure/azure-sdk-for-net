@@ -68,24 +68,9 @@ namespace Microsoft.Azure.Management.Sql
         IDatabasesOperations Databases { get; }
 
         /// <summary>
-        /// Gets the IDatabaseUsagesOperations.
-        /// </summary>
-        IDatabaseUsagesOperations DatabaseUsages { get; }
-
-        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         IServersOperations Servers { get; }
-
-        /// <summary>
-        /// Gets the IServerUpgradesOperations.
-        /// </summary>
-        IServerUpgradesOperations ServerUpgrades { get; }
-
-        /// <summary>
-        /// Gets the IServerUsagesOperations.
-        /// </summary>
-        IServerUsagesOperations ServerUsages { get; }
 
         /// <summary>
         /// Gets the IElasticPoolsOperations.
@@ -93,64 +78,9 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
-        /// Gets the IElasticPoolActivityOperations.
-        /// </summary>
-        IElasticPoolActivityOperations ElasticPoolActivity { get; }
-
-        /// <summary>
-        /// Gets the IElasticPoolDatabaseActivityOperations.
-        /// </summary>
-        IElasticPoolDatabaseActivityOperations ElasticPoolDatabaseActivity { get; }
-
-        /// <summary>
-        /// Gets the IElasticPoolDatabasesOperations.
-        /// </summary>
-        IElasticPoolDatabasesOperations ElasticPoolDatabases { get; }
-
-        /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
         /// </summary>
         IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolDatabasesOperations.
-        /// </summary>
-        IRecommendedElasticPoolDatabasesOperations RecommendedElasticPoolDatabases { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolMetricsOperations.
-        /// </summary>
-        IRecommendedElasticPoolMetricsOperations RecommendedElasticPoolMetrics { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseServiceTierAdvisorsOperations.
-        /// </summary>
-        IDatabaseServiceTierAdvisorsOperations DatabaseServiceTierAdvisors { get; }
-
-        /// <summary>
-        /// Gets the IServerServiceObjectivesOperations.
-        /// </summary>
-        IServerServiceObjectivesOperations ServerServiceObjectives { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseTransparentDataEncryptionConfigurationsOperations.
-        /// </summary>
-        IDatabaseTransparentDataEncryptionConfigurationsOperations DatabaseTransparentDataEncryptionConfigurations { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseTransparentDataEncryptionsOperations.
-        /// </summary>
-        IDatabaseTransparentDataEncryptionsOperations DatabaseTransparentDataEncryptions { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseTransparentDataEncryptionActivityOperations.
-        /// </summary>
-        IDatabaseTransparentDataEncryptionActivityOperations DatabaseTransparentDataEncryptionActivity { get; }
-
-        /// <summary>
-        /// Gets the IServerFirewallRulesOperations.
-        /// </summary>
-        IServerFirewallRulesOperations ServerFirewallRules { get; }
 
     }
 }

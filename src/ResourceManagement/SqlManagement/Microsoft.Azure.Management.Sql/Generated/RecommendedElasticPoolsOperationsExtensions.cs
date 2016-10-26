@@ -64,6 +64,60 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Returns information about an Azure SQL Database inside of an Azure SQL
+            /// Recommended Elastic Pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='recommendedElasticPoolName'>
+            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database to be retrieved.
+            /// </param>
+            public static Database GetDatabases(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName, string databaseName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendedElasticPoolsOperations)s).GetDatabasesAsync(resourceGroupName, serverName, recommendedElasticPoolName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about an Azure SQL Database inside of an Azure SQL
+            /// Recommended Elastic Pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='recommendedElasticPoolName'>
+            /// The name of the Azure SQL Elastic Pool to be retrieved.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database to be retrieved.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<Database> GetDatabasesAsync(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetDatabasesWithHttpMessagesAsync(resourceGroupName, serverName, recommendedElasticPoolName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns information about Azure SQL Recommended Elastic Pools.
             /// </summary>
             /// <param name='operations'>
@@ -98,6 +152,100 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<System.Collections.Generic.IEnumerable<RecommendedElasticPool>> ListAsync(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns information about an Azure SQL Database inside of an Azure SQL
+            /// Recommended Elastic Pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='recommendedElasticPoolName'>
+            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<Database> ListDatabases(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendedElasticPoolsOperations)s).ListDatabasesAsync(resourceGroupName, serverName, recommendedElasticPoolName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about an Azure SQL Database inside of an Azure SQL
+            /// Recommended Elastic Pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='recommendedElasticPoolName'>
+            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Collections.Generic.IEnumerable<Database>> ListDatabasesAsync(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListDatabasesWithHttpMessagesAsync(resourceGroupName, serverName, recommendedElasticPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns information about an recommended elastic pool metrics.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='recommendedElasticPoolName'>
+            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<RecommendedElasticPoolMetric> ListMetrics(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecommendedElasticPoolsOperations)s).ListMetricsAsync(resourceGroupName, serverName, recommendedElasticPoolName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about an recommended elastic pool metrics.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='recommendedElasticPoolName'>
+            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Collections.Generic.IEnumerable<RecommendedElasticPoolMetric>> ListMetricsAsync(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(resourceGroupName, serverName, recommendedElasticPoolName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

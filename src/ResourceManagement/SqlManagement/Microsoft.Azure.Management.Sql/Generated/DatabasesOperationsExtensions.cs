@@ -205,9 +205,9 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the Azure SQL Database from which to retrieve available
             /// restore points.
             /// </param>
-            public static System.Collections.Generic.IEnumerable<RestorePoint> ListRestorePointss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static System.Collections.Generic.IEnumerable<RestorePoint> ListRestorePoints(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListRestorePointssAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListRestorePointsAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -229,9 +229,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Collections.Generic.IEnumerable<RestorePoint>> ListRestorePointssAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<RestorePoint>> ListRestorePointsAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListRestorePointssWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRestorePointsWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -483,6 +483,306 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<System.Collections.Generic.IEnumerable<Database>> ListByServerAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns information about Azure SQL Database usages.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<DatabaseMetric> ListUsages(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListUsagesAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about Azure SQL Database usages.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Collections.Generic.IEnumerable<DatabaseMetric>> ListUsagesAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListUsagesWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns information about a service tier advisor.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of database.
+            /// </param>
+            /// <param name='serviceTierAdvisorName'>
+            /// The name of service tier advisor.
+            /// </param>
+            public static ServiceTierAdvisor GetServiceTierAdvisor(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string serviceTierAdvisorName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).GetServiceTierAdvisorAsync(resourceGroupName, serverName, databaseName, serviceTierAdvisorName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about a service tier advisor.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of database.
+            /// </param>
+            /// <param name='serviceTierAdvisorName'>
+            /// The name of service tier advisor.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ServiceTierAdvisor> GetServiceTierAdvisorAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string serviceTierAdvisorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetServiceTierAdvisorWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, serviceTierAdvisorName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns information about service tier advisors for specified database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of database.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<ServiceTierAdvisor> ListServiceTierAdvisors(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListServiceTierAdvisorsAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about service tier advisors for specified database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Collections.Generic.IEnumerable<ServiceTierAdvisor>> ListServiceTierAdvisorsAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListServiceTierAdvisorsWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates an Azure SQL Database Transparent Data Encryption
+            /// Operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database for which setting the Transparent Data
+            /// Encryption applies.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for creating or updating transparent data
+            /// encryption.
+            /// </param>
+            public static TransparentDataEncryption CreateOrUpdateTransparentDataEncryptionConfiguration(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, TransparentDataEncryption parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).CreateOrUpdateTransparentDataEncryptionConfigurationAsync(resourceGroupName, serverName, databaseName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates an Azure SQL Database Transparent Data Encryption
+            /// Operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database for which setting the Transparent Data
+            /// Encryption applies.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for creating or updating transparent data
+            /// encryption.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<TransparentDataEncryption> CreateOrUpdateTransparentDataEncryptionConfigurationAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, TransparentDataEncryption parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateTransparentDataEncryptionConfigurationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns an Azure SQL Database Transparent Data Encryption Response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database for which the Transparent Data
+            /// Encryption applies.
+            /// </param>
+            public static TransparentDataEncryption GetTransparentDataEncryptionConfiguration(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).GetTransparentDataEncryptionConfigurationAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns an Azure SQL Database Transparent Data Encryption Response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database for which the Transparent Data
+            /// Encryption applies.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<TransparentDataEncryption> GetTransparentDataEncryptionConfigurationAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetTransparentDataEncryptionConfigurationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns an Azure SQL Database Transparent Data Encryption Activity
+            /// Response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database for which the Transparent Data
+            /// Encryption applies.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<TransparentDataEncryptionActivity> ListTransparentDataEncryptionActivity(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListTransparentDataEncryptionActivityAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns an Azure SQL Database Transparent Data Encryption Activity
+            /// Response.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database for which the Transparent Data
+            /// Encryption applies.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Collections.Generic.IEnumerable<TransparentDataEncryptionActivity>> ListTransparentDataEncryptionActivityAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListTransparentDataEncryptionActivityWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

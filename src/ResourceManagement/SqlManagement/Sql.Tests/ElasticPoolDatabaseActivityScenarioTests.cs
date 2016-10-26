@@ -54,7 +54,7 @@ namespace Sql.Tests
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
                 // Get the Elastic Pool Database Activity List
-                var activity = sqlClient.ElasticPoolDatabaseActivity.ListByElasticPool(epName, resourceGroup.Name, server.Name);
+                var activity = sqlClient.ElasticPools.ListDatabaseActivity(epName, resourceGroup.Name, server.Name);
 
                 Assert.Equal(2, activity.Where(a => a.DatabaseName == dbName).Count());
                 Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
