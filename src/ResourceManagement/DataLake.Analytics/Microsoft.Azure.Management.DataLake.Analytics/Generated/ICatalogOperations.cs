@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     {
         /// <summary>
         /// Creates the specified secret for use with external data sources in
-        /// the specified database.
+        /// the specified database. This is deprecated and will be removed in
+        /// the next release. Please use CreateCredential instead.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -58,7 +59,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         Task<AzureOperationResponse<USqlSecret>> CreateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Modifies the specified secret for use with external data sources
-        /// in the specified database
+        /// in the specified database. This is deprecated and will be removed
+        /// in the next release. Please use UpdateCredential instead.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -90,7 +92,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<USqlSecret>> UpdateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the specified secret in the specified database
+        /// Gets the specified secret in the specified database. This is
+        /// deprecated and will be removed in the next release. Please use
+        /// GetCredential instead.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -119,7 +123,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<USqlSecret>> GetSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified secret in the specified database
+        /// Deletes the specified secret in the specified database. This is
+        /// deprecated and will be removed in the next release. Please use
+        /// DeleteCredential instead.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -145,7 +151,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse> DeleteSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes all secrets in the specified database
+        /// Deletes all secrets in the specified database. This is deprecated
+        /// and will be removed in the next release. In the future, please
+        /// only drop individual credentials using DeleteCredential
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
@@ -167,6 +175,168 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteAllSecretsWithHttpMessagesAsync(string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates the specified credential for use with external data
+        /// sources in the specified database.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database in which to create the credential.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to create the credential (name and
+        /// password)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> CreateCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Modifies the specified credential for use with external data
+        /// sources in the specified database
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the credential.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to modify the credential (name and
+        /// password)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the specified credential from the Data Lake Analytics
+        /// catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the schema.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the specified credential in the specified database
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the credential.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential to delete
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to delete a credential if the current user is not
+        /// the account owner.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of credentials from the Data Lake Analytics
+        /// catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the schema.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='select'>
+        /// OData Select statement. Limits the properties on each entry to
+        /// just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// The Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response,
+        /// e.g. Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified external data source from the Data Lake
         /// Analytics catalog.
@@ -237,76 +407,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieves the specified credential from the Data Lake Analytics
-        /// catalog.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database containing the schema.
-        /// </param>
-        /// <param name='credentialName'>
-        /// The name of the credential.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieves the list of credentials from the Data Lake Analytics
-        /// catalog.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database containing the schema.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
-        /// <param name='select'>
-        /// OData Select statement. Limits the properties on each entry to
-        /// just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='count'>
-        /// The Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response,
-        /// e.g. Categories?$count=true. Optional.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified procedure from the Data Lake Analytics
         /// catalog.
@@ -1094,29 +1194,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the list of external data sources from the Data Lake
-        /// Analytics catalog.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics
         /// catalog.
         /// </summary>
@@ -1139,6 +1216,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of external data sources from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of procedures from the Data Lake Analytics
         /// catalog.

@@ -54,9 +54,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
         /// <summary>
         /// Appends to the specified file. This method supports multiple concurrent
-        /// appends to the file. NOTE: Concurrent append and normal (serial) append
-        /// CANNOT be used interchangeably. Once a file has been appended to using
-        /// either append option, it can only be appended to using that append option.
+        /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
+        /// CANNOT be used interchangeably; once a file has been appended to using
+        /// either of these append options, it can only be appended to using that
+        /// append option. ConcurrentAppend DOES NOT guarantee order and can result
+        /// in duplicated data landing in the target file. In order to close a file
+        /// after using ConcurrentAppend, call the Flush method.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
@@ -1825,6 +1828,191 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
+        /// Flushes the specified file to the store. This forces an update to the
+        /// metadata of the file (returned from GetFileStatus), and is required by
+        /// ConcurrentAppend once the file is done to populate finalized metadata.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='flushFilePath'>
+        /// The Data Lake Store path (starting with '/') of the file to which to flush.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> FlushWithHttpMessagesAsync(string accountName, string flushFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (flushFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "flushFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            string op = "APPEND";
+            string append = "true";
+            string syncFlag = "close";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("flushFilePath", flushFilePath);
+                tracingParameters.Add("op", op);
+                tracingParameters.Add("append", append);
+                tracingParameters.Add("syncFlag", syncFlag);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Flush", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{flushFilePath}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{flushFilePath}", Uri.EscapeDataString(flushFilePath));
+            List<string> _queryParameters = new List<string>();
+            if (op != null)
+            {
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+            }
+            if (append != null)
+            {
+                _queryParameters.Add(string.Format("append={0}", Uri.EscapeDataString(append)));
+            }
+            if (syncFlag != null)
+            {
+                _queryParameters.Add(string.Format("syncFlag={0}", Uri.EscapeDataString(syncFlag)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AdlsErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Appends to the specified file. This method does not support multiple
         /// concurrent appends to the file. NOTE: Concurrent append and normal
         /// (serial) append CANNOT be used interchangeably. Once a file has been
@@ -2361,6 +2549,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
+
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)

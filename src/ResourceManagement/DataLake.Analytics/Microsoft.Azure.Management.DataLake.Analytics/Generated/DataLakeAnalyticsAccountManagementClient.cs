@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this.Account = new AccountOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-10-01-preview";
+            this.ApiVersion = "2016-11-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

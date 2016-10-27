@@ -44,8 +44,13 @@ namespace DataLakeAnalytics.Tests
         public string Location = "East US 2";
         public DataLakeAnalyticsManagementHelper DataLakeAnalyticsManagementHelper { get; set; }
         private MockContext context;
-        public CommonTestFixture(MockContext contextToUse, bool createWasbAccount = false)
+        public CommonTestFixture(MockContext contextToUse, bool createWasbAccount = false, bool isDogfood = false)
         {
+            if(isDogfood)
+            {
+                Location = "Brazil South";
+            }
+
             try 
             {
                 context = contextToUse;

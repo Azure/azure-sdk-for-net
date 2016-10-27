@@ -19,23 +19,23 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     /// <summary>
     /// Data Lake Store firewall rule information
     /// </summary>
-    public partial class FirewallRule
+    public partial class TrustedIdProvider
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallRule class.
+        /// Initializes a new instance of the TrustedIdProvider class.
         /// </summary>
-        public FirewallRule() { }
+        public TrustedIdProvider() { }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallRule class.
+        /// Initializes a new instance of the TrustedIdProvider class.
         /// </summary>
-        /// <param name="name">the firewall rule's name.</param>
-        /// <param name="type">the namespace and type of the firewall
-        /// Rule.</param>
-        /// <param name="id">the firewall rule's full ID.</param>
-        /// <param name="properties">the properties of the firewall
-        /// rule.</param>
-        public FirewallRule(string name = default(string), string type = default(string), string id = default(string), FirewallRuleProperties properties = default(FirewallRuleProperties))
+        /// <param name="name">the trusted identity provider's name.</param>
+        /// <param name="type">the namespace and type of the trusted identity
+        /// provider.</param>
+        /// <param name="id">the trusted identity provider's full ID.</param>
+        /// <param name="properties">the properties of the trusted identity
+        /// provider.</param>
+        public TrustedIdProvider(string name = default(string), string type = default(string), string id = default(string), TrustedIdProviderProperties properties = default(TrustedIdProviderProperties))
         {
             Name = name;
             Type = type;
@@ -44,28 +44,28 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets the firewall rule's name.
+        /// Gets or sets the trusted identity provider's name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the namespace and type of the firewall Rule.
+        /// Gets the namespace and type of the trusted identity provider.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the firewall rule's full ID.
+        /// Gets or sets the trusted identity provider's full ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of the firewall rule.
+        /// Gets or sets the properties of the trusted identity provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public FirewallRuleProperties Properties { get; set; }
+        public TrustedIdProviderProperties Properties { get; set; }
 
     }
 }

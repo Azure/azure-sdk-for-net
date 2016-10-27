@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this.Catalog = new CatalogOperations(this);
             this.BaseUri = "https://{accountName}.{adlaCatalogDnsSuffix}";
-            this.ApiVersion = "2015-10-01-preview";
+            this.ApiVersion = "2016-11-01";
             this.AdlaCatalogDnsSuffix = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

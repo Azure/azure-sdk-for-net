@@ -17,7 +17,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// DataLakeAnalytics DataLakeAnalyticsAccount information.
+    /// Data Lake Analytics catalog secret creation and update parameters.
+    /// This is deprecated and will be removed in the next release. Please
+    /// use DataLakeAnalyticsCatalogCredentialCreateOrUpdateParameters
+    /// instead.
     /// </summary>
     public partial class DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
     {
