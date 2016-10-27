@@ -144,8 +144,8 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the virtual network gateway.
         /// </param>
         /// <param name='gatewayVip'>
-        /// Vip parameter supplied to the Begin Active-Active Reset Virtual
-        /// Network Gateway operation through Network resource provider.
+        /// Virtual network gateway vip address supplied to the Begin Reset of
+        /// Active-Active feature enabled Gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the virtual network gateway.
         /// </param>
         /// <param name='gatewayVip'>
-        /// Vip parameter supplied to the Begin Active-Active Reset Virtual
-        /// Network Gateway operation through Network resource provider.
+        /// Virtual network gateway vip address supplied to the Begin Reset of
+        /// Active-Active feature enabled Gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

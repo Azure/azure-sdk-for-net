@@ -42,32 +42,32 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Tunnel name.
         /// </summary>
         [JsonProperty(PropertyName = "tunnel")]
-        public string Tunnel { get; set; }
+        public string Tunnel { get; private set; }
 
         /// <summary>
         /// Virtual network Gateway connection status. Possible values
         /// include: 'Unknown', 'Connecting', 'Connected', 'NotConnected'
         /// </summary>
         [JsonProperty(PropertyName = "connectionStatus")]
-        public string ConnectionStatus { get; set; }
+        public string ConnectionStatus { get; private set; }
 
         /// <summary>
         /// The Ingress Bytes Transferred in this connection
         /// </summary>
         [JsonProperty(PropertyName = "ingressBytesTransferred")]
-        public long? IngressBytesTransferred { get; set; }
+        public long? IngressBytesTransferred { get; private set; }
 
         /// <summary>
         /// The Egress Bytes Transferred in this connection
         /// </summary>
         [JsonProperty(PropertyName = "egressBytesTransferred")]
-        public long? EgressBytesTransferred { get; set; }
+        public long? EgressBytesTransferred { get; private set; }
 
         /// <summary>
         /// The time at which connection was established in Utc format.
         /// </summary>
         [JsonProperty(PropertyName = "lastConnectionEstablishedUtcTime")]
-        public string LastConnectionEstablishedUtcTime { get; set; }
+        public string LastConnectionEstablishedUtcTime { get; private set; }
 
     }
 }
