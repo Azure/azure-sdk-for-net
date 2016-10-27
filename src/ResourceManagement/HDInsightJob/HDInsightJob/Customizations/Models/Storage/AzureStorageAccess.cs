@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // 
-
+using System;
 using System.IO;
 using System.Net;
 using Hyak.Common;
@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
 
         private string DefaultStorageContainer { get; set; }
 
+        private string storageAccountSuffix { get; set; }
         /// <summary>
         /// Initializes a new instance of the AzureStorageAccess class.
         /// </summary>
@@ -46,18 +47,23 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// <param name='defaultStorageContainer'>
         /// Required. The default storage container name.
         /// </param>
-        public AzureStorageAccess(string storageAccountName, string storageAccountKey, string defaultStorageContainer)
+        /// <param name='storageAccountSuffix'>
+        /// Optional. The storage account URI suffix. For example, "core.chinacloudapi.cn".
+        /// </param>
+
+        public AzureStorageAccess(string storageAccountName, string storageAccountKey, string defaultStorageContainer, string storageAccountSuffix = null)
         {
             this.StorageAccountName = storageAccountName;
             this.StorageAccountKey = storageAccountKey;
             this.DefaultStorageContainer = defaultStorageContainer;
+            this.storageAccountSuffix = storageAccountSuffix;
         }
 
         private CloudBlobClient GetStorageClient()
         {
             var accountName = StorageAccountName.Contains(".") ? StorageAccountName.Substring(0, StorageAccountName.IndexOf('.')) : StorageAccountName;
             var storageCredentials = new StorageCredentials(accountName, StorageAccountKey);
-            var storageAccount = new CloudStorageAccount(storageCredentials, true);
+            var storageAccount = new CloudStorageAccount(storageCredentials, storageAccountSuffix, true);           
             return storageAccount.CreateCloudBlobClient();
         }
 

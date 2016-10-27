@@ -122,7 +122,7 @@ namespace HDInsight.Tests
                     var result = client.Clusters.ExecuteScriptActions(resourceGroup, dnsName, executeScriptActionParams);
                     Assert.Equal(result.StatusCode, HttpStatusCode.OK);
                     Assert.Equal(result.State, AsyncOperationState.Failed);
-                    // Assert.Equal(result.ErrorInfo.Message, "ScriptExecutionFailed");
+                    Assert.Equal(result.ErrorInfo.Message, "ScriptExecutionFailed");
 
                     var scriptActionParams = GetExecuteScriptActionParams(true, "script" + Guid.NewGuid().ToString().Substring(0, 10), InstallGiraph);
 
