@@ -804,10 +804,19 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(originalSecret.Attributes.Enabled != null && originalSecret.Attributes.Enabled == false);
 
                 // Cannot get disabled secret
-                Assert.Throws<KeyVaultErrorException>(() =>
+                try
                 {
                     client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
-                });
+                    Assert.True(false, "Get on disabled secret must throw an exception.");
+                }
+                catch(KeyVaultErrorException ex)
+                {
+                    // Validate that exception contains an error code, an error message, and an inner error code
+                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Code));
+                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Message));
+                    Assert.NotNull(ex.Body.Error.InnerError);
+                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.InnerError.Code));
+                }
             }
         }
 
