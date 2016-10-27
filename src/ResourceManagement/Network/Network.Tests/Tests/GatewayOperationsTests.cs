@@ -134,7 +134,7 @@ namespace Networks.Tests
                 Assert.Equal(VirtualNetworkGatewaySkuTier.Standard, getVirtualNetworkGatewayResponse.Sku.Tier);
 
                 // 4A. ResetVirtualNetworkGateway API
-                var resetVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName);
+                var resetVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
                 //Assert.Equal("Succeeded", resetVirtualNetworkGatewayResponse.ProvisioningState);
 
                 // 4B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called
