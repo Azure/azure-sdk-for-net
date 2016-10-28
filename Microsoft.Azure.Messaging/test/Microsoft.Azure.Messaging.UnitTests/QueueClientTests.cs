@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Dynamic;
+
 namespace Microsoft.Azure.Messaging.UnitTests
 {
     using System;
@@ -9,7 +11,6 @@ namespace Microsoft.Azure.Messaging.UnitTests
     using System.Threading.Tasks;
     using System.Linq;
     using Xunit;
-    using Microsoft.Azure.Messaging;
 
     public class QueueClientTests
     {
@@ -18,8 +19,11 @@ namespace Microsoft.Azure.Messaging.UnitTests
         {
             ConnectionString = Environment.GetEnvironmentVariable("QUEUECLIENTCONNECTIONSTRING");
 
-            ConnectionString =
-                "Endpoint=sb://testvinsustandard924.servicebus.windows.net/;EntityPath=testq;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+nCcyesi2Vdw5eAQeJvR85XMwpj46o2gvxmdizbqXoY=";
+            //ConnectionString =
+            //  "Endpoint=sb://testvinsustandard924.servicebus.windows.net/;EntityPath=testq;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+nCcyesi2Vdw5eAQeJvR85XMwpj46o2gvxmdizbqXoY=";
+
+            ConnectionString = 
+                "Endpoint=sb://newvinsu1028.servicebus.windows.net/;EntityPath=testq11028;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=7oMVG2as0pelFCFujgSb2JExro7/tZ6oIGcECpljubc=";
             if (string.IsNullOrWhiteSpace(ConnectionString))
             {
                 throw new InvalidOperationException("QUEUECLIENTCONNECTIONSTRING environment variable was not found!");
@@ -27,6 +31,49 @@ namespace Microsoft.Azure.Messaging.UnitTests
         }
 
         String ConnectionString { get; }
+
+        [Fact]
+        async Task BrokeredMessageOperationsTest()
+        {
+            //Create QueueClient with ReceiveDelete, 
+            //Send and Receive a message, Try to Complete/Abandon/Defer/DeadLetter should throw InvalidOperationException()
+            QueueClient queueClient = QueueClient.Create(this.ConnectionString, ReceiveMode.ReceiveAndDelete);
+            await this.SendMessagesAsync(queueClient, 1);
+            BrokeredMessage message = await queueClient.ReceiveAsync();
+            Assert.NotNull((object)message);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.CompleteAsync());
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.AbandonAsync());
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.DeferAsync());
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.DeadLetterAsync());
+
+            //Create a PeekLock queueClient and do rest of the operations
+            //Send a Message, Receive/ Abandon and Complete it using BrokeredMessage methods
+            queueClient = QueueClient.Create(this.ConnectionString);
+            await this.SendMessagesAsync(queueClient, 1);
+            message = await queueClient.ReceiveAsync();
+            Assert.NotNull((object)message);
+            await message.AbandonAsync();
+            await Task.Delay(TimeSpan.FromMilliseconds(100));
+            message = await queueClient.ReceiveAsync();
+            await message.CompleteAsync();
+
+            //Send a Message, Receive/DeadLetter using BrokeredMessage methods
+            await this.SendMessagesAsync(queueClient, 1);
+            message = await queueClient.ReceiveAsync();
+            await message.DeadLetterAsync();
+            string entityPath = EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName);
+            QueueClient deadLetterQueueClient = QueueClient.Create(this.ConnectionString, entityPath);
+            message = await deadLetterQueueClient.ReceiveAsync();
+            await message.CompleteAsync();
+
+            //Send a Message, Receive/Defer using BrokeredMessage methods
+            await this.SendMessagesAsync(queueClient, 1);
+            message = await queueClient.ReceiveAsync();
+            await message.DeferAsync();
+
+            //TODO: Once ReceivebySequence is implemented, Receive and Complete this message
+        }
 
         [Fact]
         async Task QueueClientBasicPeekLockTest()
@@ -162,13 +209,20 @@ namespace Microsoft.Azure.Messaging.UnitTests
 
         async Task SendMessagesAsync(QueueClient queueClient, int messageCount)
         {
+            if (messageCount == 0)
+            {
+                await Task.FromResult(false);
+            }
+
+            List<BrokeredMessage> messagesToSend = new List<BrokeredMessage>();
             for (int i = 0; i < messageCount; i++)
             {
                 BrokeredMessage message = new BrokeredMessage("test" + i);
                 message.Label = "test" + i;
-                await queueClient.SendAsync(message);
+                messagesToSend.Add(message);
             }
 
+            await queueClient.SendAsync(messagesToSend);
             WriteLine(string.Format("Sent {0} messages", messageCount));
         }
 

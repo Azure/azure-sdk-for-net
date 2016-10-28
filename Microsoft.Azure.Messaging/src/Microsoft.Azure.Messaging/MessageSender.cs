@@ -22,22 +22,17 @@ namespace Microsoft.Azure.Messaging
 
         protected abstract Task OnSendAsync(IEnumerable<BrokeredMessage> brokeredMessages);
 
-        internal static int ValidateMessages(IEnumerable<BrokeredMessage> brokeredMessages)
+        static void ValidateMessages(IEnumerable<BrokeredMessage> brokeredMessages)
         {
-            int count;
-            if (brokeredMessages == null || (count = brokeredMessages.Count()) == 0)
+            if (brokeredMessages == null || !brokeredMessages.Any())
             {
-                throw Fx.Exception.Argument(nameof(brokeredMessages), Resources.BrokeredMessageListIsNullOrEmpty);
+                throw Fx.Exception.ArgumentNull("brokeredMessages");
             }
 
-            foreach (BrokeredMessage brokeredMessage in brokeredMessages)
+            if (brokeredMessages.Any(brokeredMessage => brokeredMessage.IsLockTokenSet))
             {
-                if (brokeredMessage.IsLockTokenSet)
-                {
-                    throw Fx.Exception.Argument(nameof(brokeredMessages), "Cannot Send ReceivedMessages");
-                }
+                throw Fx.Exception.Argument(nameof(brokeredMessages), "Cannot Send ReceivedMessages");
             }
-            return count;
         }
     }
 }

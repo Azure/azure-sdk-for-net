@@ -12,15 +12,15 @@ namespace Microsoft.Azure.Messaging.Amqp
 
     sealed class AmqpMessageReceiver : MessageReceiver
     {
-        const int DefaultPrefetchCount = 300;
+        public static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
         public AmqpMessageReceiver(QueueClient queueClient) 
-            : base()
+            : base(queueClient.Mode)
         {
             this.QueueClient = queueClient;
-            this.Path = this.QueueClient.QueueName;
+            this.Path = queueClient.QueueName;
             this.ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
-            this.PrefetchCount = DefaultPrefetchCount;
+            this.PrefetchCount = queueClient.PrefetchCount;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Messaging.Amqp
                 ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
                 IEnumerable<AmqpMessage> amqpMessages = null;
                 bool hasMessages = await Task.Factory.FromAsync(
-                    (c, s) => receiveLink.BeginReceiveMessages(maxMessageCount, timeoutHelper.RemainingTime(), c, s),
+                    (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, AmqpMessageReceiver.DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),
                     (a) => receiveLink.EndReceiveMessages(a, out amqpMessages),
                     this);
 
@@ -69,9 +69,12 @@ namespace Microsoft.Azure.Messaging.Amqp
 
                         if (this.QueueClient.Mode == ReceiveMode.ReceiveAndDelete)
                         {
-                            receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome); 
+                            receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
                         }
-                        brokeredMessages.Add(AmqpMessageConverter.ClientGetMessage(amqpMessage));
+
+                        BrokeredMessage brokeredMessage = AmqpMessageConverter.ClientGetMessage(amqpMessage);
+                        brokeredMessage.Receiver = this; // Associate the Message with this Receiver.
+                        brokeredMessages.Add(brokeredMessage);
                     }
 
                     return brokeredMessages;

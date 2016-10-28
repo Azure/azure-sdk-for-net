@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Linq;
+
 namespace Microsoft.Azure.Messaging
 {
     using System;
@@ -16,12 +18,13 @@ namespace Microsoft.Azure.Messaging
         MessageSender innerSender;
         MessageReceiver innerReceiver;
 
-        internal QueueClient(ServiceBusConnectionSettings connectionSettings, ReceiveMode mode)
+
+        internal QueueClient(ServiceBusConnectionSettings connectionSettings, ReceiveMode receiveMode)
             : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({connectionSettings.EntityPath})")
         {
             this.ConnectionSettings = connectionSettings;
             this.QueueName = connectionSettings.EntityPath;
-            this.Mode = mode;
+            this.Mode = receiveMode;
         }
 
         public string QueueName { get; }
@@ -29,6 +32,8 @@ namespace Microsoft.Azure.Messaging
         public ServiceBusConnectionSettings ConnectionSettings { get; }
 
         public ReceiveMode Mode { get; private set; }
+
+        public int PrefetchCount { get; set; }
 
         protected object ThisLock { get; } = new object();
 
@@ -156,6 +161,17 @@ namespace Microsoft.Azure.Messaging
                 //TODO: Log Send Exception
                 throw;
             }
+        }
+
+        public async Task<BrokeredMessage> ReceiveAsync()
+        {
+            IList<BrokeredMessage> messages = await this.ReceiveAsync(1);
+            if (messages != null && messages.Count > 0)
+            {
+                return messages[0];
+            }
+
+            return null;
         }
 
         public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)

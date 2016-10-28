@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Messaging
     using System.IO;
     using System.Runtime.Serialization;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Xml.Serialization;
     using Microsoft.Azure.Messaging.Primitives;
 
@@ -992,13 +993,7 @@ namespace Microsoft.Azure.Messaging
             }
         }
 
-        /// <summary> Creates the empty message. </summary>
-        /// <returns> . </returns>
-        /// TODO: 
-        //internal static BrokeredMessage CreateEmptyMessage()
-        //{
-        //    return new BrokeredMessage((object)null);
-        //}
+        internal MessageReceiver Receiver { get; set; }
 
         /// <summary>Deserializes the brokered message body into an object of the specified type by using the 
         /// <see cref="System.Runtime.Serialization.DataContractSerializer" /> with a binary 
@@ -1073,6 +1068,47 @@ namespace Microsoft.Azure.Messaging
             }
 
             return (T)serializer.ReadObject(this.BodyStream);
+        }
+
+        // Summary:
+        //    Asynchronously Abandons the lock on a peek-locked message.
+        public Task AbandonAsync()
+        {
+            this.ThrowIfDisposed();
+            this.ThrowIfNotLocked();
+
+            return this.Receiver.AbandonAsync(new Guid[] { this.LockToken });
+        }
+
+        // Summary:
+        //     Asynchronously completes the receive operation of a message and indicates that
+        //     the message should be marked as processed and deleted.
+        public Task CompleteAsync()
+        {
+            this.ThrowIfDisposed();
+            this.ThrowIfNotLocked();
+
+            return this.Receiver.CompleteAsync(new Guid[] {this.LockToken});
+        }
+
+        // Summary:
+        //     Asynchronously moves the message to the dead letter queue.
+        public Task DeadLetterAsync()
+        {
+            this.ThrowIfDisposed();
+            this.ThrowIfNotLocked();
+
+            return this.Receiver.DeadLetterAsync(new Guid[] { this.LockToken });
+        }
+
+        // Summary:
+        //     Asynchronously indicates that the receiver wants to defer the processing for this message.
+        public Task DeferAsync()
+        {
+            this.ThrowIfDisposed();
+            this.ThrowIfNotLocked();
+
+            return this.Receiver.DeferAsync(new Guid[] { this.LockToken });
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
@@ -1391,6 +1427,21 @@ namespace Microsoft.Azure.Messaging
             {
                 //TODO: throw Fx.Exception.ObjectDisposed("BrokeredMessage has been disposed.");
                 throw new ObjectDisposedException("BrokeredMessage has been disposed.");
+            }
+        }
+
+        /// <summary> Throw if not locked. </summary>
+        /// <exception cref="FxTrace.Exception"> Thrown when as error. </exception>
+        void ThrowIfNotLocked()
+        {
+            if (this.Receiver == null)
+            {
+                throw Fx.Exception.AsError(new InvalidOperationException("The operation cannot be completed because the receiver is null."));
+            }
+
+            if (this.Receiver.ReceiveMode == ReceiveMode.ReceiveAndDelete)
+            {
+                throw Fx.Exception.AsError(new InvalidOperationException("The operation is only supported in 'PeekLock' receive mode."));
             }
         }
 

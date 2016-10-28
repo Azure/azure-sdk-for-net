@@ -38,7 +38,6 @@ namespace Microsoft.Azure.Messaging.Amqp
             if (brokeredMessages.Count() == 1)
             {
                 BrokeredMessage singleBrokeredMessage = brokeredMessages.Single();
-                //TODO: ProcessFaultInjectionInfo(singleBrokeredMessage);
                 amqpMessage = AmqpMessageConverter.ClientGetMessage(singleBrokeredMessage);
             }
             else
@@ -46,7 +45,6 @@ namespace Microsoft.Azure.Messaging.Amqp
                 var dataList = new List<Data>();
                 foreach (BrokeredMessage brokeredMessage in brokeredMessages)
                 {
-                    //TODO: ProcessFaultInjectionInfo(brokeredMessage);
                     AmqpMessage amqpMessageItem = AmqpMessageConverter.ClientGetMessage(brokeredMessage);
                     ArraySegment<byte>[] payload = amqpMessageItem.GetPayload();
                     BufferListStream buffer = new BufferListStream(payload);
