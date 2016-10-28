@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An immutable client-side representation of a TCP load balancing probe.
     /// </summary>
-    public interface ITcpProbe  :
+    public interface ILoadBalancerTcpProbe  :
         IProbe
     {
     }

@@ -12,8 +12,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
     /// <summary>
     /// The stage of a load balancer definition describing the nature of the frontend of the load balancer: internal or Internet-facing.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineTcpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineTcpProbe(string name);
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineHttpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineHttpProbe(string name);
 
     }
     /// <summary>

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
 
     }
     /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition
     /// </summary>
     public interface IWithRequestPath<ParentT> 
     {
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<ParentT> WithRequestPath(string requestPath);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<ParentT> WithRequestPath(string requestPath);
 
     }
     /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<ParentT> WithPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<ParentT> WithPort(int port);
 
     }
     /// <summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
 
     }
 }

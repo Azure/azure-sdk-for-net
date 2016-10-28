@@ -3,24 +3,23 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Resource.Fluent.Core;
-    using Management.Network.Fluent.Models;
+    using Models;
     using System.Collections.Generic;
     using Resource.Fluent.Core.ChildResourceActions;
-    using Rest.Azure;
     using Resource.Fluent;
 
-    public partial class ProbeImpl  :
+    public partial class LoadBalancerProbeImpl  :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,
-        ITcpProbe,
-        TcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
-        TcpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        TcpProbe.Update.IUpdate,
-        IHttpProbe,
-        HttpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
-        HttpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        HttpProbe.Update.IUpdate
+        ILoadBalancerTcpProbe,
+        LoadBalancerTcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
+        LoadBalancerTcpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancerTcpProbe.Update.IUpdate,
+        ILoadBalancerHttpProbe,
+        LoadBalancerHttpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
+        LoadBalancerHttpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancerHttpProbe.Update.IUpdate
     {
-        internal ProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner, parent)
+        internal LoadBalancerProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
         }
 
@@ -72,25 +71,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return rules;
         }
 
-        internal ProbeImpl WithPort (int port)
+        internal LoadBalancerProbeImpl WithPort (int port)
         {
             Inner.Port = port;
             return this;
         }
 
-        internal ProbeImpl WithRequestPath (string requestPath)
+        internal LoadBalancerProbeImpl WithRequestPath (string requestPath)
         {
             Inner.RequestPath = requestPath;
             return this;
         }
 
-        internal ProbeImpl WithIntervalInSeconds (int seconds)
+        internal LoadBalancerProbeImpl WithIntervalInSeconds (int seconds)
         {
             Inner.IntervalInSeconds = seconds;
             return this;
         }
 
-        internal ProbeImpl WithNumberOfProbes (int probes)
+        internal LoadBalancerProbeImpl WithNumberOfProbes (int probes)
         {
             Inner.NumberOfProbes = probes;
             return this;

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update
     /// </summary>
     public interface IWithRequestPath 
     {
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate WithRequestPath(string requestPath);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate WithRequestPath(string requestPath);
 
     }
     /// <summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate WithPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate WithPort(int port);
 
     }
     /// <summary>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate WithNumberOfProbes(int probes);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate WithNumberOfProbes(int probes);
 
     }
     /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate WithIntervalInSeconds(int seconds);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate WithIntervalInSeconds(int seconds);
 
     }
 }

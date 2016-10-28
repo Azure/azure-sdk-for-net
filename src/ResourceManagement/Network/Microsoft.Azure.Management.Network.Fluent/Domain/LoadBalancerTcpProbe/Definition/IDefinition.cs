@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
 
     }
     /// <summary>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<ParentT> WithPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<ParentT> WithPort(int port);
 
     }
     /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
 
     }
     /// <summary>

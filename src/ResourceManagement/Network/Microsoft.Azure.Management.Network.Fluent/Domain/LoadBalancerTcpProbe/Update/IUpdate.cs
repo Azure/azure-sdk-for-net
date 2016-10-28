@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate WithIntervalInSeconds(int seconds);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate WithIntervalInSeconds(int seconds);
 
     }
     /// <summary>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate WithPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate WithPort(int port);
 
     }
     /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate WithNumberOfProbes(int probes);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate WithNumberOfProbes(int probes);
 
     }
     /// <summary>

@@ -295,8 +295,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineTcpProbe(string name) { 
-            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineTcpProbe(string name) { 
+            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -317,8 +317,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineHttpProbe(string name) { 
-            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineHttpProbe(string name) { 
+            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -339,8 +339,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineTcpProbe(string name) { 
-            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineTcpProbe(string name) { 
+            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -348,8 +348,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateHttpProbe(string name) { 
-            return this.UpdateHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateHttpProbe(string name) { 
+            return this.UpdateHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -379,8 +379,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineHttpProbe(string name) { 
-            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineHttpProbe(string name) { 
+            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -388,8 +388,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateTcpProbe(string name) { 
-            return this.UpdateTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateTcpProbe(string name) { 
+            return this.UpdateTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -502,11 +502,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>HTTP probes of this load balancer, indexed by the name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IHttpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.HttpProbes
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerHttpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.HttpProbes
         {
             get
             { 
-            return this.HttpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IHttpProbe>;
+            return this.HttpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerHttpProbe>;
             }
         }
         /// <returns>resource IDs of the public IP addresses assigned to the frontends of this load balancer</returns>
@@ -534,11 +534,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>TCP probes of this load balancer, indexed by the name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ITcpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.TcpProbes
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerTcpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.TcpProbes
         {
             get
             { 
-            return this.TcpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ITcpProbe>;
+            return this.TcpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerTcpProbe>;
             }
         }
         /// <returns>inbound NAT rules for this balancer</returns>

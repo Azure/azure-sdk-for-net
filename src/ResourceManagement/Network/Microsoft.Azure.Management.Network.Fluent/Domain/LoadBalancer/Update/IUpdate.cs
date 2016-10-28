@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
 {
 
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineHttpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineHttpProbe(string name);
 
         /// <summary>
         /// Begins the definition of a new TCP probe to add to the load balancer.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineTcpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineTcpProbe(string name);
 
         /// <summary>
         /// Removes the specified probe from the load balancer, if present.
@@ -75,14 +75,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate UpdateTcpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate UpdateTcpProbe(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing HTTP probe on this load balancer.
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate UpdateHttpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate UpdateHttpProbe(string name);
 
     }
     /// <summary>

@@ -3,27 +3,27 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using System.Collections.Generic;
-    public partial class ProbeImpl 
+    public partial class LoadBalancerProbeImpl 
     {
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithRequestPath<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithRequestPath(string requestPath) { 
-            return this.WithRequestPath( requestPath) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithRequestPath<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithRequestPath(string requestPath) { 
+            return this.WithRequestPath( requestPath) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithRequestPath<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithRequestPath(string requestPath) { 
-            return this.WithRequestPath( requestPath) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithRequestPath<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithRequestPath(string requestPath) { 
+            return this.WithRequestPath( requestPath) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <returns>the protocol</returns>
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IWithPort.WithPort(int port) { 
-            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IWithPort.WithPort(int port) { 
+            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IWithPort.WithPort(int port) { 
-            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithPort.WithPort(int port) { 
+            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IWithNumberOfProbes.WithNumberOfProbes(int probes) { 
-            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IWithNumberOfProbes.WithNumberOfProbes(int probes) { 
+            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IWithNumberOfProbes.WithNumberOfProbes(int probes) { 
-            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithNumberOfProbes.WithNumberOfProbes(int probes) { 
+            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithPort(int port) { 
-            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithPort(int port) { 
+            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithPort(int port) { 
-            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithPort(int port) { 
+            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithPort(int port) { 
-            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithPort(int port) { 
+            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -102,12 +102,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithPort(int port) { 
-            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithPort(int port) { 
+            return this.WithPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IWithRequestPath.WithRequestPath(string requestPath) { 
-            return this.WithRequestPath( requestPath) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithRequestPath.WithRequestPath(string requestPath) { 
+            return this.WithRequestPath( requestPath) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate;
         }
 
         /// <returns>the port number the probe is monitoring</returns>
@@ -139,8 +139,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithNumberOfProbes(int probes) { 
-            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithNumberOfProbes(int probes) { 
+            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -148,8 +148,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithNumberOfProbes(int probes) { 
-            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithNumberOfProbes(int probes) { 
+            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithNumberOfProbes(int probes) { 
-            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithNumberOfProbes(int probes) { 
+            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithNumberOfProbes(int probes) { 
-            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithNumberOfProbes<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithNumberOfProbes(int probes) { 
+            return this.WithNumberOfProbes( probes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the HTTP request path for the HTTP probe to call to check the health status</returns>
-        string Microsoft.Azure.Management.Network.Fluent.IHttpProbe.RequestPath
+        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancerHttpProbe.RequestPath
         {
             get
             { 
@@ -199,8 +199,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IWithIntervalInSeconds.WithIntervalInSeconds(int seconds) { 
-            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IWithIntervalInSeconds.WithIntervalInSeconds(int seconds) { 
+            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -208,8 +208,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IWithIntervalInSeconds.WithIntervalInSeconds(int seconds) { 
-            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IWithIntervalInSeconds.WithIntervalInSeconds(int seconds) { 
+            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithIntervalInSeconds(int seconds) { 
-            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithIntervalInSeconds(int seconds) { 
+            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithIntervalInSeconds(int seconds) { 
-            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithIntervalInSeconds(int seconds) { 
+            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -235,8 +235,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithIntervalInSeconds(int seconds) { 
-            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithIntervalInSeconds(int seconds) { 
+            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -244,8 +244,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithIntervalInSeconds(int seconds) { 
-            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithIntervalInSeconds<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithIntervalInSeconds(int seconds) { 
+            return this.WithIntervalInSeconds( seconds) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <returns>the associated load balancing rules from this load balancer, indexed by their names</returns>

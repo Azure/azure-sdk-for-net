@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         // Children
         private IDictionary<string, ILoadBalancerBackend> backends;
-        private IDictionary<string, ITcpProbe> tcpProbes;
-        private IDictionary<string, IHttpProbe> httpProbes;
+        private IDictionary<string, ILoadBalancerTcpProbe> tcpProbes;
+        private IDictionary<string, ILoadBalancerHttpProbe> httpProbes;
         private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
         private IDictionary<string, ILoadBalancerFrontend> frontends;
         private IDictionary<string, IInboundNatRule> inboundNatRules;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             // Reset and update probes
-            Inner.Probes = InnersFromWrappers<ProbeInner, IHttpProbe>(httpProbes.Values);
+            Inner.Probes = InnersFromWrappers<ProbeInner, ILoadBalancerHttpProbe>(httpProbes.Values);
             Inner.Probes = InnersFromWrappers(tcpProbes.Values, Inner.Probes);
 
             // Reset and update backends
@@ -223,11 +223,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         private void InitializeProbesFromInner ()
         {
-            httpProbes = new SortedDictionary<string, IHttpProbe>();
-            tcpProbes = new SortedDictionary<string, ITcpProbe>();
+            httpProbes = new SortedDictionary<string, ILoadBalancerHttpProbe>();
+            tcpProbes = new SortedDictionary<string, ILoadBalancerTcpProbe>();
             if (Inner.Probes != null) {
                 foreach (var probeInner in Inner.Probes) {
-                    var probe = new ProbeImpl(probeInner, this);
+                    var probe = new LoadBalancerProbeImpl(probeInner, this);
                     if (probeInner.Protocol.Equals(ProbeProtocol.Tcp))
                     {
                         tcpProbes.Add(probeInner.Name, probe);
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal LoadBalancerImpl WithProbe (ProbeImpl probe)
+        internal LoadBalancerImpl WithProbe (LoadBalancerProbeImpl probe)
         {
             if (probe == null)
                 return this;
@@ -452,9 +452,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 .Attach();
         }
 
-        internal ProbeImpl DefineTcpProbe (string name)
+        internal LoadBalancerProbeImpl DefineTcpProbe (string name)
         {
-            ITcpProbe tcpProbe;
+            ILoadBalancerTcpProbe tcpProbe;
             if (!tcpProbes.TryGetValue(name, out tcpProbe))
             {
                 ProbeInner inner = new ProbeInner()
@@ -463,17 +463,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Protocol = ProbeProtocol.Tcp
                 };
 
-                return new ProbeImpl(inner, this);
+                return new LoadBalancerProbeImpl(inner, this);
             }
             else
             {
-                return (ProbeImpl) tcpProbe;
+                return (LoadBalancerProbeImpl) tcpProbe;
             }
         }
 
-        internal ProbeImpl DefineHttpProbe (string name)
+        internal LoadBalancerProbeImpl DefineHttpProbe (string name)
         {
-            IHttpProbe httpProbe;
+            ILoadBalancerHttpProbe httpProbe;
             if (!httpProbes.TryGetValue(name, out httpProbe)) {
                 ProbeInner inner = new ProbeInner()
                 {
@@ -482,9 +482,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Port = 80
                 };
 
-                return new ProbeImpl(inner, this);
+                return new LoadBalancerProbeImpl(inner, this);
             } else {
-                return (ProbeImpl) httpProbe;
+                return (LoadBalancerProbeImpl) httpProbe;
             }
         }
 
@@ -624,9 +624,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        internal ProbeImpl UpdateTcpProbe (string name)
+        internal LoadBalancerProbeImpl UpdateTcpProbe (string name)
         {
-            return TryGetValue<ProbeImpl, ITcpProbe>(name, tcpProbes);
+            return TryGetValue<LoadBalancerProbeImpl, ILoadBalancerTcpProbe>(name, tcpProbes);
         }
 
         internal LoadBalancerBackendImpl UpdateBackend (string name)
@@ -673,9 +673,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TryGetValue<InboundNatPoolImpl, IInboundNatPool>(name, inboundNatPools);
         }
 
-        internal ProbeImpl UpdateHttpProbe (string name)
+        internal LoadBalancerProbeImpl UpdateHttpProbe (string name)
         {
-            return TryGetValue<ProbeImpl, IHttpProbe>(name, httpProbes);
+            return TryGetValue<LoadBalancerProbeImpl, ILoadBalancerHttpProbe>(name, httpProbes);
         }
 
         internal LoadBalancingRuleImpl UpdateLoadBalancingRule (string name)
@@ -693,7 +693,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return inboundNatPools;
         }
 
-        internal IDictionary<string, ITcpProbe> TcpProbes ()
+        internal IDictionary<string, ILoadBalancerTcpProbe> TcpProbes ()
         {
             return tcpProbes;
         }
@@ -708,7 +708,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return inboundNatRules;
         }
 
-        internal IDictionary<string, IHttpProbe> HttpProbes ()
+        internal IDictionary<string, ILoadBalancerHttpProbe> HttpProbes ()
         {
             return httpProbes;
         }
