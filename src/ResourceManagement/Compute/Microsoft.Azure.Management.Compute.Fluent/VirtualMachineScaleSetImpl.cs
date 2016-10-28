@@ -210,14 +210,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new Dictionary<string, ILoadBalancerBackend>();
         }
 
-        public IDictionary<string, IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
+        public IDictionary<string, ILoadBalancerInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
                 return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
                         primaryNicDefaultIPConfiguration());
             }
-            return new Dictionary<string, IInboundNatPool>();
+            return new Dictionary<string, ILoadBalancerInboundNatPool>();
         }
 
         public IDictionary<string, ILoadBalancerBackend> ListPrimaryInternetFacingLoadBalancerBackends()
@@ -230,14 +230,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new Dictionary<string, ILoadBalancerBackend>();
         }
 
-        public IDictionary<string, IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
+        public IDictionary<string, ILoadBalancerInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
                 return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         primaryNicDefaultIPConfiguration());
             }
-            return new Dictionary<string, IInboundNatPool>();
+            return new Dictionary<string, ILoadBalancerInboundNatPool>();
         }
 
         public IList<string> PrimaryPublicIpAddressIds()
@@ -1372,13 +1372,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return attachedBackends;
         }
 
-        private static IDictionary<string, IInboundNatPool> getInboundNatPoolsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
+        private static IDictionary<string, ILoadBalancerInboundNatPool> getInboundNatPoolsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
                                                                                                    VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             String loadBalancerId = loadBalancer.Id;
-            IDictionary<string, IInboundNatPool> attachedInboundNatPools = new Dictionary<string, IInboundNatPool>();
-            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools;
-            foreach (IInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
+            IDictionary<string, ILoadBalancerInboundNatPool> attachedInboundNatPools = new Dictionary<string, ILoadBalancerInboundNatPool>();
+            IDictionary<string, ILoadBalancerInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools;
+            foreach (ILoadBalancerInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
                 String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
                 foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
@@ -1412,7 +1412,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var inboundNatPools = loadBalancer.InboundNatPools.Values;
             string[] natPoolNames = new string[inboundNatPools.Count];
             i = 0;
-            foreach (IInboundNatPool inboundNatPool in inboundNatPools)
+            foreach (ILoadBalancerInboundNatPool inboundNatPool in inboundNatPools)
             {
                 natPoolNames[i] = inboundNatPool.Name;
                 i++;

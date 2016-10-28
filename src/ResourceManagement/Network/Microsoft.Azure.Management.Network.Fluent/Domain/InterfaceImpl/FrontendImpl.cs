@@ -82,11 +82,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the inbound NAT pools on this load balancer that use this frontend, indexed by their names</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatPools
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatPools
         {
             get
             { 
-            return this.InboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool>;
+            return this.InboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
             }
         }
         /// <returns>true if the frontend is public, i.e. it has a public IP address associated with it</returns>

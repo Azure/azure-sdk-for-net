@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend> Frontends { get; }
 
         /// <returns>inbound NAT pools, indexed by name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> InboundNatPools { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> InboundNatPools { get; }
 
     }
 }

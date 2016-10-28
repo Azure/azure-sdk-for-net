@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool</param>
         /// <returns>the first stage of the new inbound NAT pool definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool> DefineInboundNatPool(string name);
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool> DefineInboundNatPool(string name);
 
     }
     /// <summary>

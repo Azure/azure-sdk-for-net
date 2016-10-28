@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
         private IDictionary<string, ILoadBalancerFrontend> frontends;
         private IDictionary<string, IInboundNatRule> inboundNatRules;
-        private IDictionary<string, IInboundNatPool> inboundNatPools;
+        private IDictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
 
         internal  LoadBalancerImpl (
             string name, 
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             // Reset and update inbound NAT pools
-            Inner.InboundNatPools = InnersFromWrappers<InboundNatPoolInner, IInboundNatPool>(inboundNatPools.Values);
+            Inner.InboundNatPools = InnersFromWrappers<InboundNatPoolInner, ILoadBalancerInboundNatPool>(inboundNatPools.Values);
             foreach (var natPool in inboundNatPools.Values) {
                 // Clear deleted frontend references
                 var frontendRef = natPool.Inner.FrontendIPConfiguration;
@@ -244,11 +244,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private void InitializeInboundNatPoolsFromInner ()
         {
 
-            inboundNatPools = new SortedDictionary<string, IInboundNatPool>();
+            inboundNatPools = new SortedDictionary<string, ILoadBalancerInboundNatPool>();
             if (Inner.InboundNatPools != null) {
                 foreach (var inner in Inner.InboundNatPools)
                 {
-                    var wrapper = new InboundNatPoolImpl(inner, this);
+                    var wrapper = new LoadBalancerInboundNatPoolImpl(inner, this);
                     inboundNatPools.Add(inner.Name, wrapper);
                 }
             }
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal LoadBalancerImpl WithInboundNatPool (InboundNatPoolImpl inboundNatPool)
+        internal LoadBalancerImpl WithInboundNatPool (LoadBalancerInboundNatPoolImpl inboundNatPool)
         {
             if (inboundNatPool == null)
                 return null;
@@ -523,9 +523,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal InboundNatPoolImpl DefineInboundNatPool (string name)
+        internal LoadBalancerInboundNatPoolImpl DefineInboundNatPool (string name)
         {
-            IInboundNatPool natPool; 
+            ILoadBalancerInboundNatPool natPool; 
             if (!inboundNatPools.TryGetValue(name, out natPool))
             {
                 InboundNatPoolInner inner = new InboundNatPoolInner()
@@ -533,11 +533,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Name = name
                 };
 
-                return new InboundNatPoolImpl(inner, this);
+                return new LoadBalancerInboundNatPoolImpl(inner, this);
             }
             else
             {
-                return (InboundNatPoolImpl) natPool;
+                return (LoadBalancerInboundNatPoolImpl) natPool;
             }
         }
 
@@ -668,9 +668,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TryGetValue<InboundNatRuleImpl, IInboundNatRule>(name, inboundNatRules);
         }
 
-        internal InboundNatPoolImpl UpdateInboundNatPool (string name)
+        internal LoadBalancerInboundNatPoolImpl UpdateInboundNatPool (string name)
         {
-            return TryGetValue<InboundNatPoolImpl, IInboundNatPool>(name, inboundNatPools);
+            return TryGetValue<LoadBalancerInboundNatPoolImpl, ILoadBalancerInboundNatPool>(name, inboundNatPools);
         }
 
         internal LoadBalancerProbeImpl UpdateHttpProbe (string name)
@@ -688,7 +688,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return backends;
         }
 
-        internal IDictionary<string, IInboundNatPool> InboundNatPools ()
+        internal IDictionary<string, ILoadBalancerInboundNatPool> InboundNatPools ()
         {
             return inboundNatPools;
         }

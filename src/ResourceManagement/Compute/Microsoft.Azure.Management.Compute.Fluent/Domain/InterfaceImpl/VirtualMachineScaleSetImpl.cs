@@ -632,8 +632,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
         /// <returns>the inbound NAT pools of the internal load balancer associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set, if any.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools() { 
-            return this.ListPrimaryInternalLoadBalancerInboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool>;
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools() { 
+            return this.ListPrimaryInternalLoadBalancerInboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
         }
 
         /// <returns>the network profile</returns>
@@ -654,8 +654,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
         /// <returns>the internet-facing load balancer's inbound NAT pool associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools() { 
-            return this.ListPrimaryInternetFacingLoadBalancerInboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool>;
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools() { 
+            return this.ListPrimaryInternetFacingLoadBalancerInboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
         }
 
         /// <summary>

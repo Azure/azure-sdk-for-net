@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <returns>the internet-facing load balancer's inbound NAT pool associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools();
 
         /// <returns>the internal load balancer associated with the primary network interface of</returns>
         /// <returns>the virtual machines in the scale set</returns>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <returns>the inbound NAT pools of the internal load balancer associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set, if any.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools();
 
         /// <returns>the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer</returns>
         /// <returns>of the scale set</returns>
