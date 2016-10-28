@@ -7,10 +7,13 @@ namespace Microsoft.Azure.Management.Search.Tests
     using System.Linq;
     using Microsoft.Azure.Management.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
+    using Rest.Azure;
     using Xunit;
 
     public sealed class SearchServiceTests : SearchTestBase<ResourceGroupFixture>
     {
+        private const string InvalidServiceName = "----badname";
+
         [Fact]
         public void CanListServices()
         {
@@ -108,7 +111,7 @@ namespace Microsoft.Azure.Management.Search.Tests
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
-                CheckNameAvailabilityOutput result = searchMgmt.Services.CheckNameAvailability("----badname");
+                CheckNameAvailabilityOutput result = searchMgmt.Services.CheckNameAvailability(InvalidServiceName);
 
                 Assert.False(string.IsNullOrEmpty(result.Message));
                 Assert.Equal(UnavailableNameReason.Invalid, result.Reason);
@@ -181,6 +184,20 @@ namespace Microsoft.Azure.Management.Search.Tests
                 Assert.Equal(1, service.ReplicaCount);
 
                 searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CreateServiceWithInvalidNameGivesUsefulMessage()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                SearchService service = DefineServiceWithSku(SkuName.Free);
+
+                CloudException e =
+                    Assert.Throws<CloudException>(() => searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, InvalidServiceName, service));
+                Assert.Equal("Service name '----badname' is invalid: Service name must only contain lowercase letters, digits or dashes, cannot start or end with or contain consecutive dashes and is limited to 60 characters.", e.Message);
             });
         }
 
