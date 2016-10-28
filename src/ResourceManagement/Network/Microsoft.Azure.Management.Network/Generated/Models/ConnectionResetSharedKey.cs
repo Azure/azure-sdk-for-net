@@ -26,29 +26,30 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ConnectionResetSharedKey class.
         /// </summary>
-        public ConnectionResetSharedKey(long keyLength)
+        public ConnectionResetSharedKey(int keyLength)
         {
             KeyLength = keyLength;
         }
 
         /// <summary>
-        /// The virtual network connection reset shared key length
+        /// The virtual network connection reset shared key length, should
+        /// between 1 and 128.
         /// </summary>
         [JsonProperty(PropertyName = "keyLength")]
-        public long KeyLength { get; set; }
+        public int KeyLength { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.KeyLength.Length > 128)
+            if (this.KeyLength > 128)
             {
-                throw new ValidationException(ValidationRules.MaxLength, "KeyLength", 128);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "KeyLength", 128);
             }
-            if (this.KeyLength.Length < 1)
+            if (this.KeyLength < 1)
             {
-                throw new ValidationException(ValidationRules.MinLength, "KeyLength", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "KeyLength", 1);
             }
         }
     }
