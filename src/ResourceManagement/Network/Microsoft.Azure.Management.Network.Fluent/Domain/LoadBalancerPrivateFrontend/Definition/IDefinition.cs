@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinitionAlt<ParentT>,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
     }
     /// <summary>
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithSubnet<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithSubnet<ParentT>
     {
     }
     /// <summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithSubnet<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithSubnet<ParentT>
     {
     }
     /// <summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition
     /// @param <ParentT> the next stage of the parent definition
     /// </summary>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
+        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend of an internal load balancer.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
 
     }
 }

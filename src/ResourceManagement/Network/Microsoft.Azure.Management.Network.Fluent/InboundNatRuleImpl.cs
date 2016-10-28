@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
         }
 
-        internal IFrontend Frontend ()
+        internal ILoadBalancerFrontend Frontend ()
         {
             var frontendRef = Inner.FrontendIPConfiguration;
             if (frontendRef == null)
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 string name = ResourceUtils.NameFromResourceId(frontendRef.Id);
-                IFrontend frontend;
+                ILoadBalancerFrontend frontend;
                 Parent.Frontends().TryGetValue(name, out frontend);
                 return frontend;
             }

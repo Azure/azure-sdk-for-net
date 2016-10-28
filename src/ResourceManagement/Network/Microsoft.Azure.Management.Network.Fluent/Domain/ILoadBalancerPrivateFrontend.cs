@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An immutable client-side representation of a private frontend of an internal load balancer.
     /// </summary>
-    public interface IPrivateFrontend  :
-        IFrontend,
+    public interface ILoadBalancerPrivateFrontend  :
+        ILoadBalancerFrontend,
         IHasPrivateIpAddress,
         IHasSubnet
     {

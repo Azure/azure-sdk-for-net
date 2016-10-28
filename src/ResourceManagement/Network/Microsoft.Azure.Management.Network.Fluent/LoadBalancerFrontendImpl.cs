@@ -11,17 +11,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for PublicFrontend.
     /// </summary>
-    public partial class FrontendImpl  :
+    public partial class LoadBalancerFrontendImpl  :
         ChildResource<FrontendIPConfigurationInner, LoadBalancerImpl, ILoadBalancer>,
-        IFrontend,
-        IPrivateFrontend,
-        PrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>,
-        PrivateFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        PrivateFrontend.Update.IUpdate,
-        IPublicFrontend,
-        PublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
-        PublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        PublicFrontend.Update.IUpdate
+        ILoadBalancerFrontend,
+        ILoadBalancerPrivateFrontend,
+        LoadBalancerPrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>,
+        LoadBalancerPrivateFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancerPrivateFrontend.Update.IUpdate,
+        ILoadBalancerPublicFrontend,
+        LoadBalancerPublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
+        LoadBalancerPublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancerPublicFrontend.Update.IUpdate
     {
         //$TODO: For some reason the converter doesn't implement this on the auto-gen'd interface implementations so putting it here for the time being
         string IHasPrivateIpAddress.PrivateIpAllocationMethod
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal FrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
+        internal LoadBalancerFrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
             : base(inner, parent)
         {
         }
@@ -129,12 +129,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return rules;
         }
 
-        internal FrontendImpl WithExistingSubnet (INetwork network, string subnetName)
+        internal LoadBalancerFrontendImpl WithExistingSubnet (INetwork network, string subnetName)
         {
             return this.WithExistingSubnet(network.Id, subnetName);
         }
 
-        internal FrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
+        internal LoadBalancerFrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
         {
             var subnetRef = new SubnetInner();
             subnetRef.Id = parentNetworkResourceId + "/subnets/" + subnetName;
@@ -143,12 +143,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        internal FrontendImpl WithExistingPublicIpAddress (IPublicIpAddress pip)
+        internal LoadBalancerFrontendImpl WithExistingPublicIpAddress (IPublicIpAddress pip)
         {
             return WithExistingPublicIpAddress(pip.Id);
         }
 
-        internal FrontendImpl WithExistingPublicIpAddress (string resourceId)
+        internal LoadBalancerFrontendImpl WithExistingPublicIpAddress (string resourceId)
         {
             var pipRef = new PublicIPAddressInner(id: resourceId);
             Inner.PublicIPAddress = pipRef;
@@ -160,13 +160,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        internal FrontendImpl WithoutPublicIpAddress ()
+        internal LoadBalancerFrontendImpl WithoutPublicIpAddress ()
         {
             Inner.PublicIPAddress = null;
             return this;
         }
 
-        internal FrontendImpl WithPrivateIpAddressDynamic ()
+        internal LoadBalancerFrontendImpl WithPrivateIpAddressDynamic ()
         {
             Inner.PrivateIPAddress = null;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        internal FrontendImpl WithPrivateIpAddressStatic (string ipAddress)
+        internal LoadBalancerFrontendImpl WithPrivateIpAddressStatic (string ipAddress)
         {
             Inner.PrivateIPAddress = ipAddress;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;

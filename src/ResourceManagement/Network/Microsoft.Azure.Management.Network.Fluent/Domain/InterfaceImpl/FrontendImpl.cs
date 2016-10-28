@@ -6,25 +6,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition;
-    public partial class FrontendImpl 
+    public partial class LoadBalancerFrontendImpl 
     {
         /// <summary>
         /// Attaches the child definition to the parent resource update.
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">parentNetworkResourceId the resource ID of the virtual network the subnet is part of</param>
         /// <param name="subnetName">subnetName the name of the subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName) { 
-            return this.WithExistingSubnet( parentNetworkResourceId,  subnetName) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName) { 
+            return this.WithExistingSubnet( parentNetworkResourceId,  subnetName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the private IP allocation method within the associated subnet for this private frontend</returns>
-        string Microsoft.Azure.Management.Network.Fluent.IPrivateFrontend.PrivateIpAllocationMethod
+        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPrivateFrontend.PrivateIpAllocationMethod
         {
             get
             { 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the inbound NAT pools on this load balancer that use this frontend, indexed by their names</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> Microsoft.Azure.Management.Network.Fluent.IFrontend.InboundNatPools
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatPools
         {
             get
             { 
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>true if the frontend is public, i.e. it has a public IP address associated with it</returns>
-        bool Microsoft.Azure.Management.Network.Fluent.IFrontend.IsPublic
+        bool Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.IsPublic
         {
             get
             { 
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the inbound NAT rules on this load balancer that use this frontend, indexed by their names</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> Microsoft.Azure.Management.Network.Fluent.IFrontend.InboundNatRules
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatRules
         {
             get
             { 
@@ -110,16 +110,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">ipAddress a static IP address within the associated private IP range</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithPrivateIpAddressStatic(string ipAddress) { 
-            return this.WithPrivateIpAddressStatic( ipAddress) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithPrivateIpAddressStatic(string ipAddress) { 
+            return this.WithPrivateIpAddressStatic( ipAddress) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithPrivateIpAddressDynamic() { 
-            return this.WithPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.UpdateDefinition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithPrivateIpAddressDynamic() { 
+            return this.WithPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -127,16 +127,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">ipAddress a static IP address within the associated private IP range</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIpAddressStatic(string ipAddress) { 
-            return this.WithPrivateIpAddressStatic( ipAddress) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIpAddressStatic(string ipAddress) { 
+            return this.WithPrivateIpAddressStatic( ipAddress) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIpAddressDynamic() { 
-            return this.WithPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Definition.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>.WithPrivateIpAddressDynamic() { 
+            return this.WithPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
@@ -144,16 +144,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">ipAddress a static IP address within the associated private IP range</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate>.WithPrivateIpAddressStatic(string ipAddress) { 
-            return this.WithPrivateIpAddressStatic( ipAddress) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIpAddressStatic(string ipAddress) { 
+            return this.WithPrivateIpAddressStatic( ipAddress) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate>.WithPrivateIpAddressDynamic() { 
-            return this.WithPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update.IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>.WithPrivateIpAddressDynamic() { 
+            return this.WithPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <returns>the name of the subnet associated with this resource</returns>
@@ -184,8 +184,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Removes the existing reference to a public IP address.
         /// </summary>
         /// <returns>the next stage of the update.</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate>.WithoutPublicIpAddress() { 
-            return this.WithoutPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>.WithoutPublicIpAddress() { 
+            return this.WithoutPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -193,8 +193,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress) { 
-            return this.WithExistingPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress) { 
+            return this.WithExistingPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -202,8 +202,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId) { 
-            return this.WithExistingPublicIpAddress( resourceId) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>.WithExistingPublicIpAddress(string resourceId) { 
+            return this.WithExistingPublicIpAddress( resourceId) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -211,8 +211,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress) { 
-            return this.WithExistingPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress) { 
+            return this.WithExistingPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIpAddress(string resourceId) { 
-            return this.WithExistingPublicIpAddress( resourceId) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>.WithExistingPublicIpAddress(string resourceId) { 
+            return this.WithExistingPublicIpAddress( resourceId) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
@@ -229,8 +229,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress) { 
-            return this.WithExistingPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress) { 
+            return this.WithExistingPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -238,8 +238,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithExistingPublicIpAddress(string resourceId) { 
-            return this.WithExistingPublicIpAddress( resourceId) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDefinition.IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithExistingPublicIpAddress(string resourceId) { 
+            return this.WithExistingPublicIpAddress( resourceId) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -264,8 +264,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithExistingSubnet(INetwork network, string subnetName) { 
-            return this.WithExistingSubnet( network,  subnetName) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithExistingSubnet(INetwork network, string subnetName) { 
+            return this.WithExistingSubnet( network,  subnetName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -274,8 +274,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>.WithExistingSubnet(INetwork network, string subnetName) { 
-            return this.WithExistingSubnet( network,  subnetName) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>.WithExistingSubnet(INetwork network, string subnetName) { 
+            return this.WithExistingSubnet( network,  subnetName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <returns>the name of this child object</returns>
@@ -292,8 +292,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IWithSubnet.WithExistingSubnet(INetwork network, string subnetName) { 
-            return this.WithExistingSubnet( network,  subnetName) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IWithSubnet.WithExistingSubnet(INetwork network, string subnetName) { 
+            return this.WithExistingSubnet( network,  subnetName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
     }

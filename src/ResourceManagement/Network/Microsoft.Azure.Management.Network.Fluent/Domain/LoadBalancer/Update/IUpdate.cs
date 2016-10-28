@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Update;
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefinePublicFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefinePublicFrontend(string name);
 
         /// <summary>
         /// Removes the specified frontend from the load balancer.
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the frontend to update</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate UpdateInternetFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate UpdateInternetFrontend(string name);
 
     }
     /// <summary>
@@ -256,14 +256,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefinePrivateFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefinePrivateFrontend(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing internal frontend.
         /// </summary>
         /// <param name="name">name the name of an existing frontend from this load balancer</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate UpdateInternalFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate UpdateInternalFrontend(string name);
 
     }
     /// <summary>

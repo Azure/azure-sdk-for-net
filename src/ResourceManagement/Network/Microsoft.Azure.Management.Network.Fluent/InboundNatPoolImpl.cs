@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.BackendPort;
         }
 
-        internal IFrontend Frontend ()
+        internal ILoadBalancerFrontend Frontend ()
         {
-            IFrontend frontend;
+            ILoadBalancerFrontend frontend;
             string name = ResourceUtils.NameFromResourceId(Inner.FrontendIPConfiguration.Id);
             Parent.Frontends().TryGetValue(name, out frontend);
             return frontend;

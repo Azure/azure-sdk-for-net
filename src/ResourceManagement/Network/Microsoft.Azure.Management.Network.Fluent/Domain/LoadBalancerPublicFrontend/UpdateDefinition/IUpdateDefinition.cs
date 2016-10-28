@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinit
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IWithPublicIpAddress<ParentT>  :
-        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
 }

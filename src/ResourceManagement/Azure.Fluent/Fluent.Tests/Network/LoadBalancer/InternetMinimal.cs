@@ -113,7 +113,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
             var frontend = resource.Frontends["default"];
             Assert.True(frontend.IsPublic);
-            Assert.True(((IPublicFrontend)frontend).PublicIpAddressId.Equals(pip.Id, StringComparison.OrdinalIgnoreCase));
+            Assert.True(((ILoadBalancerPublicFrontend)frontend).PublicIpAddressId.Equals(pip.Id, StringComparison.OrdinalIgnoreCase));
             Assert.True(lbRule.Probe.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
 
             lbRule = resource.LoadBalancingRules["lbrule2"];

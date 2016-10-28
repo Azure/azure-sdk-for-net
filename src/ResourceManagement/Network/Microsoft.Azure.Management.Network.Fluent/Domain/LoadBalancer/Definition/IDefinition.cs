@@ -8,13 +8,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition;
     using Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
     /// <summary>
     /// The stage of a load balancer definition describing the nature of the frontend of the load balancer: internal or Internet-facing.
     /// </summary>
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> DefinePublicFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> DefinePublicFrontend(string name);
 
     }
     /// <summary>
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     public interface IWithPrivateFrontend  :
         IWithNetworkSubnet
     {
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> DefinePrivateFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> DefinePrivateFrontend(string name);
 
     }
     /// <summary>

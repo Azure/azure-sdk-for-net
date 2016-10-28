@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update
 {
 
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update;
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
         IWithSubnet,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate>
     {
     }
     /// <summary>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate WithExistingSubnet(INetwork network, string subnetName);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate WithExistingSubnet(INetwork network, string subnetName);
 
     }
 }

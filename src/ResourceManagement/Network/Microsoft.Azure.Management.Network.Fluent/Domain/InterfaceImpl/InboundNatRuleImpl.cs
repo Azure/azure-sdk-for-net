@@ -111,11 +111,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the associated frontend</returns>
-        Microsoft.Azure.Management.Network.Fluent.IFrontend Microsoft.Azure.Management.Network.Fluent.IHasFrontend.Frontend
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend Microsoft.Azure.Management.Network.Fluent.IHasFrontend.Frontend
         {
             get
             { 
-            return this.Frontend() as Microsoft.Azure.Management.Network.Fluent.IFrontend;
+            return this.Frontend() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend;
             }
         }
         /// <returns>the protocol</returns>

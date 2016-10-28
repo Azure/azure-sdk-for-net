@@ -171,8 +171,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.DefinePrivateFrontend(string name) { 
-            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.DefinePrivateFrontend(string name) { 
+            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of an existing frontend from this load balancer</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.UpdateInternalFrontend(string name) { 
-            return this.UpdateInternalFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.UpdateInternalFrontend(string name) { 
+            return this.UpdateInternalFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -251,8 +251,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name) { 
-            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name) { 
+            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the frontend to update</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.UpdateInternetFrontend(string name) { 
-            return this.UpdateInternetFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.UpdateInternetFrontend(string name) { 
+            return this.UpdateInternetFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.DefinePublicFrontend(string name) { 
-            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.DefinePublicFrontend(string name) { 
+            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -284,8 +284,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this.WithoutFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate;
         }
 
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name) { 
-            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name) { 
+            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
@@ -518,11 +518,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>frontends for this load balancer, for the incoming traffic to come from.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.Frontends
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.Frontends
         {
             get
             { 
-            return this.Frontends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IFrontend>;
+            return this.Frontends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend>;
             }
         }
         /// <returns>backends for this load balancer to load balance the incoming traffic among, indexed by name</returns>

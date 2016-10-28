@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, ITcpProbe> tcpProbes;
         private IDictionary<string, IHttpProbe> httpProbes;
         private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
-        private IDictionary<string, IFrontend> frontends;
+        private IDictionary<string, ILoadBalancerFrontend> frontends;
         private IDictionary<string, IInboundNatRule> inboundNatRules;
         private IDictionary<string, IInboundNatPool> inboundNatPools;
 
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.BackendAddressPools = InnersFromWrappers<BackendAddressPoolInner, ILoadBalancerBackend>(backends.Values);
 
             // Reset and update frontends
-            Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, IFrontend>(frontends.Values);
+            Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
 
             // Reset and update inbound NAT rules
             Inner.InboundNatRules = InnersFromWrappers<InboundNatRuleInner, IInboundNatRule>(inboundNatRules.Values);
@@ -182,13 +182,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         private void InitializeFrontendsFromInner ()
         {
-            frontends = new SortedDictionary<string, IFrontend>();
+            frontends = new SortedDictionary<string, ILoadBalancerFrontend>();
             IList<FrontendIPConfigurationInner> frontendsInner = this.Inner.FrontendIPConfigurations;
             if (frontendsInner != null)
             {
                 foreach (var frontendInner in frontendsInner)
                 {
-                    var frontend = new FrontendImpl(frontendInner, this);
+                    var frontend = new LoadBalancerFrontendImpl(frontendInner, this);
                     frontends.Add(frontendInner.Name, frontend);
                 }
             }
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 .ToString();
         }
 
-        internal LoadBalancerImpl WithFrontend (FrontendImpl frontend)
+        internal LoadBalancerImpl WithFrontend (LoadBalancerFrontendImpl frontend)
         {
             if (frontend == null)
                 return null;
@@ -541,19 +541,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal FrontendImpl DefinePrivateFrontend (string name)
+        internal LoadBalancerFrontendImpl DefinePrivateFrontend (string name)
         {
             return DefineFrontend(name);
         }
 
-        internal FrontendImpl DefinePublicFrontend (string name)
+        internal LoadBalancerFrontendImpl DefinePublicFrontend (string name)
         {
             return DefineFrontend(name);
         }
 
-        private FrontendImpl DefineFrontend (string name)
+        private LoadBalancerFrontendImpl DefineFrontend (string name)
         {
-            IFrontend frontend;
+            ILoadBalancerFrontend frontend;
             if (!frontends.TryGetValue(name, out frontend))
             {
                 FrontendIPConfigurationInner inner = new FrontendIPConfigurationInner()
@@ -561,11 +561,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Name = name
                 };
 
-                return new FrontendImpl(inner, this);
+                return new LoadBalancerFrontendImpl(inner, this);
             }
             else
             {
-                return (FrontendImpl) frontend;
+                return (LoadBalancerFrontendImpl) frontend;
             }
         }
 
@@ -634,19 +634,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TryGetValue<LoadBalancerBackendImpl, ILoadBalancerBackend>(name, backends);
         }
 
-        internal FrontendImpl UpdateInternetFrontend (string name)
+        internal LoadBalancerFrontendImpl UpdateInternetFrontend (string name)
         {
             return UpdateFrontend(name);
         }
 
-        internal FrontendImpl UpdateInternalFrontend (string name)
+        internal LoadBalancerFrontendImpl UpdateInternalFrontend (string name)
         {
             return UpdateFrontend(name);
         }
 
-        private FrontendImpl UpdateFrontend (string name)
+        private LoadBalancerFrontendImpl UpdateFrontend (string name)
         {
-            return TryGetValue<FrontendImpl, IFrontend>(name, frontends);
+            return TryGetValue<LoadBalancerFrontendImpl, ILoadBalancerFrontend>(name, frontends);
         }
 
         private WrapperT TryGetValue<WrapperT, IWrapperT>(string name, IDictionary<string, IWrapperT> dictionary) where WrapperT : IWrapperT
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return tcpProbes;
         }
 
-        internal IDictionary<string, IFrontend> Frontends ()
+        internal IDictionary<string, ILoadBalancerFrontend> Frontends ()
         {
             return frontends;
         }
@@ -721,11 +721,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal List<string> PublicIpAddressIds()
         {
             List<string> publicIpAddressIds = new List<string>();
-            foreach (IFrontend frontend in Frontends().Values)
+            foreach (ILoadBalancerFrontend frontend in Frontends().Values)
             {
                 if (frontend.IsPublic)
                 {
-                    string pipId = ((IPublicFrontend)frontend).PublicIpAddressId;
+                    string pipId = ((ILoadBalancerPublicFrontend)frontend).PublicIpAddressId;
                     publicIpAddressIds.Add(pipId);
                 }
             }
