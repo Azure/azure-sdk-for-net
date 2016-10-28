@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGatewaySku class.
         /// </summary>
-        public VirtualNetworkGatewaySku(string name = default(string), string tier = default(string), int? capacity = default(int?))
+        public VirtualNetworkGatewaySku(string name, string tier, int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
@@ -58,5 +58,19 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Tier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
+            }
+        }
     }
 }

@@ -146,6 +146,20 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "VpnType");
             }
+            if (this.IpConfigurations != null)
+            {
+                foreach (var element in this.IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
         }
     }
 }
