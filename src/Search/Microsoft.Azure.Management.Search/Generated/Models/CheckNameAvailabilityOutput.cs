@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Search.Models
 
     /// <summary>
     /// Output of check name availability API.
-    /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
     /// </summary>
     public partial class CheckNameAvailabilityOutput
     {

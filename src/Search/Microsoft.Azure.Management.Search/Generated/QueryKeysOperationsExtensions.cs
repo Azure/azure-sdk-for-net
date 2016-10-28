@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Generates a new query key for the specified Search service. You can create
             /// up to 50 query keys per service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832690.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Generates a new query key for the specified Search service. You can create
             /// up to 50 query keys per service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832690.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Returns the list of query API keys for the given Azure Search service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832701.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Returns the list of query API keys for the given Azure Search service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832701.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Search
             /// Deletes the specified query key. Unlike admin keys, query keys are not
             /// regenerated. The process for regenerating a query key is to delete and
             /// then recreate it.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832697.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Search
             /// Deletes the specified query key. Unlike admin keys, query keys are not
             /// regenerated. The process for regenerating a query key is to delete and
             /// then recreate it.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832697.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
