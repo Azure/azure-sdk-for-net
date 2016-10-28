@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sql.Tests
 {
-    public class ElasticPoolDatabaseActivityScenarioTests
+    public class ElasticPoolActivityScenarioTests
     {
         [Fact]
         public void TestListElasticPoolDatabaseActivity()
@@ -59,6 +59,41 @@ namespace Sql.Tests
                 Assert.Equal(2, activity.Where(a => a.DatabaseName == dbName).Count());
                 Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
                 Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE").Count());
+            });
+        }
+
+        [Fact]
+        public void TestListElasticPoolActivity()
+        {
+            string testPrefix = "sqlcrudtest-";
+            string testName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestListElasticPoolDatabaseActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            {
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create a elastic pool
+                // 
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Edition = "Basic",
+                    Tags = tags,
+                    Dtu = 100,
+                    DatabaseDtuMax = 5,
+                    DatabaseDtuMin = 0
+                };
+                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+                
+                // Get the Elastic Pool Activity List
+                var activity = sqlClient.ElasticPools.ListActivity(epName, resourceGroup.Name, server.Name);
+
+                Assert.Equal(1, activity.Where(a => a.ElasticPoolName == epName).Count());
+                Assert.Equal(1, activity.Where(a => a.Operation == "CREATE").Count());
             });
         }
     }

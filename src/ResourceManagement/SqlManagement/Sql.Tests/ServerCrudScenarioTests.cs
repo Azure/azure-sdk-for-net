@@ -29,6 +29,7 @@ namespace Sql.Tests
                         { "tagKey1", "TagValue1" }
                     };
 
+                // Create server
                 var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Microsoft.Azure.Management.Sql.Models.Server()
                 {
                     AdministratorLogin = login,
@@ -52,15 +53,18 @@ namespace Sql.Tests
                 });
                 SqlManagementTestUtilities.ValidateServer(v2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
+                // Get first server
                 var getV12Server = sqlClient.Servers.GetByResourceGroup(resourceGroup.Name, serverNameV12);
                 SqlManagementTestUtilities.ValidateServer(getV12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
+                // Get second server
                 var getV2Server = sqlClient.Servers.GetByResourceGroup(resourceGroup.Name, serverNameV2);
                 SqlManagementTestUtilities.ValidateServer(getV2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
                 var listServers = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listServers.Count());
 
+                // Drop server, update count
                 sqlClient.Servers.Delete(resourceGroup.Name, serverNameV12);
 
                 var listServers2 = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);

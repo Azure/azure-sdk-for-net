@@ -12,7 +12,7 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "MSSharedLibKey.snk"
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
   "dependencies": {},

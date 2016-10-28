@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sql.Tests
 {
-    public class FirewallRuleCreateUpdateDrop
+    public class FirewallRuleCrudScenarioTests
     {
         [Fact]
         public void TestGetAndListFirewallRule()

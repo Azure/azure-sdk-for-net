@@ -17,6 +17,212 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabasesOperations
     {
         /// <summary>
+        /// Deletes the Azure SQL Database Replication Link with the given id.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link
+        /// to be dropped.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be deleted.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Returns information about an Azure SQL Database Replication Link.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to get the link for.
+        /// </param>
+        /// <param name='linkId'>
+        /// The replication link id to be retrieved.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ReplicationLink>> GetReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Failover the Azure SQL Database Replication Link with the given id.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link
+        /// to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be failed over.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> FailoverReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Failover the Azure SQL Database Replication Link with the given id.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link
+        /// to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be failed over.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginFailoverReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Force failover the Azure SQL Database Replication Link with the
+        /// given id which may result in data loss.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link
+        /// to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be failed over.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> FailoverReplicationLinkAllowDataLossWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Force failover the Azure SQL Database Replication Link with the
+        /// given id which may result in data loss.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link
+        /// to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be failed over.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginFailoverReplicationLinkAllowDataLossWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Returns information about Azure SQL Database Replication Links.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the resource belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to retrieve links for.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ReplicationLink>>> ListReplicationLinksWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
         /// Pause an Azure SQL Data Warehouse database.
         /// </summary>
         /// <param name='resourceGroupName'>

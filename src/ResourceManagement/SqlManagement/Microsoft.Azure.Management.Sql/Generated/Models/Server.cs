@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="version">The version of the server. Possible values
         /// include: '2.0', '12.0'</param>
         /// <param name="administratorLogin">Administrator username for the
-        /// server. Can only be specified when the server is being
-        /// created.</param>
+        /// server. Can only be specified when the server is being created
+        /// (and is required for creation).</param>
         /// <param name="administratorLoginPassword">The administrator login
-        /// password.</param>
+        /// password (required for server creation).</param>
         public Server(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string fullyQualifiedDomainName = default(string), string version = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string))
             : base(location, name, id, type, tags)
         {
@@ -62,13 +62,15 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets administrator username for the server. Can only be
-        /// specified when the server is being created.
+        /// specified when the server is being created (and is required for
+        /// creation).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
 
         /// <summary>
-        /// Gets or sets the administrator login password.
+        /// Gets or sets the administrator login password (required for server
+        /// creation).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }

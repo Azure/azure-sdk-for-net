@@ -39,9 +39,7 @@ namespace Microsoft.Azure.Management.Sql
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The subscription id that identifies an Azure subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -63,14 +61,14 @@ namespace Microsoft.Azure.Management.Sql
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IDatabasesOperations.
-        /// </summary>
-        public virtual IDatabasesOperations Databases { get; private set; }
-
-        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         public virtual IServersOperations Servers { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabasesOperations.
+        /// </summary>
+        public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
         /// Gets the IElasticPoolsOperations.
@@ -283,8 +281,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         private void Initialize()
         {
-            this.Databases = new DatabasesOperations(this);
             this.Servers = new ServersOperations(this);
+            this.Databases = new DatabasesOperations(this);
             this.ElasticPools = new ElasticPoolsOperations(this);
             this.RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");

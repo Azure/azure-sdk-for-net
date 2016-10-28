@@ -38,9 +38,7 @@ namespace Microsoft.Azure.Management.Sql
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The subscription id that identifies an Azure subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -63,14 +61,14 @@ namespace Microsoft.Azure.Management.Sql
 
 
         /// <summary>
-        /// Gets the IDatabasesOperations.
-        /// </summary>
-        IDatabasesOperations Databases { get; }
-
-        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         IServersOperations Servers { get; }
+
+        /// <summary>
+        /// Gets the IDatabasesOperations.
+        /// </summary>
+        IDatabasesOperations Databases { get; }
 
         /// <summary>
         /// Gets the IElasticPoolsOperations.

@@ -43,6 +43,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// of the Azure SQL Database. This records the start date and time
         /// when recovery is available for this Azure SQL Database (ISO8601
         /// format).</param>
+        /// <param name="createMode">Specifies the type of database to create.
+        /// Possible values include: 'Copy', 'Default',
+        /// 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore',
+        /// 'Recovery', 'Restore'</param>
+        /// <param name="sourceDatabaseId">Conditional.  Specifies the
+        /// resource Id of the source database.  If createMode is not set to
+        /// Default, then this value must be specified.</param>
         /// <param name="edition">The edition of the Azure SQL Database.  The
         /// DatabaseEditions enumeration contains all the valid editions.
         /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
@@ -81,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// encryption info for this database.</param>
         /// <param name="recommendedIndex">The recommended indices for this
         /// database.</param>
-        public Database(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), System.Collections.Generic.IList<ServiceTierAdvisor> serviceTierAdvisors = default(System.Collections.Generic.IList<ServiceTierAdvisor>), UpgradeHint upgradeHint = default(UpgradeHint), System.Collections.Generic.IList<Schema> schemas = default(System.Collections.Generic.IList<Schema>), System.Collections.Generic.IList<TransparentDataEncryption> transparentDataEncryption = default(System.Collections.Generic.IList<TransparentDataEncryption>), System.Collections.Generic.IList<RecommendedIndex> recommendedIndex = default(System.Collections.Generic.IList<RecommendedIndex>))
+        public Database(string location, string name = default(string), string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), System.Collections.Generic.IList<ServiceTierAdvisor> serviceTierAdvisors = default(System.Collections.Generic.IList<ServiceTierAdvisor>), UpgradeHint upgradeHint = default(UpgradeHint), System.Collections.Generic.IList<Schema> schemas = default(System.Collections.Generic.IList<Schema>), System.Collections.Generic.IList<TransparentDataEncryption> transparentDataEncryption = default(System.Collections.Generic.IList<TransparentDataEncryption>), System.Collections.Generic.IList<RecommendedIndex> recommendedIndex = default(System.Collections.Generic.IList<RecommendedIndex>))
             : base(location, name, id, type, tags)
         {
             Collation = collation;
@@ -90,6 +97,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             CurrentServiceObjectiveId = currentServiceObjectiveId;
             DatabaseId = databaseId;
             EarliestRestoreDate = earliestRestoreDate;
+            CreateMode = createMode;
+            SourceDatabaseId = sourceDatabaseId;
             Edition = edition;
             MaxSizeBytes = maxSizeBytes;
             RequestedServiceObjectiveId = requestedServiceObjectiveId;
@@ -144,6 +153,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.earliestRestoreDate")]
         public System.DateTime? EarliestRestoreDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies the type of database to create. Possible
+        /// values include: 'Copy', 'Default', 'NonReadableSecondary',
+        /// 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore'
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets conditional.  Specifies the resource Id of the source
+        /// database.  If createMode is not set to Default, then this value
+        /// must be specified.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sourceDatabaseId")]
+        public string SourceDatabaseId { get; set; }
 
         /// <summary>
         /// Gets or sets the edition of the Azure SQL Database.  The

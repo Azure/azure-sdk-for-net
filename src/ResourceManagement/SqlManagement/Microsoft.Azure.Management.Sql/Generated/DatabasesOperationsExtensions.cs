@@ -18,6 +18,363 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
+            /// Deletes the Azure SQL Database Replication Link with the given id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// dropped.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be deleted.
+            /// </param>
+            public static void DeleteReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).DeleteReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the Azure SQL Database Replication Link with the given id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// dropped.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task DeleteReplicationLinkAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.DeleteReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Returns information about an Azure SQL Database Replication Link.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database to get the link for.
+            /// </param>
+            /// <param name='linkId'>
+            /// The replication link id to be retrieved.
+            /// </param>
+            public static ReplicationLink GetReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).GetReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about an Azure SQL Database Replication Link.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database to get the link for.
+            /// </param>
+            /// <param name='linkId'>
+            /// The replication link id to be retrieved.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ReplicationLink> GetReplicationLinkAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            public static void FailoverReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).FailoverReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task FailoverReplicationLinkAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.FailoverReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            public static void BeginFailoverReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).BeginFailoverReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failover the Azure SQL Database Replication Link with the given id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginFailoverReplicationLinkAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginFailoverReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// which may result in data loss.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            public static void FailoverReplicationLinkAllowDataLoss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).FailoverReplicationLinkAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// which may result in data loss.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task FailoverReplicationLinkAllowDataLossAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.FailoverReplicationLinkAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// which may result in data loss.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            public static void BeginFailoverReplicationLinkAllowDataLoss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).BeginFailoverReplicationLinkAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Force failover the Azure SQL Database Replication Link with the given id
+            /// which may result in data loss.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database that has the replication link to be
+            /// failed over.
+            /// </param>
+            /// <param name='linkId'>
+            /// The id of the replication link to be failed over.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginFailoverReplicationLinkAllowDataLossAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginFailoverReplicationLinkAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Returns information about Azure SQL Database Replication Links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database to retrieve links for.
+            /// </param>
+            public static System.Collections.Generic.IEnumerable<ReplicationLink> ListReplicationLinks(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDatabasesOperations)s).ListReplicationLinksAsync(resourceGroupName, serverName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns information about Azure SQL Database Replication Links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Resource Group to which the resource belongs.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Azure SQL Server
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the Azure SQL Database to retrieve links for.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Collections.Generic.IEnumerable<ReplicationLink>> ListReplicationLinksAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListReplicationLinksWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Pause an Azure SQL Data Warehouse database.
             /// </summary>
             /// <param name='operations'>

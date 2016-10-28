@@ -43,6 +43,7 @@ namespace Sql.Tests
                     RequestedServiceObjectiveName = "Basic",
                     RequestedServiceObjectiveId = Guid.Parse("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"),
                     Tags = tags,
+                    CreateMode = "Default"
                 };
                 var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db2Input);
                 Assert.NotNull(db2);
