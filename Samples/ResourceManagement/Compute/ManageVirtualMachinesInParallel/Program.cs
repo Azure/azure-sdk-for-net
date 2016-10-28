@@ -88,7 +88,6 @@ namespace ManageVirtualMachinesInParallel
                     var startTime = DateTimeOffset.Now.UtcDateTime;
                     Console.WriteLine("Creating the virtual machines");
 
-                    var endTime = DateTimeOffset.Now.UtcDateTime;
                     Console.WriteLine("Created virtual machines");
 
                     var virtualMachines = azure.VirtualMachines.Create(creatableVirtualMachines.ToArray());
@@ -98,8 +97,9 @@ namespace ManageVirtualMachinesInParallel
                         Console.WriteLine(virtualMachine.Id);
                     }
 
-                    Console.WriteLine($"Created VM: took {(endTime - startTime).Seconds} seconds");
-                    Console.ReadLine();
+                    var endTime = DateTimeOffset.Now.UtcDateTime;
+
+                    Console.WriteLine($"Created VM: took {(endTime - startTime).TotalSeconds} seconds");
                 }
                 catch (Exception ex)
                 {
