@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkGatewayConnectionName'>
             /// The virtual network gateway connection shared key name.
             /// </param>
-            public static ConnectionSharedKeyResult GetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
+            public static ConnectionSharedKey GetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).GetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConnectionSharedKeyResult> GetSharedKeyAsync(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionSharedKey> GetSharedKeyAsync(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSharedKeyWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
