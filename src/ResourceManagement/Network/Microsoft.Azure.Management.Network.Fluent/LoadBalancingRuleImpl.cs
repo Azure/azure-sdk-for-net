@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.LoadDistribution;
         }
 
-        internal IFrontend Frontend ()
+        internal ILoadBalancerFrontend Frontend ()
         {
             var frontendRef = Inner.FrontendIPConfiguration;
             if (frontendRef == null)
@@ -65,13 +65,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 string frontendName = ResourceUtils.NameFromResourceId(frontendRef.Id);
-                IFrontend frontend;
+                ILoadBalancerFrontend frontend;
                 Parent.Frontends().TryGetValue(frontendName, out frontend);
                 return frontend;
             }
         }
 
-        internal IBackend Backend ()
+        internal ILoadBalancerBackend Backend ()
         {
             var backendRef = Inner.BackendAddressPool;
             if (backendRef == null)
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
-                IBackend backend;
+                ILoadBalancerBackend backend;
                 Parent.Backends().TryGetValue(backendName, out backend);
                 return backend;
             }

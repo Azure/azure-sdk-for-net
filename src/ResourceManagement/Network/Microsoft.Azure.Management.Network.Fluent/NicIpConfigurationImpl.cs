@@ -385,11 +385,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        internal IList<IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
+        internal IList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
         {
             IList<InboundNatRuleInner> refs = Inner.LoadBalancerInboundNatRules;
             Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
-            List<IInboundNatRule> rules = new List<IInboundNatRule>();
+            List<ILoadBalancerInboundNatRule> rules = new List<ILoadBalancerInboundNatRule>();
 
             if (refs != null)
             {
@@ -411,11 +411,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return rules;
         }
 
-        internal IList<IBackend> ListAssociatedLoadBalancerBackends()
+        internal IList<ILoadBalancerBackend> ListAssociatedLoadBalancerBackends()
         {
             var backendRefs = Inner.LoadBalancerBackendAddressPools;
             var loadBalancers = new Dictionary<string, ILoadBalancer>();
-            var backends = new List<IBackend>();
+            var backends = new List<ILoadBalancerBackend>();
 
             if (backendRefs != null)
             {
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
                     string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
 
-                    IBackend backend;
+                    ILoadBalancerBackend backend;
                     if (loadBalancer.Backends.TryGetValue(backendName, out backend))
                         backends.Add(backend);
                 }

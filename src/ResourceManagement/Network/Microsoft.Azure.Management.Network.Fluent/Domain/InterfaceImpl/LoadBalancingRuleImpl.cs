@@ -89,11 +89,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the associated frontend</returns>
-        Microsoft.Azure.Management.Network.Fluent.IFrontend Microsoft.Azure.Management.Network.Fluent.IHasFrontend.Frontend
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend Microsoft.Azure.Management.Network.Fluent.IHasFrontend.Frontend
         {
             get
             { 
-            return this.Frontend() as Microsoft.Azure.Management.Network.Fluent.IFrontend;
+            return this.Frontend() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend;
             }
         }
         /// <summary>
@@ -207,11 +207,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the backend associated with the load balancing rule</returns>
-        Microsoft.Azure.Management.Network.Fluent.IBackend Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule.Backend
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule.Backend
         {
             get
             { 
-            return this.Backend() as Microsoft.Azure.Management.Network.Fluent.IBackend;
+            return this.Backend() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend;
             }
         }
         /// <returns>the method of load distribution</returns>

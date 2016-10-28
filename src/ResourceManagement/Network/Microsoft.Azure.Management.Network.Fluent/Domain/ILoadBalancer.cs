@@ -22,22 +22,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IList<string> PublicIpAddressIds { get; }
 
         /// <returns>TCP probes of this load balancer, indexed by the name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ITcpProbe> TcpProbes { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerTcpProbe> TcpProbes { get; }
 
         /// <returns>HTTP probes of this load balancer, indexed by the name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IHttpProbe> HttpProbes { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerHttpProbe> HttpProbes { get; }
 
         /// <returns>backends for this load balancer to load balance the incoming traffic among, indexed by name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend> Backends { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Backends { get; }
 
         /// <returns>inbound NAT rules for this balancer</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> InboundNatRules { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> InboundNatRules { get; }
 
         /// <returns>frontends for this load balancer, for the incoming traffic to come from.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IFrontend> Frontends { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend> Frontends { get; }
 
         /// <returns>inbound NAT pools, indexed by name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> InboundNatPools { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> InboundNatPools { get; }
 
     }
 }

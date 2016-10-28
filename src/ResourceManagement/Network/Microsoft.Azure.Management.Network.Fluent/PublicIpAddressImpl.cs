@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return EqualsResourceType("frontendIPConfigurations");
         }
 
-        internal IPublicFrontend GetAssignedLoadBalancerFrontend()
+        internal ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend()
         {
 
             if (this.HasAssignedLoadBalancer() == true)
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(refId);
                 ILoadBalancer lb = this.Manager.LoadBalancers.GetById(loadBalancerId);
                 string frontendName = ResourceUtils.NameFromResourceId(refId);
-                return (IPublicFrontend)lb.Frontends[frontendName];
+                return (ILoadBalancerPublicFrontend)lb.Frontends[frontendName];
             }
             else
             {

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         int IdleTimeoutInMinutes { get; }
 
         /// <returns>the load balancer public frontend that this public IP address is assigned to</returns>
-        Microsoft.Azure.Management.Network.Fluent.IPublicFrontend GetAssignedLoadBalancerFrontend();
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend();
 
         /// <returns>true if this public IP address is assigned to a load balancer</returns>
         bool HasAssignedLoadBalancer { get; }

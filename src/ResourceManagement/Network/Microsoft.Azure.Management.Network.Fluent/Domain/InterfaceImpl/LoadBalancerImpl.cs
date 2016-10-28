@@ -85,8 +85,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool</param>
         /// <returns>the first stage of the new inbound NAT pool definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithInboundNatPool.DefineInboundNatPool(string name) { 
-            return this.DefineInboundNatPool( name) as Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>;
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithInboundNatPool.DefineInboundNatPool(string name) { 
+            return this.DefineInboundNatPool( name) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>;
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool</param>
         /// <returns>the first stage of the new inbound NAT pool definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatPool.DefineInboundNatPool(string name) { 
-            return this.DefineInboundNatPool( name) as Microsoft.Azure.Management.Network.Fluent.InboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatPool.DefineInboundNatPool(string name) { 
+            return this.DefineInboundNatPool( name) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool to update</param>
         /// <returns>the first stage of the inbound NAT pool update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatPool.UpdateInboundNatPool(string name) { 
-            return this.UpdateInboundNatPool( name) as Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatPool.UpdateInboundNatPool(string name) { 
+            return this.UpdateInboundNatPool( name) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate;
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.DefinePrivateFrontend(string name) { 
-            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.DefinePrivateFrontend(string name) { 
+            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of an existing frontend from this load balancer</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.UpdateInternalFrontend(string name) { 
-            return this.UpdateInternalFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternalFrontend.UpdateInternalFrontend(string name) { 
+            return this.UpdateInternalFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -191,8 +191,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the inbound NAT rule</param>
         /// <returns>the first stage of the new inbound NAT rule definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithInboundNatRule.DefineInboundNatRule(string name) { 
-            return this.DefineInboundNatRule( name) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithInboundNatRule.DefineInboundNatRule(string name) { 
+            return this.DefineInboundNatRule( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -202,8 +202,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the inbound NAT rule</param>
         /// <returns>the first stage of the new inbound NAT rule definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatRule.DefineInboundNatRule(string name) { 
-            return this.DefineInboundNatRule( name) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatRule.DefineInboundNatRule(string name) { 
+            return this.DefineInboundNatRule( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -211,8 +211,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the inbound NAT rule to update</param>
         /// <returns>the first stage of the inbound NAT rule update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatRule.UpdateInboundNatRule(string name) { 
-            return this.UpdateInboundNatRule( name) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInboundNatRule.UpdateInboundNatRule(string name) { 
+            return this.UpdateInboundNatRule( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -251,8 +251,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name) { 
-            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name) { 
+            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the frontend to update</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.UpdateInternetFrontend(string name) { 
-            return this.UpdateInternetFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.UpdateInternetFrontend(string name) { 
+            return this.UpdateInternetFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.DefinePublicFrontend(string name) { 
-            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithInternetFrontend.DefinePublicFrontend(string name) { 
+            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -284,8 +284,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this.WithoutFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate;
         }
 
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name) { 
-            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name) { 
+            return this.DefinePrivateFrontend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
         }
 
         /// <summary>
@@ -295,8 +295,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineTcpProbe(string name) { 
-            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineTcpProbe(string name) { 
+            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -317,8 +317,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineHttpProbe(string name) { 
-            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe.DefineHttpProbe(string name) { 
+            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
         }
 
         /// <summary>
@@ -339,8 +339,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineTcpProbe(string name) { 
-            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineTcpProbe(string name) { 
+            return this.DefineTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -348,8 +348,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateHttpProbe(string name) { 
-            return this.UpdateHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateHttpProbe(string name) { 
+            return this.UpdateHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -379,8 +379,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineHttpProbe(string name) { 
-            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.DefineHttpProbe(string name) { 
+            return this.DefineHttpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -388,8 +388,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateTcpProbe(string name) { 
-            return this.UpdateTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithProbe.UpdateTcpProbe(string name) { 
+            return this.UpdateTcpProbe( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IUpdate;
         }
 
         /// <summary>
@@ -494,19 +494,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>inbound NAT pools, indexed by name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.InboundNatPools
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.InboundNatPools
         {
             get
             { 
-            return this.InboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatPool>;
+            return this.InboundNatPools() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
             }
         }
         /// <returns>HTTP probes of this load balancer, indexed by the name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IHttpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.HttpProbes
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerHttpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.HttpProbes
         {
             get
             { 
-            return this.HttpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IHttpProbe>;
+            return this.HttpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerHttpProbe>;
             }
         }
         /// <returns>resource IDs of the public IP addresses assigned to the frontends of this load balancer</returns>
@@ -518,35 +518,35 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>frontends for this load balancer, for the incoming traffic to come from.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.Frontends
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.Frontends
         {
             get
             { 
-            return this.Frontends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IFrontend>;
+            return this.Frontends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend>;
             }
         }
         /// <returns>backends for this load balancer to load balance the incoming traffic among, indexed by name</returns>
-        IDictionary<string, IBackend> ILoadBalancer.Backends
+        IDictionary<string, ILoadBalancerBackend> ILoadBalancer.Backends
         {
             get
             { 
-            return this.Backends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend>;
+            return this.Backends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
             }
         }
         /// <returns>TCP probes of this load balancer, indexed by the name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ITcpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.TcpProbes
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerTcpProbe> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.TcpProbes
         {
             get
             { 
-            return this.TcpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ITcpProbe>;
+            return this.TcpProbes() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerTcpProbe>;
             }
         }
         /// <returns>inbound NAT rules for this balancer</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.InboundNatRules
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.InboundNatRules
         {
             get
             { 
-            return this.InboundNatRules() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule>;
+            return this.InboundNatRules() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
             }
         }
         /// <returns>the associated load balancing rules from this load balancer, indexed by their names</returns>
@@ -562,8 +562,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name to assign to the backend</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackend.DefineBackend(string name) { 
-            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.Backend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackend.DefineBackend(string name) { 
+            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe>;
         }
 
         /// <summary>
@@ -571,8 +571,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the new backend</param>
         /// <returns>the first stage of the backend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.DefineBackend(string name) { 
-            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.DefineBackend(string name) { 
+            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -589,8 +589,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the backend to update</param>
         /// <returns>the first stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.UpdateBackend(string name) { 
-            return this.UpdateBackend( name) as Microsoft.Azure.Management.Network.Fluent.Backend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.UpdateBackend(string name) { 
+            return this.UpdateBackend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update.IUpdate;
         }
 
         /// <summary>
