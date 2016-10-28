@@ -319,9 +319,9 @@ namespace Fluent.Tests.Compute
 
             Assert.Equal(loadBalancer.PublicIpAddressIds.Count(), 0);
             Assert.Equal(loadBalancer.Backends.Count(), 2);
-            IBackend backend1 = null;
+            ILoadBalancerBackend backend1 = null;
             Assert.True(loadBalancer.Backends.TryGetValue(backendPoolName1, out backend1));
-            IBackend backend2 = null;
+            ILoadBalancerBackend backend2 = null;
             Assert.True(loadBalancer.Backends.TryGetValue(backendPoolName2, out backend2));
             IHttpProbe httpProbe = null;
             Assert.True(loadBalancer.HttpProbes.TryGetValue("httpProbe", out httpProbe));

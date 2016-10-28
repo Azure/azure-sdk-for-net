@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IHttpProbe> HttpProbes { get; }
 
         /// <returns>backends for this load balancer to load balance the incoming traffic among, indexed by name</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend> Backends { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Backends { get; }
 
         /// <returns>inbound NAT rules for this balancer</returns>
         System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> InboundNatRules { get; }

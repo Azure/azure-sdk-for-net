@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.Update;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Update;
@@ -157,14 +157,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the new backend</param>
         /// <returns>the first stage of the backend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineBackend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineBackend(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing backend of this load balancer.
         /// </summary>
         /// <param name="name">name the name of the backend to update</param>
         /// <returns>the first stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Update.IUpdate UpdateBackend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update.IUpdate UpdateBackend(string name);
 
     }
     /// <summary>

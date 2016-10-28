@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition;
     using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition;
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name to assign to the backend</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> DefineBackend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> DefineBackend(string name);
 
     }
     /// <summary>

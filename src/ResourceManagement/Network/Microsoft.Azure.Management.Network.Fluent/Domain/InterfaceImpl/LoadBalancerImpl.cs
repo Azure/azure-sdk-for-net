@@ -526,11 +526,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>backends for this load balancer to load balance the incoming traffic among, indexed by name</returns>
-        IDictionary<string, IBackend> ILoadBalancer.Backends
+        IDictionary<string, ILoadBalancerBackend> ILoadBalancer.Backends
         {
             get
             { 
-            return this.Backends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend>;
+            return this.Backends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
             }
         }
         /// <returns>TCP probes of this load balancer, indexed by the name</returns>
@@ -562,8 +562,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name to assign to the backend</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackend.DefineBackend(string name) { 
-            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.Backend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackend.DefineBackend(string name) { 
+            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe>;
         }
 
         /// <summary>
@@ -571,8 +571,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the new backend</param>
         /// <returns>the first stage of the backend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.DefineBackend(string name) { 
-            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.DefineBackend(string name) { 
+            return this.DefineBackend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -589,8 +589,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name of the backend to update</param>
         /// <returns>the first stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.UpdateBackend(string name) { 
-            return this.UpdateBackend( name) as Microsoft.Azure.Management.Network.Fluent.Backend.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IWithBackend.UpdateBackend(string name) { 
+            return this.UpdateBackend( name) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update.IUpdate;
         }
 
         /// <summary>

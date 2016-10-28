@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string PrivateIpAddressVersion { get; }
 
         /// <returns>the load balancer backends associated with this network interface IP configuration</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.IBackend> ListAssociatedLoadBalancerBackends();
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListAssociatedLoadBalancerBackends();
 
         /// <returns>the load balancer inbound NAT rules associated with this network interface IP configuration</returns>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();

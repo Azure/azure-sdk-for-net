@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal IBackend Backend ()
+        internal ILoadBalancerBackend Backend ()
         {
             var backendRef = Inner.BackendAddressPool;
             if (backendRef == null)
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
-                IBackend backend;
+                ILoadBalancerBackend backend;
                 Parent.Backends().TryGetValue(backendName, out backend);
                 return backend;
             }

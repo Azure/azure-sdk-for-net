@@ -551,8 +551,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <returns>the internet-facing load balancer's backends associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends() { 
-            return this.ListPrimaryInternetFacingLoadBalancerBackends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend>;
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends() { 
+            return this.ListPrimaryInternetFacingLoadBalancerBackends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
         /// <returns>the internal load balancer associated with the primary network interface of</returns>
@@ -578,8 +578,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <returns>the internal load balancer's backends associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends() { 
-            return this.ListPrimaryInternalLoadBalancerBackends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IBackend>;
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends() { 
+            return this.ListPrimaryInternalLoadBalancerBackends() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
         /// <returns>the SKU of the virtual machines in the scale set</returns>

@@ -200,14 +200,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.primaryVirtualNetwork;
         }
 
-        public IDictionary<string, IBackend> ListPrimaryInternalLoadBalancerBackends()
+        public IDictionary<string, ILoadBalancerBackend> ListPrimaryInternalLoadBalancerBackends()
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
                 return getBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
                         primaryNicDefaultIPConfiguration());
             }
-            return new Dictionary<string, IBackend>();
+            return new Dictionary<string, ILoadBalancerBackend>();
         }
 
         public IDictionary<string, IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
@@ -220,14 +220,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new Dictionary<string, IInboundNatPool>();
         }
 
-        public IDictionary<string, IBackend> ListPrimaryInternetFacingLoadBalancerBackends()
+        public IDictionary<string, ILoadBalancerBackend> ListPrimaryInternetFacingLoadBalancerBackends()
         {
             if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
                 return getBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         primaryNicDefaultIPConfiguration());
             }
-            return new Dictionary<string, IBackend>();
+            return new Dictionary<string, ILoadBalancerBackend>();
         }
 
         public IDictionary<string, IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
@@ -1352,13 +1352,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        private static IDictionary<string, IBackend> getBackendsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
+        private static IDictionary<string, ILoadBalancerBackend> getBackendsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
                                                                                      VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             string loadBalancerId = loadBalancer.Id;
-            IDictionary<string, IBackend> attachedBackends = new Dictionary<string, IBackend>();
-            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends;
-            foreach (IBackend lbBackend in lbBackends.Values)
+            IDictionary<string, ILoadBalancerBackend> attachedBackends = new Dictionary<string, ILoadBalancerBackend>();
+            IDictionary<string, ILoadBalancerBackend> lbBackends = loadBalancer.Backends;
+            foreach (ILoadBalancerBackend lbBackend in lbBackends.Values)
             {
                 string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
                 foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
@@ -1399,7 +1399,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
             string[] backendNames = new string[backends.Count];
             int i = 0;
-            foreach (IBackend backend in backends)
+            foreach (ILoadBalancerBackend backend in backends)
             {
                 backendNames[i] = backend.Name;
                 i++;

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
 
         // Children
-        private IDictionary<string, IBackend> backends;
+        private IDictionary<string, ILoadBalancerBackend> backends;
         private IDictionary<string, ITcpProbe> tcpProbes;
         private IDictionary<string, IHttpProbe> httpProbes;
         private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.Probes = InnersFromWrappers(tcpProbes.Values, Inner.Probes);
 
             // Reset and update backends
-            Inner.BackendAddressPools = InnersFromWrappers<BackendAddressPoolInner, IBackend>(backends.Values);
+            Inner.BackendAddressPools = InnersFromWrappers<BackendAddressPoolInner, ILoadBalancerBackend>(backends.Values);
 
             // Reset and update frontends
             Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, IFrontend>(frontends.Values);
@@ -196,13 +196,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         private void InitializeBackendsFromInner ()
         {
-            backends = new SortedDictionary<string, IBackend>();
+            backends = new SortedDictionary<string, ILoadBalancerBackend>();
             IList<BackendAddressPoolInner> backendsInner = this.Inner.BackendAddressPools;
             if (backendsInner != null)
             {
                 foreach (var backendInner in backendsInner)
                 {
-                    var backend = new BackendImpl(backendInner, this);
+                    var backend = new LoadBalancerBackendImpl(backendInner, this);
                     backends.Add(backendInner.Name, backend);
                 }
             }
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal LoadBalancerImpl WithBackend (BackendImpl backend)
+        internal LoadBalancerImpl WithBackend (LoadBalancerBackendImpl backend)
         {
             if (backend == null)
                 return null;
@@ -569,9 +569,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal BackendImpl DefineBackend (string name)
+        internal LoadBalancerBackendImpl DefineBackend (string name)
         {
-            IBackend backend;
+            ILoadBalancerBackend backend;
             if (!backends.TryGetValue(name, out backend))
             {
                 BackendAddressPoolInner inner = new BackendAddressPoolInner()
@@ -579,11 +579,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Name = name
                 };
 
-                return new BackendImpl(inner, this);
+                return new LoadBalancerBackendImpl(inner, this);
             }
             else
             {
-                return (BackendImpl) backend;
+                return (LoadBalancerBackendImpl) backend;
             }
         }
 
@@ -629,9 +629,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TryGetValue<ProbeImpl, ITcpProbe>(name, tcpProbes);
         }
 
-        internal BackendImpl UpdateBackend (string name)
+        internal LoadBalancerBackendImpl UpdateBackend (string name)
         {
-            return TryGetValue<BackendImpl, IBackend>(name, backends);
+            return TryGetValue<LoadBalancerBackendImpl, ILoadBalancerBackend>(name, backends);
         }
 
         internal FrontendImpl UpdateInternetFrontend (string name)
@@ -683,7 +683,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TryGetValue<LoadBalancingRuleImpl, ILoadBalancingRule>(name, loadBalancingRules);
         }
 
-        internal IDictionary<string, IBackend> Backends ()
+        internal IDictionary<string, ILoadBalancerBackend> Backends ()
         {
             return backends;
         }
