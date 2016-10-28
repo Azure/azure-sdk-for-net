@@ -382,6 +382,11 @@ namespace DataLakeStore.Tests
                         new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)));
 
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
+
+                    // flush the stream and then compare length
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.Flush(commonData.DataLakeStoreFileSystemAccountName, filePath);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAppend.Length);
+
                 }
             }
         }
@@ -402,6 +407,10 @@ namespace DataLakeStore.Tests
                         new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)), AppendModeType.Autocreate);
 
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
+
+                    // flush the stream and then compare length
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.Flush(commonData.DataLakeStoreFileSystemAccountName, filePath);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAppend.Length);
                 }
             }
         }
@@ -858,7 +867,8 @@ namespace DataLakeStore.Tests
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+                    // this is plus two because we do not have a mask until we add a specific user. Adding the specific user also adds the mask.
+                    Assert.Equal(currentCount + 2, aclGetResponse.AclStatus.Entries.Count);
                     Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
                 }
             }
@@ -895,7 +905,9 @@ namespace DataLakeStore.Tests
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+
+                    // Mask gets created as part of adding the user.
+                    Assert.Equal(currentCount + 2, aclGetResponse.AclStatus.Entries.Count);
                     Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
 
                     // now remove the entry
@@ -912,7 +924,9 @@ namespace DataLakeStore.Tests
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount, aclGetResponse.AclStatus.Entries.Count);
+                    
+                    // Mask does not get removed when the user is removed.
+                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
                     Assert.False(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
                 }
             }
@@ -968,11 +982,17 @@ namespace DataLakeStore.Tests
         internal void CompareFileContents(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string filePath, string expectedContents)
         {
             // download a file and ensure they are equal
-            Stream openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(caboAccountName, filePath, null);
-            Assert.NotNull(openResponse);
-            
-            string toCompare = new StreamReader(openResponse).ReadToEnd();
-            Assert.Equal(expectedContents, toCompare);
+            try
+            {
+                Stream openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(caboAccountName, filePath, null);
+                Assert.NotNull(openResponse);
+                string toCompare = new StreamReader(openResponse).ReadToEnd();
+                Assert.Equal(expectedContents, toCompare);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         internal void DeleteFolder(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string folderPath, bool recursive, bool failureExpected)

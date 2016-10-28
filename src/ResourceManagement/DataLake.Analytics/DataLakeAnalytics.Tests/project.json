@@ -7,7 +7,8 @@
     "summary": "DataLakeAnalytics.Tests Tests.",
     "tags": [ "" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
-    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "releaseNotes": "This release includes a change to how catalog credential management works, which also includes a removal of some of the read only properties that were part of the USqlCredential object (DatabaseName)."
   },
 
   "buildOptions": {
