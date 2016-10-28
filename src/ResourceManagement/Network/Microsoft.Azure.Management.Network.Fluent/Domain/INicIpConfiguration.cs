@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListAssociatedLoadBalancerBackends();
 
         /// <returns>the load balancer inbound NAT rules associated with this network interface IP configuration</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
 
     }
 }

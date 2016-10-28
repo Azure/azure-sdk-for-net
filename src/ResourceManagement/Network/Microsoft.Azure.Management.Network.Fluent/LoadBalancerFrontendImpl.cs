@@ -110,15 +110,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return pools;
         }
 
-        internal IDictionary<string, IInboundNatRule> InboundNatRules ()
+        internal IDictionary<string, ILoadBalancerInboundNatRule> InboundNatRules ()
         {
-            IDictionary<string, IInboundNatRule> rules = new SortedDictionary<string, IInboundNatRule>();
+            IDictionary<string, ILoadBalancerInboundNatRule> rules = new SortedDictionary<string, ILoadBalancerInboundNatRule>();
             if (Inner.InboundNatRules != null)
             {
                 foreach (var innerRef in Inner.InboundNatRules)
                 {
                     string name = ResourceUtils.NameFromResourceId(innerRef.Id);
-                    IInboundNatRule rule;
+                    ILoadBalancerInboundNatRule rule;
                     if (Parent.InboundNatRules().TryGetValue(name, out rule))
                     {
                         rules[name] = rule;

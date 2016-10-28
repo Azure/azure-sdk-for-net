@@ -240,8 +240,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the load balancer inbound NAT rules associated with this network interface IP configuration</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.ListAssociatedLoadBalancerInboundNatRules() { 
-            return this.ListAssociatedLoadBalancerInboundNatRules() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.IInboundNatRule>;
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.ListAssociatedLoadBalancerInboundNatRules() { 
+            return this.ListAssociatedLoadBalancerInboundNatRules() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
         }
 
         /// <returns>the load balancer backends associated with this network interface IP configuration</returns>

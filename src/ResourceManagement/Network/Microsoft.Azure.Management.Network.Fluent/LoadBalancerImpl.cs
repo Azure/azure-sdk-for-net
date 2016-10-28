@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, ILoadBalancerHttpProbe> httpProbes;
         private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
         private IDictionary<string, ILoadBalancerFrontend> frontends;
-        private IDictionary<string, IInboundNatRule> inboundNatRules;
+        private IDictionary<string, ILoadBalancerInboundNatRule> inboundNatRules;
         private IDictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
 
         internal  LoadBalancerImpl (
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
 
             // Reset and update inbound NAT rules
-            Inner.InboundNatRules = InnersFromWrappers<InboundNatRuleInner, IInboundNatRule>(inboundNatRules.Values);
+            Inner.InboundNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values);
             foreach (var natRule in inboundNatRules.Values) {
                 // Clear deleted frontend references
                 var frontendRef = natRule.Inner.FrontendIPConfiguration;
@@ -256,10 +256,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         private void InitializeInboundNatRulesFromInner ()
         {
-            inboundNatRules = new SortedDictionary<string, IInboundNatRule>();
+            inboundNatRules = new SortedDictionary<string, ILoadBalancerInboundNatRule>();
             if (Inner.InboundNatRules != null) {
                 foreach (var inner in Inner.InboundNatRules) {
-                    var rule = new InboundNatRuleImpl(inner, this);
+                    var rule = new LoadBalancerInboundNatRuleImpl(inner, this);
                     inboundNatRules.Add(inner.Name, rule);
                 }
             }
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal LoadBalancerImpl WithInboundNatRule (InboundNatRuleImpl inboundNatRule)
+        internal LoadBalancerImpl WithInboundNatRule (LoadBalancerInboundNatRuleImpl inboundNatRule)
         {
             if (inboundNatRule == null)
                 return null;
@@ -505,9 +505,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal InboundNatRuleImpl DefineInboundNatRule (string name)
+        internal LoadBalancerInboundNatRuleImpl DefineInboundNatRule (string name)
         {
-            IInboundNatRule natRule;
+            ILoadBalancerInboundNatRule natRule;
             if (!inboundNatRules.TryGetValue(name, out natRule))
             {
                 InboundNatRuleInner inner = new InboundNatRuleInner()
@@ -515,11 +515,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     Name = name
                 };
 
-                return new InboundNatRuleImpl(inner, this);
+                return new LoadBalancerInboundNatRuleImpl(inner, this);
             }
             else
             {
-                return (InboundNatRuleImpl) natRule;
+                return (LoadBalancerInboundNatRuleImpl) natRule;
             }
         }
 
@@ -663,9 +663,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        internal InboundNatRuleImpl UpdateInboundNatRule (string name)
+        internal LoadBalancerInboundNatRuleImpl UpdateInboundNatRule (string name)
         {
-            return TryGetValue<InboundNatRuleImpl, IInboundNatRule>(name, inboundNatRules);
+            return TryGetValue<LoadBalancerInboundNatRuleImpl, ILoadBalancerInboundNatRule>(name, inboundNatRules);
         }
 
         internal LoadBalancerInboundNatPoolImpl UpdateInboundNatPool (string name)
@@ -703,7 +703,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return frontends;
         }
 
-        internal IDictionary<string, IInboundNatRule> InboundNatRules ()
+        internal IDictionary<string, ILoadBalancerInboundNatRule> InboundNatRules ()
         {
             return inboundNatRules;
         }

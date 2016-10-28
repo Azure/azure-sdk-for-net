@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition
 {
 
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<ParentT> WithFrontendPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<ParentT> WithFrontendPort(int port);
 
     }
     /// <summary>
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// </summary>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<ParentT>,
         IWithFrontendPort<ParentT>,
         IWithAttach<ParentT>
     {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
         /// </summary>
         /// <param name="minutes">minutes a number of minutes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<ParentT> WithIdleTimeoutInMinutes(int minutes);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<ParentT> WithIdleTimeoutInMinutes(int minutes);
 
     }
     /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontendPort<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontendPort<ParentT>>
     {
     }
     /// <summary>
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithBackendPort<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithBackendPort<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFloatingIp<ParentT>,
         IWithIdleTimeout<ParentT>
     {
     }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontend<ParentT>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<ParentT>,string>
     {
     }
     /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<ParentT>>
     {
     }
 }

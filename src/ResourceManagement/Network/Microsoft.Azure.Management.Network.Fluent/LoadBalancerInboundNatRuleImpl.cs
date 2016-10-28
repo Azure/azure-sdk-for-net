@@ -3,23 +3,22 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
-    using Management.Network.Fluent.Models;
+    using Models;
     using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
-    using Rest.Azure;
 
     /// <summary>
     /// Implementation for IInboundNatRule.
     /// </summary>
-    public partial class InboundNatRuleImpl  :
+    public partial class LoadBalancerInboundNatRuleImpl  :
         ChildResource<InboundNatRuleInner, LoadBalancerImpl, ILoadBalancer>,
-        IInboundNatRule,
-        InboundNatRule.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
-        InboundNatRule.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        InboundNatRule.Update.IUpdate
+        ILoadBalancerInboundNatRule,
+        LoadBalancerInboundNatRule.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
+        LoadBalancerInboundNatRule.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancerInboundNatRule.Update.IUpdate
     {
-        internal InboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 
+        internal LoadBalancerInboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 
             : base(inner, parent)
         {
         }
@@ -82,29 +81,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
         }
 
-        internal InboundNatRuleImpl WithBackendPort (int port)
+        internal LoadBalancerInboundNatRuleImpl WithBackendPort (int port)
         {
             Inner.BackendPort = port;
             return this;
         }
 
-        internal InboundNatRuleImpl WithFloatingIpEnabled ()
+        internal LoadBalancerInboundNatRuleImpl WithFloatingIpEnabled ()
         {
             return WithFloatingIp(true);
         }
 
-        internal InboundNatRuleImpl WithFloatingIpDisabled ()
+        internal LoadBalancerInboundNatRuleImpl WithFloatingIpDisabled ()
         {
             return WithFloatingIp(false);
         }
 
-        internal InboundNatRuleImpl WithFloatingIp (bool enabled)
+        internal LoadBalancerInboundNatRuleImpl WithFloatingIp (bool enabled)
         {
             Inner.EnableFloatingIP = enabled;
             return this;
         }
 
-        internal InboundNatRuleImpl WithFrontendPort (int port)
+        internal LoadBalancerInboundNatRuleImpl WithFrontendPort (int port)
         {
             Inner.FrontendPort = port;
 
@@ -112,19 +111,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (BackendPort() == 0) ? WithBackendPort(port) : this;
         }
 
-        internal InboundNatRuleImpl WithIdleTimeoutInMinutes (int minutes)
+        internal LoadBalancerInboundNatRuleImpl WithIdleTimeoutInMinutes (int minutes)
         {
             Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
-        internal InboundNatRuleImpl WithProtocol (string protocol)
+        internal LoadBalancerInboundNatRuleImpl WithProtocol (string protocol)
         {
             Inner.Protocol = protocol;
             return this;
         }
 
-        internal InboundNatRuleImpl WithFrontend (string frontendName)
+        internal LoadBalancerInboundNatRuleImpl WithFrontend (string frontendName)
         {
             string frontendId = Parent.FutureResourceId() + "/frontendIPConfigurations/" + frontendName;
             SubResource frontendRef = new SubResource(frontendId);

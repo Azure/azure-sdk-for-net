@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition;
@@ -235,14 +235,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the inbound NAT rule</param>
         /// <returns>the first stage of the new inbound NAT rule definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineInboundNatRule(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineInboundNatRule(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing inbound NAT rule.
         /// </summary>
         /// <param name="name">name the name of the inbound NAT rule to update</param>
         /// <returns>the first stage of the inbound NAT rule update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate UpdateInboundNatRule(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate UpdateInboundNatRule(string name);
 
     }
     /// <summary>

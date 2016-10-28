@@ -98,11 +98,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the inbound NAT rules on this load balancer that use this frontend, indexed by their names</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatRules
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend.InboundNatRules
         {
             get
             { 
-            return this.InboundNatRules() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.IInboundNatRule>;
+            return this.InboundNatRules() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
             }
         }
         /// <summary>

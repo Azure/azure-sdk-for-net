@@ -385,11 +385,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        internal IList<IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
+        internal IList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
         {
             IList<InboundNatRuleInner> refs = Inner.LoadBalancerInboundNatRules;
             Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
-            List<IInboundNatRule> rules = new List<IInboundNatRule>();
+            List<ILoadBalancerInboundNatRule> rules = new List<ILoadBalancerInboundNatRule>();
 
             if (refs != null)
             {
