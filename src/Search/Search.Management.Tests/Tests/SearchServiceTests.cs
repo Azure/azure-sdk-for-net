@@ -197,7 +197,12 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 CloudException e =
                     Assert.Throws<CloudException>(() => searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, InvalidServiceName, service));
-                Assert.Equal("Service name '----badname' is invalid: Service name must only contain lowercase letters, digits or dashes, cannot start or end with or contain consecutive dashes and is limited to 60 characters.", e.Message);
+
+                string expectedMessage = 
+                    $"Service name '{InvalidServiceName}' is invalid: Service name must only contain lowercase letters, digits or dashes, cannot " +
+                    "start or end with or contain consecutive dashes and is limited to 60 characters.";
+
+                Assert.Equal(expectedMessage, e.Message);
             });
         }
 
