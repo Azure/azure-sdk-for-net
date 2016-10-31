@@ -29,6 +29,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// </summary>
     public partial class UpdateGatewayConnectionParameters
     {
+        private bool _enableBgp;
+        
+        /// <summary>
+        /// Optional. Whether to establish a BGP session over this connection
+        /// </summary>
+        public bool EnableBgp
+        {
+            get { return this._enableBgp; }
+            set { this._enableBgp = value; }
+        }
+        
         private int _routingWeight;
         
         /// <summary>

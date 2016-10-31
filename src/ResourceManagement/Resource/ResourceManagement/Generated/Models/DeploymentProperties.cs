@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentProperties
     {
+        private DeploymentDebugSetting _debugSetting;
+        
+        /// <summary>
+        /// Optional. Gets or sets the deployment debug setting.
+        /// </summary>
+        public DeploymentDebugSetting DebugSetting
+        {
+            get { return this._debugSetting; }
+            set { this._debugSetting = value; }
+        }
+        
         private DeploymentMode _mode;
         
         /// <summary>

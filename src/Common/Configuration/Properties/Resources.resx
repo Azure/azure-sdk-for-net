@@ -120,4 +120,7 @@
   <data name="ErrorArgumentEmptyString" xml:space="preserve">
     <value>Argument "{0}" cannot be an empty string.</value>
   </data>
+  <data name="ErrorSettingNotFoundInRuntimeString" xml:space="preserve">
+    <value>Setting: "{0}" was not found in the ServiceRuntime.</value>
+  </data>
 </root>

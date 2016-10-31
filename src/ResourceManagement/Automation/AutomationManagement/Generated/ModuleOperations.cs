@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -377,6 +377,27 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken errorValue = propertiesValue2["error"];
+                                if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                {
+                                    ModuleErrorInfo errorInstance = new ModuleErrorInfo();
+                                    propertiesInstance.Error = errorInstance;
+                                    
+                                    JToken codeValue = errorValue["code"];
+                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                    {
+                                        string codeInstance = ((string)codeValue);
+                                        errorInstance.Code = codeInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorInstance.Message = messageInstance;
+                                    }
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -545,7 +566,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/modules/";
             url = url + Uri.EscapeDataString(moduleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -706,7 +727,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/modules/";
             url = url + Uri.EscapeDataString(moduleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -868,6 +889,27 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken errorValue = propertiesValue["error"];
+                                if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                {
+                                    ModuleErrorInfo errorInstance = new ModuleErrorInfo();
+                                    propertiesInstance.Error = errorInstance;
+                                    
+                                    JToken codeValue = errorValue["code"];
+                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                    {
+                                        string codeInstance = ((string)codeValue);
+                                        errorInstance.Code = codeInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorInstance.Message = messageInstance;
+                                    }
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -1026,7 +1068,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/modules";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1191,6 +1233,27 @@ namespace Microsoft.Azure.Management.Automation
                                             {
                                                 string versionInstance2 = ((string)versionValue2);
                                                 contentLinkInstance.Version = versionInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken errorValue = propertiesValue["error"];
+                                        if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                        {
+                                            ModuleErrorInfo errorInstance = new ModuleErrorInfo();
+                                            propertiesInstance.Error = errorInstance;
+                                            
+                                            JToken codeValue = errorValue["code"];
+                                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                            {
+                                                string codeInstance = ((string)codeValue);
+                                                errorInstance.Code = codeInstance;
+                                            }
+                                            
+                                            JToken messageValue = errorValue["message"];
+                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance = ((string)messageValue);
+                                                errorInstance.Message = messageInstance;
                                             }
                                         }
                                         
@@ -1497,6 +1560,27 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
+                                        JToken errorValue = propertiesValue["error"];
+                                        if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                        {
+                                            ModuleErrorInfo errorInstance = new ModuleErrorInfo();
+                                            propertiesInstance.Error = errorInstance;
+                                            
+                                            JToken codeValue = errorValue["code"];
+                                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                            {
+                                                string codeInstance = ((string)codeValue);
+                                                errorInstance.Code = codeInstance;
+                                            }
+                                            
+                                            JToken messageValue = errorValue["message"];
+                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance = ((string)messageValue);
+                                                errorInstance.Message = messageInstance;
+                                            }
+                                        }
+                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1701,7 +1785,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1922,6 +2006,27 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string versionInstance2 = ((string)versionValue2);
                                         contentLinkInstance.Version = versionInstance2;
+                                    }
+                                }
+                                
+                                JToken errorValue = propertiesValue2["error"];
+                                if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                {
+                                    ModuleErrorInfo errorInstance = new ModuleErrorInfo();
+                                    propertiesInstance.Error = errorInstance;
+                                    
+                                    JToken codeValue = errorValue["code"];
+                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                    {
+                                        string codeInstance = ((string)codeValue);
+                                        errorInstance.Code = codeInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorInstance.Message = messageInstance;
                                     }
                                 }
                                 

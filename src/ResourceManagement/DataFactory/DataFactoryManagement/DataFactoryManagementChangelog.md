@@ -1,5 +1,157 @@
-﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
+For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.11.0
+_Release date: 2016.09.13_ 
+
+### Feature Additions
+
+* The following linked service types have been added: 
+    * OnPremisesMongoDbLinkedService, AmazonRedshiftLinkedService, AwsAccessKeyLinkedService
+* The following dataset types have been added: 
+    * MongoDbCollectionDataset, AmazonS3Dataset
+* The following copy source types have been added: 	
+    * MongoDbSource
+
+## Version 4.10.0
+_Release date: 2016.09.09_ 
+
+### Feature Additions
+
+* The following optional properties have been added to TextFormat:
+    * SkipLineCount
+    * FirstRowAsHeader 
+    * TreatEmptyAsNull
+* The following linked service types have been added: 
+    * OnPremisesCassandraLinkedService, SalesforceLinkedService
+* The following dataset types have been added: 
+    * OnPremisesCassandraTableDataset
+* The following copy source types have been added: 	
+    * CassandraSource
+* Add WebServiceInputs property to AzureMLBatchExecutionActivity
+    * Enable passing multiple web service inputs to an Azure Machine Learning experiment
+
+## Version 4.9.1
+_Release date: 2016.07.05_ 
+
+### Bug fix
+
+* Deprecate WebApi-based authentication for WebLinkedService.
+
+## Version 4.9.0
+_Release date: 2016.06.10_ 
+
+### Feature Additions
+
+* Add EnableStaging and StagingSettings properties to CopyActivity
+    * Enable copy via interim staging.
+
+### Bug fix
+
+* Introduce an overload of ActivityWindowOperationExtensions.List() which takes an ActivityWindowsByActivityListParameters instance. 
+* Mark WriteBatchSize and WriteBatchTimeout as optional in CopySink.
+
+## Version 4.8.0
+_Release date: 2016.05.25_
+
+### Feature Additions
+* The following optional properties have been added to Copy activity type to enable tuning of copy performance: 
+    * ParallelCopies
+    * CloudDataMovementUnits
+
+## Version 4.7.0
+_Release date: 2016.05.20_
+
+### Feature Additions
+* Added new StorageFormat type OrcFormat type to copy files in optimized row columnar (ORC) format.
+* Add AllowPolyBase and PolyBaseSettings properties to SqlDWSink.
+    * Enables the use of PolyBase to copy data into SQL Data Warehouse.
+
+## Version 4.6.1
+_Release date: 2016.04.26_
+
+### Bug Fixes
+* Fixes HTTP request for listing activity windows.
+    * Removes the resource group name and the data factory name from the request payload.
+
+## Version 4.6.0
+_Release date: 2016.04.14_ 
+
+### Feature Additions
+
+* The following properties have been added to PipelineProperties: 
+    * PipelineMode
+    * ExpirationTime
+    * Datasets
+* The following properties have been added to PipelineRuntimeInfo: 
+    * PipelineState
+* Added new StorageFormat type JsonFormat type to define datasets whose data is in JSON format. 
+
+### Bug Fixes
+
+* Fixes a bug where parameters for listing activity windows were not being sent in HTTP requests.
+
+## Version 4.5.0
+_Release date: 2016.02.24_
+
+### Feature Additions
+* Added list operations for activity window.
+    * Added methods to retrieve activity windows with filters based on the entity types (i.e. data factories, datasets, pipelines and activities).
+* The following linked service types have been added: 
+    * ODataLinkedService, WebLinkedService
+* The following dataset types have been added: 
+    * ODataResourceDataset, WebTableDataset
+* The following copy source types have been added: 	
+    * WebSource
+
+## Version 4.4.0
+_Release date: 2016.01.28_
+
+### Feature Additions
+
+* The following linked service type has been added as data sources and sinks for copy activities: 
+    * AzureStorageSasLinkedService
+
+## Version 4.3.0
+_Release date: 2016.01.20_
+
+### Feature Additions
+
+* The following linked service types haven been added as data sources for copy activities: 
+    * HdfsLinkedService
+    * OnPremisesOdbcLinkedService 
+
+## Version 4.2.0
+_Release date: 2015.11.10_
+
+### Feature Additions
+
+* New Activity type: AzureMLUpdateResource, along with a new optional property in the Azure ML Linked Service, "updateResourceEndpoint". 
+    * This Activity takes as input a blob Dataset for an .iLearner file (e.g. produced as output of a retraining batch execution) and uploads it to the indicated management endpoint.
+* Add LongRunningOperationInitialTimeout and LongRunningOperationRetryTimeout properties to DataFactoryManagementClient. 
+    * Allow configuration of the timeouts for client calls to the Data Factory service. 
+
+### Bug Fixes
+* Properly initialize the internal client object wrapped by 
+  Microsoft.Azure.Management.DataFactories.DataFactoryManagementClient in all constructors. 
+
+## Version 4.1.0 
+_Release date: 2015.10.28_
+
+### Feature Additions
+* The following linked service types have been added: 
+    * AzureDataLakeStoreLinkedService
+    * AzureDataLakeAnalyticsLinkedService
+* The following activity types have been added: 
+    * DataLakeAnalyticsUSQLActivity
+* The following dataset types have been added: 
+    * AzureDataLakeStoreDataset
+* The following source and sink types for Copy Activity have been added:
+    * AzureDataLakeStoreSource
+    * AzureDataLakeStoreSink
+
+## Bug Fixes
+* Successful gateway creation response has status Succeeded and includes the gateway key.
+ 
 ## Version 4.0.1
 _Release date: 2015.10.13_
 

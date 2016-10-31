@@ -65,7 +65,7 @@ namespace HDInsight.Tests
                         {
                             RdpSettings = new RdpSettings
                             {
-                                ExpiryDate = new DateTime(2015,6,12),
+                                ExpiryDate = new DateTime(2016, 10, 20),
                                 Password = "Password1!",
                                 UserName = "rdpuser"
                             }
@@ -112,7 +112,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 //set variables
-                const string dnsname = "hdisdk-rdp1";
+                const string dnsname = "hdisdk-rdpcluster0";
 
                 var spec = GetClusterSpecHelpers.GetPaasClusterSpec();
 
@@ -122,13 +122,15 @@ namespace HDInsight.Tests
                     cluster.Cluster.Properties.ConnectivityEndpoints.Any(
                         c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
 
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+
                 client.Clusters.DisableRdp(resourceGroup, dnsname);
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.False(
                     cluster.Cluster.Properties.ConnectivityEndpoints.Any(
                         c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
 
-                client.Clusters.EnableRdp(resourceGroup, dnsname, "rdpuser", "Password1!", new DateTime(2015, 6, 12));
+                client.Clusters.EnableRdp(resourceGroup, dnsname, "rdpuser", "Password1!", new DateTime(2018, 10, 12));
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.True(
                     cluster.Cluster.Properties.ConnectivityEndpoints.Any(

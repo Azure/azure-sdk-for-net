@@ -1,0 +1,941 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcquisitionGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+  "name": "default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+  "type": "Microsoft.Storage.Admin/farms/acquisitions",
+  "location": "Shanghai",
+  "properties": {
+    "filePath": "\\\\JUSTISUN-BLOB2\\blob\\mystorageaccount1\\blob1\\c9c61ccf-9db4-4543-bb9f-39510f1c4591.pageblob",
+    "maximumblobsize": 0,
+    "status": "Success",
+    "susbcriptionid": "d6ae96e1-62b1-4f43-91f6-680e3990d76b",
+    "storageaccount": "mystorageaccount1",
+    "container": "blob1",
+    "blob": "blob3",
+    "acquisitionid": "D6AE96E1-62B1-4F43-91F6-680E3990D76D"
+  }
+}</value>
+  </data>
+  <data name="AcquisitionListResponse" xml:space="preserve">
+    <value>[ {
+    "id": "/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+    "name": "default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76D",
+    "type": "Microsoft.Storage.Admin/farms/acquisitions",
+    "location": "Shanghai",
+    "properties": {
+      "filePath": "\\\\JUSTISUN-BLOB2\\blob\\mystorageaccount1\\blob1\\c9c61ccf-9db4-4543-bb9f-39510f1c4591.pageblob",
+      "maximumblobsize": 0,
+      "status": "Success",
+      "susbcriptionid": "d6ae96e1-62b1-4f43-91f6-680e3990d76b",
+      "storageaccount": "mystorageaccount1",
+      "container": "blob1",
+      "blob": "blob3",
+      "acquisitionid": "D6AE96E1-62B1-4F43-91F6-680E3990D76D"
+    }
+  },
+  {
+    "id": "/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/default_shanghai/acquisitions/D6AE96E1-62B1-4F43-91F6-680E3990D76E",
+    "name": "default_shanghai/D6AE96E1-62B1-4F43-91F6-680E3990D76E",
+    "type": "Microsoft.Storage.Admin/farms/acquisitions",
+    "location": "Shanghai",
+    "properties": {
+      "maximumblobsize": 20,
+      "status": "Failed",
+      "susbcriptionid": "d6ae96e1-62b1-4f43-91f6-680e3990d76b",
+      "storageaccount": "mystorageaccount1",
+      "container": "$root",
+      "blob": "blob1",
+      "acquisitionid": "D6AE96E1-62B1-4F43-91F6-680E3990D76E"
+    }
+  }
+]</value>
+  </data>
+  <data name="BlobServiceGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/blobservices/default",
+  "name": "WEST_US_1/default",
+  "type": "Microsoft.Storage.Admin/farms/blobservices",
+  "location": "West_US",
+  "properties": {
+    "settings": {
+      "frontEndHttpListenPort": 11002,
+      "frontEndHttpsListenPort": 11102,
+      "frontEndCallbackThreadsCount": 1,
+      "frontEndCpuBasedKeepAliveThrottlingEnabled": true,
+      "frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold": 10.0,
+      "frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle": 90.5,
+      "frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds": 10,
+      "frontEndMemoryThrottlingEnabled": true,
+      "frontEndMaxMillisecondsBetweenMemorySamples": 100,
+      "frontEndMemoryThrottleThresholdSettings": "2;3",
+      "frontEndMinThreadPoolThreads": 10,
+      "frontEndThreadPoolBasedKeepAliveIOCompletionThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds": 10,
+      "frontEndThreadPoolBasedKeepAlivePercentage": 80.0,
+      "frontEndUseSlaTimeInAvailability": false,
+      "blobSvcContainerGcInterval": 10,
+      "blobSvcShallowGcInterval": 10,
+      "blobSvcStreamMapMinContainerOccupancyPercent": 50
+    },
+    "version": "1.0",
+    "healthStatus": "Healthy"
+  }
+}</value>
+  </data>
+  <data name="CurrentActiveFaultListResponse" xml:space="preserve">
+    <value>[
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521",
+    "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521",
+    "type": "Microsoft.Storage.Admin/farms/faults",
+    "location": "West_US",
+    "properties": {
+      "faultId": "c8e6bfe487b4b8eceb5dc36ff6a24521",
+      "faultRuleName": "faultRule1",
+      "description": "TBD",
+      "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1",
+      "severity": "Critical",
+      "activatedTime": "2015-05-18T18:02:00Z",
+      "resolvedTime": null,
+      "resolutionText": "TBD",
+      "associatedDataType": "Metrics",
+      "associatedMetricsName": "MetricsName"
+    }
+  },
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/16287dc04150fab5d8da52de0bf94051",
+    "name": "WEST_US_1/16287dc04150fab5d8da52de0bf94051",
+    "type": "Microsoft.Storage.Admin/farms/faults",
+    "location": "West_US",
+    "properties": {
+      "faultId": "16287dc04150fab5d8da52de0bf94051",
+      "faultRuleName": "faultRule2",
+      "description": "TBD",
+      "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablemasterinstances/woss-node2",
+      "severity": "Degraded",
+      "activatedTime": "2015-05-18T19:02:00Z",
+      "resolvedTime": null,
+      "resolutionText": "TBD",
+      "associatedDataType": "Event",
+      "associatedEventQuery":{
+      "filterUri":"startTime eq 2015-05-10T18:02:00Z and endTime eq 2015-05-28T18:02:00Z",
+      "tableEndpoint":"http://localhost",
+        "tableInfos":[{
+          "startTime":"2015-05-15T18:02:00Z",
+          "endTime":"2015-05-25T18:02:00Z",
+          "tableName":"WDEvent20150515",
+          "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        },
+        {
+          "startTime":"2015-05-25T18:02:00Z",
+          "endTime":"2015-06-05T18:02:00Z",
+          "tableName":"WDEvent20150525",
+          "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        }]}
+    }
+  }
+]</value>
+  </data>
+  <data name="EventQueryResponse" xml:space="preserve">
+    <value>{
+  "filterUri":"startTime eq 2015-05-10T18:02:00Z and endTime eq 2015-05-28T18:02:00Z",
+  "tableEndpoint":"http://localhost",
+  "tableInfos":[{
+        "startTime":"2015-05-15T18:02:00Z",
+        "endTime":"2015-05-25T18:02:00Z",
+        "tableName":"WDEvent20150515",
+        "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+    },
+    {
+        "startTime":"2015-05-25T18:02:00Z",
+        "endTime":"2015-06-05T18:02:00Z",
+        "tableName":"WDEvent20150525",
+        "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+    }
+  ]}</value>
+  </data>
+  <data name="FarmGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/farm_01",
+  "type": "Microsoft.Storage.Admin/farms",
+  "location": "west us",
+  "name": "farm_01",
+  "properties": {
+    "settings": {
+      "settingsPollingIntervalInSecond": 60,
+      "hostStyleHttpPort": 80,
+      "hostStyleHttpsPort": 443,
+      "corsAllowedOriginsList": "http://manage.wossportal.com;http://www.example.com",
+      "dataCenterUriHostSuffixes": "contoso.com"
+    },
+    "settingsStore": "\\\\localhost\\db1\\settings",
+    "healthStatus": "Warning"
+  }
+}</value>
+  </data>
+  <data name="FarmListResponse" xml:space="preserve">
+    <value>{"value":[{
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/farm_01",
+  "type": "Microsoft.Storage.Admin/farms",
+  "location": "west us",
+  "name": "farm_01",
+  "properties": {
+    "settings": {
+      "settingsPollingIntervalInSecond": 60,
+      "hostStyleHttpPort": 80,
+      "hostStyleHttpsPort": 443,
+      "corsAllowedOriginsList": "http://manage.wossportal.com;http://www.example.com",
+      "dataCenterUriHostSuffixes": "contoso.com"
+    },
+    "settingsStore": "\\\\localhost\\db1\\settings",
+    "healthStatus": "Warning"
+  }
+},
+{
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/farm_02",
+  "type": "Microsoft.Storage.Admin/farms",
+  "location": "west us",
+  "name": "farm_01",
+  "properties": {
+    "settings": {
+      "settingsPollingIntervalInSecond": 60,
+      "hostStyleHttpPort": 80,
+      "hostStyleHttpsPort": 443,
+      "corsAllowedOriginsList": "http://manage.wossportal.com;http://www.example.com",
+      "dataCenterUriHostSuffixes": "contoso.com"
+    },
+    "settingsStore": "\\\\localhost\\db1\\settings",
+    "healthStatus": "Warning"
+  }
+}]
+}</value>
+  </data>
+  <data name="FaultGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521",
+  "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521",
+  "type": "Microsoft.Storage.Admin/farms/faults",
+  "location": "West_US",
+  "properties": {
+      "faultId": "c8e6bfe487b4b8eceb5dc36ff6a24521",
+      "faultRuleName": "faultRule1",
+      "description": "TBD",
+      "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1",
+      "severity": "Critical",
+      "activatedTime": "2015-05-18T18:02:00Z",
+      "resolvedTime": null,
+      "resolutionText": "TBD",
+      "associatedDataType": "Metrics",
+      "associatedMetricsName": "MetricsName"
+  }
+}</value>
+  </data>
+  <data name="HistoryActiveFaultListResponse" xml:space="preserve">
+    <value>[
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/c8e6bfe487b4b8eceb5dc36ff6a24521",
+    "name": "WEST_US_1/c8e6bfe487b4b8eceb5dc36ff6a24521",
+    "type": "Microsoft.Storage.Admin/farms/faults",
+    "location": "West_US",
+    "properties": {
+      "faultId": "c8e6bfe487b4b8eceb5dc36ff6a24521",
+      "faultRuleName": "faultRule1",
+      "description": "TBD",
+      "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1",
+      "severity": "Critical",
+      "activatedTime": "2015-05-18T18:02:00Z",
+      "resolvedTime": "2015-05-18T18:04:00Z",
+      "resolutionText": "TBD",
+      "associatedDataType": "Event",
+      "associatedEventQuery":{
+        "filterUri":"startTime eq 2015-05-10T18:02:00Z and endTime eq 2015-05-28T18:02:00Z",
+        "tableEndpoint":"http://localhost",
+        "tableInfos":[{
+          "startTime":"2015-05-15T18:02:00Z",
+          "endTime":"2015-05-25T18:02:00Z",
+          "tableName":"WDEvent20150515",
+          "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        },
+        {
+          "startTime":"2015-05-25T18:02:00Z",
+          "endTime":"2015-06-05T18:02:00Z",
+          "tableName":"WDEvent20150525",
+          "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        }]}
+    }
+  },
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/faults/16287dc04150fab5d8da52de0bf94051",
+    "name": "WEST_US_1/16287dc04150fab5d8da52de0bf94051",
+    "type": "Microsoft.Storage.Admin/farms/faults",
+    "location": "West_US",
+    "properties": {
+      "faultId": "16287dc04150fab5d8da52de0bf94051",
+      "faultRuleName": "faultRule2",
+      "description": "TBD",
+      "resourceUri": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablefrontendinstances/woss-node2",
+      "severity": "Healthy",
+      "activatedTime": "2015-05-18T19:02:00Z",
+      "resolvedTime": "2015-05-19T19:04:00Z",
+      "resolutionText": "TBD",
+      "associatedDataType": "Metrics",
+      "associatedMetricsName": "MetricsName"
+    }
+  }
+]</value>
+  </data>
+  <data name="ManagementServiceGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/managementservices/default",
+  "name": "WEST_US_1/default",
+  "type": "Microsoft.Storage.Admin/farms/managementservices",
+  "location": "West_US",
+  "properties": {
+    "settings": {
+      "wacContainerGcFullScanIntervalInSeconds": 1,
+      "wacAccountGcFullScanIntervalInSeconds": 1,
+      "wacGcWaitPeriodInMilliseconds": 1,
+      "wacHoldingPeriodInHours": 1,
+      "wacMaxGcThreadNumber": 1000,
+      "wacMaxCacheSize": 100,
+      "wacMaxConnections": 100,
+      "healthAccountName": "name1",
+      "healthAccountKey": "key1",
+      "healthHistoryDays": 10,
+      "metricsBucketCount": 10,
+      "metricsAccountName": "name2",
+      "metricsAccountKey": "key2",
+      "monitorAgentAccountName": "name3",
+      "monitorAgentAccountKey": "key3"
+    },
+    "version": "1.0",
+    "healthStatus": "Healthy"
+  }
+}</value>
+  </data>
+  <data name="MetricDefinitionResponse" xml:space="preserve">
+    <value>{"value":[{"name":{"value":"Total Requests","localizedValue":"TotalRequests"},"unit":"Count","primaryAggregationType":"Total","metricAvailabilities":[{"timeGrain":"PT1M","retention":"P1D"},{"timeGrain":"PT1H","retention":"P10D"},{"timeGrain":"P1D","retention":"P60D"}]},{"name":{"value":"Successful Requests","localizedValue":"SuccessfulRequests"},"unit":"Count","primaryAggregationType":"Total","metricAvailabilities":[{"timeGrain":"PT1M","retention":"P1D"},{"timeGrain":"PT1H","retention":"P10D"},{"timeGrain":"P1D","retention":"P60D"}]},{"name":{"value":"Availability","localizedValue":"Availability"},"unit":"Count","primaryAggregationType":"Average","metricAvailabilities":[{"timeGrain":"PT1M","retention":"P1D"},{"timeGrain":"PT1H","retention":"P10D"},{"timeGrain":"P1D","retention":"P60D"}]}]}</value>
+  </data>
+  <data name="MetricResponse" xml:space="preserve">
+    <value>{"value":[{"name":{"value":"Availability","localizedValue":"Availability"},"metricUnit":"Count","timeGrain":"PT1H","startTime":"2015-03-16T08:02:19.4797354Z","endTime":"2015-03-16T12:02:19.4797354Z","metricValues":[{"timeStamp":"2015-03-16T14:02:00Z","average":99},{"timeStamp":"2015-03-16T15:02:00Z","average":99},{"timeStamp":"2015-03-16T16:02:00Z","average":99},{"timeStamp":"2015-03-16T17:02:00Z","average":99},{"timeStamp":"2015-03-16T18:02:00Z","average":99},{"timeStamp":"2015-03-16T19:02:00Z","average":99}]}]}</value>
+  </data>
+  <data name="NodeGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/nodes/woss-node-1",
+  "name": "WEST_US_1/woss-node-1",
+  "type": "Microsoft.Storage.Admin/farms/nodes",
+  "location": "West_US",
+  "properties": {
+    "codeVersion": "3.0.1414.9492",
+    "configVersion": "1.0",
+    "faultDomain": "fd:/woss-node-1",
+     "healthStatus": "Healthy",
+    "ipAddressOrFqdn": "woss-node-1",
+    "isSeedNode": true,
+    "nodeId": "c8e6bfe487b4b8eceb5dc36ff6a2452",
+    "nodeName": "woss-node-1",
+    "nodeStatus": "Up",
+    "nodeType": "Common",
+    "nodeUpTime": "PT1H",
+    "upgradeDomain": "WOSS_U1",
+    "runningInstanceUris": [
+      "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node-1",
+      "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/accountcontainerserverinstances/woss-node-1"
+    ]
+  }
+}</value>
+  </data>
+  <data name="NodeListResponse" xml:space="preserve">
+    <value>[
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/nodes/woss-node-1",
+    "name": "WEST_US_1/woss-node-1",
+    "type": "Microsoft.Storage.Admin/farms/nodes",
+    "location": "West_US",
+    "properties": {
+      "codeVersion": "3.0.1414.9492",
+      "configVersion": "1.0",
+      "faultDomain": "fd:/woss-node-1",
+      "healthStatus": "Healthy",
+      "ipAddressOrFqdn": "woss-node-1",
+      "isSeedNode": true,
+      "nodeId": "c8e6bfe487b4b8eceb5dc36ff6a2452",
+      "nodeName": "woss-node-1",
+      "nodeStatus": "Up",
+      "nodeType": "Common",
+      "nodeUpTime": "PT1H",
+      "upgradeDomain": "WOSS_U1",
+      "runningInstanceUris": [
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node-1",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/accountcontainerserverinstances/woss-node-1"
+      ]
+    }
+  },
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/nodes/woss-node-2",
+    "name": "WEST_US_1/woss-node-2",
+    "type": "Microsoft.Storage.Admin/farms/nodes",
+    "location": "West_US",
+    "properties": {
+      "codeVersion": "3.0.1414.9492",
+      "configVersion": "1.0",
+      "faultDomain": "fd:/woss-node-2",
+      "healthStatus": "Healthy",
+      "ipAddressOrFqdn": "woss-node-2",
+      "isSeedNode": true,
+      "nodeId": "16287dc04150fab5d8da52de0bf94051",
+      "nodeName": "woss-node-2",
+      "nodeStatus": "Up",
+      "nodeType": "Common",
+      "nodeUpTime": "PT1H",
+      "upgradeDomain": "WOSS_U1",
+      "runningInstanceUris": [
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node-2",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablemasterinstances/woss-node-2",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablefrontendinstances/woss-node-2",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/blobfrontendinstances/woss-node-2",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/metricsserverinstances/woss-node-2",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/healthmonitoringserverinstances/woss-node-2"
+      ]
+    }
+  },
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/nodes/woss-node-3",
+    "name": "WEST_US_1/woss-node-3",
+    "type": "Microsoft.Storage.Admin/farms/nodes",
+    "location": "West_US",
+    "properties": {
+      "codeVersion": "3.0.1414.9492",
+      "configVersion": "1.0",
+      "faultDomain": "fd:/woss-node-3",
+      "healthStatus": "Healthy",
+      "ipAddressOrFqdn": "woss-node-3",
+      "isSeedNode": true,
+      "nodeId": "16287dc04150fab5d8da52de0bf94052",
+      "nodeName": "woss-node-3",
+      "nodeStatus": "Up",
+      "nodeType": "Common",
+      "nodeUpTime": "PT1H",
+      "upgradeDomain": "WOSS_U1",
+      "runningInstanceUris": [
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node-3",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tablefrontendinstances/woss-node-3",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/blobfrontendinstances/woss-node-3",
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/metricsserverinstances/woss-node-3"
+      ]
+    }
+  },
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/nodes/woss-node-empty",
+    "name": "WEST_US_1/woss-node-empty",
+    "type": "Microsoft.Storage.Admin/farms/nodes",
+    "location": "West_US",
+    "properties": {
+      "codeVersion": "3.0.1414.9492",
+      "configVersion": "1.0",
+      "faultDomain": "fd:/woss-node-empty",
+      "healthStatus": "Healthy",
+      "ipAddressOrFqdn": "woss-node-empty",
+      "isSeedNode": true,
+      "nodeId": "16287dc04150fab5d8da52de0bf94052",
+      "nodeName": "woss-node-empty",
+      "nodeStatus": "Up",
+      "nodeType": "Common",
+      "nodeUpTime": "PT1H",
+      "upgradeDomain": "WOSS_U1",
+      "runningInstanceUris": []
+    }
+  },
+  {
+    "id": "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/nodes/woss-node-blob",
+    "name": "WEST_US_1/woss-node-blob",
+    "type": "Microsoft.Storage.Admin/farms/nodes",
+    "location": "West_US",
+    "properties": {
+      "codeVersion": "3.0.1414.9492",
+      "configVersion": "1.0",
+      "faultDomain": "fd:/woss-node-blob",
+      "healthStatus": "Healthy",
+      "ipAddressOrFqdn": "woss-node-blob",
+      "isSeedNode": true,
+      "nodeId": "16287dc04150fab5d8da52de0bf94052",
+      "nodeName": "woss-node-blob",
+      "nodeStatus": "Up",
+      "nodeType": "StorageNode",
+      "nodeUpTime": "PT1H",
+      "upgradeDomain": "WOSS_U1",
+      "runningInstanceUris": [
+        "subscriptions/serviceAdmin/resourcegroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/blobserverinstances/woss-node-blob"
+      ]
+    }
+  }
+]</value>
+  </data>
+  <data name="QueueServiceGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/queueservices/default",
+  "name": "WEST_US_1/default",
+  "type": "Microsoft.Storage.Admin/farms/queueservices",
+  "location": "West_US",
+  "properties": {
+    "settings": {
+      "frontEndHttpListenPort": 11001,
+      "frontEndHttpsListenPort": 11101,
+      "frontEndCallbackThreadsCount": 1,
+      "frontEndCpuBasedKeepAliveThrottlingEnabled": true,
+      "frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold": 10.0,
+      "frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle": 90.5,
+      "frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds": 10,
+      "frontEndMemoryThrottlingEnabled": true,
+      "frontEndMaxMillisecondsBetweenMemorySamples": 100,
+      "frontEndMemoryThrottleThresholdSettings": "2;3",
+      "frontEndMinThreadPoolThreads": 10,
+      "frontEndThreadPoolBasedKeepAliveIOCompletionThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds": 10,
+      "frontEndThreadPoolBasedKeepAlivePercentage": 80.0,
+      "frontEndUseSlaTimeInAvailability": false
+    },
+    "version": "1.0",
+    "healthStatus": "Healthy"
+  }
+}</value>
+  </data>
+  <data name="QuotaGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/SRP_DefaultQuota",
+  "name": "redmond/SRP_DefaultQuota",
+  "type": "Microsoft.Storage.Admin/locations/quotas",
+  "location": "redmond",
+  "properties": {
+    "numberOfStorageAccounts": 10,
+    "capacityInGb": 100
+  }
+}</value>
+  </data>
+  <data name="QuotaListResponse" xml:space="preserve">
+    <value>{
+  "value": [
+    {
+  "id": "/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/SRP_DefaultQuota",
+  "name": "redmond/SRP_DefaultQuota",
+  "type": "Microsoft.Storage.Admin/locations/quotas",
+  "location": "redmond",
+  "properties": {
+    "numberOfStorageAccounts": 10,
+    "capacityInGb": 100
+  }
+},
+    {
+  "id": "/subscriptions/dummySub/providers/Microsoft.Storage.Admin/locations/redmond/quotas/dummyName2",
+  "name": "redmond/dummyName2",
+  "type": "Microsoft.Storage.Admin/locations/quotas",
+  "location": "redmond",
+  "properties": {
+    "numberOfStorageAccounts": 10,
+    "capacityInGb": 100
+  }
+}
+  ]
+}</value>
+  </data>
+  <data name="RoleInstanceListResponse" xml:space="preserve">
+    <value>[{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-1","name":"default/woss-node-1","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-1","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-1","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1"}]}},{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-2","name":"default/woss-node-2","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-2","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-2","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1"}]}},{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-3","name":"default/woss-node-3","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-3","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-3","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1"}]}}]</value>
+  </data>
+  <data name="RoleInstanceResponse" xml:space="preserve">
+    <value>{"id":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/tableserviceinstances/woss-node-1","name":"default/woss-node-1","type":"Microsoft.Storage.Admin/farms/tableserviceinstances","location":"","properties":{"roleIdentifier":"woss-node-1","version":"3/18/2015","healthStatus":"Healthy","nodeUri":"/subscriptions/EA5E931C-89FB-4A74-8EE5-65B7959882D1/resourceGroups/resourceGroupNameX/providers/Microsoft.Storage.Admin/farms/default/nodes/woss-node-1","historyInfos": [{"startTime": "2015-09-16T01:01:10.0757296Z", "endTime": "2015-09-16T02:01:10.0757296Z", "duration": "PT1H", "roleIdentifier": "woss-node-1" }]}}</value>
+  </data>
+  <data name="ShareGetResponse" xml:space="preserve">
+    <value>{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb1","type":"Microsoft.Storage.Admin/farms/shares","location":"west us","name":"defaultFarm/||localhost|smb1","properties":{"shareName":"||localhost|smb1","uncPath":"\\\\localhost\\smb1","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}}</value>
+  </data>
+  <data name="ShareListResponse" xml:space="preserve">
+    <value>[{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb1","type":"Microsoft.Storage.Admin/farms","location":"west us","name":"defaultFarm","properties":{"shareName":"||localhost|smb1","uncPath":"\\\\localhost\\smb1","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}},{"id":"/subscriptions/{subscriptionId}/resourceGroups/ResourceGroupX/providers/Microsoft.Storage.Admin/farms/defaultFarm/shares/||localhost|smb2","type":"Microsoft.Storage.Admin/farms","location":"west us","name":"defaultFarm","properties":{"shareName":"||localhost|smb2","uncPath":"\\\\localhost\\smb2","healthStatus":"Warning","totalCapacity":500,"freeCapacity":460,"usedCapacity":40}}]</value>
+  </data>
+  <data name="StorageAccountGetResponse" xml:space="preserve">
+    <value>{
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount1_2015-08-20T16:08:53Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount1_2015-08-20T16:08:53Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "tenantViewId": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage/storageaccounts/705mystorageaccount1",
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+          "queue": "https://localhost:11101/705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+          "table": "https://localhost:11102/705mystorageaccount1@2015-08-20T16:09:34.2006267Z"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "Delete",
+        "acquisitionOperationCount": 0,
+        "deletedTime": "2015-08-03T23:09:34.2Z",
+        "accountStatus": "OutOfRetentionPeriod",
+        "permissions": "Empty",
+        "accountId": 0,
+        "wacInternalState": "None",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:08:53 GMT"
+      }
+    }
+</value>
+  </data>
+  <data name="StorageAccountListResponse" xml:space="preserve">
+    <value>{
+    "value": [
+    {
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount1_2015-08-20T16:08:53Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount1_2015-08-20T16:08:53Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+          "queue": "https://localhost:11101/705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+          "table": "https://localhost:11102/705mystorageaccount1@2015-08-20T16:09:34.2006267Z"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "Delete",
+        "acquisitionOperationCount": 0,
+        "deletedTime": "2015-08-03T23:09:34.2Z",
+        "accountStatus": "OutOfRetentionPeriod",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:08:53 GMT"
+      }
+    },
+    {
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount2_2015-08-20T16:09:05Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount2_2015-08-20T16:09:05Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount2@2015-08-20T16:09:44.9927694Z",
+          "queue": "https://localhost:11101/705mystorageaccount2@2015-08-20T16:09:44.9927694Z",
+          "table": "https://localhost:11102/705mystorageaccount2@2015-08-20T16:09:44.9927694Z"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount2@2015-08-20T16:09:44.9927694Z",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "Delete",
+        "acquisitionOperationCount": 0,
+        "deletedTime": "2015-08-01T23:09:44.993Z",
+        "accountStatus": "Recycled",
+        "recycledTime": "2015-08-02T23:09:44.993Z",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:09:05 GMT"
+      }
+    },
+    {
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount3_2015-08-20T16:09:18Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount3_2015-08-20T16:09:18Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount3",
+          "queue": "https://localhost:11101/705mystorageaccount3",
+          "table": "https://localhost:11102/705mystorageaccount3"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount3",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "None",
+        "acquisitionOperationCount": 0,
+        "accountStatus": "Active",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:09:18 GMT"
+      }
+    }
+  ]}</value>
+  </data>
+  <data name="StorageAccountListResponseFull" xml:space="preserve">
+    <value>{"value":[
+    {
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount1_2015-08-20T16:08:53Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount1_2015-08-20T16:08:53Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+          "queue": "https://localhost:11101/705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+          "table": "https://localhost:11102/705mystorageaccount1@2015-08-20T16:09:34.2006267Z"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount1@2015-08-20T16:09:34.2006267Z",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "Delete",
+        "acquisitionOperationCount": 0,
+        "deletedTime": "2015-08-03T23:09:34.2Z",
+        "accountStatus": "OutOfRetentionPeriod",
+        "permissions": "Empty",
+        "accountId": 0,
+        "wacInternalState": "None",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:08:53 GMT"
+      }
+    },
+    {
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount2_2015-08-20T16:09:05Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount2_2015-08-20T16:09:05Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount2@2015-08-20T16:09:44.9927694Z",
+          "queue": "https://localhost:11101/705mystorageaccount2@2015-08-20T16:09:44.9927694Z",
+          "table": "https://localhost:11102/705mystorageaccount2@2015-08-20T16:09:44.9927694Z"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount2@2015-08-20T16:09:44.9927694Z",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "Delete",
+        "acquisitionOperationCount": 0,
+        "deletedTime": "2015-08-01T23:09:44.993Z",
+        "accountStatus": "Recycled",
+        "recycledTime": "2015-08-02T23:09:44.993Z",
+        "permissions": "Empty",
+        "accountId": 0,
+        "wacInternalState": "None",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:09:05 GMT"
+      }
+    },
+    {
+      "id": "/subscriptions/1c8c9445-6e18-44e9-88d9-0676e11b6c2e/resourcegroups/SYSTEM/providers/Microsoft.Storage.Admin/farms/west_us_1/storageaccounts/705mystorageaccount3_2015-08-20T16:09:18Z",
+      "type": "Microsoft.Storage.Admin/storageaccounts",
+      "name": "705mystorageaccount3_2015-08-20T16:09:18Z",
+      "location": "DevFabric",
+      "tags": {
+        "Key1": "Value1",
+        "Key2": "Value2"
+      },
+      "properties": {
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+          "blob": "https://localhost:11100/705mystorageaccount3",
+          "queue": "https://localhost:11101/705mystorageaccount3",
+          "table": "https://localhost:11102/705mystorageaccount3"
+        },
+        "primaryLocation": "DevFabric",
+        "statusOfPrimary": "Available",
+        "tenantSubscriptionId": "1c8c9445-6e18-44e9-88d9-0676e11b6c2e",
+        "tenantStorageAccountName": "705mystorageaccount3",
+        "tenantResourceGroupName": "SYSTEM",
+        "currentOperation": "None",
+        "acquisitionOperationCount": 0,
+        "accountStatus": "Active",
+        "permissions": "Full",
+        "accountId": 999,
+        "wacInternalState": "Active",
+        "accountType": "Standard_LRS",
+        "creationTime": "Thu, 20 Aug 2015 16:09:18 GMT"
+      }
+    }
+  ]}</value>
+  </data>
+  <data name="TableServiceGetResponse" xml:space="preserve">
+    <value>{
+  "id": "/subscriptions/dummyServiceAdmin/resourceGroups/dummyResourceGroup/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableservices/default",
+  "name": "WEST_US_1/default",
+  "type": "Microsoft.Storage.Admin/farms/tableservices",
+  "location": "West_US",
+  "properties": {
+    "settings": {
+      "frontEndHttpListenPort": 11002,
+      "frontEndHttpsListenPort": 11102,
+      "frontEndCallbackThreadsCount": 1,
+      "frontEndCpuBasedKeepAliveThrottlingEnabled": true,
+      "frontEndCpuBasedKeepAliveThrottlingPercentCpuThreshold": 10.0,
+      "frontEndCpuBasedKeepAliveThrottlingPercentRequestsToThrottle": 90.5,
+      "frontEndCpuBasedKeepAliveThrottlingCpuMonitorIntervalInSeconds": 10,
+      "frontEndMemoryThrottlingEnabled": true,
+      "frontEndMaxMillisecondsBetweenMemorySamples": 100,
+      "frontEndMemoryThrottleThresholdSettings": "2;3",
+      "frontEndMinThreadPoolThreads": 10,
+      "frontEndThreadPoolBasedKeepAliveIOCompletionThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveWorkerThreadThreshold": 10,
+      "frontEndThreadPoolBasedKeepAliveMonitorIntervalInSeconds": 10,
+      "frontEndThreadPoolBasedKeepAlivePercentage": 80.0,
+      "frontEndUseSlaTimeInAvailability": false,
+      "tableMasterMaxCacheSize": 10,
+      "tableMasterMaxConnections": 10,
+      "tableServerMaxCacheSize": 100,
+      "tableServerMaxConnections": 10,
+      "tableServerCpuUsagePercentageThrottling": 10.0,
+      "tableServerCpuUsageThrottlingThreshold": 10,
+      "tableServerMaxThrottlingProbabilityForAccount": 100.0,
+      "tableServerPendingRequestCountThrottlingThreshold": 80,
+      "tableServerScanThrottlingThreshold": 10
+    },
+    "version": "1.0",
+    "healthStatus": "Healthy"
+  }
+}</value>
+  </data>
+</root>

@@ -33,6 +33,7 @@ using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.SmapiModels;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement
 {
@@ -126,7 +127,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/policy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -229,7 +230,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -281,7 +283,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/policy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -349,7 +351,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new PolicyGetResponse();
                         result.PolicyBytes = Encoding.UTF8.GetBytes(responseContent);
-                        
+
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("ETag"))
@@ -395,7 +397,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='policyStream'>
         /// Required. Policy stream.
@@ -460,7 +463,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/policy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

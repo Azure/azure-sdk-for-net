@@ -351,6 +351,13 @@ namespace Microsoft.Azure.Management.Insights
                                     propertiesInstance.StorageAccountId = storageAccountIdInstance;
                                 }
                                 
+                                JToken serviceBusRuleIdValue = propertiesValue["serviceBusRuleId"];
+                                if (serviceBusRuleIdValue != null && serviceBusRuleIdValue.Type != JTokenType.Null)
+                                {
+                                    string serviceBusRuleIdInstance = ((string)serviceBusRuleIdValue);
+                                    propertiesInstance.ServiceBusRuleId = serviceBusRuleIdInstance;
+                                }
+                                
                                 JToken storageAccountNameValue = propertiesValue["storageAccountName"];
                                 if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
                                 {
@@ -576,6 +583,11 @@ namespace Microsoft.Azure.Management.Insights
                     if (parameters.Properties.StorageAccountId != null)
                     {
                         propertiesValue["storageAccountId"] = parameters.Properties.StorageAccountId;
+                    }
+                    
+                    if (parameters.Properties.ServiceBusRuleId != null)
+                    {
+                        propertiesValue["serviceBusRuleId"] = parameters.Properties.ServiceBusRuleId;
                     }
                     
                     if (parameters.Properties.StorageAccountName != null)

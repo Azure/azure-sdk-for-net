@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             set { this._clusterState = value; }
         }
         
+        private Tier _clusterTier;
+        
+        /// <summary>
+        /// Optional. Gets or sets the cluster tier.
+        /// </summary>
+        public Tier ClusterTier
+        {
+            get { return this._clusterTier; }
+            set { this._clusterTier = value; }
+        }
+        
         private string _clusterVersion;
         
         /// <summary>
@@ -141,6 +152,17 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         {
             get { return this._quotaInfo; }
             set { this._quotaInfo = value; }
+        }
+        
+        private SecurityProfile _securityProfile;
+        
+        /// <summary>
+        /// Optional. Gets or sets the security profile.
+        /// </summary>
+        public SecurityProfile SecurityProfile
+        {
+            get { return this._securityProfile; }
+            set { this._securityProfile = value; }
         }
         
         /// <summary>

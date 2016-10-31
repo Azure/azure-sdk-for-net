@@ -15,6 +15,7 @@ using Microsoft.Azure.Management.Dns.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Xunit;
 
 namespace Microsoft.Azure.Management.Dns.Testing
@@ -51,6 +52,45 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 foreach (string key in first.Tags.Keys)
                 {
                     if (!second.Tags.ContainsKey(key) || first.Tags[key] != second.Tags[key])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public static bool AreEqualPrereq(
+           RecordSet first,
+           RecordSet second,
+           bool ignoreEtag = false)
+        {
+            if (first == null && second == null)
+            {
+                return true;
+            }
+            else if (first == null || second == null)
+            {
+                return false;
+            }
+
+            if (first.Location != second.Location
+                || first.Name != second.Name)
+            {
+                return false;
+            }
+
+            if (first.Properties.Metadata != null || second.Properties.Metadata != null)
+            {
+                if (first.Properties.Metadata == null || second.Properties.Metadata == null || first.Properties.Metadata.Count != second.Properties.Metadata.Count)
+                {
+                    return false;
+                }
+
+                foreach (string key in first.Properties.Metadata.Keys)
+                {
+                    if (!second.Properties.Metadata.ContainsKey(key) || first.Properties.Metadata[key] != second.Properties.Metadata[key])
                     {
                         return false;
                     }
@@ -201,7 +241,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 for (int i = 0; i < first.Count; i++)
                 {
-                    if (first[i].Ipv6Address != second[i].Ipv6Address)
+                    var firstAddress = IPAddress.Parse(first[i].Ipv6Address);
+                    var secondAddress = IPAddress.Parse(second[i].Ipv6Address);
+                    if (!firstAddress.Equals(secondAddress))
                     {
                         return false;
                     }

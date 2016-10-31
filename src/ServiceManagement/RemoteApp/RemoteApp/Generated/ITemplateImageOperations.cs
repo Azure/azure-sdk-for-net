@@ -101,6 +101,34 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         Task<TemplateImageListResult> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
+        /// Migrate the template image of a collection to the specified azure
+        /// storage account
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// The destination container name
+        /// </param>
+        /// <param name='overwriteExistingTemplateImage'>
+        /// A flag denoting if the request is to overwrite the existing
+        /// template image in the destination storage account
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        Task<OperationResultWithTrackingId> MigrateAsync(string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingTemplateImage, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Sets a template image details.  If the template image already
         /// exists, only the Name can be changed.
         /// </summary>

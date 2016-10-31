@@ -25,13 +25,21 @@ namespace HDInsight.Tests.Helpers
         private const string DefaultContainer = "";
         private const string StorageAccountName = "";
         private const string StorageAccountKey = "";
-        private const string SshKey = "";
+		private const string SshKey = "";
         private const string SshUser = "";
         private const string SshPassword = "";
         private const string HttpUser = "";
         private const string HttpPassword = "";
         private const string RdpUser = "";
         private const string RdpPassword = "";
+        private const string VirtualNetworkId = "";
+        private const string SubnetName = "";
+        private const string DomainUserName = "";
+        private const string DomainUserPassword = "";
+        private const string OrganizationalUnitDN = "";
+        private static readonly List<string> ClusterUsersGroupDNs = new List<string> {""};
+        private static readonly List<string> LdapsUrls = new List<string> { "" };
+        private static readonly string[] DomainNameParts = new string[2] { "", "" };
 
         public static ClusterCreateParametersExtended GetIaasClusterSpec()
         {
@@ -94,7 +102,7 @@ namespace HDInsight.Tests.Helpers
                 {
                     LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
                     {
-                        UserName = "hadoop",
+                        UserName = "sshuser",
                         SshProfile = new SshProfile
                         {
                             SshPublicKeys = sshPublicKeys
@@ -120,7 +128,7 @@ namespace HDInsight.Tests.Helpers
                 {
                     LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
                     {
-                        UserName = "hadoop",
+                        UserName = "sshuser",
                         SshProfile = new SshProfile
                         {
                             SshPublicKeys = sshPublicKeys
@@ -217,7 +225,7 @@ namespace HDInsight.Tests.Helpers
             var clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
-                ClusterType = HDInsightClusterType.Hadoop,
+                ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,
@@ -241,7 +249,7 @@ namespace HDInsight.Tests.Helpers
             var clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
-                ClusterType = HDInsightClusterType.Hadoop,
+                ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,
@@ -255,6 +263,71 @@ namespace HDInsight.Tests.Helpers
                 Version = "3.2"
             };
             return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetCustomVmSizesCreateParametersIaas()
+        {
+            var clusterparams = new ClusterCreateParameters
+            {
+                ClusterSizeInNodes = 1,
+                ClusterType = "HBase",
+                WorkerNodeSize = "Large",
+                DefaultStorageAccountName = StorageAccountName,
+                DefaultStorageAccountKey = StorageAccountKey,
+                OSType = OSType.Linux,
+                UserName = HttpUser,
+                Password = HttpPassword,
+                DefaultStorageContainer = DefaultContainer,
+                Location = "West US",
+                SshUserName = SshUser,
+                SshPassword = SshPassword,
+                Version = "3.2",
+                HeadNodeSize = "ExtraLarge",
+                ZookeeperNodeSize = "Large",
+            };
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetAdJoinedCreateParametersIaas()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.Location = "East US 2";
+            clusterparams.VirtualNetworkId = VirtualNetworkId;
+            clusterparams.SubnetName = SubnetName;
+            clusterparams.SecurityProfile = new SecurityProfile
+            {
+                DirectoryType = DirectoryType.ActiveDirectory,
+                Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
+                DomainUserPassword = DomainUserPassword,
+                DomainUsername = DomainUserName,
+                LdapsUrls = LdapsUrls,
+                OrganizationalUnitDN = OrganizationalUnitDN,
+                ClusterUsersGroupDNs = ClusterUsersGroupDNs
+            };
+            
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersSparkIaas()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.ClusterType = "Spark";
+            clusterparams.ComponentVersion.Add("Spark", "2.0");
+            return clusterparams;
+        }
+
+        public static ClusterCreateParametersExtended AddConfigurations(ClusterCreateParametersExtended cluster, string configurationKey, Dictionary<string, string> configs)
+        {
+            string configurations = cluster.Properties.ClusterDefinition.Configurations;
+            var config = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<String, string>>>(configurations);
+            config.Add(configurationKey, configs);
+
+            var serializedConfig = JsonConvert.SerializeObject(config);
+            cluster.Properties.ClusterDefinition.Configurations = serializedConfig;
+
+            return cluster;
         }
     }
 }

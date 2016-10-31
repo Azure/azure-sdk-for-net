@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.HDInsight.Models;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.HDInsight
 {
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> EnableHttpAsync(string resourceGroupName, string clusterName,
+        Task<OperationResource> EnableHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken);
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        Task<OperationResource> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
 
         /// <summary>
         /// Begins disabling HTTP on the specified cluster.
@@ -169,7 +170,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> EnableRdpAsync(string resourceGroupName, string clusterName,
+        Task<OperationResource> EnableRdpAsync(string resourceGroupName, string clusterName,
             string rdpUsername, string rdpPassword, DateTime rdpExpiryDate, CancellationToken cancellationToken);
 
         /// <summary>
@@ -211,7 +212,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> DisableRdpAsync(string resourceGroupName, string clusterName,
+        Task<OperationResource> DisableRdpAsync(string resourceGroupName, string clusterName,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount,
+        Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -273,5 +274,54 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </returns>
         Task<HDInsightOperationResponse> BeginResizingAsync(string resourceGroupName, string clusterName,
             int targetInstanceCount, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Executes script actions on specified HDInsight Running cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptActions'>
+        /// Required. The list of script actions that needs to be executed.
+        /// </param>      
+        /// <param name='persistOnSuccess'>
+        /// Required. Flag indicating if the script needs to be persisted.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        Task<OperationResource> ExecuteScriptActionsAsync(string resourceGroupName, string clusterName, IList<RuntimeScriptAction> scriptActions,
+            bool persistOnSuccess, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Begins Executing script actions on specified HDInsight Running cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptActions'>
+        /// Required. The list of script actions that needs to be executed.
+        /// </param>      
+        /// <param name='persistOnSuccess'>
+        /// Required. Flag indicating if the script needs to be persisted.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        Task<HDInsightOperationResponse> BeginExecuteScriptActionsAsync(string resourceGroupName, string clusterName, IList<RuntimeScriptAction> scriptActions,
+            bool persistOnSuccess, CancellationToken cancellationToken);
+
     }
 }

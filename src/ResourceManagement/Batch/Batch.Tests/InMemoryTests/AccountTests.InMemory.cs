@@ -15,9 +15,11 @@
 
 using System;
 using System.Collections.Generic;
-using Xunit;
+using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Xunit;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
 using Batch.Tests.Helpers;
@@ -64,17 +66,16 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal(HttpMethod.Post, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
 
-            Assert.Equal(result.Actions[0].Action, "Microsoft.Batch/ListKeys");
-            Assert.Equal(result.Actions[0].FriendlyName, "List Batch Account Keys");
-            Assert.Equal(result.Actions[0].FriendlyTarget, "Batch Account");
+            Assert.Equal("Microsoft.Batch/ListKeys",result.Actions[0].Action);
+            Assert.Equal("List Batch Account Keys",result.Actions[0].FriendlyName);
+            Assert.Equal("Batch Account",result.Actions[0].FriendlyTarget);
             Assert.True(result.Actions[0].FriendlyDescription.StartsWith("List Batch account keys"));
-
-            Assert.Equal(result.Actions[1].Action, "Microsoft.Batch/RegenerateKeys");
-            Assert.Equal(result.Actions[1].FriendlyName, "Regenerate Batch account key");
-            Assert.Equal(result.Actions[1].FriendlyTarget, "Batch Account");
+            Assert.Equal("Microsoft.Batch/RegenerateKeys",result.Actions[1].Action);
+            Assert.Equal("Regenerate Batch account key",result.Actions[1].FriendlyName);
+            Assert.Equal("Batch Account",result.Actions[1].FriendlyTarget);
             Assert.True(result.Actions[1].FriendlyDescription.StartsWith("Regenerate the specified"));
         }
-        
+
         [Fact]
         public void AccountCreateThrowsExceptions()
         {
@@ -144,8 +145,118 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Resource.Location);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
-            Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
-            Assert.True(result.Resource.Tags.Count == 2);
+            Assert.Equal(AccountProvisioningState.Succeeded, result.Resource.Properties.ProvisioningState);
+            Assert.Equal(2, result.Resource.Tags.Count);
+        }
+
+        [Fact]
+        public void CreateAccountWithAutoStorageAsyncValidateMessage()
+        {
+            var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+
+            acceptedResponse.Headers.Add("x-ms-request-id", "1");
+            acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
+            var utcNow = DateTime.UtcNow;
+
+            var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'type' : 'Microsoft.Batch/batchAccounts',
+                                'name': 'acctName',
+                                'location': 'South Central US',
+                                'properties': {
+                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' :{
+                                        'storageAccountId' : '//storageAccount1',
+                                        'lastKeySync': '" + utcNow.ToString("o") + @"',
+                                    }
+                                },
+                            }")
+            };
+
+            var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
+
+            var client = GetBatchManagementClient(handler);
+
+            var result = client.Accounts.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            {
+                Location = "South Central US",
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//storageAccount1"
+                    }
+                }
+            });
+
+            // Validate result
+            Assert.Equal("//storageAccount1", result.Resource.Properties.AutoStorage.StorageAccountId);
+            Assert.Equal(utcNow, result.Resource.Properties.AutoStorage.LastKeySync);
+        }
+
+        [Fact]
+        public void AccountUpdateWithAutoStorageValidateMessage()
+        {
+            var utcNow = DateTime.UtcNow;
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'type' : 'Microsoft.Batch/batchAccounts',
+                                'name': 'acctName',
+                                'location': 'South Central US',
+                                'properties': {
+                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' : {
+                                        'storageAccountId' : '//StorageAccountId',
+                                        'lastKeySync': '" + utcNow.ToString("o") + @"',
+                                    }
+                                },
+                                'tags' : {
+                                    'tag1' : 'value for tag1',
+                                    'tag2' : 'value for tag2',
+                                }
+                            }")
+            };
+
+            var handler = new RecordedDelegatingHandler(response);
+
+            var client = GetBatchManagementClient(handler);
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag1", "value for tag1");
+            tags.Add("tag2", "value for tag2");
+
+            var result = client.Accounts.Update("foo", "acctName", new BatchAccountUpdateParameters
+            {
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//StorageAccountId",
+                    }
+                },
+            });
+
+            // Validate headers - User-Agent for certs, Authorization for tokens
+            //Assert.Equal(HttpMethod.Patch, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            // Validate result
+            Assert.Equal("South Central US", result.Resource.Location);
+            Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(AccountProvisioningState.Succeeded, result.Resource.Properties.ProvisioningState);
+            Assert.Equal("//StorageAccountId", result.Resource.Properties.AutoStorage.StorageAccountId);
+            Assert.Equal(utcNow, result.Resource.Properties.AutoStorage.LastKeySync);
+            Assert.Equal(result.Resource.Tags.Count, 2);
         }
 
         [Fact]
@@ -178,7 +289,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
             {
-                Tags = tags
+                Tags = tags,
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -189,12 +300,14 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("South Central US", result.Resource.Location);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
-            Assert.True(result.Resource.Tags.Count == 2);
+            Assert.Equal(2, result.Resource.Tags.Count);
         }
 
         [Fact]
         public void AccountUpdateValidateMessage()
         {
+            var utcNow = DateTime.UtcNow.ToString("o");
+
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
@@ -204,7 +317,7 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -222,7 +335,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.Accounts.Update("foo", "acctName", new BatchAccountUpdateParameters
             {
-                Tags = tags
+                Tags = tags,
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -232,8 +345,9 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Resource.Location);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
-            Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
-            Assert.True(result.Resource.Tags.Count == 2);
+            Assert.Equal(AccountProvisioningState.Succeeded, result.Resource.Properties.ProvisioningState);
+
+            Assert.Equal(2, result.Resource.Tags.Count);
         }
 
         [Fact]
@@ -353,7 +467,10 @@ namespace Microsoft.Azure.Batch.Tests
                     'location': 'South Central US',
                     'properties': {
                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                        'provisioningState' : 'Succeeded'
+                        'provisioningState' : 'Succeeded',
+                        'coreQuota' : '20',
+                        'poolQuota' : '100',
+                        'activeJobAndJobScheduleQuota' : '200'
                     },
                     'tags' : {
                         'tag1' : 'value for tag1',
@@ -377,6 +494,9 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("acctName", result.Resource.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Resource.Id);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(20, result.Resource.Properties.CoreQuota);
+            Assert.Equal(100, result.Resource.Properties.PoolQuota);
+            Assert.Equal(200, result.Resource.Properties.ActiveJobAndJobScheduleQuota);
 
             Assert.True(result.Resource.Tags.ContainsKey("tag1"));
         }
@@ -409,7 +529,10 @@ namespace Microsoft.Azure.Batch.Tests
                                     'location': 'West US',
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                        'provisioningState' : 'Succeeded'
+                                        'provisioningState' : 'Succeeded',
+                                        'coreQuota' : '20',
+                                        'poolQuota' : '100',
+                                        'activeJobAndJobScheduleQuota' : '200'
                                     },
                                     'tags' : {
                                         'tag1' : 'value for tag1',
@@ -423,7 +546,10 @@ namespace Microsoft.Azure.Batch.Tests
                                     'location': 'South Central US',
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                        'provisioningState' : 'Succeeded'
+                                        'provisioningState' : 'Succeeded',
+                                        'coreQuota' : '20',
+                                        'poolQuota' : '100',
+                                        'activeJobAndJobScheduleQuota' : '200'
                                     },
                                     'tags' : {
                                         'tag1' : 'value for tag1',
@@ -448,7 +574,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -462,7 +591,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -489,7 +621,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -503,7 +638,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -536,6 +674,9 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Accounts[0].Id);
             Assert.Equal("/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctName1", result.Accounts[1].Id);
             Assert.NotEmpty(result.Accounts[0].Properties.AccountEndpoint);
+            Assert.Equal(20, result.Accounts[0].Properties.CoreQuota);
+            Assert.Equal(100, result.Accounts[0].Properties.PoolQuota);
+            Assert.Equal(200, result.Accounts[1].Properties.ActiveJobAndJobScheduleQuota);
 
             Assert.True(result.Accounts[0].Tags.ContainsKey("tag1"));
 
@@ -576,7 +717,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -590,7 +734,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Failed'
+                                    'provisioningState' : 'Failed',
+                                    'coreQuota' : '10',
+                                    'poolQuota' : '50',
+                                    'activeJobAndJobScheduleQuota' : '100'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1'
@@ -616,26 +763,32 @@ namespace Microsoft.Azure.Batch.Tests
 
             // Validate result
             Assert.True(result.Accounts.Count == 2);
-            
-            Assert.Equal(result.Accounts[0].Location, "West US");
-            Assert.Equal(result.Accounts[0].Name, "acctName");
+
+            Assert.Equal("West US", result.Accounts[0].Location);
+            Assert.Equal("acctName", result.Accounts[0].Name);
             Assert.Equal(result.Accounts[0].Id, @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName" );
-            Assert.Equal(result.Accounts[0].Properties.AccountEndpoint, @"http://acctName.batch.core.windows.net/");
-            Assert.Equal(result.Accounts[0].Properties.ProvisioningState, AccountProvisioningState.Succeeded);
+            Assert.Equal( @"http://acctName.batch.core.windows.net/", result.Accounts[0].Properties.AccountEndpoint);
+            Assert.Equal(AccountProvisioningState.Succeeded, result.Accounts[0].Properties.ProvisioningState);
+            Assert.Equal(20, result.Accounts[0].Properties.CoreQuota);
+            Assert.Equal(100, result.Accounts[0].Properties.PoolQuota);
+            Assert.Equal(200, result.Accounts[0].Properties.ActiveJobAndJobScheduleQuota);
 
-            Assert.Equal(result.Accounts[1].Location, "South Central US");
-            Assert.Equal(result.Accounts[1].Name, "acctName1");
-            Assert.Equal(result.Accounts[1].Id, @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1");
-            Assert.Equal(result.Accounts[1].Properties.AccountEndpoint, @"http://acctName1.batch.core.windows.net/");
-            Assert.Equal(result.Accounts[1].Properties.ProvisioningState, AccountProvisioningState.Failed);
+            Assert.Equal("South Central US", result.Accounts[1].Location);
+            Assert.Equal("acctName1", result.Accounts[1].Name);
+            Assert.Equal(@"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1", result.Accounts[1].Id);
+            Assert.Equal(@"http://acctName1.batch.core.windows.net/", result.Accounts[1].Properties.AccountEndpoint);
+            Assert.Equal(AccountProvisioningState.Failed, result.Accounts[1].Properties.ProvisioningState);
+            Assert.Equal(10, result.Accounts[1].Properties.CoreQuota);
+            Assert.Equal(50, result.Accounts[1].Properties.PoolQuota);
+            Assert.Equal(100, result.Accounts[1].Properties.ActiveJobAndJobScheduleQuota);
 
-            Assert.True(result.Accounts[0].Tags.Count == 2);
+            Assert.Equal(2, result.Accounts[0].Tags.Count);
             Assert.True(result.Accounts[0].Tags.ContainsKey("tag2"));
 
-            Assert.True(result.Accounts[1].Tags.Count == 1);
+            Assert.Equal(1, result.Accounts[1].Tags.Count);
             Assert.True(result.Accounts[1].Tags.ContainsKey("tag1"));
 
-            Assert.Equal(result.NextLink, @"originalRequestURl?$skipToken=opaqueStringThatYouShouldntCrack");
+            Assert.Equal(@"originalRequestURl?$skipToken=opaqueStringThatYouShouldntCrack", result.NextLink);
         }
 
         [Fact]
@@ -650,14 +803,14 @@ namespace Microsoft.Azure.Batch.Tests
         [Fact]
         public void AccountKeysListValidateMessage()
         {
-            var primaryKeyString = "primary key string which is alot longer than this";
-            var secondaryKeyString = "secondary key string which is alot longer than this";
+            var primaryKeyString = "primaryKeyString";
+            var secondaryKeyString = "secondaryKeyString";
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                    'primary' : 'primary key string which is alot longer than this',
-                    'secondary' : 'secondary key string which is alot longer than this',
+                    'primary' : 'primaryKeyString',
+                    'secondary' : 'secondaryKeyString',
                 }")
             };
 
@@ -673,9 +826,9 @@ namespace Microsoft.Azure.Batch.Tests
 
             // Validate result
             Assert.NotEmpty(result.PrimaryKey);
-            Assert.Equal(result.PrimaryKey, primaryKeyString);
+            Assert.Equal(primaryKeyString, result.PrimaryKey);
             Assert.NotEmpty(result.SecondaryKey);
-            Assert.Equal(result.SecondaryKey, secondaryKeyString);
+            Assert.Equal(secondaryKeyString, result.SecondaryKey);
         }
 
         [Fact]
@@ -717,9 +870,9 @@ namespace Microsoft.Azure.Batch.Tests
 
             // Validate result
             Assert.NotEmpty(result.PrimaryKey);
-            Assert.Equal(result.PrimaryKey, primaryKeyString);
+            Assert.Equal(primaryKeyString, result.PrimaryKey);
             Assert.NotEmpty(result.SecondaryKey);
-            Assert.Equal(result.SecondaryKey, secondaryKeyString);
+            Assert.Equal(secondaryKeyString, result.SecondaryKey);
         }
 
         [Fact]

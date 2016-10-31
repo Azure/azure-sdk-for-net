@@ -1051,6 +1051,184 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
+        /// Migrate the template image of a collection to the specified azure
+        /// storage account
+        /// </summary>
+        /// <param name='collectionName'>
+        /// Required. The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// Required. The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// Required. The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// Required. The destination container name
+        /// </param>
+        /// <param name='overwriteExistingTemplateImage'>
+        /// Required. A flag denoting if the request is to overwrite the
+        /// existing template image in the destination storage account
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        public async Task<OperationResultWithTrackingId> MigrateAsync(string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingTemplateImage, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException("collectionName");
+            }
+            if (targetAccountName == null)
+            {
+                throw new ArgumentNullException("targetAccountName");
+            }
+            if (targetAccountKey == null)
+            {
+                throw new ArgumentNullException("targetAccountKey");
+            }
+            if (targetContainerName == null)
+            {
+                throw new ArgumentNullException("targetContainerName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("collectionName", collectionName);
+                tracingParameters.Add("targetAccountName", targetAccountName);
+                tracingParameters.Add("targetAccountKey", targetAccountKey);
+                tracingParameters.Add("targetContainerName", targetContainerName);
+                tracingParameters.Add("overwriteExistingTemplateImage", overwriteExistingTemplateImage);
+                TracingAdapter.Enter(invocationId, this, "MigrateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/";
+            if (this.Client.RdfeNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.RdfeNamespace);
+            }
+            url = url + "/desktops/";
+            url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/MigrateGoldImageAsync";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("targetAccountName=" + Uri.EscapeDataString(targetAccountName));
+            queryParameters.Add("targetAccountKey=" + Uri.EscapeDataString(targetAccountKey));
+            queryParameters.Add("targetContainerName=" + Uri.EscapeDataString(targetContainerName));
+            queryParameters.Add("overwrite=" + Uri.EscapeDataString(overwriteExistingTemplateImage.ToString().ToLower()));
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json; charset=utf-8");
+                httpRequest.Headers.Add("x-ms-version", "2014-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResultWithTrackingId result = null;
+                    // Deserialize Response
+                    result = new OperationResultWithTrackingId();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-remoteapp-operation-tracking-id"))
+                    {
+                        result.TrackingId = httpResponse.Headers.GetValues("x-remoteapp-operation-tracking-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Sets a template image details.  If the template image already
         /// exists, only the Name can be changed.
         /// </summary>

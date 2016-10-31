@@ -15,15 +15,16 @@
 // 
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
@@ -32,108 +33,245 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     /// </summary>
     internal partial class JobOperations : IServiceOperations<HDInsightJobManagementClient>, IJobOperations
     {
-        private string StorageAccountName { get; set; }
-        private string StorageAccountKey { get; set; }
-        private string DefaultStorageContainer { get; set; }
+        private static string jobPrefix = "job_";
+        private static string appPrefix = "application_";
 
-        internal string StorageAccountRoot
+        /// <summary>
+        /// Submits a Hive job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Hive job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public async Task<JobSubmissionResponse> SubmitHiveJobAsync(HiveJobSubmissionParameters parameters)
         {
-            get
-            {
-                var storageRoot = StorageAccountName.Replace(Constants.WabsProtocolSchemeName, string.Empty);
-                storageRoot = string.Format(CultureInfo.InvariantCulture,
-                    storageRoot.Contains(".") ? "https://{0}" : Constants.ProductionStorageAccountEndpointUriTemplate,
-                    storageRoot);
-
-                return storageRoot;
-            }
-        }
-
-        internal Uri StorageAccountUri
-        {
-            get { return new Uri(this.StorageAccountRoot); }
-
-        }
-
-        internal string StorageAccountConnectionString
-        {
-            get
-            {
-                var storageRoot = StorageAccountName.Replace(Constants.WabsProtocolSchemeName, string.Empty);
-                if (storageRoot.Contains("."))
-                {
-                    storageRoot = storageRoot.Substring(0, storageRoot.IndexOf('.') + 1);
-                }
-                return string.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", storageRoot,
-                    StorageAccountKey);
-            }
+            return await SubmitHiveJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() }, CancellationToken.None);
         }
 
         /// <summary>
-        /// Gets the task log summary from execution of a jobDetails.
+        /// Submits a MapReduce job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public async Task<JobSubmissionResponse> SubmitMapReduceJobAsync(MapReduceJobSubmissionParameters parameters)
+        {
+            return await SubmitMapReduceJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() }, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Submits a MapReduce streaming job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public async Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(MapReduceStreamingJobSubmissionParameters parameters)
+        {
+            return await SubmitMapReduceStreamingJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() }, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Submits a Pig job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Pig job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public async Task<JobSubmissionResponse> SubmitPigJobAsync(PigJobSubmissionParameters parameters)
+        {
+            return await SubmitPigJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() }, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Submits a Sqoop job to an HDInsight cluster.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public async Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters)
+        {
+            return await SubmitSqoopJobAsync(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() }, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Gets the job output content as memory stream.
         /// </summary>
         /// <param name='jobId'>
         /// Required. The id of the job.
         /// </param>
-        /// <param name='targetDirectory'>
-        /// Required. The directory in which to download the logs to.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Job operation response.
+        /// The job output content as memory stream.
         /// </returns>
-        public async Task DownloadJobTaskLogsAsync(string jobId, string targetDirectory, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
+        public async Task<Stream> GetJobOutputAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
         {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            DefaultStorageContainer = defaultContainer;
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stdout");
+            return storageAccess.GetFileContent(blobReferencePath);
+        }
 
-            var job = await GetJobAsync(jobId, cancellationToken);
+        /// <summary>
+        /// Gets the job error output content as memory stream.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The job error output content as memory stream when job fails to run successfully.
+        /// </returns>
+        public async Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
+        {
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stderr");
+            return storageAccess.GetFileContent(blobReferencePath);
+        }
 
-            var statusdir = GetStatusFolder(job);
-            if (statusdir == null)
+        /// <summary>
+        /// Wait for completion of a Job. 
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name='duration'>
+        /// Optional. The maximum duration to wait for completion of job before returning to client. If not passed then wait till job is completed.
+        /// </param>
+        /// <param name='waitInterval'>
+        /// Optional. The interval to poll for job status. The default value is set from DefaultPollInterval property of HDInsight job management client.
+        /// </param>
+        /// <exception cref="TimeoutException">
+        /// Thrown when waiting for job completion exceeds the maximum duration specified by parameter duration.
+        /// </exception>
+        public async Task<JobGetResponse> WaitForJobCompletionAsync(string jobId, TimeSpan? duration = null, TimeSpan? waitInterval = null)
+        {
+            var appId = GetAppIdFromJobId(jobId);
+            var startTime = DateTime.UtcNow;
+            bool waitTimeOut = false;
+
+            if (waitInterval == null)
+            {
+                waitInterval = HDInsightJobManagementClient.DefaultPollInterval;
+            }
+
+            // We poll Yarn for application status until application run is finished. If the application is
+            // in finished state then we poll templeton to get completed job details.
+            JobGetResponse jobDetail = null;
+
+            // If duration is null means we need to keep retry until job is complete.
+            while (duration == null || !(waitTimeOut = ((DateTime.UtcNow - startTime) > duration)))
+            {
+                try
+                {
+                    var jobState = await GetAppStateAsync(appId, CancellationToken.None);
+
+                    ApplicationState appState = jobState.GetState();
+                    if (appState == ApplicationState.Finished || appState == ApplicationState.Failed || appState == ApplicationState.Killed)
+                    {
+                        // Get the job finished details now and keep checking if Job is complete from Templeton 
+                        // as history server may not have picked up the completed job.
+                        jobDetail = await this.GetJobAsync(jobId);
+
+                        if (jobDetail.JobDetail.Status.JobComplete)
+                        {
+                            break;
+                        }
+                    }
+                }
+                catch (CloudException ex)
+                {
+                    // If transient error then keep retry until user specified duration.
+                    if (IsTransientError(ex.Response.StatusCode))
+                    {
+                        LogMessage(ex.Message);
+                    }
+                    else
+                    {
+                        // Throw the same exception back to client.
+                        throw ex;
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    // For any other Http exceptions we keep retry.
+                    LogMessage(ex.Message);
+                }
+
+                MockSupport.Delay(waitInterval.Value);
+            }
+
+            if (waitTimeOut)
+            {
+                // If user specified duration exceeded then raise a time out exception and kill the job if requested.
+                throw new TimeoutException(string.Format(CultureInfo.InvariantCulture, "The requested task failed to complete in the allotted time ({0})", duration));
+            }
+
+            return jobDetail;
+        }
+
+        private async Task<string> GetJobStatusDirectory(string jobId, string file)
+        {
+            var job = await this.GetJobAsync(jobId);
+            var statusDir = GetStatusFolder(job);
+
+            if (statusDir == null)
             {
                 throw new CloudException(string.Format("Job {0} was not created with a status folder and therefore no logs were saved.", job.JobDetail.Id));
             }
 
-            var taskLogsDirectoryPath = GetStatusDirectoryPath(statusdir, storageAccountName, defaultContainer,
-                Client.Credentials.Username, Constants.TaskLogsDirectoryName);
-            var taskLogDirectoryContents = await List(taskLogsDirectoryPath, true);
+            return string.Format("user/{0}/{1}/{2}", job.JobDetail.User, statusDir, file);
+        }
 
-            // List also returns the directory we're looking into, 
-            // so we will ignore the directory as we can't read it.
-            foreach (var taskLogFilePath in taskLogDirectoryContents.Where(path => !string.Equals(path.AbsoluteUri, taskLogsDirectoryPath.AbsoluteUri, StringComparison.OrdinalIgnoreCase)))
+        private static string GetStatusFolder(JobGetResponse job)
+        {
+            return job.JobDetail.Userargs.Statusdir == null ? null : job.JobDetail.Userargs.Statusdir.ToString();
+        }
+
+        private static string GetAppIdFromJobId(string jobId)
+        {
+            // Validate Job Id
+            if (string.IsNullOrWhiteSpace(jobId) || !jobId.StartsWith(jobPrefix))
             {
-                // create local file in the targetdirectory.
-                var localFilePath = Path.Combine(targetDirectory, taskLogFilePath.Segments.Last());
-                var fileContentStream = await Read(taskLogFilePath);
-                var fileContents = new StreamReader(fileContentStream).ReadToEnd();
-                File.WriteAllText(localFilePath, fileContents);
+                throw new CloudException(String.Format("Invalid job id {0}", jobId));
+            }
+
+            return appPrefix + jobId.Substring(jobPrefix.Length);
+        }
+
+        private static bool IsTransientError(HttpStatusCode status)
+        {
+            return status == HttpStatusCode.RequestTimeout ||
+                        (status >= HttpStatusCode.InternalServerError &&
+                        status != HttpStatusCode.NotImplemented &&
+                        status != HttpStatusCode.HttpVersionNotSupported);
+        }
+
+        private static void LogMessage(string message)
+        {
+            if (TracingAdapter.IsEnabled)
+            {
+                TracingAdapter.Information(message);
             }
         }
-
-        public async Task<Stream> GetJobOutputAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "stdout");
-        }
-
-        public async Task<Stream> GetJobErrorLogsAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "stderr");
-        }
-
-        public async Task<Stream> GetJobTaskLogSummaryAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "logs/list.txt");
-        }
-
     }
 }

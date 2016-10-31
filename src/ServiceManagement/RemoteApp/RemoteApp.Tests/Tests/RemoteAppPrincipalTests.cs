@@ -70,6 +70,91 @@ namespace RemoteApp.Tests
         }
 
         /// <summary>
+        /// Testing of querying the assigned users from a collection
+        /// </summary>
+        [Fact]
+        public void CanGetRemoteAppPrincipalListForApp()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var client = GetRemoteAppManagementClient();
+                client.RdfeNamespace = "rdsm54westus";
+
+                string collectionName = "testd165";
+                string appAlias = "867aca6b-9b32-4db8-b5b2-2160ec986169";
+
+                SecurityPrincipalInfoListResult principalList = client.Principals.ListForApp(collectionName, appAlias);
+                Assert.NotNull(principalList);
+                Assert.True(principalList.SecurityPrincipalInfoList.Count > 0, "No user assigned to the collection with id: " + collectionName + ".");
+            }
+        }
+
+        /// <summary>
+        /// Testing of querying the assigned users from a collection
+        /// </summary>
+        [Fact]
+        public void CanGetRemoteAppPrincipalListWithToken()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var client = GetRemoteAppManagementClient();
+                client.RdfeNamespace = "rdsm54westus";
+
+                string collectionName = "testd750";
+
+                SecurityPrincipalInfoListWithTokenResult principalListWithToken = null;
+                string continuationToken = null;
+
+                do
+                {
+                    principalListWithToken = client.Principals.ListWithToken(collectionName, continuationToken);
+                    Assert.NotNull(principalListWithToken);
+                    Assert.NotNull(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList);
+                    Assert.True(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList.Count > 0, "No user assigned to the collection with name: " + collectionName + ".");
+
+                    continuationToken = principalListWithToken.SecurityPrincipalInfoListWithToken.NewContinuationToken;
+                }
+                while (continuationToken != null);
+            }
+        }
+
+        /// <summary>
+        /// Testing of querying the assigned users from a collection
+        /// </summary>
+        [Fact]
+        public void CanGetRemoteAppPrincipalListForAppWithToken()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var client = GetRemoteAppManagementClient();
+                client.RdfeNamespace = "rdsm54westus";
+
+                string collectionName = "testd269";
+                string appAlias = "92190bcd-7a6e-4e15-a2b2-c69eaf762f03";
+
+                SecurityPrincipalInfoListWithTokenResult principalListWithToken = null;
+                string continuationToken = null;
+
+                do
+                {
+                    principalListWithToken = client.Principals.ListForAppWithToken(collectionName, appAlias, continuationToken);
+                    Assert.NotNull(principalListWithToken);
+                    Assert.NotNull(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList);
+                    Assert.True(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList.Count > 0, "No user assigned to the collection with name: " + collectionName + ".");
+
+                    continuationToken = principalListWithToken.SecurityPrincipalInfoListWithToken.NewContinuationToken;
+                }
+                while (continuationToken != null);
+            }
+        }
+
+        /// <summary>
         /// Testing of negetive case of adding a user to a collection
         /// </summary>
         [Fact]
@@ -166,6 +251,101 @@ namespace RemoteApp.Tests
 
                 // verifying the deletion of the principals
                 principalList = client.Principals.List(collectionName);
+
+                Assert.NotNull(principalList);
+
+                // verify that all the requested users are added
+                Assert.Equal(principalList.SecurityPrincipalInfoList.Count, numberOfUsersBeforeAdd);
+
+                matchedPrincipals.Clear();
+                Assert.Empty(matchedPrincipals);
+
+                foreach (var principal in principalList.SecurityPrincipalInfoList)
+                {
+                    foreach (SecurityPrincipal p in principals.SecurityPrincipals)
+                    {
+                        if (String.Equals(principal.SecurityPrincipal.Name, p.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            matchedPrincipals.Add(principal.SecurityPrincipal);
+                        }
+                    }
+                }
+
+                Assert.Empty(matchedPrincipals);
+            }
+        }
+
+
+        /// <summary>
+        /// Testing of adding and removing of users from a collection
+        /// </summary>
+        [Fact]
+        public void CanAddAndRemovePrincipalToApplication()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                string collectionName = "testd165";
+                string appAlias = "085b40de-e013-4750-a0f4-082aa0d80adc";
+
+                RemoteAppManagementClient client = GetRemoteAppManagementClient();
+                client.RdfeNamespace = "rdsm54westus";
+
+                // verifying the added principals
+                SecurityPrincipalInfoListResult principalList = client.Principals.ListForApp(collectionName, appAlias);
+
+                int numberOfUsersBeforeAdd = principalList.SecurityPrincipalInfoList.Count;
+
+                SecurityPrincipalList principals = new SecurityPrincipalList();
+
+                // adding the principals to the collection
+
+                SecurityPrincipal user = new SecurityPrincipal("tstestuser1@rdvmohoro.com");
+                user.SecurityPrincipalType = PrincipalType.User;
+                user.UserIdType = PrincipalProviderType.OrgId;
+
+                principals.SecurityPrincipals.Add(user);
+
+                SecurityPrincipalOperationsResult result = client.Principals.AddToApp(collectionName, appAlias, principals);
+
+                Assert.NotNull(result);
+                Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK || result.StatusCode == System.Net.HttpStatusCode.Accepted, "Failed to add security principal. Status code: " + result.StatusCode + ".");
+                Assert.NotNull(result.Errors);
+                Assert.Empty(result.Errors);
+
+                // verifying the added principals
+                principalList = client.Principals.ListForApp(collectionName, appAlias);
+
+                Assert.NotNull(principalList);
+
+                // verify that all the requested users are added
+                Assert.True(principalList.SecurityPrincipalInfoList.Count == (numberOfUsersBeforeAdd + principals.SecurityPrincipals.Count), "Add users did not add the requested users to the collection.");
+
+                List<SecurityPrincipal> matchedPrincipals = new List<SecurityPrincipal>();
+
+                foreach (var principal in principalList.SecurityPrincipalInfoList)
+                {
+                    foreach (SecurityPrincipal p in principals.SecurityPrincipals)
+                    {
+                        if (String.Equals(principal.SecurityPrincipal.Name, p.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            matchedPrincipals.Add(principal.SecurityPrincipal);
+                        }
+                    }
+                }
+
+                Assert.True(matchedPrincipals.Count() == 1);
+                Assert.Equal(matchedPrincipals.First().Name.ToLowerInvariant(), user.Name.ToLowerInvariant());
+
+                // now remove the added security principals here
+                result = client.Principals.DeleteFromApp(collectionName, appAlias, principals);
+
+                Assert.NotNull(result);
+                Assert.True(result.StatusCode == System.Net.HttpStatusCode.OK || result.StatusCode == System.Net.HttpStatusCode.Accepted, "Failed to remove security principal. Status code: " + result.StatusCode + ".");
+
+                // verifying the deletion of the principals
+                principalList = client.Principals.ListForApp(collectionName, appAlias);
 
                 Assert.NotNull(principalList);
 

@@ -39,7 +39,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
     /// <summary>
-    /// Operations for managing the input of the stream analytics job.
+    /// Operations for managing the input(s) of the stream analytics job.
     /// </summary>
     internal partial class InputOperations : IServiceOperations<StreamAnalyticsManagementClient>, IInputOperations
     {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
+        /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public async Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
+        public async Task<ResourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(inputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -188,13 +188,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     }
                     
                     // Create Result
-                    DataSourceTestConnectionResponse result = null;
+                    ResourceTestConnectionResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.BadRequest || statusCode == HttpStatusCode.NotFound)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DataSourceTestConnectionResponse();
+                        result = new ResourceTestConnectionResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
                                 string statusInstance = ((string)statusValue);
-                                result.DataSourceTestStatus = statusInstance;
+                                result.ResourceTestStatus = statusInstance;
                             }
                             
                             JToken errorValue = responseDoc["error"];
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Input.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1616,7 +1616,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2372,7 +2372,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2484,7 +2484,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response of the get stream analytics intput operation.
+        /// The response of the get stream analytics input operation.
         /// </returns>
         public async Task<InputGetResponse> GetAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
         {
@@ -2529,7 +2529,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3285,7 +3285,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$select=" + Uri.EscapeDataString(parameters.PropertiesToSelect));
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4059,7 +4059,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5217,7 +5217,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
+        /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5225,7 +5225,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public async Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
+        public async Task<ResourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
         {
             StreamAnalyticsManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -5241,13 +5241,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            DataSourceTestConnectionResponse response = await client.Inputs.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, cancellationToken).ConfigureAwait(false);
+            ResourceTestConnectionResponse response = await client.Inputs.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            DataSourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ResourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {

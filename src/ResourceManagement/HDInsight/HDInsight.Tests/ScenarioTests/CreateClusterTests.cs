@@ -47,7 +47,8 @@ namespace HDInsight.Tests
                 Assert.Equal(cluster.Properties.OperatingSystemType, createresponse.Cluster.Properties.OperatingSystemType);
                 Assert.Equal(createresponse.Cluster.Properties.ErrorInfos.Count, 0);
                 Assert.Equal(cluster.Properties.ClusterDefinition.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
-                Assert.Equal(cluster.Properties.ClusterVersion, createresponse.Cluster.Properties.ClusterVersion);
+                Assert.Equal(cluster.Properties.ClusterVersion, createresponse.Cluster.Properties.ClusterVersion.Substring(0, 3));
+
                 Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
 
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
@@ -55,7 +56,8 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
 
@@ -87,7 +89,47 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
+        public void TestAdJoinedIaasCreateGetDeleteCluster()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient, "East US 2");
+
+                var cluster = GetClusterSpecHelpers.GetAdJoinedCreateParametersIaas();
+                const string dnsname = "HdiSdk-AdJoinedIaasCluster";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(cluster.Location, createresponse.Cluster.Location);
+                Assert.Equal(cluster.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
+                Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
+                Assert.Equal(createresponse.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(createresponse.Cluster.Properties.ProvisioningState, HDInsightClusterProvisioningState.Succeeded);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Running");
+
+                var getresponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.ComputeProfile.Roles.Count, getresponse.Cluster.Properties.ComputeProfile.Roles.Count);
+                Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
+                Assert.Equal(createresponse.Cluster.Properties.SecurityProfile.DirectoryType, getresponse.Cluster.Properties.SecurityProfile.DirectoryType);
+                Assert.Equal(createresponse.Cluster.Properties.SecurityProfile.Domain, getresponse.Cluster.Properties.SecurityProfile.Domain);
+                Assert.Equal(createresponse.Cluster.Properties.SecurityProfile.DomainUsername, getresponse.Cluster.Properties.SecurityProfile.DomainUsername);
+                Assert.Equal(createresponse.Cluster.Properties.SecurityProfile.OrganizationalUnitDN, getresponse.Cluster.Properties.SecurityProfile.OrganizationalUnitDN);
+                Assert.Equal(createresponse.Cluster.Properties.SecurityProfile.DirectoryType, getresponse.Cluster.Properties.SecurityProfile.DirectoryType);
+                
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
 
@@ -143,8 +185,10 @@ namespace HDInsight.Tests
                     Assert.Equal(ex.Response.StatusCode, HttpStatusCode.Conflict);
                 }
 
-                var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);               
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                
             }
         }
 
@@ -162,8 +206,8 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
-                const string dnsname = "hdisdk-cluster";
-
+                const string dnsname = "hdisdk-testcluster1";
+              
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
 
@@ -176,11 +220,125 @@ namespace HDInsight.Tests
                 getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
             }
         }
 
-        //[Fact]
+        [Fact]
+        public void TestCreateLinuxClusterWithPremiumTier()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+                cluster.Version = "3.4";
+                cluster.ClusterTier= Tier.Premium;
+                const string dnsname = "hdisdk-LinuxClusterPremiumTest";
+              
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterTier , Tier.Premium);
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
+        public void TestCreateLinuxClusterWithStandardTier()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+                cluster.ClusterTier = Tier.Standard;
+                const string dnsname = "hdisdk-LinuxClusterStandardTest";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterTier, Tier.Standard);
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
+        public void TestCreateWindowsClusterWithStandardTier()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetPaasClusterSpec();
+                cluster.Properties.ClusterTier = Tier.Standard;
+                const string dnsname = "hdisdk-IaasClusterStandardTierTest";             
+                          
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+                var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterTier, Tier.Standard);
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
+        public void TestCreateWindowsClusterWithPremiumTier()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+                var cluster = GetClusterSpecHelpers.GetPaasClusterSpec();
+                cluster.Properties.ClusterTier = Tier.Premium;
+                const string dnsname = "hdisdk-WindowsClusterPremiumTest";
+                try
+                {
+                    client.Clusters.Create(resourceGroup, dnsname, cluster);
+                }
+                catch (CloudException ex)
+                {
+                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
+                }
+            }
+        }
+
+        [Fact]
         public void TestCreateHumboldtClusterWithSshUsernamePassword()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -202,7 +360,67 @@ namespace HDInsight.Tests
                 client.Clusters.Get(resourceGroup, dnsname);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.NoContent);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
+            }
+        }
+
+        [Fact]
+        public void TestCreateHumboldtClusterWithCustomVMSizes()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomVmSizesCreateParametersIaas();
+                const string dnsname = "hdisdk-iaasclusternew-customvmsizes-2";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                client.Clusters.Get(resourceGroup, dnsname);
+
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
+            }
+        }
+
+        [Fact]
+        public void TestCreateLinuxSparkClusterWithComponentVersion()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersSparkIaas();
+                cluster.ClusterTier = Tier.Standard;
+                const string dnsname = "hdisdk-SparkLinuxClusterComponentVersionTest";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                client.Clusters.Get(resourceGroup, dnsname);
+                Assert.NotNull(createresponse.Cluster.Properties.ClusterDefinition.ComponentVersion);
+                
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
     }

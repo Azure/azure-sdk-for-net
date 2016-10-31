@@ -229,6 +229,74 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
+        /// Migrate the template image of a collection to the specified azure
+        /// storage account
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// Required. The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// Required. The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// Required. The destination container name
+        /// </param>
+        /// <param name='overwriteExistingTemplateImage'>
+        /// Required. A flag denoting if the request is to overwrite the
+        /// existing template image in the destination storage account
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        public static OperationResultWithTrackingId Migrate(this ITemplateImageOperations operations, string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingTemplateImage)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITemplateImageOperations)s).MigrateAsync(collectionName, targetAccountName, targetAccountKey, targetContainerName, overwriteExistingTemplateImage);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Migrate the template image of a collection to the specified azure
+        /// storage account
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.ITemplateImageOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// Required. The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// Required. The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// Required. The destination container name
+        /// </param>
+        /// <param name='overwriteExistingTemplateImage'>
+        /// Required. A flag denoting if the request is to overwrite the
+        /// existing template image in the destination storage account
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        public static Task<OperationResultWithTrackingId> MigrateAsync(this ITemplateImageOperations operations, string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingTemplateImage)
+        {
+            return operations.MigrateAsync(collectionName, targetAccountName, targetAccountKey, targetContainerName, overwriteExistingTemplateImage, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Sets a template image details.  If the template image already
         /// exists, only the Name can be changed.
         /// </summary>

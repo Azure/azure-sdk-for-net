@@ -40,6 +40,120 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public static partial class DeploymentOperationsExtensions
     {
         /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse AbortMigration(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).AbortMigrationAsync(serviceName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AbortMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return operations.AbortMigrationAsync(serviceName, deploymentName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginAbortMigration(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginAbortMigrationAsync(serviceName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginAbortMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return operations.BeginAbortMigrationAsync(serviceName, deploymentName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Changing Deployment Configuration By Name operation
         /// initiates a change to the deployment configuration. This operation
         /// is an asynchronous operation. To determine whether the Management
@@ -185,6 +299,56 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public static Task<AzureOperationResponse> BeginChangingConfigurationBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
             return operations.BeginChangingConfigurationBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginCommitMigration(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginCommitMigrationAsync(serviceName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginCommitMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return operations.BeginCommitMigrationAsync(serviceName, deploymentName, CancellationToken.None);
         }
         
         /// <summary>
@@ -665,6 +829,62 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public static Task<AzureOperationResponse> BeginGettingPackageBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
             return operations.BeginGettingPackageBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginPrepareMigration(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginPrepareMigrationAsync(serviceName, deploymentName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginPrepareMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return operations.BeginPrepareMigrationAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -2022,6 +2242,70 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse CommitMigration(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).CommitMigrationAsync(serviceName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> CommitMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName)
+        {
+            return operations.CommitMigrationAsync(serviceName, deploymentName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Create Deployment operation uploads a new service package and
         /// creates a new deployment in the staging or production
         /// environments. This operation is an asynchronous operation. To
@@ -2819,6 +3103,76 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public static Task<DeploymentEventListResponse> ListEventsBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DateTime startTime, DateTime endTime)
         {
             return operations.ListEventsBySlotAsync(serviceName, deploymentSlot, startTime, endTime, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse PrepareMigration(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).PrepareMigrationAsync(serviceName, deploymentName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> PrepareMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return operations.PrepareMigrationAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -4045,6 +4399,60 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public static Task<OperationStatusResponse> UpgradeBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
             return operations.UpgradeBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        public static XrpMigrationValidateDeploymentResponse ValidateMigration(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).ValidateMigrationAsync(serviceName, deploymentName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        public static Task<XrpMigrationValidateDeploymentResponse> ValidateMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return operations.ValidateMigrationAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
         
         /// <summary>

@@ -33,6 +33,8 @@ namespace OperationalInsights.Tests.Helpers
         public const string ParametersParameter = "parameters";
         public const string WorkspaceResourceType = "Microsoft.OperationalInsights/workspaces";
         public const string StorageInsightResourceType = "Microsoft.OperationalInsights/storageinsightconfigs";
+        public const string DataSourceResourceType = "Microsoft.OperationalInsights/workspaces/datasources";
+        public const string LinkedServiceResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
 
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.
@@ -142,6 +144,37 @@ namespace OperationalInsights.Tests.Helpers
             Assert.Equal("Succeeded", workspaceProperties.ProvisioningState, StringComparer.OrdinalIgnoreCase);
             Assert.Equal("Azure", workspaceProperties.Source, StringComparer.OrdinalIgnoreCase);
             Assert.NotNull(workspaceProperties.CustomerId);
+        }
+
+        /// <summary>
+        /// Validates a storage insight matches the expected properties.  Throws assertion exceptions if validation fails.
+        /// </summary>
+        /// <param name="expected">Expected data source</param>
+        /// <param name="actual">Actual data source</param>
+        internal static void ValidateDatasource(DataSource expected, DataSource actual)
+        {
+            Assert.NotNull(actual);
+            Assert.NotNull(actual.Id);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Kind, actual.Kind);
+            Assert.Equal(DataSourceResourceType, actual.Type);
+
+            Assert.NotNull(actual.Properties);
+        }
+
+        /// <summary>
+        /// Validates a linked service matches the expected properties. Throws assertion exceptions if validation fails.
+        /// </summary>
+        /// <param name="expected">Expected linked service</param>
+        /// <param name="actual">Actual linked service</param>
+        internal static void ValidateLinkedService(LinkedServiceCreateOrUpdateParameters expected, LinkedService actual)
+        {
+            Assert.NotNull(actual);
+            Assert.NotNull(actual.Id);
+            Assert.Equal(LinkedServiceResourceType.ToLower(), actual.Type.ToLower());
+
+            Assert.NotNull(actual.Properties);
+            Assert.Equal(expected.Properties.ResourceId.ToLower(), actual.Properties.ResourceId.ToLower());
         }
 
         /// <summary>

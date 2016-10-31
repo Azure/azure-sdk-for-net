@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.ServiceBus
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.ServiceBus">
-      <PackageVersion>0.17.1-preview</PackageVersion>
+      <PackageVersion>0.19.0-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

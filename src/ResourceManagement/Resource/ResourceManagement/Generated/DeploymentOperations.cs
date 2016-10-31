@@ -30,6 +30,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure;
@@ -128,7 +129,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -301,7 +302,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -452,7 +453,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -591,6 +592,13 @@ namespace Microsoft.Azure.Management.Resources
             }
             if (parameters.Properties != null)
             {
+                if (parameters.Properties.DebugSetting != null)
+                {
+                    if (parameters.Properties.DebugSetting.DeploymentDebugDetailLevel == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.DebugSetting.DeploymentDebugDetailLevel");
+                    }
+                }
                 if (parameters.Properties.ParametersLink != null)
                 {
                     if (parameters.Properties.ParametersLink.Uri == null)
@@ -632,7 +640,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -713,6 +721,14 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     propertiesValue["mode"] = parameters.Properties.Mode.ToString();
+                    
+                    if (parameters.Properties.DebugSetting != null)
+                    {
+                        JObject debugSettingValue = new JObject();
+                        propertiesValue["debugSetting"] = debugSettingValue;
+                        
+                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DeploymentDebugDetailLevel;
+                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -803,6 +819,13 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DateTime timestampInstance = ((DateTime)timestampValue);
                                     propertiesInstance.Timestamp = timestampInstance;
+                                }
+                                
+                                JToken durationValue = propertiesValue2["duration"];
+                                if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                    propertiesInstance.Duration = durationInstance;
                                 }
                                 
                                 JToken outputsValue = propertiesValue2["outputs"];
@@ -951,6 +974,134 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken validatedResourcesArray = propertiesValue2["validatedResources"];
+                                if (validatedResourcesArray != null && validatedResourcesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken validatedResourcesValue in ((JArray)validatedResourcesArray))
+                                    {
+                                        DeploymentPreFlightResource deploymentPreFlightResourceInstance = new DeploymentPreFlightResource();
+                                        propertiesInstance.ValidatedResources.Add(deploymentPreFlightResourceInstance);
+                                        
+                                        JToken apiVersionValue = validatedResourcesValue["apiVersion"];
+                                        if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string apiVersionInstance = ((string)apiVersionValue);
+                                            deploymentPreFlightResourceInstance.ApiVersion = apiVersionInstance;
+                                        }
+                                        
+                                        JToken dependsOnArray2 = validatedResourcesValue["dependsOn"];
+                                        if (dependsOnArray2 != null && dependsOnArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken dependsOnValue2 in ((JArray)dependsOnArray2))
+                                            {
+                                                deploymentPreFlightResourceInstance.DependsOn.Add(((string)dependsOnValue2));
+                                            }
+                                        }
+                                        
+                                        JToken propertiesValue4 = validatedResourcesValue["properties"];
+                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                        {
+                                            string propertiesInstance2 = propertiesValue4.ToString(Newtonsoft.Json.Formatting.Indented);
+                                            deploymentPreFlightResourceInstance.Properties = propertiesInstance2;
+                                        }
+                                        
+                                        JToken provisioningStateValue2 = validatedResourcesValue["provisioningState"];
+                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                            deploymentPreFlightResourceInstance.ProvisioningState = provisioningStateInstance2;
+                                        }
+                                        
+                                        JToken planValue = validatedResourcesValue["plan"];
+                                        if (planValue != null && planValue.Type != JTokenType.Null)
+                                        {
+                                            Plan planInstance = new Plan();
+                                            deploymentPreFlightResourceInstance.Plan = planInstance;
+                                            
+                                            JToken nameValue2 = planValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                planInstance.Name = nameInstance2;
+                                            }
+                                            
+                                            JToken publisherValue = planValue["publisher"];
+                                            if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                            {
+                                                string publisherInstance = ((string)publisherValue);
+                                                planInstance.Publisher = publisherInstance;
+                                            }
+                                            
+                                            JToken productValue = planValue["product"];
+                                            if (productValue != null && productValue.Type != JTokenType.Null)
+                                            {
+                                                string productInstance = ((string)productValue);
+                                                planInstance.Product = productInstance;
+                                            }
+                                            
+                                            JToken promotionCodeValue = planValue["promotionCode"];
+                                            if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                            {
+                                                string promotionCodeInstance = ((string)promotionCodeValue);
+                                                planInstance.PromotionCode = promotionCodeInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue5 = validatedResourcesValue["id"];
+                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                        {
+                                            string idInstance5 = ((string)idValue5);
+                                            deploymentPreFlightResourceInstance.Id = idInstance5;
+                                        }
+                                        
+                                        JToken nameValue3 = validatedResourcesValue["name"];
+                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance3 = ((string)nameValue3);
+                                            deploymentPreFlightResourceInstance.Name = nameInstance3;
+                                        }
+                                        
+                                        JToken typeValue = validatedResourcesValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance = ((string)typeValue);
+                                            deploymentPreFlightResourceInstance.Type = typeInstance;
+                                        }
+                                        
+                                        JToken locationValue = validatedResourcesValue["location"];
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance = ((string)locationValue);
+                                            deploymentPreFlightResourceInstance.Location = locationInstance;
+                                        }
+                                        
+                                        JToken tagsSequenceElement = ((JToken)validatedResourcesValue["tags"]);
+                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement)
+                                            {
+                                                string tagsKey = ((string)property2.Name);
+                                                string tagsValue = ((string)property2.Value);
+                                                deploymentPreFlightResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                    }
+                                }
+                                
                                 JToken templateValue = propertiesValue2["template"];
                                 if (templateValue != null && templateValue.Type != JTokenType.Null)
                                 {
@@ -1012,6 +1163,20 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                     propertiesInstance.Mode = modeInstance;
+                                }
+                                
+                                JToken debugSettingValue3 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue3 != null && debugSettingValue3.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance2;
+                                    
+                                    JToken detailLevelValue2 = debugSettingValue3["detailLevel"];
+                                    if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance2 = ((string)detailLevelValue2);
+                                        debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
+                                    }
                                 }
                             }
                         }
@@ -1090,7 +1255,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1175,7 +1340,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1291,6 +1456,13 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DateTime timestampInstance = ((DateTime)timestampValue);
                                     propertiesInstance.Timestamp = timestampInstance;
+                                }
+                                
+                                JToken durationValue = propertiesValue["duration"];
+                                if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                    propertiesInstance.Duration = durationInstance;
                                 }
                                 
                                 JToken outputsValue = propertiesValue["outputs"];
@@ -1439,6 +1611,134 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken validatedResourcesArray = propertiesValue["validatedResources"];
+                                if (validatedResourcesArray != null && validatedResourcesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken validatedResourcesValue in ((JArray)validatedResourcesArray))
+                                    {
+                                        DeploymentPreFlightResource deploymentPreFlightResourceInstance = new DeploymentPreFlightResource();
+                                        propertiesInstance.ValidatedResources.Add(deploymentPreFlightResourceInstance);
+                                        
+                                        JToken apiVersionValue = validatedResourcesValue["apiVersion"];
+                                        if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string apiVersionInstance = ((string)apiVersionValue);
+                                            deploymentPreFlightResourceInstance.ApiVersion = apiVersionInstance;
+                                        }
+                                        
+                                        JToken dependsOnArray2 = validatedResourcesValue["dependsOn"];
+                                        if (dependsOnArray2 != null && dependsOnArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken dependsOnValue2 in ((JArray)dependsOnArray2))
+                                            {
+                                                deploymentPreFlightResourceInstance.DependsOn.Add(((string)dependsOnValue2));
+                                            }
+                                        }
+                                        
+                                        JToken propertiesValue3 = validatedResourcesValue["properties"];
+                                        if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                        {
+                                            string propertiesInstance2 = propertiesValue3.ToString(Newtonsoft.Json.Formatting.Indented);
+                                            deploymentPreFlightResourceInstance.Properties = propertiesInstance2;
+                                        }
+                                        
+                                        JToken provisioningStateValue2 = validatedResourcesValue["provisioningState"];
+                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                            deploymentPreFlightResourceInstance.ProvisioningState = provisioningStateInstance2;
+                                        }
+                                        
+                                        JToken planValue = validatedResourcesValue["plan"];
+                                        if (planValue != null && planValue.Type != JTokenType.Null)
+                                        {
+                                            Plan planInstance = new Plan();
+                                            deploymentPreFlightResourceInstance.Plan = planInstance;
+                                            
+                                            JToken nameValue2 = planValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance2 = ((string)nameValue2);
+                                                planInstance.Name = nameInstance2;
+                                            }
+                                            
+                                            JToken publisherValue = planValue["publisher"];
+                                            if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                            {
+                                                string publisherInstance = ((string)publisherValue);
+                                                planInstance.Publisher = publisherInstance;
+                                            }
+                                            
+                                            JToken productValue = planValue["product"];
+                                            if (productValue != null && productValue.Type != JTokenType.Null)
+                                            {
+                                                string productInstance = ((string)productValue);
+                                                planInstance.Product = productInstance;
+                                            }
+                                            
+                                            JToken promotionCodeValue = planValue["promotionCode"];
+                                            if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                            {
+                                                string promotionCodeInstance = ((string)promotionCodeValue);
+                                                planInstance.PromotionCode = promotionCodeInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue5 = validatedResourcesValue["id"];
+                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                        {
+                                            string idInstance5 = ((string)idValue5);
+                                            deploymentPreFlightResourceInstance.Id = idInstance5;
+                                        }
+                                        
+                                        JToken nameValue3 = validatedResourcesValue["name"];
+                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance3 = ((string)nameValue3);
+                                            deploymentPreFlightResourceInstance.Name = nameInstance3;
+                                        }
+                                        
+                                        JToken typeValue = validatedResourcesValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance = ((string)typeValue);
+                                            deploymentPreFlightResourceInstance.Type = typeInstance;
+                                        }
+                                        
+                                        JToken locationValue = validatedResourcesValue["location"];
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance = ((string)locationValue);
+                                            deploymentPreFlightResourceInstance.Location = locationInstance;
+                                        }
+                                        
+                                        JToken tagsSequenceElement = ((JToken)validatedResourcesValue["tags"]);
+                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement)
+                                            {
+                                                string tagsKey = ((string)property2.Name);
+                                                string tagsValue = ((string)property2.Value);
+                                                deploymentPreFlightResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken debugSettingValue = propertiesValue["debugSetting"];
+                                if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                    }
+                                }
+                                
                                 JToken templateValue = propertiesValue["template"];
                                 if (templateValue != null && templateValue.Type != JTokenType.Null)
                                 {
@@ -1500,6 +1800,20 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                     propertiesInstance.Mode = modeInstance;
+                                }
+                                
+                                JToken debugSettingValue2 = propertiesValue["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance2;
+                                    
+                                    JToken detailLevelValue2 = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance2 = ((string)detailLevelValue2);
+                                        debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
+                                    }
                                 }
                             }
                         }
@@ -1595,7 +1909,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1716,6 +2030,13 @@ namespace Microsoft.Azure.Management.Resources
                                         {
                                             DateTime timestampInstance = ((DateTime)timestampValue);
                                             propertiesInstance.Timestamp = timestampInstance;
+                                        }
+                                        
+                                        JToken durationValue = propertiesValue["duration"];
+                                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                            propertiesInstance.Duration = durationInstance;
                                         }
                                         
                                         JToken outputsValue = propertiesValue["outputs"];
@@ -1864,6 +2185,134 @@ namespace Microsoft.Azure.Management.Resources
                                             }
                                         }
                                         
+                                        JToken validatedResourcesArray = propertiesValue["validatedResources"];
+                                        if (validatedResourcesArray != null && validatedResourcesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken validatedResourcesValue in ((JArray)validatedResourcesArray))
+                                            {
+                                                DeploymentPreFlightResource deploymentPreFlightResourceInstance = new DeploymentPreFlightResource();
+                                                propertiesInstance.ValidatedResources.Add(deploymentPreFlightResourceInstance);
+                                                
+                                                JToken apiVersionValue = validatedResourcesValue["apiVersion"];
+                                                if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string apiVersionInstance = ((string)apiVersionValue);
+                                                    deploymentPreFlightResourceInstance.ApiVersion = apiVersionInstance;
+                                                }
+                                                
+                                                JToken dependsOnArray2 = validatedResourcesValue["dependsOn"];
+                                                if (dependsOnArray2 != null && dependsOnArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken dependsOnValue2 in ((JArray)dependsOnArray2))
+                                                    {
+                                                        deploymentPreFlightResourceInstance.DependsOn.Add(((string)dependsOnValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesValue3 = validatedResourcesValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    string propertiesInstance2 = propertiesValue3.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                    deploymentPreFlightResourceInstance.Properties = propertiesInstance2;
+                                                }
+                                                
+                                                JToken provisioningStateValue2 = validatedResourcesValue["provisioningState"];
+                                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                                {
+                                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                    deploymentPreFlightResourceInstance.ProvisioningState = provisioningStateInstance2;
+                                                }
+                                                
+                                                JToken planValue = validatedResourcesValue["plan"];
+                                                if (planValue != null && planValue.Type != JTokenType.Null)
+                                                {
+                                                    Plan planInstance = new Plan();
+                                                    deploymentPreFlightResourceInstance.Plan = planInstance;
+                                                    
+                                                    JToken nameValue2 = planValue["name"];
+                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance2 = ((string)nameValue2);
+                                                        planInstance.Name = nameInstance2;
+                                                    }
+                                                    
+                                                    JToken publisherValue = planValue["publisher"];
+                                                    if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                                    {
+                                                        string publisherInstance = ((string)publisherValue);
+                                                        planInstance.Publisher = publisherInstance;
+                                                    }
+                                                    
+                                                    JToken productValue = planValue["product"];
+                                                    if (productValue != null && productValue.Type != JTokenType.Null)
+                                                    {
+                                                        string productInstance = ((string)productValue);
+                                                        planInstance.Product = productInstance;
+                                                    }
+                                                    
+                                                    JToken promotionCodeValue = planValue["promotionCode"];
+                                                    if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string promotionCodeInstance = ((string)promotionCodeValue);
+                                                        planInstance.PromotionCode = promotionCodeInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken idValue5 = validatedResourcesValue["id"];
+                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance5 = ((string)idValue5);
+                                                    deploymentPreFlightResourceInstance.Id = idInstance5;
+                                                }
+                                                
+                                                JToken nameValue3 = validatedResourcesValue["name"];
+                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance3 = ((string)nameValue3);
+                                                    deploymentPreFlightResourceInstance.Name = nameInstance3;
+                                                }
+                                                
+                                                JToken typeValue = validatedResourcesValue["type"];
+                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance = ((string)typeValue);
+                                                    deploymentPreFlightResourceInstance.Type = typeInstance;
+                                                }
+                                                
+                                                JToken locationValue = validatedResourcesValue["location"];
+                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance = ((string)locationValue);
+                                                    deploymentPreFlightResourceInstance.Location = locationInstance;
+                                                }
+                                                
+                                                JToken tagsSequenceElement = ((JToken)validatedResourcesValue["tags"]);
+                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in tagsSequenceElement)
+                                                    {
+                                                        string tagsKey = ((string)property2.Name);
+                                                        string tagsValue = ((string)property2.Value);
+                                                        deploymentPreFlightResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken debugSettingValue = propertiesValue["debugSetting"];
+                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                            
+                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            {
+                                                string detailLevelInstance = ((string)detailLevelValue);
+                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                            }
+                                        }
+                                        
                                         JToken templateValue = propertiesValue["template"];
                                         if (templateValue != null && templateValue.Type != JTokenType.Null)
                                         {
@@ -1925,6 +2374,20 @@ namespace Microsoft.Azure.Management.Resources
                                         {
                                             DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                             propertiesInstance.Mode = modeInstance;
+                                        }
+                                        
+                                        JToken debugSettingValue2 = propertiesValue["debugSetting"];
+                                        if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSetting = debugSettingInstance2;
+                                            
+                                            JToken detailLevelValue2 = debugSettingValue2["detailLevel"];
+                                            if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
+                                            {
+                                                string detailLevelInstance2 = ((string)detailLevelValue2);
+                                                debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
+                                            }
                                         }
                                     }
                                 }
@@ -2110,6 +2573,13 @@ namespace Microsoft.Azure.Management.Resources
                                             propertiesInstance.Timestamp = timestampInstance;
                                         }
                                         
+                                        JToken durationValue = propertiesValue["duration"];
+                                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                            propertiesInstance.Duration = durationInstance;
+                                        }
+                                        
                                         JToken outputsValue = propertiesValue["outputs"];
                                         if (outputsValue != null && outputsValue.Type != JTokenType.Null)
                                         {
@@ -2256,6 +2726,134 @@ namespace Microsoft.Azure.Management.Resources
                                             }
                                         }
                                         
+                                        JToken validatedResourcesArray = propertiesValue["validatedResources"];
+                                        if (validatedResourcesArray != null && validatedResourcesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken validatedResourcesValue in ((JArray)validatedResourcesArray))
+                                            {
+                                                DeploymentPreFlightResource deploymentPreFlightResourceInstance = new DeploymentPreFlightResource();
+                                                propertiesInstance.ValidatedResources.Add(deploymentPreFlightResourceInstance);
+                                                
+                                                JToken apiVersionValue = validatedResourcesValue["apiVersion"];
+                                                if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string apiVersionInstance = ((string)apiVersionValue);
+                                                    deploymentPreFlightResourceInstance.ApiVersion = apiVersionInstance;
+                                                }
+                                                
+                                                JToken dependsOnArray2 = validatedResourcesValue["dependsOn"];
+                                                if (dependsOnArray2 != null && dependsOnArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken dependsOnValue2 in ((JArray)dependsOnArray2))
+                                                    {
+                                                        deploymentPreFlightResourceInstance.DependsOn.Add(((string)dependsOnValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesValue3 = validatedResourcesValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    string propertiesInstance2 = propertiesValue3.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                    deploymentPreFlightResourceInstance.Properties = propertiesInstance2;
+                                                }
+                                                
+                                                JToken provisioningStateValue2 = validatedResourcesValue["provisioningState"];
+                                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                                {
+                                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                    deploymentPreFlightResourceInstance.ProvisioningState = provisioningStateInstance2;
+                                                }
+                                                
+                                                JToken planValue = validatedResourcesValue["plan"];
+                                                if (planValue != null && planValue.Type != JTokenType.Null)
+                                                {
+                                                    Plan planInstance = new Plan();
+                                                    deploymentPreFlightResourceInstance.Plan = planInstance;
+                                                    
+                                                    JToken nameValue2 = planValue["name"];
+                                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance2 = ((string)nameValue2);
+                                                        planInstance.Name = nameInstance2;
+                                                    }
+                                                    
+                                                    JToken publisherValue = planValue["publisher"];
+                                                    if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                                    {
+                                                        string publisherInstance = ((string)publisherValue);
+                                                        planInstance.Publisher = publisherInstance;
+                                                    }
+                                                    
+                                                    JToken productValue = planValue["product"];
+                                                    if (productValue != null && productValue.Type != JTokenType.Null)
+                                                    {
+                                                        string productInstance = ((string)productValue);
+                                                        planInstance.Product = productInstance;
+                                                    }
+                                                    
+                                                    JToken promotionCodeValue = planValue["promotionCode"];
+                                                    if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string promotionCodeInstance = ((string)promotionCodeValue);
+                                                        planInstance.PromotionCode = promotionCodeInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken idValue5 = validatedResourcesValue["id"];
+                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance5 = ((string)idValue5);
+                                                    deploymentPreFlightResourceInstance.Id = idInstance5;
+                                                }
+                                                
+                                                JToken nameValue3 = validatedResourcesValue["name"];
+                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance3 = ((string)nameValue3);
+                                                    deploymentPreFlightResourceInstance.Name = nameInstance3;
+                                                }
+                                                
+                                                JToken typeValue = validatedResourcesValue["type"];
+                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance = ((string)typeValue);
+                                                    deploymentPreFlightResourceInstance.Type = typeInstance;
+                                                }
+                                                
+                                                JToken locationValue = validatedResourcesValue["location"];
+                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance = ((string)locationValue);
+                                                    deploymentPreFlightResourceInstance.Location = locationInstance;
+                                                }
+                                                
+                                                JToken tagsSequenceElement = ((JToken)validatedResourcesValue["tags"]);
+                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in tagsSequenceElement)
+                                                    {
+                                                        string tagsKey = ((string)property2.Name);
+                                                        string tagsValue = ((string)property2.Value);
+                                                        deploymentPreFlightResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken debugSettingValue = propertiesValue["debugSetting"];
+                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                            
+                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            {
+                                                string detailLevelInstance = ((string)detailLevelValue);
+                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                            }
+                                        }
+                                        
                                         JToken templateValue = propertiesValue["template"];
                                         if (templateValue != null && templateValue.Type != JTokenType.Null)
                                         {
@@ -2317,6 +2915,20 @@ namespace Microsoft.Azure.Management.Resources
                                         {
                                             DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                             propertiesInstance.Mode = modeInstance;
+                                        }
+                                        
+                                        JToken debugSettingValue2 = propertiesValue["debugSetting"];
+                                        if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSetting = debugSettingInstance2;
+                                            
+                                            JToken detailLevelValue2 = debugSettingValue2["detailLevel"];
+                                            if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
+                                            {
+                                                string detailLevelInstance2 = ((string)detailLevelValue2);
+                                                debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
+                                            }
                                         }
                                     }
                                 }
@@ -2404,6 +3016,13 @@ namespace Microsoft.Azure.Management.Resources
             }
             if (parameters.Properties != null)
             {
+                if (parameters.Properties.DebugSetting != null)
+                {
+                    if (parameters.Properties.DebugSetting.DeploymentDebugDetailLevel == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.DebugSetting.DeploymentDebugDetailLevel");
+                    }
+                }
                 if (parameters.Properties.ParametersLink != null)
                 {
                     if (parameters.Properties.ParametersLink.Uri == null)
@@ -2446,7 +3065,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/validate";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2527,6 +3146,14 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     propertiesValue["mode"] = parameters.Properties.Mode.ToString();
+                    
+                    if (parameters.Properties.DebugSetting != null)
+                    {
+                        JObject debugSettingValue = new JObject();
+                        propertiesValue["debugSetting"] = debugSettingValue;
+                        
+                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DeploymentDebugDetailLevel;
+                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -2578,59 +3205,35 @@ namespace Microsoft.Azure.Management.Resources
                             JToken errorValue = responseDoc["error"];
                             if (errorValue != null && errorValue.Type != JTokenType.Null)
                             {
-                                ResourceManagementErrorWithDetails errorInstance = new ResourceManagementErrorWithDetails();
+                                ResourceManagementError errorInstance = new ResourceManagementError();
                                 result.Error = errorInstance;
                                 
-                                JToken detailsArray = errorValue["details"];
-                                if (detailsArray != null && detailsArray.Type != JTokenType.Null)
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken detailsValue in ((JArray)detailsArray))
-                                    {
-                                        ResourceManagementError resourceManagementErrorInstance = new ResourceManagementError();
-                                        errorInstance.Details.Add(resourceManagementErrorInstance);
-                                        
-                                        JToken codeValue = detailsValue["code"];
-                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                        {
-                                            string codeInstance = ((string)codeValue);
-                                            resourceManagementErrorInstance.Code = codeInstance;
-                                        }
-                                        
-                                        JToken messageValue = detailsValue["message"];
-                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                        {
-                                            string messageInstance = ((string)messageValue);
-                                            resourceManagementErrorInstance.Message = messageInstance;
-                                        }
-                                        
-                                        JToken targetValue = detailsValue["target"];
-                                        if (targetValue != null && targetValue.Type != JTokenType.Null)
-                                        {
-                                            string targetInstance = ((string)targetValue);
-                                            resourceManagementErrorInstance.Target = targetInstance;
-                                        }
-                                    }
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
                                 }
                                 
-                                JToken codeValue2 = errorValue["code"];
-                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
                                 {
-                                    string codeInstance2 = ((string)codeValue2);
-                                    errorInstance.Code = codeInstance2;
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
                                 }
                                 
-                                JToken messageValue2 = errorValue["message"];
-                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                JToken targetValue = errorValue["target"];
+                                if (targetValue != null && targetValue.Type != JTokenType.Null)
                                 {
-                                    string messageInstance2 = ((string)messageValue2);
-                                    errorInstance.Message = messageInstance2;
+                                    string targetInstance = ((string)targetValue);
+                                    errorInstance.Target = targetInstance;
                                 }
                                 
-                                JToken targetValue2 = errorValue["target"];
-                                if (targetValue2 != null && targetValue2.Type != JTokenType.Null)
+                                JToken detailsValue = errorValue["details"];
+                                if (detailsValue != null && detailsValue.Type != JTokenType.Null)
                                 {
-                                    string targetInstance2 = ((string)targetValue2);
-                                    errorInstance.Target = targetInstance2;
+                                    string detailsInstance = detailsValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                    errorInstance.Details = detailsInstance;
                                 }
                             }
                             
@@ -2659,6 +3262,13 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DateTime timestampInstance = ((DateTime)timestampValue);
                                     propertiesInstance.Timestamp = timestampInstance;
+                                }
+                                
+                                JToken durationValue = propertiesValue2["duration"];
+                                if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
+                                    propertiesInstance.Duration = durationInstance;
                                 }
                                 
                                 JToken outputsValue = propertiesValue2["outputs"];
@@ -2807,6 +3417,134 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken validatedResourcesArray = propertiesValue2["validatedResources"];
+                                if (validatedResourcesArray != null && validatedResourcesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken validatedResourcesValue in ((JArray)validatedResourcesArray))
+                                    {
+                                        DeploymentPreFlightResource deploymentPreFlightResourceInstance = new DeploymentPreFlightResource();
+                                        propertiesInstance.ValidatedResources.Add(deploymentPreFlightResourceInstance);
+                                        
+                                        JToken apiVersionValue = validatedResourcesValue["apiVersion"];
+                                        if (apiVersionValue != null && apiVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string apiVersionInstance = ((string)apiVersionValue);
+                                            deploymentPreFlightResourceInstance.ApiVersion = apiVersionInstance;
+                                        }
+                                        
+                                        JToken dependsOnArray2 = validatedResourcesValue["dependsOn"];
+                                        if (dependsOnArray2 != null && dependsOnArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken dependsOnValue2 in ((JArray)dependsOnArray2))
+                                            {
+                                                deploymentPreFlightResourceInstance.DependsOn.Add(((string)dependsOnValue2));
+                                            }
+                                        }
+                                        
+                                        JToken propertiesValue4 = validatedResourcesValue["properties"];
+                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                        {
+                                            string propertiesInstance2 = propertiesValue4.ToString(Newtonsoft.Json.Formatting.Indented);
+                                            deploymentPreFlightResourceInstance.Properties = propertiesInstance2;
+                                        }
+                                        
+                                        JToken provisioningStateValue2 = validatedResourcesValue["provisioningState"];
+                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                            deploymentPreFlightResourceInstance.ProvisioningState = provisioningStateInstance2;
+                                        }
+                                        
+                                        JToken planValue = validatedResourcesValue["plan"];
+                                        if (planValue != null && planValue.Type != JTokenType.Null)
+                                        {
+                                            Plan planInstance = new Plan();
+                                            deploymentPreFlightResourceInstance.Plan = planInstance;
+                                            
+                                            JToken nameValue = planValue["name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                planInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken publisherValue = planValue["publisher"];
+                                            if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                            {
+                                                string publisherInstance = ((string)publisherValue);
+                                                planInstance.Publisher = publisherInstance;
+                                            }
+                                            
+                                            JToken productValue = planValue["product"];
+                                            if (productValue != null && productValue.Type != JTokenType.Null)
+                                            {
+                                                string productInstance = ((string)productValue);
+                                                planInstance.Product = productInstance;
+                                            }
+                                            
+                                            JToken promotionCodeValue = planValue["promotionCode"];
+                                            if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                            {
+                                                string promotionCodeInstance = ((string)promotionCodeValue);
+                                                planInstance.PromotionCode = promotionCodeInstance;
+                                            }
+                                        }
+                                        
+                                        JToken idValue4 = validatedResourcesValue["id"];
+                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                        {
+                                            string idInstance4 = ((string)idValue4);
+                                            deploymentPreFlightResourceInstance.Id = idInstance4;
+                                        }
+                                        
+                                        JToken nameValue2 = validatedResourcesValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            deploymentPreFlightResourceInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken typeValue = validatedResourcesValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance = ((string)typeValue);
+                                            deploymentPreFlightResourceInstance.Type = typeInstance;
+                                        }
+                                        
+                                        JToken locationValue = validatedResourcesValue["location"];
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance = ((string)locationValue);
+                                            deploymentPreFlightResourceInstance.Location = locationInstance;
+                                        }
+                                        
+                                        JToken tagsSequenceElement = ((JToken)validatedResourcesValue["tags"]);
+                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in tagsSequenceElement)
+                                            {
+                                                string tagsKey = ((string)property2.Name);
+                                                string tagsValue = ((string)property2.Value);
+                                                deploymentPreFlightResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                    }
+                                }
+                                
                                 JToken templateValue = propertiesValue2["template"];
                                 if (templateValue != null && templateValue.Type != JTokenType.Null)
                                 {
@@ -2868,6 +3606,20 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                     propertiesInstance.Mode = modeInstance;
+                                }
+                                
+                                JToken debugSettingValue3 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue3 != null && debugSettingValue3.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance2;
+                                    
+                                    JToken detailLevelValue2 = debugSettingValue3["detailLevel"];
+                                    if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance2 = ((string)detailLevelValue2);
+                                        debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
+                                    }
                                 }
                             }
                         }

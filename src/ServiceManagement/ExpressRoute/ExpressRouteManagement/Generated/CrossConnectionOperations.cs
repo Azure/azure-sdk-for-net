@@ -558,6 +558,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 crossConnectionInstance.STag = sTagInstance;
                             }
                             
+                            XElement serviceKeyElement = crossConnectionElement.Element(XName.Get("ServiceKey", "http://schemas.microsoft.com/windowsazure"));
+                            if (serviceKeyElement != null)
+                            {
+                                string serviceKeyInstance = serviceKeyElement.Value;
+                                crossConnectionInstance.ServiceKey = serviceKeyInstance;
+                            }
+                            
                             XElement statusElement = crossConnectionElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null)
                             {
@@ -939,6 +946,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                     crossConnectionInstance.STag = sTagInstance;
                                 }
                                 
+                                XElement serviceKeyElement = crossConnectionsElement.Element(XName.Get("ServiceKey", "http://schemas.microsoft.com/windowsazure"));
+                                if (serviceKeyElement != null)
+                                {
+                                    string serviceKeyInstance = serviceKeyElement.Value;
+                                    crossConnectionInstance.ServiceKey = serviceKeyInstance;
+                                }
+                                
                                 XElement statusElement = crossConnectionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                                 if (statusElement != null)
                                 {
@@ -1021,7 +1035,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1115,7 +1129,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

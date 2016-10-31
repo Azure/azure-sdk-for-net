@@ -13,18 +13,16 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
-using Microsoft.WindowsAzure.Management;
-using Microsoft.WindowsAzure.Management.ServiceBus;
-using Microsoft.WindowsAzure.Management.ServiceBus.Models;
-using Microsoft.Azure.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Management.ServiceBus;
+using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 using Xunit;
 
 namespace ServiceBus.Tests
@@ -59,7 +57,58 @@ namespace ServiceBus.Tests
                 int retries = 0;
                 while (true)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(4));
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Thread.Sleep(TimeSpan.FromSeconds(4));
+                    }
+
+                    var description = sbClient.Namespaces.GetAsync(namespaceName, CancellationToken.None).Result;
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    if (description.Namespace.Status.Equals("Active", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        break;
+                    }
+
+                    retries++;
+                    Assert.True(retries < 15, "number of retries to wait for namespace activation too high");
+                }
+            }
+        }
+
+
+        [Fact]
+        public void CanCreateEventHubNamespace()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var sbClient = TestBase.GetServiceClient<ServiceBusManagementClient>(new RDFETestEnvironmentFactory());
+
+                string namespaceName = TestUtilities.GenerateName("testeventHubNS");
+                string location = sbClient.GetServiceBusRegionsAsync(CancellationToken.None).Result.First().FullName;
+                var response = sbClient.Namespaces.CreateNamespaceAsync(
+                    namespaceName,
+                    new ServiceBusNamespaceCreateParameters
+                    {
+                        Region = location,
+                        CreateACSNamespace = false,
+                        NamespaceType = NamespaceType.EventHub
+                    },
+                    new CancellationToken()).Result;
+
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(namespaceName, response.Namespace.Name);
+                Assert.Equal(location, response.Namespace.Region);
+                Assert.Equal(false, response.Namespace.CreateACSNamespace);
+                Assert.Equal(NamespaceType.EventHub, response.Namespace.NamespaceType);
+                int retries = 0;
+                while (true)
+                {
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Thread.Sleep(TimeSpan.FromSeconds(4));
+                    }
+
                     var description = sbClient.Namespaces.GetAsync(namespaceName, CancellationToken.None).Result;
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                     if (description.Namespace.Status.Equals("Active", StringComparison.InvariantCultureIgnoreCase))

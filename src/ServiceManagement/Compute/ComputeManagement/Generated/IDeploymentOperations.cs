@@ -37,6 +37,51 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public partial interface IDeploymentOperations
     {
         /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> AbortMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Abort Deployment Operation validates and aborts your deployment
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginAbortMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Changing Deployment Configuration By Name operation
         /// initiates a change to the deployment configuration. This operation
         /// is an asynchronous operation. To determine whether the Management
@@ -97,6 +142,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> BeginChangingConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginCommitMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Creating Deployment operation uploads a new service
@@ -294,6 +358,28 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> BeginGettingPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginPrepareMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Rebooting Role Instance By Deployment Name operation
@@ -882,6 +968,32 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationStatusResponse> ChangeConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Commit Deployment Operation validates and commits your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> CommitMigrationAsync(string serviceName, string deploymentName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Create Deployment operation uploads a new service package and
         /// creates a new deployment in the staging or production
         /// environments. This operation is an asynchronous operation. To
@@ -1214,6 +1326,35 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// that impacted a deployment in the optionally provided timeframe.
         /// </returns>
         Task<DeploymentEventListResponse> ListEventsBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Prepare Deployment Operation validates and prepares your
+        /// deployment for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> PrepareMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reboot Role Instance By Deployment Name operation requests a
@@ -1747,6 +1888,27 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// the failure.
         /// </returns>
         Task<OperationStatusResponse> UpgradeBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Deployment Network resource parameters for migration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        Task<XrpMigrationValidateDeploymentResponse> ValidateMigrationAsync(string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Walk Upgrade Domain By Deployment Name operation specifies an

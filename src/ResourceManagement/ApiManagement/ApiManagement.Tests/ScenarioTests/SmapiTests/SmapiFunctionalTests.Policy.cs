@@ -27,19 +27,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
     {
         public const string TenantValid =
                 @"<policies>
-                    <inbound>
-                        <find-and-replace from=""aaa"" to=""BBB"" />
-                        <set-header name=""ETag"" exists-action=""skip"">
-                            <value>bbyby</value>
-                            <!-- for multiple headers with the same name add additional value elements -->
-                        </set-header>
-                        <set-query-parameter name=""additional"" exists-action=""append"">
-                            <value>xxbbcczc</value>
-                            <!-- for multiple parameters with the same name add additional value elements -->
-                        </set-query-parameter>
-                        <cross-domain />
-                    </inbound>
-                    <outbound />
+	                <inbound>
+	                    <find-and-replace from=""aaa"" to=""BBB"" />
+	                    <set-header name=""ETag"" exists-action=""skip"">
+	                        <value>bbyby</value>
+	                    <!-- for multiple headers with the same name add additional value elements -->
+	                    </set-header>
+	                    <set-query-parameter name=""additional"" exists-action=""append"">
+	                         <value>xxbbcczc</value>
+	                    <!-- for multiple parameters with the same name add additional value elements -->
+	                    </set-query-parameter>
+	                </inbound>
+	                <backend>
+		                <forward-request follow-redirects=""true"" />
+                    </backend>
+                    <outbound>
+                    </outbound>
                 </policies>";
 
         public const string ProductValid =
@@ -49,6 +52,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                         <quota calls=""100"" renewal-period=""604800"" />
                         <base />
                     </inbound>
+                    <backend>
+		                <forward-request follow-redirects=""true"" />
+                    </backend>
                     <outbound>
                         <base />
                     </outbound>
@@ -64,6 +70,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     <vary-by-header>Accept-Charset</vary-by-header>
                     </cache-lookup>
                 </inbound>
+                <backend>
+		                <forward-request follow-redirects=""true"" />
+                </backend>
                 <outbound>
                     <cache-store duration=""10"" />
                     <base />
@@ -76,6 +85,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                         <base />
                         <rewrite-uri template=""/resource"" />
                     </inbound>
+                    <backend>
+		                <forward-request follow-redirects=""true"" />
+                    </backend>
                     <outbound>
                         <base />
                     </outbound>
@@ -109,7 +121,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     format,
                     policyDoc.ToStream(),
-                    null);
+                    "*");
 
                 Assert.NotNull(setResponse);
 
@@ -178,7 +190,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     api.Id,
                     format,
-                    policyDoc.ToStream());
+                    policyDoc.ToStream(),
+                    "*");
 
                 Assert.NotNull(setResponse);
 
@@ -251,7 +264,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     operation.OperationId,
                     format,
                     policyDoc.ToStream(),
-                    null);
+                    "*");
 
                 Assert.NotNull(setResponse);
 
@@ -330,7 +343,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     product.Id,
                     format,
-                    policyDoc.ToStream());
+                    policyDoc.ToStream(),
+                    "*");
 
                 Assert.NotNull(setResponse);
 

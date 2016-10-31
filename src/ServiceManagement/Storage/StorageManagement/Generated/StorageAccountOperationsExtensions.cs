@@ -40,6 +40,152 @@ namespace Microsoft.WindowsAzure.Management.Storage
     public static partial class StorageAccountOperationsExtensions
     {
         /// <summary>
+        /// Abort storage account migration api validates and aborts the given
+        /// storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse AbortMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).AbortMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Abort storage account migration api validates and aborts the given
+        /// storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AbortMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.AbortMigrationAsync(storageAccountName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Abort storage account migration api validates and aborts the given
+        /// storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginAbortMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).BeginAbortMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Abort storage account migration api validates and aborts the given
+        /// storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginAbortMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.BeginAbortMigrationAsync(storageAccountName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit storage account migration api validates and commits the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginCommitMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).BeginCommitMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit storage account migration api validates and commits the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginCommitMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.BeginCommitMigrationAsync(storageAccountName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Creating Storage Account operation creates a new storage
         /// account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
@@ -90,6 +236,50 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
+        /// Prepare storage account migration api validates and prepares the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginPrepareMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).BeginPrepareMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare storage account migration api validates and prepares the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginPrepareMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.BeginPrepareMigrationAsync(storageAccountName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Check Name Availability operation checks if a storage account
         /// name is available for use in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
@@ -135,6 +325,64 @@ namespace Microsoft.WindowsAzure.Management.Storage
         public static Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IStorageAccountOperations operations, string accountName)
         {
             return operations.CheckNameAvailabilityAsync(accountName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit storage account migration api validates and commits the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse CommitMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).CommitMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit storage account migration api validates and commits the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> CommitMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.CommitMigrationAsync(storageAccountName, CancellationToken.None);
         }
         
         /// <summary>
@@ -382,6 +630,64 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
+        /// Prepare storage account migration api validates and prepares the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse PrepareMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).PrepareMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare storage account migration api validates and prepares the
+        /// given storage account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> PrepareMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.PrepareMigrationAsync(storageAccountName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Regenerate Keys operation regenerates the primary or secondary
         /// access key for the specified storage account.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460795.aspx
@@ -483,6 +789,48 @@ namespace Microsoft.WindowsAzure.Management.Storage
         public static Task<AzureOperationResponse> UpdateAsync(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
             return operations.UpdateAsync(accountName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Validate storage account migration api validates the given storage
+        /// account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Storage Account Migration operation response.
+        /// </returns>
+        public static XrpMigrationValidateStorageResponse ValidateMigration(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageAccountOperations)s).ValidateMigrationAsync(storageAccountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Validate storage account migration api validates the given storage
+        /// account for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// Required. Name of storage account to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Storage Account Migration operation response.
+        /// </returns>
+        public static Task<XrpMigrationValidateStorageResponse> ValidateMigrationAsync(this IStorageAccountOperations operations, string storageAccountName)
+        {
+            return operations.ValidateMigrationAsync(storageAccountName, CancellationToken.None);
         }
     }
 }

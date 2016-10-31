@@ -15,7 +15,9 @@
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
@@ -47,7 +49,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                     ApiManagementServiceName,
                     new ApiServiceUploadCertificateParameters
                     {
-                        CertificatePassword = "powershelltest",
+                        CertificatePassword = "g0BdrCRORWI2ctk_g5Wdf5QpTsI9vxnw",
                         EncodedCertificate = Convert.ToBase64String(certificate),
                         Type = HostnameType.Portal
                     });
@@ -55,10 +57,42 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(response.Value);
-                Assert.Equal("CN=*.preview.int-azure-api.net", response.Value.Subject);
-                Assert.Equal("A9B7C36DE11C29F38B9DCDA5D96BA36B9C777106", response.Value.Thumbprint, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal("CN=*.powershelltest.net", response.Value.Subject);
+                Assert.Equal("E861A19B22EE98AC71F84AC00C5A05E2E7206820", response.Value.Thumbprint, StringComparer.OrdinalIgnoreCase);
 
-                // TODO: implement updatehostname verification
+                // now setup the hostname for proxy
+                var proxyHostConfig = new HostnameConfiguration
+                {
+                    Type = HostnameType.Proxy,
+                    Certificate = new CertificateInformation
+                    {
+                        Thumbprint = response.Value.Thumbprint,
+                        Subject = response.Value.Subject,
+                        Expiry = response.Value.Expiry
+                    },
+                    Hostname = "apimproxy.powershelltest.net"
+                };
+
+                var updateHostNameResponse = apiManagementClient.ResourceProvider.UpdateHostname(
+                    ResourceGroupName,
+                    ApiManagementServiceName,
+                    new ApiServiceUpdateHostnameParameters
+                    {
+                        HostnamesToCreateOrUpdate = new List<HostnameConfiguration> {proxyHostConfig}
+                    });
+
+                Assert.NotNull(updateHostNameResponse);
+                Assert.Equal(HttpStatusCode.OK, updateHostNameResponse.StatusCode);
+                Assert.NotNull(updateHostNameResponse.Value);
+                Assert.NotNull(updateHostNameResponse.Value.Properties);
+                Assert.NotNull(updateHostNameResponse.Value.Properties.HostnameConfigurations);
+                Assert.True(updateHostNameResponse.Value.Properties.HostnameConfigurations.Any());
+                Assert.Equal("apimproxy.powershelltest.net",
+                    updateHostNameResponse.Value.Properties.HostnameConfigurations[0].Hostname);
+                Assert.Equal(HostnameType.Proxy,
+                    updateHostNameResponse.Value.Properties.HostnameConfigurations[0].Type);
+                Assert.Equal("E861A19B22EE98AC71F84AC00C5A05E2E7206820",
+                    updateHostNameResponse.Value.Properties.HostnameConfigurations[0].Certificate.Thumbprint);
             }
         }
     }

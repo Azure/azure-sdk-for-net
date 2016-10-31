@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using Microsoft.WindowsAzure;
 
 [assembly: CLSCompliant(true)]
 namespace Microsoft.Azure
@@ -66,7 +67,7 @@ namespace Microsoft.Azure
 
                         if (isAvailable)
                         {
-                            Trace.WriteLine(message);
+                            WriteTraceLine(message);
                         }
                     }
                     catch (TargetInvocationException e)
@@ -111,6 +112,56 @@ namespace Microsoft.Azure
 
         /// <summary>
         /// Gets a setting with the given name.
+        /// Setting throwIfNotFound to true will result in blow up the app if it can't find the setting
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <param name="outputResultsToTrace"></param>
+        /// /// <param name="throwIfNotFoundInRuntime"></param>
+        /// <returns>Setting value or null if such setting does not exist.</returns>
+        internal string GetSetting(string name, bool outputResultsToTrace, bool throwIfNotFoundInRuntime)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            string value = null;
+
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, outputResultsToTrace);
+            if (value == null)
+            {
+                if (throwIfNotFoundInRuntime)
+                {
+                    var errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.ErrorSettingNotFoundInRuntimeString, name);
+                    throw new SettingsPropertyNotFoundException(errorMessage);
+                }
+
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], outputResultsToTrace);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name.
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <param name="outputResultsToTrace"></param>
+        /// <returns>Setting value or null if such setting does not exist.</returns>
+        internal string GetSetting(string name, bool outputResultsToTrace)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            string value = null;
+
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, outputResultsToTrace);
+            if (value == null)
+            {
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], outputResultsToTrace);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name. This method is included for backwards compatibility.
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <returns>Setting value or null if such setting does not exist.</returns>
@@ -120,10 +171,10 @@ namespace Microsoft.Azure
 
             string value = null;
 
-            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting);
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, true);
             if (value == null)
             {
-                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n]);
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], true);
             }
 
             return value;
@@ -137,29 +188,33 @@ namespace Microsoft.Azure
         /// <param name="getValue">Method to obtain given setting.</param>
         /// <returns>Setting value, or null if not found.</returns>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Necessary for robust handling withing the configuration module.")]
-        private static string GetValue(string providerName, string settingName, Func<string, string> getValue)
+        private static string GetValue(string providerName, string settingName, Func<string, string> getValue, bool outputResultsToTrace)
         {
             string value = getValue(settingName);
-            string message;
 
-            if (value != null)
+            if (outputResultsToTrace)
             {
-                message = "PASS";
-            }
-            else
-            {
-                message = "FAIL";
-            }
+                string message;
 
-            message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
+                if (value != null)
+                {
+                    message = "PASS";
+                }
+                else
+                {
+                    message = "FAIL";
+                }
 
-            try
-            {
-                Trace.WriteLine(message);
-            }
-            catch (Exception)
-            {
-                // Ommit writing the trace message, running outside of dev fabric.
+                message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
+
+                try
+                {
+                    WriteTraceLine(message);
+                }
+                catch (Exception)
+                {
+                    // Omit writing the trace message, running outside of dev fabric.
+                }
             }
 
             return value;
@@ -198,8 +253,8 @@ namespace Microsoft.Azure
         /// runtime assembly.
         /// </summary>
         /// <returns>Loaded assembly, if any.</returns>
-        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom", 
-            Justification= "The ServiceRuntime.dll has to be loaded at runtime so calling Assembly.LoadFrom method is essential to do the loading")]
+        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom",
+            Justification = "The ServiceRuntime.dll has to be loaded at runtime so calling Assembly.LoadFrom method is essential to do the loading")]
         private Assembly GetServiceRuntimeAssembly()
         {
             Assembly assembly = null;
@@ -219,8 +274,8 @@ namespace Microsoft.Azure
                 {
                     // The following exceptions are ignored for enabling configuration manager to proceed
                     // and load the configuration from application settings instead of using ServiceRuntime.
-                    if (!(e is FileNotFoundException || 
-                          e is FileLoadException || 
+                    if (!(e is FileNotFoundException ||
+                          e is FileLoadException ||
                           e is BadImageFormatException))
                     {
                         throw;
@@ -229,6 +284,15 @@ namespace Microsoft.Azure
             }
 
             return assembly;
+        }
+
+        /// <summary>
+        /// Writes to trace output if WriteToTrace is true
+        /// </summary>
+        /// <param name="message">The message to write to Trace</param>
+        private static void WriteTraceLine(string message)
+        {
+            Trace.WriteLine(message);
         }
     }
 }

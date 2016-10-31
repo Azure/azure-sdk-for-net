@@ -63,6 +63,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._port = value; }
         }
         
+        private string _probe;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Probe
+        {
+            get { return this._probe; }
+            set { this._probe = value; }
+        }
+        
         private Protocol _protocol;
         
         /// <summary>
@@ -72,6 +83,18 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         {
             get { return this._protocol; }
             set { this._protocol = value; }
+        }
+        
+        private uint _requestTimeout;
+        
+        /// <summary>
+        /// Optional. RequestTimeout in seconds. ARR will fail the request if
+        /// response not received within RequestTimeout
+        /// </summary>
+        public uint RequestTimeout
+        {
+            get { return this._requestTimeout; }
+            set { this._requestTimeout = value; }
         }
         
         /// <summary>

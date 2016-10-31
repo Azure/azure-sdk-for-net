@@ -72,7 +72,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -96,10 +97,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='policyStream'>
         /// Policy stream.
+        /// </param>
+        /// <param name='etag'>
+        /// ETag.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -108,6 +113,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, string etag, CancellationToken cancellationToken);
     }
 }

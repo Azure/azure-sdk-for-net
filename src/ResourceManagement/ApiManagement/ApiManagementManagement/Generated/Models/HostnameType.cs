@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Types of API Managrement hostnames.
+    /// Types of API Management hostnames.
     /// </summary>
     public enum HostnameType
     {

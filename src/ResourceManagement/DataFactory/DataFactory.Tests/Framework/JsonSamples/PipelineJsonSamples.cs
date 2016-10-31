@@ -99,6 +99,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 linkedServiceName: ""MyLinkedServiceName""
             }
         ],
+        pipelineMode: ""Scheduled"",
+        expirationTime: ""5.00:00:00"",
         start: ""2001-01-01"",
         end: ""2001-01-01"",
         isPaused: false,
@@ -143,6 +145,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 }
             }
         ],
+        expirationTime: ""1.00:00:00"",
         start: ""2001-01-01"",
         end: ""2001-01-01"",
         isPaused: false,
@@ -208,7 +211,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         isPaused: false,
         runtimeInfo: 
         {
-            deploymentTime: ""2002-01-01""
+            deploymentTime: ""2002-01-01"",
+            pipelineState: ""Completed""
         }
     }
 }
@@ -313,8 +317,23 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         sqlWriterCleanupScript: ""Script"",
-                        sliceIdentifierColumnName: ""SliceID""
+                        sliceIdentifierColumnName: ""SliceID"",
+                        allowPolyBase: true,
+                        polyBaseSettings:
+                        {
+                            rejectType: ""percentage"",
+                            rejectValue: 10,
+                            rejectSampleValue: 100,
+                            useTypeDefault: true
+                        }
                     },
+                    enableStaging: true,
+                    stagingSettings: 
+                    {
+                        linkedServiceName: ""MyStagingBlob"",
+                        path: ""stagingcontainer/path"",
+                        enableCompression: true
+                    }
                 },
                 inputs: 
                 [ 
@@ -476,7 +495,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         isPaused: false,
         runtimeInfo: 
         {
-            deploymentTime: ""2002-01-01""
+            deploymentTime: ""2002-01-01"",
+            pipelineState: ""Running""
         }
     }
 }
@@ -578,6 +598,59 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string AzureMLPipelineWithWebServiceInputs = @"
+{
+    name: ""My machine learning pipeline WebServiceInputs"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                typeProperties: {
+                    webServiceInputs: {
+                        ""webServiceInput1"": ""csvBlob1"",
+                        ""webServiceInput2"": ""csvBlob2""
+                    },
+                    webServiceOutputs: {
+                        ""webServiceOutput1"": ""sasCopyBlob""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob1""
+                    },
+                    {   
+                        name: ""csvBLob2""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                        timeout: ""00:00:05"",
+                        delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(propertyBagKeys: new string[]
                     {
                         "properties.activities[0].typeProperties.webServiceParameters.oNe",
@@ -632,6 +705,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string AzureMLUpdatePipeline = @"
+{
+    name: ""My updatable machine learning pipeline"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""ML Update Resource Activity"",
+                description: ""Test activity description"", 
+                type: ""AzureMLUpdateResource"",
+                typeProperties: {
+                    trainedModelDatasetName: ""retraining output dataset"",
+                    trainedModelName: ""Decision Tree trained model""
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""retraining output dataset""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""some other output""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                        timeout: ""00:00:05"",
+                        delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
 
 //        [JsonSample("ExtraProperties")]
 //        public const string ExtraPropertiesPipeline = @"
@@ -1023,6 +1142,431 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     }
                 ],
                 linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyAzureDataLakeToAzureDataLake = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from adl to adl"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""AzureDataLakeStoreSource"",
+                        recursive: true,
+                    },
+                    sink: 
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""adlIn""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""adlOut""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(propertyBagKeys: new string[] 
+            { 
+                // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
+                "properties.activities[0].typeProperties.parameters.parameter1",
+                "properties.activities[0].typeProperties.parameters.Parameter2",
+            })]
+        public const string DataLakeAnalyticsActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Data Lake analytics pipeline"",
+        activities:
+        [
+            {
+                name: ""DataLakeAnalyticsUSQL"",
+                inputs: [ {name: ""DataLake-Table-In""} ],
+                outputs: [ {name: ""DataLake-Table-Out""} ],
+                linkedServiceName: ""Linked-ServiceDataLakeAnalytics"",
+                type: ""DataLakeAnalyticsU-SQL"",
+                typeProperties:
+                {
+                    script: ""CREATE DATABASE test;"",
+                    degreeOfParallelism: 3,
+                    priority: 100,
+                    parameters:
+                    {
+                        ""parameter1"": ""value1"",
+                        ""Parameter2"": ""Value2""
+                    }
+                },
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string PiplieModeAndState = @"
+{
+    name: ""OneTime PipelineName"",
+    properties: 
+    {
+        description : ""OneTime Copy from SQL to Blob"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        blobWriterAddHeader: true,
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputBlobDA""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
+            }
+        ],
+        pipelineMode: ""OneTime"",
+        expirationTime: ""2.00:00:00""
+    }
+}
+";
+
+        [JsonSample]
+        public const string PipelineWithDataSet = @"
+{
+    name: ""Pipeline With Dataset"",
+    properties: 
+    {
+        description : ""Copy from SQL to Blob"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        blobWriterAddHeader: true,
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputSqlDA""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
+            }
+        ],
+        ""datasets"":[
+            {
+                name: ""InputSqlDA"",
+                properties:
+                {
+                    type: ""SqlServerTable"",
+                    linkedServiceName: ""MyLinkedServiceName"",
+                    typeProperties:
+                    {            
+                        tableName: ""$EncryptedString$MyEncryptedTableName""            
+                    },
+                    availability:
+                    {
+                        offset: ""01:00:00"",
+                        interval: 1,
+                        anchorDateTime: ""2014-02-27T12:00:00"",
+                        frequency: ""Hour""
+                    }
+                }
+            },
+            {
+                name: ""OutputSqlDA"",
+                properties:
+                {
+                    type: ""SqlServerTable"",
+                    linkedServiceName: ""MyLinkedServiceName"",
+                    typeProperties:
+                    {            
+                        tableName: ""$EncryptedString$MyEncryptedTableName""            
+                    },
+                    availability:
+                    {
+                        offset: ""01:00:00"",
+                        interval: 1,
+                        anchorDateTime: ""2014-02-27T12:00:00"",
+                        frequency: ""Hour""
+                    }
+                }
+            },
+        ]
+    }
+}";
+
+        public const string WebTableCopyActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Web Table."",
+        activities:
+        [
+            {
+                name: ""WebTableCopy"",
+                inputs: [ {name: ""Input""} ],
+                outputs: [ {name: ""Output""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""WebSource""
+                    },
+                    sink: 
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyBlobToAzureDataLakeWithPerformanceParams = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Blob to AzureDataLake with performance parameters"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""BlobSource"",
+                    },
+                     sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                    },
+                    ""parallelCopies"": 5,
+                    ""cloudDataMovementUnits"": 4
+                },
+                inputs:
+                [ 
+                    {
+                        name: ""RawBlob""
+                    }
+                ],
+                outputs:
+                [ 
+                    {
+                        name: ""AdlOut""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string CopyCassandraToBlob = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-Blob""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""CassandraSource"",
+                        ""query"":""select * from table"",
+                        ""consistencyLevel"":""TWO"",
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbActivityPipeline = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-MongoDb""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""MongoDbSource"",
+                        ""query"":""fake query""
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
+                }
             }
         ]
     }

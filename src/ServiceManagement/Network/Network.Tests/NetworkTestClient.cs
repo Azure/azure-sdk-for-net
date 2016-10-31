@@ -215,5 +215,40 @@ namespace Network.Tests
             testOperation.Invoke();
             testOperations.Add(testOperation);
         }
+
+        public NetworkMigrationValidationResponse ValidateVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.ValidateMigration(virtualNetworkName);
+        }
+
+        public OperationStatusResponse PrepareVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.PrepareMigration(virtualNetworkName);
+        }
+
+        public OperationStatusResponse CommitVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.CommitMigration(virtualNetworkName);
+        }
+
+        public OperationStatusResponse AbortVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.AbortMigration(virtualNetworkName);
+        }
+
+        public NetworkMigrationValidationResponse ValidateRouteTableMigration(string routeTableName)
+        {
+            return this.networkClient.Routes.ValidateMigration(routeTableName);
+        }
+
+        public OperationStatusResponse PrepareRouteTableMigration(string routeTableName)
+        {
+            return this.networkClient.Routes.PrepareMigration(routeTableName);
+        }
+
+        public OperationStatusResponse AbortRouteTableMigration(string routeTableName)
+        {
+            return this.networkClient.Routes.AbortMigration(routeTableName);
+        }
     }
 }

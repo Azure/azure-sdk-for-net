@@ -35,6 +35,29 @@ namespace Microsoft.WindowsAzure.Management.Network
     public partial interface IReservedIPOperations
     {
         /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> AbortMigrationAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Associate Reserved IP operation associates a Reserved IP with a
         /// service.
         /// </summary>
@@ -61,6 +84,22 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<OperationStatusResponse> AssociateAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginAbortMigrationAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The BeginAssociate begins to associate a Reserved IP with a service.
         /// </summary>
         /// <param name='reservedIpName'>
@@ -84,6 +123,22 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> BeginAssociatingAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginCommitMigrationAsync(string ipName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Creating Reserved IP operation creates a reserved IP from
@@ -149,6 +204,45 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> BeginDisassociatingAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginPrepareMigrationAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> CommitMigrationAsync(string ipName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Reserved IP operation creates a reserved IP from your
@@ -248,5 +342,43 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response structure for the Server List operation.
         /// </returns>
         Task<NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// reservedIP for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> PrepareMigrationAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Validate reservedip migration api validates the given reservedip
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='ipName'>
+        /// Name of the reservedIP to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Network Migration operation response.
+        /// </returns>
+        Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(string ipName, CancellationToken cancellationToken);
     }
 }

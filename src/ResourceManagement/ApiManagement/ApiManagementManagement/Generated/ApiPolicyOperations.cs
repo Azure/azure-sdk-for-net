@@ -33,6 +33,7 @@ using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.SmapiModels;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement
 {
@@ -136,7 +137,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(aid);
             url = url + "/policy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -242,7 +243,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -301,7 +303,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(aid);
             url = url + "/policy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -369,7 +371,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new PolicyGetResponse();
                         result.PolicyBytes = Encoding.UTF8.GetBytes(responseContent);
-                        
+
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("ETag"))
@@ -418,10 +420,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='policyStream'>
         /// Required. Policy stream.
+        /// </param>
+        /// <param name='etag'>
+        /// Optional. ETag.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -430,7 +436,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, string etag, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -466,6 +472,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("aid", aid);
                 tracingParameters.Add("format", format);
                 tracingParameters.Add("policyStream", policyStream);
+                tracingParameters.Add("etag", etag);
                 TracingAdapter.Enter(invocationId, this, "SetAsync", tracingParameters);
             }
             
@@ -486,7 +493,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(aid);
             url = url + "/policy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -513,6 +520,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.TryAddWithoutValidation("If-Match", etag);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

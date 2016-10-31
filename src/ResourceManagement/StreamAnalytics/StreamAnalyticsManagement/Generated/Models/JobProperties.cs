@@ -107,6 +107,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._eventsOutOfOrderPolicy = value; }
         }
         
+        private IList<Function> _functions;
+        
+        /// <summary>
+        /// Optional. Gets or sets a list of functions.
+        /// </summary>
+        public IList<Function> Functions
+        {
+            get { return this._functions; }
+            set { this._functions = value; }
+        }
+        
         private IList<Input> _inputs;
         
         /// <summary>
@@ -150,6 +161,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         {
             get { return this._lastOutputEventTime; }
             set { this._lastOutputEventTime = value; }
+        }
+        
+        private string _outputErrorPolicy;
+        
+        /// <summary>
+        /// Optional. Gets or sets the output error policy of the stream
+        /// analytics job. Indicates the policy to apply to events that arrive
+        /// at the output and cannot be written to the external storage due to
+        /// being malformed (missing column values, column values of wrong
+        /// type or size). Defaults to "stop".
+        /// </summary>
+        public string OutputErrorPolicy
+        {
+            get { return this._outputErrorPolicy; }
+            set { this._outputErrorPolicy = value; }
         }
         
         private IList<Output> _outputs;

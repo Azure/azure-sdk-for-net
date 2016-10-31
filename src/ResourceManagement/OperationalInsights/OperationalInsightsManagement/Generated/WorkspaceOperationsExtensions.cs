@@ -175,6 +175,114 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
+        /// Disables an intelligence back for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.IWorkspaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <param name='intelligencePackName'>
+        /// Required. The name of the intelligence pack to be disabled.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse DisableIntelligencePack(this IWorkspaceOperations operations, string resourceGroupName, string workspaceName, string intelligencePackName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWorkspaceOperations)s).DisableIntelligencePackAsync(resourceGroupName, workspaceName, intelligencePackName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Disables an intelligence back for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.IWorkspaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <param name='intelligencePackName'>
+        /// Required. The name of the intelligence pack to be disabled.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DisableIntelligencePackAsync(this IWorkspaceOperations operations, string resourceGroupName, string workspaceName, string intelligencePackName)
+        {
+            return operations.DisableIntelligencePackAsync(resourceGroupName, workspaceName, intelligencePackName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Enables an intelligence back for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.IWorkspaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <param name='intelligencePackName'>
+        /// Required. The name of the intelligence pack to be enabled.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse EnableIntelligencePack(this IWorkspaceOperations operations, string resourceGroupName, string workspaceName, string intelligencePackName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWorkspaceOperations)s).EnableIntelligencePackAsync(resourceGroupName, workspaceName, intelligencePackName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Enables an intelligence back for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.IWorkspaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <param name='intelligencePackName'>
+        /// Required. The name of the intelligence pack to be enabled.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> EnableIntelligencePackAsync(this IWorkspaceOperations operations, string resourceGroupName, string workspaceName, string intelligencePackName)
+        {
+            return operations.EnableIntelligencePackAsync(resourceGroupName, workspaceName, intelligencePackName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets a workspace instance.
         /// </summary>
         /// <param name='operations'>
@@ -390,6 +498,54 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public static Task<WorkspaceListResponse> ListInSubscriptionAsync(this IWorkspaceOperations operations)
         {
             return operations.ListInSubscriptionAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Lists all the intelligence packs possible and whether they are
+        /// enabled or disabled for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.IWorkspaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <returns>
+        /// The list intelligence packs operation response.
+        /// </returns>
+        public static WorkspaceListIntelligencePacksResponse ListIntelligencePacks(this IWorkspaceOperations operations, string resourceGroupName, string workspaceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWorkspaceOperations)s).ListIntelligencePacksAsync(resourceGroupName, workspaceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Lists all the intelligence packs possible and whether they are
+        /// enabled or disabled for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.IWorkspaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <returns>
+        /// The list intelligence packs operation response.
+        /// </returns>
+        public static Task<WorkspaceListIntelligencePacksResponse> ListIntelligencePacksAsync(this IWorkspaceOperations operations, string resourceGroupName, string workspaceName)
+        {
+            return operations.ListIntelligencePacksAsync(resourceGroupName, workspaceName, CancellationToken.None);
         }
         
         /// <summary>

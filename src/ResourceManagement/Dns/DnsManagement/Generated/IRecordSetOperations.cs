@@ -51,13 +51,20 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='parameters'>
         /// Parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='ifMatch'>
+        /// The etag of RecordSet.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response to a RecordSet CreateOrUpdate operation.
         /// </returns>
-        Task<RecordSetCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<RecordSetCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetCreateOrUpdateParameters parameters, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
         
         /// <summary>
         /// Removes a RecordSet from a DNS zone.
@@ -74,8 +81,15 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='recordType'>
         /// The type of DNS record.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to delete a record set.
+        /// <param name='ifMatch'>
+        /// Defines the If-Match condition. The delete operation will be
+        /// performed only if the ETag of the zone on the server matches this
+        /// value.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. The delete operation will be
+        /// performed only if the ETag of the zone on the server does not
+        /// match this value.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -84,7 +98,7 @@ namespace Microsoft.Azure.Management.Dns
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetDeleteParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a RecordSet.
@@ -168,5 +182,38 @@ namespace Microsoft.Azure.Management.Dns
         /// The response to a RecordSet List operation.
         /// </returns>
         Task<RecordSetListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates a RecordSet within a DNS zone.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='zoneName'>
+        /// The name of the zone without a terminating dot.
+        /// </param>
+        /// <param name='relativeRecordSetName'>
+        /// The name of the RecordSet, relative to the name of the zone.
+        /// </param>
+        /// <param name='recordType'>
+        /// The type of DNS record.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the CreateOrUpdate operation.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// The etag of Zone.
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// Defines the If-None-Match condition. Set to '*' to force
+        /// Create-If-Not-Exist. Other values will be ignored.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a RecordSet Update operation.
+        /// </returns>
+        Task<RecordSetUpdateResponse> UpdateAsync(string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetUpdateParameters parameters, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
     }
 }

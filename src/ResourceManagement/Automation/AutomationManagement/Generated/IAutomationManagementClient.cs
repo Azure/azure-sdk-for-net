@@ -253,6 +253,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation object data types.  (see
+        /// http://aka.ms/azureautomationsdk/objectdatatypeoperations for more
+        /// information)
+        /// </summary>
+        IObjectDataTypeOperations ObjectDataTypes
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation runbook draft.  (see
         /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
         /// information)
@@ -283,11 +293,31 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation statistics.  (see
+        /// http://aka.ms/azureautomationsdk/statisticsoperations for more
+        /// information)
+        /// </summary>
+        IStatisticsOperations Statistics
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation test jobs.  (see
         /// http://aka.ms/azureautomationsdk/testjoboperations for more
         /// information)
         /// </summary>
         ITestJobOperations TestJobs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation type fields.  (see
+        /// http://aka.ms/azureautomationsdk/typefieldoperations for more
+        /// information)
+        /// </summary>
+        ITypeFieldOperations TypeFields
         {
             get; 
         }

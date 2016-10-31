@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse EnableHttp(this IClusterOperations operations,
+        public static OperationResource EnableHttp(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string username, string password)
         {
             return
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> EnableHttpAsync(this IClusterOperations operations,
+        public static Task<OperationResource> EnableHttpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string username, string password)
         {
             return operations.EnableHttpAsync(resourceGroupName, clusterName, username, password, CancellationToken.None);
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse DisableHttp(this IClusterOperations operations,
+        public static OperationResource DisableHttp(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
             return
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> DisableHttpAsync(this IClusterOperations operations,
+        public static Task<OperationResource> DisableHttpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
             return operations.DisableHttpAsync(resourceGroupName, clusterName, CancellationToken.None);
