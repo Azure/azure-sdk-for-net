@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update
 {
 
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
@@ -12,21 +12,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     /// The stage of an inbound NAT pool update allowing to specify the backend port.
     /// </summary>
     public interface IWithBackendPort  :
-        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate>
+        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate>
     {
     }
     /// <summary>
     /// The stage of an inbound NAT pool update allowing to specify the frontend for the inbound NAT rules in the pool to apply to.
     /// </summary>
     public interface IWithFrontend  :
-        Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate>
+        Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate>
     {
     }
     /// <summary>
     /// The stage of an inbound NAT pool update allowing to specify the transport protocol for the pool to apply to.
     /// </summary>
     public interface IWithProtocol  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate,string>
     {
     }
     /// <summary>
@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     /// </summary>
     public interface IUpdate  :
         ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IWithProtocol,
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IWithFrontend,
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IWithBackendPort,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithProtocol,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithFrontend,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IWithBackendPort,
         IWithFrontendPortRange
     {
     }
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
         /// <param name="from">from the starting port number, between 1 and 65534</param>
         /// <param name="to">to the ending port number, greater than the starting port number and no more than 65534</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate WithFrontendPortRange(int from, int to);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate WithFrontendPortRange(int from, int to);
 
     }
 }

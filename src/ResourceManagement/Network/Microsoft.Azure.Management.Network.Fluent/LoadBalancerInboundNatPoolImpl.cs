@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public partial class LoadBalancerInboundNatPoolImpl  :
         ChildResource<InboundNatPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatPool,
-        ILoadBalancerInboundNatPool.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
-        ILoadBalancerInboundNatPool.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        ILoadBalancerInboundNatPool.Update.IUpdate
+        LoadBalancerInboundNatPool.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
+        LoadBalancerInboundNatPool.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancerInboundNatPool.Update.IUpdate
     {
         internal LoadBalancerInboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) 
             : base(inner, parent)

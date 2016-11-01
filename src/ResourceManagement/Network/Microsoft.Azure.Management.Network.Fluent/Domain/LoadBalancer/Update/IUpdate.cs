@@ -20,8 +20,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition;
     /// <summary>
     /// The stage of the load balancer update allowing to add, remove or modify probes.
     /// </summary>
@@ -333,14 +333,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool</param>
         /// <returns>the first stage of the new inbound NAT pool definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineInboundNatPool(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> DefineInboundNatPool(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing inbound NAT pool.
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool to update</param>
         /// <returns>the first stage of the inbound NAT pool update</returns>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Update.IUpdate UpdateInboundNatPool(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate UpdateInboundNatPool(string name);
 
     }
 }

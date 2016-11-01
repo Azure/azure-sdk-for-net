@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition
 {
 
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
         /// <param name="from">from the starting port number, between 1 and 65534</param>
         /// <param name="to">to the ending port number, greater than the starting port number and no more than 65534</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithBackendPort<ParentT> WithFrontendPortRange(int from, int to);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithBackendPort<ParentT> WithFrontendPortRange(int from, int to);
 
     }
     /// <summary>
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<ParentT>,
         IWithFrontendPortRange<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithBackendPort<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithBackendPort<ParentT>
     {
     }
     /// <summary>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithFrontendPortRange<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontendPortRange<ParentT>>
     {
     }
     /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithFrontend<ParentT>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<ParentT>,string>
     {
     }
     /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
