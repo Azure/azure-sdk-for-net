@@ -13,8 +13,7 @@ namespace Microsoft.Azure.Messaging
     using System.Xml.Serialization;
     using Microsoft.Azure.Messaging.Primitives;
 
-    /// <summary>Represents the unit of communication between ServiceBus clients and Service.</summary>
-    [XmlRoot("BrokeredMessage", Namespace = Constants.Namespace)]
+    /// <summary>Represents the unit of communication between ServiceBus client and Service.</summary>
     public sealed class BrokeredMessage : IDisposable
     {
         /// <summary> The message version </summary>
@@ -49,7 +48,6 @@ namespace Microsoft.Azure.Messaging
         string replyToSessionId;
         DateTime scheduledEnqueueTimeUtc = DateTime.MinValue;
         string sessionId;
-        MessageState state;
         TimeSpan timeToLive;
         string to;
         int version;
@@ -170,7 +168,7 @@ namespace Microsoft.Azure.Messaging
             return clonedDisposables.Count > 0 ? clonedDisposables : null;
         }
 
-        internal static Stream CloneStream(Stream originalStream, bool canThrowException = false)
+        static Stream CloneStream(Stream originalStream, bool canThrowException = false)
         {
             Stream clonedStream = null;
 
@@ -799,24 +797,6 @@ namespace Microsoft.Azure.Messaging
             }
         }
 
-        /// <summary>Gets or sets the state of the message.</summary>
-        /// <value>The state of the message.</value>
-        public MessageState State
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.state;
-            }
-
-            internal set
-            {
-                this.ThrowIfDisposed();
-                this.state = value;
-                this.initializedMembers |= MessageMembers.MessageState;
-            }
-        }
-
         /// <summary>Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. Messages older than their TimeToLive value will expire and no longer be retained in the message store. Subscribers will be unable to receive expired messages.TimeToLive is the maximum lifetime that a message can receive, but its value cannot exceed the entity specified the 
         /// <see cref="Microsoft.ServiceBus.Messaging.QueueDescription.DefaultMessageTimeToLive" /> value on the destination queue or subscription. If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the entity’s DefaultMessageTimeToLive value.</summary> 
         /// <value>The message’s time to live value.</value>
@@ -1365,11 +1345,6 @@ namespace Microsoft.Azure.Messaging
                 if ((originalMessage.initializedMembers & MessageMembers.DeadLetterSource) != 0)
                 {
                     this.DeadLetterSource = originalMessage.DeadLetterSource;
-                }
-
-                if ((originalMessage.InitializedMembers & MessageMembers.MessageState) != 0)
-                {
-                    this.State = originalMessage.State;
                 }
             }
         }

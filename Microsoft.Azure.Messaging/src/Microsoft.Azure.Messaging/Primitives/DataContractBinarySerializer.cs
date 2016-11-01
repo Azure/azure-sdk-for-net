@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using System.Xml;
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Microsoft.Azure.Messaging.Primitives
 {
+    using System;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Xml;
+
     // This class is almost identical to DataContractSerializer; only difference is that 
     // ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer instead of text.
     sealed class DataContractBinarySerializer : XmlObjectSerializer

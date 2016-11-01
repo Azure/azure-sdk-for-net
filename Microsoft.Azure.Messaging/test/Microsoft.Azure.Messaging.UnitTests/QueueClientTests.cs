@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Dynamic;
-
 namespace Microsoft.Azure.Messaging.UnitTests
 {
     using System;
@@ -18,12 +16,7 @@ namespace Microsoft.Azure.Messaging.UnitTests
         public QueueClientTests()
         {
             ConnectionString = Environment.GetEnvironmentVariable("QUEUECLIENTCONNECTIONSTRING");
-
-            //ConnectionString =
-            //  "Endpoint=sb://testvinsustandard924.servicebus.windows.net/;EntityPath=testq;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+nCcyesi2Vdw5eAQeJvR85XMwpj46o2gvxmdizbqXoY=";
-
-            ConnectionString = 
-                "Endpoint=sb://newvinsu1028.servicebus.windows.net/;EntityPath=testq11028;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=7oMVG2as0pelFCFujgSb2JExro7/tZ6oIGcECpljubc=";
+            
             if (string.IsNullOrWhiteSpace(ConnectionString))
             {
                 throw new InvalidOperationException("QUEUECLIENTCONNECTIONSTRING environment variable was not found!");
