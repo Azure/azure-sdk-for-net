@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Search
         /// Creates or updates a Search service in the given resource group. If the
         /// Search service already exists, all properties will be updated with the
         /// given values.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832687.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription. You can
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Search
 
         /// <summary>
         /// Gets the Search service with the given name in the given resource group.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832694.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription. You can
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.Management.Search
         /// <summary>
         /// Deletes a Search service in the given resource group, along with its
         /// associated resources.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832692.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription. You can
@@ -699,7 +699,7 @@ namespace Microsoft.Azure.Management.Search
 
         /// <summary>
         /// Gets a list of all Search services in the given resource group.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832688.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription. You can
@@ -902,7 +902,7 @@ namespace Microsoft.Azure.Management.Search
         /// Checks whether or not the given Search service name is available for use.
         /// Search service names must be globally unique since they are part of the
         /// service URI (https://&lt;name&gt;.search.windows.net).
-        /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='name'>
         /// The Search service name to validate. Search service names must only

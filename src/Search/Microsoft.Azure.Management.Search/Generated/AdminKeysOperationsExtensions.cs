@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Gets the primary and secondary admin API keys for the specified Azure
             /// Search service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Gets the primary and secondary admin API keys for the specified Azure
             /// Search service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Regenerates either the primary or secondary admin API key. You can only
             /// regenerate one key at a time.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832700.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Regenerates either the primary or secondary admin API key. You can only
             /// regenerate one key at a time.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn832700.aspx" />
+            /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

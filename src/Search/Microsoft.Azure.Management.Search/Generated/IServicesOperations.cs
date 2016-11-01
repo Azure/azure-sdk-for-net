@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Search
         /// Creates or updates a Search service in the given resource group.
         /// If the Search service already exists, all properties will be
         /// updated with the given values.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832687.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Search
         /// <summary>
         /// Gets the Search service with the given name in the given resource
         /// group.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832694.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Search
         /// <summary>
         /// Deletes a Search service in the given resource group, along with
         /// its associated resources.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832692.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Search
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets a list of all Search services in the given resource group.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832688.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Search
         /// for use. Search service names must be globally unique since they
         /// are part of the service URI
         /// (https://&lt;name&gt;.search.windows.net).
-        /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='name'>
         /// The Search service name to validate. Search service names must
