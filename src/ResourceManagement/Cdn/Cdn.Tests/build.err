@@ -1,0 +1,1 @@
+     1>E:\azure-sdk-for-net\src\ResourceManagement\Cdn\Cdn.Tests\ScenarioTests\ProfileTests.cs(485,67): error CS0246: The type or namespace name 'ProfileCreateParameters' could not be found (are you missing a using directive or an assembly reference?) [E:\azure-sdk-for-net\src\ResourceManagement\Cdn\Cdn.Tests\Cdn.Tests.xproj]
