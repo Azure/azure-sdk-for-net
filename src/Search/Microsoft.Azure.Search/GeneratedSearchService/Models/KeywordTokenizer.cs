@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Search.Models
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.KeywordTokenizer")]
+    [Obsolete("This type is obsolete. Please use KeywordTokenizerV2 instead.")]
     public partial class KeywordTokenizer : Tokenizer
     {
         /// <summary>

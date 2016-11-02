@@ -21,19 +21,18 @@ namespace Microsoft.Azure.Search.Models
     /// implemented using Apache Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.NGramTokenFilter")]
-    [Obsolete("This type is obsolete. Please use NGramTokenFilterV2 instead.")]
-    public partial class NGramTokenFilter : TokenFilter
+    [JsonObject("#Microsoft.Azure.Search.NGramTokenFilterV2")]
+    public partial class NGramTokenFilterV2 : TokenFilter
     {
         /// <summary>
-        /// Initializes a new instance of the NGramTokenFilter class.
+        /// Initializes a new instance of the NGramTokenFilterV2 class.
         /// </summary>
-        public NGramTokenFilter() { }
+        public NGramTokenFilterV2() { }
 
         /// <summary>
-        /// Initializes a new instance of the NGramTokenFilter class.
+        /// Initializes a new instance of the NGramTokenFilterV2 class.
         /// </summary>
-        public NGramTokenFilter(string name, int? minGram = default(int?), int? maxGram = default(int?))
+        public NGramTokenFilterV2(string name, int? minGram = default(int?), int? maxGram = default(int?))
             : base(name)
         {
             MinGram = minGram;
@@ -41,14 +40,15 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the minimum n-gram length. Default is 1. Must be less
-        /// than minGram.
+        /// Gets or sets the minimum n-gram length. Default is 1. Maximum is
+        /// 300. Must be less than the value of maxGram.
         /// </summary>
         [JsonProperty(PropertyName = "minGram")]
         public int? MinGram { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum n-gram length. Default is 2.
+        /// Gets or sets the maximum n-gram length. Default is 2. Maximum is
+        /// 300.
         /// </summary>
         [JsonProperty(PropertyName = "maxGram")]
         public int? MaxGram { get; set; }
@@ -62,6 +62,14 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MinGram > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinGram", 300);
+            }
+            if (this.MaxGram > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxGram", 300);
+            }
         }
     }
 }

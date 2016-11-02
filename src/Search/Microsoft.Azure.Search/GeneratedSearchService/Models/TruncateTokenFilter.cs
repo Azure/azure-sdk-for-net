@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the length at which terms will be truncated. Default
-        /// is 300.
+        /// and maximum is 300.
         /// </summary>
         [JsonProperty(PropertyName = "length")]
         public int? Length { get; set; }
@@ -54,6 +54,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.Length > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Length", 300);
+            }
         }
     }
 }

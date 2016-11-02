@@ -21,19 +21,18 @@ namespace Microsoft.Azure.Search.Models
     /// tokenizer is implemented using Apache Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.StandardTokenizer")]
-    [Obsolete("This type is obsolete. Please use StandardTokenizerV2 instead.")]
-    public partial class StandardTokenizer : Tokenizer
+    [JsonObject("#Microsoft.Azure.Search.StandardTokenizerV2")]
+    public partial class StandardTokenizerV2 : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the StandardTokenizer class.
+        /// Initializes a new instance of the StandardTokenizerV2 class.
         /// </summary>
-        public StandardTokenizer() { }
+        public StandardTokenizerV2() { }
 
         /// <summary>
-        /// Initializes a new instance of the StandardTokenizer class.
+        /// Initializes a new instance of the StandardTokenizerV2 class.
         /// </summary>
-        public StandardTokenizer(string name, int? maxTokenLength = default(int?))
+        public StandardTokenizerV2(string name, int? maxTokenLength = default(int?))
             : base(name)
         {
             MaxTokenLength = maxTokenLength;
@@ -41,7 +40,8 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the maximum token length. Default is 255. Tokens
-        /// longer than the maximum length are split
+        /// longer than the maximum length are split. The maximum token
+        /// length that can be used is 300 characters.
         /// </summary>
         [JsonProperty(PropertyName = "maxTokenLength")]
         public int? MaxTokenLength { get; set; }
@@ -55,6 +55,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MaxTokenLength > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxTokenLength", 300);
+            }
         }
     }
 }

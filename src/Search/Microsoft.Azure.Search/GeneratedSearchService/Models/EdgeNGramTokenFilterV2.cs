@@ -22,19 +22,18 @@ namespace Microsoft.Azure.Search.Models
     /// Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.EdgeNGramTokenFilter")]
-    [Obsolete("This type is obsolete. Please use EdgeNGramTokenFilterV2 instead.")]
-    public partial class EdgeNGramTokenFilter : TokenFilter
+    [JsonObject("#Microsoft.Azure.Search.EdgeNGramTokenFilterV2")]
+    public partial class EdgeNGramTokenFilterV2 : TokenFilter
     {
         /// <summary>
-        /// Initializes a new instance of the EdgeNGramTokenFilter class.
+        /// Initializes a new instance of the EdgeNGramTokenFilterV2 class.
         /// </summary>
-        public EdgeNGramTokenFilter() { }
+        public EdgeNGramTokenFilterV2() { }
 
         /// <summary>
-        /// Initializes a new instance of the EdgeNGramTokenFilter class.
+        /// Initializes a new instance of the EdgeNGramTokenFilterV2 class.
         /// </summary>
-        public EdgeNGramTokenFilter(string name, int? minGram = default(int?), int? maxGram = default(int?), EdgeNGramTokenFilterSide? side = default(EdgeNGramTokenFilterSide?))
+        public EdgeNGramTokenFilterV2(string name, int? minGram = default(int?), int? maxGram = default(int?), EdgeNGramTokenFilterSide? side = default(EdgeNGramTokenFilterSide?))
             : base(name)
         {
             MinGram = minGram;
@@ -43,14 +42,15 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the minimum n-gram length. Default is 1. Must be less
-        /// than the value of maxGram.
+        /// Gets or sets the minimum n-gram length. Default is 1. Maximum is
+        /// 300. Must be less than the value of maxGram.
         /// </summary>
         [JsonProperty(PropertyName = "minGram")]
         public int? MinGram { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum n-gram length. Default is 2.
+        /// Gets or sets the maximum n-gram length. Default is 2. Maximum is
+        /// 300.
         /// </summary>
         [JsonProperty(PropertyName = "maxGram")]
         public int? MaxGram { get; set; }
@@ -72,6 +72,14 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MinGram > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinGram", 300);
+            }
+            if (this.MaxGram > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxGram", 300);
+            }
         }
     }
 }

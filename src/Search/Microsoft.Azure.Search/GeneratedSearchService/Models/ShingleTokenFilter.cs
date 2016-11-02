@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Search.Models
         public int? MaxShingleSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum shingle size. Default is 2.
+        /// Gets or sets the minimum shingle size. Default is 2.  Must be less
+        /// than the value of maxShingleSize.
         /// </summary>
         [JsonProperty(PropertyName = "minShingleSize")]
         public int? MinShingleSize { get; set; }
@@ -94,6 +95,14 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MaxShingleSize < 2)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxShingleSize", 2);
+            }
+            if (this.MinShingleSize < 2)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinShingleSize", 2);
+            }
         }
     }
 }

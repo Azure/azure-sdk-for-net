@@ -17,31 +17,29 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Breaks text following the Unicode Text Segmentation rules. This
-    /// tokenizer is implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
+    /// Emits the entire input as a single token.
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.StandardTokenizer")]
-    [Obsolete("This type is obsolete. Please use StandardTokenizerV2 instead.")]
-    public partial class StandardTokenizer : Tokenizer
+    [JsonObject("#Microsoft.Azure.Search.KeywordTokenizerV2")]
+    public partial class KeywordTokenizerV2 : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the StandardTokenizer class.
+        /// Initializes a new instance of the KeywordTokenizerV2 class.
         /// </summary>
-        public StandardTokenizer() { }
+        public KeywordTokenizerV2() { }
 
         /// <summary>
-        /// Initializes a new instance of the StandardTokenizer class.
+        /// Initializes a new instance of the KeywordTokenizerV2 class.
         /// </summary>
-        public StandardTokenizer(string name, int? maxTokenLength = default(int?))
+        public KeywordTokenizerV2(string name, int? maxTokenLength = default(int?))
             : base(name)
         {
             MaxTokenLength = maxTokenLength;
         }
 
         /// <summary>
-        /// Gets or sets the maximum token length. Default is 255. Tokens
-        /// longer than the maximum length are split
+        /// Gets or sets the maximum token length. Default is 256. Tokens
+        /// longer than the maximum length are split. The maximum token
+        /// length that can be used is 300 characters.
         /// </summary>
         [JsonProperty(PropertyName = "maxTokenLength")]
         public int? MaxTokenLength { get; set; }
