@@ -534,6 +534,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 {
                     headNodeSize = "Standard_D12";
                 }
+                else if (clusterCreateParameters.ClusterType.Equals("InteractiveHive", StringComparison.OrdinalIgnoreCase))
+                {
+                    headNodeSize = "Standard_D13_v2";
+                }
                 else
                 {
                     headNodeSize = "Large";
@@ -551,9 +555,19 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                workerNodeSize = clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase)
-                    ? "Standard_D12"
-                    : "Standard_D3";
+                if (clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase))
+                {
+                    workerNodeSize = "Standard_D12";
+                }
+                else if (clusterCreateParameters.ClusterType.Equals("InteractiveHive", StringComparison.OrdinalIgnoreCase))
+                {
+                    workerNodeSize = "Standard_D13_v2";
+
+                }
+                else
+                {
+                    workerNodeSize = "Standard_D3";
+                }
             }
             return workerNodeSize;
         }

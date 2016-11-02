@@ -44,6 +44,7 @@
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxClusterWithStandardTier.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxInteractiveHiveCluster.json" />
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWindowsClusterWithPremiumTier.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
