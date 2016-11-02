@@ -32,17 +32,14 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="name">the firewall rule's name.</param>
         /// <param name="type">the namespace and type of the firewall
         /// Rule.</param>
-        /// <param name="id">the firewall rule's subscription ID.</param>
-        /// <param name="location">the firewall rule's regional
-        /// location.</param>
+        /// <param name="id">the firewall rule's full ID.</param>
         /// <param name="properties">the properties of the firewall
         /// rule.</param>
-        public FirewallRule(string name = default(string), string type = default(string), string id = default(string), string location = default(string), FirewallRuleProperties properties = default(FirewallRuleProperties))
+        public FirewallRule(string name = default(string), string type = default(string), string id = default(string), FirewallRuleProperties properties = default(FirewallRuleProperties))
         {
             Name = name;
             Type = type;
             Id = id;
-            Location = location;
             Properties = properties;
         }
 
@@ -59,16 +56,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the firewall rule's subscription ID.
+        /// Gets or sets the firewall rule's full ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the firewall rule's regional location.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the properties of the firewall rule.

@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         {
             this.FileSystem = new FileSystemOperations(this);
             this.BaseUri = "https://{accountName}.{adlsFileSystemDnsSuffix}";
-            this.ApiVersion = "2015-10-01-preview";
+            this.ApiVersion = "2016-11-01";
             this.AdlsFileSystemDnsSuffix = "azuredatalakestore.net";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
