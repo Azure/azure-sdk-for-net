@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         int FrontendPort { get; }
 
         /// <returns>the backend associated with the load balancing rule</returns>
-        Microsoft.Azure.Management.Network.Fluent.IBackend Backend { get; }
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend Backend { get; }
 
         /// <returns>the probe associated with the load balancing rule</returns>
         Microsoft.Azure.Management.Network.Fluent.IProbe Probe { get; }
