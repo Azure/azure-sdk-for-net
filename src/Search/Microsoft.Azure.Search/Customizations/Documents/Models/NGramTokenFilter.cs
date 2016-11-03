@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the minimum n-gram length. Default is 1. Must be less
-        /// than minGram.
+        /// than the value of minGram.
         /// </summary>
         [JsonProperty(PropertyName = "minGram")]
         public int? MinGram { get; set; }
