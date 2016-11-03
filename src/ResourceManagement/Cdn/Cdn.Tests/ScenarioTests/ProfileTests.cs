@@ -131,7 +131,7 @@ namespace Cdn.Tests.ScenarioTests
                 var updatedProfile = cdnMgmtClient.Profiles.Update(
                     resourceGroupName,
                     profileName,
-                    new ProfileUpdateParameters(newTags));
+                    newTags);
                 VerifyProfileUpdated(profile, updatedProfile, newTags);
 
                 // Create a standard cdn profile and don't wait for creation to finish
@@ -159,14 +159,14 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, new ProfileUpdateParameters(tags));
+                    cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, tags);
                 });
 
                 // Wait for second profile to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode(2);
 
                 // Update profile now should succeed
-                cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, new ProfileUpdateParameters(tags));
+                cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, tags);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);

@@ -43,7 +43,7 @@ namespace Cdn.Tests.ScenarioTests
                 
 
                 // CheckNameAvailability should return true
-                var output = cdnMgmtClient.CheckNameAvailability(new CheckNameAvailabilityInput(endpointName));
+                var output = cdnMgmtClient.CheckNameAvailability(endpointName);
                 Assert.Equal(output.NameAvailable, true);
 
                 // Create endpoint with that name then CheckNameAvailability again
@@ -83,7 +83,7 @@ namespace Cdn.Tests.ScenarioTests
                 var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // CheckNameAvailability after endpoint was created should return false
-                output = cdnMgmtClient.CheckNameAvailability(new CheckNameAvailabilityInput(endpointName));
+                output = cdnMgmtClient.CheckNameAvailability(endpointName);
                 Assert.Equal(output.NameAvailable, false);
 
                 // Delete resource group

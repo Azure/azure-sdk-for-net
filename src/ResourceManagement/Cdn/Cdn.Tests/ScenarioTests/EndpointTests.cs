@@ -708,7 +708,7 @@ namespace Cdn.Tests.ScenarioTests
                     resourceGroupName,
                     profileName,
                     endpointName,
-                    new PurgeParameters(purgeContentPaths));
+                    purgeContentPaths);
 
                 // Purge content on non-existing endpoint should fail
                 Assert.Throws<ErrorResponseException>(() => {
@@ -716,7 +716,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         "fakeEndpoint",
-                        new PurgeParameters(purgeContentPaths));
+                        purgeContentPaths);
                 });
 
                 // Purge content on endpoint with invalid content paths should fail
@@ -726,7 +726,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        new PurgeParameters(invalidPurgeContentPaths)); });
+                        invalidPurgeContentPaths); });
 
                 // Load content on endpoint should succeed
                 var loadContentPaths = new List<string>
@@ -738,7 +738,7 @@ namespace Cdn.Tests.ScenarioTests
                     resourceGroupName,
                     profileName,
                     endpointName,
-                    new LoadParameters(loadContentPaths));
+                    loadContentPaths);
 
                 // Load content on non-existing endpoint should fail
                 Assert.Throws<ErrorResponseException>(() => {
@@ -746,7 +746,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         "fakeEndpoint",
-                        new LoadParameters(loadContentPaths));
+                        loadContentPaths);
                 });
 
                 // Load content on endpoint with invalid content paths should fail
@@ -756,7 +756,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        new LoadParameters(invalidLoadContentPaths));
+                        invalidLoadContentPaths);
                 });
 
                 // Stop the running endpoint
@@ -770,7 +770,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        new PurgeParameters(purgeContentPaths));
+                        purgeContentPaths);
                 });
 
                 // Load content on stopped endpoint should fail
@@ -779,7 +779,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        new LoadParameters(loadContentPaths));
+                        loadContentPaths);
                 });
 
                 // Delete resource group
@@ -851,7 +851,7 @@ namespace Cdn.Tests.ScenarioTests
                     resourceGroupName,
                     profileName,
                     endpointName,
-                    new ValidateCustomDomainInput("customdomain34.azureedge-test.net"));
+                    "customdomain34.azureedge-test.net");
                 Assert.Equal(output.CustomDomainValidated, true);
 
                 // Validate non-exisiting custom domain should return false
@@ -859,7 +859,7 @@ namespace Cdn.Tests.ScenarioTests
                     resourceGroupName,
                     profileName,
                     endpointName,
-                    new ValidateCustomDomainInput("customdomain4.hello.com"));
+                    "customdomain4.hello.com");
                 Assert.Equal(output.CustomDomainValidated, false);
 
                 // Validate invalid custom domain should fail
@@ -868,7 +868,7 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        new ValidateCustomDomainInput("invalid\\custom/domain")); });
+                        "invalid\\custom/domain"); });
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
