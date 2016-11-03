@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Xunit;
 using System.Threading;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Cdn.Tests.Helpers
 {
@@ -119,13 +120,11 @@ namespace Cdn.Tests.Helpers
             }
         }
 
-        public static void WaitIfNotInPlaybackMode()
+        public static void WaitIfNotInPlaybackMode(int minutesToWait = 1)
         {
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") != null && 
-                !Environment.GetEnvironmentVariable("AZURE_TEST_MODE").
-                Equals("Playback", StringComparison.CurrentCultureIgnoreCase))
-            {
-                Thread.Sleep(TimeSpan.FromMinutes(1));
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            { 
+                Thread.Sleep(TimeSpan.FromMinutes(minutesToWait));
             }
         }
     }
