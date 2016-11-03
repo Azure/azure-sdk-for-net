@@ -35,13 +35,18 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="resourceState">Resource status of the custom domain.
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
+        /// <param name="validationData">Special validation or data may be
+        /// required when delivering CDN to some regions due to local
+        /// compliance reasons. (e.g. ICP license number of a custom domain
+        /// is required to deliver content in China.)</param>
         /// <param name="provisioningState">Provisioning status of the custom
         /// domain.</param>
-        public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string))
+        public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string resourceState = default(string), string validationData = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             HostName = hostName;
             ResourceState = resourceState;
+            ValidationData = validationData;
             ProvisioningState = provisioningState;
         }
 
@@ -58,6 +63,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceState")]
         public string ResourceState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets special validation or data may be required when
+        /// delivering CDN to some regions due to local compliance reasons.
+        /// (e.g. ICP license number of a custom domain is required to
+        /// deliver content in China.)
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.validationData")]
+        public string ValidationData { get; set; }
 
         /// <summary>
         /// Gets provisioning status of the custom domain.
