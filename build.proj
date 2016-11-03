@@ -78,6 +78,7 @@
 
   <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   
   <!-- Building ClientRuntime projects -->
   <Target Name="BuildClientRuntime">
@@ -297,7 +298,15 @@
     <Exec Command="$(NuGetCommand) restore %(NonAutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(NonAutoRestLibraries) != '' "/>
     <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
-  
+
+<!-- Task to build project templates -->  
+  <Target Name="BuildProjectTemplates">
+	<Message Text="Building Project Templates" />
+    <BuildProjectTemplatesTask>
+      <Output TaskParameter="TaskErrorDetected" PropertyName="BuildTemplateTaskFailed" />
+    </BuildProjectTemplatesTask>
+    <Message Text="Building Project Templates Completed" />
+  </Target>
   <!--
   We have some important work to do when building our official Library bits.
   -->
