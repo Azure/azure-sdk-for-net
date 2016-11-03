@@ -92,7 +92,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal("Microsoft.Sql.Admin", result.ProviderRegistration.Properties.Namespace);
             Assert.Equal("local", result.ProviderRegistration.Properties.ProviderLocation);
             Assert.Equal("hostingservers", result.ProviderRegistration.Properties.ResourceTypes[0].Name);
-            Assert.Equal("hostingservers", result.ProviderRegistration.Properties.Extensions[0].Name);
+            Assert.Equal("SqlAdminExtension", result.ProviderRegistration.Properties.Extensions[0].Name);
             Assert.Equal("2014-04-01-preview", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].ApiVersions[0]);
             Assert.Equal("https://azstack:30010", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].EndpointUri);
             Assert.Equal(new TimeSpan(0, 0, 0), result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Timeout);
@@ -185,7 +185,7 @@ namespace AzureStackAdmin.Tests
 
                                                              }
                                                          },
-                                         ProvisioningState = ProvisioningState.Succeeded
+                                         ProvisioningState = "Succeeded"
                                      }
                     }
                     ));
@@ -200,7 +200,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal("Microsoft.Sql.Admin", result.ProviderRegistration.Properties.Namespace);
             Assert.Equal("local", result.ProviderRegistration.Properties.ProviderLocation);
             Assert.Equal("hostingservers", result.ProviderRegistration.Properties.ResourceTypes[0].Name);
-            Assert.Equal("hostingservers", result.ProviderRegistration.Properties.Extensions[0].Name);
+            Assert.Equal("SqlAdminExtension", result.ProviderRegistration.Properties.Extensions[0].Name);
             Assert.Equal("2014-04-01-preview", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].ApiVersions[0]);
             Assert.Equal("https://azstack:30010", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].EndpointUri);
             Assert.Equal(new TimeSpan(0, 0, 0), result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Timeout);
