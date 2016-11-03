@@ -19,6 +19,7 @@ using System.Net;
 using System.Globalization;
 using System.Threading;
 using KeyVault.TestFramework;
+using System.Net.Http;
 
 namespace Microsoft.Azure.KeyVault.Tests
 {
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         private string _keyVersion = "";
         private KeyIdentifier _keyIdentifier;
 
-        private KeyVaultClient GetKeyVaultClient()
+        private void Initialize()
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
@@ -56,8 +57,27 @@ namespace Microsoft.Azure.KeyVault.Tests
                 _keyName = HttpMockServer.Variables["KeyName"];
                 _keyVersion = HttpMockServer.Variables["KeyVersion"];
             }
+        }
+
+        private KeyVaultClient GetKeyVaultClient()
+        {
+            Initialize();
             _keyIdentifier = new KeyIdentifier(_vaultAddress, _keyName, _keyVersion);
             return fixture.CreateKeyVaultClient();
+        }
+
+        [Fact]
+        public void KeyVaultConstructor()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                Initialize();
+                var httpClient = HttpClientFactory.Create(fixture.GetHandlers());
+                
+                var kvClient = new KeyVaultClient(new TestKeyVaultCredential(fixture.GetAccessToken), httpClient);
+                Assert.Equal(httpClient, kvClient.HttpClient);
+                kvClient.GetKeysAsync(_vaultAddress).GetAwaiter().GetResult();
+            }            
         }
 
         #region Key Operations

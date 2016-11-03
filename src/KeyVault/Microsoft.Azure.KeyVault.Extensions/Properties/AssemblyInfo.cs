@@ -4,9 +4,10 @@
 // 
 
 using System.Reflection;
+using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure Key Vault WebKey")]
-[assembly: AssemblyDescription("Microsoft Azure Key Vault WebKey Class Library.")]
+[assembly: AssemblyTitle("Microsoft Azure Key Vault Extensions")]
+[assembly: AssemblyDescription("Microsoft Azure Key Vault Extensions Class Library")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.2.0")]
@@ -16,3 +17,4 @@ using System.Reflection;
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en")]
