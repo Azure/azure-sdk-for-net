@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the VirtualNetworkGatewayConnection
         /// class.
         /// </summary>
-        public VirtualNetworkGatewayConnection(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway1 = default(VirtualNetworkGateway), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
             RoutingWeight = routingWeight;
             SharedKey = sharedKey;
             ConnectionStatus = connectionStatus;
+            TunnelConnectionStatus = tunnelConnectionStatus;
             EgressBytesTransferred = egressBytesTransferred;
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
@@ -98,19 +99,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// include: 'Unknown', 'Connecting', 'Connected', 'NotConnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionStatus")]
-        public string ConnectionStatus { get; set; }
+        public string ConnectionStatus { get; private set; }
+
+        /// <summary>
+        /// Collection of all tunnels' connection health status.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tunnelConnectionStatus")]
+        public IList<TunnelConnectionHealth> TunnelConnectionStatus { get; private set; }
 
         /// <summary>
         /// The Egress Bytes Transferred in this connection
         /// </summary>
         [JsonProperty(PropertyName = "properties.egressBytesTransferred")]
-        public long? EgressBytesTransferred { get; set; }
+        public long? EgressBytesTransferred { get; private set; }
 
         /// <summary>
         /// The Ingress Bytes Transferred in this connection
         /// </summary>
         [JsonProperty(PropertyName = "properties.ingressBytesTransferred")]
-        public long? IngressBytesTransferred { get; set; }
+        public long? IngressBytesTransferred { get; private set; }
 
         /// <summary>
         /// The reference to peerings resource.
@@ -136,7 +143,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
@@ -145,5 +152,31 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (VirtualNetworkGateway1 == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VirtualNetworkGateway1");
+            }
+            if (ConnectionType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
+            }
+            if (this.VirtualNetworkGateway1 != null)
+            {
+                this.VirtualNetworkGateway1.Validate();
+            }
+            if (this.VirtualNetworkGateway2 != null)
+            {
+                this.VirtualNetworkGateway2.Validate();
+            }
+            if (this.LocalNetworkGateway2 != null)
+            {
+                this.LocalNetworkGateway2.Validate();
+            }
+        }
     }
 }
