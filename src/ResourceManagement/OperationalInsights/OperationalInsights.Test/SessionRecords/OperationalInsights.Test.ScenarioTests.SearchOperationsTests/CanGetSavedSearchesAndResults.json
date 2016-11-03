@@ -1,0 +1,188 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvd29ya3NwYWNlLTg2MWJkNDY2LTU0MDAtNDRiZS05NTUyLTViYTQwODIzYzNhYS9zYXZlZFNlYXJjaGVzP2FwaS12ZXJzaW9uPTIwMTUtMDMtMjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "159b041f-a420-4aed-91d0-6b73a53b14c7"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"__metadata\": {},\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/0022aa2d-e4c2-4792-8672-c46e77ed116e\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-12T23%3A14%3A17.26477Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"SS\",\r\n        \"Query\": \"*\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/1|test\",\r\n      \"etag\": \"W/\\\"datetime'2015-08-27T19%3A04%3A25.7940321Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"1\",\r\n        \"DisplayName\": \"TestBen\",\r\n        \"Query\": \"* Type=Alert  (AlertSeverity=error)  SourceDisplayName=\\\"Microsoft.Windows.Computer:NEB-OM-724193.smx.net\\\"\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/1|test66666666666666666\",\r\n      \"etag\": \"W/\\\"datetime'2015-08-27T19%3A05%3A27.9119521Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"1\",\r\n        \"DisplayName\": \"TestBen\",\r\n        \"Query\": \"* Type=Alert  (AlertSeverity=error)  SourceDisplayName=\\\"Microsoft.Windows.Computer:NEB-OM-724193.smx.net\\\"\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/1|testben\",\r\n      \"etag\": \"W/\\\"datetime'2015-05-12T20%3A45%3A50.1632243Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"1\",\r\n        \"DisplayName\": \"TestBen\",\r\n        \"Query\": \"* Type=Alert  (AlertSeverity=error)  SourceDisplayName=\\\"Microsoft.Windows.Computer:NEB-OM-724193.smx.net\\\"\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/2b3a414c-e1b3-4c60-8bb3-b3828bef0174\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-12T23%3A55%3A12.5783991Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"SS\",\r\n        \"Query\": \"* | Measure count() by Type\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/51797902-3d96-46ba-95e3-26e74c91118d\",\r\n      \"etag\": \"W/\\\"datetime'2015-10-23T04%3A58%3A47.9226934Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"norem\",\r\n        \"DisplayName\": \"gasga\",\r\n        \"Query\": \"* Type=Alert  (AlertSeverity=error)  SourceDisplayName=\\\"Microsoft.Windows.Computer:NEB-OM-724193.smx.net\\\"\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/5c7af1f8-bb71-4648-b7d9-910a6b9c9d74\",\r\n      \"etag\": \"W/\\\"datetime'2015-10-21T19%3A03%3A42.498994Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"a\",\r\n        \"DisplayName\": \"a\",\r\n        \"Query\": \"Type=ADAssessmentRecommendation RecommendationPeriod=YYYY-MM IsRollup=false FocusArea=Prerequisites\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/60df279b-d288-4777-be03-b2ee65585488\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-23T20%3A46%3A14.747973Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"Alert3\",\r\n        \"Query\": \"Type=Event\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/6d95bebd-f016-4a2a-8f8d-81c7c1c5a971\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-12T23%3A38%3A41.3404003Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"SS\",\r\n        \"Query\": \"Type=Event\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/7c474737-9279-433a-af17-a1c5ad7f339a\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-23T20%3A47%3A11.8794146Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"Alert4\",\r\n        \"Query\": \"Type=Event EventLevelName=warning\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/857fb644-5543-4b8c-9028-05b0980240f9\",\r\n      \"etag\": \"W/\\\"datetime'2015-10-21T22%3A14%3A03.421978Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"aetaeta\",\r\n        \"DisplayName\": \"atett\",\r\n        \"Query\": \"* Type=Alert  (AlertSeverity=error)  SourceDisplayName=\\\"Microsoft.Windows.Computer:NEB-OM-724193.smx.net\\\"\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/9fddfbb4-ce42-4c4c-bd84-2263b10dffa1\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-23T20%3A47%3A30.3141368Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"Alert6\",\r\n        \"Query\": \"Type=Event EventLevelName=warning\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/a0efeb96-79cf-474b-a98c-23a3a76ee332\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-23T20%3A47%3A22.4599753Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Alert\",\r\n        \"DisplayName\": \"Alert5\",\r\n        \"Query\": \"Type=Event EventLevelName=warning\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/all|all\",\r\n      \"etag\": \"W/\\\"datetime'2015-04-09T17%3A03%3A03.9192424Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"All\",\r\n        \"DisplayName\": \"All\",\r\n        \"Query\": \"*\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/computergroups|allcomputers\",\r\n      \"etag\": \"W/\\\"datetime'2015-10-21T20%3A09%3A41.9906542Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"ComputerGroups\",\r\n        \"DisplayName\": \"allcomputers\",\r\n        \"Query\": \"* | measure count() by Computer\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/computergroups|allcomputers2\",\r\n      \"etag\": \"W/\\\"datetime'2015-10-22T22%3A32%3A26.327691Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"ComputerGroups\",\r\n        \"DisplayName\": \"AllComputers2\",\r\n        \"Query\": \"* | measure count() by Computer\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/dd35eca5-3dc7-4e30-bf26-83e0cb5f0a2a\",\r\n      \"etag\": \"W/\\\"datetime'2015-10-22T20%3A03%3A07.6701721Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"agasg\",\r\n        \"DisplayName\": \"agsga\",\r\n        \"Query\": \"* Type=Alert  (AlertSeverity=error)  SourceDisplayName=\\\"Microsoft.Windows.Computer:NEB-OM-724193.smx.net\\\"\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/intervals|count of all interval 1hour\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-07T00%3A16%3A14.7972332Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Intervals\",\r\n        \"DisplayName\": \"Count of all interval 1hour\",\r\n        \"Query\": \"* | measure count() by TimeGenerated interval 1HOUR\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/perf|avg disk writes by computer\",\r\n      \"etag\": \"W/\\\"datetime'2015-11-05T19%3A48%3A24.8353096Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"Perf\",\r\n        \"DisplayName\": \"Avg Disk Writes by Computer\",\r\n        \"Query\": \"* Type=Perf CounterName=\\\"Disk Write Bytes/sec\\\" | measure avg(CounterValue) by Computer\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/qwerty|all events\",\r\n      \"etag\": \"W/\\\"datetime'2015-04-09T17%3A02%3A49.4024833Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"qwerty\",\r\n        \"DisplayName\": \"All Events\",\r\n        \"Query\": \"Type=Event\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/qwerty|events\",\r\n      \"etag\": \"W/\\\"datetime'2014-10-17T16%3A15%3A27.8903997Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"qwerty\",\r\n        \"DisplayName\": \"events\",\r\n        \"Query\": \"Type=Event\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/sql assessment|sql assmt by focus area\",\r\n      \"etag\": \"W/\\\"datetime'2015-07-15T21%3A38%3A00.898438Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"SQL Assessment\",\r\n        \"DisplayName\": \"SQL Assmt by Focus Area\",\r\n        \"Query\": \"Type=SQLAssessmentRecommendation AssessmentName=SQLV2 RecommendationPeriod=YYYY-MM IsRollup=true | measure count() by FocusArea\",\r\n        \"Version\": 1\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/test|test\",\r\n      \"etag\": \"W/\\\"datetime'2015-09-30T05%3A06%3A25.4487456Z'\\\"\",\r\n      \"properties\": {\r\n        \"Category\": \"test\",\r\n        \"DisplayName\": \"test\",\r\n        \"Query\": \"Type=W3CIISLog\",\r\n        \"Version\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "9664"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-request-id": [
+          "f8435644-b9ec-4044-82bc-8cbf0251fc4a"
+        ],
+        "x-ms-correlation-request-id": [
+          "f8435644-b9ec-4044-82bc-8cbf0251fc4a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151218T191240Z:f8435644-b9ec-4044-82bc-8cbf0251fc4a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2015 19:12:40 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/0022aa2d-e4c2-4792-8672-c46e77ed116e?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvd29ya3NwYWNlLTg2MWJkNDY2LTU0MDAtNDRiZS05NTUyLTViYTQwODIzYzNhYS9zYXZlZFNlYXJjaGVzLzAwMjJhYTJkLWU0YzItNDc5Mi04NjcyLWM0NmU3N2VkMTE2ZT9hcGktdmVyc2lvbj0yMDE1LTAzLTIw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3a8181ea-685d-42f9-9f4a-2fa9de22d054"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/0022aa2d-e4c2-4792-8672-c46e77ed116e\",\r\n  \"etag\": \"W/\\\"datetime'2015-11-12T23%3A14%3A17.26477Z'\\\"\",\r\n  \"properties\": {\r\n    \"Category\": \"Alert\",\r\n    \"DisplayName\": \"SS\",\r\n    \"Query\": \"*\",\r\n    \"Version\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "364"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
+        ],
+        "x-ms-request-id": [
+          "536b9c56-d7a9-47d7-b5fa-15f2f8d83111"
+        ],
+        "x-ms-correlation-request-id": [
+          "536b9c56-d7a9-47d7-b5fa-15f2f8d83111"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151218T191241Z:536b9c56-d7a9-47d7-b5fa-15f2f8d83111"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2015 19:12:40 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/savedSearches/0022aa2d-e4c2-4792-8672-c46e77ed116e/results?api-version=2015-03-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvd29ya3NwYWNlLTg2MWJkNDY2LTU0MDAtNDRiZS05NTUyLTViYTQwODIzYzNhYS9zYXZlZFNlYXJjaGVzLzAwMjJhYTJkLWU0YzItNDc5Mi04NjcyLWM0NmU3N2VkMTE2ZS9yZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTUtMDMtMjA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b6926099-23ba-40a7-bec9-5118da277f2f"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/workspace-861bd466-5400-44be-9552-5ba40823c3aa/search/879b6d91-b728-424c-904e-73a0cbe8afab\",\r\n  \"__metadata\": {\r\n    \"resultType\": \"raw\",\r\n    \"total\": 5411801,\r\n    \"RequestId\": \"879b6d91-b728-424c-904e-73a0cbe8afab\",\r\n    \"CoreResponses\": [],\r\n    \"CoreSummaries\": [],\r\n    \"Status\": \"Successful\",\r\n    \"StartTime\": \"2015-12-18T19:12:42.7722243Z\",\r\n    \"LastUpdated\": \"2015-12-18T19:12:43.1628639Z\",\r\n    \"ETag\": \"635860627631628639\",\r\n    \"sort\": [\r\n      {\r\n        \"name\": \"TimeGenerated\",\r\n        \"order\": \"desc\"\r\n      }\r\n    ]\r\n  },\r\n  \"value\": [\r\n    {\r\n      \"Computer\": \"odstest\",\r\n      \"ObjectName\": \"LogicalDisk\",\r\n      \"CounterName\": \"Disk Write Bytes/sec\",\r\n      \"InstanceName\": \"_Total\",\r\n      \"TimeGenerated\": \"2015-12-18T19:10:07.139Z\",\r\n      \"SourceSystem\": \"OpsManager\",\r\n      \"CounterPath\": \"\\\\\\\\odstest\\\\LogicalDisk(_Total)\\\\Disk Write Bytes/sec\",\r\n      \"MG\": \"00000000-0000-0000-0000-000000000002\",\r\n      \"id\": \"d558d4b5-2301-3bfe-bca9-108187fd6517\",\r\n      \"Type\": \"Perf\",\r\n      \"CounterValue\": 2.1,\r\n      \"__metadata\": {\r\n        \"Type\": \"Perf\",\r\n        \"TimeGenerated\": \"2015-12-18T19:10:07.139Z\"\r\n      }\r\n    },\r\n    {\r\n      \"Computer\": \"atml-001.contoso.com\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"ManagementGroupName\": \"MockSCOMGW_11_4_2015_2_50_02_PM\",\r\n      \"SourceSystem\": \"OpsManager\",\r\n      \"TimeGenerated\": \"2015-12-18T19:07:05.757Z\",\r\n      \"SessionStartTime\": \"2015-12-18T00:00:00Z\",\r\n      \"SessionEndTime\": \"2015-12-18T00:00:00Z\",\r\n      \"LocalIP\": \"10.123.172.169\",\r\n      \"LocalSubnet\": \"10.2.0.0/16\",\r\n      \"LocalMAC\": \"00:0a:95:9d:68:16\",\r\n      \"LocalPortNumber\": 443,\r\n      \"RemoteIP\": \"10.123.172.185\",\r\n      \"RemoteMAC\": \"00:0a:95:9d:72:18\",\r\n      \"RemotePortNumber\": 80,\r\n      \"SessionID\": \"10.123.172.169_443_10.123.172.185_80_12_2015-12-18T00:00:00.000Z\",\r\n      \"SentBytes\": 2000,\r\n      \"ReceivedBytes\": 20,\r\n      \"TotalBytes\": 2020,\r\n      \"ProtocolName\": \"UDP\",\r\n      \"SentPackets\": 100,\r\n      \"ReceivedPackets\": 10,\r\n      \"ProcessID\": 3,\r\n      \"ProcessName\": \"SQL\",\r\n      \"LatencyMilliseconds\": 3,\r\n      \"LatencySamplingTimeStamp\": \"2014-11-03T17:56:51Z\",\r\n      \"LatencySamplingFailureRate\": \"30%\",\r\n      \"id\": \"4a45d99e-5bdf-2527-ca0a-f49551bb1fe7\",\r\n      \"Type\": \"WireData\",\r\n      \"Direction\": \"Inbound\",\r\n      \"SequenceNumber\": 3,\r\n      \"SessionState\": \"Closed\",\r\n      \"IPVersion\": \"IPv4\",\r\n      \"ApplicationProtocol\": \"SMTP\",\r\n      \"ApplicationServiceName\": \"https\",\r\n      \"__metadata\": {\r\n        \"Type\": \"WireData\",\r\n        \"TimeGenerated\": \"2015-12-18T19:07:05.757Z\"\r\n      }\r\n    },\r\n    {\r\n      \"SourceSystem\": \"Containers\",\r\n      \"TimeGenerated\": \"2015-12-18T19:06:30.817Z\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"Computer\": \"swati-dockerubuntu5\",\r\n      \"TimeOfCommand\": \"2015-08-16T21:52:10Z\",\r\n      \"ContainerID\": \"f8b44edb318af04d05f83c28f680c9ea0d1e561beb530b1ebc4e85a8ec5d16a2\",\r\n      \"Image\": \"drupal\",\r\n      \"Repository\": \"samos123\",\r\n      \"Name\": \"determined_pasteur\",\r\n      \"LogEntrySource\": \"stderr\",\r\n      \"LogEntry\": \"/usr/lib/python2.7/dist-packages/supervisor/options.py proceeding new drupal\",\r\n      \"id\": \"08b4c2f4-9b39-8491-79dd-2e7cc2f3374e\",\r\n      \"Type\": \"ContainerLog\",\r\n      \"__metadata\": {\r\n        \"Type\": \"ContainerLog\",\r\n        \"TimeGenerated\": \"2015-12-18T19:06:30.817Z\"\r\n      }\r\n    },\r\n    {\r\n      \"SourceSystem\": \"Containers\",\r\n      \"TimeGenerated\": \"2015-12-18T19:06:25.18Z\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"Computer\": \"swati-dockerswarm4\",\r\n      \"TimeOfCommand\": \"2015-08-15T21:52:10Z\",\r\n      \"ContainerID\": \"db976336c3ec69ca335eaf89703ec639d6c6ad3174ea0da374c3fd5889ac3194\",\r\n      \"Image\": \"wordpress:latest\",\r\n      \"Command\": \"stop\",\r\n      \"id\": \"40bbdba5-5214-589c-6159-088ee6d9dc84\",\r\n      \"Type\": \"ContainerServiceLog\",\r\n      \"__metadata\": {\r\n        \"Type\": \"ContainerServiceLog\",\r\n        \"TimeGenerated\": \"2015-12-18T19:06:25.18Z\"\r\n      }\r\n    },\r\n    {\r\n      \"SourceSystem\": \"Linux\",\r\n      \"TimeGenerated\": \"2015-12-18T19:06:20.253Z\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"Computer\": \"varunkum1\",\r\n      \"EventTime\": \"2015-12-18T19:06:20.253Z\",\r\n      \"Facility\": \"cron\",\r\n      \"HostName\": \"varunkum1\",\r\n      \"SeverityLevel\": \"crit\",\r\n      \"Message\": \"test syslog 2 [UFW ALLOW] IN= OUT=eth0 SRC=157.59.144.87 DST=187.52.211.160 LEN=60\",\r\n      \"ProcessID\": 1234,\r\n      \"HostIP\": \"157.59.144.87\",\r\n      \"PreciseTimeStamp\": \"2015-12-18T19:06:20.253Z\",\r\n      \"id\": \"e56b2e8b-6aae-bcb1-84de-3684b2302476\",\r\n      \"Type\": \"Syslog\",\r\n      \"IPScanDST_CF\": \"187.52.211.160\",\r\n      \"__metadata\": {\r\n        \"Type\": \"Syslog\",\r\n        \"TimeGenerated\": \"2015-12-18T19:06:20.253Z\"\r\n      }\r\n    },\r\n    {\r\n      \"Computer\": \"atml-001.contoso.com\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"ManagementGroupName\": \"MockSCOMGW_11_4_2015_2_50_02_PM\",\r\n      \"SourceSystem\": \"OpsManager\",\r\n      \"TimeGenerated\": \"2015-12-18T19:05:25.757Z\",\r\n      \"SessionStartTime\": \"2015-12-18T00:00:00Z\",\r\n      \"SessionEndTime\": \"2015-12-18T00:00:00Z\",\r\n      \"LocalIP\": \"10.123.172.169\",\r\n      \"LocalSubnet\": \"IPv6-N/A\",\r\n      \"LocalMAC\": \"00:0a:95:9d:68:16\",\r\n      \"LocalPortNumber\": 443,\r\n      \"RemoteIP\": \"10.123.172.185\",\r\n      \"RemoteMAC\": \"00:0a:95:9d:72:18\",\r\n      \"RemotePortNumber\": 80,\r\n      \"SessionID\": \"10.123.172.169_443_10.123.172.185_80_12_2015-12-18T00:00:00.000Z\",\r\n      \"SentBytes\": 4000,\r\n      \"ReceivedBytes\": 40,\r\n      \"TotalBytes\": 4040,\r\n      \"ProtocolName\": \"TCP\",\r\n      \"SentPackets\": 200,\r\n      \"ReceivedPackets\": 20,\r\n      \"ProcessID\": 2,\r\n      \"ProcessName\": \"Outlook\",\r\n      \"LatencyMilliseconds\": 1,\r\n      \"LatencySamplingTimeStamp\": \"2014-11-02T17:56:51Z\",\r\n      \"LatencySamplingFailureRate\": \"10%\",\r\n      \"id\": \"560b1f9d-51f6-70b2-439b-5c0cea559534\",\r\n      \"Type\": \"WireData\",\r\n      \"Direction\": \"Outbound\",\r\n      \"SequenceNumber\": 2,\r\n      \"SessionState\": \"LastAck\",\r\n      \"IPVersion\": \"IPv6\",\r\n      \"ApplicationProtocol\": \"HTTPS\",\r\n      \"ApplicationServiceName\": \"http\",\r\n      \"__metadata\": {\r\n        \"Type\": \"WireData\",\r\n        \"TimeGenerated\": \"2015-12-18T19:05:25.757Z\"\r\n      }\r\n    },\r\n    {\r\n      \"Computer\": \"odstest\",\r\n      \"ObjectName\": \"LogicalDisk\",\r\n      \"CounterName\": \"Disk Write Bytes/sec\",\r\n      \"InstanceName\": \"_Total\",\r\n      \"TimeGenerated\": \"2015-12-18T19:05:07.568Z\",\r\n      \"SourceSystem\": \"OpsManager\",\r\n      \"CounterPath\": \"\\\\\\\\odstest\\\\LogicalDisk(_Total)\\\\Disk Write Bytes/sec\",\r\n      \"MG\": \"00000000-0000-0000-0000-000000000002\",\r\n      \"id\": \"fff0e12d-046d-c8f7-3e92-c007fff2c18d\",\r\n      \"Type\": \"Perf\",\r\n      \"CounterValue\": 2.1,\r\n      \"__metadata\": {\r\n        \"Type\": \"Perf\",\r\n        \"TimeGenerated\": \"2015-12-18T19:05:07.568Z\"\r\n      }\r\n    },\r\n    {\r\n      \"SourceSystem\": \"Containers\",\r\n      \"TimeGenerated\": \"2015-12-18T19:04:00.817Z\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"Computer\": \"bowudockervm3\",\r\n      \"TimeOfCommand\": \"2015-08-16T21:52:10Z\",\r\n      \"ContainerID\": \"2950e078e40d5352260e6920a7bd3ddbf14c066a6020a4f213604dc35b253c44\",\r\n      \"Image\": \"wordpress\",\r\n      \"ImageTag\": \"latest\",\r\n      \"Name\": \"bowuwordpress\",\r\n      \"LogEntrySource\": \"stdout\",\r\n      \"LogEntry\": \"mysql_install_db\",\r\n      \"id\": \"892f7d5c-8ea5-e932-2bf1-59f5d5265c9a\",\r\n      \"Type\": \"ContainerLog\",\r\n      \"__metadata\": {\r\n        \"Type\": \"ContainerLog\",\r\n        \"TimeGenerated\": \"2015-12-18T19:04:00.817Z\"\r\n      }\r\n    },\r\n    {\r\n      \"SourceSystem\": \"OpsManager\",\r\n      \"TimeGenerated\": \"2015-12-18T19:03:59.863Z\",\r\n      \"SourceHealthServiceId\": \"5b16404c-f27e-a2d7-d2ef-fa38355804d8\",\r\n      \"DeviceName\": \"atml-001.contoso.com\",\r\n      \"DetectionId\": \"00000000-0000-0000-0000-000000000000\",\r\n      \"Threat\": \"Win32\\\\Conflicker\",\r\n      \"ThreatStatusRank\": 550,\r\n      \"ThreatStatus\": \"Active threat\",\r\n      \"ProtectionStatusRank\": 550,\r\n      \"ProtectionStatus\": \"No real time protection\",\r\n      \"ProtectionStatusDetails\": \"At least one infection detected.\",\r\n      \"SignatureVersion\": \"1.163.1013.0\",\r\n      \"TypeofProtection\": \"Malicious Software Removal Tool\",\r\n      \"ScanDate\": \"2015-12-18T00:00:00Z\",\r\n      \"DateCollected\": \"2/7/2014\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"TimeCollected\": \"2015-12-18T19:09:02.23Z\",\r\n      \"ManagementGroupName\": \"MockSCOMGW_11_4_2015_2_50_02_PM\",\r\n      \"Computer\": \"atml-001.contoso.com\",\r\n      \"id\": \"5246bd66-2f09-ab28-3ce7-a1eaf46dcf0c\",\r\n      \"Type\": \"ProtectionStatus\",\r\n      \"__metadata\": {\r\n        \"Type\": \"ProtectionStatus\",\r\n        \"TimeGenerated\": \"2015-12-18T19:03:59.863Z\"\r\n      }\r\n    },\r\n    {\r\n      \"SourceSystem\": \"Containers\",\r\n      \"TimeGenerated\": \"2015-12-18T19:03:55.18Z\",\r\n      \"MG\": \"511e40ec-5a7c-4bdc-b2aa-2359e04ecea0\",\r\n      \"Computer\": \"bowudockervm3\",\r\n      \"TimeOfCommand\": \"2015-08-16T21:52:10Z\",\r\n      \"ContainerID\": \"152b38be5dd67c9a109e48701f6af49408267fd55fb3f5ae94df112ab16b8e47\",\r\n      \"Image\": \"mono:latest\",\r\n      \"Command\": \"start\",\r\n      \"id\": \"b9a415dd-53d9-6161-9404-f1a4075714f8\",\r\n      \"Type\": \"ContainerServiceLog\",\r\n      \"__metadata\": {\r\n        \"Type\": \"ContainerServiceLog\",\r\n        \"TimeGenerated\": \"2015-12-18T19:03:55.18Z\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "7222"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-request-id": [
+          "d8d9419e-7e43-4258-8fe0-c52fff98318e"
+        ],
+        "x-ms-correlation-request-id": [
+          "d8d9419e-7e43-4258-8fe0-c52fff98318e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151218T191243Z:d8d9419e-7e43-4258-8fe0-c52fff98318e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 18 Dec 2015 19:12:42 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "df1ec963-d784-4d11-a779-1b3eeb9ecb78"
+  }
+}
