@@ -1,5 +1,5 @@
 {
-  "version": "1.7.2-preview",
+  "version": "1.7.2",
   "description": "Provides management capabilities for Azure Dns.",
   "authors": [ "Microsoft" ],
 
