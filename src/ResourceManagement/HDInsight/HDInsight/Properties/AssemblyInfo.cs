@@ -40,3 +40,6 @@ using System.Runtime.InteropServices;
 #else
 [assembly:InternalsVisibleTo("HDInsight.Tests")]
 #endif
+
+// Extra setup for unit testing
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
