@@ -17,33 +17,33 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Truncates the terms to a specific length. This token filter is
+    /// Emits the entire input as a single token. This tokenizer is
     /// implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/TruncateTokenFilter.html" />
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.TruncateTokenFilter")]
-    public partial class TruncateTokenFilter : TokenFilter
+    [JsonObject("#Microsoft.Azure.Search.KeywordTokenizer")]
+    [Obsolete("This type is obsolete. Please use KeywordTokenizerV2 instead.")]
+    public partial class KeywordTokenizer : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the TruncateTokenFilter class.
+        /// Initializes a new instance of the KeywordTokenizer class.
         /// </summary>
-        public TruncateTokenFilter() { }
+        public KeywordTokenizer() { }
 
         /// <summary>
-        /// Initializes a new instance of the TruncateTokenFilter class.
+        /// Initializes a new instance of the KeywordTokenizer class.
         /// </summary>
-        public TruncateTokenFilter(string name, int? length = default(int?))
+        public KeywordTokenizer(string name, int? bufferSize = default(int?))
             : base(name)
         {
-            Length = length;
+            BufferSize = bufferSize;
         }
 
         /// <summary>
-        /// Gets or sets the length at which terms will be truncated. Default
-        /// and maximum is 300.
+        /// Gets or sets the read buffer size in bytes. Default is 256.
         /// </summary>
-        [JsonProperty(PropertyName = "length")]
-        public int? Length { get; set; }
+        [JsonProperty(PropertyName = "bufferSize")]
+        public int? BufferSize { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -54,10 +54,6 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.Length > 300)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Length", 300);
-            }
         }
     }
 }
