@@ -20,8 +20,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         private Dictionary<string, string> _keyValuePairs;
         private string _connString;
         private StringBuilder _parseErrorSb;
-        private string DEFAULT_TENANTID = "72f988bf-86f1-41af-91ab-2d7cd011db47";
-        private string DEFAULT_CLIENTID = "1950a258-227b-4e31-a9cf-717495945fc2";
+        private string DEFAULT_TENANTID = "microsoft.onmicrosoft.com";
 
         #endregion
 
