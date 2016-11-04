@@ -26,8 +26,8 @@ namespace Sql.Tests
                     string firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
                     ServerFirewallRule rule = new ServerFirewallRule()
                     {
-                        StartIpAddress = SqlManagementTestUtilities.GenerateIpAddress(),
-                        EndIpAddress = SqlManagementTestUtilities.GenerateIpAddress()
+                        StartIpAddress = string.Format("0.0.0.{0}",i),
+                        EndIpAddress = string.Format("0.0.0.{0}", i)
                     };
                     sqlClient.Servers.CreateOrUpdateFirewallRule(resourceGroup.Name, server.Name, firewallRuleName, rule);
                     rules.Add(firewallRuleName, rule);
@@ -106,7 +106,7 @@ namespace Sql.Tests
         {
             string testPrefix = "firewallrulecrudtest-";
             string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateUpdateDropFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestCreateAndUpdateFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 // Create Firewall Rule and Validate
                 //

@@ -67,7 +67,7 @@ namespace Sql.Tests
         {
             string testPrefix = "sqlcrudtest-";
             string testName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestListElasticPoolDatabaseActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestListElasticPoolActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
