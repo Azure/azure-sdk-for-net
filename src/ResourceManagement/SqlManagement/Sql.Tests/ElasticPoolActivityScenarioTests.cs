@@ -90,7 +90,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
                 
                 // Get the Elastic Pool Activity List
-                var activity = sqlClient.ElasticPools.ListActivity(epName, resourceGroup.Name, server.Name);
+                var activity = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
 
                 Assert.Equal(1, activity.Where(a => a.ElasticPoolName == epName).Count());
                 Assert.Equal(1, activity.Where(a => a.Operation == "CREATE").Count());
