@@ -194,6 +194,11 @@ namespace Microsoft.AzureStack.Management
                         propertiesValue["providerLocation"] = parameters.ProviderRegistration.Properties.ProviderLocation;
                     }
                     
+                    if (parameters.ProviderRegistration.Properties.ResourceManagerType != null)
+                    {
+                        propertiesValue["resourceManagerType"] = parameters.ProviderRegistration.Properties.ResourceManagerType.Value.ToString();
+                    }
+                    
                     if (parameters.ProviderRegistration.Properties.Enabled != null)
                     {
                         propertiesValue["enabled"] = parameters.ProviderRegistration.Properties.Enabled.Value;
@@ -512,6 +517,13 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     string providerLocationInstance = ((string)providerLocationValue);
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
+                                }
+                                
+                                JToken resourceManagerTypeValue = propertiesValue2["resourceManagerType"];
+                                if (resourceManagerTypeValue != null && resourceManagerTypeValue.Type != JTokenType.Null)
+                                {
+                                    ResourceManagerType resourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)resourceManagerTypeValue), true));
+                                    propertiesInstance.ResourceManagerType = resourceManagerTypeInstance;
                                 }
                                 
                                 JToken enabledValue = propertiesValue2["enabled"];
@@ -1140,6 +1152,13 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
+                                JToken resourceManagerTypeValue = propertiesValue["resourceManagerType"];
+                                if (resourceManagerTypeValue != null && resourceManagerTypeValue.Type != JTokenType.Null)
+                                {
+                                    ResourceManagerType resourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)resourceManagerTypeValue), true));
+                                    propertiesInstance.ResourceManagerType = resourceManagerTypeInstance;
+                                }
+                                
                                 JToken enabledValue = propertiesValue["enabled"];
                                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                 {
@@ -1612,6 +1631,13 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             string providerLocationInstance = ((string)providerLocationValue);
                                             propertiesInstance.ProviderLocation = providerLocationInstance;
+                                        }
+                                        
+                                        JToken resourceManagerTypeValue = propertiesValue["resourceManagerType"];
+                                        if (resourceManagerTypeValue != null && resourceManagerTypeValue.Type != JTokenType.Null)
+                                        {
+                                            ResourceManagerType resourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)resourceManagerTypeValue), true));
+                                            propertiesInstance.ResourceManagerType = resourceManagerTypeInstance;
                                         }
                                         
                                         JToken enabledValue = propertiesValue["enabled"];
