@@ -1,7 +1,7 @@
 {
-  "version": "0.9.0-preview",
+  "version": "1.0.0-rc",
   "title": "Microsoft Azure Search Management Library",
-  "description": "Makes it easy to manage Azure Search services from a .NET application.",
+  "description": "Makes it easy to manage Azure Search services and API keys from a .NET application.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
@@ -10,8 +10,8 @@
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Search", "Microsoft Azure Search Management", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
-    "requireLicenseAcceptance":  true,
-    "releaseNotes": "This is a preview release of the Azure Search Management SDK for .NET, based on version 2015-02-28 of the Azure Search Management REST API."
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "This is the Azure Search Management SDK for .NET, based on version 2015-08-19 of the Azure Search Management REST API. It includes support for programmatically provisioning and managing Search services and API keys. It supports all available SKUs, including the new S3 and S3 High-Density SKUs."
   },
 
   "buildOptions": {
@@ -20,15 +20,15 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
 
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.*,4.0)"
+  },
+
   "frameworks": {
-    "net45": {
-      "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
-      }
-    },
+    "net45": { },
     "netstandard1.5": {
       "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": ["dnxcore50"],
+      "imports": [ "dnxcore50" ],
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Collections": "4.0.11",
@@ -60,18 +60,16 @@
         "System.Xml.ReaderWriter": "4.0.11",
         "System.Xml.XDocument": "4.0.11",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Dynamic.Runtime": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Dynamic.Runtime": "4.0.11"
       }
     },
     "netstandard1.1": {
       "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": ["dnxcore50", "portable-net45+win8"],
+      "imports": [ "dnxcore50", "portable-net45+win8" ],
       "dependencies": {
         "NETStandard.Library": "1.6.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Dynamic.Runtime": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Dynamic.Runtime": "4.0.11"
       }
     }
   }
