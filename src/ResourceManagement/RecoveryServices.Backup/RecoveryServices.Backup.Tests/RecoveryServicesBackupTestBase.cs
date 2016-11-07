@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
         public RecoveryServicesBackupClient BackupClient { get; private set; }
 
-        public RecoveryServicesBackupTestBase(MockContext context)
+        public void Initialize(MockContext context)
         {
             VaultClient = this.GetVaultClient(context);
             BackupClient = this.GetBackupClient(context);

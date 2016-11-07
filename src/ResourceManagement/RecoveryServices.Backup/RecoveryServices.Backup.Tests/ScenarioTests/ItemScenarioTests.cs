@@ -22,13 +22,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public class ItemScenarioTests : TestBase
     {
+        RecoveryServicesBackupTestBase _testFixture { get; set; }
+
+        public ItemScenarioTests()
+        {
+            _testFixture = new RecoveryServicesBackupTestBase();
+        }
+
         [Fact]
         public void TriggerBackupAndRestoreTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                using (RecoveryServicesBackupTestBase _testFixture = new RecoveryServicesBackupTestBase(context))
+                using (_testFixture)
                 {
+                    _testFixture.Initialize(context);
+                    
                     var containerUniqueName = BackupDefinition.TestCrud.VmDefinition.ContainerUniqueName;
                     var containerName = BackupDefinition.TestCrud.VmDefinition.ContainerName;
                     var itemName = BackupDefinition.TestCrud.VmDefinition.ItemName;
