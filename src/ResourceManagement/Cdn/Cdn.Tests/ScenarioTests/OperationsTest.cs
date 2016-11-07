@@ -37,7 +37,7 @@ namespace Cdn.Tests.ScenarioTests
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
 
                 // Get operations
-                var operations = cdnMgmtClient.Operations.List();
+                var operations = cdnMgmtClient.ListOperations();
 
                 // Verify operations are returned
                 Assert.NotNull(operations);

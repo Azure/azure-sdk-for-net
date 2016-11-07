@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VpnClientParameters class.
         /// </summary>
-        public VpnClientParameters(string processorArchitecture = default(string))
+        public VpnClientParameters(string processorArchitecture)
         {
             ProcessorArchitecture = processorArchitecture;
         }
@@ -41,5 +41,15 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "ProcessorArchitecture")]
         public string ProcessorArchitecture { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (ProcessorArchitecture == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProcessorArchitecture");
+            }
+        }
     }
 }

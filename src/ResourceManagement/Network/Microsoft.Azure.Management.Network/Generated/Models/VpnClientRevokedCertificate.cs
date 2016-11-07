@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.

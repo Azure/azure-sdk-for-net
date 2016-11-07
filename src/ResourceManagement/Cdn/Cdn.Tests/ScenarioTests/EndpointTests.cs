@@ -47,10 +47,10 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.StandardVerizon },
+                    Sku = new Sku { Name = SkuName.StandardAkamai },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -58,11 +58,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -77,11 +77,11 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
-                var existingEndpoint = cdnMgmtClient.Endpoints.Get(endpointName, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                var existingEndpoint = cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName);
 
                 // Create endpoint with same name should fail
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "EastUs",
                     IsHttpAllowed = false,
@@ -97,12 +97,12 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                    cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
                 });
 
                 // Create a cdn endpoint with full properties should succeed
                 endpointName = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -120,15 +120,26 @@ namespace Cdn.Tests.ScenarioTests
                             Name = "origin1",
                             HostName = "host1.hello.com"
                         }
+                    },
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Block,
+                            CountryCodes = new List<string>
+                            {
+                                "AT"
+                            }
+                        }
                     }
                 };
 
-                endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
                 Assert.NotNull(endpoint);
 
                 // Create a cdn endpoint with no origins should fail
                 endpointName = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -142,11 +153,11 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ValidationException>(() => {
-                    cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName); });
+                    cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters); });
 
                 // Create a cdn endpoint with both http and https disallowed should fail
                 endpointName = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = false,
@@ -160,7 +171,7 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ValidationException>(() => {
-                    cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                    cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
                 });
 
                 // Delete resource group
@@ -185,10 +196,10 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.StandardVerizon },
+                    Sku = new Sku { Name = SkuName.StandardAkamai },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -196,11 +207,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -212,10 +223,21 @@ namespace Cdn.Tests.ScenarioTests
                             Name = "origin1",
                             HostName = "host1.hello.com"
                         }
+                    },
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mypicture",
+                            Action = GeoFilterActions.Block,
+                            CountryCodes = new List<string>
+                            {
+                                "AT"
+                            }
+                        }
                     }
                 };
 
-                cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // Update endpoint with invalid origin path should fail
                 var endpointUpdateParameters = new EndpointUpdateParameters
@@ -226,7 +248,7 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Update(endpointName, endpointUpdateParameters, profileName, resourceGroupName); });
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters); });
 
                 // Update endpoint to enable compression without specifying compression types should fail
                 endpointUpdateParameters = new EndpointUpdateParameters
@@ -239,7 +261,29 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Update(endpointName, endpointUpdateParameters, profileName, resourceGroupName); });
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters); });
+
+                // Update endpoint with invalid geo filter should fail
+                endpointUpdateParameters = new EndpointUpdateParameters
+                {
+                    IsHttpAllowed = false,
+                    OriginPath = "/path/valid",
+                    OriginHostHeader = "www.bing.com",
+                    IsCompressionEnabled = true,
+                    QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>()
+                        }
+                    }
+                };
+
+                Assert.ThrowsAny<ErrorResponseException>(() => {
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+                });
 
                 // Update endpoint with valid properties should succeed
                 endpointUpdateParameters = new EndpointUpdateParameters
@@ -249,14 +293,28 @@ namespace Cdn.Tests.ScenarioTests
                     OriginHostHeader = "www.bing.com",
                     IsCompressionEnabled = true,
                     ContentTypesToCompress = new List<string> { "text/html", "application/octet-stream" },
-                    QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString
+                    QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>
+                            {
+                                "AU"
+                            }
+                        }
+                    }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Update(endpointName, endpointUpdateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+                Assert.Equal(1, endpoint.GeoFilters.Count);
+                Assert.Equal("/mycar", endpoint.GeoFilters[0].RelativePath);
+                Assert.Equal(1, endpoint.GeoFilters[0].CountryCodes.Count);
 
                 // Create a cdn endpoint but don't wait for creation to complete
                 endpointName = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -271,7 +329,10 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                cdnMgmtClient.Endpoints.BeginCreateAsync(endpointName, endpointCreateParameters, profileName, resourceGroupName).Wait(5000);
+                cdnMgmtClient.Endpoints.BeginCreateAsync(resourceGroupName, profileName, endpointName, endpointCreateParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Update endpoint in creating state should fail
                 endpointUpdateParameters = new EndpointUpdateParameters
@@ -281,7 +342,7 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Update(endpointName, endpointUpdateParameters, profileName, resourceGroupName);
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
                 });
 
                 // Delete resource group
@@ -306,7 +367,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -317,11 +378,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -336,25 +397,25 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // List endpoints should return one
-                var endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                var endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(1, endpoints.Count());
 
                 // Delete existing endpoint should succeed
-                cdnMgmtClient.Endpoints.DeleteIfExists(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName);
 
                 // Delete non-existing endpoint should succeed
-                cdnMgmtClient.Endpoints.DeleteIfExists(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName);
 
                 // List endpoints should return none
-                endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(0, endpoints.Count());
 
                 // Create a cdn endpoint and don't wait for creation to finish
                 endpointName = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -369,20 +430,23 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                cdnMgmtClient.Endpoints.BeginCreateAsync(endpointName, endpointCreateParameters, profileName, resourceGroupName).Wait(5000);
+                cdnMgmtClient.Endpoints.BeginCreateAsync(resourceGroupName, profileName, endpointName, endpointCreateParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Delete endpoint in creating state should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.DeleteIfExists(endpointName, profileName, resourceGroupName); });
+                    cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName); });
 
                 // Wait for second endpoint to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
 
                 // Delete endpoint should succeed
-                cdnMgmtClient.Endpoints.DeleteIfExists(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName);
 
                 // List endpoints should return none
-                endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(0, endpoints.Count());
 
                 // Delete resource group
@@ -407,7 +471,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -418,15 +482,15 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // List endpoints should return none
-                var endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                var endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(0, endpoints.Count());
 
                 // Create a cdn endpoint should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -441,20 +505,20 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // Get endpoint returns the created endpoint
-                var existingEndpoint = cdnMgmtClient.Endpoints.Get(endpointName, profileName, resourceGroupName);
+                var existingEndpoint = cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName);
                 Assert.NotNull(existingEndpoint);
                 Assert.Equal(existingEndpoint.ResourceState, EndpointResourceState.Running);
 
                 // List endpoints should return one endpoint
-                endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(1, endpoints.Count());
 
                 // Create a cdn endpoint and don't wait for creation to finish
                 string endpointName2 = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -469,39 +533,45 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                cdnMgmtClient.Endpoints.BeginCreateAsync(endpointName2, endpointCreateParameters, profileName, resourceGroupName).Wait(5000);
+                cdnMgmtClient.Endpoints.BeginCreateAsync(resourceGroupName, profileName, endpointName2, endpointCreateParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // List endpoints should return two endpoints
-                endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(2, endpoints.Count());
 
                 // Delete first endpoint should succeed
-                cdnMgmtClient.Endpoints.DeleteIfExists(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName);
 
                 // Get deleted endpoint fails
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Get(endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName);
                 });
 
                 // List endpoints should return 1 endpoint
-                endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(1, endpoints.Count());
 
                 // Wait for second endpoint to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
 
                 // Delete second endpoint but don't wait for operation to complete
-                cdnMgmtClient.Endpoints.BeginDeleteIfExistsAsync(endpointName2, profileName, resourceGroupName).Wait(2000);
+                cdnMgmtClient.Endpoints.BeginDeleteAsync(resourceGroupName, profileName, endpointName2)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Get second endpoint returns endpoint in Deleting state
-                existingEndpoint = cdnMgmtClient.Endpoints.Get(endpointName2, profileName, resourceGroupName);
+                existingEndpoint = cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName2);
                 Assert.Equal(existingEndpoint.ResourceState, EndpointResourceState.Deleting);
 
                 // Wait for second endpoint deletion to complete
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
 
                 // List endpoints should return none
-                endpoints = cdnMgmtClient.Endpoints.ListByProfile(profileName, resourceGroupName);
+                endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
                 Assert.Equal(0, endpoints.Count());
 
                 // Delete resource group
@@ -526,7 +596,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -537,11 +607,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -556,16 +626,16 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // Stop a running endpoint should succeed
-                cdnMgmtClient.Endpoints.Stop(endpointName, profileName, resourceGroupName);
-                var endpoint = cdnMgmtClient.Endpoints.Get(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Stop(resourceGroupName, profileName, endpointName);
+                var endpoint = cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName);
                 Assert.Equal(endpoint.ResourceState, EndpointResourceState.Stopped);
 
                 // Start a stopped endpoint should succeed
-                cdnMgmtClient.Endpoints.Start(endpointName, profileName, resourceGroupName);
-                endpoint = cdnMgmtClient.Endpoints.Get(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Start(resourceGroupName, profileName, endpointName);
+                endpoint = cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName);
                 Assert.Equal(endpoint.ResourceState, EndpointResourceState.Running);
 
                 // Delete resource group
@@ -590,7 +660,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -601,11 +671,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointParameter = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -626,7 +696,7 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointParameter);
 
                 // Purge content on endpoint should succeed
                 var purgeContentPaths = new List<string>
@@ -634,17 +704,29 @@ namespace Cdn.Tests.ScenarioTests
                     "/movies/*",
                     "/pictures/pic1.jpg"
                 };
-                cdnMgmtClient.Endpoints.PurgeContent(endpointName, profileName, resourceGroupName, purgeContentPaths);
+                cdnMgmtClient.Endpoints.PurgeContent(
+                    resourceGroupName,
+                    profileName,
+                    endpointName,
+                    purgeContentPaths);
 
                 // Purge content on non-existing endpoint should fail
                 Assert.Throws<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.PurgeContent("fakeEndpoint", profileName, resourceGroupName, purgeContentPaths);
+                    cdnMgmtClient.Endpoints.PurgeContent(
+                        resourceGroupName,
+                        profileName,
+                        "fakeEndpoint",
+                        purgeContentPaths);
                 });
 
                 // Purge content on endpoint with invalid content paths should fail
                 var invalidPurgeContentPaths = new List<string> { "invalidpath!" };
                 Assert.Throws<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.PurgeContent(endpointName, profileName, resourceGroupName, invalidPurgeContentPaths); });
+                    cdnMgmtClient.Endpoints.PurgeContent(
+                        resourceGroupName,
+                        profileName,
+                        endpointName,
+                        invalidPurgeContentPaths); });
 
                 // Load content on endpoint should succeed
                 var loadContentPaths = new List<string>
@@ -652,32 +734,52 @@ namespace Cdn.Tests.ScenarioTests
                     "/movies/amazing.mp4",
                     "/pictures/pic1.jpg"
                 };
-                cdnMgmtClient.Endpoints.LoadContent(endpointName, profileName, resourceGroupName, loadContentPaths);
+                cdnMgmtClient.Endpoints.LoadContent(
+                    resourceGroupName,
+                    profileName,
+                    endpointName,
+                    loadContentPaths);
 
                 // Load content on non-existing endpoint should fail
                 Assert.Throws<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.LoadContent("fakeEndpoint", profileName, resourceGroupName, loadContentPaths);
+                    cdnMgmtClient.Endpoints.LoadContent(
+                        resourceGroupName,
+                        profileName,
+                        "fakeEndpoint",
+                        loadContentPaths);
                 });
 
                 // Load content on endpoint with invalid content paths should fail
                 var invalidLoadContentPaths = new List<string> { "/movies/*" };
                 Assert.Throws<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.LoadContent(endpointName, profileName, resourceGroupName, invalidLoadContentPaths);
+                    cdnMgmtClient.Endpoints.LoadContent(
+                        resourceGroupName,
+                        profileName,
+                        endpointName,
+                        invalidLoadContentPaths);
                 });
 
                 // Stop the running endpoint
-                cdnMgmtClient.Endpoints.Stop(endpointName, profileName, resourceGroupName);
-                var endpoint = cdnMgmtClient.Endpoints.Get(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Stop(resourceGroupName, profileName, endpointName);
+                var endpoint = cdnMgmtClient.Endpoints.Get(resourceGroupName, profileName, endpointName);
                 Assert.Equal(endpoint.ResourceState, EndpointResourceState.Stopped);
 
                 // Purge content on stopped endpoint should fail
                 Assert.Throws<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.PurgeContent(endpointName, profileName, resourceGroupName, purgeContentPaths);
+                    cdnMgmtClient.Endpoints.PurgeContent(
+                        resourceGroupName,
+                        profileName,
+                        endpointName,
+                        purgeContentPaths);
                 });
 
                 // Load content on stopped endpoint should fail
                 Assert.Throws<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.LoadContent(endpointName, profileName, resourceGroupName, loadContentPaths);
+                    cdnMgmtClient.Endpoints.LoadContent(
+                        resourceGroupName,
+                        profileName,
+                        endpointName,
+                        loadContentPaths);
                 });
 
                 // Delete resource group
@@ -702,7 +804,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -713,11 +815,14 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(
+                    resourceGroupName,
+                    profileName,
+                    createParameters);
 
                 // Create a cdn endpoint with minimum requirements
-                string endpointName = "endpoint-5b4f5e6b9ea6";
-                var endpointCreateParameters = new EndpointCreateParameters
+                string endpointName = "endpoint-8e02deffed3c";
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -732,22 +837,38 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(
+                    resourceGroupName,
+                    profileName,
+                    endpointName,
+                    endpointCreateParameters);
 
                 //NOTE: There is a CName mapping already created for this custom domain and endpoint hostname
-                // "customdomain31.azureedge-test.net" maps to "endpoint-5b4f5e6b9ea6.azureedge-test.net"
+                // "customdomain34.azureedge-test.net" maps to "endpoint-8e02deffed3c.azureedge.net"
 
                 // Validate exisiting custom domain should return true
-                var output = cdnMgmtClient.Endpoints.ValidateCustomDomain(endpointName, profileName, resourceGroupName, "customdomain31.azureedge-test.net");
+                var output = cdnMgmtClient.Endpoints.ValidateCustomDomain(
+                    resourceGroupName,
+                    profileName,
+                    endpointName,
+                    "customdomain34.azureedge-test.net");
                 Assert.Equal(output.CustomDomainValidated, true);
 
                 // Validate non-exisiting custom domain should return false
-                output = cdnMgmtClient.Endpoints.ValidateCustomDomain(endpointName, profileName, resourceGroupName, "customdomain4.hello.com");
+                output = cdnMgmtClient.Endpoints.ValidateCustomDomain(
+                    resourceGroupName,
+                    profileName,
+                    endpointName,
+                    "customdomain4.hello.com");
                 Assert.Equal(output.CustomDomainValidated, false);
 
                 // Validate invalid custom domain should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.ValidateCustomDomain(endpointName, profileName, resourceGroupName, "invalid\\custom/domain"); });
+                    cdnMgmtClient.Endpoints.ValidateCustomDomain(
+                        resourceGroupName,
+                        profileName,
+                        endpointName,
+                        "invalid\\custom/domain"); });
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);

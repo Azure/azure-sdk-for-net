@@ -8,21 +8,18 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ProvisioningState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ProvisioningState
     {
-        [EnumMember(Value = "succeeded")]
+        [System.Runtime.Serialization.EnumMember(Value = "succeeded")]
         Succeeded,
-        [EnumMember(Value = "provisioning")]
+        [System.Runtime.Serialization.EnumMember(Value = "provisioning")]
         Provisioning,
-        [EnumMember(Value = "failed")]
+        [System.Runtime.Serialization.EnumMember(Value = "failed")]
         Failed
     }
 }
