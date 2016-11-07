@@ -132,9 +132,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>$(LibraryNugetPackageFolder)\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.ResourceManager">

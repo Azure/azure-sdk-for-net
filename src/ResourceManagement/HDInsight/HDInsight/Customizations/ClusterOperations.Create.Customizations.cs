@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
         }
 
-        private ClusterCreateParametersExtended GetExtendedClusterCreateParameters(
+        internal ClusterCreateParametersExtended GetExtendedClusterCreateParameters(
             string clusterName, ClusterCreateParameters clusterCreateParameters)
         {
             var createParamsExtended = new ClusterCreateParametersExtended
