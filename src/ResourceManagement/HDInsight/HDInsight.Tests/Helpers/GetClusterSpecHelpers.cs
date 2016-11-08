@@ -22,7 +22,6 @@ namespace HDInsight.Tests.Helpers
 {
     public static class GetClusterSpecHelpers
     {
-        private const string ADLClusterRootPath = "/Clusters/SDK";
         private const string ADLDefaultStorageAccountName = "";
         private const string DefaultContainer = "";
         private const string StorageAccountName = "";
@@ -392,6 +391,7 @@ namespace HDInsight.Tests.Helpers
         private static StorageInfo GetDefaultAzureDataLakeStoreInfo()
         {
             bool recordMode = HDInsightManagementTestUtilities.IsRecordMode();
+            string ADLClusterRootPath = "/Clusters/SDK";
 
             return recordMode
                ? new AzureDataLakeStoreInfo(ADLDefaultStorageAccountName, ADLClusterRootPath)
