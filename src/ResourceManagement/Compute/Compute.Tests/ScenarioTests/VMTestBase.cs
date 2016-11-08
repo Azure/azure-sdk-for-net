@@ -532,7 +532,7 @@ namespace Compute.Tests
                 {
                     Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "frontendIPConfigurations", frontendIPConfigName)
                 },
-                SslCertificate = null,
+                SSLCertificate = null,
                 Protocol = ApplicationGatewayProtocol.Http
             };
 
