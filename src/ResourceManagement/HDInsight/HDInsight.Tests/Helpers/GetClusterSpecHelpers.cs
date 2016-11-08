@@ -318,16 +318,6 @@ namespace HDInsight.Tests.Helpers
             return clusterparams;
         }
 
-        public static ClusterCreateParameters GetCustomCreateParametersInteractiveHiveIaas()
-        {
-            var clusterparams = GetCustomCreateParametersIaas();
-            clusterparams.Version = "3.5";
-            clusterparams.ClusterType = "InteractiveHive";
-            clusterparams.WorkerNodeSize = null;
-            clusterparams.HeadNodeSize = null;
-            return clusterparams;
-        }
-
         public static ClusterCreateParametersExtended AddConfigurations(ClusterCreateParametersExtended cluster, string configurationKey, Dictionary<string, string> configs)
         {
             string configurations = cluster.Properties.ClusterDefinition.Configurations;
