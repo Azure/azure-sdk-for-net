@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     {"InteractiveHive", "Standard_D13_v2"},
                 };
 
-        private static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
+        internal static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
         {
             string headNodeSize;
             if (clusterCreateParameters.HeadNodeSize != null)
@@ -546,7 +546,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     {"InteractiveHive", "Standard_D13_v2"},
                 };
 
-        private static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
+        internal static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
         {
             string workerNodeSize;
             if (clusterCreateParameters.WorkerNodeSize != null)
