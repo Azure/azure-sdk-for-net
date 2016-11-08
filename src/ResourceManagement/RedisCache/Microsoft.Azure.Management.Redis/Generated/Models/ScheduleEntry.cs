@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         /// <param name="dayOfWeek">Day of week when cache can be patched.
         /// Possible values include: 'Monday', 'Tuesday', 'Wednesday',
-        /// 'Thursday', 'Friday', 'Saturday', 'Sunday'</param>
+        /// 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Everyday',
+        /// 'Weekend'</param>
         /// <param name="startHourUtc">Start hour after which cache patching
         /// can start.</param>
         /// <param name="maintenanceWindow">ISO8601 timespan specifying how
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Gets or sets day of week when cache can be patched. Possible
         /// values include: 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-        /// 'Friday', 'Saturday', 'Sunday'
+        /// 'Friday', 'Saturday', 'Sunday', 'Everyday', 'Weekend'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dayOfWeek")]
         public DayOfWeek DayOfWeek { get; set; }
