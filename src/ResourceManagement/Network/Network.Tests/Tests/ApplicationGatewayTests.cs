@@ -96,7 +96,7 @@ namespace Networks.Tests
             var appGw = new ApplicationGateway()
             {
                 Location = location,                
-                SSLPolicy = new ApplicationGatewaySslPolicy()
+                SslPolicy = new ApplicationGatewaySslPolicy()
                     {
                         DisabledSslProtocols = new List<string>()
                         {
@@ -232,7 +232,7 @@ namespace Networks.Tests
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                             },
-                            SSLCertificate = null,
+                            SslCertificate = null,
                             Protocol = ApplicationGatewayProtocol.Http
                         },
                         new ApplicationGatewayHttpListener()
@@ -248,7 +248,7 @@ namespace Networks.Tests
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
                             },
-                            SSLCertificate = null,
+                            SslCertificate = null,
                             Protocol = ApplicationGatewayProtocol.Http
                         },                        
                         //new ApplicationGatewayHttpListener()
@@ -399,7 +399,7 @@ namespace Networks.Tests
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
-            Assert.Equal(gw1.SSLPolicy.DisabledSslProtocols.Count, gw2.SSLPolicy.DisabledSslProtocols.Count);
+            Assert.Equal(gw1.SslPolicy.DisabledSslProtocols.Count, gw2.SslPolicy.DisabledSslProtocols.Count);
             Assert.Equal(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
             Assert.Equal(gw1.WebApplicationFirewallConfiguration.Enabled, gw2.WebApplicationFirewallConfiguration.Enabled);
             Assert.Equal(gw1.WebApplicationFirewallConfiguration.FirewallMode, gw2.WebApplicationFirewallConfiguration.FirewallMode);

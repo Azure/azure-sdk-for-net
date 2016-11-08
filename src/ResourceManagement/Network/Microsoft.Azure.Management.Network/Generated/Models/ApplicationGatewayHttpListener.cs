@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="protocol">Protocol. Possible values are: 'Http' and
         /// 'Https'. Possible values include: 'Http', 'Https'</param>
         /// <param name="hostName">Host name of HTTP listener.</param>
-        /// <param name="sSLCertificate">SSL certificate resource of an
+        /// <param name="sslCertificate">SSL certificate resource of an
         /// application gateway.</param>
         /// <param name="requireServerNameIndication">Applicable only if
         /// protocol is https. Enables SNI for multi-hosting.</param>
@@ -46,14 +46,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayHttpListener(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sSLCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayHttpListener(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             FrontendPort = frontendPort;
             Protocol = protocol;
             HostName = hostName;
-            SSLCertificate = sSLCertificate;
+            SslCertificate = sslCertificate;
             RequireServerNameIndication = requireServerNameIndication;
             ProvisioningState = provisioningState;
             Name = name;
@@ -89,8 +89,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets SSL certificate resource of an application gateway.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.SSLCertificate")]
-        public SubResource SSLCertificate { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslCertificate")]
+        public SubResource SslCertificate { get; set; }
 
         /// <summary>
         /// Gets or sets applicable only if protocol is https. Enables SNI for

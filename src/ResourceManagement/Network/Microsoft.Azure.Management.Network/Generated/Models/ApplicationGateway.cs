@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">SKU of the application gateway resource.</param>
-        /// <param name="sSLPolicy">SSL policy of the application gateway
+        /// <param name="sslPolicy">SSL policy of the application gateway
         /// resource.</param>
         /// <param name="operationalState">Operational state of the
         /// application gateway resource. Possible values are: 'Stopped',
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// gateway resource.</param>
         /// <param name="authenticationCertificates">Authentication
         /// certificates of the application gateway resource.</param>
-        /// <param name="sSLCertificates">SSL certificates of the application
+        /// <param name="sslCertificates">SSL certificates of the application
         /// gateway resource.</param>
         /// <param name="frontendIPConfigurations">Frontend IP addresses of
         /// the application gateway resource.</param>
@@ -67,15 +67,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sSLPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), System.Collections.Generic.IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(System.Collections.Generic.IList<ApplicationGatewayIPConfiguration>), System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default(System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificate>), System.Collections.Generic.IList<ApplicationGatewaySslCertificate> sSLCertificates = default(System.Collections.Generic.IList<ApplicationGatewaySslCertificate>), System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfiguration>), System.Collections.Generic.IList<ApplicationGatewayFrontendPort> frontendPorts = default(System.Collections.Generic.IList<ApplicationGatewayFrontendPort>), System.Collections.Generic.IList<ApplicationGatewayProbe> probes = default(System.Collections.Generic.IList<ApplicationGatewayProbe>), System.Collections.Generic.IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddressPool>), System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettings>), System.Collections.Generic.IList<ApplicationGatewayHttpListener> httpListeners = default(System.Collections.Generic.IList<ApplicationGatewayHttpListener>), System.Collections.Generic.IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(System.Collections.Generic.IList<ApplicationGatewayUrlPathMap>), System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRule>), ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default(ApplicationGatewayWebApplicationFirewallConfiguration), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public ApplicationGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sslPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), System.Collections.Generic.IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(System.Collections.Generic.IList<ApplicationGatewayIPConfiguration>), System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default(System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificate>), System.Collections.Generic.IList<ApplicationGatewaySslCertificate> sslCertificates = default(System.Collections.Generic.IList<ApplicationGatewaySslCertificate>), System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfiguration>), System.Collections.Generic.IList<ApplicationGatewayFrontendPort> frontendPorts = default(System.Collections.Generic.IList<ApplicationGatewayFrontendPort>), System.Collections.Generic.IList<ApplicationGatewayProbe> probes = default(System.Collections.Generic.IList<ApplicationGatewayProbe>), System.Collections.Generic.IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddressPool>), System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettings>), System.Collections.Generic.IList<ApplicationGatewayHttpListener> httpListeners = default(System.Collections.Generic.IList<ApplicationGatewayHttpListener>), System.Collections.Generic.IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(System.Collections.Generic.IList<ApplicationGatewayUrlPathMap>), System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRule>), ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default(ApplicationGatewayWebApplicationFirewallConfiguration), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
-            SSLPolicy = sSLPolicy;
+            SslPolicy = sslPolicy;
             OperationalState = operationalState;
             GatewayIPConfigurations = gatewayIPConfigurations;
             AuthenticationCertificates = authenticationCertificates;
-            SSLCertificates = sSLCertificates;
+            SslCertificates = sslCertificates;
             FrontendIPConfigurations = frontendIPConfigurations;
             FrontendPorts = frontendPorts;
             Probes = probes;
@@ -99,8 +99,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets SSL policy of the application gateway resource.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.SSLPolicy")]
-        public ApplicationGatewaySslPolicy SSLPolicy { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslPolicy")]
+        public ApplicationGatewaySslPolicy SslPolicy { get; set; }
 
         /// <summary>
         /// Gets operational state of the application gateway resource.
@@ -127,8 +127,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets SSL certificates of the application gateway resource.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.SSLCertificates")]
-        public System.Collections.Generic.IList<ApplicationGatewaySslCertificate> SSLCertificates { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslCertificates")]
+        public System.Collections.Generic.IList<ApplicationGatewaySslCertificate> SslCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets frontend IP addresses of the application gateway
