@@ -1086,6 +1086,13 @@ namespace Microsoft.Azure.Management.Sql
                                                 string createModeInstance = ((string)createModeValue);
                                                 propertiesInstance2.CreateMode = createModeInstance;
                                             }
+                                            
+                                            JToken readScaleValue = propertiesValue2["readScale"];
+                                            if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                            {
+                                                string readScaleInstance = ((string)readScaleValue);
+                                                propertiesInstance2.ReadScale = readScaleInstance;
+                                            }
                                         }
                                         
                                         JToken idValue8 = databasesValue["id"];
@@ -2188,6 +2195,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string createModeInstance = ((string)createModeValue);
                                     propertiesInstance.CreateMode = createModeInstance;
                                 }
+                                
+                                JToken readScaleValue = propertiesValue["readScale"];
+                                if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                {
+                                    string readScaleInstance = ((string)readScaleValue);
+                                    propertiesInstance.ReadScale = readScaleInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3278,6 +3292,13 @@ namespace Microsoft.Azure.Management.Sql
                                                     {
                                                         string createModeInstance = ((string)createModeValue);
                                                         propertiesInstance2.CreateMode = createModeInstance;
+                                                    }
+                                                    
+                                                    JToken readScaleValue = propertiesValue2["readScale"];
+                                                    if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                                    {
+                                                        string readScaleInstance = ((string)readScaleValue);
+                                                        propertiesInstance2.ReadScale = readScaleInstance;
                                                     }
                                                 }
                                                 
@@ -4378,6 +4399,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string createModeInstance = ((string)createModeValue);
                                             propertiesInstance.CreateMode = createModeInstance;
+                                        }
+                                        
+                                        JToken readScaleValue = propertiesValue["readScale"];
+                                        if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                        {
+                                            string readScaleInstance = ((string)readScaleValue);
+                                            propertiesInstance.ReadScale = readScaleInstance;
                                         }
                                     }
                                     
@@ -5481,6 +5509,13 @@ namespace Microsoft.Azure.Management.Sql
                                                     {
                                                         string createModeInstance = ((string)createModeValue);
                                                         propertiesInstance2.CreateMode = createModeInstance;
+                                                    }
+                                                    
+                                                    JToken readScaleValue = propertiesValue2["readScale"];
+                                                    if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                                    {
+                                                        string readScaleInstance = ((string)readScaleValue);
+                                                        propertiesInstance2.ReadScale = readScaleInstance;
                                                     }
                                                 }
                                                 

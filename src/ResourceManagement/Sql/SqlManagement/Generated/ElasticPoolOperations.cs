@@ -1911,6 +1911,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string createModeInstance = ((string)createModeValue);
                                     propertiesInstance.CreateMode = createModeInstance;
                                 }
+                                
+                                JToken readScaleValue = propertiesValue["readScale"];
+                                if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                {
+                                    string readScaleInstance = ((string)readScaleValue);
+                                    propertiesInstance.ReadScale = readScaleInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -2205,11 +2212,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -4130,6 +4137,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string createModeInstance = ((string)createModeValue);
                                             propertiesInstance.CreateMode = createModeInstance;
+                                        }
+                                        
+                                        JToken readScaleValue = propertiesValue["readScale"];
+                                        if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                        {
+                                            string readScaleInstance = ((string)readScaleValue);
+                                            propertiesInstance.ReadScale = readScaleInstance;
                                         }
                                     }
                                     

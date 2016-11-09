@@ -149,6 +149,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._maxSizeBytes = value; }
         }
         
+        private string _readScale;
+        
+        /// <summary>
+        /// Optional. Gets the read scale option for this database.
+        /// </summary>
+        public string ReadScale
+        {
+            get { return this._readScale; }
+            set { this._readScale = value; }
+        }
+        
         private string _requestedServiceObjectiveId;
         
         /// <summary>

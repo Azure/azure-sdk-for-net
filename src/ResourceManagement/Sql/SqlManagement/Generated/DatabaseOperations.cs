@@ -244,6 +244,11 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["recoveryServicesRecoveryPointResourceId"] = parameters.Properties.RecoveryServicesRecoveryPointResourceId;
                 }
                 
+                if (parameters.Properties.ReadScale != null)
+                {
+                    propertiesValue["readScale"] = parameters.Properties.ReadScale;
+                }
+                
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
@@ -1133,6 +1138,13 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string createModeInstance = ((string)createModeValue);
                                     propertiesInstance.CreateMode = createModeInstance;
+                                }
+                                
+                                JToken readScaleValue = propertiesValue2["readScale"];
+                                if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                {
+                                    string readScaleInstance = ((string)readScaleValue);
+                                    propertiesInstance.ReadScale = readScaleInstance;
                                 }
                             }
                             
@@ -2408,6 +2420,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string createModeInstance = ((string)createModeValue);
                                     propertiesInstance.CreateMode = createModeInstance;
                                 }
+                                
+                                JToken readScaleValue = propertiesValue["readScale"];
+                                if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                {
+                                    string readScaleInstance = ((string)readScaleValue);
+                                    propertiesInstance.ReadScale = readScaleInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3435,6 +3454,13 @@ namespace Microsoft.Azure.Management.Sql
                                             string createModeInstance = ((string)createModeValue);
                                             propertiesInstance.CreateMode = createModeInstance;
                                         }
+                                        
+                                        JToken readScaleValue = propertiesValue["readScale"];
+                                        if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                        {
+                                            string readScaleInstance = ((string)readScaleValue);
+                                            propertiesInstance.ReadScale = readScaleInstance;
+                                        }
                                     }
                                     
                                     JToken idValue8 = valueValue["id"];
@@ -4431,6 +4457,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string createModeInstance = ((string)createModeValue);
                                     propertiesInstance.CreateMode = createModeInstance;
                                 }
+                                
+                                JToken readScaleValue = propertiesValue["readScale"];
+                                if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                {
+                                    string readScaleInstance = ((string)readScaleValue);
+                                    propertiesInstance.ReadScale = readScaleInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -4479,11 +4512,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -5465,6 +5498,13 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string createModeInstance = ((string)createModeValue);
                                     propertiesInstance.CreateMode = createModeInstance;
+                                }
+                                
+                                JToken readScaleValue = propertiesValue["readScale"];
+                                if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                {
+                                    string readScaleInstance = ((string)readScaleValue);
+                                    propertiesInstance.ReadScale = readScaleInstance;
                                 }
                             }
                             
@@ -6478,6 +6518,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string createModeInstance = ((string)createModeValue);
                                             propertiesInstance.CreateMode = createModeInstance;
+                                        }
+                                        
+                                        JToken readScaleValue = propertiesValue["readScale"];
+                                        if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                        {
+                                            string readScaleInstance = ((string)readScaleValue);
+                                            propertiesInstance.ReadScale = readScaleInstance;
                                         }
                                     }
                                     
@@ -7503,6 +7550,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string createModeInstance = ((string)createModeValue);
                                             propertiesInstance.CreateMode = createModeInstance;
+                                        }
+                                        
+                                        JToken readScaleValue = propertiesValue["readScale"];
+                                        if (readScaleValue != null && readScaleValue.Type != JTokenType.Null)
+                                        {
+                                            string readScaleInstance = ((string)readScaleValue);
+                                            propertiesInstance.ReadScale = readScaleInstance;
                                         }
                                     }
                                     
