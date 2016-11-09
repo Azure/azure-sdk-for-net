@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     /// <summary>
     /// Data Lake Store firewall rule information
     /// </summary>
-    public partial class FirewallRule
+    [JsonTransformation]
+    public partial class FirewallRule : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
@@ -29,43 +30,48 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
         /// </summary>
-        /// <param name="name">the firewall rule's name.</param>
-        /// <param name="type">the namespace and type of the firewall
-        /// Rule.</param>
-        /// <param name="id">the firewall rule's full ID.</param>
-        /// <param name="properties">the properties of the firewall
+        /// <param name="startIpAddress">the start IP address for the firewall
         /// rule.</param>
-        public FirewallRule(string name = default(string), string type = default(string), string id = default(string), FirewallRuleProperties properties = default(FirewallRuleProperties))
+        /// <param name="endIpAddress">the end IP address for the firewall
+        /// rule.</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
-            Name = name;
-            Type = type;
-            Id = id;
-            Properties = properties;
+            StartIpAddress = startIpAddress;
+            EndIpAddress = endIpAddress;
         }
 
         /// <summary>
-        /// Gets or sets the firewall rule's name.
+        /// Gets or sets the start IP address for the firewall rule.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "properties.startIpAddress")]
+        public string StartIpAddress { get; set; }
 
         /// <summary>
-        /// Gets the namespace and type of the firewall Rule.
+        /// Gets or sets the end IP address for the firewall rule.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.endIpAddress")]
+        public string EndIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the firewall rule's full ID.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the properties of the firewall rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public FirewallRuleProperties Properties { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (StartIpAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StartIpAddress");
+            }
+            if (EndIpAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EndIpAddress");
+            }
+        }
     }
 }

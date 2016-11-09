@@ -80,6 +80,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IFirewallRulesOperations.
+        /// </summary>
+        public virtual IFirewallRulesOperations FirewallRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ITrustedIdProvidersOperations.
+        /// </summary>
+        public virtual ITrustedIdProvidersOperations TrustedIdProviders { get; private set; }
+
+        /// <summary>
         /// Gets the IAccountOperations.
         /// </summary>
         public virtual IAccountOperations Account { get; private set; }
@@ -285,6 +295,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         private void Initialize()
         {
+            this.FirewallRules = new FirewallRulesOperations(this);
+            this.TrustedIdProviders = new TrustedIdProvidersOperations(this);
             this.Account = new AccountOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-11-01";
@@ -304,6 +316,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -317,6 +330,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }

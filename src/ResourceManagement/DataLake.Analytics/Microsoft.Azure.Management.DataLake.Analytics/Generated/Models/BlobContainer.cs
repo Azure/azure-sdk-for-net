@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Azure Storage blob container information.
     /// </summary>
+    [JsonTransformation]
     public partial class BlobContainer
     {
         /// <summary>
@@ -33,14 +34,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="id">the unique identifier of the blob
         /// container.</param>
         /// <param name="type">the type of the blob container.</param>
-        /// <param name="properties">the properties of the blob
+        /// <param name="lastModifiedTime">the last modified time of the blob
         /// container.</param>
-        public BlobContainer(string name = default(string), string id = default(string), string type = default(string), BlobContainerProperties properties = default(BlobContainerProperties))
+        public BlobContainer(string name = default(string), string id = default(string), string type = default(string), DateTime? lastModifiedTime = default(DateTime?))
         {
             Name = name;
             Id = id;
             Type = type;
-            Properties = properties;
+            LastModifiedTime = lastModifiedTime;
         }
 
         /// <summary>
@@ -62,10 +63,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the properties of the blob container.
+        /// Gets the last modified time of the blob container.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public BlobContainerProperties Properties { get; private set; }
+        [JsonProperty(PropertyName = "properties.lastModifiedTime")]
+        public DateTime? LastModifiedTime { get; private set; }
 
     }
 }

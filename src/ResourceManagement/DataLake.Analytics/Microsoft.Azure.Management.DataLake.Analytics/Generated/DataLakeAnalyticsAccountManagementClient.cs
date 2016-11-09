@@ -80,6 +80,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataLakeStoreAccountsOperations.
+        /// </summary>
+        public virtual IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the IAccountOperations.
         /// </summary>
         public virtual IAccountOperations Account { get; private set; }
@@ -285,6 +295,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
+            this.StorageAccounts = new StorageAccountsOperations(this);
+            this.DataLakeStoreAccounts = new DataLakeStoreAccountsOperations(this);
             this.Account = new AccountOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-11-01";
@@ -304,6 +316,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -317,6 +330,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }

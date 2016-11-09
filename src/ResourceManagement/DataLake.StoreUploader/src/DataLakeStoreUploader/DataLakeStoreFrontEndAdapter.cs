@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
-                var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, offset, cancellationToken: _token);
+                var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, offset, SyncFlag.DATA, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {

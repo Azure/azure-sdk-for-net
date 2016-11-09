@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Additional Data Lake Store parameters.
     /// </summary>
+    [JsonTransformation]
     public partial class AddDataLakeStoreParameters
     {
         /// <summary>
@@ -29,32 +30,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the AddDataLakeStoreParameters class.
         /// </summary>
-        /// <param name="properties">the properties for the Data Lake Store
-        /// account being added.</param>
-        public AddDataLakeStoreParameters(DataLakeStoreAccountInfoProperties properties)
+        /// <param name="suffix">the optional suffix for the Data Lake Store
+        /// account.</param>
+        public AddDataLakeStoreParameters(string suffix = default(string))
         {
-            Properties = properties;
+            Suffix = suffix;
         }
 
         /// <summary>
-        /// Gets or sets the properties for the Data Lake Store account being
-        /// added.
+        /// Gets or sets the optional suffix for the Data Lake Store account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public DataLakeStoreAccountInfoProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.suffix")]
+        public string Suffix { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-        }
     }
 }

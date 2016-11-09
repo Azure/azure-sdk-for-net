@@ -377,6 +377,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The optional offset in the stream to begin the append operation.
         /// Default is to append at the end of the stream.
         /// </param>
+        /// <param name='syncFlag'>
+        /// Optionally indicates what to do after completion of the append.
+        /// DATA indicates more data is coming so no sync takes place,
+        /// METADATA indicates a sync should be done to refresh metadata of
+        /// the file only. CLOSE indicates that both the stream and metadata
+        /// should be refreshed upon append completion. Possible values
+        /// include: 'DATA', 'METADATA', 'CLOSE'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -389,7 +397,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), SyncFlag? syncFlag = default(SyncFlag?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a file with optionally specified content.
         /// </summary>
@@ -432,8 +440,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Data Lake Store path (starting with '/') of the file to open.
         /// </param>
         /// <param name='length'>
+        /// The number of bytes that the server will attempt to retrieve. It
+        /// will retrieve &lt;= length bytes.
         /// </param>
         /// <param name='offset'>
+        /// The byte offset to start reading data from.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -441,7 +452,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AdlsErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">

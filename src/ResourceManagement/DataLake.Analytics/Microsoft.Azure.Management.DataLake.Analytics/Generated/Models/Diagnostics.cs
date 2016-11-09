@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Error diagnostic information for failed jobs.
+    /// </summary>
     public partial class Diagnostics
     {
         /// <summary>

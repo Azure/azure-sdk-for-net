@@ -24,246 +24,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public partial interface IAccountOperations
     {
         /// <summary>
-        /// Deletes the specified firewall rule from the specified Data Lake
-        /// Store account
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to delete the
-        /// firewall rule.
-        /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to delete.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteFirewallRuleWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the specified Data Lake Store firewall rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the
-        /// firewall rule.
-        /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to retrieve.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<FirewallRule>> GetFirewallRuleWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the Data Lake Store firewall rules within the specified Data
-        /// Lake Store account.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the
-        /// firewall rules.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<FirewallRule>>> ListFirewallRulesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates the specified firewall rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account to which to add the
-        /// firewall rule.
-        /// </param>
-        /// <param name='name'>
-        /// The name of the firewall rule to create or update.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to create the create firewall rule.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<FirewallRule>> CreateOrUpdateFirewallRuleWithHttpMessagesAsync(string resourceGroupName, string accountName, string name, FirewallRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates the specified trusted identity provider
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account to which to add the
-        /// trusted identity provider.
-        /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider. This is used for
-        /// differentiation of providers in the account.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to create the create the trusted identity
-        /// provider.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TrustedIdProvider>> CreateOrUpdateTrustedIdProviderWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes the specified trusted identity provider from the specified
-        /// Data Lake Store account
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to delete the
-        /// trusted identity provider.
-        /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider to delete.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteTrustedIdProviderWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the specified Data Lake Store trusted identity provider.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the
-        /// trusted identity provider.
-        /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider to retrieve.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TrustedIdProvider>> GetTrustedIdProviderWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the Data Lake Store trusted identity providers within the
-        /// specified Data Lake Store account.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the
-        /// trusted identity providers.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TrustedIdProvider>>> ListTrustedIdProvidersWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Creates the specified Data Lake Store account.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -349,7 +109,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeStoreAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeStoreAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeStoreAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the specified Data Lake Store account information.
         /// </summary>
@@ -378,7 +138,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeStoreAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeStoreAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeStoreAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified Data Lake Store account.
         /// </summary>
@@ -498,16 +258,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// matching resources included with the resources in the response,
         /// e.g. Categories?$count=true. Optional.
         /// </param>
-        /// <param name='search'>
-        /// A free form search. A free-text search expression to match for
-        /// whether a particular entry should be included in the feed, e.g.
-        /// Categories?$search=blue OR green. Optional.
-        /// </param>
-        /// <param name='format'>
-        /// The desired return format. Return the response in particular
-        /// formatxii without access to request headers for standard
-        /// content-type negotiation (e.g Orders?$format=json). Optional.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -523,7 +273,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DataLakeStoreAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DataLakeStoreAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Data Lake Store accounts within the subscription. The
         /// response includes a link to the next page of results, if any.
@@ -541,16 +291,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// matching resources included with the resources in the response,
         /// e.g. Categories?$count=true. Optional.
         /// </param>
-        /// <param name='search'>
-        /// A free form search. A free-text search expression to match for
-        /// whether a particular entry should be included in the feed, e.g.
-        /// Categories?$search=blue OR green. Optional.
-        /// </param>
-        /// <param name='format'>
-        /// The desired return format. Return the response in particular
-        /// formatxii without access to request headers for standard
-        /// content-type negotiation (e.g Orders?$format=json). Optional.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -566,53 +306,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DataLakeStoreAccount>>> ListWithHttpMessagesAsync(ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the Data Lake Store firewall rules within the specified Data
-        /// Lake Store account.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<FirewallRule>>> ListFirewallRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the Data Lake Store trusted identity providers within the
-        /// specified Data Lake Store account.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TrustedIdProvider>>> ListTrustedIdProvidersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DataLakeStoreAccount>>> ListWithHttpMessagesAsync(ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Data Lake Store accounts within a specific resource
         /// group. The response includes a link to the next page of results,

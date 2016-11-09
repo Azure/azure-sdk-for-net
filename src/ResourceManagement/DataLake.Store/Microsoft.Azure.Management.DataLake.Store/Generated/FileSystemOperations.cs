@@ -2034,6 +2034,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The optional offset in the stream to begin the append operation. Default
         /// is to append at the end of the stream.
         /// </param>
+        /// <param name='syncFlag'>
+        /// Optionally indicates what to do after completion of the append. DATA
+        /// indicates more data is coming so no sync takes place, METADATA indicates
+        /// a sync should be done to refresh metadata of the file only. CLOSE
+        /// indicates that both the stream and metadata should be refreshed upon
+        /// append completion. Possible values include: 'DATA', 'METADATA', 'CLOSE'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2049,7 +2056,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), SyncFlag? syncFlag = default(SyncFlag?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -2084,6 +2091,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("offset", offset);
+                tracingParameters.Add("syncFlag", syncFlag);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2099,6 +2107,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (offset != null)
             {
                 _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (syncFlag != null)
+            {
+                _queryParameters.Add(string.Format("syncFlag={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(syncFlag, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
@@ -2418,8 +2430,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Data Lake Store path (starting with '/') of the file to open.
         /// </param>
         /// <param name='length'>
+        /// The number of bytes that the server will attempt to retrieve. It will
+        /// retrieve &lt;= length bytes.
         /// </param>
         /// <param name='offset'>
+        /// The byte offset to start reading data from.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2427,7 +2442,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="AdlsErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2549,7 +2564,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
-
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
@@ -2561,13 +2575,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new AdlsErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2577,6 +2592,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

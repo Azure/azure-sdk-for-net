@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// release. Please use CreateCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database in which to create the secret.
@@ -279,7 +280,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// release. Please use UpdateCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -494,7 +496,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// and will be removed in the next release. Please use GetCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -696,7 +699,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -869,7 +873,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// individual credentials using DeleteCredential
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -1032,7 +1037,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// specified database.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database in which to create the credential.
@@ -1222,7 +1228,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// the specified database
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the credential.
@@ -1407,7 +1414,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified credential from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -1607,7 +1615,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Deletes the specified credential in the specified database
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the credential.
@@ -1789,7 +1798,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of credentials from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -2012,7 +2022,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the external data source.
@@ -2213,7 +2224,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the external data sources.
@@ -2435,7 +2447,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified procedure from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedure.
@@ -2644,7 +2657,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of procedures from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedures.
@@ -2875,7 +2889,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table.
@@ -3084,7 +3099,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the tables.
@@ -3315,7 +3331,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified table type from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table type.
@@ -3524,7 +3541,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of table types from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table types.
@@ -3755,7 +3773,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified view from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the view.
@@ -3964,7 +3983,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of views from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the views.
@@ -4196,7 +4216,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
@@ -4415,7 +4436,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
@@ -4656,7 +4678,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the partition.
@@ -4875,7 +4898,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the partitions.
@@ -5116,7 +5140,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the types.
@@ -5348,7 +5373,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued function.
@@ -5558,7 +5584,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued functions.
@@ -5789,7 +5816,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified assembly from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
@@ -5989,7 +6017,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of assemblies from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
@@ -6211,7 +6240,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified schema from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -6411,7 +6441,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of schemas from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -6633,7 +6664,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified database from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database.
@@ -6824,7 +6856,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of databases from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.

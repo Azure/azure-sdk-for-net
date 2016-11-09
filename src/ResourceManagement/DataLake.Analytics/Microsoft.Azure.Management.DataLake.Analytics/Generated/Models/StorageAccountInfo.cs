@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Azure Storage account information.
     /// </summary>
+    [JsonTransformation]
     public partial class StorageAccountInfo
     {
         /// <summary>
@@ -29,28 +30,37 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
+        /// <param name="accessKey">the access key associated with this Azure
+        /// Storage account that will be used to connect to it.</param>
         /// <param name="name">the account name associated with the Azure
         /// storage account.</param>
-        /// <param name="properties">the properties associated with this
-        /// storage account.</param>
-        public StorageAccountInfo(string name, StorageAccountProperties properties)
+        /// <param name="suffix">the optional suffix for the storage
+        /// account.</param>
+        public StorageAccountInfo(string accessKey, string name = default(string), string suffix = default(string))
         {
             Name = name;
-            Properties = properties;
+            AccessKey = accessKey;
+            Suffix = suffix;
         }
 
         /// <summary>
-        /// Gets or sets the account name associated with the Azure storage
-        /// account.
+        /// Gets the account name associated with the Azure storage account.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the properties associated with this storage account.
+        /// Gets or sets the access key associated with this Azure Storage
+        /// account that will be used to connect to it.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public StorageAccountProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.accessKey")]
+        public string AccessKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the optional suffix for the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suffix")]
+        public string Suffix { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -60,17 +70,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (AccessKey == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
             }
         }
     }
