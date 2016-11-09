@@ -163,7 +163,7 @@ namespace KeyVault.TestFramework
             return myclient;
         }
 
-        private DelegatingHandler[] GetHandlers()
+        public DelegatingHandler[] GetHandlers()
         {
             HttpMockServer server = HttpMockServer.CreateInstance();
             var testHttpHandler = new TestHttpMessageHandler();
