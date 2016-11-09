@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// 'Suspending', 'Resuming', 'Deleting', 'Deleted'</param>
         /// <param name="state">the status of the Data Lake Store account
         /// after provisioning has completed. Possible values include:
-        /// 'active', 'suspended'</param>
+        /// 'Active', 'Suspended'</param>
         /// <param name="creationTime">the account creation time.</param>
         /// <param name="encryptionState">The current state of encryption for
         /// this Data Lake store account. Possible values include: 'Enabled',
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
 
         /// <summary>
         /// Gets the status of the Data Lake Store account after provisioning
-        /// has completed. Possible values include: 'active', 'suspended'
+        /// has completed. Possible values include: 'Active', 'Suspended'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public DataLakeStoreAccountState? State { get; private set; }

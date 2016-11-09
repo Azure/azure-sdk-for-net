@@ -522,47 +522,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Flushes the specified file to the store. This forces an update to the
-            /// metadata of the file (returned from GetFileStatus), and is required by
-            /// ConcurrentAppend once the file is done to populate finalized metadata.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='flushFilePath'>
-            /// The Data Lake Store path (starting with '/') of the file to which to flush.
-            /// </param>
-            public static void Flush(this IFileSystemOperations operations, string accountName, string flushFilePath)
-            {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).FlushAsync(accountName, flushFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Flushes the specified file to the store. This forces an update to the
-            /// metadata of the file (returned from GetFileStatus), and is required by
-            /// ConcurrentAppend once the file is done to populate finalized metadata.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='flushFilePath'>
-            /// The Data Lake Store path (starting with '/') of the file to which to flush.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task FlushAsync(this IFileSystemOperations operations, string accountName, string flushFilePath, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.FlushWithHttpMessagesAsync(accountName, flushFilePath, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
             /// Appends to the specified file. This method does not support multiple
             /// concurrent appends to the file. NOTE: Concurrent append and normal
             /// (serial) append CANNOT be used interchangeably. Once a file has been
@@ -658,9 +617,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='overwrite'>
             /// The indication of if the file should be overwritten.
             /// </param>
-            public static void Create(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?))
+            /// <param name='syncFlag'>
+            /// Optionally indicates what to do after completion of the append. DATA
+            /// indicates more data is coming so no sync takes place, METADATA indicates
+            /// a sync should be done to refresh metadata of the file only. CLOSE
+            /// indicates that both the stream and metadata should be refreshed upon
+            /// append completion. Possible values include: 'DATA', 'METADATA', 'CLOSE'
+            /// </param>
+            public static void Create(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), SyncFlag? syncFlag = default(SyncFlag?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateAsync(accountName, directFilePath, streamContents, overwrite), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateAsync(accountName, directFilePath, streamContents, overwrite, syncFlag), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -682,12 +648,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='overwrite'>
             /// The indication of if the file should be overwritten.
             /// </param>
+            /// <param name='syncFlag'>
+            /// Optionally indicates what to do after completion of the append. DATA
+            /// indicates more data is coming so no sync takes place, METADATA indicates
+            /// a sync should be done to refresh metadata of the file only. CLOSE
+            /// indicates that both the stream and metadata should be refreshed upon
+            /// append completion. Possible values include: 'DATA', 'METADATA', 'CLOSE'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), SyncFlag? syncFlag = default(SyncFlag?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CreateWithHttpMessagesAsync(accountName, directFilePath, streamContents, overwrite, null, cancellationToken).ConfigureAwait(false);
+                await operations.CreateWithHttpMessagesAsync(accountName, directFilePath, streamContents, overwrite, syncFlag, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

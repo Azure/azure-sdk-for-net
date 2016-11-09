@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
         /// 'Resuming', 'Deleting', 'Deleted'</param>
         /// <param name="state">the state of the Data Lake Analytics account.
-        /// Possible values include: 'active', 'suspended'</param>
+        /// Possible values include: 'Active', 'Suspended'</param>
         /// <param name="maxDegreeOfParallelism">the maximum supported degree
         /// of parallelism for this account.</param>
         /// <param name="queryStoreRetention">the number of days that job
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the state of the Data Lake Analytics account. Possible values
-        /// include: 'active', 'suspended'
+        /// include: 'Active', 'Suspended'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public DataLakeAnalyticsAccountState? State { get; private set; }

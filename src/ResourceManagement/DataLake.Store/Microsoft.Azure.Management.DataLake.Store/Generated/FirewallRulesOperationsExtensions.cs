@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class FirewallRulesOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates the specified firewall rule. In this case of update,
-            /// the firewall rule with the specified name will be replaced with this new
+            /// Creates or updates the specified firewall rule. During update, the
+            /// firewall rule with the specified name will be replaced with this new
             /// firewall rule.
             /// </summary>
             /// <param name='operations'>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the firewall rule to create or update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create the create firewall rule.
+            /// Parameters supplied to create or update the firewall rule.
             /// </param>
             public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters)
             {
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Creates or updates the specified firewall rule. In this case of update,
-            /// the firewall rule with the specified name will be replaced with this new
+            /// Creates or updates the specified firewall rule. During update, the
+            /// firewall rule with the specified name will be replaced with this new
             /// firewall rule.
             /// </summary>
             /// <param name='operations'>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the firewall rule to create or update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create the create firewall rule.
+            /// Parameters supplied to create or update the firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

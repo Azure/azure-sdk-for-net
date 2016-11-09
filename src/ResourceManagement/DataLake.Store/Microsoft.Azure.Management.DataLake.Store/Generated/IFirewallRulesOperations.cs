@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public partial interface IFirewallRulesOperations
     {
         /// <summary>
-        /// Creates or updates the specified firewall rule. In this case of
-        /// update, the firewall rule with the specified name will be
-        /// replaced with this new firewall rule.
+        /// Creates or updates the specified firewall rule. During update, the
+        /// firewall rule with the specified name will be replaced with this
+        /// new firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group that contains the Data Lake
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the firewall rule to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create the create firewall rule.
+        /// Parameters supplied to create or update the firewall rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

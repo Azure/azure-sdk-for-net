@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class TrustedIdProvidersOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates the specified trusted identity provider. In this case
-            /// of update, the trusted identity provider with the specified name will be
-            /// replaced with this new provider
+            /// Creates or updates the specified trusted identity provider. During update,
+            /// the trusted identity provider with the specified name will be replaced
+            /// with this new provider
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Creates or updates the specified trusted identity provider. In this case
-            /// of update, the trusted identity provider with the specified name will be
-            /// replaced with this new provider
+            /// Creates or updates the specified trusted identity provider. During update,
+            /// the trusted identity provider with the specified name will be replaced
+            /// with this new provider
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

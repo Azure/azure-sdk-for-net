@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public DataLakeStoreAccountManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates or updates the specified trusted identity provider. In this case
-        /// of update, the trusted identity provider with the specified name will be
-        /// replaced with this new provider
+        /// Creates or updates the specified trusted identity provider. During update,
+        /// the trusted identity provider with the specified name will be replaced
+        /// with this new provider
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group that contains the Data Lake Store

@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DataLakeStoreAccountState
     {
-        [EnumMember(Value = "active")]
+        [EnumMember(Value = "Active")]
         Active,
-        [EnumMember(Value = "suspended")]
+        [EnumMember(Value = "Suspended")]
         Suspended
     }
 }

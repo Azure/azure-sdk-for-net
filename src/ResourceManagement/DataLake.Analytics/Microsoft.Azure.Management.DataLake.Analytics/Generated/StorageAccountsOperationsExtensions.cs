@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='containerName'>
             /// The name of the Azure storage container to retrieve
             /// </param>
-            public static BlobContainer GetStorageContainer(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
+            public static StorageContainer GetStorageContainer(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
             {
                 return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).GetStorageContainerAsync(resourceGroupName, accountName, storageAccountName, containerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BlobContainer> GetStorageContainerAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageContainer> GetStorageContainerAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetStorageContainerWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account from which to list blob containers.
             /// </param>
-            public static IPage<BlobContainer> ListStorageContainers(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
+            public static IPage<StorageContainer> ListStorageContainers(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
                 return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListStorageContainersAsync(resourceGroupName, accountName, storageAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -342,7 +342,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BlobContainer>> ListStorageContainersAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageContainer>> ListStorageContainersAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListStorageContainersWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<BlobContainer> ListStorageContainersNext(this IStorageAccountsOperations operations, string nextPageLink)
+            public static IPage<StorageContainer> ListStorageContainersNext(this IStorageAccountsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListStorageContainersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BlobContainer>> ListStorageContainersNextAsync(this IStorageAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageContainer>> ListStorageContainersNextAsync(this IStorageAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListStorageContainersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

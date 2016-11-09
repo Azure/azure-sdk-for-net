@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public DataLakeStoreAccountManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates or updates the specified firewall rule. In this case of update,
-        /// the firewall rule with the specified name will be replaced with this new
+        /// Creates or updates the specified firewall rule. During update, the
+        /// firewall rule with the specified name will be replaced with this new
         /// firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the firewall rule to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create the create firewall rule.
+        /// Parameters supplied to create or update the firewall rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

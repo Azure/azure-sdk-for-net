@@ -20,15 +20,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// Azure Storage blob container information.
     /// </summary>
     [JsonTransformation]
-    public partial class BlobContainer
+    public partial class StorageContainer
     {
         /// <summary>
-        /// Initializes a new instance of the BlobContainer class.
+        /// Initializes a new instance of the StorageContainer class.
         /// </summary>
-        public BlobContainer() { }
+        public StorageContainer() { }
 
         /// <summary>
-        /// Initializes a new instance of the BlobContainer class.
+        /// Initializes a new instance of the StorageContainer class.
         /// </summary>
         /// <param name="name">the name of the blob container.</param>
         /// <param name="id">the unique identifier of the blob
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="type">the type of the blob container.</param>
         /// <param name="lastModifiedTime">the last modified time of the blob
         /// container.</param>
-        public BlobContainer(string name = default(string), string id = default(string), string type = default(string), DateTime? lastModifiedTime = default(DateTime?))
+        public StorageContainer(string name = default(string), string id = default(string), string type = default(string), DateTime? lastModifiedTime = default(DateTime?))
         {
             Name = name;
             Id = id;
