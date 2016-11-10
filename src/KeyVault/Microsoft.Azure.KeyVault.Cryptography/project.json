@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Azure.KeyVault.Core": "[2.0.2-preview, 3.0)"
+    "Microsoft.Azure.KeyVault.Core": "[2.0.3-preview, 3.0)"
   },
 
   "frameworks": {

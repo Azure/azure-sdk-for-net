@@ -5,11 +5,11 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Microsoft Azure Key Vault WebKey")]
-[assembly: AssemblyDescription("Microsoft Azure Key Vault WebKey Class Library.")]
+[assembly: AssemblyTitle("Microsoft Azure key vault core")]
+[assembly: AssemblyDescription("Microsoft Azure Key Vault Core Class Library")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.2.0")]
+[assembly: AssemblyFileVersion("2.0.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
