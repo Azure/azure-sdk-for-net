@@ -1,5 +1,5 @@
 {
-  "version": "4.1.0-preview",
+  "version": "4.2.0-preview",
   "description": "Provides redis cache management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
