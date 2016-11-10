@@ -1,5 +1,8 @@
 Below is a summary of the changes in the most recent release of Microsoft.Azure.Management.Redis.
 
+## v4.2.0-Preview
+BeginCreate should also return the result (Basically 201 should also return result)
+
 ## v4.1.0-Preview
 Redis patch schedule supports "Everyday" and "Weekend" as valid DayOfWeek
 
