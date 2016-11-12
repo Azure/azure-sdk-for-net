@@ -517,7 +517,13 @@ namespace Microsoft.Azure.Management.HDInsight
             return roles;
         }
 
-        private static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static readonly Dictionary<string, string> HeadNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { 
+                    {"hadoop", "Standard_D3" },
+                    {"spark", "Standard_D12"},
+                    {"InteractiveHive", "Standard_D13_v2"},
+                };
+
+        internal static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
         {
             string headNodeSize;
             if (clusterCreateParameters.HeadNodeSize != null)
@@ -526,23 +532,21 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                if (clusterCreateParameters.ClusterType.Equals("Hadoop", StringComparison.OrdinalIgnoreCase))
-                {
-                    headNodeSize = "Standard_D3";
-                }
-                else if (clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase))
-                {
-                    headNodeSize = "Standard_D12";
-                }
-                else
+                if (! HeadNodeDefaultSizes.TryGetValue(clusterCreateParameters.ClusterType, out headNodeSize))
                 {
                     headNodeSize = "Large";
                 }
             }
+
             return headNodeSize;
         }
 
-        private static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static readonly Dictionary<string, string> WorkerNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { 
+                    {"spark", "Standard_D12"},
+                    {"InteractiveHive", "Standard_D13_v2"},
+                };
+
+        internal static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
         {
             string workerNodeSize;
             if (clusterCreateParameters.WorkerNodeSize != null)
@@ -551,10 +555,12 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                workerNodeSize = clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase)
-                    ? "Standard_D12"
-                    : "Standard_D3";
+                if (!WorkerNodeDefaultSizes.TryGetValue(clusterCreateParameters.ClusterType, out workerNodeSize))
+                {
+                    workerNodeSize = "Standard_D3";
+                }
             }
+
             return workerNodeSize;
         }
     }

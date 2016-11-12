@@ -22,6 +22,7 @@
     <Compile Include="ScenarioTests\ListClusterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\ScriptActionsOnRunningCluster.cs" />
+    <Compile Include="UnitTests\ClusterCreateDefaultVmTypeTests.cs" />
     <Compile Include="UnitTests\MetastoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
