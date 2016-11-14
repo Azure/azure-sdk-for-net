@@ -20,12 +20,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         {
             if (string.IsNullOrWhiteSpace(storageAccountName))
             {
-                throw new ArgumentException("Input cannot be empty", "storageAccountName");
+                throw new ArgumentException(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageAccountName");
             }
 
             if (storageAccountName.Contains("://"))
             {
-                throw new ArgumentException("Please specify fully qualified storage endpoint without the scheme", "storageAccountName");
+                throw new ArgumentException(Constants.ERROR_SCHEME_SPECIFIED_IN_STORAGE_FQDN, "storageAccountName");
             }
 
             this.StorageAccountName = storageAccountName;

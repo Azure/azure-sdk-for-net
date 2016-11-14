@@ -15,8 +15,7 @@ namespace HDInsight.Tests.UnitTests
             string mooncakeStorageNameFqdn = "testblob.blob.core.chinacloudapi.cn";
             string existingStorageKey = "testtest==";
             string containerName = "testcontainer";
-            string existingStorageNameFqdnUri = "wasb://" + containerName +"@" + existingStorageNameFqdn;
-            string paramErrorMessage = "Input cannot be empty\r\nParameter name: ";
+            string existingStorageNameFqdnUri = string.Format("wasb://{0}@{1}", containerName, existingStorageNameFqdn);
 
             // Test for optional storageContainer
             var testStorageInfoOptionalContainer = new AzureStorageInfo(existingStorageNameFqdn, existingStorageKey);
@@ -26,15 +25,15 @@ namespace HDInsight.Tests.UnitTests
             Assert.Equal(testStorageInfoContainer.StorageContainer, containerName);
 
             // Test storageAccountName is null
-            testAndAssert(() =>
+            TestAndAssert(() =>
                                 { return new AzureStorageInfo("", existingStorageKey, containerName); },
-                                paramErrorMessage + "storageAccountName"
+                                GetErrorMessage(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageAccountName")
                          );
 
             // Test storageAccountKey is null
-            testAndAssert(() =>
+            TestAndAssert(() =>
                                 { return new AzureStorageInfo(existingStorageNameFqdn, "", containerName); },
-                                paramErrorMessage + "storageAccountKey"
+                                GetErrorMessage(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageAccountKey")
                           );
 
             // Test non-fully-qualified storageAccountName
@@ -50,9 +49,9 @@ namespace HDInsight.Tests.UnitTests
             Assert.Equal(testStorageAccountMooncakeFullyQualifiedName.StorageAccountName, mooncakeStorageNameFqdn);
 
             // Test storageAccountName with url input
-            testAndAssert(() =>
+            TestAndAssert(() =>
                                 { return new AzureStorageInfo(existingStorageNameFqdnUri, existingStorageKey); },
-                                "Please specify fully qualified storage endpoint without the scheme\r\nParameter name: " + "storageAccountName"
+                                GetErrorMessage(Constants.ERROR_SCHEME_SPECIFIED_IN_STORAGE_FQDN, "storageAccountName")
                           );
 
             // Test for StorageAccountUri
@@ -66,12 +65,11 @@ namespace HDInsight.Tests.UnitTests
             string existingDatalakeStorageShortName = "test";
             string existingDatalakeStorageNameFqdn = "test.azuredatalakestore.net";
             string existingDatalakeStorageNameFqdnUri = "adl://" + existingDatalakeStorageNameFqdn;
-            string paramErrorMessage = "Input cannot be empty\r\nParameter name: ";
 
             // Test Datalake null/empty storageAccount name
-            testAndAssert(() =>
+            TestAndAssert(() =>
                                 { return new AzureDataLakeStoreInfo("", "/"); },
-                                paramErrorMessage + "storageAccountName"
+                                GetErrorMessage(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageAccountName")
                          );
 
             // Test Datalake storageAccount shortname
@@ -83,19 +81,19 @@ namespace HDInsight.Tests.UnitTests
             Assert.Equal(datalakeFullName.StorageAccountName, existingDatalakeStorageNameFqdn);
 
             // Test Datalake storageAccount with url input
-            testAndAssert(
+            TestAndAssert(
                                 () => { return new AzureDataLakeStoreInfo(existingDatalakeStorageNameFqdnUri, "/"); },
-                                "Please specify fully qualified storage endpoint without the scheme\r\nParameter name: " + "storageAccountName"
+                                GetErrorMessage(Constants.ERROR_SCHEME_SPECIFIED_IN_STORAGE_FQDN, "storageAccountName")
                           );
 
             // Test Datalake null/empty storageRootPath
-            testAndAssert(
+            TestAndAssert(
                                 () => { return new AzureDataLakeStoreInfo(existingDatalakeStorageShortName, ""); },
-                                "Input cannot be empty\r\nParameter name: " + "storageRootPath"
+                                GetErrorMessage(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageRootPath")
                           );
         }
 
-        private void testAndAssert(Func<StorageInfo> func, string msg)
+        private void TestAndAssert(Func<StorageInfo> func, string msg)
         {
             try
             {
@@ -108,6 +106,11 @@ namespace HDInsight.Tests.UnitTests
             }
 
             Assert.True(false, "Should not come here");
+        }
+
+        private string GetErrorMessage(string errorCode, string parameterName)
+        {
+            return string.Format("{0}\r\nParameter name: {1}", errorCode, parameterName);
         }
     }
 }

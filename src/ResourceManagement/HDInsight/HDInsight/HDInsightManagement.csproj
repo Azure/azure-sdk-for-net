@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="CustomizationModels\AzureDataLakeStoreInfo.cs" />
     <Compile Include="CustomizationModels\AzureStorageInfo.cs" />
+    <Compile Include="CustomizationModels\Constants.cs" />
     <Compile Include="CustomizationModels\Principal.cs" />
     <Compile Include="CustomizationModels\ClusterCreateParameters.cs" />
     <Compile Include="CustomizationModels\ClusterNodeType.cs" />

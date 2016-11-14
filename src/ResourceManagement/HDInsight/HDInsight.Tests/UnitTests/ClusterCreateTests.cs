@@ -8,10 +8,6 @@ namespace HDInsight.Tests.UnitTests
 {
     public class ClusterCreateTests
     {
-        public ClusterCreateTests()
-        {
-        }
-
         [Fact]
         public void TestCreateDefaultFsAzureBlobClusterUsingClusterParameters()
         {
@@ -34,7 +30,7 @@ namespace HDInsight.Tests.UnitTests
 
             ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
             var extendedParams = op.GetExtendedClusterCreateParameters(clusterName, clusterCreateParams);
-            Assert.True(ContainerMatchesNameProvided(extendedParams, storageContainerName), "Container name does not match the one specified");
+            AssertContainerMatchesNameProvided(extendedParams, storageContainerName);
         }
 
         [Fact]
@@ -59,19 +55,22 @@ namespace HDInsight.Tests.UnitTests
 
             ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
             var extendedParams = op.GetExtendedClusterCreateParameters(clusterName, clusterCreateParams);
-            Assert.True(ContainerMatchesNameProvided(extendedParams, clusterName), "Container name does not match the cluster name");
+            AssertContainerMatchesNameProvided(extendedParams, clusterName);
         }
 
-        private bool ContainerMatchesNameProvided(ClusterCreateParametersExtended x, string name)
+        private void AssertContainerMatchesNameProvided(ClusterCreateParametersExtended createParamsExtended, string name)
         {
             Dictionary<string,string> coresiteConfig;
-            if(JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(x.Properties.ClusterDefinition.Configurations).TryGetValue("core-site", out coresiteConfig))
+            if (JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(createParamsExtended.Properties.ClusterDefinition.Configurations).TryGetValue("core-site", out coresiteConfig))
             {
                 string value;
                 coresiteConfig.TryGetValue("fs.defaultFS", out value);
-                return value.StartsWith("wasb://" + name + "@");
+                Assert.True(value.StartsWith("wasb://" + name + "@"), "Container does not match the name provided");
             }
-            return false;
+            else
+            {
+                Assert.True(false, "Deserialization error");
+            }
         }
     }
 }
