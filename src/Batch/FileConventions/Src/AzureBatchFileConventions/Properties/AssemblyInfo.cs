@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("A convention-based library for saving and retrieving Azure Batch task output files.")]
 
 [assembly: AssemblyVersion("0.9.4.0")] 
-[assembly: AssemblyFileVersion("0.9.4.0")]
+[assembly: AssemblyFileVersion("0.9.5.0")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Azure")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Corporation. All rights reserved.")]
