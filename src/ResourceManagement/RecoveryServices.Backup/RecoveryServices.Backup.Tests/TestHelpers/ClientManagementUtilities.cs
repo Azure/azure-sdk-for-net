@@ -20,17 +20,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public static class ClientManagementUtilities
     {
-        public static RecoveryServicesBackupClient GetBackupClient(this TestBase testBase, MockContext context)
+        public static RecoveryServicesBackupClient GetBackupClient(this TestHelper testHelper, MockContext context)
         {
             return context.GetServiceClient<RecoveryServicesBackupClient>();
         }
 
-        public static RecoveryServicesClient GetVaultClient(this TestBase testBase, MockContext context)
+        public static RecoveryServicesClient GetVaultClient(this TestHelper testHelper, MockContext context)
         {
             return context.GetServiceClient<RecoveryServicesClient>();
         }
 
-        public static ResourceManagementClient GetResourcesClient(this TestBase testBase, MockContext context)
+        public static ResourceManagementClient GetResourcesClient(this TestHelper testHelper, MockContext context)
         {
             return context.GetServiceClient<ResourceManagementClient>();
         }

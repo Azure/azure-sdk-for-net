@@ -13,6 +13,9 @@
 // limitations under the License.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Azure.Management.RecoveryServices;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
@@ -21,14 +24,11 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
-    public class RecoveryServicesBackupTestBase : TestBase, IDisposable
+    public class TestHelper : IDisposable
     {
         private const string resourceGroup = "RecoveryServicesBackupTestRg";
         private const string vaultName = "SDKTestRsVault";
