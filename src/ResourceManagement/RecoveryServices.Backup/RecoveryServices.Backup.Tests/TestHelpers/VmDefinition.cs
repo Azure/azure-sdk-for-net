@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public enum VmType
@@ -28,11 +30,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         private readonly VmType vmType;
         private readonly StorageAccountDefinition saDefinition;
 
-        public VmDefinition(string vmName, string vmRg, VmType vmType, StorageAccountDefinition saDefinition)
+        public VmDefinition(StorageAccountDefinition saDefinition)
         {
-            this.vmName = vmName;
-            this.vmRg = vmRg;
-            this.vmType = vmType;
+            this.vmName = TestSettings.Instance.VirtualMachineName;
+            this.vmRg = TestSettings.Instance.VirtualMachineResourceGroupName;
+            this.vmType = (VmType)Enum.Parse(typeof(VmType), TestSettings.Instance.VirtualMachineType);
             this.saDefinition = saDefinition;
         }
 

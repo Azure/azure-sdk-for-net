@@ -20,10 +20,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         private readonly string saName;
         private readonly string saRg;
         
-        public StorageAccountDefinition(string saName, string saRg)
+        public StorageAccountDefinition()
         {
-            this.saName = saName;
-            this.saRg = saRg;
+            this.saName = TestSettings.Instance.RestoreStorageAccountName;
+            this.saRg = TestSettings.Instance.RestoreStorageAccountResourceGroupName;
         }
 
         public string StorageAccountName

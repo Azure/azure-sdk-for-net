@@ -15,12 +15,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
-    /// <summary>
-    /// For the recovery services backup tests, need some test artifact to be created manually for the tests to run:
-    /// Azure VM: any size, version, any resource group. Should be in the same region as the test vault being created. The default region is West US.
-    /// Storage Account: any configuration, but should be of the same version of the above VM. This will be used for the restore operation.
-    /// These details need to be updated in the TestCrud property initialization below.
-    /// </summary>
     public class BackupDefinition
     {
         private readonly VmDefinition vmDefinition;
@@ -44,13 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         }
 
         public static BackupDefinition TestCrud = new BackupDefinition(
-            new VmDefinition(
-                "pstestv2vm1",
-                "pstestrg",
-                VmType.Compute,
-                new StorageAccountDefinition(
-                    "pstestrg4762",
-                    "pstestrg")),
+            new VmDefinition(new StorageAccountDefinition()),
             "DefaultPolicy");
     }
 }
