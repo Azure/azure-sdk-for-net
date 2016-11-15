@@ -1,0 +1,27 @@
+﻿{
+  "version": "0.0.1-preview",
+
+  "dependencies": {
+    "Microsoft.Azure.Amqp": "2.0.0"
+  },
+
+  "frameworks": {
+    "netstandard1.3": {
+      "imports": "dnxcore50",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.Net.Security": "4.0.0",
+        "System.Private.DataContractSerialization": "4.1.1",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Runtime.Serialization.Xml": "4.1.1",
+        "System.Reflection": "4.1.0",
+        "System.Reflection.Emit": "4.0.1",
+        "System.Reflection.TypeExtensions": "4.1.0",
+        "System.Xml.ReaderWriter": "4.0.11",
+        "System.Xml.XmlSerializer": "4.0.11",
+        "System.Text.RegularExpressions": "4.1.0"
+      }
+    }
+  }
+}
+
