@@ -530,11 +530,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 memoryStream.Write(readBuffer, 0, bytesRead);
             }
 
-            ArraySegment<byte> buffer;
-            if (!memoryStream.TryGetBuffer(out buffer))
-            {
-                buffer = new ArraySegment<byte>(memoryStream.ToArray());
-            }
+            ArraySegment<byte> buffer = new ArraySegment<byte>(memoryStream.ToArray());
 
             memoryStream.Dispose();
             return buffer;

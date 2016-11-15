@@ -1,11 +1,37 @@
 ﻿{
   "version": "0.0.1-preview",
+  "title": "Microsoft.Azure.ServiceBus",
+  "description": "Microsoft.Azure.ServicBus Class Library",
+  "authors": [ "Microsoft" ],
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../build/MSSharedLibSN1024.snk"
+  },
+
+  "packOptions": {
+    "tags": [ "Azure", "Service Bus", "ServiceBus", ".NET", "AMQP", "IoT", "Queue", "Topic" ],
+    "projectUrl": "https://github.com/Azure/azure-service-bus-dotnet",
+    "licenseUrl": "https://raw.githubusercontent.com/Azure/azure-service-bus-dotnet/master/LICENSE",
+    "iconUrl": "https://raw.githubusercontent.com/Azure/azure-service-bus-dotnet/master/service-bus.png",
+    "releaseNotes": "https://github.com/Azure/azure-service-bus-dotnet/releases",
+    "requireLicenseAcceptance": true
+  },
 
   "dependencies": {
     "Microsoft.Azure.Amqp": "2.0.0"
   },
 
   "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Xml.Serialization": "4.0.0.0",
+        "System.Runtime.Serialization": "4.0.0.0",
+        "System.Xml": "4.0.0.0"
+      }
+    },
     "netstandard1.3": {
       "imports": "dnxcore50",
       "dependencies": {
@@ -24,4 +50,3 @@
     }
   }
 }
-
