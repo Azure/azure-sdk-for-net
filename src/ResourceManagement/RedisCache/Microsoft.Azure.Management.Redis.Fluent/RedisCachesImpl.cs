@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     using Microsoft.Azure.Management.Redis.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation of RedisCaches and its parent interfaces.
@@ -40,14 +42,15 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return WrapList(pagedList);
         }
 
-        public void Delete (string id)
+        public override Task DeleteByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            return InnerCollection.DeleteAsync(resourceGroupName, name, cancellationToken);
         }
 
-        public void Delete (string groupName, string name)
+        public override async Task<IRedisCache> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.InnerCollection.Delete(groupName, name);
+            var RedisResourceInner = await InnerCollection.GetAsync(groupName, name, cancellationToken);
+            return WrapModel(RedisResourceInner);
         }
 
         public RedisCacheImpl Define (string name)
