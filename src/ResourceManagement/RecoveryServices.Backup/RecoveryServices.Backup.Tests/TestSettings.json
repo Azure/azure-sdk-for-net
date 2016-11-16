@@ -1,0 +1,7 @@
+﻿{
+  "VirtualMachineName": "pstestv2vm1",
+  "VirtualMachineResourceGroupName": "pstestrg",
+  "VirtualMachineType": "Compute",
+  "RestoreStorageAccountName": "pstestrg4762",
+  "RestoreStorageAccountResourceGroupName": "pstestrg"
+}
