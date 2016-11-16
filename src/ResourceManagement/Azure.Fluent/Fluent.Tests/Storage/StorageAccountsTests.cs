@@ -16,7 +16,7 @@ namespace Fluent.Tests.Storage
         private string rgName = "rgstg123";
         private string stgName = "stgbnc732";
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDStorageAccount()
         {
             try
