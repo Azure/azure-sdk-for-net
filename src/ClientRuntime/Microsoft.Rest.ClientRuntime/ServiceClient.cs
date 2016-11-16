@@ -160,7 +160,9 @@ namespace Microsoft.Rest
                                 .First(c => c.StartsWith("Version=", StringComparison.OrdinalIgnoreCase))
                                 .Substring("Version=".Length);
                     }
-
+                    
+                    // removing all info after the first space 
+                    _clientVersion = _clientVersion.Split(' ').First(); 
                 }
                 return _clientVersion;
             }
