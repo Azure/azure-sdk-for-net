@@ -58,8 +58,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// CANNOT be used interchangeably; once a file has been appended to using
         /// either of these append options, it can only be appended to using that
         /// append option. ConcurrentAppend DOES NOT guarantee order and can result
-        /// in duplicated data landing in the target file. In order to close a file
-        /// after using ConcurrentAppend, call the Flush method.
+        /// in duplicated data landing in the target file.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
