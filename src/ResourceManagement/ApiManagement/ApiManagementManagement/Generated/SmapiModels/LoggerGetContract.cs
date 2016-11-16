@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
@@ -30,6 +32,17 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
     /// </summary>
     public partial class LoggerGetContract
     {
+        private IDictionary<string, string> _credentials;
+        
+        /// <summary>
+        /// Required. Gets or sets the credentials of the logger.
+        /// </summary>
+        public IDictionary<string, string> Credentials
+        {
+            get { return this._credentials; }
+            set { this._credentials = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -80,16 +93,22 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         /// </summary>
         public LoggerGetContract()
         {
+            this.Credentials = new LazyDictionary<string, string>();
         }
         
         /// <summary>
         /// Initializes a new instance of the LoggerGetContract class with
         /// required arguments.
         /// </summary>
-        public LoggerGetContract(LoggerTypeContract type)
+        public LoggerGetContract(LoggerTypeContract type, IDictionary<string, string> credentials)
             : this()
         {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
             this.Type = type;
+            this.Credentials = credentials;
         }
     }
 }

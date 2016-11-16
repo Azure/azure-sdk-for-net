@@ -224,9 +224,6 @@
     <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\AuthorizationServersCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

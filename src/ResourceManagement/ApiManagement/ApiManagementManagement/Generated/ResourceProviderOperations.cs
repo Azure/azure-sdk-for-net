@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/backup";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -448,7 +448,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/service/";
             url = url + Uri.EscapeDataString(name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1208,7 +1208,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/managedeployments";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1504,7 +1504,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/restore";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1717,7 +1717,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/updatehostname";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1960,7 +1960,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/checkcustomhostname";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2173,7 +2173,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             url = url + "/providers/Microsoft.ApiManagement/checkNameAvailability";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2443,7 +2443,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/service/";
             url = url + Uri.EscapeDataString(name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2587,7 +2587,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/service/";
             url = url + Uri.EscapeDataString(name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3065,7 +3065,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-07");
+                httpRequest.Headers.Add("x-ms-version", "2016-10-10");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3558,7 +3558,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-07-07");
+                httpRequest.Headers.Add("x-ms-version", "2016-10-10");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3693,7 +3693,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/getssotoken";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3716,7 +3716,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -3849,7 +3849,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4591,7 +4591,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(name);
             url = url + "/updatecertificate";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
