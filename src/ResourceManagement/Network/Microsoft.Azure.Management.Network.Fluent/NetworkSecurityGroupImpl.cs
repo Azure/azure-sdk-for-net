@@ -15,7 +15,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public partial class NetworkSecurityGroupImpl :
         GroupableParentResource<INetworkSecurityGroup,
             NetworkSecurityGroupInner,
-            Microsoft.Azure.Management.Resource.Fluent.Resource,
             NetworkSecurityGroupImpl,
             INetworkManager,
             NetworkSecurityGroup.Definition.IWithGroup,

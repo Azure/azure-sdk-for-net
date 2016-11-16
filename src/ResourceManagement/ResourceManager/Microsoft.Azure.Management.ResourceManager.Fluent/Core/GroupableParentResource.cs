@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     public abstract partial class GroupableParentResource<IFluentResourceT,
         InnerResourceT,
-        InnerResourceBaseT,
         FluentResourceT,
         ManagerT,
         IDefinitionAfterRegion,
@@ -27,7 +26,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         UTypeWithTags> :
         GroupableResource<IFluentResourceT,
             InnerResourceT,
-            InnerResourceBaseT,
             FluentResourceT,
             ManagerT,
             IDefinitionAfterRegion,
@@ -36,7 +34,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             UTypeWithTags>
         where FluentResourceT : GroupableParentResource<IFluentResourceT,
             InnerResourceT,
-            InnerResourceBaseT,
             FluentResourceT,
             ManagerT,
             IDefinitionAfterRegion,
@@ -45,8 +42,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             UTypeWithTags>, IFluentResourceT
         where ManagerT : IManagerBase
         where IFluentResourceT : class, IResource
-        where InnerResourceBaseT : class
-        where InnerResourceT : class, InnerResourceBaseT
+        where InnerResourceT : Microsoft.Azure.Management.Resource.Fluent.Resource
         where IDefinitionAfterRegion : class
         where IDefinitionAfterResourceGroup : class
         where DefTypeWithTags : class

@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public partial class NetworkInterfaceImpl :
         GroupableParentResource<INetworkInterface,
                 NetworkInterfaceInner,
-                Microsoft.Azure.Management.Resource.Fluent.Resource,
                 NetworkInterfaceImpl,
                 NetworkManager,
                 IWithGroup,

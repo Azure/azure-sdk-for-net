@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public abstract class CreatableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT> :
         ReadableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>,
-        ISupportsDeletingById
+        ISupportsDeletingById   // Assumption: Anything creatable is deletable
         where FluentResourceT : IFluentResourceT
     {
         protected CreatableWrappers() { }

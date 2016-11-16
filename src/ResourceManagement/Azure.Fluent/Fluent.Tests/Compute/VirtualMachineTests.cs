@@ -17,7 +17,7 @@ namespace Fluent.Tests.Compute
         private const string LOCATION = "southcentralus";
         private const string VMNAME = "chashvm";
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateVirtualMachine()
         {
             IComputeManager computeManager = TestHelper.CreateComputeManager();
