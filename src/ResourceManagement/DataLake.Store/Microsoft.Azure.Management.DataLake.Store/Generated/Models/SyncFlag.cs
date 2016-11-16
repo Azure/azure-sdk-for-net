@@ -13,16 +13,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for OperationStatus.
+    /// Defines values for SyncFlag.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum OperationStatus
+    public enum SyncFlag
     {
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Failed")]
-        Failed
+        [EnumMember(Value = "DATA")]
+        DATA,
+        [EnumMember(Value = "METADATA")]
+        METADATA,
+        [EnumMember(Value = "CLOSE")]
+        CLOSE
     }
 }

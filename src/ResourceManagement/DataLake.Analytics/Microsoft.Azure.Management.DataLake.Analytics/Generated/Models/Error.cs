@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// with this error</param>
         /// <param name="message">the error message to display.</param>
         /// <param name="target">the target of the error.</param>
-        /// <param name="details">the list of error details</param>
-        /// <param name="innerError">the inner exceptions or errors, if
+        /// <param name="details">The list of error details</param>
+        /// <param name="innerError">The inner exceptions or errors, if
         /// any</param>
         public Error(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>), InnerError innerError = default(InnerError))
         {

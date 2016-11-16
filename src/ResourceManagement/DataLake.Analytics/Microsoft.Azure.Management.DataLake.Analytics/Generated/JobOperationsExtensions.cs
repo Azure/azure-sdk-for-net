@@ -290,19 +290,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            /// <param name='search'>
-            /// A free form search. A free-text search expression to match for whether a
-            /// particular entry should be included in the feed, e.g.
-            /// Categories?$search=blue OR green. Optional.
-            /// </param>
-            /// <param name='format'>
-            /// The return format. Return the response in particular formatxii without
-            /// access to request headers for standard content-type negotiation (e.g
-            /// Orders?$format=json). Optional.
-            /// </param>
-            public static IPage<JobInformation> List(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<JobInformation> List(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(accountName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -327,22 +317,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            /// <param name='search'>
-            /// A free form search. A free-text search expression to match for whether a
-            /// particular entry should be included in the feed, e.g.
-            /// Categories?$search=blue OR green. Optional.
-            /// </param>
-            /// <param name='format'>
-            /// The return format. Return the response in particular formatxii without
-            /// access to request headers for standard content-type negotiation (e.g
-            /// Orders?$format=json). Optional.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobInformation>> ListAsync(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobInformation>> ListAsync(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

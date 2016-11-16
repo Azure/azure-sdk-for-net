@@ -24,408 +24,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class AccountOperationsExtensions
     {
             /// <summary>
-            /// Deletes the specified firewall rule from the specified Data Lake Store
-            /// account
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to delete.
-            /// </param>
-            public static void DeleteFirewallRule(this IAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
-            {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).DeleteFirewallRuleAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified firewall rule from the specified Data Lake Store
-            /// account
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to delete.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteFirewallRuleAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.DeleteFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
-            /// </param>
-            public static FirewallRule GetFirewallRule(this IAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetFirewallRuleAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<FirewallRule> GetFirewallRuleAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rules.
-            /// </param>
-            public static IPage<FirewallRule> ListFirewallRules(this IAccountOperations operations, string resourceGroupName, string accountName)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListFirewallRulesAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rules.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> ListFirewallRulesAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListFirewallRulesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates the specified firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the firewall rule.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the firewall rule to create or update.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create the create firewall rule.
-            /// </param>
-            public static FirewallRule CreateOrUpdateFirewallRule(this IAccountOperations operations, string resourceGroupName, string accountName, string name, FirewallRule parameters)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).CreateOrUpdateFirewallRuleAsync(resourceGroupName, accountName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the specified firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the firewall rule.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the firewall rule to create or update.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create the create firewall rule.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<FirewallRule> CreateOrUpdateFirewallRuleAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string name, FirewallRule parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateFirewallRuleWithHttpMessagesAsync(resourceGroupName, accountName, name, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates the specified trusted identity provider
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider. This is used for
-            /// differentiation of providers in the account.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create the create the trusted identity provider.
-            /// </param>
-            public static TrustedIdProvider CreateOrUpdateTrustedIdProvider(this IAccountOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).CreateOrUpdateTrustedIdProviderAsync(resourceGroupName, accountName, trustedIdProviderName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the specified trusted identity provider
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to add the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider. This is used for
-            /// differentiation of providers in the account.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create the create the trusted identity provider.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TrustedIdProvider> CreateOrUpdateTrustedIdProviderAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateTrustedIdProviderWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes the specified trusted identity provider from the specified Data
-            /// Lake Store account
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider to delete.
-            /// </param>
-            public static void DeleteTrustedIdProvider(this IAccountOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName)
-            {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).DeleteTrustedIdProviderAsync(resourceGroupName, accountName, trustedIdProviderName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified trusted identity provider from the specified Data
-            /// Lake Store account
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider to delete.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteTrustedIdProviderAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.DeleteTrustedIdProviderWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store trusted identity provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider to retrieve.
-            /// </param>
-            public static TrustedIdProvider GetTrustedIdProvider(this IAccountOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetTrustedIdProviderAsync(resourceGroupName, accountName, trustedIdProviderName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store trusted identity provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider to retrieve.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TrustedIdProvider> GetTrustedIdProviderAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetTrustedIdProviderWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store trusted identity providers within the specified
-            /// Data Lake Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity providers.
-            /// </param>
-            public static IPage<TrustedIdProvider> ListTrustedIdProviders(this IAccountOperations operations, string resourceGroupName, string accountName)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListTrustedIdProvidersAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store trusted identity providers within the specified
-            /// Data Lake Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity providers.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TrustedIdProvider>> ListTrustedIdProvidersAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListTrustedIdProvidersWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
@@ -537,7 +135,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to update the Data Lake Store account.
             /// </param>
-            public static DataLakeStoreAccount Update(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
+            public static DataLakeStoreAccount Update(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters)
             {
                 return Task.Factory.StartNew(s => ((IAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -561,7 +159,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> UpdateAsync(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> UpdateAsync(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -585,7 +183,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to update the Data Lake Store account.
             /// </param>
-            public static DataLakeStoreAccount BeginUpdate(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
+            public static DataLakeStoreAccount BeginUpdate(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters)
             {
                 return Task.Factory.StartNew(s => ((IAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -609,7 +207,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> BeginUpdateAsync(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> BeginUpdateAsync(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -803,19 +401,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            /// <param name='search'>
-            /// A free form search. A free-text search expression to match for whether a
-            /// particular entry should be included in the feed, e.g.
-            /// Categories?$search=blue OR green. Optional.
-            /// </param>
-            /// <param name='format'>
-            /// The desired return format. Return the response in particular formatxii
-            /// without access to request headers for standard content-type negotiation
-            /// (e.g Orders?$format=json). Optional.
-            /// </param>
-            public static IPage<DataLakeStoreAccount> ListByResourceGroup(this IAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<DataLakeStoreAccount> ListByResourceGroup(this IAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -841,22 +429,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            /// <param name='search'>
-            /// A free form search. A free-text search expression to match for whether a
-            /// particular entry should be included in the feed, e.g.
-            /// Categories?$search=blue OR green. Optional.
-            /// </param>
-            /// <param name='format'>
-            /// The desired return format. Return the response in particular formatxii
-            /// without access to request headers for standard content-type negotiation
-            /// (e.g Orders?$format=json). Optional.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataLakeStoreAccount>> ListByResourceGroupAsync(this IAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataLakeStoreAccount>> ListByResourceGroupAsync(this IAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -881,19 +459,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            /// <param name='search'>
-            /// A free form search. A free-text search expression to match for whether a
-            /// particular entry should be included in the feed, e.g.
-            /// Categories?$search=blue OR green. Optional.
-            /// </param>
-            /// <param name='format'>
-            /// The desired return format. Return the response in particular formatxii
-            /// without access to request headers for standard content-type negotiation
-            /// (e.g Orders?$format=json). Optional.
-            /// </param>
-            public static IPage<DataLakeStoreAccount> List(this IAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<DataLakeStoreAccount> List(this IAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListAsync(odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListAsync(odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -915,94 +483,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            /// <param name='search'>
-            /// A free form search. A free-text search expression to match for whether a
-            /// particular entry should be included in the feed, e.g.
-            /// Categories?$search=blue OR green. Optional.
-            /// </param>
-            /// <param name='format'>
-            /// The desired return format. Return the response in particular formatxii
-            /// without access to request headers for standard content-type negotiation
-            /// (e.g Orders?$format=json). Optional.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataLakeStoreAccount>> ListAsync(this IAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataLakeStoreAccount>> ListAsync(this IAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<FirewallRule> ListFirewallRulesNext(this IAccountOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListFirewallRulesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> ListFirewallRulesNextAsync(this IAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListFirewallRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store trusted identity providers within the specified
-            /// Data Lake Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TrustedIdProvider> ListTrustedIdProvidersNext(this IAccountOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListTrustedIdProvidersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store trusted identity providers within the specified
-            /// Data Lake Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TrustedIdProvider>> ListTrustedIdProvidersNextAsync(this IAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListTrustedIdProvidersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

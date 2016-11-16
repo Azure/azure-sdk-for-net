@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="childrenNum">the number of children in the
         /// directory.</param>
         /// <param name="expirationTime">Gets the expiration time, if any, as
-        /// ticks since the epoch. If this is set to 0 or DateTime.MaxValue
+        /// ticks since the epoch. If the value is 0 or DateTime.MaxValue
         /// there is no expiration.</param>
         /// <param name="group">the group owner.</param>
         /// <param name="length">the number of bytes in a file.</param>
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public long? ChildrenNum { get; private set; }
 
         /// <summary>
-        /// Gets the expiration time, if any, as ticks since the epoch. If
-        /// this is set to 0 or DateTime.MaxValue there is no expiration.
+        /// Gets the expiration time, if any, as ticks since the epoch. If the
+        /// value is 0 or DateTime.MaxValue there is no expiration.
         /// </summary>
         [JsonProperty(PropertyName = "expirationTime")]
         public long? ExpirationTime { get; private set; }

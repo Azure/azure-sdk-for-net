@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
 
     /// <summary>
     /// Data Lake Store filesystem exception based on the WebHDFS definition
-    /// for RemoteExceptions.
+    /// for RemoteExceptions. This is a WebHDFS 'catch all' exception
     /// </summary>
     public partial class AdlsRemoteException
     {

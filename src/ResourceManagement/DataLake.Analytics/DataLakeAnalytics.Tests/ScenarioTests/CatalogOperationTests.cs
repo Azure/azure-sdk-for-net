@@ -168,7 +168,7 @@ namespace DataLakeAnalytics.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                commonData = new CommonTestFixture(context, isDogfood: true);
+                commonData = new CommonTestFixture(context);
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
@@ -257,7 +257,7 @@ namespace DataLakeAnalytics.Tests
             // NOTE: This is deprecated and will be removed in a future release
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                commonData = new CommonTestFixture(context, isDogfood: true);
+                commonData = new CommonTestFixture(context);
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);

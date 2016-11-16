@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Hive job properties used when submitting and retrieving Hive jobs.
+    /// </summary>
     [JsonObject("Hive")]
     public partial class HiveJobProperties : JobProperties
     {

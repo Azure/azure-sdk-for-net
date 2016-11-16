@@ -74,6 +74,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
 
         /// <summary>
+        /// Gets the IFirewallRulesOperations.
+        /// </summary>
+        IFirewallRulesOperations FirewallRules { get; }
+
+        /// <summary>
+        /// Gets the ITrustedIdProvidersOperations.
+        /// </summary>
+        ITrustedIdProvidersOperations TrustedIdProviders { get; }
+
+        /// <summary>
         /// Gets the IAccountOperations.
         /// </summary>
         IAccountOperations Account { get; }

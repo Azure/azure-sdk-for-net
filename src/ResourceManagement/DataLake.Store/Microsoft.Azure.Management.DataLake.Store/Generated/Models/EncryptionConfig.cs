@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The encryption configuration for the account.
+    /// </summary>
     public partial class EncryptionConfig
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// 'ServiceManaged'</param>
         /// <param name="keyVaultMetaInfo">The Key vault information for
         /// connecting to user managed encryption keys.</param>
-        public EncryptionConfig(EncryptionConfigType? type = default(EncryptionConfigType?), KeyVaultMetaInfo keyVaultMetaInfo = default(KeyVaultMetaInfo))
+        public EncryptionConfig(EncryptionConfigType type, KeyVaultMetaInfo keyVaultMetaInfo = default(KeyVaultMetaInfo))
         {
             Type = type;
             KeyVaultMetaInfo = keyVaultMetaInfo;
@@ -45,7 +48,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// 'ServiceManaged'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public EncryptionConfigType? Type { get; set; }
+        public EncryptionConfigType Type { get; set; }
 
         /// <summary>
         /// Gets or sets the Key vault information for connecting to user
@@ -54,5 +57,18 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         [JsonProperty(PropertyName = "keyVaultMetaInfo")]
         public KeyVaultMetaInfo KeyVaultMetaInfo { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.KeyVaultMetaInfo != null)
+            {
+                this.KeyVaultMetaInfo.Validate();
+            }
+        }
     }
 }

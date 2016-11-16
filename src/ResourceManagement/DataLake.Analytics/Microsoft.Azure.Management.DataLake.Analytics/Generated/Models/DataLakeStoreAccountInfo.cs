@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Data Lake Store account information.
     /// </summary>
+    [JsonTransformation]
     public partial class DataLakeStoreAccountInfo
     {
         /// <summary>
@@ -29,28 +30,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccountInfo class.
         /// </summary>
-        /// <param name="name">the account name of the Data Lake Store
+        /// <param name="name">the account name of the Data Lake Store account
+        /// to add to the Data Lake Analytics account being created.</param>
+        /// <param name="suffix">the optional suffix for the Data Lake Store
         /// account.</param>
-        /// <param name="properties">the properties associated with this Data
-        /// Lake Store account.</param>
-        public DataLakeStoreAccountInfo(string name, DataLakeStoreAccountInfoProperties properties = default(DataLakeStoreAccountInfoProperties))
+        public DataLakeStoreAccountInfo(string name, string suffix = default(string))
         {
             Name = name;
-            Properties = properties;
+            Suffix = suffix;
         }
 
         /// <summary>
-        /// Gets or sets the account name of the Data Lake Store account.
+        /// Gets or sets the account name of the Data Lake Store account to
+        /// add to the Data Lake Analytics account being created.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties associated with this Data Lake Store
-        /// account.
+        /// Gets or sets the optional suffix for the Data Lake Store account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public DataLakeStoreAccountInfoProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.suffix")]
+        public string Suffix { get; set; }
 
         /// <summary>
         /// Validate the object.
