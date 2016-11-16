@@ -22,6 +22,7 @@ namespace HDInsight.Tests.Helpers
 {
     public static class GetClusterSpecHelpers
     {
+        private const string ADLDefaultStorageAccountName = "";
         private const string DefaultContainer = "";
         private const string StorageAccountName = "";
         private const string StorageAccountKey = "";
@@ -227,13 +228,12 @@ namespace HDInsight.Tests.Helpers
                 ClusterSizeInNodes = 3,
                 ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
-                DefaultStorageAccountName = StorageAccountName,
-                DefaultStorageAccountKey = StorageAccountKey,
+                DefaultStorageInfo = GetDefaultAzureStorageInfo(),
                 OSType = OSType.Windows,
                 UserName = HttpUser,
                 Password = HttpPassword,
-                DefaultStorageContainer = DefaultContainer,
-                Location =  "West US"
+                Location = "East US",
+                Version = "3.2"
             };
             var actions = new List<ScriptAction>();
             var action = new ScriptAction("action", new Uri("https://uri.com"), "params");
@@ -251,17 +251,47 @@ namespace HDInsight.Tests.Helpers
                 ClusterSizeInNodes = 3,
                 ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
-                DefaultStorageAccountName = StorageAccountName,
-                DefaultStorageAccountKey = StorageAccountKey,
+                DefaultStorageInfo = GetDefaultAzureStorageInfo(),
                 OSType = OSType.Linux,
                 UserName = HttpUser,
                 Password = HttpPassword,
-                DefaultStorageContainer = DefaultContainer,
-                Location = "West US",
+                Location = "East US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.2"
             };
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetDataLakeDefaultFsCreateParametersIaas()
+        {
+            var storageInfo = GetDefaultAzureDataLakeStoreInfo();
+            return GetDefaultFsCreateParametersIaas(storageInfo);
+        }
+
+        public static ClusterCreateParameters GetAzureBlobDefaultFsCreateParametersIaas(bool specifyDefaultContainer = true)
+        {
+            var storageInfo = GetDefaultAzureStorageInfo(specifyDefaultContainer);
+            return GetDefaultFsCreateParametersIaas(storageInfo);
+        }
+
+        private static ClusterCreateParameters GetDefaultFsCreateParametersIaas(StorageInfo defaultStorageInfo)
+        {
+            var clusterparams = new ClusterCreateParameters
+            {
+                ClusterSizeInNodes = 3,
+                ClusterType = "Hadoop",
+                WorkerNodeSize = "Large",
+                DefaultStorageInfo = defaultStorageInfo,
+                OSType = OSType.Linux,
+                UserName = HttpUser,
+                Password = HttpPassword,
+                Location = "East US",
+                SshUserName = SshUser,
+                SshPassword = SshPassword,
+                Version = "3.2"
+            };
+
             return clusterparams;
         }
 
@@ -272,13 +302,11 @@ namespace HDInsight.Tests.Helpers
                 ClusterSizeInNodes = 1,
                 ClusterType = "HBase",
                 WorkerNodeSize = "Large",
-                DefaultStorageAccountName = StorageAccountName,
-                DefaultStorageAccountKey = StorageAccountKey,
+                DefaultStorageInfo = GetDefaultAzureStorageInfo(),
                 OSType = OSType.Linux,
                 UserName = HttpUser,
                 Password = HttpPassword,
-                DefaultStorageContainer = DefaultContainer,
-                Location = "West US",
+                Location = "East US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.2",
@@ -329,5 +357,47 @@ namespace HDInsight.Tests.Helpers
 
             return cluster;
         }
+
+        /// <summary>
+        /// Returns appropriate AzureStorageInfo based on test-mode.
+        /// </summary>
+        /// <returns></returns>
+        private static StorageInfo GetDefaultAzureStorageInfo(bool specifyDefaultContainer=true)
+        {
+            bool recordMode = HDInsightManagementTestUtilities.IsRecordMode();
+
+            if(recordMode)
+            {
+                return (specifyDefaultContainer) 
+                    ? new AzureStorageInfo(StorageAccountName, StorageAccountKey, DefaultContainer) 
+                    : new AzureStorageInfo(StorageAccountName, StorageAccountKey);
+            }
+            else 
+            {
+                string testStorageAccountName = "tmp.blob.core.windows.net";
+                string testStorageAccountKey = "teststorageaccountkey";
+                string testContainer = "testdefaultcontainer";
+
+                return (specifyDefaultContainer) 
+                    ? new AzureStorageInfo(testStorageAccountName, testStorageAccountKey, testContainer)
+                    : new AzureStorageInfo(testStorageAccountName, testStorageAccountKey);
+            }
+        }
+
+        /// <summary>
+        /// Returns appropriate AzureDataLakeStoreInfo based on test-mode.
+        /// </summary>
+        /// <returns></returns>
+        private static StorageInfo GetDefaultAzureDataLakeStoreInfo()
+        {
+            bool recordMode = HDInsightManagementTestUtilities.IsRecordMode();
+            string ADLClusterRootPath = "/Clusters/SDK";
+
+            return recordMode
+               ? new AzureDataLakeStoreInfo(ADLDefaultStorageAccountName, ADLClusterRootPath)
+               : new AzureDataLakeStoreInfo("tmp.azuredatalakestore.net", ADLClusterRootPath);
+        }
+
+        
     }
 }
