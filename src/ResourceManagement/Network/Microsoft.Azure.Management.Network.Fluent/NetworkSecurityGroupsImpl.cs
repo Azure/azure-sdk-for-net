@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapModel(name);
         }
 
-        Task DeleteAsync(string groupName, string name)
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name);
+            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public override async Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name)
+        public override async Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name);
+            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 
@@ -73,21 +73,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         override protected INetworkSecurityGroup WrapModel (NetworkSecurityGroupInner inner)
         {
             return new NetworkSecurityGroupImpl(inner.Name, inner, InnerCollection, Manager);
-        }
-
-        public void Delete(string id)
-        {
-            DeleteAsync(id).Wait();
-        }
-
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
-        public void Delete(string groupName, string name)
-        {
-            DeleteAsync(groupName, name).Wait();
         }
     }
 }

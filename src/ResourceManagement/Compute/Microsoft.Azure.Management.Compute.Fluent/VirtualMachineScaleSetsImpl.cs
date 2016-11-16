@@ -54,33 +54,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return WrapList(pagedList);
         }
 
-        public void Delete (string id)
-        {
-            this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
-        public void Delete (string groupName, string name)
-        {
-            this.InnerCollection.Delete(groupName, name);
-        }
-
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
-        {
-            return this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), 
-                ResourceUtils.NameFromResourceId(id),
-                cancellationToken);
-        }
-
-        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.InnerCollection.DeleteAsync(groupName,
                 name,
                 cancellationToken);
         }
 
-        public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string groupName, string name)
+        public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var scaleSet = await this.InnerCollection.GetAsync(groupName, name);
+            var scaleSet = await this.InnerCollection.GetAsync(groupName, name, cancellationToken);
             return WrapModel(scaleSet);
         }
 

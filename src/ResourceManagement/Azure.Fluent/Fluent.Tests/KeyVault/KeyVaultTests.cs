@@ -85,15 +85,15 @@ namespace Fluent.Tests.KeyVault
                 var vaults = manager.Vaults.ListByGroup(rgName);
                 Assert.Equal(2, vaults.Count);
 
-                manager.Vaults.Delete(vault1.Id);
-                manager.Vaults.Delete(vault2.Id);
+                manager.Vaults.DeleteById(vault1.Id);
+                manager.Vaults.DeleteById(vault2.Id);
 
                 vaults = manager.Vaults.ListByGroup(rgName);
                 Assert.Equal(0, vaults.Count);
             }
             finally
             {
-                TestHelper.CreateResourceManager().ResourceGroups.Delete(rgName);
+                TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
             }
         }
 

@@ -237,7 +237,7 @@ namespace ManageVirtualNetwork
                     //============================================================
                     // Delete a virtual network
                     Console.WriteLine("Deleting the virtual network");
-                    azure.Networks.Delete(virtualNetwork2.Id);
+                    azure.Networks.DeleteById(virtualNetwork2.Id);
                     Console.WriteLine("Deleted the virtual network");
                 }
                 catch (Exception ex)
@@ -249,7 +249,7 @@ namespace ManageVirtualNetwork
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

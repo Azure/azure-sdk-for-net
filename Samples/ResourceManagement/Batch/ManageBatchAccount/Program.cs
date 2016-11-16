@@ -205,7 +205,7 @@ namespace ManageBatchAccount
 
                     try
                     {
-                        azure.BatchAccounts.Delete(batchAccount.Id);
+                        azure.BatchAccounts.DeleteById(batchAccount.Id);
                     }
                     catch
                     {
@@ -218,7 +218,7 @@ namespace ManageBatchAccount
                         Console.WriteLine("Deleting second batch account - " + batchAccount2.Name);
                         try
                         {
-                            azure.BatchAccounts.Delete(batchAccount2.Id);
+                            azure.BatchAccounts.DeleteById(batchAccount2.Id);
                         }
                         catch
                         {
@@ -236,7 +236,7 @@ namespace ManageBatchAccount
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (Exception)

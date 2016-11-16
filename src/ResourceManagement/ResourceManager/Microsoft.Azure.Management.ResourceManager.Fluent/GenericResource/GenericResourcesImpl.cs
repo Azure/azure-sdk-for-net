@@ -76,10 +76,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             return resource;
         }
 
-        public override Task<IGenericResource> GetByGroupAsync(string groupName, string name)
+        public override Task<IGenericResource> GetByGroupAsync(string groupName, string name, CancellationToken cancellation = default(CancellationToken))
         {
-            // Not needed, can't be supported, provided only to satisfy GroupableResourceImpl's requirements
-            return null;
+            throw new NotSupportedException("Get just by resource group and name is not supported. Please use other overloads.");
         }
 
         public PagedList<IGenericResource> ListByGroup(string resourceGroupName)
@@ -127,6 +126,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                 resourceType = ResourceUtils.ResourceTypeFromResourceId(id)
             }.WithExistingResourceGroup(ResourceUtils.GroupFromResourceId(id));
             return model;
+        }
+
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotSupportedException("Delete just by resource group and name is not supported. Please use other overloads.");
         }
     }
 }

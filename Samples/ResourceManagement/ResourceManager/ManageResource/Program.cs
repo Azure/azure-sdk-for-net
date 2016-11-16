@@ -101,7 +101,7 @@ namespace ManageResource
 
                     Console.WriteLine("Deleting storage account: " + resourceName2);
 
-                    azure.StorageAccounts.Delete(storageAccount2.Id);
+                    azure.StorageAccounts.DeleteById(storageAccount2.Id);
 
                     Console.WriteLine("Deleted storage account: " + resourceName2);
                 }
@@ -114,7 +114,7 @@ namespace ManageResource
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (Exception ex)

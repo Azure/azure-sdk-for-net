@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// </summary>
         /// <param name="groupName">groupName The group the resource is part of</param>
         /// <param name="name">name The name of the resource</param>
-        void Delete (string groupName, string name);
+        void DeleteByGroup (string groupName, string name);
 
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its name and its resource group.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// <param name="groupName">groupName The group the resource is part of</param>
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
-        Task DeleteAsync (string groupName, string name, CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteByGroupAsync (string groupName, string name, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

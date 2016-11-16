@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public interface IGroups  :
         ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>,
-        ISupportsDeleting
+        ISupportsDeletingById
     {
         /// <summary>
         /// Gets the information about a group.

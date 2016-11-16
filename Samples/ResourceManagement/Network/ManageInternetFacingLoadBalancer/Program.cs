@@ -482,7 +482,7 @@ namespace ManageInternetFacingLoadBalancer
 
                     Console.WriteLine("Deleting load balancer " + loadBalancerName2
                             + "(" + loadBalancer2.Id + ")");
-                    azure.LoadBalancers.Delete(loadBalancer2.Id);
+                    azure.LoadBalancers.DeleteById(loadBalancer2.Id);
                     Console.WriteLine("Deleted load balancer" + loadBalancerName2);
                 }
                 catch (Exception ex)
@@ -494,7 +494,7 @@ namespace ManageInternetFacingLoadBalancer
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

@@ -424,7 +424,7 @@ namespace ManageInternalLoadBalancer
 
                     Console.WriteLine("Deleting load balancer " + loadBalancerName4
                             + "(" + loadBalancer4.Id + ")");
-                    azure.LoadBalancers.Delete(loadBalancer4.Id);
+                    azure.LoadBalancers.DeleteById(loadBalancer4.Id);
                     Console.WriteLine("Deleted load balancer" + loadBalancerName4);
                 }
                 catch (Exception ex)
@@ -436,7 +436,7 @@ namespace ManageInternalLoadBalancer
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

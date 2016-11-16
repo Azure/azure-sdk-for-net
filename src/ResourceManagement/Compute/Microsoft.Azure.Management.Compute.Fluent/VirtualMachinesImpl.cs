@@ -57,19 +57,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return WrapList(pagedList);
         }
 
-        public void Delete(string id)
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            DeleteAsync(id).Wait();
-        }
-
-        public void Delete(string groupName, string name)
-        {
-            DeleteAsync(groupName, name).Wait();
-        }
-
-        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            return this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
         public VirtualMachineImpl Define(string name)
@@ -156,14 +146,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.networkManager);
         }
 
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return ((ISupportsDeletingByGroup)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)
-        {
-            var data = await this.InnerCollection.GetAsync(groupName, name);
+            var data = await this.InnerCollection.GetAsync(groupName, name, null, cancellationToken);
             return this.WrapModel(data);
         }
     }

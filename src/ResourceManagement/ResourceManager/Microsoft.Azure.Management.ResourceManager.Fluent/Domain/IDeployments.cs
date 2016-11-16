@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         ISupportsGettingByName<IDeployment>,
         ISupportsGettingByGroup<IDeployment>,
         ISupportsGettingById<IDeployment>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsDeletingByGroup
     {
         /// <summary>

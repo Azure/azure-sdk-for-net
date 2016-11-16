@@ -205,7 +205,7 @@ namespace ManageVirtualMachine
                     // Delete the virtual machine
                     Console.WriteLine("Deleting VM: " + windowsVM.Id);
 
-                    azure.VirtualMachines.Delete(windowsVM.Id);
+                    azure.VirtualMachines.DeleteById(windowsVM.Id);
 
                     Console.WriteLine("Deleted VM: " + windowsVM.Id);
                 }
@@ -216,7 +216,7 @@ namespace ManageVirtualMachine
                 finally
                 {
                     Console.WriteLine($"Deleting resource group : {rgName}");
-                    azure.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
                     Console.WriteLine($"Deleted resource group : {rgName}");
                 }
             }

@@ -10,8 +10,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public abstract class GroupableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT> :
         CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT>,
+        ISupportsGettingById<IFluentResourceT>,
         ISupportsGettingByGroup<IFluentResourceT>,
-        ISupportsGettingById<IFluentResourceT>
+        ISupportsDeletingByGroup,
+        IHasManager<ManagerT>
         where IFluentResourceT : class, IGroupableResource
         where FluentResourceT : IFluentResourceT
         where ManagerT : IManagerBase
@@ -24,42 +26,58 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         protected InnerCollectionT InnerCollection { get; }
 
-        protected ManagerT Manager { get; }
+        public ManagerT Manager { get; }
 
         #region Implementation of ISupportsGettingByGroup interface
 
-        public abstract Task<IFluentResourceT> GetByGroupAsync(string groupName, string name);
+        public abstract Task<IFluentResourceT> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken);
 
         public IFluentResourceT GetByGroup(string groupName, string name)
         {
-            return GetByGroupAsync(groupName, name).Result;
+            return GetByGroupAsync(groupName, name, CancellationToken.None).Result;
         }
 
         #endregion
 
         #region Implementation of ISupportsGettingById interface
 
-        public async Task<IFluentResourceT> GetByIdAsync(string id)
+        public async Task<IFluentResourceT> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await GetByGroupAsync(
                     ResourceUtils.GroupFromResourceId(id),
-                    ResourceUtils.NameFromResourceId(id)
+                    ResourceUtils.NameFromResourceId(id),
+                    cancellationToken
                 );
         }
 
         public IFluentResourceT GetById(string id)
         {
-            return GetByIdAsync(id).Result;
+            return GetByIdAsync(id, CancellationToken.None).Result;
         }
 
-        public Task<IFluentResourceT> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        #endregion
+
+        #region Implementation of ISupportsDeletingByGroup interface
+
+        public abstract Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken));
+
+        public void DeleteByGroup(string groupName, string name)
         {
-            throw new NotImplementedException();
+            this.DeleteByGroupAsync(groupName, name, CancellationToken.None);
         }
 
-        public Task<IFluentResourceT> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        #endregion
+
+        #region Implementation of ISupportsDeletingById interface 
+
+        public override void DeleteById(string id)
         {
-            throw new NotImplementedException();
+            this.DeleteByIdAsync(id).Wait();
+        }
+
+        public override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return this.DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         #endregion

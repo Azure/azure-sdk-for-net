@@ -66,7 +66,7 @@ namespace Fluent.Tests.Storage
             {
                 try
                 {
-                    CreateResourceManager().ResourceGroups.Delete(rgName);
+                    CreateResourceManager().ResourceGroups.DeleteByName(rgName);
                 }
                 catch
                 {}
