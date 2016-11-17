@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        String ConnectionString { get; }
+        string ConnectionString { get; }
 
         [Fact]
         async Task BrokeredMessageOperationsTest()
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        async Task QueueClientBasicPeekLockTest()
+        async Task BasicPeekLockTest()
         {
             const int messageCount = 10;
 
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        async Task QueueClientBasicReceiveDeleteTest()
+        async Task BasicReceiveDeleteTest()
         {
             const int messageCount = 10;
 
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        async Task QueueClientPeekLockWithAbandonTest()
+        async Task PeekLockWithAbandonTest()
         {
             const int messageCount = 10;
 
@@ -135,9 +135,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await this.CompleteMessagesAsync(queueClient, receivedMessages);
         }
 
-
         [Fact]
-        async Task QueueClientPeekLockWithDeadLetterTest()
+        async Task PeekLockWithDeadLetterTest()
         {
             const int messageCount = 10;
             IEnumerable<BrokeredMessage> receivedMessages = null;
@@ -174,7 +173,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        async Task QueueClientPeekLockDeferTest()
+        async Task PeekLockDeferTest()
         {
             const int messageCount = 10;
 
