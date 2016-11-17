@@ -306,10 +306,10 @@ namespace Microsoft.Azure.Management.Fluent.Dns
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultZoneDeleteResultInner>> DeleteWithHttpMessagesAsync(string resourceGroupName, string zoneName, string ifMatch = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultInner>> DeleteWithHttpMessagesAsync(string resourceGroupName, string zoneName, string ifMatch = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultZoneDeleteResultInner> _response = await BeginDeleteWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultInner> _response = await BeginDeleteWithHttpMessagesAsync(
                 resourceGroupName, zoneName, ifMatch, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
@@ -894,7 +894,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultZoneDeleteResultInner>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string zoneName, string ifMatch = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultInner>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string zoneName, string ifMatch = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1029,7 +1029,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultZoneDeleteResultInner>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<ZoneDeleteResultInner>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1042,7 +1042,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ZoneDeleteResultZoneDeleteResultInner>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ZoneDeleteResultInner>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

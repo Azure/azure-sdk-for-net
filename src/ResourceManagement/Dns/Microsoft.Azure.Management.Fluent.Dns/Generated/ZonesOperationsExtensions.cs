@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// zone. Specify the last-seen etag value to prevent accidentally deleting any
             /// concurrent changes.
             /// </param>
-            public static ZoneDeleteResultZoneDeleteResultInner Delete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
+            public static ZoneDeleteResultInner Delete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IZonesOperations)s).DeleteAsync(resourceGroupName, zoneName, ifMatch), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ZoneDeleteResultZoneDeleteResultInner> DeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ZoneDeleteResultInner> DeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// zone. Specify the last-seen etag value to prevent accidentally deleting any
             /// concurrent changes.
             /// </param>
-            public static ZoneDeleteResultZoneDeleteResultInner BeginDelete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
+            public static ZoneDeleteResultInner BeginDelete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IZonesOperations)s).BeginDeleteAsync(resourceGroupName, zoneName, ifMatch), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ZoneDeleteResultZoneDeleteResultInner> BeginDeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ZoneDeleteResultInner> BeginDeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
