@@ -51,6 +51,10 @@ namespace Microsoft.Rest.Serialization
                 throw new ArgumentNullException("serializer");
             }
 
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
             JObject jsonObject = JObject.Load(reader);
 
             // Update type if there is a polymorphism

@@ -54,6 +54,10 @@ namespace Microsoft.Rest.Azure
 
             try
             {
+                if (reader.TokenType == JsonToken.Null)
+                {
+                    return null;
+                }
                 JObject resourceJObject = JObject.Load(reader);
                 // Flatten resource
                 JObject propertiesJObject = resourceJObject[PropertiesNode] as JObject;
