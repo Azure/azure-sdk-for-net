@@ -11,27 +11,27 @@ namespace Microsoft.Azure.ServiceBus
     public class ServiceBusException : Exception
     {
         public ServiceBusException(bool isTransient)
-		{
-			this.IsTransient = isTransient;
-		}
+        {
+            this.IsTransient = isTransient;
+        }
 
         public ServiceBusException(bool isTransient, string message)
-			: base(message)
-		{
-			this.IsTransient = isTransient;
-		}
+            : base(message)
+        {
+            this.IsTransient = isTransient;
+        }
 
         public ServiceBusException(bool isTransient, Exception innerException)
-			: base(innerException.Message, innerException)
-		{
-			this.IsTransient = isTransient;
-		}
+            : base(innerException.Message, innerException)
+        {
+            this.IsTransient = isTransient;
+        }
 
         public ServiceBusException(bool isTransient, string message, Exception innerException)
-			: base(message, innerException)
-		{
-			this.IsTransient = isTransient;
-		}
+            : base(message, innerException)
+        {
+            this.IsTransient = isTransient;
+        }
 
         public override string Message
         {
@@ -54,5 +54,5 @@ namespace Microsoft.Azure.ServiceBus
         public bool IsTransient { get; }
 
         public string ServiceBusNamespace { get; internal set; }
-	}
+    }
 }

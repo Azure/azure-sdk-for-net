@@ -10,7 +10,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Runtime.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml.Serialization;
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>Represents the unit of communication between ServiceBus client and Service.</summary>
