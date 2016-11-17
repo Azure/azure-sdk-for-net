@@ -30,22 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return WrapModel(name);
         }
 
-        public void Delete(string id)
-        {
-            DeleteAsync(id).Wait();
-        }
-
-        public void Delete(string groupName, string name)
-        {
-            DeleteAsync(groupName, name).Wait();
-        }
-
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
-        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -74,9 +59,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         #region Implementation of Abstract members in GroupableResources
 
-        public override async Task<IAvailabilitySet> GetByGroupAsync(string groupName, string name)
+        public override async Task<IAvailabilitySet> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var availabilitySetInner = await InnerCollection.GetAsync(groupName, name);
+            var availabilitySetInner = await InnerCollection.GetAsync(groupName, name, cancellationToken);
             return WrapModel(availabilitySetInner);
         }
 

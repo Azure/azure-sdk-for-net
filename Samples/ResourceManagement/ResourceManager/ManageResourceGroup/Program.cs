@@ -93,7 +93,7 @@ namespace ManageResourceGroup
 
                         Console.WriteLine("Deleting resource group: " + rgName2);
 
-                        azure.ResourceGroups.Delete(rgName2);
+                        azure.ResourceGroups.DeleteByName(rgName2);
 
                         Console.WriteLine("Deleted resource group: " + rgName2);
                     }
@@ -106,7 +106,7 @@ namespace ManageResourceGroup
                         try
                         {
                             Console.WriteLine("Deleting Resource Group: " + rgName);
-                            azure.ResourceGroups.Delete(rgName);
+                            azure.ResourceGroups.DeleteByName(rgName);
                             Console.WriteLine("Deleted Resource Group: " + rgName);
                         }
                         catch (Exception ex)

@@ -228,7 +228,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                 finally
                 {
                     Console.WriteLine($"Deleting resource group : {rgName}");
-                    azure.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
                     Console.WriteLine($"Deleted resource group : {rgName}");
                 }
             }

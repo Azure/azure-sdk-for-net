@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// The implementation of ServicePrincipals and its parent interfaces.
     /// </summary>
     public partial class ServicePrincipalsImpl  :
-        CreatableWrappers<IServicePrincipal, ServicePrincipalImpl, ServicePrincipalInner>,
+        ReadableWrappers<IServicePrincipal, ServicePrincipalImpl, ServicePrincipalInner>,
         IServicePrincipals
     {
         private IServicePrincipalsOperations innerCollection;
@@ -35,19 +35,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             var pagedList = new PagedList<ServicePrincipalInner>(this.innerCollection.List());
             return WrapList(pagedList);
-        }
-
-        public ServicePrincipalImpl Define (string appId)
-        {
-            return WrapModel(appId);
-        }
-
-        protected override ServicePrincipalImpl WrapModel (string appId)
-        {
-            return new ServicePrincipalImpl(new ServicePrincipalInner
-            {
-                AppId = appId
-            }, innerCollection);
         }
 
         protected override IServicePrincipal WrapModel (ServicePrincipalInner servicePrincipalInner)

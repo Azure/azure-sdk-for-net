@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Entry point to AD user management API.
     /// </summary>
     public interface IUsers  :
-        ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IBlank>,
+        // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>
     {
         /// <summary>

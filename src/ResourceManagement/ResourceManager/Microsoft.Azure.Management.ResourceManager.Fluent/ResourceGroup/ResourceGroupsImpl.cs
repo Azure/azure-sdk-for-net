@@ -44,14 +44,24 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             return new ResourceGroupImpl(inner, InnerCollection);
         }
 
-        public void Delete(string name)
+        public void DeleteByName(string name)
         {
-            DeleteAsync(name).Wait();
+            DeleteByIdAsync(name).Wait();
         }
 
-        public Task DeleteAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(name, cancellationToken);
+        }
+
+        public override void DeleteById(string id)
+        {
+            DeleteByName(ResourceUtils.NameFromResourceId(id));
+        }
+
+        public override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return DeleteByNameAsync(ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         public IResourceGroup GetByName(string name)

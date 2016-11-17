@@ -104,7 +104,7 @@ namespace Fluent.Tests.Compute
             }
 
 
-            manager.Networks.Delete(virtualNetwork2.Id);
+            manager.Networks.DeleteById(virtualNetwork2.Id);
         }
 
         public INetworkManager CreateNetworkManager()

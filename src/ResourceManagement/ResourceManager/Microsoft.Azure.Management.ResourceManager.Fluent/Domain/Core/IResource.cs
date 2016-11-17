@@ -12,16 +12,12 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// Base interfaces for fluent resources.
     /// </summary>
     public interface IResource  :
-        IIndexable
+        IIndexable,
+        IHasId,
+        IHasName
     {
-        /// <returns>the resource ID string</returns>
-        string Id { get; }
-
         /// <returns>the type of the resource</returns>
         string Type { get; }
-
-        /// <returns>the name of the resource</returns>
-        string Name { get; }
 
         /// <returns>the name of the region the resource is in</returns>
         string RegionName { get; }

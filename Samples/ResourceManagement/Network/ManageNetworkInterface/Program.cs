@@ -173,9 +173,9 @@ namespace ManageNetworkInterface
 
                     Console.WriteLine("Deleting a network interface: " + networkInterface2.Id);
                     Console.WriteLine("First, deleting the vm");
-                    azure.VirtualMachines.Delete(vm.Id);
+                    azure.VirtualMachines.DeleteById(vm.Id);
                     Console.WriteLine("Second, deleting the network interface");
-                    azure.NetworkInterfaces.Delete(networkInterface2.Id);
+                    azure.NetworkInterfaces.DeleteById(networkInterface2.Id);
                     Console.WriteLine("Deleted network interface");
 
                     Console.WriteLine("============================================================");
@@ -195,7 +195,7 @@ namespace ManageNetworkInterface
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

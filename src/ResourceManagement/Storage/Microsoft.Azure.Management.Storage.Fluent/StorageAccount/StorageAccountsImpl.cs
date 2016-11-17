@@ -73,36 +73,17 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         #region Implementation of ISupportsGettingByGroup::GetByGroupAsync and override GroupableResources::GetByGroupAsync
 
-        public override async Task<IStorageAccount> GetByGroupAsync(string groupName, string name)
+        public override async Task<IStorageAccount> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var storageAccount = await InnerCollection.GetPropertiesAsync(groupName, name);
+            var storageAccount = await InnerCollection.GetPropertiesAsync(groupName, name, cancellationToken);
             return WrapModel(storageAccount);
         }
 
         #endregion Implementation of ISupportsGettingByGroup::GetByGroupAsync and override GroupableResources::GetByGroupAsync
 
-        #region Implementation of ISupportsDeleting interface
-
-        public void Delete(string id)
-        {
-            DeleteAsync(id).Wait();
-        }
-
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        #endregion Implementation of ISupportsDeleting interface
-
         #region Implementation of ISupportsDeletingByGroup interface
 
-        public void Delete(string resourceGroupName, string name)
-        {
-            DeleteAsync(resourceGroupName, name).Wait();
-        }
-
-        public Task DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task DeleteByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(resourceGroupName, name, cancellationToken);
         }

@@ -65,9 +65,9 @@ namespace Fluent.Tests.Compute
                 Assert.NotNull(jsonResult);
 
                 // Delete VM
-                computeManager.VirtualMachines.Delete(foundedVM.Id);
+                computeManager.VirtualMachines.DeleteById(foundedVM.Id);
             } finally {
-                resourceManager.ResourceGroups.Delete(RG_NAME);
+                resourceManager.ResourceGroups.DeleteByName(RG_NAME);
             }
         }
     }

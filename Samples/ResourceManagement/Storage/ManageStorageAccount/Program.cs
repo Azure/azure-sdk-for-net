@@ -103,7 +103,7 @@ namespace ManageStorageAccount
 
                     Console.WriteLine($"Deleting a storage account - {accounts[0].Name} created @ {accounts[0].CreationTime}");
 
-                    azure.StorageAccounts.Delete(accounts[0].Id);
+                    azure.StorageAccounts.DeleteById(accounts[0].Id);
 
                     Console.WriteLine("Deleted storage account");
                 }
@@ -116,7 +116,7 @@ namespace ManageStorageAccount
                     if (azure.ResourceGroups.GetByName(rgName) != null)
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     else
