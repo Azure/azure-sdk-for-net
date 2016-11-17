@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public void Close()
         {
-            this.CloseAsync().GetAwaiter().GetResult();
+            this.CloseAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         protected static long GetNextId()

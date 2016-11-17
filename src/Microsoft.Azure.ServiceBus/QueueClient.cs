@@ -134,7 +134,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public sealed override async Task CloseAsync()
         {
-            await this.OnCloseAsync();
+            await this.OnCloseAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.InnerSender.SendAsync(brokeredMessages);
+                await this.InnerSender.SendAsync(brokeredMessages).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public async Task<BrokeredMessage> ReceiveAsync()
         {
-            IList<BrokeredMessage> messages = await this.ReceiveAsync(1);
+            IList<BrokeredMessage> messages = await this.ReceiveAsync(1).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.InnerReceiver.CompleteAsync(lockTokens);
+                await this.InnerReceiver.CompleteAsync(lockTokens).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.InnerReceiver.AbandonAsync(lockTokens);
+                await this.InnerReceiver.AbandonAsync(lockTokens).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.InnerReceiver.DeferAsync(lockTokens);
+                await this.InnerReceiver.DeferAsync(lockTokens).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.InnerReceiver.DeadLetterAsync(lockTokens);
+                await this.InnerReceiver.DeadLetterAsync(lockTokens).ConfigureAwait(false);
             }
             catch (Exception)
             {

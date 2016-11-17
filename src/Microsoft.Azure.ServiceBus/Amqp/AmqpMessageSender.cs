@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             var timeoutHelper = new TimeoutHelper(this.QueueClient.ConnectionSettings.OperationTimeout, true);
             using (AmqpMessage amqpMessage = AmqpMessageConverter.BrokeredMessagesToAmqpMessage(brokeredMessages, true))
             {
-                var amqpLink = await this.SendLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
+                var amqpLink = await this.SendLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 if (amqpLink.Settings.MaxMessageSize.HasValue)
                 {
                     ulong size = (ulong)amqpMessage.SerializedMessageSize;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             var amqpQueueClient = ((AmqpQueueClient)this.QueueClient);
             var connectionSettings = amqpQueueClient.ConnectionSettings;
             var timeoutHelper = new TimeoutHelper(connectionSettings.OperationTimeout);
-            AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
+            AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Authenticate over CBS
             var cbsLink = connection.Extensions.Find<AmqpCbsLink>();
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             Uri address = new Uri(connectionSettings.Endpoint, this.Path);
             string audience = address.AbsoluteUri;
             string resource = address.AbsoluteUri;
-            var expiresAt = await cbsLink.SendTokenAsync(cbsTokenProvider, address, audience, resource, new[] { ClaimConstants.Send }, timeoutHelper.RemainingTime());
+            var expiresAt = await cbsLink.SendTokenAsync(cbsTokenProvider, address, audience, resource, new[] { ClaimConstants.Send }, timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             AmqpSession session = null;
             try
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 linkSettings.LinkName = $"{amqpQueueClient.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
                 link.AttachTo(session);
 
-                await link.OpenAsync(timeoutHelper.RemainingTime());
+                await link.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 return link;
             }
             catch (Exception)

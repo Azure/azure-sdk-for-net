@@ -45,12 +45,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             try
             {
                 var timeoutHelper = new TimeoutHelper(this.QueueClient.ConnectionSettings.OperationTimeout, true);
-                ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
+                ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 IEnumerable<AmqpMessage> amqpMessages = null;
                 bool hasMessages = await Task.Factory.FromAsync(
                     (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, AmqpMessageReceiver.DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),
                     (a) => receiveLink.EndReceiveMessages(a, out amqpMessages),
-                    this);
+                    this).ConfigureAwait(false);
 
                 if (receiveLink.TerminalException != null)
                 {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                await this.DisposeMessagesAsync(lockTokens, AmqpConstants.AcceptedOutcome);
+                await this.DisposeMessagesAsync(lockTokens, AmqpConstants.AcceptedOutcome).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                await DisposeMessagesAsync(lockTokens, new Modified());
+                await DisposeMessagesAsync(lockTokens, new Modified()).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                await this.DisposeMessagesAsync(lockTokens, new Modified() {UndeliverableHere = true});
+                await this.DisposeMessagesAsync(lockTokens, new Modified() {UndeliverableHere = true}).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                await this.DisposeMessagesAsync(lockTokens, AmqpConstants.RejectedOutcome);
+                await this.DisposeMessagesAsync(lockTokens, AmqpConstants.RejectedOutcome).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             var timeoutHelper = new TimeoutHelper(this.QueueClient.ConnectionSettings.OperationTimeout, true);
             IList<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
 
-            ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
+            ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
             Task[] disposeMessageTasks = new Task[deliveryTags.Count];
             int i = 0;
             foreach (ArraySegment<byte> deliveryTag in deliveryTags)
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             var amqpQueueClient = ((AmqpQueueClient)this.QueueClient);
             var connectionSettings = amqpQueueClient.ConnectionSettings;
             var timeoutHelper = new TimeoutHelper(connectionSettings.OperationTimeout);
-            AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
+            AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Authenticate over CBS
             var cbsLink = connection.Extensions.Find<AmqpCbsLink>();
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             Uri address = new Uri(connectionSettings.Endpoint, this.Path);
             string audience = address.AbsoluteUri;
             string resource = address.AbsoluteUri;
-            var expiresAt = await cbsLink.SendTokenAsync(cbsTokenProvider, address, audience, resource, new[] { ClaimConstants.Listen }, timeoutHelper.RemainingTime());
+            var expiresAt = await cbsLink.SendTokenAsync(cbsTokenProvider, address, audience, resource, new[] { ClaimConstants.Listen }, timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             AmqpSession session = null;
             bool succeeded = false;
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 // Create our Session
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
-                await session.OpenAsync(timeoutHelper.RemainingTime());
+                await session.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
                 // Create our Link
                 var linkSettings = new AmqpLinkSettings();

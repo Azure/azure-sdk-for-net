@@ -174,11 +174,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 useSslStreamSecurity: true);
 
             var initiator = new AmqpTransportInitiator(amqpSettings, tpSettings);
-            var transport = await initiator.ConnectTaskAsync(timeoutHelper.RemainingTime());
+            var transport = await initiator.ConnectTaskAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             var connectionSettings = CreateAmqpConnectionSettings(this.MaxFrameSize, this.ContainerId, hostName);
             var connection = new AmqpConnection(transport, amqpSettings, connectionSettings);
-            await connection.OpenAsync(timeoutHelper.RemainingTime());
+            await connection.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Always create the CBS Link + Session
             var cbsLink = new AmqpCbsLink(connection);
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 string claim = requiredClaims?.FirstOrDefault();
                 var tokenProvider = this.QueueClient.TokenProvider;
                 var timeout = this.QueueClient.ConnectionSettings.OperationTimeout;
-                var token = await tokenProvider.GetTokenAsync(appliesTo, claim, timeout);
+                var token = await tokenProvider.GetTokenAsync(appliesTo, claim, timeout).ConfigureAwait(false);
                 return new CbsToken(token.TokenValue, CbsConstants.ServiceBusSasTokenType, token.ExpiresAtUtc);
             }
         }
