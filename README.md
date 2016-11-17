@@ -44,6 +44,12 @@ Using the command line:
   - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
         *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
 
+## Source Code and External Package Organization
+
+### Avro
+
+The Avro source code can be found under https://github.com/Azure/azure-sdk-for-net/tree/master/src/ServiceManagement/HDInsight/Microsoft.Hadoop.Avro. It's available as a stand-alone NuGet package at https://www.nuget.org/packages/Microsoft.Hadoop.Avro/.
+
 ## To on-board new libraries
 
 ### Project Structure
