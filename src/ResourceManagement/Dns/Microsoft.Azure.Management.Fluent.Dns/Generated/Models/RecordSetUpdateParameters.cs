@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns.Models
         /// </summary>
         /// <param name="recordSet">Specifies information about the record set
         /// being updated.</param>
-        public RecordSetUpdateParameters(RecordSetRecordSetInner recordSet = default(RecordSetRecordSetInner))
+        public RecordSetUpdateParameters(RecordSetInner recordSet = default(RecordSetInner))
         {
             RecordSet = recordSet;
         }
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns.Models
         /// updated.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "RecordSet")]
-        public RecordSetRecordSetInner RecordSet { get; set; }
+        public RecordSetInner RecordSet { get; set; }
 
     }
 }

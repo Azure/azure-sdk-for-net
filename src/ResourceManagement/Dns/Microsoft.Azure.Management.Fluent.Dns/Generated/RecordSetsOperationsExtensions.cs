@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// record set. Specify the last-seen etag value to prevent accidentally
             /// overwritting concurrent changes.
             /// </param>
-            public static RecordSetRecordSetInner Update(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetRecordSetInner parameters, string ifMatch = default(string))
+            public static RecordSetInner Update(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetInner parameters, string ifMatch = default(string))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).UpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<RecordSetRecordSetInner> UpdateAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetRecordSetInner parameters, string ifMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<RecordSetInner> UpdateAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetInner parameters, string ifMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// Set to '*' to allow a new record set to be created, but to prevent updating
             /// an existing record set. Other values will be ignored.
             /// </param>
-            public static RecordSetRecordSetInner CreateOrUpdate(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetRecordSetInner parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
+            public static RecordSetInner CreateOrUpdate(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetInner parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).CreateOrUpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<RecordSetRecordSetInner> CreateOrUpdateAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetRecordSetInner parameters, string ifMatch = default(string), string ifNoneMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<RecordSetInner> CreateOrUpdateAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetInner parameters, string ifMatch = default(string), string ifNoneMatch = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// The type of DNS record in this record set. Possible values include: 'A',
             /// 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
             /// </param>
-            public static RecordSetRecordSetInner Get(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType)
+            public static RecordSetInner Get(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).GetAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<RecordSetRecordSetInner> GetAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<RecordSetInner> GetAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// The maximum number of record sets to return. If not specified, returns up
             /// to 100 record sets.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner> ListByType(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, RecordType recordType, int? top = default(int?))
+            public static Microsoft.Rest.Azure.IPage<RecordSetInner> ListByType(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, RecordType recordType, int? top = default(int?))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).ListByTypeAsync(resourceGroupName, zoneName, recordType, top), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner>> ListByTypeAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, RecordType recordType, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetInner>> ListByTypeAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, RecordType recordType, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByTypeWithHttpMessagesAsync(resourceGroupName, zoneName, recordType, top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// The maximum number of record sets to return. If not specified, returns up
             /// to 100 record sets.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner> ListByDnsZone(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?))
+            public static Microsoft.Rest.Azure.IPage<RecordSetInner> ListByDnsZone(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).ListByDnsZoneAsync(resourceGroupName, zoneName, top), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner>> ListByDnsZoneAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetInner>> ListByDnsZoneAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByDnsZoneWithHttpMessagesAsync(resourceGroupName, zoneName, top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -399,7 +399,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner> ListByTypeNext(this IRecordSetsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<RecordSetInner> ListByTypeNext(this IRecordSetsOperations operations, string nextPageLink)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).ListByTypeNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -416,7 +416,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner>> ListByTypeNextAsync(this IRecordSetsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetInner>> ListByTypeNextAsync(this IRecordSetsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByTypeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner> ListByDnsZoneNext(this IRecordSetsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<RecordSetInner> ListByDnsZoneNext(this IRecordSetsOperations operations, string nextPageLink)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRecordSetsOperations)s).ListByDnsZoneNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -450,7 +450,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetRecordSetInner>> ListByDnsZoneNextAsync(this IRecordSetsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RecordSetInner>> ListByDnsZoneNextAsync(this IRecordSetsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByDnsZoneNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -15,15 +15,15 @@ namespace Microsoft.Azure.Management.Fluent.Dns.Models
     /// name and type).
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RecordSetRecordSetInner
+    public partial class RecordSetInner
     {
         /// <summary>
-        /// Initializes a new instance of the RecordSetRecordSetInner class.
+        /// Initializes a new instance of the RecordSetInner class.
         /// </summary>
-        public RecordSetRecordSetInner() { }
+        public RecordSetInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the RecordSetRecordSetInner class.
+        /// Initializes a new instance of the RecordSetInner class.
         /// </summary>
         /// <param name="id">The ID of the record set.</param>
         /// <param name="name">The name of the record set.</param>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Fluent.Dns.Models
         /// <param name="cnameRecord">The CNAME record in the  record
         /// set.</param>
         /// <param name="soaRecord">The SOA record in the record set.</param>
-        public RecordSetRecordSetInner(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.Collections.Generic.IDictionary<string, string> metadata = default(System.Collections.Generic.IDictionary<string, string>), long? tTL = default(long?), System.Collections.Generic.IList<ARecord> aRecords = default(System.Collections.Generic.IList<ARecord>), System.Collections.Generic.IList<AaaaRecord> aaaaRecords = default(System.Collections.Generic.IList<AaaaRecord>), System.Collections.Generic.IList<MxRecord> mxRecords = default(System.Collections.Generic.IList<MxRecord>), System.Collections.Generic.IList<NsRecord> nsRecords = default(System.Collections.Generic.IList<NsRecord>), System.Collections.Generic.IList<PtrRecord> ptrRecords = default(System.Collections.Generic.IList<PtrRecord>), System.Collections.Generic.IList<SrvRecord> srvRecords = default(System.Collections.Generic.IList<SrvRecord>), System.Collections.Generic.IList<TxtRecord> txtRecords = default(System.Collections.Generic.IList<TxtRecord>), CnameRecord cnameRecord = default(CnameRecord), SoaRecord soaRecord = default(SoaRecord))
+        public RecordSetInner(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.Collections.Generic.IDictionary<string, string> metadata = default(System.Collections.Generic.IDictionary<string, string>), long? tTL = default(long?), System.Collections.Generic.IList<ARecord> aRecords = default(System.Collections.Generic.IList<ARecord>), System.Collections.Generic.IList<AaaaRecord> aaaaRecords = default(System.Collections.Generic.IList<AaaaRecord>), System.Collections.Generic.IList<MxRecord> mxRecords = default(System.Collections.Generic.IList<MxRecord>), System.Collections.Generic.IList<NsRecord> nsRecords = default(System.Collections.Generic.IList<NsRecord>), System.Collections.Generic.IList<PtrRecord> ptrRecords = default(System.Collections.Generic.IList<PtrRecord>), System.Collections.Generic.IList<SrvRecord> srvRecords = default(System.Collections.Generic.IList<SrvRecord>), System.Collections.Generic.IList<TxtRecord> txtRecords = default(System.Collections.Generic.IList<TxtRecord>), CnameRecord cnameRecord = default(CnameRecord), SoaRecord soaRecord = default(SoaRecord))
         {
             Id = id;
             Name = name;
