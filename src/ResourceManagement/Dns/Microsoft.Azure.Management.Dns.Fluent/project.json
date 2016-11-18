@@ -1,49 +1,49 @@
 {
-    "version": "1.0.0-beta3",
-    "title": "Microsoft Azure DNS Management Library",
-    "description": "Provides DNS management (Fluent) capabilities for Microsoft Azure.",
-    "authors": [ "Microsoft" ],
+  "version": "1.0.0-beta3",
+  "title": "Microsoft Azure DNS Management Library",
+  "description": "Provides DNS management (Fluent) capabilities for Microsoft Azure.",
+  "authors": [ "Microsoft" ],
 
-    "packOptions": {
-        "summary": "Microsoft Azure Management DNS Library.",
-        "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
-        "tags": [ "Microsoft Azure DNS management", "dnszone", "network", "REST HTTP client", "azureofficial", "windowsazureofficial", "Fluent" ],
-        "projectUrl": "https://github.com/Azure/azure-sdk-for-net/tree/Fluent",
-        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-        "requireLicenseAcceptance": true
+  "packOptions": {
+    "summary": "Microsoft Azure Management DNS Library.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure DNS management", "dnszone", "network", "REST HTTP client", "azureofficial", "windowsazureofficial", "Fluent" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net/tree/Fluent",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance": true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)"
+  },
+
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+      }
     },
-
-    "buildOptions": {
-        "delaySign": true,
-        "publicSign": false,
-        "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11"
+      }
     },
-
-    "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
-        "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)"
-    },
-
-    "frameworks": {
-        "net45": {
-            "dependencies": {
-            }
-        },
-        "netstandard1.5": {
-            "imports": [ "dnxcore50" ],
-            "dependencies": {
-                "Microsoft.NETCore.Platforms": "1.0.1",
-                "System.Diagnostics.Tools": "4.0.1",
-                "System.Net.Http": "4.1.0",
-                "System.Runtime.Serialization.Primitives": "4.1.1",
-                "System.Threading.Tasks": "4.0.11"
-            }
-        },
-        "netstandard1.1": {
-            "imports": [ "dnxcore50" ],
-            "dependencies": {
-                "System.Runtime.Serialization.Primitives": "4.1.1"
-            }
-        }
+    "netstandard1.1": {
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      }
     }
+  }
 }
