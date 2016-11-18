@@ -21,6 +21,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Batch.Fluent", "..\Batch\Microsoft.Azure.Management.Batch.Fluent\Microsoft.Azure.Management.Batch.Fluent.xproj", "{08BACF2F-33C9-498D-81DC-377291356F39}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Dns.Fluent", "..\Dns\Microsoft.Azure.Management.Dns.Fluent\Microsoft.Azure.Management.Dns.Fluent.xproj", "{85B92B95-242F-48A2-899A-1AC42B325396}"
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "..\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent\Microsoft.Azure.Management.TrafficManager.Fluent.xproj", "{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}"
 EndProject
 Global
@@ -65,6 +66,10 @@ Global
 		{08BACF2F-33C9-498D-81DC-377291356F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B92B95-242F-48A2-899A-1AC42B325396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B92B95-242F-48A2-899A-1AC42B325396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B92B95-242F-48A2-899A-1AC42B325396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B92B95-242F-48A2-899A-1AC42B325396}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Release|Any CPU.ActiveCfg = Release|Any CPU

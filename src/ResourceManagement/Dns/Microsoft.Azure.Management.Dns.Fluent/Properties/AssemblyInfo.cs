@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Traffic Manager Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Traffic Manager management APIs.")]
+[assembly: AssemblyTitle("Microsoft Azure DNS Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure DNS management APIs.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
