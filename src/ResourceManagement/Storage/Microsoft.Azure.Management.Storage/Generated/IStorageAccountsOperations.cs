@@ -222,5 +222,48 @@ namespace Microsoft.Azure.Management.Storage
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<StorageAccountListKeysResult>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List SAS credentials of a storage account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters
+        /// in length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to provide to list SAS credentials for the storage
+        /// account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ListAccountSasResponse>> ListAccountSasWithHttpMessagesAsync(string resourceGroupName, string accountName, AccountSasParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List service SAS credentials of a specific resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters
+        /// in length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to provide to list service SAS credentials.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ListServiceSasResponse>> ListServiceSasWithHttpMessagesAsync(string resourceGroupName, string accountName, ServiceSasParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

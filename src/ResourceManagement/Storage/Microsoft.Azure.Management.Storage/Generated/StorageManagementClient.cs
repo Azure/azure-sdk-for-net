@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Storage
             this.StorageAccounts = new StorageAccountsOperations(this);
             this.Usage = new UsageOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-01-01";
+            this.ApiVersion = "2016-05-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
