@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The parameters to provide for the account.
+    /// The parameters that can be provided when updating the storage account
+    /// properties.
     /// </summary>
     [JsonTransformation]
     public partial class StorageAccountUpdateParameters
@@ -44,9 +45,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
-        /// Gets or sets the sku type. Note that sku cannot be updated to
-        /// StandardZRS or ProvisionedLRS, nor can accounts of that sku type
-        /// be updated to any other value.
+        /// Gets or sets the SKU name. Note that the SKU name cannot be
+        /// updated to Standard_ZRS or Premium_LRS, nor can accounts of those
+        /// sku names be updated to any other value.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
@@ -55,17 +56,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets a list of key value pairs that describe the resource.
         /// These tags can be used in viewing and grouping this resource
         /// (across resource groups). A maximum of 15 tags can be provided
-        /// for a resource. Each tag must have a key no greater than 128
-        /// characters and value no greater than 256 characters.
+        /// for a resource. Each tag must have a key no greater in length
+        /// than 128 characters and a value no greater in length than 256
+        /// characters.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// User domain assigned to the storage account. Name is the CNAME
-        /// source. Only one custom domain is supported per storage account
-        /// at this time. To clear the existing custom domain, use an empty
-        /// string for the custom domain name property.
+        /// Custom domain assigned to the storage account by the user. Name is
+        /// the CNAME source. Only one custom domain is supported per storage
+        /// account at this time. To clear the existing custom domain, use an
+        /// empty string for the custom domain name property.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; set; }
@@ -78,10 +80,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public Encryption Encryption { get; set; }
 
         /// <summary>
-        /// The access tier used for billing. Access tier cannot be changed
-        /// more than once every 7 days (168 hours). Access tier cannot be
-        /// set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS
-        /// account types. Possible values include: 'Hot', 'Cool'
+        /// Required for storage accounts where kind = BlobStorage. The access
+        /// tier used for billing. Possible values include: 'Hot', 'Cool'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }

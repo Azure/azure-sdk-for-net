@@ -43,13 +43,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string KeyName { get; private set; }
 
         /// <summary>
-        /// Base 64 encoded value of the key.
+        /// Base 64-encoded value of the key.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; private set; }
 
         /// <summary>
-        /// Permissions for the key. Possible values include: 'READ', 'FULL'
+        /// Permissions for the key -- read-only or full permissions. Possible
+        /// values include: 'READ', 'FULL'
         /// </summary>
         [JsonProperty(PropertyName = "permissions")]
         public KeyPermission? Permissions { get; private set; }

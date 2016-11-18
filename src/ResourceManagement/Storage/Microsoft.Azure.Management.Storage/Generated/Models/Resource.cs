@@ -60,7 +60,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Resource tags
+        /// Tags assigned to a resource; can be used for viewing and grouping
+        /// a resource (across resource groups).
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

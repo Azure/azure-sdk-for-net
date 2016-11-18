@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Storage
         public StorageManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Checks that account name is valid and is not in use.
+        /// Checks that the storage account name is valid and is not already in use.
         /// </summary>
         /// <param name='name'>
         /// </param>
@@ -233,11 +233,11 @@ namespace Microsoft.Azure.Management.Storage
 
         /// <summary>
         /// Asynchronously creates a new storage account with the specified
-        /// parameters. If an account is already created and subsequent create
+        /// parameters. If an account is already created and a subsequent create
         /// request is issued with different properties, the account properties will
-        /// be updated. If an account is already created and subsequent create or
-        /// update request is issued with exact same set of properties, the request
-        /// will succeed.
+        /// be updated. If an account is already created and a subsequent create or
+        /// update request is issued with the exact same set of properties, the
+        /// request will succeed.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -268,11 +268,11 @@ namespace Microsoft.Azure.Management.Storage
 
         /// <summary>
         /// Asynchronously creates a new storage account with the specified
-        /// parameters. If an account is already created and subsequent create
+        /// parameters. If an account is already created and a subsequent create
         /// request is issued with different properties, the account properties will
-        /// be updated. If an account is already created and subsequent create or
-        /// update request is issued with exact same set of properties, the request
-        /// will succeed.
+        /// be updated. If an account is already created and a subsequent create or
+        /// update request is issued with the exact same set of properties, the
+        /// request will succeed.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -421,7 +421,7 @@ namespace Microsoft.Azure.Management.Storage
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -654,7 +654,7 @@ namespace Microsoft.Azure.Management.Storage
 
         /// <summary>
         /// Returns the properties for the specified storage account including but not
-        /// limited to name, account type, location, and account status. The ListKeys
+        /// limited to name, SKU name, location, and account status. The ListKeys
         /// operation should be used to retrieve storage keys.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -850,16 +850,16 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// The update operation can be used to update the account type, encryption,
-        /// or tags for a storage account. It can also be used to map the account to
-        /// a custom domain. Only one custom domain is supported per storage account
-        /// and. replacement/change of custom domain is not supported. In order to
-        /// replace an old custom domain, the old value must be cleared/unregistered
-        /// before a new value may be set. Update of multiple properties is
-        /// supported. This call does not change the storage keys for the account. If
-        /// you want to change storage account keys, use the regenerate keys
-        /// operation.  The location and name of the storage account cannot be
-        /// changed after creation.
+        /// The update operation can be used to update the SKU, encryption, access
+        /// tier, or tags for a storage account. It can also be used to map the
+        /// account to a custom domain. Only one custom domain is supported per
+        /// storage account; the replacement/change of custom domain is not
+        /// supported. In order to replace an old custom domain, the old value must
+        /// be cleared/unregistered before a new value can be set. The update of
+        /// multiple properties is supported. This call does not change the storage
+        /// keys for the account. If you want to change the storage account keys, use
+        /// the regenerate keys operation. The location and name of the storage
+        /// account cannot be changed after creation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1415,10 +1415,12 @@ namespace Microsoft.Azure.Management.Storage
         /// Lists the access keys for the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the storage account.
+        /// The name of the storage account within the specified resource group.
+        /// Storage account names must be between 3 and 24 characters in length and
+        /// use numbers and lower-case letters only.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1605,7 +1607,7 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Regenerates the access keys for the specified storage account.
+        /// Regenerates one of the access keys for the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Storage
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
+        /// Gets subscription credentials which uniquely identify the Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
