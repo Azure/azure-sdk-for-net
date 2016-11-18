@@ -98,7 +98,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 TestHelper.ValidateStorageInsight(storageInsightTwo, createResponse);
 
                 // List the storage insights in the workspace
-                var listResponse = client.StorageInsights.ListInWorkspace(resourceGroupName, workspaceName);
+                var listResponse = client.StorageInsights.ListByWorkspace(resourceGroupName, workspaceName);
                 Assert.Equal(2, listResponse.Count());
                 Assert.Null(listResponse.NextPageLink);
                 Assert.Single(listResponse.Where(w => w.Name.Equals(storageInsightName, StringComparison.OrdinalIgnoreCase)));

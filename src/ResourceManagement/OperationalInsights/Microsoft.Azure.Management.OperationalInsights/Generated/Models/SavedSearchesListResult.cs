@@ -7,21 +7,21 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// The get schema operation response.
+    /// The saved search operation response.
     /// </summary>
-    public partial class SearchGetSchemaResponse
+    public partial class SavedSearchesListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SearchGetSchemaResponse class.
+        /// Initializes a new instance of the SavedSearchesListResult class.
         /// </summary>
-        public SearchGetSchemaResponse() { }
+        public SavedSearchesListResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the SearchGetSchemaResponse class.
+        /// Initializes a new instance of the SavedSearchesListResult class.
         /// </summary>
         /// <param name="metadata">The metadata from search results.</param>
         /// <param name="value">The array of result values.</param>
-        public SearchGetSchemaResponse(SearchMetadata metadata = default(SearchMetadata), System.Collections.Generic.IList<SearchSchemaValue> value = default(System.Collections.Generic.IList<SearchSchemaValue>))
+        public SavedSearchesListResult(SearchMetadata metadata = default(SearchMetadata), System.Collections.Generic.IList<SavedSearch> value = default(System.Collections.Generic.IList<SavedSearch>))
         {
             Metadata = metadata;
             Value = value;
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// Gets or sets the array of result values.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<SearchSchemaValue> Value { get; set; }
+        public System.Collections.Generic.IList<SavedSearch> Value { get; set; }
 
     }
 }

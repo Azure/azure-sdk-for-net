@@ -56,10 +56,9 @@ namespace OperationalInsights.Test.ScenarioTests
                 TestHelper.ValidateLinkedService(createParameters, getResponse);
 
                 // List the linked services in the workspace
-                var listResponse = client.LinkedServices.List(resourceGroupName, workspaceName);
-                Assert.Equal(1, listResponse.Count());
-                Assert.Null(listResponse.NextPageLink);
-                Assert.Single(listResponse.Where(w => w.ResourceId.Equals(accountResourceId, StringComparison.OrdinalIgnoreCase)));
+                var listResponse = client.LinkedServices.ListByWorkspace(resourceGroupName, workspaceName);
+                Assert.Equal(1, listResponse.Value.Count);
+                Assert.Single(listResponse.Value.Where(w => w.ResourceId.Equals(accountResourceId, StringComparison.OrdinalIgnoreCase)));
 
                 var accountResourceId2 = string.Format(accountResourceIdFromat, subId, resourceGroupName, automationAccountName2);
                 var updateParameters = new LinkedService

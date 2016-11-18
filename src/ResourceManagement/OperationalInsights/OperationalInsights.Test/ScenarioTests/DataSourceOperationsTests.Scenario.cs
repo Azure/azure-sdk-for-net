@@ -79,7 +79,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 TestHelper.ValidateDatasource(createParameters, createResponse);
 
                 // List the data sources in the workspace
-                var listResponse = client.DataSources.ListInWorkspace(new ODataQuery<DataSourceFilter>(ds=> ds.Kind == "AzureAuditLog" ), resourceGroupName, workspaceName);
+                var listResponse = client.DataSources.ListByWorkspace(new ODataQuery<DataSourceFilter>(ds=> ds.Kind == "AzureAuditLog" ), resourceGroupName, workspaceName);
                 Assert.Equal(2, listResponse.Count());
                 Assert.Null(listResponse.NextPageLink);
                 Assert.Single(listResponse.Where(w => w.Name.Equals(dataSourceName, StringComparison.OrdinalIgnoreCase)));
@@ -134,7 +134,7 @@ namespace OperationalInsights.Test.ScenarioTests
                     var createParameters = new DataSource
                     {
                         Name = windowsEventDataSourceName,
-                        Kind = "WindowsEvent",
+                        Kind = DataSourceKind.WindowsEvent,
                         Properties = JToken.Parse("{\"eventLogName\": \"" + ("windowsEvent" + i) + "\", \"eventTypes\": [{\"eventType\": \"Error\"}]}")
                     };
 
@@ -143,12 +143,12 @@ namespace OperationalInsights.Test.ScenarioTests
                 }
 
                 // List the data sources in the workspace
-                var listResponse = client.DataSources.ListInWorkspace(new ODataQuery<DataSourceFilter>(ds => ds.Kind == "WindowsEvent"), resourceGroupName, workspaceName);
+                var listResponse = client.DataSources.ListByWorkspace(new ODataQuery<DataSourceFilter>(ds => ds.Kind == "WindowsEvent"), resourceGroupName, workspaceName);
                 Assert.Equal(200, listResponse.Count());
                 Assert.NotNull(listResponse.NextPageLink);
 
                 // Get the next page
-                var listResponseNextPage = client.DataSources.ListInWorkspaceNext(listResponse.NextPageLink);
+                var listResponseNextPage = client.DataSources.ListByWorkspaceNext(listResponse.NextPageLink);
                 Assert.Null(listResponseNextPage.NextPageLink);
                 Assert.Equal(100, listResponseNextPage.Count());
             }

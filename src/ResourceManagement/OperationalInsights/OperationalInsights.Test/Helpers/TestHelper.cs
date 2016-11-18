@@ -97,6 +97,11 @@ namespace OperationalInsights.Tests.Helpers
             Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Location, actual.Location);
             Assert.Equal(WorkspaceResourceType, actual.Type);
+            if (expected.RetentionInDays.HasValue)
+            {
+                Assert.Equal(expected.RetentionInDays, actual.RetentionInDays);
+            }
+
             if (expected.Tags != null)
             {
                 Assert.Equal(expected.Tags.Count, actual.Tags.Count);
@@ -110,15 +115,14 @@ namespace OperationalInsights.Tests.Helpers
                 Assert.Null(actual.Tags);
             }
 
-            var workspaceProperties = actual;
             Assert.Equal(
                 expected != null && expected.Sku != null ? expected.Sku.Name : SkuNameEnum.Free,
-                workspaceProperties.Sku.Name, 
+                actual.Sku.Name, 
                 StringComparer.OrdinalIgnoreCase);
-            Assert.NotNull(workspaceProperties.PortalUrl);
-            Assert.Equal("Succeeded", workspaceProperties.ProvisioningState, StringComparer.OrdinalIgnoreCase);
-            Assert.Equal("Azure", workspaceProperties.Source, StringComparer.OrdinalIgnoreCase);
-            Assert.NotNull(workspaceProperties.CustomerId);
+            Assert.NotNull(actual.PortalUrl);
+            Assert.Equal("Succeeded", actual.ProvisioningState, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal("Azure", actual.Source, StringComparer.OrdinalIgnoreCase);
+            Assert.NotNull(actual.CustomerId);
         }
 
         /// <summary>

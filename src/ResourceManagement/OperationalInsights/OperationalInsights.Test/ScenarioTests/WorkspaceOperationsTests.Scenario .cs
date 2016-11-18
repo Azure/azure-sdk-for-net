@@ -30,7 +30,8 @@ namespace OperationalInsights.Test.ScenarioTests
                     Name = workspaceName,
                     Location = resourceGroup.Location,
                     Tags = new Dictionary<string, string> { { "tag1", "val1" } },
-                    Sku = new Sku(SkuNameEnum.Free)
+                    Sku = new Sku(SkuNameEnum.PerNode),
+                    RetentionInDays = 30
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(
@@ -64,7 +65,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 {
                     Name = workspaceName,
                     Location = resourceGroup.Location,
-                    CustomerId = Guid.NewGuid().ToString()
+                    CustomerId = Guid.NewGuid().ToString(),
                 };
 
                 TestHelper.VerifyCloudException(
@@ -76,6 +77,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 {
                     Name = workspaceName,
                     Location = resourceGroup.Location,
+                    Sku = new Sku(SkuNameEnum.Free)
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(
@@ -91,8 +93,7 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // List the management groups connected to the workspace
                 var managementGroupsResponse = client.Workspaces.ListManagementGroups(resourceGroupName, workspaceName);
-                Assert.Null(managementGroupsResponse.NextPageLink);
-                Assert.Equal(0, managementGroupsResponse.Count());
+                Assert.Equal(0, managementGroupsResponse.Value.Count());
 
                 // List the usage for a workspace
                 var usagesResponse = client.Workspaces.ListUsages(resourceGroupName, workspaceName);
@@ -124,7 +125,8 @@ namespace OperationalInsights.Test.ScenarioTests
                     Name = workspaceName,
                     Location = resourceGroup.Location,
                     Tags = new Dictionary<string, string> { { "tag1", "val1" } },
-                    Sku = new Sku(SkuNameEnum.Free)
+                    Sku = new Sku(SkuNameEnum.PerNode),
+                    RetentionInDays = 30
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(

@@ -8,26 +8,51 @@ namespace Microsoft.Azure.Management.OperationalInsights
     using Models;
 
     /// <summary>
-    /// DataSourcesOperations operations.
+    /// SavedSearchesOperations operations.
     /// </summary>
-    public partial interface IDataSourcesOperations
+    public partial interface ISavedSearchesOperations
     {
         /// <summary>
-        /// Create or update a data source.
+        /// Deletes the specified saved search in a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the
-        /// datasource
+        /// Log Analytics workspace name
         /// </param>
-        /// <param name='dataSourceName'>
-        /// The name of the datasource resource.
+        /// <param name='savedSearchName'>
+        /// Name of the saved search.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string savedSearchName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Creates or updates a saved search for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to get. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Log Analytics workspace name
+        /// </param>
+        /// <param name='savedSearchName'>
+        /// The id of the saved search.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters required to create or update a datasource.
+        /// The parameters required to save a search.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,20 +69,19 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<DataSource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string dataSourceName, DataSource parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SavedSearch>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string savedSearchName, SavedSearchCreateOrUpdateParameters parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes a data source instance.
+        /// Gets the specified saved search for a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contains the
-        /// datasource.
+        /// Log Analytics workspace name
         /// </param>
-        /// <param name='dataSourceName'>
-        /// Name of the datasource.
+        /// <param name='savedSearchName'>
+        /// The id of the saved search.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -68,23 +92,22 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string dataSourceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SavedSearch>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string savedSearchName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a datasource instance.
+        /// Gets the saved searches for a given Log Analytics Workspace
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contain the the
-        /// datasource.
-        /// </param>
-        /// <param name='dataSourceName'>
-        /// Name of the datasource
+        /// Log Analytics workspace name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -101,46 +124,19 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<DataSource>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string dataSourceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SavedSearchesListResult>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets the first page of data source instances in a workspace with
-        /// the link to the next page.
+        /// Gets the results from a saved search for a given workspace.
         /// </summary>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The workspace that contains the data sources.
+        /// Log Analytics workspace name
         /// </param>
-        /// <param name='skiptoken'>
-        /// Token for paging support.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<DataSource>>> ListByWorkspaceWithHttpMessagesAsync(Microsoft.Rest.Azure.OData.ODataQuery<DataSourceFilter> odataQuery, string resourceGroupName, string workspaceName, string skiptoken = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Gets the first page of data source instances in a workspace with
-        /// the link to the next page.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='savedSearchName'>
+        /// The name of the saved search.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,6 +153,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<DataSource>>> ListByWorkspaceNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SearchResultsResponse>> GetResultsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string savedSearchName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }
