@@ -50,7 +50,7 @@ namespace Fluent.Tests.Compute
                     .Apply();
 
                 // Delete
-                computeManager.AvailabilitySets.Delete(availabilitySet.Id);
+                computeManager.AvailabilitySets.DeleteById(availabilitySet.Id);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace Fluent.Tests.Compute
                 try
                 {
                     var resourceManager = CreateResourceManager();
-                    resourceManager.ResourceGroups.Delete(rgName);
+                    resourceManager.ResourceGroups.DeleteByName(rgName);
                 }
                 catch { }
             }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     public interface IVaults  :
         ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsCreating<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsGettingById<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,

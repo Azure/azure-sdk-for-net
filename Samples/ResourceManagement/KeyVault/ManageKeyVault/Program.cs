@@ -130,8 +130,8 @@ namespace ManageKeyVault
                     //============================================================
                     // Delete key vaults
                     Console.WriteLine("Deleting the key vaults");
-                    azure.Vaults.Delete(vault1.Id);
-                    azure.Vaults.Delete(vault2.Id);
+                    azure.Vaults.DeleteById(vault1.Id);
+                    azure.Vaults.DeleteById(vault2.Id);
                     Console.WriteLine("Deleted the key vaults");
                 }
                 catch (Exception e)
@@ -143,7 +143,7 @@ namespace ManageKeyVault
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

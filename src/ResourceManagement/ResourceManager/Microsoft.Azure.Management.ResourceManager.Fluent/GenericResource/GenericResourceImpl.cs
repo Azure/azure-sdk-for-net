@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class GenericResourceImpl : GroupableResource<IGenericResource,
         GenericResourceInner,
-        Microsoft.Azure.Management.Resource.Fluent.Resource,
         GenericResourceImpl,
         IResourceManager,
         IWithGroup,

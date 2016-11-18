@@ -32,9 +32,14 @@ namespace Fluent.Tests.Storage
                     .Define(stgName)
                     .WithRegion(Region.US_EAST)
                     .WithNewResourceGroup(rgName)
+                    .WithTag("t1", "v1")
+                    .WithTag("t2", "v2")
                     .Create();
+
                 Assert.True(string.Equals(storageAccount.ResourceGroupName, rgName));
                 Assert.True(storageAccount.Sku.Name == SkuName.StandardGRS);
+                Assert.NotNull(storageAccount.Tags);
+                Assert.Equal(storageAccount.Tags.Count, 2);
 
                 // List
                 var accounts = storageManager.StorageAccounts.ListByGroup(rgName);
@@ -44,6 +49,8 @@ namespace Fluent.Tests.Storage
                 // Get
                 storageAccount = storageManager.StorageAccounts.GetByGroup(rgName, stgName);
                 Assert.NotNull(storageAccount);
+                Assert.NotNull(storageAccount.Tags);
+                Assert.Equal(storageAccount.Tags.Count, 2);
 
                 // Get keys 
                 Assert.True(storageAccount.GetKeys().Count() > 0);
@@ -59,14 +66,20 @@ namespace Fluent.Tests.Storage
                 // Update
                 storageAccount = storageAccount.Update()
                     .WithSku(SkuName.StandardLRS)
+                    .WithTag("t3", "v3")
+                    .WithTag("t4", "v4")
+                    .WithoutTag("t2")
                     .Apply();
+
                 Assert.Equal(storageAccount.Sku.Name, SkuName.StandardLRS);
+                Assert.NotNull(storageAccount.Tags);
+                Assert.Equal(storageAccount.Tags.Count, 3);
             }
             finally
             {
                 try
                 {
-                    CreateResourceManager().ResourceGroups.Delete(rgName);
+                    CreateResourceManager().ResourceGroups.DeleteByName(rgName);
                 }
                 catch
                 {}

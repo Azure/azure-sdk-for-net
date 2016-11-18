@@ -70,30 +70,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapModel(name);
         }
 
-        Task DeleteAsync(string groupName, string name)
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return InnerCollection.DeleteAsync(groupName, name);
+            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public override async Task<IPublicIpAddress> GetByGroupAsync(string groupName, string name)
+        public override async Task<IPublicIpAddress> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name);
+            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
-        }
-
-        public void Delete(string id)
-        {
-            DeleteAsync(id).Wait();
-        }
-
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
-        public void Delete(string groupName, string name)
-        {
-            DeleteAsync(groupName, name).Wait();
         }
     }
 }

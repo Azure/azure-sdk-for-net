@@ -15,7 +15,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public partial class PublicIpAddressImpl :
         GroupableResource<IPublicIpAddress,
             PublicIPAddressInner,
-            Microsoft.Azure.Management.Resource.Fluent.Resource,
             PublicIpAddressImpl,
             INetworkManager,
             PublicIpAddress.Definition.IWithGroup,

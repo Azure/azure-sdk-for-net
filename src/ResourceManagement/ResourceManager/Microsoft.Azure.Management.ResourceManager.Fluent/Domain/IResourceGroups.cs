@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         ISupportsListing<IResourceGroup>,
         ISupportsGettingByName<IResourceGroup>,
         ISupportsCreating<IBlank>,
-        ISupportsDeleting,
+        ISupportsDeletingByName,
         ISupportsBatchCreation<IResourceGroup>
     {
         /// <summary>

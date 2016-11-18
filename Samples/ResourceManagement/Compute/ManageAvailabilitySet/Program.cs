@@ -161,7 +161,7 @@ namespace ManageAvailabilitySet
 
                     Console.WriteLine("Deleting an availability set: " + availSet2.Id);
 
-                    azure.AvailabilitySets.Delete(availSet2.Id);
+                    azure.AvailabilitySets.DeleteById(availSet2.Id);
 
                     Console.WriteLine("Deleted availability set: " + availSet2.Id);
                 }
@@ -174,7 +174,7 @@ namespace ManageAvailabilitySet
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (Exception ex)

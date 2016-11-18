@@ -9,6 +9,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     internal partial class VaultsImpl 
     {
         /// <summary>
@@ -35,8 +38,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// Deletes a resource from Azure, identifying it by its resource ID.
         /// </summary>
         /// <param name="id">id the resource ID of the resource to delete</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeleting.Delete (string id) {
-            this.Delete( id);
+        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingById.DeleteById(string id) {
+            this.DeleteById( id);
         }
 
         /// <summary>
@@ -63,8 +66,8 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="groupName">groupName The group the resource is part of</param>
         /// <param name="name">name The name of the resource</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.Delete (string groupName, string name) {
-            this.Delete( groupName,  name);
+        Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken) {
+            return this.DeleteByGroupAsync( groupName,  name, cancellationToken);
         }
 
         /// <summary>

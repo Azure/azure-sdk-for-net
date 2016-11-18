@@ -58,8 +58,8 @@ namespace Fluent.Tests.Network
                 .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
-            manager.Networks.Delete(resource.Id);
-            manager.NetworkSecurityGroups.Delete(nsg.Id);
+            manager.Networks.DeleteById(resource.Id);
+            manager.NetworkSecurityGroups.DeleteById(nsg.Id);
         }
 
 

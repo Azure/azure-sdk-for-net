@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
-            await this.DeleteAsync( groupName,  name);
+        Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
+            return this.DeleteByGroupAsync( groupName,  name, cancellationToken);
         }
 
         /// <summary>

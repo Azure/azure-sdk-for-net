@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class VirtualMachineImpl  :
         GroupableResource<IVirtualMachine,
             VirtualMachineInner,
-            Microsoft.Azure.Management.Resource.Fluent.Resource,
             VirtualMachineImpl,
             IComputeManager,
             VirtualMachine.Definition.IWithGroup,

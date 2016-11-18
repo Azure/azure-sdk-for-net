@@ -55,7 +55,7 @@ namespace Fluent.Tests.Miscellaneous
                 ServiceClientTracing.IsEnabled = false;
                 if (azure != null)
                 {
-                    azure.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
                 }
             }
             Assert.True(logAndUserAgentInterceptor.FoundUserAgentInLog);

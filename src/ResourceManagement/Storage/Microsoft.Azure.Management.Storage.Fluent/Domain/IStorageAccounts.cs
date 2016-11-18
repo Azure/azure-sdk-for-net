@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     public interface IStorageAccounts  :
         ISupportsListing<IStorageAccount>,
         ISupportsCreating<StorageAccount.Definition.IBlank>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsListingByGroup<IStorageAccount>,
         ISupportsGettingByGroup<IStorageAccount>,
         ISupportsGettingById<IStorageAccount>,

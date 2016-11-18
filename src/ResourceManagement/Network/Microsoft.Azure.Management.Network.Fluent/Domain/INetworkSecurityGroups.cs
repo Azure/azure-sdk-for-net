@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>
     {

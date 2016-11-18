@@ -64,14 +64,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return new LoadBalancerImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        Task DeleteAsync(string groupName, string name)
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name);
         }
 
-        public override async Task<ILoadBalancer> GetByGroupAsync(string groupName, string name)
+        public override async Task<ILoadBalancer> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.GetAsync(groupName, name);
+            var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
         }
 
@@ -82,12 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
-        public void Delete(string groupName, string name)
-        {
-            DeleteAsync(groupName, name).Wait();
+            return DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
     }
 }

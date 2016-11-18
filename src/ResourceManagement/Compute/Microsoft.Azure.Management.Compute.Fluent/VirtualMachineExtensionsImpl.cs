@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Represents a extension collection associated with a virtual machine.
     /// </summary>
     internal partial class VirtualMachineExtensionsImpl :
-        ExternalChildResources<VirtualMachineExtensionImpl, IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>
+        ExternalChildResourcesCached<VirtualMachineExtensionImpl, IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>
     {
         private IVirtualMachineExtensionsOperations client;
         /// <summary>
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             : base(parent, "VirtualMachineExtension")
         {
             this.client = client;
-            this.InitializeCollection();
+            this.CacheCollection();
         }
 
         /// <returns>the extension as a map indexed by name.</returns>

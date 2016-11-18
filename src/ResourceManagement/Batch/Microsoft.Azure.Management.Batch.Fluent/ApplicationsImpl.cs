@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// Represents a application collection associated with a Batch Account.
     /// </summary>
     public partial class ApplicationsImpl :
-        ExternalChildResources<
+        ExternalChildResourcesCached<
             ApplicationImpl,
             IApplication,
             ApplicationInner,
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             this.client = client;
             this.parent = parent;
             this.applicationPackagesClient = applicationPackagesClient;
-            this.InitializeCollection();
+            this.CacheCollection();
         }
 
         internal IDictionary<string, IApplication> AsMap()

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// The implementation of Users and its parent interfaces.
     /// </summary>
     public partial class UsersImpl :
-        CreatableWrappers<IUser, UserImpl, UserInner>,
+        ReadableWrappers<IUser, UserImpl, UserInner>,
         IUsers
     {
         private IUsersOperations innerCollection;
@@ -32,19 +32,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             var pagedList = new PagedList<UserInner>(innerCollection.List());
             return WrapList(pagedList);
-        }
-
-        public UserImpl Define (string name)
-        {
-            return WrapModel(name);
-        }
-
-        protected override UserImpl WrapModel (string userPrincipalName)
-        {
-            return new UserImpl(new UserInner
-            {
-                UserPrincipalName = userPrincipalName
-            }, innerCollection);
         }
 
         protected override IUser WrapModel (UserInner userInner)

@@ -149,7 +149,7 @@ namespace Fluent.Tests.Batch
 
                 try
                 {
-                    await batchManager.BatchAccounts.DeleteAsync(batchAccount.Id);
+                    await batchManager.BatchAccounts.DeleteByIdAsync(batchAccount.Id);
                 }
                 catch
                 {
@@ -164,7 +164,7 @@ namespace Fluent.Tests.Batch
                 try
                 {
                     var resourceManager = TestHelper.CreateResourceManager();
-                    resourceManager.ResourceGroups.Delete(rgName);
+                    resourceManager.ResourceGroups.DeleteByName(rgName);
                 }
                 catch { }
             }
@@ -213,7 +213,7 @@ namespace Fluent.Tests.Batch
 
                 try
                 {
-                    await batchManager.BatchAccounts.DeleteAsync(batchAccount.ResourceGroupName, batchAccountName);
+                    await batchManager.BatchAccounts.DeleteByGroupAsync(batchAccount.ResourceGroupName, batchAccountName);
                 }
                 catch
                 {
@@ -227,7 +227,7 @@ namespace Fluent.Tests.Batch
                 try
                 {
                     var resourceManager = TestHelper.CreateResourceManager();
-                    resourceManager.ResourceGroups.Delete(rgName);
+                    resourceManager.ResourceGroups.DeleteByName(rgName);
                 }
                 catch { }
             }
