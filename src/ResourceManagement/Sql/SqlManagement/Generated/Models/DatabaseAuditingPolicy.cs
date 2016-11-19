@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public DatabaseAuditingPolicy()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the DatabaseAuditingPolicy class with
-        /// required arguments.
-        /// </summary>
-        public DatabaseAuditingPolicy(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public RecommendedIndex()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecommendedIndex class with
-        /// required arguments.
-        /// </summary>
-        public RecommendedIndex(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

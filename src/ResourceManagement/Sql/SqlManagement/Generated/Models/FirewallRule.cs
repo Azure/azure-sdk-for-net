@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public FirewallRule()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the FirewallRule class with required
-        /// arguments.
-        /// </summary>
-        public FirewallRule(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

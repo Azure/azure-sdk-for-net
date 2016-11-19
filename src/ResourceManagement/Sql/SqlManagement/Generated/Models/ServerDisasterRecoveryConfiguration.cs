@@ -49,19 +49,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ServerDisasterRecoveryConfiguration()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ServerDisasterRecoveryConfiguration class with required arguments.
-        /// </summary>
-        public ServerDisasterRecoveryConfiguration(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

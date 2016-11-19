@@ -49,19 +49,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public RestorePoint()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the RestorePoint class with required
-        /// arguments.
-        /// </summary>
-        public RestorePoint(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

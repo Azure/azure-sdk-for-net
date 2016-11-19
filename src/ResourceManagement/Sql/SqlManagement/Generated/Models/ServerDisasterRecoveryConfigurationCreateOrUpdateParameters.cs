@@ -56,19 +56,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// ServerDisasterRecoveryConfigurationCreateOrUpdateParameters class
         /// with required arguments.
         /// </summary>
-        public ServerDisasterRecoveryConfigurationCreateOrUpdateParameters(ServerDisasterRecoveryConfigurationCreateOrUpdateProperties properties, string location)
+        public ServerDisasterRecoveryConfigurationCreateOrUpdateParameters(ServerDisasterRecoveryConfigurationCreateOrUpdateProperties properties)
             : this()
         {
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             this.Properties = properties;
-            this.Location = location;
         }
     }
 }

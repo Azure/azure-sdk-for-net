@@ -50,20 +50,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public DatabaseBackupLongTermRetentionPolicy()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// DatabaseBackupLongTermRetentionPolicy class with required
-        /// arguments.
-        /// </summary>
-        public DatabaseBackupLongTermRetentionPolicy(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

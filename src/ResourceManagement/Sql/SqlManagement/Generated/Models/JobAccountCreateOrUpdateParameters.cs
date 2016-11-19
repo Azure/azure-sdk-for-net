@@ -54,19 +54,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the
         /// JobAccountCreateOrUpdateParameters class with required arguments.
         /// </summary>
-        public JobAccountCreateOrUpdateParameters(JobAccountCreateOrUpdateProperties properties, string location)
+        public JobAccountCreateOrUpdateParameters(JobAccountCreateOrUpdateProperties properties)
             : this()
         {
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             this.Properties = properties;
-            this.Location = location;
         }
     }
 }

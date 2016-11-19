@@ -49,19 +49,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public DatabaseSecureConnectionPolicy()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the DatabaseSecureConnectionPolicy
-        /// class with required arguments.
-        /// </summary>
-        public DatabaseSecureConnectionPolicy(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

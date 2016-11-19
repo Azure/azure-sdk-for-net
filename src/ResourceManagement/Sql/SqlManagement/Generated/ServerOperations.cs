@@ -101,10 +101,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
             if (parameters.Properties == null)
             {
                 throw new ArgumentNullException("parameters.Properties");
@@ -194,7 +190,10 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["administratorLoginPassword"] = parameters.Properties.AdministratorLoginPassword;
                 }
                 
-                serverCreateOrUpdateParametersValue["location"] = parameters.Location;
+                if (parameters.Location != null)
+                {
+                    serverCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
                 
                 if (parameters.Tags != null)
                 {

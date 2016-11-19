@@ -113,10 +113,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
             if (parameters.Properties == null)
             {
                 throw new ArgumentNullException("parameters.Properties");
@@ -249,7 +245,10 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["readScale"] = parameters.Properties.ReadScale;
                 }
                 
-                databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
+                if (parameters.Location != null)
+                {
+                    databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
                 
                 if (parameters.Tags != null)
                 {

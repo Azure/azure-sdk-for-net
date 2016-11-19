@@ -49,19 +49,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public DeletedDatabaseBackup()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the DeletedDatabaseBackup class with
-        /// required arguments.
-        /// </summary>
-        public DeletedDatabaseBackup(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

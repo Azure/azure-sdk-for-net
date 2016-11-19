@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ServerAdministrator()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the ServerAdministrator class with
-        /// required arguments.
-        /// </summary>
-        public ServerAdministrator(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

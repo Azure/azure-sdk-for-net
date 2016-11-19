@@ -50,19 +50,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public BackupLongTermRetentionVault()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the BackupLongTermRetentionVault
-        /// class with required arguments.
-        /// </summary>
-        public BackupLongTermRetentionVault(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

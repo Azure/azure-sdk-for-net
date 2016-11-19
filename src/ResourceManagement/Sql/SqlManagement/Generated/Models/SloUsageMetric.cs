@@ -69,19 +69,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public SloUsageMetric()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the SloUsageMetric class with
-        /// required arguments.
-        /// </summary>
-        public SloUsageMetric(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

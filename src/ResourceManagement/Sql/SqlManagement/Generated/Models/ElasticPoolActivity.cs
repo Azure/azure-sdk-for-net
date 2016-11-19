@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ElasticPoolActivity()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the ElasticPoolActivity class with
-        /// required arguments.
-        /// </summary>
-        public ElasticPoolActivity(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

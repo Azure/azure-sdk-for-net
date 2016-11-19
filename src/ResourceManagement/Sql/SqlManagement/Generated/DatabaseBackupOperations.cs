@@ -111,10 +111,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
             if (parameters.Properties == null)
             {
                 throw new ArgumentNullException("parameters.Properties");
@@ -197,7 +193,10 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["recoveryServicesVaultResourceId"] = parameters.Properties.RecoveryServicesVaultResourceId;
                 }
                 
-                backupLongTermRetentionVaultCreateOrUpdateParametersValue["location"] = parameters.Location;
+                if (parameters.Location != null)
+                {
+                    backupLongTermRetentionVaultCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
                 
                 if (parameters.Tags != null)
                 {
@@ -437,10 +436,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
             if (parameters.Properties == null)
             {
                 throw new ArgumentNullException("parameters.Properties");
@@ -531,7 +526,10 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["recoveryServicesBackupPolicyResourceId"] = parameters.Properties.RecoveryServicesBackupPolicyResourceId;
                 }
                 
-                databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue["location"] = parameters.Location;
+                if (parameters.Location != null)
+                {
+                    databaseBackupLongTermRetentionPolicyCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
                 
                 if (parameters.Tags != null)
                 {
@@ -950,10 +948,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
             if (parameters.Properties == null)
             {
                 throw new ArgumentNullException("parameters.Properties");
@@ -1039,7 +1033,10 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["state"] = parameters.Properties.State;
                 }
                 
-                geoBackupPolicyCreateOrUpdateParametersValue["location"] = parameters.Location;
+                if (parameters.Location != null)
+                {
+                    geoBackupPolicyCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
                 
                 if (parameters.Tags != null)
                 {
@@ -1166,11 +1163,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Accepted)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1605,11 +1602,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -2068,11 +2065,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public GeoBackup()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the GeoBackup class with required
-        /// arguments.
-        /// </summary>
-        public GeoBackup(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

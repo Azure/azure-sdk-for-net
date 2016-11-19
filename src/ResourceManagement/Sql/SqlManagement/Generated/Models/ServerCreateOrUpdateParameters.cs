@@ -54,19 +54,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ServerCreateOrUpdateParameters
         /// class with required arguments.
         /// </summary>
-        public ServerCreateOrUpdateParameters(ServerCreateOrUpdateProperties properties, string location)
+        public ServerCreateOrUpdateParameters(ServerCreateOrUpdateProperties properties)
             : this()
         {
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             this.Properties = properties;
-            this.Location = location;
         }
     }
 }

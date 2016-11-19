@@ -49,19 +49,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public TransparentDataEncryptionActivity()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the TransparentDataEncryptionActivity
-        /// class with required arguments.
-        /// </summary>
-        public TransparentDataEncryptionActivity(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

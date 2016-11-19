@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public Table()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the Table class with required
-        /// arguments.
-        /// </summary>
-        public Table(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

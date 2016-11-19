@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ReplicationLink()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the ReplicationLink class with
-        /// required arguments.
-        /// </summary>
-        public ReplicationLink(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

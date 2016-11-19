@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public DataMaskingPolicy()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the DataMaskingPolicy class with
-        /// required arguments.
-        /// </summary>
-        public DataMaskingPolicy(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

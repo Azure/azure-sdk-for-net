@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public Schema()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the Schema class with required
-        /// arguments.
-        /// </summary>
-        public Schema(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

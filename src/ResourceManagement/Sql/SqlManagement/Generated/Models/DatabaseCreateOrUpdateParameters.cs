@@ -54,19 +54,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DatabaseCreateOrUpdateParameters
         /// class with required arguments.
         /// </summary>
-        public DatabaseCreateOrUpdateParameters(DatabaseCreateOrUpdateProperties properties, string location)
+        public DatabaseCreateOrUpdateParameters(DatabaseCreateOrUpdateProperties properties)
             : this()
         {
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             this.Properties = properties;
-            this.Location = location;
         }
     }
 }

@@ -48,19 +48,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public ServiceTierAdvisor()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the ServiceTierAdvisor class with
-        /// required arguments.
-        /// </summary>
-        public ServiceTierAdvisor(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

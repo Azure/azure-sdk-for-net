@@ -49,19 +49,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public BlobAuditingOperationResult()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the BlobAuditingOperationResult class
-        /// with required arguments.
-        /// </summary>
-        public BlobAuditingOperationResult(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }
