@@ -231,6 +231,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             {
                 Location = "EastUS"
             };
+
             sampleResource.Tags = new Dictionary<string, string>();
             sampleResource.Tags["tag1"] = "value1";
             var serializeSettings = new JsonSerializerSettings()
@@ -240,6 +241,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
+
             serializeSettings.Converters.Add(new TransformationJsonConverter());
             serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SampleResourceChild>("dType"));
             string json = JsonConvert.SerializeObject(sampleResource, serializeSettings);
@@ -267,11 +269,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver()
             };
+
             deserializeSettings.Converters.Add(new TransformationJsonConverter());
-            //deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SampleResourceChild>("dType"));
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SampleResourceChild>("dType"));
             var deserializedResource = JsonConvert.DeserializeObject<SampleResource>(jsonWithNull, deserializeSettings);
             var jsonoverProcessed = JsonConvert.SerializeObject(deserializedResource, serializeSettings);
-
             Assert.Equal(json, jsonoverProcessed);
         }
 

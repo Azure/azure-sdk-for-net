@@ -55,6 +55,7 @@ namespace Microsoft.Rest.Serialization
             {
                 return null;
             }
+
             JObject jsonObject = JObject.Load(reader);
 
             // Update type if there is a polymorphism

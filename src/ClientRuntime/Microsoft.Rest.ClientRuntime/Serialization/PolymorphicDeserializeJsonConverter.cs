@@ -61,6 +61,7 @@ namespace Microsoft.Rest.Serialization
             {
                 return null;
             }
+
             JObject item = JObject.Load(reader);
             string typeDiscriminator = (string) item[Discriminator];
             Type derivedType = GetDerivedType(typeof (T), typeDiscriminator);
