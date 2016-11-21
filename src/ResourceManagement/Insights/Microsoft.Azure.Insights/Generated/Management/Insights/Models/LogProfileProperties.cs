@@ -11,29 +11,23 @@ namespace Microsoft.Azure.Management.Insights.Models
     using System.Linq;
 
     /// <summary>
-    /// The log profile resource.
+    /// The log profile properties.
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class LogProfileResource : Resource
+    public partial class LogProfileProperties
     {
         /// <summary>
-        /// Initializes a new instance of the LogProfileResource class.
+        /// Initializes a new instance of the LogProfileProperties class.
         /// </summary>
-        public LogProfileResource() { }
+        public LogProfileProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the LogProfileResource class.
+        /// Initializes a new instance of the LogProfileProperties class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="storageAccountId">the resource id of the storage
         /// account to which you would like to send the Activity Log.</param>
         /// <param name="locations">List of regions for which Activity Log
         /// events should be stored or streamed. It is a comma separated list
         /// of valid ARM locations including the 'global' location.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="serviceBusRuleId">The service bus rule ID of the
         /// service bus namespace in which you would like to have Event Hubs
         /// created for streaming the Activity Log. The rule ID is of the
@@ -44,8 +38,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// are: 'Write', 'Delete', and/or 'Action.'</param>
         /// <param name="retentionPolicy">the retention policy for the events
         /// in the log.</param>
-        public LogProfileResource(string location, string storageAccountId, System.Collections.Generic.IList<string> locations, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string serviceBusRuleId = default(string), System.Collections.Generic.IList<string> categories = default(System.Collections.Generic.IList<string>), RetentionPolicy retentionPolicy = default(RetentionPolicy))
-            : base(location, id, name, type, tags)
+        public LogProfileProperties(string storageAccountId, System.Collections.Generic.IList<string> locations, string serviceBusRuleId = default(string), System.Collections.Generic.IList<string> categories = default(System.Collections.Generic.IList<string>), RetentionPolicy retentionPolicy = default(RetentionPolicy))
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -58,7 +51,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Gets or sets the resource id of the storage account to which you
         /// would like to send the Activity Log.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.storageAccountId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }
 
         /// <summary>
@@ -67,7 +60,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// the Activity Log. The rule ID is of the format: '{service bus
         /// resource ID}/authorizationrules/{key name}'.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceBusRuleId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "serviceBusRuleId")]
         public string ServiceBusRuleId { get; set; }
 
         /// <summary>
@@ -75,7 +68,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// be stored or streamed. It is a comma separated list of valid ARM
         /// locations including the 'global' location.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.locations")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "locations")]
         public System.Collections.Generic.IList<string> Locations { get; set; }
 
         /// <summary>
@@ -83,13 +76,13 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// created as is convenient to the user. Some values are: 'Write',
         /// 'Delete', and/or 'Action.'
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.categories")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "categories")]
         public System.Collections.Generic.IList<string> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the retention policy for the events in the log.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.retentionPolicy")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "retentionPolicy")]
         public RetentionPolicy RetentionPolicy { get; set; }
 
         /// <summary>
@@ -98,9 +91,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (StorageAccountId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "StorageAccountId");

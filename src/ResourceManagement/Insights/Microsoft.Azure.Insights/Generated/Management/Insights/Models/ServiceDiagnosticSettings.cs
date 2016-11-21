@@ -11,26 +11,18 @@ namespace Microsoft.Azure.Management.Insights.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of a service diagnostic setting
+    /// The diagnostic settings for service.
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ServiceDiagnosticSettingsResource : Resource
+    public partial class ServiceDiagnosticSettings
     {
         /// <summary>
-        /// Initializes a new instance of the ServiceDiagnosticSettingsResource
-        /// class.
+        /// Initializes a new instance of the ServiceDiagnosticSettings class.
         /// </summary>
-        public ServiceDiagnosticSettingsResource() { }
+        public ServiceDiagnosticSettings() { }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceDiagnosticSettingsResource
-        /// class.
+        /// Initializes a new instance of the ServiceDiagnosticSettings class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="storageAccountId">The resource ID of the storage
         /// account to which you would like to send Diagnostic Logs.</param>
         /// <param name="serviceBusRuleId">The service bus rule ID of the
@@ -44,8 +36,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Analytics workspace) for a Log Analytics workspace to which you
         /// would like to send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2</param>
-        public ServiceDiagnosticSettingsResource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string storageAccountId = default(string), string serviceBusRuleId = default(string), System.Collections.Generic.IList<MetricSettings> metrics = default(System.Collections.Generic.IList<MetricSettings>), System.Collections.Generic.IList<LogSettings> logs = default(System.Collections.Generic.IList<LogSettings>), string workspaceId = default(string))
-            : base(location, id, name, type, tags)
+        public ServiceDiagnosticSettings(string storageAccountId = default(string), string serviceBusRuleId = default(string), System.Collections.Generic.IList<MetricSettings> metrics = default(System.Collections.Generic.IList<MetricSettings>), System.Collections.Generic.IList<LogSettings> logs = default(System.Collections.Generic.IList<LogSettings>), string workspaceId = default(string))
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -58,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Gets or sets the resource ID of the storage account to which you
         /// would like to send Diagnostic Logs.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.storageAccountId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }
 
         /// <summary>
@@ -67,19 +58,19 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Diagnostic Logs. The rule ID is of the format: '{service bus
         /// resource ID}/authorizationrules/{key name}'.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceBusRuleId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "serviceBusRuleId")]
         public string ServiceBusRuleId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of metric settings.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.metrics")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metrics")]
         public System.Collections.Generic.IList<MetricSettings> Metrics { get; set; }
 
         /// <summary>
         /// Gets or sets the list of logs settings.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.logs")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "logs")]
         public System.Collections.Generic.IList<LogSettings> Logs { get; set; }
 
         /// <summary>
@@ -88,38 +79,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.workspaceId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.Metrics != null)
-            {
-                foreach (var element in this.Metrics)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (this.Logs != null)
-            {
-                foreach (var element1 in this.Logs)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-        }
     }
 }

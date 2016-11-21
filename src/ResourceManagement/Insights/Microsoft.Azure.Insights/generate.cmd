@@ -5,7 +5,7 @@
 
  
 @echo off 
-set autoRestVersion=0.17.0-Nightly20160914
+set autoRestVersion=1.0.0-Nightly20161116
 if  "%1" == "" (
    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/insights/compositeInsightsClient.json"
 ) else (
