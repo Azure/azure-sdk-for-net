@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
     /// </summary>
     /// <typeparam name="IFluentResourceT">the top level Azure resource type</typeparam>
     public interface ISupportsBatchCreation<IFluentResourceT>
-        where IFluentResourceT : IResource
+        where IFluentResourceT : IHasId
     {
         /// <summary>
         /// Creates a set (batch) of resources.
