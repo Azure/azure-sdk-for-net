@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(leafDnsLabel);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithExistingPrimaryPublicIpAddress(publicIpAddress);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
@@ -223,14 +223,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             var nicCreatable = this.nicDefinitionWithCreate;
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreator<IHasId>);
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<INetworkInterface> creatable)
         {
             this.creatablePrimaryNetworkInterfaceKey = creatable.Key;
-            this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this;
         }
 
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (this.creatableStorageAccountKey == null)
             {
                 this.creatableStorageAccountKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             }
             return this;
         }
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (this.creatableAvailabilitySetKey == null)
             {
                 this.creatableAvailabilitySetKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             }
             return this;
         }
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public VirtualMachineImpl WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable)
         {
             this.creatableSecondaryNetworkInterfaceKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this;
         }
 

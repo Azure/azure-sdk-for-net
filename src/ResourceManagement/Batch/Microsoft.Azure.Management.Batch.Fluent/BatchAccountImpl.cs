@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             if (creatableStorageAccountKey == null)
             {
                 creatableStorageAccountKey = creatable.Key;
-                AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             }
             existingStorageAccountToAssociate = null;
 
