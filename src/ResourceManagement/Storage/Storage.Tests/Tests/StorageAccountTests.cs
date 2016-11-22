@@ -737,7 +737,7 @@ namespace Storage.Tests
                 Assert.Equal(1, usages.Count());
                 Assert.Equal(UsageUnit.Count, usages.First().Unit);
                 Assert.NotNull(usages.First().CurrentValue);
-                Assert.Equal(100, usages.First().Limit);
+                Assert.Equal(250, usages.First().Limit);
                 Assert.NotNull(usages.First().Name);
                 Assert.Equal("StorageAccounts", usages.First().Name.Value);
                 Assert.Equal("Storage Accounts", usages.First().Name.LocalizedValue);
@@ -759,7 +759,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountListAccountSasTest()
+        public void StorageAccountListAccountSASTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -782,11 +782,11 @@ namespace Storage.Tests
                     Permissions = "rdwlacup",
                     IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
-                    SharedAccessStartTime = DateTime.UtcNow,
-                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                    SharedAccessStartTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime(),
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
                     KeyToSign = "key1"
                 };
-                var result = storageMgmtClient.StorageAccounts.ListAccountSas(rgname, accountName, accountSasParameters);
+                var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
 
                 var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
 
@@ -807,7 +807,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountListAccountSasWithDefaultProperties()
+        public void StorageAccountListAccountSASWithDefaultProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -829,10 +829,10 @@ namespace Storage.Tests
                     Services = "b",
                     ResourceTypes = "sco",
                     Permissions = "rl",
-                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1)
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
                 };
 
-                var result = storageMgmtClient.StorageAccounts.ListAccountSas(rgname, accountName, accountSasParameters);
+                var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
 
                 var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
 
@@ -849,7 +849,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountListAccountSasWithMissingProperties()
+        public void StorageAccountListAccountSASWithMissingProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -874,7 +874,7 @@ namespace Storage.Tests
                 };
                 try
                 {
-                    var result = storageMgmtClient.StorageAccounts.ListAccountSas(rgname, accountName, accountSasParameters);
+                    var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
                     var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
                 }
                 catch (Exception ex)
@@ -886,7 +886,7 @@ namespace Storage.Tests
             }
         }
         [Fact]
-        public void StorageAccountListServiceSasTest()
+        public void StorageAccountListServiceSASTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -909,11 +909,11 @@ namespace Storage.Tests
                     Permissions = "rdwlacup",
                     IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
-                    SharedAccessStartTime = DateTime.UtcNow,
-                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                    SharedAccessStartTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime(),
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
                     KeyToSign = "key1"
                 };
-                var result = storageMgmtClient.StorageAccounts.ListServiceSas(rgname, accountName, serviceSasParameters);
+                var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
 
                 var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
 
@@ -938,7 +938,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountListServiceSasWithDefaultProperties()
+        public void StorageAccountListServiceSASWithDefaultProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -960,10 +960,10 @@ namespace Storage.Tests
                     CanonicalizedResource = "/blob/" + accountName + "/music",
                     Resource = "c",
                     Permissions = "rl",
-                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1)
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
                 };
 
-                var result = storageMgmtClient.StorageAccounts.ListServiceSas(rgname, accountName, serviceSasParameters);
+                var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
 
                 var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
 
@@ -979,7 +979,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountListServiceSasWithMissingProperties()
+        public void StorageAccountListServiceSASWithMissingProperties()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -1004,7 +1004,7 @@ namespace Storage.Tests
                 };
                 try
                 {
-                    var result = storageMgmtClient.StorageAccounts.ListServiceSas(rgname, accountName, serviceSasParameters);
+                    var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
                     var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
                 }
                 catch (Exception ex)
