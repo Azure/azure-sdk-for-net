@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<LogProfileResource>> CreateOrUpdateWithHttpMessagesAsync(string logProfileName, LogProfileProperties parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<LogProfileResource>> CreateOrUpdateWithHttpMessagesAsync(string logProfileName, LogProfileResource parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// List the log profiles.
         /// </summary>

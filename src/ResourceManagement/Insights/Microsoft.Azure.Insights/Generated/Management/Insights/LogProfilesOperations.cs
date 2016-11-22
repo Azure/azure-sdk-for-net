@@ -399,7 +399,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<LogProfileResource>> CreateOrUpdateWithHttpMessagesAsync(string logProfileName, LogProfileProperties parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<LogProfileResource>> CreateOrUpdateWithHttpMessagesAsync(string logProfileName, LogProfileResource parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (logProfileName == null)
             {

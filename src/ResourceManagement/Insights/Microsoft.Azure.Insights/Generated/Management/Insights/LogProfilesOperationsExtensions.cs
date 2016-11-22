@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Insights
             /// <param name='parameters'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static LogProfileResource CreateOrUpdate(this ILogProfilesOperations operations, string logProfileName, LogProfileProperties parameters)
+            public static LogProfileResource CreateOrUpdate(this ILogProfilesOperations operations, string logProfileName, LogProfileResource parameters)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((ILogProfilesOperations)s).CreateOrUpdateAsync(logProfileName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Insights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<LogProfileResource> CreateOrUpdateAsync(this ILogProfilesOperations operations, string logProfileName, LogProfileProperties parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<LogProfileResource> CreateOrUpdateAsync(this ILogProfilesOperations operations, string logProfileName, LogProfileResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(logProfileName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
