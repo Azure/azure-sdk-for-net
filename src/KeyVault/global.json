@@ -3,7 +3,6 @@
     "Microsoft.Azure.KeyVault",
     "Microsoft.Azure.KeyVault.Core",
     "Microsoft.Azure.KeyVault.Cryptography",
-    "Microsoft.Azure.KeyVault.Extensions",
-    "../TestFramework"
+    "Microsoft.Azure.KeyVault.Extensions"
   ]
 }
