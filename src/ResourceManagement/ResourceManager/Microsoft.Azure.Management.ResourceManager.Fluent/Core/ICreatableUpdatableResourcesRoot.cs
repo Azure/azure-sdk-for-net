@@ -10,10 +10,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// added via <see cref="ISupportsBatchCreation{IFluentResourceT}.CreateAsync(ICreatable{IFluentResourceT}[])">
     /// </summary>
     /// <typeparam name="IFluentResourceT">the type of resources in the batch</typeparam>
-    internal interface ICreatableUpdatableResourcesRoot<IFluentResourceT> : IHasId
-        where IFluentResourceT : IHasId
+    internal interface ICreatableUpdatableResourcesRoot<IFluentResourceT> : IResource
+        where IFluentResourceT : IResource
     {
         IEnumerable<IFluentResourceT> CreatedTopLevelResources();
-        IHasId CreatedRelatedResource(string key);
+        IResource CreatedRelatedResource(string key);
     }
 }

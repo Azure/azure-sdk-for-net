@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     /// <typeparam name="ResourceT">the type of the resources in the batch</typeparam>
     internal class CreatedResources<ResourceT> : ICreatedResources<ResourceT>
-        where ResourceT : class, IHasId
+        where ResourceT : class, IResource
     {
         /// <summary>
         /// The dummy root resource for this batch.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         #region Implementation of ICreatedResources interface
 
-        public IHasId CreatedRelatedResource(string key)
+        public IResource CreatedRelatedResource(string key)
         {
             return this.creatableUpdatableResourcesRoot.CreatedRelatedResource(key);
         }

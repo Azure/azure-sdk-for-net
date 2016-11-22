@@ -173,6 +173,10 @@ namespace Fluent.Tests.Compute
                     Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
                 }
             }
+            catch(Exception exception)
+            {
+                Assert.True(false, exception.Message);
+            }
             finally
             {
                 azure.ResourceGroups.DeleteByName(resourceGroupName);

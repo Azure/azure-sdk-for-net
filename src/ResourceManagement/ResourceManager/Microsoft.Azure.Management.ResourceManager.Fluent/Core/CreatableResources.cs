@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     public abstract class CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT> :
         CreatableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>,
         ISupportsBatchCreation<IFluentResourceT>
-        where IFluentResourceT : class, IHasId
+        where IFluentResourceT : class, IResource
         where FluentResourceT : IFluentResourceT
     {
         public ICreatedResources<IFluentResourceT> Create(params ICreatable<IFluentResourceT>[] creatables)
