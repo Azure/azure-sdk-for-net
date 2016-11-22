@@ -8,6 +8,12 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using System;
 using System.Linq;
 using Xunit;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Fluent;
+using System.Collections.Generic;
+using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.Network.Fluent;
 
 namespace Fluent.Tests.Compute
 {
@@ -70,5 +76,108 @@ namespace Fluent.Tests.Compute
                 resourceManager.ResourceGroups.DeleteByName(RG_NAME);
             }
         }
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
+        {
+            string resourceGroupName = ResourceNamer.RandomResourceName("rgvmtest-", 20);
+            string vmNamePrefix = "vmz";
+            string publicIpNamePrefix = ResourceNamer.RandomResourceName("pip-", 15);
+            string networkNamePrefix = ResourceNamer.RandomResourceName("vnet-", 15);
+
+            Region region = Region.US_EAST;
+            int count = 5;
+
+            IAzure azure = TestHelper.CreateRollupClient();
+
+            try
+            {
+                var resourceGroupCreatable = azure.ResourceGroups
+                .Define(resourceGroupName)
+                .WithRegion(region);
+
+                var storageAccountCreatable = azure.StorageAccounts
+                    .Define(ResourceNamer.RandomResourceName("stg", 20))
+                    .WithRegion(region)
+                    .WithNewResourceGroup(resourceGroupCreatable);
+
+                List<string> networkCreatableKeys = new List<string>();
+                List<string> publicIpCreatableKeys = new List<string>();
+                List<ICreatable<IVirtualMachine>> virtualMachineCreatables = new List<ICreatable<IVirtualMachine>>();
+                for (int i = 0; i < count; i++)
+                {
+                    var networkCreatable = azure.Networks
+                            .Define(string.Format("{0}-{1}", networkNamePrefix, i))
+                            .WithRegion(region)
+                            .WithNewResourceGroup(resourceGroupCreatable)
+                            .WithAddressSpace("10.0.0.0/28");
+                    networkCreatableKeys.Add(networkCreatable.Key);
+
+                    var publicIpAddressCreatable = azure.PublicIpAddresses
+                            .Define(string.Format("{0}-{1}", publicIpNamePrefix, i))
+                            .WithRegion(region)
+                            .WithNewResourceGroup(resourceGroupCreatable);
+                    publicIpCreatableKeys.Add(publicIpAddressCreatable.Key);
+
+                    ICreatable<IVirtualMachine> virtualMachineCreatable = azure.VirtualMachines
+                            .Define(string.Format("{0}-{1}", vmNamePrefix, i))
+                            .WithRegion(region)
+                            .WithNewResourceGroup(resourceGroupCreatable)
+                            .WithNewPrimaryNetwork(networkCreatable)
+                            .WithPrimaryPrivateIpAddressDynamic()
+                            .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
+                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                            .WithRootUserName("tirekicker")
+                            .WithPassword("BaR@12!#")
+                            .WithNewStorageAccount(storageAccountCreatable);
+                    virtualMachineCreatables.Add(virtualMachineCreatable);
+                }
+
+                var createdVirtualMachines = azure.VirtualMachines.Create(virtualMachineCreatables.ToArray());
+                Assert.True(createdVirtualMachines.Count() == count);
+
+                HashSet<string> virtualMachineNames = new HashSet<string>();
+                for (int i = 0; i < count; i++)
+                {
+                    virtualMachineNames.Add(string.Format("{0}-{1}", vmNamePrefix, i));
+                }
+
+                foreach (var virtualMachine in createdVirtualMachines)
+                {
+                    Assert.True(virtualMachineNames.Contains(virtualMachine.Name));
+                    Assert.NotNull(virtualMachine.Id);
+                }
+
+                HashSet<string> networkNames = new HashSet<string>();
+                for (int i = 0; i < count; i++)
+                {
+                    networkNames.Add(string.Format("{0}-{1}", networkNamePrefix, i));
+                }
+
+                foreach (var networkCreatableKey in networkCreatableKeys)
+                {
+                    INetwork createdNetwork = (INetwork)createdVirtualMachines.CreatedRelatedResource(networkCreatableKey);
+                    Assert.NotNull(createdNetwork);
+                    Assert.True(networkNames.Contains(createdNetwork.Name));
+                }
+
+                HashSet<string> publicIpAddressNames = new HashSet<string>();
+                for (int i = 0; i < count; i++)
+                {
+                    publicIpAddressNames.Add(string.Format("{0}-{1}", publicIpNamePrefix, i));
+                }
+
+                foreach (string publicIpCreatableKey in publicIpCreatableKeys)
+                {
+                    IPublicIpAddress createdPublicIpAddress = (IPublicIpAddress)createdVirtualMachines.CreatedRelatedResource(publicIpCreatableKey);
+                    Assert.NotNull(createdPublicIpAddress);
+                    Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
+                }
+            }
+            finally
+            {
+                azure.ResourceGroups.DeleteByName(resourceGroupName);
+            }
+    }
     }
 }
