@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using DnsZone.Update;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure DNS Zone.

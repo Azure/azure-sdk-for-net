@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
 
     internal abstract partial class DnsRecordSetImpl 
     {
