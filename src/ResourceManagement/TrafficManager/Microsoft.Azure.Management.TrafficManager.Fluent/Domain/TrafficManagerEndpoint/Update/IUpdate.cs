@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Update
 {
-    using xternalEndpoint;
+    using Microsoft.Azure.Management.Trafficmanager.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
-    using estedProfileEndpoint;
-    using Microsoft.Azure.Management.Trafficmanager.Fluent;
+    using UpdateExternalEndpoint;
+    using UpdateNestedProfileEndpoint;
 
     /// <summary>
     /// The stage of the traffic manager profile endpoint update allowing to specify the endpoint weight.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the endpoint update.</return>
-        xternalEndpoint.IUpdateExternalEndpoint ToFqdn(string externalFqdn);
+        IUpdateExternalEndpoint ToFqdn(string externalFqdn);
     }
 
     /// <summary>
@@ -102,14 +102,14 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="nestedProfile">The nested traffic manager profile.</param>
         /// <return>The next stage of the update.</return>
-        estedProfileEndpoint.IUpdateNestedProfileEndpoint ToProfile(ITrafficManagerProfile nestedProfile);
+        IUpdateNestedProfileEndpoint ToProfile(ITrafficManagerProfile nestedProfile);
 
         /// <summary>
         /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
         /// </summary>
         /// <param name="count">Number of endpoints.</param>
         /// <return>The next stage of the endpoint update.</return>
-        estedProfileEndpoint.IUpdateNestedProfileEndpoint WithMinimumEndpointsToEnableTraffic(int count);
+        IUpdateNestedProfileEndpoint WithMinimumEndpointsToEnableTraffic(int count);
     }
 
     /// <summary>

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         {
             get
             {
-                return this.SourceTrafficLocation() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
+                return this.SourceTrafficLocation();
             }
         }
     }

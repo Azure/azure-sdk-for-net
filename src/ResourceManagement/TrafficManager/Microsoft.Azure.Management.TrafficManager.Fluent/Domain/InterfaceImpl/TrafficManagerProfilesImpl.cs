@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
  
-            this.DeleteByGroupAsync(groupName, name);
+            await this.DeleteByGroupAsync(groupName, name);
         }
 
         /// <summary>

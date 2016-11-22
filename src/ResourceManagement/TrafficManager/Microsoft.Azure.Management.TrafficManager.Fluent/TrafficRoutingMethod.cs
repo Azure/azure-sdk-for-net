@@ -5,11 +5,51 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// Possible routing methods supported by Traffic manager profile.
     /// </summary>
-    public enum TrafficRoutingMethod 
+    public partial class TrafficRoutingMethod 
     {
-        public TrafficRoutingMethod PERFORMANCE;
-        public TrafficRoutingMethod WEIGHTED;
-        public TrafficRoutingMethod PRIORITY;
-        private TrafficRoutingMethod value;
+        public static readonly TrafficRoutingMethod PERFORMANCE = new TrafficRoutingMethod("Performance");
+        public static readonly TrafficRoutingMethod WEIGHTED = new TrafficRoutingMethod("Weighted");
+        public static readonly TrafficRoutingMethod PRIORITY = new TrafficRoutingMethod("Priority");
+
+        private string value;
+
+        public override int GetHashCode()
+        {
+            return this.value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            string value = this.ToString();
+            if (!(obj is TrafficRoutingMethod))
+            {
+                return false;
+            }
+
+            if (obj == this)
+            {
+                return true;
+            }
+            TrafficRoutingMethod rhs = (TrafficRoutingMethod)obj;
+            if (value == null)
+            {
+                return rhs.value == null;
+            }
+            return value.Equals(rhs.value);
+        }
+
+        public override string ToString()
+        {
+            return this.value;
+        }
+
+        /// <summary>
+        /// Creates TrafficRoutingMethod.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public TrafficRoutingMethod(string value)
+        {
+            this.value = value;
+        }
     }
 }

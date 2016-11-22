@@ -5,11 +5,67 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// Possible endpoint types supported in a Traffic manager profile.
     /// </summary>
-    public enum EndpointType 
+    public partial class EndpointType
     {
-        public EndpointType AZURE;
-        public EndpointType EXTERNAL;
-        public EndpointType NESTED_PROFILE;
-        private EndpointType value;
+        public static readonly EndpointType AZURE = new EndpointType("Microsoft.Network/trafficManagerProfiles/azureEndpoints");
+        public static readonly EndpointType EXTERNAL = new EndpointType("Microsoft.Network/trafficManagerProfiles/externalEndpoints");
+        public static readonly EndpointType NESTED_PROFILE = new EndpointType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints");
+
+        private string value;
+
+        public override int GetHashCode()
+        {
+            return this.value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+
+            string value = this.ToString();
+            if (!(obj is EndpointType))
+            {
+                return false;
+            }
+
+            if (obj == this)
+            {
+                return true;
+            }
+            EndpointType rhs = (EndpointType)obj;
+            if (value == null)
+            {
+                return rhs.value == null;
+            }
+            return value.Equals(rhs.value);
+        }
+
+        public override string ToString()
+        {
+            return this.value;
+        }
+
+        /// <summary>
+        /// Creates EndpointType.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public EndpointType(string value)
+        {
+            this.value = value;
+        }
+
+        /// <summary>
+        /// Gets the local name of the endpoint type.
+        /// </summary>
+        public string LocalName
+        {
+            get
+            {
+                if (this.value != null)
+                {
+                    return this.value.Substring(this.value.LastIndexOf('/') + 1);
+                }
+                return null;
+            }
+        }
     }
 }
