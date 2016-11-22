@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.Azure.Batch.Conventions.Files.Utilities;
+using Microsoft.Azure.Batch.Conventions.Files.Utilities;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             DirectoryInfo baseFolder,
             string relativePath,
             CancellationToken cancellationToken = default(CancellationToken)
-        )
+            )
         {
             Debug.Assert(baseFolder != null);
 
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             if (Path.IsPathRooted(relativePath))
             {
-                throw new ArgumentException($"{nameof(relativePath)} must not be a relative path", nameof(relativePath));
+                throw new ArgumentException($"{nameof(relativePath)} must be a relative path", nameof(relativePath));
             }
 
             string sourcePath = Path.Combine(baseFolder.FullName, relativePath);
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string sourcePath,
             string destinationRelativePath,
             CancellationToken cancellationToken = default(CancellationToken)
-        )
+            )
         {
             if (kind == null)
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadFromFileAsync(sourcePath, FileMode.Open, cancellationToken);
+            await blob.UploadFromFileAsync(sourcePath, cancellationToken);
         }
 
         // Uploads text to blob storage.
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string text,
             string destinationRelativePath,
             CancellationToken cancellationToken = default(CancellationToken)
-        )
+            )
         {
             if (kind == null)
             {
