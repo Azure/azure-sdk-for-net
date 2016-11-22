@@ -77,7 +77,7 @@ namespace Fluent.Tests.Compute
             }
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
         {
             var resourceGroupName = ResourceNamer.RandomResourceName("rgvmtest-", 20);
@@ -172,6 +172,10 @@ namespace Fluent.Tests.Compute
                     Assert.NotNull(createdPublicIpAddress);
                     Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
                 }
+            }
+            catch(Exception exception)
+            {
+                Assert.True(false, exception.Message);
             }
             finally
             {

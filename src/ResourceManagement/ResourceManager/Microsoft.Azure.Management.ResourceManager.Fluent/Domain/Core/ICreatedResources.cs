@@ -10,13 +10,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     /// <typeparam name="ResourceT">the type of the resource in this batch</typeparam>
     public interface ICreatedResources<ResourceT> : IEnumerable<ResourceT>
-        where ResourceT : IHasId
+        where ResourceT : IResource
     {
         /// <summary>
         /// Gets a created resource with the given key.
         /// </summary>
         /// <param name="key">the key of the resource</param>
         /// <returns>the created resource</returns>
-        IHasId CreatedRelatedResource(string key);
+        IResource CreatedRelatedResource(string key);
     }
 }

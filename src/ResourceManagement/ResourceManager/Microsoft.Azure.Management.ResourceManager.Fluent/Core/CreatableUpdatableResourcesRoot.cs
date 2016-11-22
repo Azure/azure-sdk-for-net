@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         CreatableUpdatable<ICreatableUpdatableResourcesRoot<IFluentResourceT>,
             InnerResourceT,
             CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT>,
-            IHasId,
+            IResource,
             object>,
-        IHasId,
+        IResource,
         ICreatableUpdatableResourcesRoot<IFluentResourceT>
-        where IFluentResourceT : class, IHasId
+        where IFluentResourceT : class, IResource
     {
         private List<string> keys;
 
@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             foreach (ICreatable<IFluentResourceT> item in creatables)
             {
                 this.keys.Add(item.Key);
-                this.AddCreatableDependency(item as IResourceCreator<IHasId>);
+                this.AddCreatableDependency(item as IResourceCreator<IResource>);
             }
         }
 
-        public IHasId CreatedRelatedResource(string key)
+        public IResource CreatedRelatedResource(string key)
         {
             return this.CreatorTaskGroup.CreatedResource(key);
         }
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
         #endregion
 
-        #region IHasId empty Impl
+        #region IResource empty Impl
         public string Id
         {
             get
@@ -78,6 +78,54 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
                 return null;
             }
         }
+ 
+        public new string Key
+         {
+             get
+             {
+                 return null;
+             }
+         }
+ 
+         public new string Name
+         {
+             get
+             {
+                 return null;
+             }
+         }
+ 
+         public Region Region
+         {
+             get
+             {
+                 return default(Region);
+             }
+         }
+ 
+         public string RegionName
+         {
+             get
+             {
+                 return null;
+             }
+         }
+ 
+         public IDictionary<string, string> Tags
+         {
+             get
+             {
+                 return null;
+             }
+         }
+ 
+         public string Type
+         {
+             get
+             {
+                 return null;
+             }
+         }
         #endregion
     }
 }
