@@ -196,6 +196,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
+            this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
             this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
             return this;
         }
