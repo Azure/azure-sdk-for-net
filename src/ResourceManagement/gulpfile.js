@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var args = require('yargs').argv;
-var colors = require('colors');
 var exec = require('child_process').exec;
 var fs = require('fs');
 
@@ -59,6 +58,13 @@ var mappings = {
         'dir': 'KeyVault/Microsoft.Azure.Management.Fluent.KeyVault',
         'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
         'package': 'Microsoft.Azure.Management.Fluent.KeyVault',
+    },
+    'sql': {
+        'dir': 'Sql/Microsoft.Azure.Management.Sql.Fluent',
+        'source': 'arm-sql/compositeSql.json',
+        'package': 'Microsoft.Azure.Management.Sql.Fluent',
+        'composite': true,
+        'args': '-FT 1'
     }
 };
 
