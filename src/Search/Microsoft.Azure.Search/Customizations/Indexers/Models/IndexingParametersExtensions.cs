@@ -4,7 +4,9 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Defines extension methods for the IndexingParameters class.
@@ -23,9 +25,10 @@ namespace Microsoft.Azure.Search.Models
         /// This option only applies to indexers that index Azure Blob Storage.
         /// </remarks>
         /// <returns>The IndexingParameters instance.</returns>
+        [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.StorageMetadata).")]
         public static IndexingParameters IndexStorageMetadataOnly(this IndexingParameters parameters)
         {
-            return Configure(parameters, "indexStorageMetadataOnly", true);
+            return parameters.SetBlobExtractionMode(BlobExtractionMode.StorageMetadata);
         }
 
         /// <summary>
@@ -44,7 +47,10 @@ namespace Microsoft.Azure.Search.Models
         {
             if (extensions?.Length > 0)
             {
-                Configure(parameters, "indexedFileNameExtensions", extensions.ToCommaSeparatedString());
+                Configure(
+                    parameters, 
+                    "indexedFileNameExtensions",
+                    extensions.Select(ValidateExtension).Select(FixUpExtension).ToCommaSeparatedString());
             }
 
             return parameters;
@@ -66,7 +72,10 @@ namespace Microsoft.Azure.Search.Models
         {
             if (extensions?.Length > 0)
             {
-                Configure(parameters, "excludedFileNameExtensions", extensions.ToCommaSeparatedString());
+                Configure(
+                    parameters, 
+                    "excludedFileNameExtensions", 
+                    extensions.Select(ValidateExtension).Select(FixUpExtension).ToCommaSeparatedString());
             }
 
             return parameters;
@@ -82,9 +91,10 @@ namespace Microsoft.Azure.Search.Models
         /// This option only applies to indexers that index Azure Blob Storage.
         /// </remarks>
         /// <returns>The IndexingParameters instance.</returns>
+        [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.AllMetadata).")]
         public static IndexingParameters SkipContent(this IndexingParameters parameters)
         {
-            return Configure(parameters, "skipContent", true);
+            return parameters.SetBlobExtractionMode(BlobExtractionMode.AllMetadata);
         }
 
         /// <summary>
@@ -163,10 +173,10 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <remarks>
         /// This option only applies to indexers that index Azure Blob Storage.
-        /// <see cref="BlobExtractionMode" />
         /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
         /// </remarks>
         /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <param name="extractionMode">A <c cref="BlobExtractionMode" /> value specifying what to index.</param>
         /// <returns>The IndexingParameters instance.</returns>
         public static IndexingParameters SetBlobExtractionMode(this IndexingParameters parameters, BlobExtractionMode extractionMode)
         {
@@ -174,7 +184,7 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata"/> blob extraction mode will be automatically used blobs of unsupported content types.  
+        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata"/> blob extraction mode will be automatically used for blobs of unsupported content types.  
         /// The default is false. 
         /// </summary>
         /// <remarks>
@@ -199,6 +209,31 @@ namespace Microsoft.Azure.Search.Models
 
             parameters.Configuration[key] = value;
             return parameters;
+        }
+
+        private static string ValidateExtension(string extension)
+        {
+            if (string.IsNullOrEmpty(extension))
+            {
+                throw new ArgumentException("Extension cannot be null or empty string.");
+            }
+
+            if (extension.Contains("*"))
+            {
+                throw new ArgumentException("Extension cannot contain the wildcard character '*'.");
+            }
+
+            return extension;
+        }
+
+        private static string FixUpExtension(string extension)
+        {
+            if (!extension.StartsWith(".", StringComparison.Ordinal))
+            {
+                return "." + extension;
+            }
+
+            return extension;
         }
     }
 }
