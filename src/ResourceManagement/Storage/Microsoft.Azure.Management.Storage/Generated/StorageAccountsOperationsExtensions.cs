@@ -508,9 +508,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='parameters'>
             /// The parameters to provide to list SAS credentials for the storage account.
             /// </param>
-            public static ListAccountSasResponse ListAccountSas(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, AccountSasParameters parameters)
+            public static ListAccountSasResponse ListAccountSAS(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, AccountSasParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListAccountSasAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListAccountSASAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -533,9 +533,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListAccountSasResponse> ListAccountSasAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ListAccountSasResponse> ListAccountSASAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAccountSasWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAccountSASWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -558,9 +558,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='parameters'>
             /// The parameters to provide to list service SAS credentials.
             /// </param>
-            public static ListServiceSasResponse ListServiceSas(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ServiceSasParameters parameters)
+            public static ListServiceSasResponse ListServiceSAS(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ServiceSasParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListServiceSasAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListServiceSASAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -583,9 +583,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListServiceSasResponse> ListServiceSasAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ListServiceSasResponse> ListServiceSASAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListServiceSasWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListServiceSASWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

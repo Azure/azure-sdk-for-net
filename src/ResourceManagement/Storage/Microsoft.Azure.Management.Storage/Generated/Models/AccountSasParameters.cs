@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The parameters to list sas credentials of a storage account.
+    /// The parameters to list SAS credentials of a storage account.
     /// </summary>
     public partial class AccountSasParameters
     {

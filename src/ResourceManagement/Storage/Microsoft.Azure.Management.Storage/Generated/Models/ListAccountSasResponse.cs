@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The List sas credentials operation response.
+    /// The List SAS credentials operation response.
     /// </summary>
     public partial class ListAccountSasResponse
     {

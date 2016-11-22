@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Describes storage resource.
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>
