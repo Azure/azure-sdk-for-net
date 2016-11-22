@@ -397,8 +397,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 return;
             }
 
-            int intervalSeconds = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
-            Thread.Sleep(TimeSpan.FromSeconds(intervalSeconds));
+            int intervalMs = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount)) * 1000;
+
+            // add up to 10% to the sleep to allow for randomness in the retry so that thread contention is unlikely
+            var randomMS = new Random();
+            intervalMs += randomMS.Next((int)Math.Ceiling(intervalMs * .1));
+            Thread.Sleep(TimeSpan.FromMilliseconds(intervalMs));
         }
 
         /// <summary>

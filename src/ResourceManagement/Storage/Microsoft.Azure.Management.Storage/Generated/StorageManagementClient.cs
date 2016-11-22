@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Storage
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
+        /// Gets subscription credentials which uniquely identify the Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Storage
             this.StorageAccounts = new StorageAccountsOperations(this);
             this.Usage = new UsageOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-01-01";
+            this.ApiVersion = "2016-05-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

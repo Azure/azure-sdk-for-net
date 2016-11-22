@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets a boolean value that indicates whether the name is available
         /// for you to use. If true, the name is available. If false, the
-        /// name has already been taken or invalid and cannot be used.
+        /// name has already been taken or is invalid and cannot be used.
         /// </summary>
         [JsonProperty(PropertyName = "nameAvailable")]
         public bool? NameAvailable { get; private set; }

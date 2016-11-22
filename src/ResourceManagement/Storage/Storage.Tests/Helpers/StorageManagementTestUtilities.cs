@@ -215,5 +215,112 @@ namespace Storage.Tests.Helpers
                 Assert.Equal(account.Tags["key2"], "value2");
             }
         }
+
+        public static AccountSasParameters ParseAccountSASToken(string accountSAS)
+        {
+            string[] sasProperties = accountSAS.Substring(1).Split(new char[] { '&' });
+            AccountSasParameters parameters = new AccountSasParameters();
+            foreach (var property in sasProperties)
+            {
+                string[] keyValue = property.Split(new char[] { '=' });
+                switch (keyValue[0])
+                {
+                    case "ss":
+                        parameters.Services = keyValue[1];
+                        break;
+                    case "srt":
+                        parameters.ResourceTypes = keyValue[1];
+                        break;
+                    case "sp":
+                        parameters.Permissions = keyValue[1];
+                        break;
+                    case "st":
+                        parameters.SharedAccessStartTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "se":
+                        parameters.SharedAccessExpiryTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "sip":
+                        parameters.IPAddressOrRange = keyValue[1];
+                        break;
+                    case "spr":
+                        if (keyValue[1] == "https")
+                            parameters.Protocols = HttpProtocol.Https;
+                        else if (keyValue[1] == "https,http")
+                            parameters.Protocols = HttpProtocol.Httpshttp;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return parameters;
+        }
+
+        public static ServiceSasParameters ParseServiceSASToken(string serviceSAS)
+        {
+            string[] sasProperties = serviceSAS.Substring(1).Split(new char[] { '&' });
+            ServiceSasParameters parameters = new ServiceSasParameters();
+            foreach (var property in sasProperties)
+            {
+                string[] keyValue = property.Split(new char[] { '=' });
+                switch (keyValue[0])
+                {
+                    case "sr":
+                        parameters.Resource = keyValue[1];
+                        break;
+                    case "sp":
+                        parameters.Permissions = keyValue[1];
+                        break;
+                    case "st":
+                        parameters.SharedAccessStartTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "se":
+                        parameters.SharedAccessExpiryTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "sip":
+                        parameters.IPAddressOrRange = keyValue[1];
+                        break;
+                    case "spr":
+                        if (keyValue[1] == "https")
+                            parameters.Protocols = HttpProtocol.Https;
+                        else if (keyValue[1] == "https,http")
+                            parameters.Protocols = HttpProtocol.Httpshttp;
+                        break;
+                    case "si":
+                        parameters.Identifier = keyValue[1];
+                        break;
+                    case "spk":
+                        parameters.PartitionKeyStart = keyValue[1];
+                        break;
+                    case "epk":
+                        parameters.PartitionKeyEnd = keyValue[1];
+                        break;
+                    case "srk":
+                        parameters.RowKeyStart = keyValue[1];
+                        break;
+                    case "erk":
+                        parameters.RowKeyEnd = keyValue[1];
+                        break;
+                    case "rscc":
+                        parameters.CacheControl = keyValue[1];
+                        break;
+                    case "rscd":
+                        parameters.ContentDisposition = keyValue[1];
+                        break;
+                    case "rsce":
+                        parameters.ContentEncoding = keyValue[1];
+                        break;
+                    case "rscl":
+                        parameters.ContentLanguage = keyValue[1];
+                        break;
+                    case "rsct":
+                        parameters.ContentType = keyValue[1];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return parameters;
+        }
     }
 }

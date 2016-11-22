@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The URIs that are used to perform a retrieval of a public blob, queue
+    /// The URIs that are used to perform a retrieval of a public blob, queue,
     /// or table object.
     /// </summary>
     public partial class Endpoints

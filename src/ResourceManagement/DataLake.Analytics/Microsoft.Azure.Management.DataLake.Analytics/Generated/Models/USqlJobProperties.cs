@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// U-SQL job properties used when submitting and retrieving U-SQL jobs.
+    /// </summary>
     [JsonObject("USql")]
     public partial class USqlJobProperties : JobProperties
     {
@@ -60,8 +63,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="yarnApplicationTimeStamp">the timestamp (in ticks)
         /// for the yarn application executing the job. This value should not
         /// be set by the user and will be ignored if it is.</param>
-        /// <param name="compileMode">the compile mode for the job. Possible
-        /// values include: 'Semantic', 'Full', 'SingleBox'</param>
+        /// <param name="compileMode">Optionally enforces a specific
+        /// compilation mode for the job during execution. If this is not
+        /// specified during submission, the server will determine the
+        /// optimal compilation mode. Possible values include: 'Semantic',
+        /// 'Full', 'SingleBox'</param>
         public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), IList<Diagnostics> diagnostics = default(IList<Diagnostics>), string algebraFilePath = default(string), TimeSpan? totalCompilationTime = default(TimeSpan?), TimeSpan? totalPauseTime = default(TimeSpan?), TimeSpan? totalQueuedTime = default(TimeSpan?), TimeSpan? totalRunningTime = default(TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
             : base(script, runtimeVersion)
         {
@@ -163,8 +169,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public long? YarnApplicationTimeStamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets the compile mode for the job. Possible values
-        /// include: 'Semantic', 'Full', 'SingleBox'
+        /// Gets or sets optionally enforces a specific compilation mode for
+        /// the job during execution. If this is not specified during
+        /// submission, the server will determine the optimal compilation
+        /// mode. Possible values include: 'Semantic', 'Full', 'SingleBox'
         /// </summary>
         [JsonProperty(PropertyName = "compileMode")]
         public CompileMode? CompileMode { get; set; }

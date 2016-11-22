@@ -29,20 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CatalogItemList class.
         /// </summary>
-        /// <param name="count">the count of items in the list.</param>
         /// <param name="nextLink">the link to the next page of
         /// results.</param>
-        public CatalogItemList(int? count = default(int?), string nextLink = default(string))
+        public CatalogItemList(string nextLink = default(string))
         {
-            Count = count;
             NextLink = nextLink;
         }
-
-        /// <summary>
-        /// Gets or sets the count of items in the list.
-        /// </summary>
-        [JsonProperty(PropertyName = "count")]
-        public int? Count { get; set; }
 
         /// <summary>
         /// Gets or sets the link to the next page of results.

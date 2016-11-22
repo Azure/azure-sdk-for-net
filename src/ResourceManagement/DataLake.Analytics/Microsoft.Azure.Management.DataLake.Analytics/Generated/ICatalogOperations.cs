@@ -25,11 +25,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     {
         /// <summary>
         /// Creates the specified secret for use with external data sources in
-        /// the specified database.
+        /// the specified database. This is deprecated and will be removed in
+        /// the next release. Please use CreateCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database in which to create the secret.
@@ -58,11 +59,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         Task<AzureOperationResponse<USqlSecret>> CreateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Modifies the specified secret for use with external data sources
-        /// in the specified database
+        /// in the specified database. This is deprecated and will be removed
+        /// in the next release. Please use UpdateCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -90,11 +92,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<USqlSecret>> UpdateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the specified secret in the specified database
+        /// Gets the specified secret in the specified database. This is
+        /// deprecated and will be removed in the next release. Please use
+        /// GetCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -119,11 +123,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<USqlSecret>> GetSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified secret in the specified database
+        /// Deletes the specified secret in the specified database. This is
+        /// deprecated and will be removed in the next release. Please use
+        /// DeleteCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -145,11 +151,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse> DeleteSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes all secrets in the specified database
+        /// Deletes all secrets in the specified database. This is deprecated
+        /// and will be removed in the next release. In the future, please
+        /// only drop individual credentials using DeleteCredential
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -168,18 +176,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse> DeleteAllSecretsWithHttpMessagesAsync(string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the specified external data source from the Data Lake
-        /// Analytics catalog.
+        /// Creates the specified credential for use with external data
+        /// sources in the specified database.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database containing the external data source.
+        /// The name of the database in which to create the credential.
         /// </param>
-        /// <param name='externalDataSourceName'>
-        /// The name of the external data source.
+        /// <param name='credentialName'>
+        /// The name of the credential.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to create the credential (name and
+        /// password)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -190,36 +202,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string accountName, string databaseName, string externalDataSourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CreateCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the list of external data sources from the Data Lake
-        /// Analytics catalog.
+        /// Modifies the specified credential for use with external data
+        /// sources in the specified database
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database containing the external data sources.
+        /// The name of the database containing the credential.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='credentialName'>
+        /// The name of the credential.
         /// </param>
-        /// <param name='select'>
-        /// OData Select statement. Limits the properties on each entry to
-        /// just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='count'>
-        /// The Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response,
-        /// e.g. Categories?$count=true. Optional.
+        /// <param name='parameters'>
+        /// The parameters required to modify the credential (name and
+        /// password)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -230,20 +233,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified credential from the Data Lake Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -268,12 +268,42 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes the specified credential in the specified database
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the credential.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential to delete
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to delete a credential if the current user is not
+        /// the account owner.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -308,12 +338,82 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves the specified external data source from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the external data source.
+        /// </param>
+        /// <param name='externalDataSourceName'>
+        /// The name of the external data source.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string accountName, string databaseName, string externalDataSourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of external data sources from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the external data sources.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='select'>
+        /// OData Select statement. Limits the properties on each entry to
+        /// just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// The Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response,
+        /// e.g. Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves the specified procedure from the Data Lake Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedure.
@@ -345,8 +445,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedures.
@@ -387,8 +487,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table.
@@ -419,8 +519,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the tables.
@@ -462,8 +562,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table type.
@@ -495,8 +595,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table types.
@@ -537,8 +637,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified view from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the view.
@@ -569,8 +669,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of views from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the views.
@@ -612,8 +712,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
@@ -648,8 +748,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
@@ -694,8 +794,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the partition.
@@ -730,8 +830,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the partitions.
@@ -776,8 +876,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// schema from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the types.
@@ -819,8 +919,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued function.
@@ -852,8 +952,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued functions.
@@ -895,8 +995,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
@@ -925,8 +1025,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
@@ -965,8 +1065,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -994,8 +1094,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of schemas from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -1034,8 +1134,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database.
@@ -1061,8 +1161,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
+        /// The Azure Data Lake Analytics account upon which to execute
+        /// catalog operations.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1094,29 +1194,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves the list of external data sources from the Data Lake
-        /// Analytics catalog.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics
         /// catalog.
         /// </summary>
@@ -1139,6 +1216,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of external data sources from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of procedures from the Data Lake Analytics
         /// catalog.

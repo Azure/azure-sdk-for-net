@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets the job's unique identifier (a GUID).
+        /// Gets the job's unique identifier (a GUID).
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
-        public Guid? JobId { get; set; }
+        public Guid? JobId { get; private set; }
 
         /// <summary>
         /// Gets or sets the friendly name of the job.
@@ -104,10 +104,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public JobType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the user or account that submitted the job.
+        /// Gets the user or account that submitted the job.
         /// </summary>
         [JsonProperty(PropertyName = "submitter")]
-        public string Submitter { get; set; }
+        public string Submitter { get; private set; }
 
         /// <summary>
         /// Gets the error message details for the job, if the job failed.
@@ -208,6 +208,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (this.DegreeOfParallelism < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "DegreeOfParallelism", 1);
             }
             if (this.Properties != null)
             {

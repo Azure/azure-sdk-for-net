@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// VirtualNetworkGatewayIPConfiguration class.
         /// </summary>
-        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfiguration(SubResource subnet, SubResource publicIPAddress, string id = default(string), string privateIPAllocationMethod = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
@@ -83,5 +83,19 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Subnet == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Subnet");
+            }
+            if (PublicIPAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PublicIPAddress");
+            }
+        }
     }
 }

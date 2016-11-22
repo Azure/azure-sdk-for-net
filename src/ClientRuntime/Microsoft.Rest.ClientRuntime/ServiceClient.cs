@@ -42,7 +42,7 @@ namespace Microsoft.Rest
         /// </summary>
         private string _fxVersion;
 
-#if net45
+#if NET45
         /// <summary>
         /// Indicates OS Name
         /// </summary>
@@ -409,7 +409,8 @@ namespace Microsoft.Rest
             HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
 #if net45
             // If you want to log ProductName in userAgent, it has to be without spaces
-            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OsName, OsVersion));
+            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OSNAME, OsName));
+            HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
 #endif
         }
     }

@@ -19,6 +19,7 @@ using System.Net;
 using System.Globalization;
 using System.Threading;
 using KeyVault.TestFramework;
+using System.Net.Http;
 
 namespace Microsoft.Azure.KeyVault.Tests
 {
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         private string _keyVersion = "";
         private KeyIdentifier _keyIdentifier;
 
-        private KeyVaultClient GetKeyVaultClient()
+        private void Initialize()
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
@@ -56,8 +57,27 @@ namespace Microsoft.Azure.KeyVault.Tests
                 _keyName = HttpMockServer.Variables["KeyName"];
                 _keyVersion = HttpMockServer.Variables["KeyVersion"];
             }
+        }
+
+        private KeyVaultClient GetKeyVaultClient()
+        {
+            Initialize();
             _keyIdentifier = new KeyIdentifier(_vaultAddress, _keyName, _keyVersion);
             return fixture.CreateKeyVaultClient();
+        }
+
+        [Fact]
+        public void KeyVaultConstructor()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                Initialize();
+                var httpClient = HttpClientFactory.Create(fixture.GetHandlers());
+                
+                var kvClient = new KeyVaultClient(new TestKeyVaultCredential(fixture.GetAccessToken), httpClient);
+                Assert.Equal(httpClient, kvClient.HttpClient);
+                kvClient.GetKeysAsync(_vaultAddress).GetAwaiter().GetResult();
+            }            
         }
 
         #region Key Operations
@@ -804,10 +824,19 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(originalSecret.Attributes.Enabled != null && originalSecret.Attributes.Enabled == false);
 
                 // Cannot get disabled secret
-                Assert.Throws<KeyVaultErrorException>(() =>
+                try
                 {
                     client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
-                });
+                    Assert.True(false, "Get on disabled secret must throw an exception.");
+                }
+                catch(KeyVaultErrorException ex)
+                {
+                    // Validate that exception contains an error code, an error message, and an inner error code
+                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Code));
+                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Message));
+                    Assert.NotNull(ex.Body.Error.InnerError);
+                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.InnerError.Code));
+                }
             }
         }
 

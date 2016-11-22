@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Metadata information used by account encryption.
+    /// </summary>
     public partial class KeyVaultMetaInfo
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// encryption key.</param>
         /// <param name="encryptionKeyVersion">The version of the user managed
         /// encryption key.</param>
-        public KeyVaultMetaInfo(string keyVaultResourceId = default(string), string encryptionKeyName = default(string), string encryptionKeyVersion = default(string))
+        public KeyVaultMetaInfo(string keyVaultResourceId, string encryptionKeyName, string encryptionKeyVersion)
         {
             KeyVaultResourceId = keyVaultResourceId;
             EncryptionKeyName = encryptionKeyName;
@@ -58,5 +61,26 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         [JsonProperty(PropertyName = "encryptionKeyVersion")]
         public string EncryptionKeyVersion { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeyVaultResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultResourceId");
+            }
+            if (EncryptionKeyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EncryptionKeyName");
+            }
+            if (EncryptionKeyVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EncryptionKeyVersion");
+            }
+        }
     }
 }

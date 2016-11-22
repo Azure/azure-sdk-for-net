@@ -17,8 +17,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Additional Azure Storage account parameters.
+    /// Storage account parameters for a storage account being added to a Data
+    /// Lake Analytics account.
     /// </summary>
+    [JsonTransformation]
     public partial class AddStorageAccountParameters
     {
         /// <summary>
@@ -31,19 +33,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the AddStorageAccountParameters
         /// class.
         /// </summary>
-        /// <param name="properties">the properties for the Azure Storage
-        /// account being added.</param>
-        public AddStorageAccountParameters(StorageAccountProperties properties)
+        /// <param name="accessKey">the access key associated with this Azure
+        /// Storage account that will be used to connect to it.</param>
+        /// <param name="suffix">the optional suffix for the storage
+        /// account.</param>
+        public AddStorageAccountParameters(string accessKey, string suffix = default(string))
         {
-            Properties = properties;
+            AccessKey = accessKey;
+            Suffix = suffix;
         }
 
         /// <summary>
-        /// Gets or sets the properties for the Azure Storage account being
-        /// added.
+        /// Gets or sets the access key associated with this Azure Storage
+        /// account that will be used to connect to it.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public StorageAccountProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.accessKey")]
+        public string AccessKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the optional suffix for the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suffix")]
+        public string Suffix { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -53,13 +64,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Properties == null)
+            if (AccessKey == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
             }
         }
     }

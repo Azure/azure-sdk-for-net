@@ -2,8 +2,8 @@
 
 ###### Usage:
 
-1. Start PS-VSPrompt.lnk (shortcut), this will start VS Dev Prompt in powershell
-2. Import-Module ./Repo-Tasks.psm1
+1. Start ./tools/PS-VSPrompt.lnk (shortcut), this will start VS Dev Prompt in powershell
+2. Import-Module ./tools/Repo-Tasks.psm1
 	1. During import, we allow to load additional functions that users might want to use it in their session.
 	2. If you have any userPreference.ps1 file under %userprofile%/psFiles directory, the module will try to load it by dot sourcing it.
 	2. It will also honor environment variable $env:psuserpreferences and load .ps1 files from the location that is pointed by $env:psuserpreferences

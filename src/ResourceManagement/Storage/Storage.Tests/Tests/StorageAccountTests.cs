@@ -734,13 +734,13 @@ namespace Storage.Tests
 
                 // Query usage
                 var usages = storageMgmtClient.Usage.List();
-                Assert.Equal(1, usages.Value.Count());
-                Assert.Equal(UsageUnit.Count, usages.Value.First().Unit);
-                Assert.NotNull(usages.Value.First().CurrentValue);
-                Assert.Equal(100, usages.Value.First().Limit);
-                Assert.NotNull(usages.Value.First().Name);
-                Assert.Equal("StorageAccounts", usages.Value.First().Name.Value);
-                Assert.Equal("Storage Accounts", usages.Value.First().Name.LocalizedValue);
+                Assert.Equal(1, usages.Count());
+                Assert.Equal(UsageUnit.Count, usages.First().Unit);
+                Assert.NotNull(usages.First().CurrentValue);
+                Assert.Equal(250, usages.First().Limit);
+                Assert.NotNull(usages.First().Name);
+                Assert.Equal("StorageAccounts", usages.First().Name.Value);
+                Assert.Equal("Storage Accounts", usages.First().Name.LocalizedValue);
             }
         }
 
@@ -755,6 +755,264 @@ namespace Storage.Tests
                 var ops = resourcesClient.ResourceProviderOperationDetails.List("Microsoft.Storage", "2015-06-15");
 
                 Assert.Equal(ops.Count(), 7);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListAccountSASTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                var accountSasParameters = new AccountSasParameters()
+                {
+                    Services = "bftq",
+                    ResourceTypes = "sco",
+                    Permissions = "rdwlacup",
+                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
+                    Protocols = HttpProtocol.Httpshttp,
+                    SharedAccessStartTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime(),
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                    KeyToSign = "key1"
+                };
+                var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
+
+                Assert.Equal(accountSasParameters.Services, resultCredentials.Services);
+                Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
+                Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
+                Assert.Equal(accountSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
+                Assert.Equal(accountSasParameters.Protocols, resultCredentials.Protocols);
+
+                //Assert.Equal(accountSasParameters.SharedAccessStartTime, resultCredentials.SharedAccessStartTime);
+
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Year, resultCredentials.SharedAccessExpiryTime.Year);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Month, resultCredentials.SharedAccessExpiryTime.Month);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Date, resultCredentials.SharedAccessExpiryTime.Date);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Hour, resultCredentials.SharedAccessExpiryTime.Hour);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Second, resultCredentials.SharedAccessExpiryTime.Second);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListAccountSASWithDefaultProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var accountSasParameters = new AccountSasParameters()
+                {
+                    Services = "b",
+                    ResourceTypes = "sco",
+                    Permissions = "rl",
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                };
+
+                var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
+
+                Assert.Equal(accountSasParameters.Services, resultCredentials.Services);
+                Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
+                Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
+
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Year, resultCredentials.SharedAccessExpiryTime.Year);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Month, resultCredentials.SharedAccessExpiryTime.Month);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Date, resultCredentials.SharedAccessExpiryTime.Date);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Hour, resultCredentials.SharedAccessExpiryTime.Hour);
+                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Second, resultCredentials.SharedAccessExpiryTime.Second);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListAccountSASWithMissingProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var accountSasParameters = new AccountSasParameters()
+                {
+                    Services = "b",
+                    ResourceTypes = "sco",
+                    Permissions = "rl",
+                };
+                try
+                {
+                    var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
+                    var resultCredentials = StorageManagementTestUtilities.ParseAccountSASToken(result.AccountSasToken);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Equal("Values for request parameters are invalid: signedExpiry.", ex.Message);
+                    return;
+                }
+                throw new Exception("AccountSasToken shouldn't be returned without SharedAccessExpiryTime");
+            }
+        }
+        [Fact]
+        public void StorageAccountListServiceSASTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                var serviceSasParameters = new ServiceSasParameters()
+                {
+                    CanonicalizedResource = "/blob/" + accountName + "/music",
+                    Resource = "c",
+                    Permissions = "rdwlacup",
+                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
+                    Protocols = HttpProtocol.Httpshttp,
+                    SharedAccessStartTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime(),
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                    KeyToSign = "key1"
+                };
+                var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
+
+                Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
+                Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
+                Assert.Equal(serviceSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
+                Assert.Equal(serviceSasParameters.Protocols, resultCredentials.Protocols);
+
+                Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
+                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Year, resultCredentials.SharedAccessStartTime.Value.Year);
+                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Month, resultCredentials.SharedAccessStartTime.Value.Month);
+                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Date, resultCredentials.SharedAccessStartTime.Value.Date);
+                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Hour, resultCredentials.SharedAccessStartTime.Value.Hour);
+                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Second, resultCredentials.SharedAccessStartTime.Value.Second);
+
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Year, resultCredentials.SharedAccessExpiryTime.Value.Year);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Month, resultCredentials.SharedAccessExpiryTime.Value.Month);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Date, resultCredentials.SharedAccessExpiryTime.Value.Date);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Hour, resultCredentials.SharedAccessExpiryTime.Value.Hour);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Second, resultCredentials.SharedAccessExpiryTime.Value.Second);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListServiceSASWithDefaultProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var serviceSasParameters = new ServiceSasParameters()
+                {
+                    CanonicalizedResource = "/blob/" + accountName + "/music",
+                    Resource = "c",
+                    Permissions = "rl",
+                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                };
+
+                var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
+
+                var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
+
+                Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
+                Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
+                
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Year, resultCredentials.SharedAccessExpiryTime.Value.Year);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Month, resultCredentials.SharedAccessExpiryTime.Value.Month);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Date, resultCredentials.SharedAccessExpiryTime.Value.Date);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Hour, resultCredentials.SharedAccessExpiryTime.Value.Hour);
+                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Second, resultCredentials.SharedAccessExpiryTime.Value.Second);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountListServiceSASWithMissingProperties()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, StorageManagementTestUtilities.GetDefaultStorageAccountParameters());
+
+                // Test for default values of sas credentials.
+                var serviceSasParameters = new ServiceSasParameters()
+                {
+                    CanonicalizedResource = "/blob/" + accountName + "/music",
+                    Resource = "b",
+                    Permissions = "rl",
+                };
+                try
+                {
+                    var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
+                    var resultCredentials = StorageManagementTestUtilities.ParseServiceSASToken(result.ServiceSasToken);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Equal("Values for request parameters are invalid: signedExpiry.", ex.Message);
+                    return;
+                }
+                throw new Exception("AccountSasToken shouldn't be returned without SharedAccessExpiryTime");
             }
         }
     }

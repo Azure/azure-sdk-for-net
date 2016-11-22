@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static UsageListResult List(this IUsageOperations operations)
+            public static IEnumerable<Usage> List(this IUsageOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IUsageOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsageListResult> ListAsync(this IUsageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Usage>> ListAsync(this IUsageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

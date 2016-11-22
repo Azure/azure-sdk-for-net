@@ -382,6 +382,45 @@ namespace DataLakeStore.Tests
                         new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)));
 
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
+
+                    //compare length
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAppend.Length);
+
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemNegativeConcurrentAppend()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = TestUtilities.GenerateName(string.Format("{0}/{1}", folderToCreate, fileToCreate));
+
+                    // Concurrent append to the file that we will create during the concurrent append call.
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.ConcurrentAppend(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)), AppendModeType.Autocreate);
+
+                    CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
+
+                    // attempt to append after concurrently appending (should fail)
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.Append(
+                        commonData.DataLakeStoreFileSystemAccountName, 
+                        filePath, 
+                        new MemoryStream()));
+
+                    // Now create a file with contents and attempt to concurrent append onto it.
+                    filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
+
+                    // Append to the file that we created
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.ConcurrentAppend(
+                        commonData.DataLakeStoreFileSystemAccountName, 
+                        filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend))));
                 }
             }
         }
@@ -402,6 +441,9 @@ namespace DataLakeStore.Tests
                         new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)), AppendModeType.Autocreate);
 
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
+
+                    // compare length to ensure metadata is updated.
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAppend.Length);
                 }
             }
         }
@@ -858,7 +900,8 @@ namespace DataLakeStore.Tests
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+                    // this is plus two because we do not have a mask until we add a specific user. Adding the specific user also adds the mask.
+                    Assert.Equal(currentCount + 2, aclGetResponse.AclStatus.Entries.Count);
                     Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
                 }
             }
@@ -895,7 +938,9 @@ namespace DataLakeStore.Tests
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
+
+                    // Mask gets created as part of adding the user.
+                    Assert.Equal(currentCount + 2, aclGetResponse.AclStatus.Entries.Count);
                     Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
 
                     // now remove the entry
@@ -912,7 +957,9 @@ namespace DataLakeStore.Tests
 
                     Assert.NotNull(aclGetResponse.AclStatus);
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
-                    Assert.Equal(currentCount, aclGetResponse.AclStatus.Entries.Count);
+                    
+                    // Mask does not get removed when the user is removed.
+                    Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
                     Assert.False(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
                 }
             }
@@ -943,7 +990,8 @@ namespace DataLakeStore.Tests
                 commonData.DataLakeStoreFileSystemClient.FileSystem.Create(
                     caboAccountName,
                     filePath,
-                    new MemoryStream());
+                    new MemoryStream(),
+                    syncFlag: SyncFlag.DATA);
             }
             else
             {
@@ -968,11 +1016,17 @@ namespace DataLakeStore.Tests
         internal void CompareFileContents(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string filePath, string expectedContents)
         {
             // download a file and ensure they are equal
-            Stream openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(caboAccountName, filePath, null);
-            Assert.NotNull(openResponse);
-            
-            string toCompare = new StreamReader(openResponse).ReadToEnd();
-            Assert.Equal(expectedContents, toCompare);
+            try
+            {
+                Stream openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(caboAccountName, filePath, null);
+                Assert.NotNull(openResponse);
+                string toCompare = new StreamReader(openResponse).ReadToEnd();
+                Assert.Equal(expectedContents, toCompare);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         internal void DeleteFolder(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string folderPath, bool recursive, bool failureExpected)
