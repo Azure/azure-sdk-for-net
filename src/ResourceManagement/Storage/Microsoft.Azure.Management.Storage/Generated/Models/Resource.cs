@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Describes storage resource.
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>
@@ -60,7 +63,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Resource tags
+        /// Tags assigned to a resource; can be used for viewing and grouping
+        /// a resource (across resource groups).
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

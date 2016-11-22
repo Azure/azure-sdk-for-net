@@ -17,31 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The response from the ListKeys operation.
+    /// The List SAS credentials operation response.
     /// </summary>
-    public partial class StorageAccountListKeysResult
+    public partial class ListAccountSasResponse
     {
         /// <summary>
-        /// Initializes a new instance of the StorageAccountListKeysResult
-        /// class.
+        /// Initializes a new instance of the ListAccountSasResponse class.
         /// </summary>
-        public StorageAccountListKeysResult() { }
+        public ListAccountSasResponse() { }
 
         /// <summary>
-        /// Initializes a new instance of the StorageAccountListKeysResult
-        /// class.
+        /// Initializes a new instance of the ListAccountSasResponse class.
         /// </summary>
-        public StorageAccountListKeysResult(IList<StorageAccountKey> keys = default(IList<StorageAccountKey>))
+        public ListAccountSasResponse(string accountSasToken = default(string))
         {
-            Keys = keys;
+            AccountSasToken = accountSasToken;
         }
 
         /// <summary>
-        /// Gets the list of storage account keys and their properties for the
-        /// specified storage account.
+        /// List SAS credentials of storage account.
         /// </summary>
-        [JsonProperty(PropertyName = "keys")]
-        public IList<StorageAccountKey> Keys { get; private set; }
+        [JsonProperty(PropertyName = "accountSasToken")]
+        public string AccountSasToken { get; private set; }
 
     }
 }
