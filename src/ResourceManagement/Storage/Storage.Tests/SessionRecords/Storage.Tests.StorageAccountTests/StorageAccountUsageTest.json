@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f8c52dbc-c51b-4117-93db-1212fb832f3a"
+          "94e43bd2-dc4b-41ad-b108-e574ffd18df5"
         ],
         "accept-language": [
           "en-US"
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 3,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 5,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 22 Nov 2016 08:46:05 GMT"
+          "Tue, 22 Nov 2016 09:27:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -45,16 +45,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "516773b0-b08c-43a8-bad2-08cc99ab7e98"
+          "6107dcbb-0cc1-40dd-be5c-6071832a81e2"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14989"
         ],
         "x-ms-correlation-request-id": [
-          "516773b0-b08c-43a8-bad2-08cc99ab7e98"
+          "6107dcbb-0cc1-40dd-be5c-6071832a81e2"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20161122T084606Z:516773b0-b08c-43a8-bad2-08cc99ab7e98"
+          "JAPANEAST:20161122T092704Z:6107dcbb-0cc1-40dd-be5c-6071832a81e2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
