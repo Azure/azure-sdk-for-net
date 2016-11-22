@@ -26,13 +26,13 @@ namespace Fluent.Tests.Compute
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateVirtualMachine()
         {
-            IComputeManager computeManager = TestHelper.CreateComputeManager();
-            IResourceManager resourceManager = TestHelper.CreateResourceManager();
+            var computeManager = TestHelper.CreateComputeManager();
+            var resourceManager = TestHelper.CreateResourceManager();
 
             try
             {
                 // Create
-                IVirtualMachine vm = computeManager.VirtualMachines
+                var vm = computeManager.VirtualMachines
                     .Define(VMNAME)
                     .WithRegion(LOCATION)
                     .WithNewResourceGroup(RG_NAME)
@@ -47,7 +47,7 @@ namespace Fluent.Tests.Compute
                     .WithOsDiskName("javatest")
                     .Create();
 
-                IVirtualMachine foundedVM = computeManager.VirtualMachines.ListByGroup(RG_NAME)
+                var foundedVM = computeManager.VirtualMachines.ListByGroup(RG_NAME)
                     .FirstOrDefault(v => v.Name.Equals(VMNAME, StringComparison.OrdinalIgnoreCase));
 
                 Assert.NotNull(foundedVM);
@@ -67,7 +67,7 @@ namespace Fluent.Tests.Compute
                 // Capture the VM [Requires VM to be Poweroff and generalized]
                 foundedVM.PowerOff();
                 foundedVM.Generalize();
-                string jsonResult = foundedVM.Capture("capturedVhds", true);
+                var jsonResult = foundedVM.Capture("capturedVhds", true);
                 Assert.NotNull(jsonResult);
 
                 // Delete VM
@@ -80,16 +80,15 @@ namespace Fluent.Tests.Compute
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
         {
-            string resourceGroupName = ResourceNamer.RandomResourceName("rgvmtest-", 20);
-            string vmNamePrefix = "vmz";
-            string publicIpNamePrefix = ResourceNamer.RandomResourceName("pip-", 15);
-            string networkNamePrefix = ResourceNamer.RandomResourceName("vnet-", 15);
+            var resourceGroupName = ResourceNamer.RandomResourceName("rgvmtest-", 20);
+            var vmNamePrefix = "vmz";
+            var publicIpNamePrefix = ResourceNamer.RandomResourceName("pip-", 15);
+            var networkNamePrefix = ResourceNamer.RandomResourceName("vnet-", 15);
 
-            Region region = Region.US_EAST;
+            var region = Region.US_EAST;
             int count = 5;
 
-            IAzure azure = TestHelper.CreateRollupClient();
-
+            var azure = TestHelper.CreateRollupClient();
             try
             {
                 var resourceGroupCreatable = azure.ResourceGroups
@@ -101,26 +100,26 @@ namespace Fluent.Tests.Compute
                     .WithRegion(region)
                     .WithNewResourceGroup(resourceGroupCreatable);
 
-                List<string> networkCreatableKeys = new List<string>();
-                List<string> publicIpCreatableKeys = new List<string>();
-                List<ICreatable<IVirtualMachine>> virtualMachineCreatables = new List<ICreatable<IVirtualMachine>>();
+                var networkCreatableKeys = new List<string>();
+                var publicIpCreatableKeys = new List<string>();
+                var virtualMachineCreatables = new List<ICreatable<IVirtualMachine>>();
                 for (int i = 0; i < count; i++)
                 {
                     var networkCreatable = azure.Networks
-                            .Define(string.Format("{0}-{1}", networkNamePrefix, i))
+                            .Define($"{networkNamePrefix}-{i}")
                             .WithRegion(region)
                             .WithNewResourceGroup(resourceGroupCreatable)
                             .WithAddressSpace("10.0.0.0/28");
                     networkCreatableKeys.Add(networkCreatable.Key);
 
                     var publicIpAddressCreatable = azure.PublicIpAddresses
-                            .Define(string.Format("{0}-{1}", publicIpNamePrefix, i))
+                            .Define($"{publicIpNamePrefix}-{i}")
                             .WithRegion(region)
                             .WithNewResourceGroup(resourceGroupCreatable);
                     publicIpCreatableKeys.Add(publicIpAddressCreatable.Key);
 
-                    ICreatable<IVirtualMachine> virtualMachineCreatable = azure.VirtualMachines
-                            .Define(string.Format("{0}-{1}", vmNamePrefix, i))
+                    var virtualMachineCreatable = azure.VirtualMachines
+                            .Define($"{vmNamePrefix}-{i}")
                             .WithRegion(region)
                             .WithNewResourceGroup(resourceGroupCreatable)
                             .WithNewPrimaryNetwork(networkCreatable)
@@ -139,7 +138,7 @@ namespace Fluent.Tests.Compute
                 HashSet<string> virtualMachineNames = new HashSet<string>();
                 for (int i = 0; i < count; i++)
                 {
-                    virtualMachineNames.Add(string.Format("{0}-{1}", vmNamePrefix, i));
+                    virtualMachineNames.Add($"{vmNamePrefix}-{i}");
                 }
 
                 foreach (var virtualMachine in createdVirtualMachines)
@@ -148,15 +147,15 @@ namespace Fluent.Tests.Compute
                     Assert.NotNull(virtualMachine.Id);
                 }
 
-                HashSet<string> networkNames = new HashSet<string>();
+                var networkNames = new HashSet<string>();
                 for (int i = 0; i < count; i++)
                 {
-                    networkNames.Add(string.Format("{0}-{1}", networkNamePrefix, i));
+                    networkNames.Add($"{networkNamePrefix}-{i}");
                 }
 
                 foreach (var networkCreatableKey in networkCreatableKeys)
                 {
-                    INetwork createdNetwork = (INetwork)createdVirtualMachines.CreatedRelatedResource(networkCreatableKey);
+                    var createdNetwork = (INetwork)createdVirtualMachines.CreatedRelatedResource(networkCreatableKey);
                     Assert.NotNull(createdNetwork);
                     Assert.True(networkNames.Contains(createdNetwork.Name));
                 }
@@ -164,12 +163,12 @@ namespace Fluent.Tests.Compute
                 HashSet<string> publicIpAddressNames = new HashSet<string>();
                 for (int i = 0; i < count; i++)
                 {
-                    publicIpAddressNames.Add(string.Format("{0}-{1}", publicIpNamePrefix, i));
+                    publicIpAddressNames.Add($"{publicIpNamePrefix}-{i}");
                 }
 
                 foreach (string publicIpCreatableKey in publicIpCreatableKeys)
                 {
-                    IPublicIpAddress createdPublicIpAddress = (IPublicIpAddress)createdVirtualMachines.CreatedRelatedResource(publicIpCreatableKey);
+                    var createdPublicIpAddress = (IPublicIpAddress)createdVirtualMachines.CreatedRelatedResource(publicIpCreatableKey);
                     Assert.NotNull(createdPublicIpAddress);
                     Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
                 }
@@ -178,6 +177,6 @@ namespace Fluent.Tests.Compute
             {
                 azure.ResourceGroups.DeleteByName(resourceGroupName);
             }
-    }
+        }
     }
 }
