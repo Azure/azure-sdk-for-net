@@ -158,6 +158,36 @@ namespace Microsoft.Azure.Search.Models
             return parameters;
         }
 
+        /// <summary>
+        /// Specifies which parts of a blob will be indexed by the blob storage indexer. 
+        /// </summary>
+        /// <remarks>
+        /// This option only applies to indexers that index Azure Blob Storage.
+        /// <see cref="BlobExtractionMode" />
+        /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
+        /// </remarks>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters SetBlobExtractionMode(this IndexingParameters parameters, BlobExtractionMode extractionMode)
+        {
+            return Configure(parameters, "dataToExtract", (string)extractionMode);
+        }
+
+        /// <summary>
+        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata"/> blob extraction mode will be automatically used blobs of unsupported content types.  
+        /// The default is false. 
+        /// </summary>
+        /// <remarks>
+        /// This option only applies to indexers that index Azure Blob Storage.
+        /// </remarks>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <returns></returns>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters DoNotFailOnUnsupportedContentType(this IndexingParameters parameters)
+        {
+            return Configure(parameters, "failOnUnsupportedContentType", false);
+        }
+
         private static IndexingParameters Configure(IndexingParameters parameters, string key, object value)
         {
             Throw.IfArgumentNull(parameters, nameof(parameters));
@@ -167,7 +197,7 @@ namespace Microsoft.Azure.Search.Models
                 parameters.Configuration = new Dictionary<string, object>();
             }
 
-            parameters.Configuration.Add(key, value);
+            parameters.Configuration[key] = value;
             return parameters;
         }
     }

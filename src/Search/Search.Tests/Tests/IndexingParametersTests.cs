@@ -105,6 +105,21 @@ namespace Microsoft.Azure.Search.Tests
             AssertHasConfigItem(parameters, "delimitedTextHeaders", "id,name,address", ExpectedCount);
         }
 
+        [Fact]
+        public void SetBlobExtractionModeSetCorrectly()
+        {
+            var parameters = new IndexingParameters().SetBlobExtractionMode(BlobExtractionMode.AllMetadata);
+
+            AssertHasConfigItem(parameters, "dataToExtract", (string)BlobExtractionMode.AllMetadata);
+        }
+
+        [Fact]
+        public void DoNotFailOnUnsupportedContentTypeSetCorrectly()
+        {
+            var parameters = new IndexingParameters().DoNotFailOnUnsupportedContentType();
+            AssertHasConfigItem(parameters, "failOnUnsupportedContentType", false);
+        }
+
         private static void AssertHasConfigItem(
             IndexingParameters parameters, 
             string expectedKey, 
