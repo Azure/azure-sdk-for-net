@@ -77,7 +77,7 @@ namespace Fluent.Tests.Compute
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
         {
             var resourceGroupName = ResourceNamer.RandomResourceName("rgvmtest-", 20);
