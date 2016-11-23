@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Language specific stemming filter. This token filter is implemented
     /// using Apache Lucene.
-    /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx#TokenFilters" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.StemmerTokenFilter")]
     public partial class StemmerTokenFilter : TokenFilter

@@ -4,14 +4,13 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System.Runtime.Serialization;
     using Microsoft.Rest;
     using Newtonsoft.Json;
 
     /// <summary>
     /// Represents a field in an index definition in Azure Search, which describes the name, data type, and search
     /// behavior of a field.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Index" />
     /// </summary>
     public class Field
     {
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the name of the field.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules" />
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -79,7 +78,7 @@ namespace Microsoft.Azure.Search.Models
         /// and it can't be set together with either SearchAnalyzer or
         /// IndexAnalyzer. Once the analyzer is chosen, it cannot be changed
         /// for the field.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Language-support" /> 
         /// </summary>
         [JsonProperty(PropertyName = "analyzer")]
         public AnalyzerName Analyzer { get; set; }
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.Search.Models
         /// option can be used only with searchable fields. It must be set together
         /// with IndexAnalyzer and it cannot be set together with the Analyzer
         /// option. This analyzer can be updated on an existing field.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Language-support" /> 
         /// </summary>
         [JsonProperty(PropertyName = "searchAnalyzer")]
         public AnalyzerName SearchAnalyzer { get; set; }
@@ -99,7 +98,7 @@ namespace Microsoft.Azure.Search.Models
         /// option can be used only with searchable fields. It must be set together
         /// with SearchAnalyzer and it cannot be set together with the Analyzer
         /// option. Once the analyzer is chosen, it cannot be changed for the field.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Language-support" /> 
         /// </summary>
         [JsonProperty(PropertyName = "indexAnalyzer")]
         public AnalyzerName IndexAnalyzer { get; set; }

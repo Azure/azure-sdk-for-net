@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines a function that boosts scores of documents with string values
     /// matching a given list of tags.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Add-scoring-profiles-to-a-search-index" />
     /// </summary>
     [JsonObject("tag")]
     public partial class TagScoringFunction : ScoringFunction
