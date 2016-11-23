@@ -986,11 +986,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the analyzer.</param>
         /// <returns>An AnalyzerName instance with the given name.</returns>
-        public static AnalyzerName Create(string name)
-        {
-            // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new AnalyzerName(name);
-        }
+        public static AnalyzerName Create(string name) => Lookup(name) ?? new AnalyzerName(name);
 
         /// <summary>
         /// Defines implicit conversion from string to AnalyzerName.
