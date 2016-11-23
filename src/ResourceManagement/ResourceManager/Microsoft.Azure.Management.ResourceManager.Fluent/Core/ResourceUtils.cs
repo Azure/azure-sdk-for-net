@@ -7,47 +7,29 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public static class ResourceUtils
     {
-        public static string ExtractFromResourceId(string id, string identifier)
-        {
-            if (id == null || identifier == null)
-            {
-                return null;
-            }
-
-            identifier = identifier.ToLower();
-            return id.Split('/')
-                .SkipWhile(part => !part.ToLower().Equals(identifier))
-                .Skip(1)
-                .FirstOrDefault();
-        }
-
         public static string GroupFromResourceId(string id)
         {
-            return ExtractFromResourceId(id, "resourceGroups");
+            return ResourceId.ParseResourceId(id).ResourceGroupName;
         }
 
         public static string ResourceProviderFromResourceId(string id)
         {
-            return ExtractFromResourceId(id, "providers");
+            return ResourceId.ParseResourceId(id).ProviderNamespace;
         }
 
         public static string NameFromResourceId(string id)
         {
-            return id.Split('/').Last();
+            return ResourceId.ParseResourceId(id).Name;
         }
 
         public static string ResourceTypeFromResourceId(string id)
         {
-            return id.Split('/')
-                .Reverse()
-                .Skip(1)
-                .Take(1)
-                .FirstOrDefault();
+            return ResourceId.ParseResourceId(id).ResourceType;
         }
 
         public static string ParentResourcePathFromResourceId(string id)
         {
-            return id.TrimEnd(new char[] {'/'}).Replace("/" + ResourceTypeFromResourceId(id) + "/" + NameFromResourceId(id), "");
+            return ResourceId.ParseResourceId(id).Parent.Id;
         }
     }
 }

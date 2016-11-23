@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             groupName = creatable.Name;
             newGroup = creatable;
-            AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this as IDefinitionAfterResourceGroup;
         }
 

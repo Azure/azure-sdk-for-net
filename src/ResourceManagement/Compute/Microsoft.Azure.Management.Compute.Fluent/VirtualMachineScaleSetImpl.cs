@@ -794,7 +794,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
         {
             this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Resource.Fluent.Core.IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this;
         }
 

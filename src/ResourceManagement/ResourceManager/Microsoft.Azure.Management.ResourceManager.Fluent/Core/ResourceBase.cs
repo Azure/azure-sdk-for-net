@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
     public abstract class ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags> : 
-        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResource, UTypeWithTags>,
+        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IHasId, UTypeWithTags>,
         IResource, IDefinitionWithTags<DefTypeWithTags>, IUpdateWithTags<UTypeWithTags>
         where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
         where IFluentResourceT : class, IResource

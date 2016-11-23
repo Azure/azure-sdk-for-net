@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
             get; private set;
         }
 
-        public void SetInner(InnerResourceT innerObject)
+        public virtual void SetInner(InnerResourceT innerObject)
         {
             Inner = innerObject;
         }
