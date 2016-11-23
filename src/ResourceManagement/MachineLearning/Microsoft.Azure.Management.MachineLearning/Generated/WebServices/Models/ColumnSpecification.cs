@@ -28,9 +28,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <param name="type">Data type of the column. Possible values
         /// include: 'Boolean', 'Integer', 'Number', 'String'</param>
         /// <param name="format">Additional format information for the data
-        /// type. Possible values include: 'Byte', 'Char', 'Datetime',
-        /// 'Double', 'Duration', 'Float', 'Int8', 'Int16', 'Int32', 'Int64',
-        /// 'Uint8', 'Uint16', 'Uint32', 'Uint64'</param>
+        /// type. Possible values include: 'Byte', 'Char', 'Complex64',
+        /// 'Complex128', 'Date-time', 'Date-timeOffset', 'Double',
+        /// 'Duration', 'Float', 'Int8', 'Int16', 'Int32', 'Int64', 'Uint8',
+        /// 'Uint16', 'Uint32', 'Uint64'</param>
         /// <param name="enumProperty">If the data type is categorical, this
         /// provides the list of accepted categories.</param>
         /// <param name="xMsIsnullable">Flag indicating if the type supports
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
 
         /// <summary>
         /// Gets or sets additional format information for the data type.
-        /// Possible values include: 'Byte', 'Char', 'Datetime', 'Double',
+        /// Possible values include: 'Byte', 'Char', 'Complex64',
+        /// 'Complex128', 'Date-time', 'Date-timeOffset', 'Double',
         /// 'Duration', 'Float', 'Int8', 'Int16', 'Int32', 'Int64', 'Uint8',
         /// 'Uint16', 'Uint32', 'Uint64'
         /// </summary>

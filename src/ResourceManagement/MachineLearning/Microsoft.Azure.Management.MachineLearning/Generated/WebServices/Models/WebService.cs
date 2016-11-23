@@ -23,12 +23,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebService class.
         /// </summary>
-        /// <param name="location">Resource Location</param>
-        /// <param name="properties">Web service resource properties.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource Name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="location">Specifies the location of the
+        /// resource.</param>
+        /// <param name="properties">Contains the property payload that
+        /// describes the web service.</param>
+        /// <param name="id">Specifies the resource ID.</param>
+        /// <param name="name">Specifies the name of the resource.</param>
+        /// <param name="type">Specifies the type of the resource.</param>
+        /// <param name="tags">Contains resource tags defined as key/value
+        /// pairs.</param>
         public WebService(string location, WebServiceProperties properties, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
             : base(location, id, name, type, tags)
         {
@@ -36,7 +39,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets or sets web service resource properties.
+        /// Gets or sets contains the property payload that describes the web
+        /// service.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public WebServiceProperties Properties { get; set; }
