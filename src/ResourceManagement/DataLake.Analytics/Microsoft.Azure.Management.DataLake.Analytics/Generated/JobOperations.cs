@@ -1197,16 +1197,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
-        /// <param name='search'>
-        /// A free form search. A free-text search expression to match for whether a
-        /// particular entry should be included in the feed, e.g.
-        /// Categories?$search=blue OR green. Optional.
-        /// </param>
-        /// <param name='format'>
-        /// The return format. Return the response in particular formatxii without
-        /// access to request headers for standard content-type negotiation (e.g
-        /// Orders?$format=json). Optional.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1225,7 +1215,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1250,8 +1240,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("count", count);
-                tracingParameters.Add("search", search);
-                tracingParameters.Add("format", format);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -1276,14 +1264,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (count != null)
             {
                 _queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (search != null)
-            {
-                _queryParameters.Add(string.Format("$search={0}", Uri.EscapeDataString(search)));
-            }
-            if (format != null)
-            {
-                _queryParameters.Add(string.Format("$format={0}", Uri.EscapeDataString(format)));
             }
             if (this.Client.ApiVersion != null)
             {

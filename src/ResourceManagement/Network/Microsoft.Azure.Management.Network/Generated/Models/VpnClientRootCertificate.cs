@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VpnClientRootCertificate class.
         /// </summary>
-        public VpnClientRootCertificate(string id = default(string), string publicCertData = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VpnClientRootCertificate(string publicCertData, string id = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PublicCertData = publicCertData;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
@@ -66,5 +66,15 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (PublicCertData == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PublicCertData");
+            }
+        }
     }
 }

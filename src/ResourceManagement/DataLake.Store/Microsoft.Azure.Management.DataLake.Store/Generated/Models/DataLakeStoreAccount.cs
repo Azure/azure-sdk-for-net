@@ -19,59 +19,75 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     /// <summary>
     /// Data Lake Store account information
     /// </summary>
-    public partial class DataLakeStoreAccount
+    [JsonTransformation]
+    public partial class DataLakeStoreAccount : Resource
     {
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccount class.
         /// </summary>
-        public DataLakeStoreAccount() { }
+        public DataLakeStoreAccount()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccount class.
         /// </summary>
-        /// <param name="location">the account regional location.</param>
-        /// <param name="name">the account name.</param>
-        /// <param name="type">the namespace and type of the account.</param>
-        /// <param name="id">the account subscription ID.</param>
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="identity">The Key vault encryption identity, if
         /// any.</param>
-        /// <param name="tags">the value of custom properties.</param>
-        /// <param name="properties">the Data Lake Store account
-        /// properties.</param>
-        public DataLakeStoreAccount(string location = default(string), string name = default(string), string type = default(string), string id = default(string), EncryptionIdentity identity = default(EncryptionIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStoreAccountProperties properties = default(DataLakeStoreAccountProperties))
+        /// <param name="provisioningState">the status of the Data Lake Store
+        /// account while being provisioned. Possible values include:
+        /// 'Failed', 'Creating', 'Running', 'Succeeded', 'Patching',
+        /// 'Suspending', 'Resuming', 'Deleting', 'Deleted'</param>
+        /// <param name="state">the status of the Data Lake Store account
+        /// after provisioning has completed. Possible values include:
+        /// 'Active', 'Suspended'</param>
+        /// <param name="creationTime">the account creation time.</param>
+        /// <param name="encryptionState">The current state of encryption for
+        /// this Data Lake store account. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="encryptionProvisioningState">The current state of
+        /// encryption provisioning for this Data Lake store account.
+        /// Possible values include: 'Creating', 'Succeeded'</param>
+        /// <param name="encryptionConfig">The Key vault encryption
+        /// configuration.</param>
+        /// <param name="firewallState">The current state of the IP address
+        /// firewall for this Data Lake store account. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="firewallRules">The list of firewall rules associated
+        /// with this Data Lake store account.</param>
+        /// <param name="trustedIdProviderState">The current state of the
+        /// trusted identity provider feature for this Data Lake store
+        /// account. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="trustedIdProviders">The list of trusted identity
+        /// providers associated with this Data Lake store account.</param>
+        /// <param name="lastModifiedTime">the account last modified
+        /// time.</param>
+        /// <param name="endpoint">the gateway host.</param>
+        /// <param name="defaultGroup">the default owner group for all new
+        /// folders and files created in the Data Lake Store account.</param>
+        public DataLakeStoreAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), DateTime? creationTime = default(DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), FirewallState? firewallState = default(FirewallState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), IList<TrustedIdProvider> trustedIdProviders = default(IList<TrustedIdProvider>), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string), string defaultGroup = default(string))
+            : base(location, id, name, type, tags)
         {
-            Location = location;
-            Name = name;
-            Type = type;
-            Id = id;
             Identity = identity;
-            Tags = tags;
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            State = state;
+            CreationTime = creationTime;
+            EncryptionState = encryptionState;
+            EncryptionProvisioningState = encryptionProvisioningState;
+            EncryptionConfig = encryptionConfig;
+            FirewallState = firewallState;
+            FirewallRules = firewallRules;
+            TrustedIdProviderState = trustedIdProviderState;
+            TrustedIdProviders = trustedIdProviders;
+            LastModifiedTime = lastModifiedTime;
+            Endpoint = endpoint;
+            DefaultGroup = defaultGroup;
         }
-
-        /// <summary>
-        /// Gets or sets the account regional location.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the account name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets the namespace and type of the account.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets the account subscription ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the Key vault encryption identity, if any.
@@ -80,16 +96,130 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public EncryptionIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of custom properties.
+        /// Gets the status of the Data Lake Store account while being
+        /// provisioned. Possible values include: 'Failed', 'Creating',
+        /// 'Running', 'Succeeded', 'Patching', 'Suspending', 'Resuming',
+        /// 'Deleting', 'Deleted'
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public DataLakeStoreAccountStatus? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Data Lake Store account properties.
+        /// Gets the status of the Data Lake Store account after provisioning
+        /// has completed. Possible values include: 'Active', 'Suspended'
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public DataLakeStoreAccountProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.state")]
+        public DataLakeStoreAccountState? State { get; private set; }
 
+        /// <summary>
+        /// Gets the account creation time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.creationTime")]
+        public DateTime? CreationTime { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the current state of encryption for this Data Lake
+        /// store account. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionState")]
+        public EncryptionState? EncryptionState { get; set; }
+
+        /// <summary>
+        /// Gets the current state of encryption provisioning for this Data
+        /// Lake store account. Possible values include: 'Creating',
+        /// 'Succeeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionProvisioningState")]
+        public EncryptionProvisioningState? EncryptionProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Key vault encryption configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionConfig")]
+        public EncryptionConfig EncryptionConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of the IP address firewall for this
+        /// Data Lake store account. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallState")]
+        public FirewallState? FirewallState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of firewall rules associated with this Data
+        /// Lake store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallRules")]
+        public IList<FirewallRule> FirewallRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of the trusted identity provider
+        /// feature for this Data Lake store account. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trustedIdProviderState")]
+        public TrustedIdProviderState? TrustedIdProviderState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of trusted identity providers associated
+        /// with this Data Lake store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trustedIdProviders")]
+        public IList<TrustedIdProvider> TrustedIdProviders { get; set; }
+
+        /// <summary>
+        /// Gets the account last modified time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastModifiedTime")]
+        public DateTime? LastModifiedTime { get; private set; }
+
+        /// <summary>
+        /// Gets the gateway host.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endpoint")]
+        public string Endpoint { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the default owner group for all new folders and files
+        /// created in the Data Lake Store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultGroup")]
+        public string DefaultGroup { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.EncryptionConfig != null)
+            {
+                this.EncryptionConfig.Validate();
+            }
+            if (this.FirewallRules != null)
+            {
+                foreach (var element in this.FirewallRules)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.TrustedIdProviders != null)
+            {
+                foreach (var element1 in this.TrustedIdProviders)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

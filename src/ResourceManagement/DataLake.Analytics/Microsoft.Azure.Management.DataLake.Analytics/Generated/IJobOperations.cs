@@ -195,16 +195,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// matching resources included with the resources in the response,
         /// e.g. Categories?$count=true. Optional.
         /// </param>
-        /// <param name='search'>
-        /// A free form search. A free-text search expression to match for
-        /// whether a particular entry should be included in the feed, e.g.
-        /// Categories?$search=blue OR green. Optional.
-        /// </param>
-        /// <param name='format'>
-        /// The return format. Return the response in particular formatxii
-        /// without access to request headers for standard content-type
-        /// negotiation (e.g Orders?$format=json). Optional.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -220,7 +210,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobInformation>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the jobs, if any, associated with the specified Data Lake
         /// Analytics account. The response includes a link to the next page

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The parameters to provide for the account.
+    /// The parameters used when creating a storage account.
     /// </summary>
     [JsonTransformation]
     public partial class StorageAccountCreateParameters
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
-        /// Required. Gets or sets the sku type.
+        /// Required. Gets or sets the sku name.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
@@ -63,17 +63,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// one of the supported and registered Azure Geo Regions (e.g. West
         /// US, East US, Southeast Asia, etc.). The geo region of a resource
         /// cannot be changed once it is created, but if an identical geo
-        /// region is specified on update the request will succeed.
+        /// region is specified on update, the request will succeed.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource.
-        /// These tags can be used in viewing and grouping this resource
+        /// These tags can be used for viewing and grouping this resource
         /// (across resource groups). A maximum of 15 tags can be provided
-        /// for a resource. Each tag must have a key no greater than 128
-        /// characters and value no greater than 256 characters.
+        /// for a resource. Each tag must have a key with a length no greater
+        /// than 128 characters and a value with a length no greater than 256
+        /// characters.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
@@ -89,18 +90,15 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Provides the encryption settings on the account. If left
-        /// unspecified the account encryption settings will remain. The
-        /// default setting is unencrypted.
+        /// unspecified the account encryption settings will remain the same.
+        /// The default setting is unencrypted.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
 
         /// <summary>
-        /// Required for StandardBlob accounts. The access tier used for
-        /// billing. Access tier cannot be changed more than once every 7
-        /// days (168 hours). Access tier cannot be set for StandardLRS,
-        /// StandardGRS, StandardRAGRS, or PremiumLRS account types. Possible
-        /// values include: 'Hot', 'Cool'
+        /// Required for storage accounts where kind = BlobStorage. The access
+        /// tier used for billing. Possible values include: 'Hot', 'Cool'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }

@@ -950,6 +950,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 segmentProgressTracker = segmentProgressTracker ?? CreateSegmentProgressTracker(metadata);
 
+                // ensure the full folder to the target file exists before attempting to create the target file.
+                Directory.CreateDirectory(Path.GetDirectoryName(metadata.TargetStreamPath));
+
                 if (metadata.SegmentCount == 0)
                 {
                     // simply create the target stream, overwriting existing streams if they exist
@@ -962,7 +965,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     // if it is larger, since those extra threads will not be used.
                     using (var targetStream = new FileStream(metadata.TargetStreamPath + ".inprogress", FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                     {
+                        // set length to the target length up front to test for disk space issues
+                        // then reset it to 0.
                         targetStream.SetLength(metadata.FileLength);
+                        targetStream.SetLength(0);
                     }
 
                     var msu = new MultipleSegmentDownloader(metadata,
@@ -984,7 +990,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                     using (var targetStream = new FileStream(metadata.TargetStreamPath, FileMode.Create, FileAccess.Write))
                     {
+                        // set length to the target length up front to test for disk space issues
+                        // then reset it to 0 to ensure that we explicitly call out how big the file is.
                         targetStream.SetLength(metadata.FileLength);
+                        targetStream.SetLength(0);
                     }
 
                     metadata.Segments[0].Path = metadata.TargetStreamPath;

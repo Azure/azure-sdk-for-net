@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DataLakeAnalyticsAccountState
     {
-        [EnumMember(Value = "active")]
+        [EnumMember(Value = "Active")]
         Active,
-        [EnumMember(Value = "suspended")]
+        [EnumMember(Value = "Suspended")]
         Suspended
     }
 }

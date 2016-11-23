@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="directoryCount">the number of directories.</param>
         /// <param name="fileCount">the number of files.</param>
         /// <param name="length">the number of bytes used by the
-        /// contet.</param>
+        /// content.</param>
         /// <param name="spaceConsumed">the disk space consumed by the
         /// content.</param>
         public ContentSummary(long? directoryCount = default(long?), long? fileCount = default(long?), long? length = default(long?), long? spaceConsumed = default(long?))
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public long? FileCount { get; private set; }
 
         /// <summary>
-        /// Gets the number of bytes used by the contet.
+        /// Gets the number of bytes used by the content.
         /// </summary>
         [JsonProperty(PropertyName = "length")]
         public long? Length { get; private set; }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         internal const decimal BufferLength = 32 * 1024 * 1024; // 32MB
         private const int MaximumBackoffWaitSeconds = 32;
-        internal const int MaxBufferDownloadAttemptCount = 4;
+        internal const int MaxBufferDownloadAttemptCount = 8;
 
         private readonly IFrontEndAdapter _frontEnd;
         private readonly IProgress<SegmentUploadProgress> _progressTracker;
@@ -175,15 +175,27 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 {
                     _token.ThrowIfCancellationRequested();
                     int attemptCount = 0;
+                    int partialDataAttempts = 0;
                     bool downloadCompleted = false;
+                    long dataReceived = 0;
+                    bool modifyLengthAndOffset = false;
                     while (!downloadCompleted && attemptCount < MaxBufferDownloadAttemptCount)
                     {
                         _token.ThrowIfCancellationRequested();
-                        attemptCount++;
                         try
                         {
-                            // test to make sure that the remaining length is larger than the max size, otherwise just download the remaining length
                             long lengthToDownload = (long)BufferLength;
+
+                            // in the case where we got less than the expected amount of data,
+                            // only download the rest of the data from the previous request
+                            // instead of a new full buffer.
+                            if (modifyLengthAndOffset)
+                            {
+                                lengthToDownload -= dataReceived;
+                            }
+
+                            // test to make sure that the remaining length is larger than the max size, 
+                            // otherwise just download the remaining length.
                             if (lengthRemaining - lengthToDownload < 0)
                             {
                                 lengthToDownload = lengthRemaining;
@@ -194,14 +206,50 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 readStream.CopyTo(outputStream, (int)lengthToDownload);
                             }
 
-                            downloadCompleted = true;
-                            lengthRemaining -= lengthToDownload;
-                            curOffset += lengthToDownload;
-                            localOffset += lengthToDownload;
-                            ReportProgress(localOffset, false);
+                            var lengthReturned = outputStream.Position - curOffset;
+                            
+                            // if we got more data than we asked for something went wrong and we should retry, since we can't trust the extra data
+                            if(lengthReturned > lengthToDownload)
+                            {
+                                throw new UploadFailedException(string.Format("{4}: Did not download the expected amount of data in the request. Expected: {0}. Actual: {1}. From offset: {2} in remote file: {3}", lengthToDownload, outputStream.Position - curOffset, curOffset, _metadata.InputFilePath, DateTime.Now.ToString()));
+                            }
+
+                            // we need to validate how many bytes have actually been copied to the read stream
+                            if (lengthReturned < lengthToDownload)
+                            {
+                                partialDataAttempts++;
+                                lengthRemaining -= lengthReturned;
+                                curOffset += lengthReturned;
+                                localOffset += lengthReturned;
+                                modifyLengthAndOffset = true;
+                                dataReceived += lengthReturned;
+                                ReportProgress(localOffset, false);
+
+                                // we will wait before the next iteration, since something went wrong and we did not receive enough data.
+                                // this could be a throttling issue or an issue with the service itself. Either way, waiting should help
+                                // reduce the liklihood of additional failures.
+                                if(partialDataAttempts >= MaxBufferDownloadAttemptCount)
+                                {
+                                    throw new UploadFailedException(string.Format("Failed to retrieve the requested data after {0} attempts for file {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", MaxBufferDownloadAttemptCount, _segmentMetadata.Path));
+                                }
+
+                                WaitForRetry(partialDataAttempts, this.UseBackOffRetryStrategy, _token);
+                            }
+                            else
+                            {
+                                downloadCompleted = true;
+                                lengthRemaining -= lengthToDownload;
+                                curOffset += lengthToDownload;
+                                localOffset += lengthToDownload;
+                                ReportProgress(localOffset, false);
+                            }
                         }
                         catch (Exception ex)
                         {
+                            // update counts and reset for internal attempts
+                            attemptCount++;
+                            partialDataAttempts = 0;
+
                             //if we tried more than the number of times we were allowed to, give up and throw the exception
                             if (attemptCount >= MaxBufferDownloadAttemptCount)
                             {
@@ -217,6 +265,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             }
                         }
                     }
+                }
+
+                // full validation of the segment.
+                if(outputStream.Position - _segmentMetadata.Offset != _segmentMetadata.Length)
+                {
+                    throw new UploadFailedException(string.Format("Post-download stream segment verification failed for file {2}: target stream has a length of {0}, expected {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", outputStream.Position - _segmentMetadata.Offset, _segmentMetadata.Length, _segmentMetadata.Path));
                 }
             }
         }
@@ -234,8 +288,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 return;
             }
 
-            int intervalSeconds = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
-            Thread.Sleep(TimeSpan.FromSeconds(intervalSeconds));
+            int intervalMs = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount)) * 1000;
+
+            // add up to 10% to the sleep to allow for randomness in the retry so that thread contention is unlikely
+            var randomMS = new Random();
+            intervalMs += randomMS.Next((int)Math.Ceiling(intervalMs * .1));
+            Thread.Sleep(TimeSpan.FromMilliseconds(intervalMs));
         }
 
         /// <summary>

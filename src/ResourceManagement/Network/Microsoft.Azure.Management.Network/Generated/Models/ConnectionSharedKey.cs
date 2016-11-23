@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ConnectionSharedKey class.
         /// </summary>
-        public ConnectionSharedKey(string value = default(string))
+        public ConnectionSharedKey(string value)
         {
             Value = value;
         }
@@ -40,5 +40,15 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
+        }
     }
 }

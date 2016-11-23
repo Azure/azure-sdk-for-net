@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The encryption settings on the account.
+    /// The encryption settings on the storage account.
     /// </summary>
     public partial class Encryption
     {
@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
-        /// Gets the services which are encrypted.
+        /// List of services which support encryption.
         /// </summary>
         [JsonProperty(PropertyName = "services")]
         public EncryptionServices Services { get; set; }
 
         /// <summary>
-        /// Gets the encryption keySource(provider). Possible values
+        /// The encryption keySource (provider). Possible values
         /// (case-insensitive):  Microsoft.Storage
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]

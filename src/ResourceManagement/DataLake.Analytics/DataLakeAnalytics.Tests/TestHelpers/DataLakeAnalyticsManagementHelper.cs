@@ -115,7 +115,7 @@ namespace DataLakeAnalytics.Tests
             if (!exists)
             {
                 dataLakeStoreManagementClient.Account.Create(resourceGroupName, accountName,
-                    new Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount { Location = location, Name = accountName });
+                    new Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount { Location = location});
 
                 accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
                     accountName);
@@ -124,9 +124,9 @@ namespace DataLakeAnalytics.Tests
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
                 int minutesWaited = 0;
                 int timeToWaitInMinutes = 15;
-                while (accountGetResponse.Properties.ProvisioningState !=
+                while (accountGetResponse.ProvisioningState !=
                        DataLakeStoreAccountStatus.Succeeded &&
-                       accountGetResponse.Properties.ProvisioningState !=
+                       accountGetResponse.ProvisioningState !=
                        DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
@@ -138,12 +138,12 @@ namespace DataLakeAnalytics.Tests
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.Properties.ProvisioningState !=
+                accountGetResponse.ProvisioningState !=
                 DataLakeStoreAccountStatus.Succeeded,
                 "Account failed to be provisioned into the success state. Actual State: " +
-                accountGetResponse.Properties.ProvisioningState);
+                accountGetResponse.ProvisioningState);
 
-            return accountGetResponse.Properties.Endpoint.Replace(string.Format("{0}.",accountName), "");
+            return accountGetResponse.Endpoint.Replace(string.Format("{0}.",accountName), "");
         }
 
         public string TryCreateStorageAccount(string resourceGroupName, string storageAccountName, string label, string description, string location, out string storageAccountSuffix)
@@ -182,34 +182,24 @@ namespace DataLakeAnalytics.Tests
             var datalakeStoreEndpoint = TryCreateDataLakeStoreAccount(resourceGroupName, location,
                 dataLakeStoreAccountName);
 
-            var accountCreateResponse =
-                dataLakeAnalyticsManagementClient.Account.Create(resourceGroupName, accountName,
+            var accountCreateResponse = dataLakeAnalyticsManagementClient.Account.Create(
+                resourceGroupName, 
+                accountName,
                 new DataLakeAnalyticsAccount
                 {
                     Location = location,
-                    Name = accountName,
-                    Properties =
-                        new DataLakeAnalyticsAccountProperties
+                     
+                    DataLakeStoreAccounts = new List<DataLakeStoreAccountInfo>
+                    {
+                        new DataLakeStoreAccountInfo
                         {
-                            DataLakeStoreAccounts =
-                                new List
-                                    <
-                                        DataLakeStoreAccountInfo>
-                                {
-                                    new DataLakeStoreAccountInfo
-                                    {
-                                        Name = dataLakeStoreAccountName,
-                                        Properties = new DataLakeStoreAccountInfoProperties
-                                        {
-                                            Suffix =
-                                                datalakeStoreEndpoint.Replace(
-                                                    string.Format("{0}.", dataLakeStoreAccountName), "")
-                                        }
-                                    }
-                                },
-                            DefaultDataLakeStoreAccount = dataLakeStoreAccountName
-                        }     
+                            Name = dataLakeStoreAccountName,
+                            Suffix = datalakeStoreEndpoint.Replace(string.Format("{0}.", dataLakeStoreAccountName), "")
+                        }
+                    },
+                    DefaultDataLakeStoreAccount = dataLakeStoreAccountName      
                 });
+
             var accountGetResponse = dataLakeAnalyticsManagementClient.Account.Get(resourceGroupName,
                 accountName);
 
@@ -217,9 +207,9 @@ namespace DataLakeAnalytics.Tests
             // we will wait a maximum of 15 minutes for this to happen and then report failures
             int timeToWaitInMinutes = 15;
             int minutesWaited = 0;
-            while (accountGetResponse.Properties.ProvisioningState !=
+            while (accountGetResponse.ProvisioningState !=
                    DataLakeAnalyticsAccountStatus.Succeeded &&
-                   accountGetResponse.Properties.ProvisioningState !=
+                   accountGetResponse.ProvisioningState !=
                    DataLakeAnalyticsAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
             {
                 TestUtilities.Wait(60000); // Wait for one minute and then go again.
@@ -230,7 +220,7 @@ namespace DataLakeAnalytics.Tests
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.Properties.ProvisioningState !=
+                accountGetResponse.ProvisioningState !=
                 DataLakeAnalyticsAccountStatus.Succeeded,
                 "Account failed to be provisioned into the success state after " + timeToWaitInMinutes + " minutes.");
 
@@ -349,8 +339,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 {
                     // Type = JobType.USql,
                     Script = scriptToRun
-                },
-                JobId = jobIdToUse
+                }
             };
             var jobCreateResponse = jobClient.Job.Create(dataLakeAnalyticsAccountName, jobIdToUse, createOrBuildParams);
 

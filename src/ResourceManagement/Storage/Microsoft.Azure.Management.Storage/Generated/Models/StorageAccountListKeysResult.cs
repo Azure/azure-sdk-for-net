@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The ListKeys operation response.
+    /// The response from the ListKeys operation.
     /// </summary>
     public partial class StorageAccountListKeysResult
     {
@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
-        /// Gets the list of account keys and their properties.
+        /// Gets the list of storage account keys and their properties for the
+        /// specified storage account.
         /// </summary>
         [JsonProperty(PropertyName = "keys")]
         public IList<StorageAccountKey> Keys { get; private set; }

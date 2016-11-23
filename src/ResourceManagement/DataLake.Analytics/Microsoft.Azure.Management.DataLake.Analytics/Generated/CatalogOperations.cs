@@ -55,10 +55,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
         /// <summary>
         /// Creates the specified secret for use with external data sources in the
-        /// specified database.
+        /// specified database. This is deprecated and will be removed in the next
+        /// release. Please use CreateCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database in which to create the secret.
@@ -274,10 +276,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
         /// <summary>
         /// Modifies the specified secret for use with external data sources in the
-        /// specified database
+        /// specified database. This is deprecated and will be removed in the next
+        /// release. Please use UpdateCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -488,10 +492,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the specified secret in the specified database
+        /// Gets the specified secret in the specified database. This is deprecated
+        /// and will be removed in the next release. Please use GetCredential instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -688,10 +694,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Deletes the specified secret in the specified database
+        /// Deletes the specified secret in the specified database. This is deprecated
+        /// and will be removed in the next release. Please use DeleteCredential
+        /// instead.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -859,10 +868,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Deletes all secrets in the specified database
+        /// Deletes all secrets in the specified database. This is deprecated and will
+        /// be removed in the next release. In the future, please only drop
+        /// individual credentials using DeleteCredential
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
@@ -1021,17 +1033,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Retrieves the specified external data source from the Data Lake Analytics
-        /// catalog.
+        /// Creates the specified credential for use with external data sources in the
+        /// specified database.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database containing the external data source.
+        /// The name of the database in which to create the credential.
         /// </param>
-        /// <param name='externalDataSourceName'>
-        /// The name of the external data source.
+        /// <param name='credentialName'>
+        /// The name of the credential.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to create the credential (name and password)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1042,16 +1058,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string accountName, string databaseName, string externalDataSourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1065,9 +1078,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            if (externalDataSourceName == null)
+            if (credentialName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "externalDataSourceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "credentialName");
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1082,17 +1103,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("externalDataSourceName", externalDataSourceName);
+                tracingParameters.Add("credentialName", credentialName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetExternalDataSource", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateCredential", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/externaldatasources/{externalDataSourceName}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/credentials/{credentialName}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{externalDataSourceName}", Uri.EscapeDataString(externalDataSourceName));
+            _url = _url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1105,7 +1127,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -1134,6 +1156,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1157,19 +1185,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
                 }
-                catch (JsonException)
-                {
-                    // Ignore the exception
+                else {
+                    _responseContent = string.Empty;
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1189,30 +1209,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<USqlExternalDataSource>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<USqlExternalDataSource>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
@@ -1222,26 +1224,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Retrieves the list of external data sources from the Data Lake Analytics
-        /// catalog.
+        /// Modifies the specified credential for use with external data sources in
+        /// the specified database
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database containing the external data sources.
+        /// The name of the database containing the credential.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='credentialName'>
+        /// The name of the credential.
         /// </param>
-        /// <param name='select'>
-        /// OData Select statement. Limits the properties on each entry to just those
-        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='count'>
-        /// The Boolean value of true or false to request a count of the matching
-        /// resources included with the resources in the response, e.g.
-        /// Categories?$count=true. Optional.
+        /// <param name='parameters'>
+        /// The parameters required to modify the credential (name and password)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1252,16 +1249,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1275,6 +1269,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
+            if (credentialName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "credentialName");
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1286,37 +1288,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("count", count);
+                tracingParameters.Add("credentialName", credentialName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListExternalDataSources", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateCredential", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/externaldatasources";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/credentials/{credentialName}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
             List<string> _queryParameters = new List<string>();
-            if (odataQuery != null)
-            {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    _queryParameters.Add(_odataFilter);
-                }
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
-            }
-            if (count != null)
-            {
-                _queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
-            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -1328,7 +1314,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -1357,6 +1343,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1380,19 +1372,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
                 }
-                catch (JsonException)
-                {
-                    // Ignore the exception
+                else {
+                    _responseContent = string.Empty;
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1412,30 +1396,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<USqlExternalDataSource>>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<USqlExternalDataSource>>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
@@ -1448,7 +1414,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified credential from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -1645,10 +1612,194 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
+        /// Deletes the specified credential in the specified database
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the credential.
+        /// </param>
+        /// <param name='credentialName'>
+        /// The name of the credential to delete
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to delete a credential if the current user is not the
+        /// account owner.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (credentialName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "credentialName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("credentialName", credentialName);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteCredential", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/credentials/{credentialName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -1867,10 +2018,437 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
+        /// Retrieves the specified external data source from the Data Lake Analytics
+        /// catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the external data source.
+        /// </param>
+        /// <param name='externalDataSourceName'>
+        /// The name of the external data source.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string accountName, string databaseName, string externalDataSourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (externalDataSourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "externalDataSourceName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("externalDataSourceName", externalDataSourceName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetExternalDataSource", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/externaldatasources/{externalDataSourceName}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{externalDataSourceName}", Uri.EscapeDataString(externalDataSourceName));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<USqlExternalDataSource>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<USqlExternalDataSource>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves the list of external data sources from the Data Lake Analytics
+        /// catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the external data sources.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='select'>
+        /// OData Select statement. Limits the properties on each entry to just those
+        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// The Boolean value of true or false to request a count of the matching
+        /// resources included with the resources in the response, e.g.
+        /// Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlaCatalogDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlaCatalogDnsSuffix");
+            }
+            if (databaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("select", select);
+                tracingParameters.Add("count", count);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListExternalDataSources", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "catalog/usql/databases/{databaseName}/externaldatasources";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlaCatalogDnsSuffix}", this.Client.AdlaCatalogDnsSuffix);
+            _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
+            List<string> _queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter)) 
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
+            }
+            if (select != null)
+            {
+                _queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(select)));
+            }
+            if (count != null)
+            {
+                _queryParameters.Add(string.Format("$count={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(count, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<USqlExternalDataSource>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<USqlExternalDataSource>>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Retrieves the specified procedure from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedure.
@@ -2079,7 +2657,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of procedures from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedures.
@@ -2310,7 +2889,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table.
@@ -2519,7 +3099,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the tables.
@@ -2750,7 +3331,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified table type from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table type.
@@ -2959,7 +3541,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of table types from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table types.
@@ -3190,7 +3773,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified view from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the view.
@@ -3399,7 +3983,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of views from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the views.
@@ -3631,7 +4216,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
@@ -3850,7 +4436,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
@@ -4091,7 +4678,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the partition.
@@ -4310,7 +4898,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the partitions.
@@ -4551,7 +5140,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the types.
@@ -4783,7 +5373,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued function.
@@ -4993,7 +5584,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued functions.
@@ -5224,7 +5816,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified assembly from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
@@ -5424,7 +6017,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of assemblies from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
@@ -5646,7 +6240,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified schema from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -5846,7 +6441,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of schemas from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
@@ -6068,7 +6664,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the specified database from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='databaseName'>
         /// The name of the database.
@@ -6259,7 +6856,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Retrieves the list of databases from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog operations on.
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -6469,6 +7067,174 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
+        /// Retrieves the list of credentials from the Data Lake Analytics catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListCredentialsNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<USqlCredential>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<USqlCredential>>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Retrieves the list of external data sources from the Data Lake Analytics
         /// catalog.
         /// </summary>
@@ -6619,174 +7385,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<Page<USqlExternalDataSource>>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves the list of credentials from the Data Lake Analytics catalog.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListCredentialsNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<USqlCredential>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<USqlCredential>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
