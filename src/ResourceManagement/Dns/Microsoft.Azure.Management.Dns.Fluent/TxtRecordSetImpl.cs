@@ -22,8 +22,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:A6CAFC362ACBF08FA397C2EA60D22E1C
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.TxtRecords != null && this.Inner.TxtRecords.Count > 0) {
-                if (resource.TxtRecords == null) {
+            if (this.Inner.TxtRecords != null && this.Inner.TxtRecords.Count > 0)
+            {
+                if (resource.TxtRecords == null)
+                {
                     resource.TxtRecords = new List<TxtRecord>();
                 }
              
@@ -35,11 +37,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 this.Inner.TxtRecords.Clear();
              }
              
-            if (this.recordSetRemoveInfo.TxtRecords.Count > 0) {
-                if (resource.TxtRecords != null) {
-                    foreach(var recordToRemove in this.recordSetRemoveInfo.TxtRecords)  {
-                        foreach(var record in resource.TxtRecords)  {
-                            if (record.Value.Count != 0 && record.Value[0].Equals(recordToRemove.Value[0], StringComparison.OrdinalIgnoreCase)) {
+            if (this.recordSetRemoveInfo.TxtRecords.Count > 0)
+            {
+                if (resource.TxtRecords != null)
+                {
+                    foreach(var recordToRemove in this.recordSetRemoveInfo.TxtRecords)
+                    {
+                        foreach(var record in resource.TxtRecords)
+                        {
+                            if (record.Value.Count != 0 && record.Value[0].Equals(recordToRemove.Value[0], StringComparison.OrdinalIgnoreCase))
+                            {
                                 resource.TxtRecords.Remove(record);
                                 break;
                             }

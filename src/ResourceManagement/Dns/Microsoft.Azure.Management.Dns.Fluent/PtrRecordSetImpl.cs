@@ -17,8 +17,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:8254A32ABF739B147B00EFE318330056
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.PtrRecords != null && this.Inner.PtrRecords.Count > 0) {
-                if (resource.PtrRecords == null) {
+            if (this.Inner.PtrRecords != null && this.Inner.PtrRecords.Count > 0)
+            {
+                if (resource.PtrRecords == null)
+                {
                     resource.PtrRecords = new List<PtrRecord>();
                 }
 
@@ -29,11 +31,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 this.Inner.PtrRecords.Clear();
             }
 
-            if (this.recordSetRemoveInfo.PtrRecords.Count > 0) {
-                if (resource.PtrRecords != null) {
-                    foreach(var recordToRemove in this.recordSetRemoveInfo.PtrRecords)  {
-                        foreach(var record in resource.PtrRecords)  {
-                            if (record.Ptrdname.Equals(recordToRemove.Ptrdname, StringComparison.OrdinalIgnoreCase)) {
+            if (this.recordSetRemoveInfo.PtrRecords.Count > 0)
+            {
+                if (resource.PtrRecords != null)
+                {
+                    foreach(var recordToRemove in this.recordSetRemoveInfo.PtrRecords)
+                    {
+                        foreach(var record in resource.PtrRecords)
+                        {
+                            if (record.Ptrdname.Equals(recordToRemove.Ptrdname, StringComparison.OrdinalIgnoreCase))
+                            {
                                 resource.PtrRecords.Remove(record);
                                 break;
                             }
@@ -50,7 +57,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             List<string> targetDomainNames = new List<string>();
             if (this.Inner.PtrRecords != null) {
-                foreach(var ptrRecord in this.Inner.PtrRecords)  {
+                foreach(var ptrRecord in this.Inner.PtrRecords)
+                {
                     targetDomainNames.Add(ptrRecord.Ptrdname);
                 }
             }

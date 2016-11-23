@@ -17,8 +17,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:0D98BE0584279084FC4D20C014B0932B
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.MxRecords != null && this.Inner.MxRecords.Count > 0) {
-                if (resource.MxRecords == null) {
+            if (this.Inner.MxRecords != null && this.Inner.MxRecords.Count > 0)
+            {
+                if (resource.MxRecords == null)
+                {
                     resource.MxRecords = new List<MxRecord>();
                 }
 
@@ -29,12 +31,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 this.Inner.MxRecords.Clear();
             }
 
-            if (this.recordSetRemoveInfo.MxRecords.Count > 0) {
-                if (resource.MxRecords != null) {
-                    foreach(var recordToRemove in this.recordSetRemoveInfo.MxRecords)  {
-                        foreach(var record in resource.MxRecords)  {
+            if (this.recordSetRemoveInfo.MxRecords.Count > 0)
+            {
+                if (resource.MxRecords != null)
+                {
+                    foreach(var recordToRemove in this.recordSetRemoveInfo.MxRecords)
+                    {
+                        foreach(var record in resource.MxRecords)
+                        {
                             if (record.Exchange.Equals(recordToRemove.Exchange, StringComparison.OrdinalIgnoreCase)
-                                && (record.Preference == recordToRemove.Preference)) {
+                                && (record.Preference == recordToRemove.Preference))
+                            {
                                 resource.MxRecords.Remove(record);
                                 break;
                             }
@@ -50,7 +57,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         public IList<MxRecord> Records()
         {
             List<MxRecord> records = new List<MxRecord>();
-            if (this.Inner.MxRecords != null) {
+            if (this.Inner.MxRecords != null)
+            {
                 foreach (MxRecord record in this.Inner.MxRecords)
                 {
                     records.Add(new MxRecord

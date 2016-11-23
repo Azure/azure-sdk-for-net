@@ -2,15 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using DnsRecordSet.Update;
-    using DnsZone.Definition;
     using System.Threading;
     using DnsRecordSet.UpdateDefinition;
     using DnsRecordSet.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using DnsZone.Update;
     using DnsRecordSet.UpdateCombined;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -35,10 +30,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:4F856FB578CC3E1352902BE5686B7CC9:D624DD59AB1913F5FF4AECA70621F115
         private RecordSetInner Prepare(RecordSetInner resource)
         {
-            if (this.recordSetRemoveInfo.Metadata.Count > 0) {
-                if (resource.Metadata != null) {
-                    foreach(var key in this.recordSetRemoveInfo.Metadata.Keys)  {
-                        if (resource.Metadata.ContainsKey(key)) {
+            if (this.recordSetRemoveInfo.Metadata.Count > 0)
+            {
+                if (resource.Metadata != null)
+                {
+                    foreach(var key in this.recordSetRemoveInfo.Metadata.Keys)
+                    {
+                        if (resource.Metadata.ContainsKey(key))
+                        {
                             resource.Metadata.Remove(key);
                         }
                     }
@@ -46,18 +45,22 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 this.recordSetRemoveInfo.Metadata.Clear();
             }
 
-            if (this.Inner.Metadata != null && this.Inner.Metadata.Count > 0) {
-                if (resource.Metadata == null) {
+            if (this.Inner.Metadata != null && this.Inner.Metadata.Count > 0)
+            {
+                if (resource.Metadata == null)
+                {
                     resource.Metadata = new Dictionary<string, string>();
                 }
 
-                foreach (var keyVal in this.Inner.Metadata) {
+                foreach (var keyVal in this.Inner.Metadata)
+                {
                     resource.Metadata.Add(keyVal.Key, keyVal.Value);
                 }
                 this.Inner.Metadata.Clear();
             }
              
-            if (this.Inner.TTL != null) {
+            if (this.Inner.TTL != null)
+            {
                 resource.TTL = this.Inner.TTL;
                 this.Inner.TTL = null;
             }
@@ -271,10 +274,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:A8504DD39B3F14EC8A5C6530FB22292A:5BA5A4ACBB2C6A840606E1F8F35C4054
         public DnsRecordSetImpl WithMetadata(string key, string value)
         {
-            if (this.Inner.Metadata == null) {
+            if (this.Inner.Metadata == null)
+            {
                 this.Inner.Metadata = new Dictionary<string, string>();
             }
-            if (this.Inner.Metadata.ContainsKey(key)) {
+            if (!this.Inner.Metadata.ContainsKey(key))
+            {
                 this.Inner.Metadata.Add(key, value);
             }
             return this;

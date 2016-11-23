@@ -16,31 +16,38 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:352DEB81080973F0DD8A640958597C6B
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-             if (resource.SoaRecord == null) {
+             if (resource.SoaRecord == null)
+             {
                 resource.SoaRecord = new SoaRecord();
              }
 
-             if (this.Inner.SoaRecord.Email != null) {
+             if (this.Inner.SoaRecord.Email != null)
+             {
                 resource.SoaRecord.Email = this.Inner.SoaRecord.Email;
              }
             
-             if (this.Inner.SoaRecord.ExpireTime != null) {
+             if (this.Inner.SoaRecord.ExpireTime != null)
+             {
                 resource.SoaRecord.ExpireTime = this.Inner.SoaRecord.ExpireTime;
              }
              
-             if (this.Inner.SoaRecord.MinimumTtl != null) {
+             if (this.Inner.SoaRecord.MinimumTtl != null)
+             {
                 resource.SoaRecord.MinimumTtl = this.Inner.SoaRecord.MinimumTtl;
              }
              
-             if (this.Inner.SoaRecord.RefreshTime != null) {
+             if (this.Inner.SoaRecord.RefreshTime != null)
+             {
                 resource.SoaRecord.RefreshTime = this.Inner.SoaRecord.RefreshTime;
              }
 
-             if (this.Inner.SoaRecord.RetryTime != null) {
+             if (this.Inner.SoaRecord.RetryTime != null)
+             {
                 resource.SoaRecord.RetryTime = this.Inner.SoaRecord.RetryTime;
              }
              
-             if (this.Inner.SoaRecord.SerialNumber != null) {
+             if (this.Inner.SoaRecord.SerialNumber != null)
+             {
                 resource.SoaRecord.SerialNumber = this.Inner.SoaRecord.SerialNumber;
              }
              

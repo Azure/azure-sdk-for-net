@@ -291,12 +291,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Begins the description of an update of the Soa record in this Dns zone.
         /// </summary>
         /// <return>The stage representing configuration for the Txt record set.</return>
-        DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord DnsZone.Update.IWithRecordSet.UpdateSoaRecord
+        DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord DnsZone.Update.IWithRecordSet.UpdateSoaRecord()
         {
-            get
-            {
-                return this.UpdateSoaRecord() as DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord;
-            }
+            return this.UpdateSoaRecord() as DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord;
         }
 
         /// <summary>

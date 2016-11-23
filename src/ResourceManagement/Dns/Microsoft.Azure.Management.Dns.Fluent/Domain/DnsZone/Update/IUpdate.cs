@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         /// Begins the description of an update of the Soa record in this Dns zone.
         /// </summary>
         /// <return>The stage representing configuration for the Txt record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord UpdateSoaRecord { get; }
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord UpdateSoaRecord();
 
         /// <summary>
         /// Begins the description of an update of an existing Aaaa record set in this Dns zone.

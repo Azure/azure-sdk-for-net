@@ -17,8 +17,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:53BB67595D71CD0CA502C876E02949C2
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
-            if (this.Inner.SrvRecords != null && this.Inner.SrvRecords.Count > 0) {
-                if (resource.SrvRecords == null) {
+            if (this.Inner.SrvRecords != null && this.Inner.SrvRecords.Count > 0)
+            {
+                if (resource.SrvRecords == null)
+                {
                     resource.SrvRecords = new List<SrvRecord>();
                 }
                 foreach (var record in this.Inner.SrvRecords)
@@ -27,14 +29,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
                 this.Inner.SrvRecords.Clear();
             }
-            if (this.recordSetRemoveInfo.SrvRecords.Count > 0) {
-                if (resource.SrvRecords != null) {
-                   foreach(var recordToRemove in this.recordSetRemoveInfo.SrvRecords)  {
-                       foreach(var record in resource.SrvRecords)  {
+            if (this.recordSetRemoveInfo.SrvRecords.Count > 0)
+            {
+                if (resource.SrvRecords != null)
+                {
+                   foreach(var recordToRemove in this.recordSetRemoveInfo.SrvRecords)
+                    {
+                       foreach(var record in resource.SrvRecords)
+                        {
                            if (record.Target.Equals(recordToRemove.Target, StringComparison.OrdinalIgnoreCase)
                                && (record.Port == recordToRemove.Port)
                                && (record.Weight == recordToRemove.Weight)
-                               && (record.Priority == recordToRemove.Priority)) {
+                               && (record.Priority == recordToRemove.Priority))
+                           {
                                    resource.SrvRecords.Remove(record);
                                    break;
                            }
