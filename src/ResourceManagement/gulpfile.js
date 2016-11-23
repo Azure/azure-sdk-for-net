@@ -65,6 +65,12 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.Sql.Fluent',
         'composite': true,
         'args': '-FT 1'
+    },
+    'cdn': {
+        'dir': 'Cdn/Microsoft.Azure.Management.Cdn.Fluent',
+        'source': 'arm-cdn/2016-10-02/swagger/cdn.json',
+        'package': 'Microsoft.Azure.Management.Cdn.Fluent',
+        'args': '-FT 2'
     }
 };
 
