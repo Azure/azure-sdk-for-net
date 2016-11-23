@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The List Usages operation response.
+    /// The List service SAS credentials operation response.
     /// </summary>
-    public partial class UsageListResult
+    public partial class ListServiceSasResponse
     {
         /// <summary>
-        /// Initializes a new instance of the UsageListResult class.
+        /// Initializes a new instance of the ListServiceSasResponse class.
         /// </summary>
-        public UsageListResult() { }
+        public ListServiceSasResponse() { }
 
         /// <summary>
-        /// Initializes a new instance of the UsageListResult class.
+        /// Initializes a new instance of the ListServiceSasResponse class.
         /// </summary>
-        public UsageListResult(IList<Usage> value = default(IList<Usage>))
+        public ListServiceSasResponse(string serviceSasToken = default(string))
         {
-            Value = value;
+            ServiceSasToken = serviceSasToken;
         }
 
         /// <summary>
-        /// Gets or sets the list Storage Resource Usages.
+        /// List service SAS credentials of speicific resource.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<Usage> Value { get; set; }
+        [JsonProperty(PropertyName = "serviceSasToken")]
+        public string ServiceSasToken { get; private set; }
 
     }
 }

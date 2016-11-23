@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Storage
     public static partial class StorageAccountsOperationsExtensions
     {
             /// <summary>
-            /// Checks that account name is valid and is not in use.
+            /// Checks that the storage account name is valid and is not already in use.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// Checks that account name is valid and is not in use.
+            /// Checks that the storage account name is valid and is not already in use.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,11 +56,11 @@ namespace Microsoft.Azure.Management.Storage
 
             /// <summary>
             /// Asynchronously creates a new storage account with the specified
-            /// parameters. If an account is already created and subsequent create
+            /// parameters. If an account is already created and a subsequent create
             /// request is issued with different properties, the account properties will
-            /// be updated. If an account is already created and subsequent create or
-            /// update request is issued with exact same set of properties, the request
-            /// will succeed.
+            /// be updated. If an account is already created and a subsequent create or
+            /// update request is issued with the exact same set of properties, the
+            /// request will succeed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,11 +83,11 @@ namespace Microsoft.Azure.Management.Storage
 
             /// <summary>
             /// Asynchronously creates a new storage account with the specified
-            /// parameters. If an account is already created and subsequent create
+            /// parameters. If an account is already created and a subsequent create
             /// request is issued with different properties, the account properties will
-            /// be updated. If an account is already created and subsequent create or
-            /// update request is issued with exact same set of properties, the request
-            /// will succeed.
+            /// be updated. If an account is already created and a subsequent create or
+            /// update request is issued with the exact same set of properties, the
+            /// request will succeed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -116,11 +116,11 @@ namespace Microsoft.Azure.Management.Storage
 
             /// <summary>
             /// Asynchronously creates a new storage account with the specified
-            /// parameters. If an account is already created and subsequent create
+            /// parameters. If an account is already created and a subsequent create
             /// request is issued with different properties, the account properties will
-            /// be updated. If an account is already created and subsequent create or
-            /// update request is issued with exact same set of properties, the request
-            /// will succeed.
+            /// be updated. If an account is already created and a subsequent create or
+            /// update request is issued with the exact same set of properties, the
+            /// request will succeed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,11 +143,11 @@ namespace Microsoft.Azure.Management.Storage
 
             /// <summary>
             /// Asynchronously creates a new storage account with the specified
-            /// parameters. If an account is already created and subsequent create
+            /// parameters. If an account is already created and a subsequent create
             /// request is issued with different properties, the account properties will
-            /// be updated. If an account is already created and subsequent create or
-            /// update request is issued with exact same set of properties, the request
-            /// will succeed.
+            /// be updated. If an account is already created and a subsequent create or
+            /// update request is issued with the exact same set of properties, the
+            /// request will succeed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Storage
 
             /// <summary>
             /// Returns the properties for the specified storage account including but not
-            /// limited to name, account type, location, and account status. The ListKeys
+            /// limited to name, SKU name, location, and account status. The ListKeys
             /// operation should be used to retrieve storage keys.
             /// </summary>
             /// <param name='operations'>
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Storage
 
             /// <summary>
             /// Returns the properties for the specified storage account including but not
-            /// limited to name, account type, location, and account status. The ListKeys
+            /// limited to name, SKU name, location, and account status. The ListKeys
             /// operation should be used to retrieve storage keys.
             /// </summary>
             /// <param name='operations'>
@@ -264,16 +264,16 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// The update operation can be used to update the account type, encryption,
-            /// or tags for a storage account. It can also be used to map the account to
-            /// a custom domain. Only one custom domain is supported per storage account
-            /// and. replacement/change of custom domain is not supported. In order to
-            /// replace an old custom domain, the old value must be cleared/unregistered
-            /// before a new value may be set. Update of multiple properties is
-            /// supported. This call does not change the storage keys for the account. If
-            /// you want to change storage account keys, use the regenerate keys
-            /// operation.  The location and name of the storage account cannot be
-            /// changed after creation.
+            /// The update operation can be used to update the SKU, encryption, access
+            /// tier, or tags for a storage account. It can also be used to map the
+            /// account to a custom domain. Only one custom domain is supported per
+            /// storage account; the replacement/change of custom domain is not
+            /// supported. In order to replace an old custom domain, the old value must
+            /// be cleared/unregistered before a new value can be set. The update of
+            /// multiple properties is supported. This call does not change the storage
+            /// keys for the account. If you want to change the storage account keys, use
+            /// the regenerate keys operation. The location and name of the storage
+            /// account cannot be changed after creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -295,16 +295,16 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// The update operation can be used to update the account type, encryption,
-            /// or tags for a storage account. It can also be used to map the account to
-            /// a custom domain. Only one custom domain is supported per storage account
-            /// and. replacement/change of custom domain is not supported. In order to
-            /// replace an old custom domain, the old value must be cleared/unregistered
-            /// before a new value may be set. Update of multiple properties is
-            /// supported. This call does not change the storage keys for the account. If
-            /// you want to change storage account keys, use the regenerate keys
-            /// operation.  The location and name of the storage account cannot be
-            /// changed after creation.
+            /// The update operation can be used to update the SKU, encryption, access
+            /// tier, or tags for a storage account. It can also be used to map the
+            /// account to a custom domain. Only one custom domain is supported per
+            /// storage account; the replacement/change of custom domain is not
+            /// supported. In order to replace an old custom domain, the old value must
+            /// be cleared/unregistered before a new value can be set. The update of
+            /// multiple properties is supported. This call does not change the storage
+            /// keys for the account. If you want to change the storage account keys, use
+            /// the regenerate keys operation. The location and name of the storage
+            /// account cannot be changed after creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -406,10 +406,12 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the storage account.
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and
+            /// use numbers and lower-case letters only.
             /// </param>
             public static StorageAccountListKeysResult ListKeys(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
             {
@@ -423,10 +425,12 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the storage account.
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and
+            /// use numbers and lower-case letters only.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -440,7 +444,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// Regenerates the access keys for the specified storage account.
+            /// Regenerates one of the access keys for the specified storage account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -461,7 +465,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// Regenerates the access keys for the specified storage account.
+            /// Regenerates one of the access keys for the specified storage account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -482,6 +486,106 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task<StorageAccountListKeysResult> RegenerateKeyAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List SAS credentials of a storage account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and
+            /// use numbers and lower-case letters only.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters to provide to list SAS credentials for the storage account.
+            /// </param>
+            public static ListAccountSasResponse ListAccountSAS(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, AccountSasParameters parameters)
+            {
+                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListAccountSASAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List SAS credentials of a storage account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and
+            /// use numbers and lower-case letters only.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters to provide to list SAS credentials for the storage account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ListAccountSasResponse> ListAccountSASAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAccountSASWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List service SAS credentials of a specific resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and
+            /// use numbers and lower-case letters only.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters to provide to list service SAS credentials.
+            /// </param>
+            public static ListServiceSasResponse ListServiceSAS(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ServiceSasParameters parameters)
+            {
+                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListServiceSASAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List service SAS credentials of a specific resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and
+            /// use numbers and lower-case letters only.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters to provide to list service SAS credentials.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ListServiceSasResponse> ListServiceSASAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListServiceSASWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

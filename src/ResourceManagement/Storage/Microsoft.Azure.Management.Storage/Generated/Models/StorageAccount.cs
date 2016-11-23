@@ -73,14 +73,15 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets the URLs that are used to perform a retrieval of a public
-        /// blob, queue or table object.Note that StandardZRS and PremiumLRS
-        /// accounts only return the blob endpoint.
+        /// blob, queue, or table object. Note that Standard_ZRS and
+        /// Premium_LRS accounts only return the blob endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryEndpoints")]
         public Endpoints PrimaryEndpoints { get; private set; }
 
         /// <summary>
-        /// Gets the location of the primary for the storage account.
+        /// Gets the location of the primary data center for the storage
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryLocation")]
         public string PrimaryLocation { get; private set; }
@@ -98,15 +99,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// the secondary location. Only the most recent timestamp is
         /// retained. This element is not returned if there has never been a
         /// failover instance. Only available if the accountType is
-        /// StandardGRS or StandardRAGRS.
+        /// Standard_GRS or Standard_RAGRS.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastGeoFailoverTime")]
         public DateTime? LastGeoFailoverTime { get; private set; }
 
         /// <summary>
-        /// Gets the location of the geo replicated secondary for the storage
-        /// account. Only available if the accountType is StandardGRS or
-        /// StandardRAGRS.
+        /// Gets the location of the geo-replicated secondary for the storage
+        /// account. Only available if the accountType is Standard_GRS or
+        /// Standard_RAGRS.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryLocation")]
         public string SecondaryLocation { get; private set; }
@@ -114,7 +115,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the status indicating whether the secondary location of the
         /// storage account is available or unavailable. Only available if
-        /// the accountType is StandardGRS or StandardRAGRS. Possible values
+        /// the SKU name is Standard_GRS or Standard_RAGRS. Possible values
         /// include: 'Available', 'Unavailable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.statusOfSecondary")]
@@ -127,33 +128,29 @@ namespace Microsoft.Azure.Management.Storage.Models
         public DateTime? CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets the user assigned custom domain assigned to this storage
-        /// account.
+        /// Gets the custom domain the user assigned to this storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; private set; }
 
         /// <summary>
         /// Gets the URLs that are used to perform a retrieval of a public
-        /// blob, queue or table object from the secondary location of the
-        /// storage account. Only available if the accountType is
-        /// StandardRAGRS.
+        /// blob, queue, or table object from the secondary location of the
+        /// storage account. Only available if the SKU name is Standard_RAGRS.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryEndpoints")]
         public Endpoints SecondaryEndpoints { get; private set; }
 
         /// <summary>
-        /// Gets the encryption settings on the account. If unspecified the
+        /// Gets the encryption settings on the account. If unspecified, the
         /// account is unencrypted.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; private set; }
 
         /// <summary>
-        /// The access tier used for billing. Access tier cannot be changed
-        /// more than once every 7 days (168 hours). Access tier cannot be
-        /// set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS
-        /// account types. Possible values include: 'Hot', 'Cool'
+        /// Required for storage accounts where kind = BlobStorage. The access
+        /// tier used for billing. Possible values include: 'Hot', 'Cool'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; private set; }

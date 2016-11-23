@@ -15,7 +15,7 @@
 
   "dependencies": {
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Azure.KeyVault": "[2.0.4-preview, 3.0)",
+    "Microsoft.Azure.KeyVault": "[2.0.5-preview, 3.0)",
     "Microsoft.AspNet.WebApi.Client": "5.2.2",
     "Microsoft.Azure.KeyVault.TestFramework": "[2.0.2-preview, 3.0)",
     "xunit": "2.2.0-beta2-build3300"

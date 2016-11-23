@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The encrypted services.
+    /// A list of services that support encryption.
     /// </summary>
     public partial class EncryptionServices
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
-        /// The blob service.
+        /// The encryption function of the blob storage service.
         /// </summary>
         [JsonProperty(PropertyName = "blob")]
         public EncryptionService Blob { get; set; }
