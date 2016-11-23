@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Abstract base class for character filters.
-    /// <see href="https://msdn.microsoft.com/library/mt605304.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search" />
     /// </summary>
     public partial class CharFilter
     {

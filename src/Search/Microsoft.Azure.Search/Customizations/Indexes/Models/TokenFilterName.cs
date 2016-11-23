@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Defines the names of all token filters supported by Azure Search.
-    /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx"/>
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<TokenFilterName>))]
     public sealed class TokenFilterName : ExtensibleEnum<TokenFilterName>
     {
         // MAINTENANCE NOTE: Keep these ordered the same as the table on this page:
-        // https://msdn.microsoft.com/library/azure/mt605304.aspx
+        // https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search
 
         /// <summary>
         /// A token filter that applies the Arabic normalizer to normalize the orthography.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Language specific stemming filter.
-        /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx#TokenFilters" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters" />
         /// </summary>
         public static readonly TokenFilterName Stemmer = new TokenFilterName("stemmer");
 

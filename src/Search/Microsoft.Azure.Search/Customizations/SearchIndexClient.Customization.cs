@@ -5,7 +5,6 @@
 namespace Microsoft.Azure.Search
 {
     using System;
-    using System.Linq;
     using System.Net.Http;
 
     public partial class SearchIndexClient
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Search
         /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
         /// <param name='indexName'>Required. The name of the Azure Search index.</param>
         /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/" />
         /// </param>
         public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials)
             : this()
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Search
         /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
         /// <param name='indexName'>Required. The name of the Azure Search index.</param>
         /// <param name='credentials'>Required. The credentials used to authenticate to an Azure Search service.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798935.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/" />
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.

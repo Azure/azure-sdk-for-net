@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for managing datasources. 
-    /// <see href="https://msdn.microsoft.com/library/azure/dn946891.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations" />
     /// </summary>
     public static partial class DataSourcesOperationsExtensions
     {

@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Defines the names of all tokenizers supported by Azure Search.
-    /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx"/>
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<TokenizerName>))]
     public sealed class TokenizerName : ExtensibleEnum<TokenizerName>
     {
         // MAINTENANCE NOTE: Keep these ordered the same as the table on this page:
-        // https://msdn.microsoft.com/library/azure/mt605304.aspx
+        // https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search
 
         /// <summary>
         /// Grammar-based tokenizer that is suitable for processing most
