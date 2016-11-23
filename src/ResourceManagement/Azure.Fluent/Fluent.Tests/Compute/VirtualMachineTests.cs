@@ -173,7 +173,7 @@ namespace Fluent.Tests.Compute
                     Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
                 }
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 Assert.True(false, exception.Message);
             }

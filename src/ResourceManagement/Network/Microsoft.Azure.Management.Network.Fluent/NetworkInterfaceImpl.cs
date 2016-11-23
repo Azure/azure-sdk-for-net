@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (this.creatableNetworkSecurityGroupKey == null)
             {
                 this.creatableNetworkSecurityGroupKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             }
 
             return this;
@@ -447,13 +447,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:94051374E70252DDB3C7A3FEDAA8537B:FC7B116552CE8C8D172AF7124F9B7092
-        internal void AddToCreatableDependencies(IResourceCreator<IResource> creatableResource)
+        internal void AddToCreatableDependencies(IResourceCreator<IHasId> creatableResource)
         {
             AddCreatableDependency(creatableResource);
         }
 
         ///GENMHASH:C67758EF2E365B570BC697E1F615237E:D9E5129DA20E099859BE4DEE002923C8
-        internal IResource CreatedDependencyResource(string key)
+        internal IHasId CreatedDependencyResource(string key)
         {
             return CreatedResource(key);
         }

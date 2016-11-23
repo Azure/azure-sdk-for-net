@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public void DeleteByName(string name)
         {
-            DeleteByIdAsync(name).Wait();
+            DeleteByNameAsync(name).Wait();
         }
 
         public Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))

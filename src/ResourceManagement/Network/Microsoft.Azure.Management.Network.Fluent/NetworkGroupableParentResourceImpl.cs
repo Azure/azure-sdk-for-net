@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal FluentResourceT WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatablePIP)
         {
             creatablePIPKeys.Add(creatablePIP.Key, DEFAULT);
-            AddCreatableDependency(creatablePIP as IResourceCreator<IResource>);
+            AddCreatableDependency(creatablePIP as IResourceCreator<IHasId>);
             return this as FluentResourceT;
         }
 

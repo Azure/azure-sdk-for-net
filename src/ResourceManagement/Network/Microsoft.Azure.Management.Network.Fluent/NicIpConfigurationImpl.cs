@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
             creatableVirtualNetworkKey = creatable.Key;
-            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IResource>);
+            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IHasId>);
             return this;
         }
 
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (creatablePublicIpKey == null)
             {
                 creatablePublicIpKey = creatable.Key;
-                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IResource>);
+                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IHasId>);
             }
 
             return this;
