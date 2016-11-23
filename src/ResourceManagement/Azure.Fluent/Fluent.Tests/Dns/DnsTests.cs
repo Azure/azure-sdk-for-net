@@ -15,7 +15,7 @@ namespace Azure.Tests.Dns
 {
     public class DnsTests
     {
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateUpdateDnsZone()
         {
             var region = Region.US_EAST;
