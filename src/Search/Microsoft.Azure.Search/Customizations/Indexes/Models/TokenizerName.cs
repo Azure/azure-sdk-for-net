@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Search.Models
         /// Emits the entire input as a single token.
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
         /// </summary>
-        public static readonly TokenizerName Keyword = new TokenizerName("keyword");
+        public static readonly TokenizerName Keyword = new TokenizerName("keyword_v2");
 
         /// <summary>
         /// Divides text at non-letters.
@@ -49,6 +49,16 @@ namespace Microsoft.Azure.Search.Models
         public static readonly TokenizerName Lowercase = new TokenizerName("lowercase");
 
         /// <summary>
+        /// Divides text using language-specific rules.
+        /// </summary>
+        public static readonly TokenizerName MicrosoftLanguageTokenizer = new TokenizerName("microsoft_language_tokenizer");
+
+        /// <summary>
+        /// Divides text using language-specific rules and reduces words to their base forms.
+        /// </summary>
+        public static readonly TokenizerName MicrosoftLanguageStemmingTokenizer = new TokenizerName("microsoft_language_stemming_tokenizer");
+
+        /// <summary>
         /// Tokenizes the input into n-grams of the given size(s).
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html" />
         /// </summary>
@@ -58,7 +68,7 @@ namespace Microsoft.Azure.Search.Models
         /// Tokenizer for path-like hierarchies.
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html" />
         /// </summary>
-        public static readonly TokenizerName PathHierarchy = new TokenizerName("path_hierarchy");
+        public static readonly TokenizerName PathHierarchy = new TokenizerName("path_hierarchy_v2");
 
         /// <summary>
         /// Tokenizer that uses regex pattern matching to construct distinct tokens.
@@ -71,7 +81,7 @@ namespace Microsoft.Azure.Search.Models
         /// lowercase filter and stop filter.
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
         /// </summary>
-        public static readonly TokenizerName Standard = new TokenizerName("standard");
+        public static readonly TokenizerName Standard = new TokenizerName("standard_v2");
 
         /// <summary>
         /// Tokenizes urls and emails as one token.

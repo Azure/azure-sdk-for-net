@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Search.Models
         /// back of an input token.
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html" />
         /// </summary>
-        public static readonly TokenFilterName EdgeNGram = new TokenFilterName("edgeNGram");
+        public static readonly TokenFilterName EdgeNGram = new TokenFilterName("edgeNGram_v2");
 
         /// <summary>
         /// Removes elisions. For example, "l'avion" (the plane) will be converted
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Search.Models
         /// Generates n-grams of the given size(s).
         /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html" />
         /// </summary>
-        public static readonly TokenFilterName NGram = new TokenFilterName("nGram");
+        public static readonly TokenFilterName NGram = new TokenFilterName("nGram_v2");
 
         /// <summary>
         /// Applies normalization for Persian.
