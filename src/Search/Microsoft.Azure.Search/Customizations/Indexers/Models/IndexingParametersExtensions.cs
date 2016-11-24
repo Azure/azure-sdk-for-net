@@ -13,6 +13,22 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public static class IndexingParametersExtensions
     {
+        /// <summary> 
+        /// Specifies that the indexer will index only the storage metadata and completely skip the document extraction process. This is useful when 
+        /// you don't need the document content, nor do you need any of the content type-specific metadata properties. 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details. 
+        /// </summary> 
+        /// <param name="parameters">IndexingParameters to configure.</param> 
+        /// <remarks> 
+        /// This option only applies to indexers that index Azure Blob Storage. 
+        /// </remarks> 
+        /// <returns>The IndexingParameters instance.</returns> 
+        [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.StorageMetadata).")]
+        public static IndexingParameters IndexStorageMetadataOnly(this IndexingParameters parameters)
+        { 
+            return parameters.SetBlobExtractionMode(BlobExtractionMode.StorageMetadata); 
+        } 
+ 
         /// <summary>
         /// Specifies that the indexer will index only the blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and ExcludeFileNameExtensions, blobs
@@ -63,6 +79,22 @@ namespace Microsoft.Azure.Search.Models
             return parameters;
         }
 
+        /// <summary>
+        /// Specifies that the indexer will extract metadata, but skip content extraction for all blobs. If you want to skip content extraction for 
+        /// only some blobs, add AzureSearch_SkipContent metadata to those blobs individually instead of using this option. 
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details. 
+        /// </summary> 
+        /// <param name="parameters">IndexingParameters to configure.</param> 
+        /// <remarks> 
+        /// This option only applies to indexers that index Azure Blob Storage. 
+        /// </remarks> 
+        /// <returns>The IndexingParameters instance.</returns> 
+        [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.AllMetadata).")]
+        public static IndexingParameters SkipContent(this IndexingParameters parameters)
+        { 
+            return parameters.SetBlobExtractionMode(BlobExtractionMode.AllMetadata); 
+        } 
+ 
         /// <summary>
         /// Specifies which parts of a blob will be indexed by the blob storage indexer. 
         /// </summary>
