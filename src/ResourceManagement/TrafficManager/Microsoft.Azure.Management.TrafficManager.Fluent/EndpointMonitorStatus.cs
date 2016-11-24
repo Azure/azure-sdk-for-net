@@ -22,6 +22,20 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this.value.GetHashCode();
         }
 
+        public static bool operator ==(EndpointMonitorStatus lhs, EndpointMonitorStatus rhs)
+        {
+            if (object.ReferenceEquals(lhs, null))
+            {
+                return object.ReferenceEquals(rhs, null);
+            }
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(EndpointMonitorStatus lhs, EndpointMonitorStatus rhs)
+        {
+            return !(lhs == rhs);
+        }
+
         ///GENMHASH:86E56D83C59D665A2120AFEA8D89804D:DD06768FCF4C921AC5D5390E4B7F4A1A
         public override bool Equals(object obj)
         {

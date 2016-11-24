@@ -18,6 +18,20 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this.value.GetHashCode();
         }
 
+        public static bool operator ==(EndpointType lhs, EndpointType rhs)
+        {
+            if (object.ReferenceEquals(lhs, null))
+            {
+                return object.ReferenceEquals(rhs, null);
+            }
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(EndpointType lhs, EndpointType rhs)
+        {
+            return !(lhs == rhs);
+        }
+
         public override bool Equals(object obj)
         {
 
@@ -36,7 +50,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             {
                 return rhs.value == null;
             }
-            return value.Equals(rhs.value);
+            return value.Equals(rhs.value, System.StringComparison.OrdinalIgnoreCase);
         }
 
         public override string ToString()
