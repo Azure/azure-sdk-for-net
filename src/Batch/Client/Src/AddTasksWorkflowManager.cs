@@ -259,7 +259,7 @@
             this._customerVisibleFileStagingArtifacts.Add(legStagingArtifacts);
 
             // now we have all files, send off to file staging machine
-            System.Threading.Tasks.Task fileStagingTask = FileStagingLinkedSources.StageFilesAsync(allFiles, legStagingArtifacts, namingFragment);
+            System.Threading.Tasks.Task fileStagingTask = FileStagingUtils.StageFilesAsync(allFiles, legStagingArtifacts, namingFragment);
 
             // wait for file staging async task
             await fileStagingTask.ConfigureAwait(continueOnCapturedContext: false);

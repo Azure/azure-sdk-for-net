@@ -122,7 +122,6 @@
                      "ArgumentOutOfRangeException",
                      "InvalidOperationException",
                      "ArgumentException",
-                     "FileNotFoundException",
                      "ParallelOperationsException",
                  };
 

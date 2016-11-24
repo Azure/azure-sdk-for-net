@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Batch
     /// each type of <see cref="FileStaging.IFileStagingProvider"/> in the FilesToStage collection. The key of
     /// the dictionary entry is the <see cref="Type"/> of the IFileStagingProvider and the value is an instance
     /// of the corresponding implementation of IFileStagingArtifact.  For example, if FilesToStage includes one or more
-    /// <see cref="FileStaging.FileToStage"/> objects, then the dictionary contains an entry whose key is
-    /// typeof(FileToStage) and whose value is an instance of <see cref="FileStaging.SequentialFileStagingArtifact"/>.
+    /// FileToStage objects (from the Microsoft.Azure.Batch.FileStaging library), then the dictionary contains an entry whose key is
+    /// typeof(FileToStage) and whose value is an instance of SequentialFileStagingArtifact.
     /// </para>
     /// <para>
     /// When the Add Task operation completes, or during the Add Task operation if the application is multi-threaded,
     /// you can examine the dictionary and convert each IFileStagingArtifact to the appropriate type to retrieve
     /// the type-specific information.  For example, if your Add Task operation specified one or more FileToStage objects,
     /// you can locate the dictionary entry keyed by typeof(FileToStage), cast the value to SequentialFileStagingArtifact,
-    /// and examine the <see cref="FileStaging.SequentialFileStagingArtifact.BlobContainerCreated"/> property to
+    /// and examine the SequentialFileStagingArtifact.BlobContainerCreated property to
     /// determine if the upload process created a blob container in Azure Storage and if so the name of that container.
     /// This example could be useful for cleaning up automatically created containers.
     /// </para>

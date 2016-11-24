@@ -122,6 +122,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Batch.FileStaging\Batch.FileStaging.csproj">
+      <Project>{a7b9cd95-7ec3-4ccf-b20f-951fd2d028f1}</Project>
+      <Name>Batch.FileStaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Src\Batch.csproj">
       <Project>{3328fbbf-9c20-4775-b367-856c09dc13bf}</Project>
       <Name>Batch</Name>
