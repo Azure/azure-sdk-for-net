@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Batch
             }
 
             // now we have all files, send off to file staging machine
-            System.Threading.Tasks.Task fileStagingTask = FileStagingLinkedSources.StageFilesAsync(allFiles, allFileStagingArtifacts);
+            System.Threading.Tasks.Task fileStagingTask = FileStagingUtils.StageFilesAsync(allFiles, allFileStagingArtifacts);
 
             // wait for file staging async task
             await fileStagingTask.ConfigureAwait(continueOnCapturedContext: false);
