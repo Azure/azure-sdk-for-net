@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch", "Src\Batch.csproj", "{3328FBBF-9C20-4775-B367-856C09DC13BF}"
 EndProject
@@ -49,6 +49,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer", "Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj", "{48215D6D-DB21-48B8-AB03-1297A94DF696}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer.Tests", "Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.Tests\ConfigureAwaitAnalyzer.Tests.csproj", "{5F8690AA-765A-4112-8C68-0BB00C322FDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch.FileStaging", "Batch.FileStaging\Batch.FileStaging.csproj", "{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,12 @@ Global
 		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{5F8690AA-765A-4112-8C68-0BB00C322FDB}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,5 +145,6 @@ Global
 		{D007B9BF-D886-4B0A-87E0-AEB6EFB1390F} = {3DE96B66-463F-470B-92F2-7284A2DD022C}
 		{48215D6D-DB21-48B8-AB03-1297A94DF696} = {D007B9BF-D886-4B0A-87E0-AEB6EFB1390F}
 		{5F8690AA-765A-4112-8C68-0BB00C322FDB} = {D007B9BF-D886-4B0A-87E0-AEB6EFB1390F}
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1} = {9EC38B72-3B6D-46DF-89B4-1CF689C3CB2C}
 	EndGlobalSection
 EndGlobal
