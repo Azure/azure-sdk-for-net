@@ -371,7 +371,6 @@ namespace Microsoft.Azure.Search.Tests
                     .ExcludeFileNameExtensions(".pdf")
                     .IndexFileNameExtensions(".docx")
                     .SetBlobExtractionMode(BlobExtractionMode.StorageMetadata)
-                    .ParseDelimitedTextFiles("a", "b", "c")
                     .DoNotFailOnUnsupportedContentType();
 
                 Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
