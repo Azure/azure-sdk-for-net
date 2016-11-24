@@ -163,6 +163,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 AnalyzerName[] allAnalyzerNames = GetAllExtensibleEnumValues<AnalyzerName>();
 
+                //TODO,brjohnst: Remove this logic after Analyze API validation has been fixed
+                allAnalyzerNames = allAnalyzerNames.Except(new[] { AnalyzerName.StandardLucene }).ToArray();
+
                 var requests = allAnalyzerNames.Select(an => new AnalyzeRequest() { Text = "One two", Analyzer = an });
 
                 foreach (var req in requests)
@@ -171,6 +174,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
 
                 TokenizerName[] allTokenizerNames = GetAllExtensibleEnumValues<TokenizerName>();
+
+                //TODO,brjohnst: Remove this logic after Analyze API validation has been fixed
+                allTokenizerNames =
+                    allTokenizerNames
+                        .Except(new[] { TokenizerName.MicrosoftLanguageTokenizer, TokenizerName.MicrosoftLanguageStemmingTokenizer })
+                        .ToArray();
 
                 requests = allTokenizerNames.Select(tn => new AnalyzeRequest() { Text = "One two", Tokenizer = tn });
 
