@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Search
         {
             this.Documents = new DocumentsOperations(this);
             this.BaseUri = new Uri("http://localhost");
-            this.ApiVersion = "2015-02-28-Preview";
+            this.ApiVersion = "2016-09-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the list of facet expressions to apply to the search query. Each facet expression contains a
         /// field name, optionally followed by a comma-separated list of name:value pairs.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
         /// </summary>
         public IList<string> Facets { get; set; }
 

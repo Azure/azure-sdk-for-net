@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Resets the change tracking state associated with an Azure Search indexer.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946897.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Reset-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer to reset.
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Runs an Azure Search indexer on-demand.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946885.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Run-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer to run.
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new Azure Search indexer or updates an indexer if it already
         /// exists.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer to create or update.
@@ -649,7 +649,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Deletes an Azure Search indexer.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946898.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer to delete.
@@ -846,7 +846,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves an indexer definition from Azure Search.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946874.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer" />
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer to retrieve.
@@ -1041,7 +1041,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Lists all indexers available for an Azure Search service.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946883.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexers" />
         /// </summary>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -1227,7 +1227,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new Azure Search indexer.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Indexer" />
         /// </summary>
         /// <param name='indexer'>
         /// The definition of the indexer to create.
@@ -1431,7 +1431,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Returns the current status and execution history of an indexer.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946884.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Indexer-Status" />
         /// </summary>
         /// <param name='indexerName'>
         /// The name of the indexer for which to retrieve status.

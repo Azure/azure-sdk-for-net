@@ -44,10 +44,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the data source type.</param>
         /// <returns>A DataSourceType instance with the given name.</returns>
-        public static DataSourceType Create(string name)
-        {
-            // Data source type names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new DataSourceType(name);
-        }
+        public static DataSourceType Create(string name) => Lookup(name) ?? new DataSourceType(name);
+
+        /// <summary>
+        /// Defines implicit conversion from string to DataSourceType.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a DataSourceType.</returns>
+        public static implicit operator DataSourceType(string name) => Create(name);
     }
 }

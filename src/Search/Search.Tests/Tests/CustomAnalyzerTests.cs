@@ -163,6 +163,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 AnalyzerName[] allAnalyzerNames = GetAllExtensibleEnumValues<AnalyzerName>();
 
+                //TODO,brjohnst: Remove this logic after Analyze API validation has been fixed
+                allAnalyzerNames = allAnalyzerNames.Except(new[] { AnalyzerName.StandardLucene }).ToArray();
+
                 var requests = allAnalyzerNames.Select(an => new AnalyzeRequest() { Text = "One two", Analyzer = an });
 
                 foreach (var req in requests)
@@ -171,6 +174,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
 
                 TokenizerName[] allTokenizerNames = GetAllExtensibleEnumValues<TokenizerName>();
+
+                //TODO,brjohnst: Remove this logic after Analyze API validation has been fixed
+                allTokenizerNames =
+                    allTokenizerNames
+                        .Except(new[] { TokenizerName.MicrosoftLanguageTokenizer, TokenizerName.MicrosoftLanguageStemmingTokenizer })
+                        .ToArray();
 
                 requests = allTokenizerNames.Select(tn => new AnalyzeRequest() { Text = "One two", Tokenizer = tn });
 
@@ -237,18 +246,18 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 // Declare some custom component names to use with CustomAnalyzer. All other names will be randomly generated.
-                var customTokenizerName = TokenizerName.Create("my_tokenizer");
-                var customTokenFilterName = TokenFilterName.Create("my_tokenfilter");
-                var customCharFilterName = CharFilterName.Create("my_charfilter");
+                const string CustomTokenizerName = "my_tokenizer";
+                const string CustomTokenFilterName = "my_tokenfilter";
+                const string CustomCharFilterName = "my_charfilter";
 
                 Index index = CreateTestIndex();
                 index.Analyzers = new Analyzer[]
                 {
                     new CustomAnalyzer(
                         SearchTestUtilities.GenerateName(), 
-                        customTokenizerName, 
-                        new[] { customTokenFilterName }, 
-                        new[] { customCharFilterName }),
+                        CustomTokenizerName, 
+                        new TokenFilterName[] { CustomTokenFilterName }, 
+                        new CharFilterName[] { CustomCharFilterName }),
                     new CustomAnalyzer(
                         SearchTestUtilities.GenerateName(),
                         TokenizerName.EdgeNGram),
@@ -265,7 +274,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 index.Tokenizers = new Tokenizer[]
                 {
-                    new EdgeNGramTokenizer(customTokenizerName, minGram: 1, maxGram: 2),    // One custom tokenizer for CustomAnalyzer above.
+                    new EdgeNGramTokenizer(CustomTokenizerName, minGram: 1, maxGram: 2),    // One custom tokenizer for CustomAnalyzer above.
                     new EdgeNGramTokenizer(
                         SearchTestUtilities.GenerateName(), 
                         minGram: 2, 
@@ -302,7 +311,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 index.TokenFilters = new TokenFilter[]
                 {
-                    new CjkBigramTokenFilter(customTokenFilterName),    // One custom token filter for CustomAnalyzer above.
+                    new CjkBigramTokenFilter(CustomTokenFilterName),    // One custom token filter for CustomAnalyzer above.
                     new CjkBigramTokenFilter(
                         SearchTestUtilities.GenerateName(), 
                         ignoreScripts: new[] { CjkBigramTokenFilterScripts.Han }, 
@@ -377,7 +386,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 index.CharFilters = new CharFilter[]
                 {
-                    new MappingCharFilter(customCharFilterName, mappings: new[] { "a => b" }),    // One custom char filter for CustomAnalyzer above.
+                    new MappingCharFilter(CustomCharFilterName, mappings: new[] { "a => b" }),    // One custom char filter for CustomAnalyzer above.
                     new MappingCharFilter(SearchTestUtilities.GenerateName(), mappings: new[] { "s => $", "S => $" }),
                     new PatternReplaceCharFilter(SearchTestUtilities.GenerateName(), pattern: "abc", replacement: "123")
                 };
