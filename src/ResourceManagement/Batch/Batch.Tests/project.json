@@ -3,6 +3,13 @@
   "description": "Batch.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
 
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
+
   "testRunner": "xunit",
   "frameworks": {
     "netcoreapp1.0": {
