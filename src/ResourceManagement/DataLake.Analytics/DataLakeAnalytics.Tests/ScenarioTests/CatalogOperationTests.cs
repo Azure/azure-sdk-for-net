@@ -246,6 +246,27 @@ namespace DataLakeAnalytics.Tests
                         commonData.SecondDataLakeAnalyticsAccountName,
                         commonData.DatabaseName, commonData.SecretName));
 
+                    // Re-create and delete the credential using cascade = true, which should still succeed.
+                    clientToUse.Catalog.CreateCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName,
+                        new DataLakeAnalyticsCatalogCredentialCreateParameters
+                        {
+                            Password = commonData.SecretPwd,
+                            Uri = "https://adlasecrettest.contoso.com:443",
+                            UserId = TestUtilities.GenerateGuid("fakeUserId01").ToString()
+                        });
+
+                    clientToUse.Catalog.DeleteCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName,
+                        new DataLakeAnalyticsCatalogCredentialDeleteParameters(commonData.SecretPwd), cascade: true);
+
+                    // Try to get the credential which should throw
+                    Assert.Throws<CloudException>(() => clientToUse.Catalog.GetCredential(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, commonData.SecretName));
+
                     // TODO: once support is available for delete all credentials add tests here for that.
                 }
             }

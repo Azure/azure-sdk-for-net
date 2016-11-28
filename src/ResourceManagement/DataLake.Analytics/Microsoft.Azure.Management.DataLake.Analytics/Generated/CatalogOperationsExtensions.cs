@@ -455,9 +455,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters to delete a credential if the current user is not the
             /// account owner.
             /// </param>
-            public static void DeleteCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters))
+            /// <param name='cascade'>
+            /// Indicates if the delete should be a cascading delete (which deletes all
+            /// resources dependent on the credential as well as the credential) or not.
+            /// If false will fail if there are any resources relying on the credential.
+            /// </param>
+            public static void DeleteCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteCredentialAsync(accountName, databaseName, credentialName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteCredentialAsync(accountName, databaseName, credentialName, parameters, cascade), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -480,12 +485,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters to delete a credential if the current user is not the
             /// account owner.
             /// </param>
+            /// <param name='cascade'>
+            /// Indicates if the delete should be a cascading delete (which deletes all
+            /// resources dependent on the credential as well as the credential) or not.
+            /// If false will fail if there are any resources relying on the credential.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, parameters, cascade, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
