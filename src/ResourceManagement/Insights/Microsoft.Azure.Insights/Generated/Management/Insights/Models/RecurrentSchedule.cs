@@ -23,33 +23,33 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// <summary>
         /// Initializes a new instance of the RecurrentSchedule class.
         /// </summary>
-        /// <param name="timeZone">the time zone for the hours of the profile.
-        /// See examples of valid timezone are: Dateline Standard Time, UTC-11,
-        /// Hawaiian Standard Time, Alaskan Standard Time, Pacific Standard
-        /// Time (Mexico), Pacific Standard Time, US Mountain Standard Time,
-        /// Mountain Standard Time (Mexico), Mountain Standard Time, Central
-        /// America Standard Time, Central Standard Time, Central Standard Time
-        /// (Mexico), Canada Central Standard Time, SA Pacific Standard Time,
-        /// Eastern Standard Time, US Eastern Standard Time, Venezuela Standard
-        /// Time, Paraguay Standard Time, Atlantic Standard Time, Central
-        /// Brazilian Standard Time, SA Western Standard Time, Pacific SA
-        /// Standard Time, Newfoundland Standard Time, E. South America
-        /// Standard Time, Argentina Standard Time, SA Eastern Standard Time,
-        /// Greenland Standard Time, Montevideo Standard Time, Bahia Standard
-        /// Time, UTC-02, Mid-Atlantic Standard Time, Azores Standard Time,
-        /// Cape Verde Standard Time, Morocco Standard Time, UTC, GMT Standard
-        /// Time, Greenwich Standard Time, W. Europe Standard Time, Central
-        /// Europe Standard Time, Romance Standard Time, Central European
-        /// Standard Time, W. Central Africa Standard Time, Namibia Standard
-        /// Time, Jordan Standard Time, GTB Standard Time, Middle East Standard
-        /// Time, Egypt Standard Time, Syria Standard Time, E. Europe Standard
-        /// Time, South Africa Standard Time, FLE Standard Time, Turkey
-        /// Standard Time, Israel Standard Time, Kaliningrad Standard Time,
-        /// Libya Standard Time, Arabic Standard Time, Arab Standard Time,
-        /// Belarus Standard Time, Russian Standard Time, E. Africa Standard
-        /// Time, Iran Standard Time, Arabian Standard Time, Azerbaijan
-        /// Standard Time, Russia Time Zone 3, Mauritius Standard Time,
-        /// Georgian Standard Time, Caucasus Standard Time, Afghanistan
+        /// <param name="timeZone">the timezone for the hours of the profile.
+        /// Some examples of valid timezones are: Dateline Standard Time,
+        /// UTC-11, Hawaiian Standard Time, Alaskan Standard Time, Pacific
+        /// Standard Time (Mexico), Pacific Standard Time, US Mountain Standard
+        /// Time, Mountain Standard Time (Mexico), Mountain Standard Time,
+        /// Central America Standard Time, Central Standard Time, Central
+        /// Standard Time (Mexico), Canada Central Standard Time, SA Pacific
+        /// Standard Time, Eastern Standard Time, US Eastern Standard Time,
+        /// Venezuela Standard Time, Paraguay Standard Time, Atlantic Standard
+        /// Time, Central Brazilian Standard Time, SA Western Standard Time,
+        /// Pacific SA Standard Time, Newfoundland Standard Time, E. South
+        /// America Standard Time, Argentina Standard Time, SA Eastern Standard
+        /// Time, Greenland Standard Time, Montevideo Standard Time, Bahia
+        /// Standard Time, UTC-02, Mid-Atlantic Standard Time, Azores Standard
+        /// Time, Cape Verde Standard Time, Morocco Standard Time, UTC, GMT
+        /// Standard Time, Greenwich Standard Time, W. Europe Standard Time,
+        /// Central Europe Standard Time, Romance Standard Time, Central
+        /// European Standard Time, W. Central Africa Standard Time, Namibia
+        /// Standard Time, Jordan Standard Time, GTB Standard Time, Middle East
+        /// Standard Time, Egypt Standard Time, Syria Standard Time, E. Europe
+        /// Standard Time, South Africa Standard Time, FLE Standard Time,
+        /// Turkey Standard Time, Israel Standard Time, Kaliningrad Standard
+        /// Time, Libya Standard Time, Arabic Standard Time, Arab Standard
+        /// Time, Belarus Standard Time, Russian Standard Time, E. Africa
+        /// Standard Time, Iran Standard Time, Arabian Standard Time,
+        /// Azerbaijan Standard Time, Russia Time Zone 3, Mauritius Standard
+        /// Time, Georgian Standard Time, Caucasus Standard Time, Afghanistan
         /// Standard Time, West Asia Standard Time, Ekaterinburg Standard Time,
         /// Pakistan Standard Time, India Standard Time, Sri Lanka Standard
         /// Time, Nepal Standard Time, Central Asia Standard Time, Bangladesh
@@ -82,8 +82,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         }
 
         /// <summary>
-        /// Gets or sets the time zone for the hours of the profile. See
-        /// examples of valid timezone are: Dateline Standard Time, UTC-11,
+        /// Gets or sets the timezone for the hours of the profile. Some
+        /// examples of valid timezones are: Dateline Standard Time, UTC-11,
         /// Hawaiian Standard Time, Alaskan Standard Time, Pacific Standard
         /// Time (Mexico), Pacific Standard Time, US Mountain Standard Time,
         /// Mountain Standard Time (Mexico), Mountain Standard Time, Central
