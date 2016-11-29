@@ -65,9 +65,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// string that can be used to create similar VMs.
         /// </summary>
         /// <param name="containerName">containerName destination container name to store the captured Vhd</param>
+        /// <param name="vhdPrefix">vhdPrefix the prefix for the vhd holding captured image</param>
         /// <param name="overwriteVhd">overwriteVhd whether to overwrites destination vhd if it exists</param>
         /// <returns>the template as json string</returns>
-        string Capture(string containerName, bool overwriteVhd);
+        string Capture(string containerName, string vhdPrefix, bool overwriteVhd);
 
         /// <summary>
         /// Refreshes the virtual machine instance view to sync with Azure.

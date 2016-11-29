@@ -65,8 +65,8 @@ namespace ManageVirtualMachine
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(userName)
-                            .WithPassword(password)
+                            .WithAdminUsername(userName)
+                            .WithAdminPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
                     var endTime = DateTimeOffset.Now.UtcDateTime;
@@ -181,8 +181,8 @@ namespace ManageVirtualMachine
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword(password)
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
 

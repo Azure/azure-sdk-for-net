@@ -78,8 +78,8 @@ namespace ManageVirtualMachinesInParallel
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName("tirekicker")
-                            .WithPassword("12NewPA$$w0rd!")
+                            .WithRootUsername("tirekicker")
+                            .WithRootPassword("12NewPA$$w0rd!")
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithNewStorageAccount(creatableStorageAccount);
                         creatableVirtualMachines.Add(creatableVirtualMachine);

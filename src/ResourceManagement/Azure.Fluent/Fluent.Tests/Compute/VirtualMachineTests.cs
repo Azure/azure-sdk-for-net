@@ -40,8 +40,8 @@ namespace Fluent.Tests.Compute
                     .WithPrimaryPrivateIpAddressDynamic()
                     .WithoutPrimaryPublicIpAddress()
                     .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_DATACENTER)
-                    .WithAdminUserName("Foo12")
-                    .WithPassword("BaR@12!Foo")
+                    .WithAdminUsername("Foo12")
+                    .WithAdminPassword("BaR@12!Foo")
                     .WithSize(VirtualMachineSizeTypes.StandardD3)
                     .WithOsDiskCaching(CachingTypes.ReadWrite)
                     .WithOsDiskName("javatest")
@@ -58,7 +58,7 @@ namespace Fluent.Tests.Compute
                 Assert.Equal(LOCATION, foundedVM.RegionName);
 
                 // Fetch instance view
-                PowerState? powerState = foundedVM.PowerState;
+                PowerState powerState = foundedVM.PowerState;
                 Assert.True(powerState == PowerState.RUNNING);
                 VirtualMachineInstanceView instanceView = foundedVM.InstanceView;
                 Assert.NotNull(instanceView);
@@ -67,7 +67,7 @@ namespace Fluent.Tests.Compute
                 // Capture the VM [Requires VM to be Poweroff and generalized]
                 foundedVM.PowerOff();
                 foundedVM.Generalize();
-                var jsonResult = foundedVM.Capture("capturedVhds", true);
+                var jsonResult = foundedVM.Capture("capturedVhds", "cpt", true);
                 Assert.NotNull(jsonResult);
 
                 // Delete VM
@@ -126,8 +126,8 @@ namespace Fluent.Tests.Compute
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName("tirekicker")
-                            .WithPassword("BaR@12!#")
+                            .WithRootUsername("tirekicker")
+                            .WithRootPassword("BaR@12!#")
                             .WithNewStorageAccount(storageAccountCreatable);
                     virtualMachineCreatables.Add(virtualMachineCreatable);
                 }
