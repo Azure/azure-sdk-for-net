@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:FE4BD2ACA7E297312697D10EB6E88C35:F1D888A0B0ADA9B0BB01B024FD2C692B
         public Region SourceTrafficLocation()
         {
-            return EnumNameAttribute.FromName<Region>(Inner.EndpointLocation);
+            return Region.Create(Inner.EndpointLocation);
         }
 
         ///GENMHASH:577F8437932AEC6E08E1A137969BDB4A:3CC692393857371CADD3A0EF3687C595

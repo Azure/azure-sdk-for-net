@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:91BB0A08404D6D37671F71EB696F7DDA:C7EED8E9DF95CD503E77886E10606183
         public TrafficManagerEndpointImpl FromRegion(Region location)
         {
-            this.Inner.EndpointLocation = EnumNameAttribute.GetName(location);
+            this.Inner.EndpointLocation = location.Name;
             return this;
         }
 

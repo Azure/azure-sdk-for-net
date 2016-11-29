@@ -137,7 +137,7 @@ namespace Azure.Tests.TrafficManager
                         Assert.Equal(1, endpoint.RoutingPriority);
                         Assert.Equal(externalFqdn21, endpoint.Fqdn);
                         Assert.NotNull(endpoint.MonitorStatus);
-                        // Assert.Equal(Region.US_EAST, endpoint.SourceTrafficLocation);
+                        Assert.Equal(Region.US_EAST, endpoint.SourceTrafficLocation);
                         c++;
                     }
                     else if (endpoint.Name.Equals(externalEndpointName22, StringComparison.OrdinalIgnoreCase))
@@ -145,7 +145,7 @@ namespace Azure.Tests.TrafficManager
                         Assert.Equal(2, endpoint.RoutingPriority);
                         Assert.Equal(externalFqdn22, endpoint.Fqdn);
                         Assert.NotNull(endpoint.MonitorStatus);
-                        // Assert.Equal(Region.US_EAST2, endpoint.SourceTrafficLocation);
+                        Assert.Equal(Region.US_EAST2, endpoint.SourceTrafficLocation);
                         c++;
                     }
                 }
@@ -176,7 +176,7 @@ namespace Azure.Tests.TrafficManager
                         Assert.NotNull(endpoint.MonitorStatus);
                         Assert.Equal(1, endpoint.MinimumChildEndpointCount);
                         Assert.Equal(nestedProfile.Id, endpoint.NestedProfileId);
-                        // Assert.Equal(Region.INDIA_CENTRAL, endpoint.SourceTrafficLocation);
+                        Assert.Equal(Region.INDIA_CENTRAL, endpoint.SourceTrafficLocation);
                         c++;
                     }
                 }
@@ -218,7 +218,7 @@ namespace Azure.Tests.TrafficManager
                     {
                         Assert.Equal(2, endpoint.RoutingPriority);
                         Assert.Equal(externalFqdn22, endpoint.Fqdn);
-                        // Assert.Equal(Region.US_EAST2, endpoint.SourceTrafficLocation);
+                        Assert.Equal(Region.US_EAST2, endpoint.SourceTrafficLocation);
                         Assert.NotNull(endpoint.MonitorStatus);
                         c++;
                     }
@@ -227,7 +227,7 @@ namespace Azure.Tests.TrafficManager
                         Assert.Equal(6, endpoint.RoutingPriority);
                         Assert.Equal(externalFqdn23, endpoint.Fqdn);
                         Assert.NotNull(endpoint.MonitorStatus);
-                        // Assert.Equal(Region.US_CENTRAL, endpoint.SourceTrafficLocation);
+                        Assert.Equal(Region.US_CENTRAL, endpoint.SourceTrafficLocation);
                         c++;
                     }
                     else
