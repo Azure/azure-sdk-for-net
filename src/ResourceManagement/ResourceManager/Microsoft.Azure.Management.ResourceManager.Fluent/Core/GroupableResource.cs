@@ -124,6 +124,16 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             return WithExistingResourceGroup(group.Name);
         }
 
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(string name, Region region)
+        {
+            return this.WithNewResourceGroup(this.manager.ResourceManager.ResourceGroups.Define(name).WithRegion(region));
+        }
+
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(Region region)
+        {
+            return this.WithNewResourceGroup(this.Name + "group", region);
+        }
+
         #endregion
     }
 }

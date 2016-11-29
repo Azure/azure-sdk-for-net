@@ -22,6 +22,7 @@
   "dependencies": {
     "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Dns.Fluent": "1.0.0-beta3",
     "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
