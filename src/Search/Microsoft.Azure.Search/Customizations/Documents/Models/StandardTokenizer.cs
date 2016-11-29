@@ -17,32 +17,34 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Emits the entire input as a single token. This tokenizer is
-    /// implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
+    /// Breaks text following the Unicode Text Segmentation rules. This
+    /// tokenizer is implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.KeywordTokenizer")]
-    public partial class KeywordTokenizer : Tokenizer
+    [JsonObject("#Microsoft.Azure.Search.StandardTokenizer")]
+    [Obsolete("This type is obsolete. Please use StandardTokenizerV2 instead.")]
+    public partial class StandardTokenizer : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the KeywordTokenizer class.
+        /// Initializes a new instance of the StandardTokenizer class.
         /// </summary>
-        public KeywordTokenizer() { }
+        public StandardTokenizer() { }
 
         /// <summary>
-        /// Initializes a new instance of the KeywordTokenizer class.
+        /// Initializes a new instance of the StandardTokenizer class.
         /// </summary>
-        public KeywordTokenizer(string name, int? bufferSize = default(int?))
+        public StandardTokenizer(string name, int? maxTokenLength = default(int?))
             : base(name)
         {
-            BufferSize = bufferSize;
+            MaxTokenLength = maxTokenLength;
         }
 
         /// <summary>
-        /// Gets or sets the read buffer size in bytes. Default is 256.
+        /// Gets or sets the maximum token length. Default is 255. Tokens
+        /// longer than the maximum length are split
         /// </summary>
-        [JsonProperty(PropertyName = "bufferSize")]
-        public int? BufferSize { get; set; }
+        [JsonProperty(PropertyName = "maxTokenLength")]
+        public int? MaxTokenLength { get; set; }
 
         /// <summary>
         /// Validate the object.

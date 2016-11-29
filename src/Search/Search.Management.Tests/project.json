@@ -33,7 +33,7 @@
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.*,4.0)",
     "Microsoft.Azure.Management.ResourceManager": "1.1.1-preview",
     "Microsoft.Azure.Management.Search": "1.0.0-rc",
-    "Microsoft.Azure.Search": "2.0.6-preview",
+    "Microsoft.Azure.Search": "2.0.7-preview",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   }

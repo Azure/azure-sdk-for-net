@@ -17,33 +17,33 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Truncates the terms to a specific length. This token filter is
-    /// implemented using Apache Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/TruncateTokenFilter.html" />
+    /// Emits the entire input as a single token.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.TruncateTokenFilter")]
-    public partial class TruncateTokenFilter : TokenFilter
+    [JsonObject("#Microsoft.Azure.Search.KeywordTokenizerV2")]
+    public partial class KeywordTokenizerV2 : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the TruncateTokenFilter class.
+        /// Initializes a new instance of the KeywordTokenizerV2 class.
         /// </summary>
-        public TruncateTokenFilter() { }
+        public KeywordTokenizerV2() { }
 
         /// <summary>
-        /// Initializes a new instance of the TruncateTokenFilter class.
+        /// Initializes a new instance of the KeywordTokenizerV2 class.
         /// </summary>
-        public TruncateTokenFilter(string name, int? length = default(int?))
+        public KeywordTokenizerV2(string name, int? maxTokenLength = default(int?))
             : base(name)
         {
-            Length = length;
+            MaxTokenLength = maxTokenLength;
         }
 
         /// <summary>
-        /// Gets or sets the length at which terms will be truncated. Default
-        /// and maximum is 300.
+        /// Gets or sets the maximum token length. Default is 256. Tokens
+        /// longer than the maximum length are split. The maximum token
+        /// length that can be used is 300 characters.
         /// </summary>
-        [JsonProperty(PropertyName = "length")]
-        public int? Length { get; set; }
+        [JsonProperty(PropertyName = "maxTokenLength")]
+        public int? MaxTokenLength { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.Length > 300)
+            if (this.MaxTokenLength > 300)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Length", 300);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxTokenLength", 300);
             }
         }
     }
