@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <returns>key of this child resource in the collection maintained by ExternalChildResourceCollectionImpl
-        public string ChildResourceKey
+        public virtual string ChildResourceKey
         {
             get
             {

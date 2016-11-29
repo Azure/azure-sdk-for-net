@@ -12,6 +12,8 @@ using Microsoft.Rest;
 using System.Linq;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
+using Microsoft.Azure.Management.Dns.Fluent;
+
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -26,6 +28,7 @@ namespace Microsoft.Azure.Management.Fluent
         private IBatchManager batchManager;
         private IKeyVaultManager keyVaultManager;
         private ITrafficManager trafficManager;
+        private IDnsZoneManager dnsZoneManager;
 
         #endregion Service Managers
 
@@ -164,6 +167,14 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IDnsZones DnsZones
+        {
+            get
+            {
+                return dnsZoneManager.Zones;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -177,6 +188,7 @@ namespace Microsoft.Azure.Management.Fluent
             batchManager = BatchManager.Authenticate(restClient, subscriptionId);
             keyVaultManager = KeyVaultManager.Authenticate(restClient, subscriptionId, tenantId);
             trafficManager = Trafficmanager.Fluent.TrafficManager.Authenticate(restClient, subscriptionId);
+            dnsZoneManager = DnsZoneManager.Authenticate(restClient, subscriptionId);
             SubscriptionId = subscriptionId;
         }
 
@@ -349,5 +361,7 @@ namespace Microsoft.Azure.Management.Fluent
         IVaults Vaults { get; }
 
         ITrafficManagerProfiles TrafficManagerProfiles { get; }
+
+        IDnsZones DnsZones { get; }
     }
 }
