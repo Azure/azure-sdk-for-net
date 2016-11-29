@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public PagedList<IVirtualMachineExtensionImage> ListByRegion (Region region)
         {
-            return ListByRegion(EnumNameAttribute.GetName(region));
+            return ListByRegion(region.Name);
         }
 
         public PagedList<IVirtualMachineExtensionImage> ListByRegion (string regionName)

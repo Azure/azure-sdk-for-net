@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return EnumNameAttribute.FromName<Region>(this.RegionName);
+                return Region.Create(this.RegionName);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public IDefinitionAfterRegion WithRegion(Region region)
         {
-            return this.WithRegion(EnumNameAttribute.GetName(region));
+            return this.WithRegion(Region.Name);
         }
 
         public FluentResourceT WithTags(IDictionary<string, string> tags)

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public PagedList<IVirtualMachineOffer> List()
         {
             IEnumerable<VirtualMachineImageResourceInner> innerOffers =
-                innerCollection.ListOffers(EnumNameAttribute.GetName(publisher.Region), publisher.Name);
+                innerCollection.ListOffers(publisher.Region.Name, publisher.Name);
             var pagedList = new PagedList<VirtualMachineImageResourceInner>(innerOffers);
             return WrapList(pagedList);
         }
