@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access/regeneratePrimaryKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access/regenerateSecondaryKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

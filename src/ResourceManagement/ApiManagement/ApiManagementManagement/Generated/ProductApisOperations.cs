@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(pid);
             url = url + "/apis";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -868,7 +868,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
