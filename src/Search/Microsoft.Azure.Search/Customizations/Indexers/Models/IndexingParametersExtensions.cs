@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary> 
         /// Specifies that the indexer will index only the storage metadata and completely skip the document extraction process. This is useful when 
         /// you don't need the document content, nor do you need any of the content type-specific metadata properties. 
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details. 
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details. 
         /// </summary> 
         /// <param name="parameters">IndexingParameters to configure.</param> 
         /// <remarks> 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Specifies that the indexer will extract metadata, but skip content extraction for all blobs. If you want to skip content extraction for 
         /// only some blobs, add AzureSearch_SkipContent metadata to those blobs individually instead of using this option. 
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details. 
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details. 
         /// </summary> 
         /// <param name="parameters">IndexingParameters to configure.</param> 
         /// <remarks> 
