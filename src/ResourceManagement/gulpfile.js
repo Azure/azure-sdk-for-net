@@ -71,7 +71,20 @@ var mappings = {
         'source': 'arm-cdn/2016-10-02/swagger/cdn.json',
         'package': 'Microsoft.Azure.Management.Cdn.Fluent',
         'args': '-FT 2'
+    },
+    'dns': {
+        'dir': 'Dns/Microsoft.Azure.Management.Dns.Fluent',
+        'source': 'arm-dns/2016-04-01/swagger/dns.json',
+        'package': 'Microsoft.Azure.Management.Dns.Fluent',
+        'args': '-FT 2'
+    },
+    'trafficmanager': {
+        'dir': 'TrafficManager/Microsoft.Azure.Management.TrafficManager.Fluent',
+        'source': 'arm-trafficmanager/2015-11-01/swagger/trafficmanager.json',
+        'package': 'Microsoft.Azure.Management.TrafficManager.Fluent',
+        'args': '-FT 2'
     }
+
 };
 
 gulp.task('default', function() {

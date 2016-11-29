@@ -13,19 +13,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition;
     /// <summary>
-    /// The stage of the Linux virtual machine definition allowing to specify root user name.
-    /// </summary>
-    public interface IWithRootUserName 
-    {
-        /// <summary>
-        /// Specifies the root user name for the Linux virtual machine.
-        /// </summary>
-        /// <param name="rootUserName">rootUserName the Linux root user name. This must follow the required naming convention for Linux user name</param>
-        /// <returns>the next stage of the Linux virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreate WithRootUserName(string rootUserName);
-
-    }
-    /// <summary>
     /// The stage of the virtual machine definition allowing to specify the Operation System image.
     /// </summary>
     public interface IWithOS 
@@ -35,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <param name="knownImage">knownImage enum value indicating known market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithAdminUserName WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsername WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage);
 
         /// <summary>
         /// Specifies that the latest version of a marketplace Windows image needs to be used.
@@ -44,28 +31,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="offer">offer specifies the offer of the image</param>
         /// <param name="sku">sku specifies the SKU of the image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithAdminUserName WithLatestWindowsImage(string publisher, string offer, string sku);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsername WithLatestWindowsImage(string publisher, string offer, string sku);
 
         /// <summary>
         /// Specifies the version of a marketplace Windows image needs to be used.
         /// </summary>
         /// <param name="imageReference">imageReference describes publisher, offer, sku and version of the market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithAdminUserName WithSpecificWindowsImageVersion(ImageReference imageReference);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsername WithSpecificWindowsImageVersion(ImageReference imageReference);
 
         /// <summary>
         /// Specifies the user (generalized) Windows image used for the virtual machine's OS.
         /// </summary>
         /// <param name="imageUrl">imageUrl the url the the VHD</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithAdminUserName WithStoredWindowsImage(string imageUrl);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsername WithStoredWindowsImage(string imageUrl);
 
         /// <summary>
         /// Specifies the known marketplace Linux image used for the virtual machine's OS.
         /// </summary>
         /// <param name="knownImage">knownImage enum value indicating known market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRootUserName WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsername WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage);
 
         /// <summary>
         /// Specifies that the latest version of a marketplace Linux image needs to be used.
@@ -74,21 +61,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="offer">offer specifies the offer of the image</param>
         /// <param name="sku">sku specifies the SKU of the image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRootUserName WithLatestLinuxImage(string publisher, string offer, string sku);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsername WithLatestLinuxImage(string publisher, string offer, string sku);
 
         /// <summary>
         /// Specifies the version of a market-place Linux image needs to be used.
         /// </summary>
         /// <param name="imageReference">imageReference describes publisher, offer, sku and version of the market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRootUserName WithSpecificLinuxImageVersion(ImageReference imageReference);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsername WithSpecificLinuxImageVersion(ImageReference imageReference);
 
         /// <summary>
         /// Specifies the user (generalized) Linux image used for the virtual machine's OS.
         /// </summary>
         /// <param name="imageUrl">imageUrl the url the the VHD</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRootUserName WithStoredLinuxImage(string imageUrl);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsername WithStoredLinuxImage(string imageUrl);
 
         /// <summary>
         /// Specifies the specialized operating system disk to be attached to the virtual machine.
@@ -99,15 +86,108 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOsDisk(string osDiskUrl, OperatingSystemTypes osType);
 
     }
+
     /// <summary>
-    /// The stage of the definition which contains all the minimum required inputs for
-    /// the resource to be created (via {@link WithCreate#create()}), but also allows
-    /// for any other optional settings to be specified.
+    /// The stage of the Linux virtual machine definition allowing to specify SSH root user name.
     /// </summary>
-    public interface IWithCreate  :
+    public interface IWithLinuxRootUsername
+    {
+        /// <summary>
+        /// Specifies the SSH root user name for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootUserName">the Linux SSH root user name. This must follow the required naming convention for Linux user name</param>
+        /// <returns>the next stage of the Linux virtual machine definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKey WithRootUsername(string rootUserName);
+    }
+
+    /// <summary>
+    /// The stage of the Linux virtual machine definition allowing to specify SSH root password or public key.
+    /// </summary>
+    public interface IWithLinuxRootPasswordOrPublicKey
+    {
+        /// <summary>
+        /// Specifies the SSH root password for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootPassword">the SSH root password. This must follow the criteria for Azure Linux VM password.</param>
+        /// <returns>the next stage of the Linux virtual machine definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreate WithRootPassword(string rootPassword);
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// <p>
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">the SSH public key in PEM format.</param>
+        /// <returns>the next stage of the Linux virtual machine definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreate WithSsh(string publicKey);
+    }
+
+    /// <summary>
+    /// The stage of the Windows virtual machine definition allowing to specify administrator user name.
+    /// </summary>
+    public interface IWithWindowsAdminUsername
+    {
+        /// <summary>
+        /// Specifies the administrator user name for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminUserName">the Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
+        /// <returns>the stage representing creatable Linux VM definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminPassword WithAdminUsername(string adminUserName);
+    }
+
+    /// <summary>
+    /// The stage of the Windows virtual machine definition allowing to specify administrator user name.
+    /// </summary>
+    public interface IWithWindowsAdminPassword
+    {
+        /// <summary>
+        /// Specifies the administrator password for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminPassword">the administrator password. This must follow the criteria for Azure Windows VM password.</param>
+        /// <returns>the stage representing creatable Windows VM definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreate WithAdminPassword(string adminPassword);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine definition allowing to specify the custom data.
+    /// </summary>
+    public interface IWithCustomData
+    {
+        /// <summary>
+        /// Specifies the custom data for the virtual machine.
+        /// </summary>
+        /// <param name="base64EncodedCustomData">the base64 encoded custom data</param>
+        /// <returns>the stage representing creatable Windows VM definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptions WithCustomData(string base64EncodedCustomData);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine definition allowing to specify the computer name.
+    /// </summary>
+    public interface IWithComputerName
+    {
+        /// <summary>
+        /// Specifies the computer name for the virtual machine.
+        /// </summary>
+        /// <param name="computerName">the computer name</param>
+        /// <returns>the stage representing creatable VM definition</returns>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptions WithComputerName(string computerName);
+    }
+
+    /// <summary>
+    /// The stages contains OS agnostics settings when virtual machine is created from image.
+    /// </summary>
+    public interface IWithFromImageCreateOptions : IWithCustomData, IWithComputerName, IWithCreate {
+    }
+
+/// <summary>
+/// The stage of the definition which contains all the minimum required inputs for
+/// the resource to be created (via {@link WithCreate#create()}), but also allows
+/// for any other optional settings to be specified.
+/// </summary>
+public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>,
-        IWithPassword,
         IWithOsDiskSettings,
         IWithVMSize,
         IWithStorageAccount,
@@ -135,19 +215,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the stage representing configuration for the extension</returns>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate> DefineNewExtension(string name);
-
-    }
-    /// <summary>
-    /// The stage of the Windows virtual machine definition allowing to specify administrator user name.
-    /// </summary>
-    public interface IWithAdminUserName 
-    {
-        /// <summary>
-        /// Specifies the administrator user name for the Windows virtual machine.
-        /// </summary>
-        /// <param name="adminUserName">adminUserName the Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
-        /// <returns>the stage representing creatable Linux VM definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreate WithAdminUserName(string adminUserName);
 
     }
     /// <summary>
@@ -257,8 +324,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         IWithPublicIpAddress,
         IWithPrimaryNetworkInterface,
         IWithOS,
-        IWithRootUserName,
-        IWithAdminUserName,
+        IWithLinuxRootUsername,
+        IWithLinuxRootPasswordOrPublicKey,
+        IWithWindowsAdminUsername,
+        IWithWindowsAdminPassword,
+        IWithFromImageCreateOptions,
         IWithLinuxCreate,
         IWithWindowsCreate,
         IWithCreate
@@ -422,19 +492,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithoutPrimaryPublicIpAddress();
 
     }
-    /// <summary>
-    /// The stage of the virtual machine definition allowing to specify password.
-    /// </summary>
-    public interface IWithPassword 
-    {
-        /// <summary>
-        /// Specifies the password for the virtual machine.
-        /// </summary>
-        /// <param name="password">password the password. This must follow the criteria for Azure VM password.</param>
-        /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithPassword(string password);
 
-    }
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify availability set.
     /// </summary>
@@ -520,7 +578,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithLinuxCreate  :
-        IWithCreate
+        IWithFromImageCreateOptions
     {
         /// <summary>
         /// Specifies the SSH public key.
@@ -538,19 +596,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithWindowsCreate  :
-        IWithCreate
+        IWithFromImageCreateOptions
     {
         /// <summary>
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreate DisableVmAgent();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreate WithoutVmAgent();
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreate DisableAutoUpdate();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreate WithoutAutoUpdate();
 
         /// <summary>
         /// Specifies the time-zone.

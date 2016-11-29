@@ -175,7 +175,7 @@ namespace ManageVirtualNetwork
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithNewPrimaryPublicIpAddress(publicIpAddressLeafDnsForFrontEndVm)
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
+                            .WithRootUsername(userName)
                             .WithSsh(sshKey)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
@@ -200,7 +200,7 @@ namespace ManageVirtualNetwork
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
+                            .WithRootUsername(userName)
                             .WithSsh(sshKey)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();

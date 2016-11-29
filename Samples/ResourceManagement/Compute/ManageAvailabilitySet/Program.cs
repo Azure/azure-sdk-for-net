@@ -90,8 +90,8 @@ namespace ManageAvailabilitySet
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(userName)
-                            .WithPassword(password)
+                            .WithAdminUsername(userName)
+                            .WithAdminPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithExistingAvailabilitySet(availSet1)
                             .Create();
@@ -111,8 +111,8 @@ namespace ManageAvailabilitySet
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword(password)
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithExistingAvailabilitySet(availSet1)
                             .Create();
