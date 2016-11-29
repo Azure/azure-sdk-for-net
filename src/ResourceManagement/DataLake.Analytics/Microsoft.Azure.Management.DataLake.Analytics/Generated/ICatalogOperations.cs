@@ -284,6 +284,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The parameters to delete a credential if the current user is not
         /// the account owner.
         /// </param>
+        /// <param name='cascade'>
+        /// Indicates if the delete should be a cascading delete (which
+        /// deletes all resources dependent on the credential as well as the
+        /// credential) or not. If false will fail if there are any resources
+        /// relying on the credential.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -296,7 +302,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics
         /// catalog.

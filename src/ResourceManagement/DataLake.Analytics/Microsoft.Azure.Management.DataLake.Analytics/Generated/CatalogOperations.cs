@@ -1628,6 +1628,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The parameters to delete a credential if the current user is not the
         /// account owner.
         /// </param>
+        /// <param name='cascade'>
+        /// Indicates if the delete should be a cascading delete (which deletes all
+        /// resources dependent on the credential as well as the credential) or not.
+        /// If false will fail if there are any resources relying on the credential.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1643,7 +1648,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -1676,6 +1681,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("credentialName", credentialName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cascade", cascade);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCredential", tracingParameters);
             }
@@ -1687,6 +1693,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             _url = _url.Replace("{databaseName}", Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{credentialName}", Uri.EscapeDataString(credentialName));
             List<string> _queryParameters = new List<string>();
+            if (cascade != null)
+            {
+                _queryParameters.Add(string.Format("cascade={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(cascade, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));

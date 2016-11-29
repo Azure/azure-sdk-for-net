@@ -17,32 +17,32 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Generates n-grams of the given size(s) starting from the front or the
-    /// back of an input token. This token filter is implemented using Apache
-    /// Lucene.
-    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html" />
+    /// Generates n-grams of the given size(s). This token filter is
+    /// implemented using Apache Lucene.
+    /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.EdgeNGramTokenFilter")]
-    public partial class EdgeNGramTokenFilter : TokenFilter
+    [JsonObject("#Microsoft.Azure.Search.NGramTokenFilter")]
+    [Obsolete("This type is obsolete. Please use NGramTokenFilterV2 instead.")]
+    public partial class NGramTokenFilter : TokenFilter
     {
         /// <summary>
-        /// Initializes a new instance of the EdgeNGramTokenFilter class.
+        /// Initializes a new instance of the NGramTokenFilter class.
         /// </summary>
-        public EdgeNGramTokenFilter() { }
+        public NGramTokenFilter() { }
 
         /// <summary>
-        /// Initializes a new instance of the EdgeNGramTokenFilter class.
+        /// Initializes a new instance of the NGramTokenFilter class.
         /// </summary>
-        public EdgeNGramTokenFilter(string name, int? minGram = default(int?), int? maxGram = default(int?), EdgeNGramTokenFilterSide? side = default(EdgeNGramTokenFilterSide?))
+        public NGramTokenFilter(string name, int? minGram = default(int?), int? maxGram = default(int?))
             : base(name)
         {
             MinGram = minGram;
             MaxGram = maxGram;
-            Side = side;
         }
 
         /// <summary>
-        /// Gets or sets the minimum n-gram length. Default is 1.
+        /// Gets or sets the minimum n-gram length. Default is 1. Must be less
+        /// than the value of minGram.
         /// </summary>
         [JsonProperty(PropertyName = "minGram")]
         public int? MinGram { get; set; }
@@ -52,14 +52,6 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxGram")]
         public int? MaxGram { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies which side of the input the n-gram should
-        /// be generated from. Default is "front". Possible values include:
-        /// 'front', 'back'
-        /// </summary>
-        [JsonProperty(PropertyName = "side")]
-        public EdgeNGramTokenFilterSide? Side { get; set; }
 
         /// <summary>
         /// Validate the object.

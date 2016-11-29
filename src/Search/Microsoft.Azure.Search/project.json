@@ -1,5 +1,5 @@
 {
-  "version": "2.0.6-preview",
+  "version": "2.0.7-preview",
   "title": "Microsoft Azure Search Library",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
   "authors": [ "Microsoft" ],
@@ -10,8 +10,8 @@
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Search", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
-    "requireLicenseAcceptance":  true,
-    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API. It includes support for indexing Azure Blob and Table storage, indexer field mappings, custom analyzers, and ETags. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade."
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API. New in this version is support for reflection-based field definitions via the FieldBuilder class, thanks to a contribution from Ian Griffiths (https://github.com/idg10). It also includes support for indexing Azure Blob and Table storage, indexer field mappings, custom analyzers, and ETags. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade."
   },
 
   "buildOptions": {
