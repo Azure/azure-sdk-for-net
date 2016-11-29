@@ -202,6 +202,9 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseReadScaleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\FirewallCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

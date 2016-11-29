@@ -90,6 +90,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._maxSizeBytes = value; }
         }
         
+        private string _readScale;
+        
+        /// <summary>
+        /// Optional. Gets or sets the read scale property for the Azure Sql
+        /// Database (Enabled or Disabled).
+        /// </summary>
+        public string ReadScale
+        {
+            get { return this._readScale; }
+            set { this._readScale = value; }
+        }
+        
         private string _recoveryServicesRecoveryPointResourceId;
         
         /// <summary>
