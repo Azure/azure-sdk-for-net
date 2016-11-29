@@ -72,12 +72,6 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.Cdn.Fluent',
         'args': '-FT 2'
     },
-    'cdn': {
-        'dir': 'Cdn/Microsoft.Azure.Management.Cdn.Fluent',
-        'source': 'arm-cdn/2016-10-02/swagger/cdn.json',
-        'package': 'Microsoft.Azure.Management.Cdn.Fluent',
-        'args': '-FT 2'
-    },
     'dns': {
         'dir': 'Dns/Microsoft.Azure.Management.Dns.Fluent',
         'source': 'arm-dns/2016-04-01/swagger/dns.json',
