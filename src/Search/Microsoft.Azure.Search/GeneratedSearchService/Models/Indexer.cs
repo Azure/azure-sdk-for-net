@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Represents an Azure Search indexer.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn946891.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Indexer-operations" />
     /// </summary>
     public partial class Indexer
     {

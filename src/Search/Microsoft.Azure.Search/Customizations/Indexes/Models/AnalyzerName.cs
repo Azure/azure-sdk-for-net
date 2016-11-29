@@ -9,15 +9,15 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Defines the names of all text analyzers supported by Azure Search.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx"/>
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Language-support"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<AnalyzerName>))]
     public sealed class AnalyzerName : ExtensibleEnum<AnalyzerName>
     {
         // MAINTENANCE NOTE: Keep the language analyzers ordered the same as the table on this page:
-        // https://msdn.microsoft.com/library/azure/dn879793.aspx
+        // https://docs.microsoft.com/rest/api/searchservice/Language-support
         // The other pre-defined analyzers come next, and should be ordered the same as the table on this page:
-        // https://msdn.microsoft.com/library/azure/mt605304.aspx
+        // https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search
 
         /// <summary>
         /// Microsoft analyzer for Arabic.
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Standard ASCII Folding Lucene analyzer.
-        /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx#Analyzers" /> 
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers" /> 
         /// </summary>
         public static readonly AnalyzerName StandardAsciiFoldingLucene =
             new AnalyzerName(AsString.StandardAsciiFoldingLucene);
@@ -939,7 +939,7 @@ namespace Microsoft.Azure.Search.Models
 
             /// <summary>
             /// Standard ASCII Folding Lucene analyzer.
-            /// <see href="https://msdn.microsoft.com/library/azure/mt605304.aspx#Analyzers" /> 
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers" /> 
             /// </summary>
             public static readonly string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
 
@@ -986,10 +986,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the analyzer.</param>
         /// <returns>An AnalyzerName instance with the given name.</returns>
-        public static AnalyzerName Create(string name)
-        {
-            // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new AnalyzerName(name);
-        }
+        public static AnalyzerName Create(string name) => Lookup(name) ?? new AnalyzerName(name);
+
+        /// <summary>
+        /// Defines implicit conversion from string to AnalyzerName.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as an AnalyzerName.</returns>
+        public static implicit operator AnalyzerName(string name) => Create(name);
     }
 }

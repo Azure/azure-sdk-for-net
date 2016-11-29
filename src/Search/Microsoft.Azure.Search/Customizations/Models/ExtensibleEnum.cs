@@ -29,14 +29,27 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Defines implicit conversion from ExtensibleEnum to string.
+        /// Compares two ExtensibleEnum values for equality.
+        /// </summary>
+        /// <param name="lhs">The first ExtensibleEnum to compare.</param>
+        /// <param name="rhs">The second ExtensibleEnum to compare.</param>
+        /// <returns>true if the ExtensibleEnum objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(ExtensibleEnum<T> lhs, T rhs) => object.Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two ExtensibleEnum values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first ExtensibleEnum to compare.</param>
+        /// <param name="rhs">The second ExtensibleEnum to compare.</param>
+        /// <returns>true if the ExtensibleEnum objects are not equal; false otherwise.</returns>
+        public static bool operator !=(ExtensibleEnum<T> lhs, T rhs) => !object.Equals(lhs, rhs);
+
+        /// <summary>
+        /// Defines explicit conversion from ExtensibleEnum to string.
         /// </summary>
         /// <param name="name">ExtensibleEnum to convert.</param>
         /// <returns>The ExtensibleEnum as a string.</returns>
-        public static implicit operator string(ExtensibleEnum<T> name)
-        {
-            return (name != null) ? name.ToString() : null;
-        }
+        public static explicit operator string(ExtensibleEnum<T> name) => name?.ToString();
 
         /// <summary>
         /// Looks up an ExtensibleEnum instance by name, or returns null if the given name does not match one of the
@@ -49,14 +62,7 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNull(name, "name");
 
             T analyzerName;
-            if (_nameMap.Value.TryGetValue(name, out analyzerName))
-            {
-                return analyzerName;
-            }
-            else
-            {
-                return null;
-            }
+            return _nameMap.Value.TryGetValue(name, out analyzerName) ? analyzerName : null;
         }
 
         /// <summary>

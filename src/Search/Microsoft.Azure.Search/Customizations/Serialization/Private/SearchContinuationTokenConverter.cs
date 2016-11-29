@@ -45,11 +45,10 @@ namespace Microsoft.Azure.Search.Serialization
 
             if (apiVersion != Consts.TargetApiVersion)
             {
-                const string MessageFormat =
+                string message =
                     "Cannot deserialize a continuation token for a different api-version. Token contains version " +
-                    "'{0}'; Expected version '{1}'.";
+                    $"'{apiVersion}'; Expected version '{Consts.TargetApiVersion}'.";
 
-                string message = string.Format(MessageFormat, apiVersion, Consts.TargetApiVersion);
                 throw new JsonSerializationException(message);
             }
 

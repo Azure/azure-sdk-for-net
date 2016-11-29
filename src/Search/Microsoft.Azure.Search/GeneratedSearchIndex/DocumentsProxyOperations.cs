@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Queries the number of documents in the Azure Search index.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798924.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Count-Documents" />
         /// </summary>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
