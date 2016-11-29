@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
                 resources.Add(resource);
             }
 
-            List<Task> allTasks = new List<Task>();
+            ConcurrentBag<Task> allTasks = new ConcurrentBag<Task>();
             foreach (FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeRemoved))
             {
                 FluentModelTImpl res = resource;

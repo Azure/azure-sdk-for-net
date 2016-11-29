@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Defi
     /// 
     /// @param <T> the next stage of the resource definition
     /// </summary>
-    public interface IWithGroup<T>  :
+    public interface IWithGroup<T> :
         IWithExistingResourceGroup<T>,
         IWithNewResourceGroup<T>
     {
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Defi
     /// 
     /// </summary>
     /// <typeparam name="T">the next stage of the resource definition</typeparam>
-    public interface IWithGroupAndRegion<T> : 
+    public interface IWithGroupAndRegion<T> :
         IWithExistingResourceGroup<T>,
         IWithNewResourceGroupWithRegion<T>
     {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Defi
         /// </summary>
         /// <param name="name">name the name of the new group</param>
         /// <returns>the next stage of the resource definition</returns>
-        T WithNewResourceGroup (string name);
+        T WithNewResourceGroup(string name);
 
         /// <summary>
         /// Creates a new resource group to put the resource in.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Defi
         /// The group's name is automatically derived from the resource's name.
         /// </summary>
         /// <returns>the next stage of the resource definition</returns>
-        T WithNewResourceGroup ();
+        T WithNewResourceGroup();
     }
 
 
@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Defi
     /// </summary>
     /// <typeparam name="T">the next stage of the resource definition</typeparam>
     public interface IWithNewResourceGroupWithRegion<T> :
-            IWithCreatableResourceGroup<T> {
+            IWithCreatableResourceGroup<T>
+    {
         /// <summary>
         /// Creates a new resource group to put the resource in.
         /// The group will be created in the same location as the resource.
@@ -103,21 +104,21 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Defi
     /// 
     /// @param <T> the next stage of the resource definition
     /// </summary>
-    public interface IWithExistingResourceGroup<T> 
+    public interface IWithExistingResourceGroup<T>
     {
         /// <summary>
         /// Associates the resource with an existing resource group.
         /// </summary>
         /// <param name="groupName">groupName the name of an existing resource group to put this resource in.</param>
         /// <returns>the next stage of the resource definition</returns>
-        T WithExistingResourceGroup (string groupName);
+        T WithExistingResourceGroup(string groupName);
 
         /// <summary>
         /// Associates the resource with an existing resource group.
         /// </summary>
         /// <param name="group">group an existing resource group to put the resource in</param>
         /// <returns>the next stage of the resource definition</returns>
-        T WithExistingResourceGroup (IResourceGroup group);
+        T WithExistingResourceGroup(IResourceGroup group);
 
     }
 }
