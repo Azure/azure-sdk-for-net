@@ -418,14 +418,14 @@ namespace Storage.Tests
                 StorageAccountKey key1 = keys.Keys.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key1"));
                 Assert.NotNull(key1);
-                Assert.Equal(KeyPermission.FULL, key1.Permissions);
+                Assert.Equal(KeyPermission.Full, key1.Permissions);
                 Assert.NotNull(key1.Value);
 
                 // Validate Key2
                 StorageAccountKey key2 = keys.Keys.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
                 Assert.NotNull(key2);
-                Assert.Equal(KeyPermission.FULL, key2.Permissions);
+                Assert.Equal(KeyPermission.Full, key2.Permissions);
                 Assert.NotNull(key2.Value);
             }
         }

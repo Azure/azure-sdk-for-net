@@ -69,19 +69,19 @@ namespace Storage.Tests.Helpers
             }
         }
 
-        public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static StorageManagement GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            StorageManagementClient storageClient;
+            StorageManagement storageClient;
             if (IsTestTenant)
             {
-                storageClient = new StorageManagementClient(new TokenCredentials("xyz"), GetHandler());
+                storageClient = new StorageManagement(new TokenCredentials("xyz"), GetHandler());
                 storageClient.SubscriptionId = testSubscription;
                 storageClient.BaseUri = testUri;
             }
             else
             {
                 handler.IsPassThrough = true;
-                storageClient = context.GetServiceClient<StorageManagementClient>(handlers: handler);
+                storageClient = context.GetServiceClient<StorageManagement>(handlers: handler);
             }
             return storageClient;
         }
@@ -132,7 +132,7 @@ namespace Storage.Tests.Helpers
             return rgname;
         }
 
-        public static string CreateStorageAccount(StorageManagementClient storageMgmtClient, string rgname)
+        public static string CreateStorageAccount(StorageManagement storageMgmtClient, string rgname)
         {
             string accountName = TestUtilities.GenerateName("sto");
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
