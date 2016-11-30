@@ -87,8 +87,11 @@
     <Compile Include="Generated\IApisOperations.cs" />
     <Compile Include="Generated\IAuthorizationServersOperations.cs" />
     <Compile Include="Generated\ICertificatesOperations.cs" />
+    <Compile Include="Generated\IdentityProviderOperations.cs" />
+    <Compile Include="Generated\IdentityProviderOperationsExtensions.cs" />
     <Compile Include="Generated\IGroupsOperations.cs" />
     <Compile Include="Generated\IGroupUsersOperations.cs" />
+    <Compile Include="Generated\IIdentityProviderOperations.cs" />
     <Compile Include="Generated\ILoggerOperations.cs" />
     <Compile Include="Generated\IOpenIdConnectProvidersOperations.cs" />
     <Compile Include="Generated\IPolicySnippetsOperations.cs" />
@@ -202,6 +205,12 @@
     <Compile Include="Generated\SmapiModels\GroupPaged.cs" />
     <Compile Include="Generated\SmapiModels\GroupTypeContract.cs" />
     <Compile Include="Generated\SmapiModels\GroupUpdateParameters.cs" />
+    <Compile Include="Generated\SmapiModels\IdentityProviderContract.cs" />
+    <Compile Include="Generated\SmapiModels\IdentityProviderCreateParameters.cs" />
+    <Compile Include="Generated\SmapiModels\IdentityProviderGetResponse.cs" />
+    <Compile Include="Generated\SmapiModels\IdentityProviderListResponse.cs" />
+    <Compile Include="Generated\SmapiModels\IdentityProviderTypeContract.cs" />
+    <Compile Include="Generated\SmapiModels\IdentityProviderUpdateParameters.cs" />
     <Compile Include="Generated\SmapiModels\LoggerCreateParameters.cs" />
     <Compile Include="Generated\SmapiModels\LoggerGetContract.cs" />
     <Compile Include="Generated\SmapiModels\LoggerGetResponse.cs" />
