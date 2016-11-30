@@ -25,8 +25,6 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Initializes a new instance of the LogProfileResource class.
         /// </summary>
         /// <param name="location">Resource location</param>
-        /// <param name="storageAccountId">the resource id of the storage
-        /// account to which you would like to send the Activity Log.</param>
         /// <param name="locations">List of regions for which Activity Log
         /// events should be stored or streamed. It is a comma separated list
         /// of valid ARM locations including the 'global' location.</param>
@@ -34,6 +32,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="storageAccountId">the resource id of the storage
+        /// account to which you would like to send the Activity Log.</param>
         /// <param name="serviceBusRuleId">The service bus rule ID of the
         /// service bus namespace in which you would like to have Event Hubs
         /// created for streaming the Activity Log. The rule ID is of the
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// are: 'Write', 'Delete', and/or 'Action.'</param>
         /// <param name="retentionPolicy">the retention policy for the events
         /// in the log.</param>
-        public LogProfileResource(string location, string storageAccountId, System.Collections.Generic.IList<string> locations, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string serviceBusRuleId = default(string), System.Collections.Generic.IList<string> categories = default(System.Collections.Generic.IList<string>), RetentionPolicy retentionPolicy = default(RetentionPolicy))
+        public LogProfileResource(string location, System.Collections.Generic.IList<string> locations, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string storageAccountId = default(string), string serviceBusRuleId = default(string), System.Collections.Generic.IList<string> categories = default(System.Collections.Generic.IList<string>), RetentionPolicy retentionPolicy = default(RetentionPolicy))
             : base(location, id, name, type, tags)
         {
             StorageAccountId = storageAccountId;
@@ -101,10 +101,6 @@ namespace Microsoft.Azure.Management.Insights.Models
         public override void Validate()
         {
             base.Validate();
-            if (StorageAccountId == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "StorageAccountId");
-            }
             if (Locations == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Locations");
