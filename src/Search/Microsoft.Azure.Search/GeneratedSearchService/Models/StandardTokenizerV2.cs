@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Search.Models
     /// tokenizer is implemented using Apache Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html" />
     /// </summary>
-    [JsonObject("#Microsoft.Azure.Search.StandardTokenizer")]
-    public partial class StandardTokenizer : Tokenizer
+    [JsonObject("#Microsoft.Azure.Search.StandardTokenizerV2")]
+    public partial class StandardTokenizerV2 : Tokenizer
     {
         /// <summary>
-        /// Initializes a new instance of the StandardTokenizer class.
+        /// Initializes a new instance of the StandardTokenizerV2 class.
         /// </summary>
-        public StandardTokenizer() { }
+        public StandardTokenizerV2() { }
 
         /// <summary>
-        /// Initializes a new instance of the StandardTokenizer class.
+        /// Initializes a new instance of the StandardTokenizerV2 class.
         /// </summary>
-        public StandardTokenizer(string name, int? maxTokenLength = default(int?))
+        public StandardTokenizerV2(string name, int? maxTokenLength = default(int?))
             : base(name)
         {
             MaxTokenLength = maxTokenLength;

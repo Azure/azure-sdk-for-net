@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines a mapping between a field in a data source and a target field
     /// in an index.
-    /// <see href="https://azure.microsoft.com/documentation/articles/search-indexer-field-mappings/" />
+    /// <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings" />
     /// </summary>
     public partial class FieldMapping
     {
