@@ -102,7 +102,7 @@ namespace Insights.Tests.BasicTests
             var handler = new RecordedDelegatingHandler(response);
             var insightsClient = GetInsightsManagementClient(handler);
 
-            var actualIncidents = insightsClient.Incidents.ListByAlertRule(
+            var actualIncidents = insightsClient.AlertRuleIncidents.ListByAlertRule(
                 resourceGroupName: "rg1",
                 ruleName: "r1");
 

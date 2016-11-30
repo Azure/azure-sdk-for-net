@@ -82,7 +82,7 @@ namespace Insights.Tests.BasicTests
                             Count = 1,
                             Maximum = 10.0,
                             Minimum = 10.0,
-                            Timestamp = DateTime.Parse("2014-08-20T12:15:23.00Z"),
+                            TimeStamp = DateTime.Parse("2014-08-20T12:15:23.00Z"),
                             Total = 10.0
                         }
                     }
@@ -126,7 +126,7 @@ namespace Insights.Tests.BasicTests
                 Assert.Equal(exp.Count, act.Count);
                 Assert.Equal(exp.Maximum, act.Maximum);
                 Assert.Equal(exp.Minimum, act.Minimum);
-                Assert.Equal(exp.Timestamp.ToUniversalTime(), act.Timestamp.ToUniversalTime());
+                Assert.Equal(exp.TimeStamp.ToUniversalTime(), act.TimeStamp.ToUniversalTime());
                 Assert.Equal(exp.Total, act.Total);
             }
         }

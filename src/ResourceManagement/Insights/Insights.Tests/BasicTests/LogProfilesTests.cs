@@ -127,9 +127,9 @@ namespace Insights.Tests.BasicTests
             };
         }
 
-        private static LogProfileCreateOrUpdateParameters CreateLogProfileParams()
+        private static LogProfileResource CreateLogProfileParams()
         {
-            return new LogProfileCreateOrUpdateParameters
+            return new LogProfileResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
                 ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/sb1/authorizationrules/ar1",
@@ -139,7 +139,8 @@ namespace Insights.Tests.BasicTests
                 {
                     Days = 4,
                     Enabled = true,
-                }
+                },
+                Location = ""
             };
         }
 
