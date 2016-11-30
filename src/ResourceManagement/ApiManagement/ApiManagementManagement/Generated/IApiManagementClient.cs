@@ -147,6 +147,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Operations for managing Identity Providers.
+        /// </summary>
+        IIdentityProviderOperations IdentityProvider
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Loggers.
         /// </summary>
         ILoggerOperations Loggers

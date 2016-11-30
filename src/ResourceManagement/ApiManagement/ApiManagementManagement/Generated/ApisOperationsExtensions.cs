@@ -306,15 +306,18 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='wsdlEndpointName'>
         /// Optional. Local name of WSDL Endpoint (port) to be imported.
         /// </param>
+        /// <param name='apiType'>
+        /// Optional. Type of Api getting imported (Soap/Http).
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Import(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName)
+        public static AzureOperationResponse Import(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, string apiType)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApisOperations)s).ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, wsdlServiceName, wsdlEndpointName);
+                return ((IApisOperations)s).ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, wsdlServiceName, wsdlEndpointName, apiType);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -350,13 +353,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='wsdlEndpointName'>
         /// Optional. Local name of WSDL Endpoint (port) to be imported.
         /// </param>
+        /// <param name='apiType'>
+        /// Optional. Type of Api getting imported (Soap/Http).
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> ImportAsync(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName)
+        public static Task<AzureOperationResponse> ImportAsync(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, string apiType)
         {
-            return operations.ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, wsdlServiceName, wsdlEndpointName, CancellationToken.None);
+            return operations.ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, wsdlServiceName, wsdlEndpointName, apiType, CancellationToken.None);
         }
         
         /// <summary>

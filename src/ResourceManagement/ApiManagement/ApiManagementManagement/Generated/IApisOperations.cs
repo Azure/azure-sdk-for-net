@@ -156,6 +156,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='wsdlEndpointName'>
         /// Local name of WSDL Endpoint (port) to be imported.
         /// </param>
+        /// <param name='apiType'>
+        /// Type of Api getting imported (Soap/Http).
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -163,7 +166,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, string apiType, CancellationToken cancellationToken);
         
         /// <summary>
         /// List all APIs of the Api Management service instance.
