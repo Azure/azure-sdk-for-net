@@ -15,6 +15,8 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.ResourceManager;
+using System.Net;
+using Microsoft.Rest.TransientFaultHandling;
 
 namespace KeyVault.TestFramework
 {
@@ -23,10 +25,12 @@ namespace KeyVault.TestFramework
         // Required in test code
         public string vaultAddress;
         public bool standardVaultOnly;
+        public bool softDeleteEnabled;
         public string keyName;
         public string keyVersion;
         public KeyIdentifier keyIdentifier;
         public ClientCredential clientCredential;
+        public RetryPolicy retryExecutor;
 
         // Required for cleaning up at the end of the test
         private string rgName = "", appObjectId = "";
@@ -49,6 +53,10 @@ namespace KeyVault.TestFramework
                 keyName = keyIdentifier.Name;
                 keyVersion = keyIdentifier.Version;
                 tokenCache = new TokenCache();
+                retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new ExponentialBackoffRetryStrategy(8, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
+            } else
+            {
+                retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new FixedIntervalRetryStrategy(0));
             }
         }
 
@@ -118,10 +126,17 @@ namespace KeyVault.TestFramework
             string authClientId = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientId");
             string authSecret = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientSecret");
             string standardVaultOnlyString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StandardVaultOnly");
-            bool result;
-            if (!bool.TryParse(standardVaultOnlyString, out result))
+            string softDeleteEnabledString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("SoftDeleteEnabled");
+            bool standardVaultOnlyresult;
+            if (!bool.TryParse(standardVaultOnlyString, out standardVaultOnlyresult))
             {
-                result = false;
+                standardVaultOnlyresult = false;
+            }
+
+            bool softDeleteEnabledresult;
+            if (!bool.TryParse(softDeleteEnabledString, out softDeleteEnabledresult))
+            {
+                softDeleteEnabledresult = false;
             }
 
             if (string.IsNullOrWhiteSpace(vault) || string.IsNullOrWhiteSpace(authClientId) || string.IsNullOrWhiteSpace(authSecret))
@@ -130,7 +145,8 @@ namespace KeyVault.TestFramework
             {
                 this.vaultAddress = vault;
                 this.clientCredential = new ClientCredential(authClientId, authSecret);
-                this.standardVaultOnly = result;
+                this.standardVaultOnly = standardVaultOnlyresult;
+                this.softDeleteEnabled = softDeleteEnabledresult;
                 return true;
             }
         }
@@ -147,6 +163,26 @@ namespace KeyVault.TestFramework
         {
             var myclient = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
             return myclient;
+        }
+
+        public void WaitOnDeletedKey(KeyVaultClient client, string vaultAddress, string keyName)
+        {
+            this.retryExecutor.ExecuteAction(() => client.GetDeletedKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult());
+        }
+
+        public void WaitOnDeletedSecret(KeyVaultClient client, string vaultAddress, string secretName)
+        {
+            this.retryExecutor.ExecuteAction(() => client.GetDeletedSecretAsync(vaultAddress, secretName).GetAwaiter().GetResult());
+        }
+
+        public void WaitOnKey(KeyVaultClient client, string vaultAddress, string keyName)
+        {
+            this.retryExecutor.ExecuteAction(() => client.GetKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult());
+        }
+
+        public void WaitOnSecret(KeyVaultClient client, string vaultAddress, string secretName)
+        {
+            this.retryExecutor.ExecuteAction(() => client.GetSecretAsync(vaultAddress, secretName).GetAwaiter().GetResult());
         }
 
         public DelegatingHandler[] GetHandlers()
