@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-rc",
+  "version": "1.0.1",
   "title": "Microsoft Azure Search Management Library",
   "description": "Makes it easy to manage Azure Search services and API keys from a .NET application.",
   "authors": [ "Microsoft" ],
