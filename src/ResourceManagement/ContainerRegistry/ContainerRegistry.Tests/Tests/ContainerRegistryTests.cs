@@ -466,10 +466,16 @@ namespace ContainerRegistry.Tests
                 string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, rgName);
                 string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, rgName, storageName);
 
-                // Create container registry
+                // Delete a container registry which does not exist
+                registryClient.Registries.Delete(rgName, "doesnotexist");
+
+                // Create a container registry
                 string registryName = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, rgName, storageName, storageKey);
 
-                // Delete container registry
+                // Delete the container registry
+                registryClient.Registries.Delete(rgName, registryName);
+
+                // Delete the container registry again
                 registryClient.Registries.Delete(rgName, registryName);
             }
         }
