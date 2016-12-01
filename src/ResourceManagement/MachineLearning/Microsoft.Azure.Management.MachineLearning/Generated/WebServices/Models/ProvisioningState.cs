@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public const string Provisioning = "Provisioning";
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
-        public const string Canceled = "Canceled";
     }
 }
