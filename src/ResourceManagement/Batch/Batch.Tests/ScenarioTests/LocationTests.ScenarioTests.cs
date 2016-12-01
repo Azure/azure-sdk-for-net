@@ -30,9 +30,8 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task GetLocationQuotasAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
             {
-                Initialize(context);
                 BatchLocationQuota quotas = await this.BatchManagementClient.Location.GetQuotasAsync(this.Location);
 
                 Assert.NotNull(quotas.AccountQuota);

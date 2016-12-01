@@ -33,10 +33,8 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchAccountEndToEndAsync()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
             {
-                Initialize(context);
-
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
                 ResourceGroup group = new ResourceGroup(this.Location);
@@ -91,7 +89,14 @@ namespace Batch.Tests.ScenarioTests
                         }
                     }
                     // Verify account was deleted. A GET operation will return a 404 error and result in an exception
-                    await Assert.ThrowsAsync(typeof(CloudException), () => this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName));
+                    try
+                    {
+                        await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
                 }
                 finally
                 {

@@ -32,14 +32,26 @@ namespace Batch.Tests.ScenarioTests
 
         public string Location { get; private set; }
 
-        public void Initialize(MockContext context)
+        protected MockContext StartMockContextAndInitializeClients(string className,
+            // Automatically populates the methodName parameter with the calling method, which
+            // gets used to generate recorder file names.
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string methodName = "")
+        {
+            MockContext context = MockContext.Start(className, methodName);
+            Initialize(context);
+
+            return context;
+        }
+
+        private void Initialize(MockContext context)
         {
             this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
             this.BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
 
             Provider provider = this.ResourceManagementClient.Providers.Get("Microsoft.Batch");
             IList<string> locations = provider.ResourceTypes.Where((resType) => resType.ResourceType == "batchAccounts").First().Locations;
-            this.Location = locations.Count == 0 ? "westus" : locations.First();
+            this.Location = locations.DefaultIfEmpty("westus").First();
         }
     }
 }
