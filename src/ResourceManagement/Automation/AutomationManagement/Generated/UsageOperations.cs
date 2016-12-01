@@ -252,6 +252,13 @@ namespace Microsoft.Azure.Management.Automation
                                         long limitInstance = ((long)limitValue);
                                         usageInstance.Limit = limitInstance;
                                     }
+                                    
+                                    JToken throttleStatusValue = valueValue["throttleStatus"];
+                                    if (throttleStatusValue != null && throttleStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string throttleStatusInstance = ((string)throttleStatusValue);
+                                        usageInstance.ThrottleStatus = throttleStatusInstance;
+                                    }
                                 }
                             }
                         }
