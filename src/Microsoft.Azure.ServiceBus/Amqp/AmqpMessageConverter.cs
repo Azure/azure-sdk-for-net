@@ -15,7 +15,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     static class AmqpMessageConverter
     {
-        const int GuidSize = 16;
         public const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
         public const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
         public const string SequenceNumberName = "x-opt-sequence-number";
@@ -31,6 +30,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         public const string UriName = AmqpConstants.Vendor + ":uri";
         public const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
+        const int GuidSize = 16;
 
         public static AmqpMessage BrokeredMessagesToAmqpMessage(IEnumerable<BrokeredMessage> brokeredMessages, bool batchable)
         {
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 if (brokeredMessage.BodyStream.CanSeek && brokeredMessage.BodyStream.Position != 0)
                 {
-                    //TODO:throw new InvalidOperationException(SRClient.CannotSerializeMessageWithPartiallyConsumedBodyStream);
+                    // TODO:throw new InvalidOperationException(SRClient.CannotSerializeMessageWithPartiallyConsumedBodyStream);
                     throw new InvalidOperationException("CannotSerializeMessageWithPartiallyConsumedBodyStream");
                 }
 
@@ -329,23 +329,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return amqpMessage;
-        }
-
-        static Stream GetMessageBodyStream(AmqpMessage message)
-        {
-            if ((message.BodyType & SectionFlag.Data) != 0 &&
-                message.DataBody != null)
-            {
-                List<ArraySegment<byte>> dataSegments = new List<ArraySegment<byte>>();
-                foreach (Data data in message.DataBody)
-                {
-                    dataSegments.Add((ArraySegment<byte>)data.Value);
-                }
-
-                return new BufferListStream(dataSegments.ToArray());
-            }
-
-            return null;
         }
 
         public static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
@@ -401,7 +384,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        //TODO: throw FxTrace.Exception.AsError(new SerializationException(SRClient.FailedToSerializeUnsupportedType(netObject.GetType().FullName)));
+                        // TODO: throw FxTrace.Exception.AsError(new SerializationException(SRClient.FailedToSerializeUnsupportedType(netObject.GetType().FullName)));
                         throw new SerializationException("netObject.GetType().FullName");
                     }
                     else if (netObject is byte[])
@@ -494,7 +477,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
-                        //TODO: throw FxTrace.Exception.AsError(new SerializationException(SRClient.FailedToSerializeUnsupportedType(amqpObject.GetType().FullName)));
+                        // TODO: throw FxTrace.Exception.AsError(new SerializationException(SRClient.FailedToSerializeUnsupportedType(amqpObject.GetType().FullName)));
                         throw new SerializationException("netObject.GetType().FullName");
                     }
                     else if (amqpObject is AmqpMap)
@@ -534,6 +517,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             memoryStream.Dispose();
             return buffer;
+        }
+
+        static Stream GetMessageBodyStream(AmqpMessage message)
+        {
+            if ((message.BodyType & SectionFlag.Data) != 0 &&
+                message.DataBody != null)
+            {
+                List<ArraySegment<byte>> dataSegments = new List<ArraySegment<byte>>();
+                foreach (Data data in message.DataBody)
+                {
+                    dataSegments.Add((ArraySegment<byte>)data.Value);
+                }
+
+                return new BufferListStream(dataSegments.ToArray());
+            }
+
+            return null;
         }
     }
 }

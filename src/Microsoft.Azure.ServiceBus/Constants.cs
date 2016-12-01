@@ -4,13 +4,17 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+
     static class Constants
     {
         public const int MaxMessageIdLength = 128;
+
         public const int MaxDestinationLength = 128;
+
         public const int MaxPartitionKeyLength = 128;
+
         public const int MaxSessionIdLength = 128;
 
-        public static readonly int MaximumMessageHeaderPropertySize = UInt16.MaxValue;
+        public static readonly int MaximumMessageHeaderPropertySize = ushort.MaxValue;
     }
 }

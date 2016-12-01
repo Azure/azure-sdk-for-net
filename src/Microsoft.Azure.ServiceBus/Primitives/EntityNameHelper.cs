@@ -14,6 +14,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             return EntityNameHelper.FormatSubQueuePath(queuePath, EntityNameHelper.DeadLetterQueueName);
         }
+
         public static string FormatSubQueuePath(string entityPath, string subQueueName)
         {
             return string.Concat(entityPath, EntityNameHelper.PathDelimiter, subQueueName);

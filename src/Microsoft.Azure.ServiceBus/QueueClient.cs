@@ -16,7 +16,6 @@ namespace Microsoft.Azure.ServiceBus
         MessageSender innerSender;
         MessageReceiver innerReceiver;
 
-
         internal QueueClient(ServiceBusConnectionSettings connectionSettings, ReceiveMode receiveMode)
             : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({connectionSettings.EntityPath})")
         {
@@ -58,11 +57,11 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if(this.innerReceiver == null)
+                if (this.innerReceiver == null)
                 {
-                    lock(this.ThisLock)
+                    lock (this.ThisLock)
                     {
-                        if(this.innerReceiver == null)
+                        if (this.innerReceiver == null)
                         {
                             this.innerReceiver = this.CreateMessageReceiver();
                         }
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(path));
             }
 
-            var connectionSettings = new ServiceBusConnectionSettings(connectionString) {EntityPath = path};
+            var connectionSettings = new ServiceBusConnectionSettings(connectionString) { EntityPath = path };
 
             return Create(connectionSettings, mode);
         }
@@ -127,9 +126,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionSettings.EntityPath));
             }
 
-            QueueClient QueueClient;
-            QueueClient = connectionSettings.CreateQueueClient(mode);
-            return QueueClient;
+            return connectionSettings.CreateQueueClient(mode);
         }
 
         public sealed override async Task CloseAsync()
@@ -156,7 +153,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception)
             {
-                //TODO: Log Send Exception
+                // TODO: Log Send Exception
                 throw;
             }
         }
@@ -178,16 +175,16 @@ namespace Microsoft.Azure.ServiceBus
             {
                 return await this.InnerReceiver.ReceiveAsync(maxMessageCount);
             }
-            catch(Exception)
+            catch (Exception)
             {
-                //TODO: Log Receive Exception
+                // TODO: Log Receive Exception
                 throw;
             }
         }
 
         public Task CompleteAsync(Guid lockToken)
         {
-            return this.CompleteAsync(new Guid[] {lockToken});
+            return this.CompleteAsync(new Guid[] { lockToken });
         }
 
         public async Task CompleteAsync(IEnumerable<Guid> lockTokens)
@@ -198,7 +195,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception)
             {
-                //TODO: Log Complete Exception
+                // TODO: Log Complete Exception
                 throw;
             }
         }
@@ -216,7 +213,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception)
             {
-                //TODO: Log Complete Exception
+                // TODO: Log Complete Exception
                 throw;
             }
         }
@@ -234,7 +231,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception)
             {
-                //TODO: Log Complete Exception
+                // TODO: Log Complete Exception
                 throw;
             }
         }
@@ -252,7 +249,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception)
             {
-                //TODO: Log Complete Exception
+                // TODO: Log Complete Exception
                 throw;
             }
         }

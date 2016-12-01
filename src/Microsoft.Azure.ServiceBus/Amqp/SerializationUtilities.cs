@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     class SerializationUtilities
     {
-        readonly static Dictionary<Type, PropertyValueType> typeToIntMap = new Dictionary<Type, PropertyValueType>
+        static readonly Dictionary<Type, PropertyValueType> TypeToIntMap = new Dictionary<Type, PropertyValueType>
         {
             { typeof(byte), PropertyValueType.Byte },
             { typeof(sbyte), PropertyValueType.SByte },
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             PropertyValueType typeId;
-            if (typeToIntMap.TryGetValue(value.GetType(), out typeId))
+            if (TypeToIntMap.TryGetValue(value.GetType(), out typeId))
             {
                 return typeId;
             }

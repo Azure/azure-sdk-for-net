@@ -19,10 +19,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ClientId = clientId;
         }
 
-        public string ClientId
-        {
-            get; private set;
-        }
+        public string ClientId { get; private set; }
 
         public abstract Task CloseAsync();
 

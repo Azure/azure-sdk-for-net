@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics;
 
     static class Fx
@@ -143,9 +142,9 @@ namespace Microsoft.Azure.ServiceBus
 
                 public CacheAttribute(Type elementType, CacheAttrition cacheAttrition)
                 {
-                    Scope = Strings.DeclaringInstance;
-                    SizeLimit = Strings.Unbounded;
-                    Timeout = Strings.Infinite;
+                    this.Scope = Strings.DeclaringInstance;
+                    this.SizeLimit = Strings.Unbounded;
+                    this.Timeout = Strings.Infinite;
 
                     if (elementType == null)
                     {
@@ -173,7 +172,9 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 public string Scope { get; set; }
+
                 public string SizeLimit { get; set; }
+
                 public string Timeout { get; set; }
             }
 
@@ -185,8 +186,8 @@ namespace Microsoft.Azure.ServiceBus
 
                 public QueueAttribute(Type elementType)
                 {
-                    Scope = Strings.DeclaringInstance;
-                    SizeLimit = Strings.Unbounded;
+                    this.Scope = Strings.DeclaringInstance;
+                    this.SizeLimit = Strings.Unbounded;
 
                     if (elementType == null)
                     {
@@ -205,39 +206,32 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 public string Scope { get; set; }
+
                 public string SizeLimit { get; set; }
+
                 public bool StaleElementsRemovedImmediately { get; set; }
+
                 public bool EnqueueThrowsIfFull { get; set; }
             }
 
             // Set on a class when that class uses lock (this) - acts as though it were on a field
-            //     private object this;
+            //     object this;
             [AttributeUsage(AttributeTargets.Field | AttributeTargets.Class, Inherited = false)]
             [Conditional("CODE_ANALYSIS")]
             public sealed class SynchronizationObjectAttribute : Attribute
             {
                 public SynchronizationObjectAttribute()
                 {
-                    Blocking = true;
-                    Scope = Strings.DeclaringInstance;
-                    Kind = SynchronizationKind.FromFieldType;
+                    this.Blocking = true;
+                    this.Scope = Strings.DeclaringInstance;
+                    this.Kind = SynchronizationKind.FromFieldType;
                 }
 
-                public bool Blocking
-                {
-                    get;
-                    set;
-                }
-                public string Scope
-                {
-                    get;
-                    set;
-                }
-                public SynchronizationKind Kind
-                {
-                    get;
-                    set;
-                }
+                public bool Blocking { get; set; }
+
+                public string Scope { get; set; }
+
+                public SynchronizationKind Kind { get; set; }
             }
 
             [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = true)]
@@ -259,160 +253,121 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                public bool SupportsAsync
-                {
-                    get;
-                    set;
-                }
-                public bool Spins
-                {
-                    get;
-                    set;
-                }
-                public string ReleaseMethod
-                {
-                    get;
-                    set;
-                }
-            }
+                public bool SupportsAsync { get; set; }
 
-            [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
-            [Conditional("CODE_ANALYSIS")]
-            public sealed class BlockingAttribute : Attribute
-            {
-                public BlockingAttribute()
-                {
-                }
+                public bool Spins { get; set; }
 
-                public string CancelMethod
-                {
-                    get;
-                    set;
-                }
-                public Type CancelDeclaringType
-                {
-                    get;
-                    set;
-                }
-                public string Conditional
-                {
-                    get;
-                    set;
-                }
-            }
+                public string ReleaseMethod { get; set; }
 
-            // Sometime a method will call a conditionally-blocking method in such a way that it is guaranteed
-            // not to block (i.e. the condition can be Asserted false).  Such a method can be marked as
-            // GuaranteeNonBlocking as an assertion that the method doesn't block despite calling a blocking method.
-            //
-            // Methods that don't call blocking methods and aren't marked as Blocking are assumed not to block, so
-            // they do not require this attribute.
-            [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
-            [Conditional("CODE_ANALYSIS")]
-            public sealed class GuaranteeNonBlockingAttribute : Attribute
-            {
-                public GuaranteeNonBlockingAttribute()
+                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
+                [Conditional("CODE_ANALYSIS")]
+                public sealed class BlockingAttribute : Attribute
                 {
-                }
-            }
-
-            [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
-            [Conditional("CODE_ANALYSIS")]
-            public sealed class NonThrowingAttribute : Attribute
-            {
-                public NonThrowingAttribute()
-                {
-                }
-            }
-
-            //[SuppressMessage(FxCop.Category.Performance, "CA1813:AvoidUnsealedAttributes",
-            //    Justification = "This is intended to be an attribute heirarchy. It does not affect product perf.")]
-            [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor,
-                AllowMultiple = true, Inherited = false)]
-            [Conditional("CODE_ANALYSIS")]
-            public class ThrowsAttribute : Attribute
-            {
-                readonly Type exceptionType;
-                readonly string diagnosis;
-
-                public ThrowsAttribute(Type exceptionType, string diagnosis)
-                {
-                    if (exceptionType == null)
+                    public BlockingAttribute()
                     {
-                        throw Fx.Exception.ArgumentNull("exceptionType");
-                    }
-                    if (string.IsNullOrEmpty(diagnosis))
-                    {
-                        //throw Fx.Exception.ArgumentNullOrEmpty("diagnosis");
-                        throw new ArgumentNullException("diagnosis");
                     }
 
-                    this.exceptionType = exceptionType;
-                    this.diagnosis = diagnosis;
+                    public string CancelMethod { get; set; }
+
+                    public Type CancelDeclaringType { get; set; }
+
+                    public string Conditional { get; set; }
                 }
 
-                public Type ExceptionType
+                // Sometime a method will call a conditionally-blocking method in such a way that it is guaranteed
+                // not to block (i.e. the condition can be Asserted false).  Such a method can be marked as
+                // GuaranteeNonBlocking as an assertion that the method doesn't block despite calling a blocking method.
+                //
+                // Methods that don't call blocking methods and aren't marked as Blocking are assumed not to block, so
+                // they do not require this attribute.
+                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
+                [Conditional("CODE_ANALYSIS")]
+                public sealed class GuaranteeNonBlockingAttribute : Attribute
                 {
-                    get
+                    public GuaranteeNonBlockingAttribute()
                     {
-                        return this.exceptionType;
                     }
                 }
 
-                public string Diagnosis
+                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
+                [Conditional("CODE_ANALYSIS")]
+                public sealed class NonThrowingAttribute : Attribute
                 {
-                    get
+                    public NonThrowingAttribute()
                     {
-                        return this.diagnosis;
                     }
                 }
-            }
 
-            [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
-            [Conditional("CODE_ANALYSIS")]
-            public sealed class InheritThrowsAttribute : Attribute
-            {
-                public InheritThrowsAttribute()
+                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor,
+                    AllowMultiple = true, Inherited = false)]
+                [Conditional("CODE_ANALYSIS")]
+                public class ThrowsAttribute : Attribute
                 {
+                    readonly Type exceptionType;
+                    readonly string diagnosis;
+
+                    public ThrowsAttribute(Type exceptionType, string diagnosis)
+                    {
+                        if (exceptionType == null)
+                        {
+                            throw Fx.Exception.ArgumentNull("exceptionType");
+                        }
+                        if (string.IsNullOrEmpty(diagnosis))
+                        {
+                            ////throw Fx.Exception.ArgumentNullOrEmpty("diagnosis");
+                            throw new ArgumentNullException("diagnosis");
+                        }
+
+                        this.exceptionType = exceptionType;
+                        this.diagnosis = diagnosis;
+                    }
+
+                    public Type ExceptionType
+                    {
+                        get
+                        {
+                            return this.exceptionType;
+                        }
+                    }
+
+                    public string Diagnosis
+                    {
+                        get
+                        {
+                            return this.diagnosis;
+                        }
+                    }
                 }
 
-                public Type FromDeclaringType
+                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]
+                [Conditional("CODE_ANALYSIS")]
+                public sealed class InheritThrowsAttribute : Attribute
                 {
-                    get;
-                    set;
-                }
-                public string From
-                {
-                    get;
-                    set;
-                }
-            }
+                    public InheritThrowsAttribute()
+                    {
+                    }
 
-            [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module | AttributeTargets.Class |
-                AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method |
-                AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface |
-                AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
-            [Conditional("CODE_ANALYSIS")]
-            public sealed class SecurityNoteAttribute : Attribute
-            {
-                public SecurityNoteAttribute()
-                {
+                    public Type FromDeclaringType { get; set; }
+
+                    public string From { get; set; }
                 }
 
-                public string Critical
+                [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module | AttributeTargets.Class |
+                    AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method |
+                    AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface |
+                    AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
+                [Conditional("CODE_ANALYSIS")]
+                public sealed class SecurityNoteAttribute : Attribute
                 {
-                    get;
-                    set;
-                }
-                public string Safe
-                {
-                    get;
-                    set;
-                }
-                public string Miscellaneous
-                {
-                    get;
-                    set;
+                    public SecurityNoteAttribute()
+                    {
+                    }
+
+                    public string Critical { get; set; }
+
+                    public string Safe { get; set; }
+
+                    public string Miscellaneous { get; set; }
                 }
             }
         }

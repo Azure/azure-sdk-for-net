@@ -106,7 +106,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                await DisposeMessagesAsync(lockTokens, new Modified()).ConfigureAwait(false);
+                await this.DisposeMessagesAsync(lockTokens, new Modified()).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                await this.DisposeMessagesAsync(lockTokens, new Modified() {UndeliverableHere = true}).ConfigureAwait(false);
+                await this.DisposeMessagesAsync(lockTokens, new Modified() { UndeliverableHere = true }).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome)
         {
             var timeoutHelper = new TimeoutHelper(this.QueueClient.ConnectionSettings.OperationTimeout, true);
-            IList<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
+            IList<ArraySegment<byte>> deliveryTags = this.ConvertLockTokensToDeliveryTags(lockTokens);
 
             ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
             Task[] disposeMessageTasks = new Task[deliveryTags.Count];
@@ -159,12 +159,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         IList<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
         {
-            return lockTokens.Select(lockToken => new ArraySegment<Byte>(lockToken.ToByteArray())).ToList();
+            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
         }
 
         async Task<ReceivingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
-            var amqpQueueClient = ((AmqpQueueClient)this.QueueClient);
+            var amqpQueueClient = (AmqpQueueClient)this.QueueClient;
             var connectionSettings = amqpQueueClient.ConnectionSettings;
             var timeoutHelper = new TimeoutHelper(connectionSettings.OperationTimeout);
             AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);

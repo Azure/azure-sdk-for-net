@@ -16,8 +16,8 @@ namespace Microsoft.Azure.ServiceBus
 
         public AsyncLock()
         {
-            asyncSemaphore = new SemaphoreSlim(1);
-            lockRelease = Task.FromResult(new LockRelease(this));
+            this.asyncSemaphore = new SemaphoreSlim(1);
+            this.lockRelease = Task.FromResult(new LockRelease(this));
         }
 
         public Task<LockRelease> LockAsync()
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task<LockRelease> LockAsync(CancellationToken cancellationToken)
         {
-            var waitTask = asyncSemaphore.WaitAsync(cancellationToken);
+            var waitTask = this.asyncSemaphore.WaitAsync(cancellationToken);
             if (waitTask.IsCompleted)
             {
                 // Avoid an allocation in the non-contention case.
-                return lockRelease;
+                return this.lockRelease;
             }
 
             return waitTask.ContinueWith(
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus
 
         void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!this.disposed)
             {
                 if (disposing)
                 {
@@ -74,16 +74,16 @@ namespace Microsoft.Azure.ServiceBus
 
             public void Dispose()
             {
-                Dispose(true);
+                this.Dispose(true);
             }
 
             void Dispose(bool disposing)
             {
-                if (!disposed)
+                if (!this.disposed)
                 {
                     if (disposing)
                     {
-                        asyncLockRelease?.asyncSemaphore.Release();
+                        this.asyncLockRelease?.asyncSemaphore.Release();
                     }
 
                     this.disposed = true;

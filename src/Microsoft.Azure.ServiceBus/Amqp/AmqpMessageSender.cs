@@ -46,8 +46,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         // TODO: Add MessageSizeExceededException
                         throw new NotImplementedException("MessageSizeExceededException: " + Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value));
-                        //throw Fx.Exception.AsError(new MessageSizeExceededException(
-                        //    Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value)));
+                        ////throw Fx.Exception.AsError(new MessageSizeExceededException(
+                        ////Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value)));
                     }
                 }
 
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
-            var amqpQueueClient = ((AmqpQueueClient)this.QueueClient);
+            var amqpQueueClient = (AmqpQueueClient)this.QueueClient;
             var connectionSettings = amqpQueueClient.ConnectionSettings;
             var timeoutHelper = new TimeoutHelper(connectionSettings.OperationTimeout);
             AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 // Create our Session
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
-                //sessionSettings.Properties[AmqpClientConstants.BatchFlushIntervalName] = (uint)connectionSettings.BatchFlushInterval.TotalMilliseconds;
+                ////sessionSettings.Properties[AmqpClientConstants.BatchFlushIntervalName] = (uint)connectionSettings.BatchFlushInterval.TotalMilliseconds;
                 session = connection.CreateSession(sessionSettings);
                 await session.OpenAsync(timeoutHelper.RemainingTime());
 

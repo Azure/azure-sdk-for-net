@@ -6,35 +6,34 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Threading.Tasks;
     using System.Linq;
+    using System.Threading.Tasks;
     using Xunit;
     using Xunit.Abstractions;
 
     public class QueueClientTests
     {
         const int MaxAttemptsCount = 5;
+        readonly string connectionString;
         ITestOutputHelper output;
 
         public QueueClientTests(ITestOutputHelper output)
         {
             this.output = output;
-            ConnectionString = Environment.GetEnvironmentVariable("QUEUECLIENTCONNECTIONSTRING");
+            this.connectionString = Environment.GetEnvironmentVariable("QUEUECLIENTCONNECTIONSTRING");
             
-            if (string.IsNullOrWhiteSpace(ConnectionString))
+            if (string.IsNullOrWhiteSpace(this.connectionString))
             {
                 throw new InvalidOperationException("QUEUECLIENTCONNECTIONSTRING environment variable was not found!");
             }
         }
 
-        string ConnectionString { get; }
-
         [Fact]
         async Task BrokeredMessageOperationsTest()
         {
-            //Create QueueClient with ReceiveDelete, 
-            //Send and Receive a message, Try to Complete/Abandon/Defer/DeadLetter should throw InvalidOperationException()
-            QueueClient queueClient = QueueClient.Create(this.ConnectionString, ReceiveMode.ReceiveAndDelete);
+            // Create QueueClient with ReceiveDelete, 
+            // Send and Receive a message, Try to Complete/Abandon/Defer/DeadLetter should throw InvalidOperationException()
+            QueueClient queueClient = QueueClient.Create(this.connectionString, ReceiveMode.ReceiveAndDelete);
             await this.SendMessagesAsync(queueClient, 1);
             BrokeredMessage message = await queueClient.ReceiveAsync();
             Assert.NotNull((object)message);
@@ -44,9 +43,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.DeferAsync());
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.DeadLetterAsync());
 
-            //Create a PeekLock queueClient and do rest of the operations
-            //Send a Message, Receive/ Abandon and Complete it using BrokeredMessage methods
-            queueClient = QueueClient.Create(this.ConnectionString);
+            // Create a PeekLock queueClient and do rest of the operations
+            // Send a Message, Receive/Abandon and Complete it using BrokeredMessage methods
+            queueClient = QueueClient.Create(this.connectionString);
             await this.SendMessagesAsync(queueClient, 1);
             message = await queueClient.ReceiveAsync();
             Assert.NotNull((object)message);
@@ -55,122 +54,122 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             message = await queueClient.ReceiveAsync();
             await message.CompleteAsync();
 
-            //Send a Message, Receive/DeadLetter using BrokeredMessage methods
+            // Send a Message, Receive/DeadLetter using BrokeredMessage methods
             await this.SendMessagesAsync(queueClient, 1);
             message = await queueClient.ReceiveAsync();
             await message.DeadLetterAsync();
             string entityPath = EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName);
-            QueueClient deadLetterQueueClient = QueueClient.Create(this.ConnectionString, entityPath);
+            QueueClient deadLetterQueueClient = QueueClient.Create(this.connectionString, entityPath);
             message = await deadLetterQueueClient.ReceiveAsync();
             await message.CompleteAsync();
 
-            //Send a Message, Receive/Defer using BrokeredMessage methods
+            // Send a Message, Receive/Defer using BrokeredMessage methods
             await this.SendMessagesAsync(queueClient, 1);
             message = await queueClient.ReceiveAsync();
             await message.DeferAsync();
 
-            //TODO: Once ReceivebySequence is implemented, Receive and Complete this message
+            // TODO: Once ReceivebySequence is implemented, Receive and Complete this message
         }
 
         [Fact]
         async Task BasicPeekLockTest()
         {
-            const int messageCount = 10;
+            const int MessageCount = 10;
 
-            //Create QueueClient With PeekLock
-            QueueClient queueClient = QueueClient.Create(this.ConnectionString);
+            // Create QueueClient With PeekLock
+            QueueClient queueClient = QueueClient.Create(this.connectionString);
 
-            //Send messages
-            await this.SendMessagesAsync(queueClient, messageCount);
+            // Send messages
+            await this.SendMessagesAsync(queueClient, MessageCount);
 
-            //Receive messages
-            IEnumerable<BrokeredMessage> receivedMessages = await ReceiveMessagesAsync(queueClient, messageCount);
+            // Receive messages
+            IEnumerable<BrokeredMessage> receivedMessages = await this.ReceiveMessagesAsync(queueClient, MessageCount);
 
-            //Complete Messages
+            // Complete Messages
             await this.CompleteMessagesAsync(queueClient, receivedMessages);
 
-            Assert.True(receivedMessages.Count() == messageCount);
+            Assert.True(receivedMessages.Count() == MessageCount);
         }
 
         [Fact]
         async Task BasicReceiveDeleteTest()
         {
-            const int messageCount = 10;
+            const int MessageCount = 10;
 
-            //Create QueueClient With ReceiveAndDelete
-            QueueClient queueClient = QueueClient.Create(this.ConnectionString, ReceiveMode.ReceiveAndDelete);
+            // Create QueueClient With ReceiveAndDelete
+            QueueClient queueClient = QueueClient.Create(this.connectionString, ReceiveMode.ReceiveAndDelete);
 
-            //Send messages
-            await this.SendMessagesAsync(queueClient, messageCount);
+            // Send messages
+            await this.SendMessagesAsync(queueClient, MessageCount);
 
-            //Receive messages
-            IEnumerable<BrokeredMessage> receivedMessages = await this.ReceiveMessagesAsync(queueClient, messageCount);
+            // Receive messages
+            IEnumerable<BrokeredMessage> receivedMessages = await this.ReceiveMessagesAsync(queueClient, MessageCount);
 
-            Assert.True(receivedMessages.Count() == messageCount);
+            Assert.True(receivedMessages.Count() == MessageCount);
         }
 
         [Fact]
         async Task PeekLockWithAbandonTest()
         {
-            const int messageCount = 10;
+            const int MessageCount = 10;
 
-            //Create QueueClient With PeekLock
-            QueueClient queueClient = QueueClient.Create(this.ConnectionString);
+            // Create QueueClient With PeekLock
+            QueueClient queueClient = QueueClient.Create(this.connectionString);
 
-            //Send messages
-            await this.SendMessagesAsync(queueClient, messageCount);
+            // Send messages
+            await this.SendMessagesAsync(queueClient, MessageCount);
 
-            //Receive 5 messages and Abandon them
+            // Receive 5 messages and Abandon them
             int abandonMessagesCount = 5;
-            IEnumerable<BrokeredMessage> receivedMessages = await ReceiveMessagesAsync(queueClient, abandonMessagesCount);
+            IEnumerable<BrokeredMessage> receivedMessages = await this.ReceiveMessagesAsync(queueClient, abandonMessagesCount);
             Assert.True(receivedMessages.Count() == abandonMessagesCount);
 
             await this.AbandonMessagesAsync(queueClient, receivedMessages);
 
-            //Receive all 10 messages, 5 of them should have DeliveryCount = 2
-            receivedMessages = await this.ReceiveMessagesAsync(queueClient, messageCount);
-            Assert.True(receivedMessages.Count() == messageCount);
+            // Receive all 10 messages, 5 of them should have DeliveryCount = 2
+            receivedMessages = await this.ReceiveMessagesAsync(queueClient, MessageCount);
+            Assert.True(receivedMessages.Count() == MessageCount);
 
             // 5 of these messages should have deliveryCount = 2
             int messagesWithDeliveryCount2 = receivedMessages.Where((message) => message.DeliveryCount == 2).Count();
             Assert.True(messagesWithDeliveryCount2 == abandonMessagesCount);
 
-            //Complete Messages
+            // Complete Messages
             await this.CompleteMessagesAsync(queueClient, receivedMessages);
         }
 
         [Fact]
         async Task PeekLockWithDeadLetterTest()
         {
-            const int messageCount = 10;
+            const int MessageCount = 10;
             IEnumerable<BrokeredMessage> receivedMessages = null;
 
-            //Create QueueClient With PeekLock
-            QueueClient queueClient = QueueClient.Create(this.ConnectionString);
+            // Create QueueClient With PeekLock
+            QueueClient queueClient = QueueClient.Create(this.connectionString);
 
-            //Send messages
-            await this.SendMessagesAsync(queueClient, messageCount);
+            // Send messages
+            await this.SendMessagesAsync(queueClient, MessageCount);
 
-            //Receive 5 messages and Deadletter them
+            // Receive 5 messages and Deadletter them
             int deadLetterMessageCount = 5;
             receivedMessages = await this.ReceiveMessagesAsync(queueClient, deadLetterMessageCount);
             Assert.True(receivedMessages.Count() == deadLetterMessageCount);
 
             await this.DeadLetterMessagesAsync(queueClient, receivedMessages);
 
-            //Receive and Complete 5 other regular messages
-            receivedMessages = await this.ReceiveMessagesAsync(queueClient, messageCount - deadLetterMessageCount);
+            // Receive and Complete 5 other regular messages
+            receivedMessages = await this.ReceiveMessagesAsync(queueClient, MessageCount - deadLetterMessageCount);
             await this.CompleteMessagesAsync(queueClient, receivedMessages);
 
-            ////TODO: After implementing Receive(WithTimeSpan), Add Try another Receive, We should not get anything.
-            //IEnumerable<BrokeredMessage> dummyMessages = await this.ReceiveMessagesAsync(queueClient, 10);
-            //Assert.True(dummyMessages == null);
+            // TODO: After implementing Receive(WithTimeSpan), Add Try another Receive, We should not get anything.
+            // IEnumerable<BrokeredMessage> dummyMessages = await this.ReceiveMessagesAsync(queueClient, 10);
+            // Assert.True(dummyMessages == null);
 
-            //Create DLQ Client and Receive DeadLetteredMessages
-            string entityPath = EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName);
-            QueueClient deadLetterQueueClient = QueueClient.Create(this.ConnectionString, entityPath);
+            // Create DLQ Client and Receive DeadLetteredMessages
+            var entityPath = EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName);
+            QueueClient deadLetterQueueClient = QueueClient.Create(this.connectionString, entityPath);
 
-            //Receive 5 DLQ messages and Complete them
+            // Receive 5 DLQ messages and Complete them
             receivedMessages = await this.ReceiveMessagesAsync(deadLetterQueueClient, deadLetterMessageCount);
             Assert.True(receivedMessages.Count() == deadLetterMessageCount);
             await this.CompleteMessagesAsync(deadLetterQueueClient, receivedMessages);
@@ -179,28 +178,28 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         async Task PeekLockDeferTest()
         {
-            const int messageCount = 10;
+            const int MessageCount = 10;
 
-            //Create QueueClient With PeekLock
-            QueueClient queueClient = QueueClient.Create(this.ConnectionString);
+            // Create QueueClient With PeekLock
+            QueueClient queueClient = QueueClient.Create(this.connectionString);
 
-            //Send messages
-            await this.SendMessagesAsync(queueClient, messageCount);
+            // Send messages
+            await this.SendMessagesAsync(queueClient, MessageCount);
 
-            //Receive 5 messages And Defer them 
+            // Receive 5 messages And Defer them 
             int deferMessagesCount = 5;
             IEnumerable<BrokeredMessage> receivedMessages = await this.ReceiveMessagesAsync(queueClient, deferMessagesCount);
             Assert.True(receivedMessages.Count() == deferMessagesCount);
 
             await this.DeferMessagesAsync(queueClient, receivedMessages);
 
-            //Receive and Complete 5 other regular messages
-            receivedMessages = await this.ReceiveMessagesAsync(queueClient, messageCount - deferMessagesCount);
+            // Receive and Complete 5 other regular messages
+            receivedMessages = await this.ReceiveMessagesAsync(queueClient, MessageCount - deferMessagesCount);
             await this.CompleteMessagesAsync(queueClient, receivedMessages);
 
-            Assert.True(receivedMessages.Count() == messageCount - deferMessagesCount);
+            Assert.True(receivedMessages.Count() == MessageCount - deferMessagesCount);
 
-            //Once Request response link is implemented,  Call ReceiveBySequenceNumber() here and complete the rest of the 5 messages
+            // Once Request response link is implemented,  Call ReceiveBySequenceNumber() here and complete the rest of the 5 messages
         }
 
         async Task SendMessagesAsync(QueueClient queueClient, int messageCount)
@@ -219,7 +218,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             await queueClient.SendAsync(messagesToSend);
-            Log(string.Format("Sent {0} messages", messageCount));
+            this.Log(string.Format("Sent {0} messages", messageCount));
         }
 
         async Task<IEnumerable<BrokeredMessage>> ReceiveMessagesAsync(QueueClient queueClient, int messageCount)
@@ -236,7 +235,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             }
 
-            Log(string.Format("Received {0} messages", messagesToReturn.Count));
+            this.Log(string.Format("Received {0} messages", messagesToReturn.Count));
             
             return messagesToReturn;
         }
@@ -244,31 +243,31 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task CompleteMessagesAsync(QueueClient queueClient, IEnumerable<BrokeredMessage> messages)
         {
             await queueClient.CompleteAsync(messages.Select(message => message.LockToken));
-            Log(string.Format("Completed {0} messages", messages.Count()));
+            this.Log(string.Format("Completed {0} messages", messages.Count()));
         }
 
         async Task AbandonMessagesAsync(QueueClient queueClient, IEnumerable<BrokeredMessage> messages)
         {
             await queueClient.AbandonAsync(messages.Select(message => message.LockToken));
-            Log(string.Format("Abandoned {0} messages", messages.Count()));
+            this.Log(string.Format("Abandoned {0} messages", messages.Count()));
         }
 
         async Task DeadLetterMessagesAsync(QueueClient queueClient, IEnumerable<BrokeredMessage> messages)
         {
             await queueClient.DeadLetterAsync(messages.Select(message => message.LockToken));
-            Log(string.Format("Deadlettered {0} messages", messages.Count()));
+            this.Log(string.Format("Deadlettered {0} messages", messages.Count()));
         }
 
         async Task DeferMessagesAsync(QueueClient queueClient, IEnumerable<BrokeredMessage> messages)
         {
             await queueClient.DeferAsync(messages.Select(message => message.LockToken));
-            Log(string.Format("Deferred {0} messages", messages.Count()));
+            this.Log(string.Format("Deferred {0} messages", messages.Count()));
         }
 
         void Log(string message)
         {
             var formattedMessage = string.Format("{0} {1}", DateTime.Now.TimeOfDay, message);
-            output.WriteLine(formattedMessage);
+            this.output.WriteLine(formattedMessage);
             Debug.WriteLine(formattedMessage);
             Console.WriteLine(formattedMessage);
         }

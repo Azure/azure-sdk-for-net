@@ -41,22 +41,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         TokenProvider TokenProvider { get; }
 
-        internal override MessageSender OnCreateMessageSender()
-        {
-            return new AmqpMessageSender(this);
-        }
-
-        internal override MessageReceiver OnCreateMessageReceiver()
-        {
-            return new AmqpMessageReceiver(this);
-        }
-
-        protected override Task OnCloseAsync()
-        {
-            // Closing the Connection will also close all Links associated with it.
-            return this.ConnectionManager.CloseAsync();
-        }
-
         internal static AmqpSettings CreateAmqpSettings(
             Version amqpVersion,
             bool useSslStreamSecurity,
@@ -111,6 +95,26 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return settings;
         }
 
+        internal override MessageSender OnCreateMessageSender()
+        {
+            return new AmqpMessageSender(this);
+        }
+
+        internal override MessageReceiver OnCreateMessageReceiver()
+        {
+            return new AmqpMessageReceiver(this);
+        }
+
+        protected override Task OnCloseAsync()
+        {
+            // Closing the Connection will also close all Links associated with it.
+            return this.ConnectionManager.CloseAsync();
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.NamingRules",
+            "SA1305:FieldNamesMustNotUseHungarianNotation",
+            Justification = "tpSettings is a local variable.")]
         static TransportSettings CreateTcpTransportSettings(
             string networkHost,
             string hostName,
@@ -155,6 +159,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return connectionSettings;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.NamingRules",
+            "SA1305:FieldNamesMustNotUseHungarianNotation",
+            Justification = "tpSettings is a local variable.")]
         async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
             string hostName = this.ConnectionSettings.Endpoint.Host;
@@ -200,19 +208,19 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         /// </summary>
         sealed class TokenProviderAdapter : ICbsTokenProvider
         {
-            readonly AmqpQueueClient QueueClient;
+            readonly AmqpQueueClient queueClient;
 
-            public TokenProviderAdapter(AmqpQueueClient QueueClient)
+            public TokenProviderAdapter(AmqpQueueClient queueClient)
             {
-                Fx.Assert(QueueClient != null, "tokenProvider cannot be null");
-                this.QueueClient = QueueClient;
+                Fx.Assert(queueClient != null, "tokenProvider cannot be null");
+                this.queueClient = queueClient;
             }
 
             public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress, string appliesTo, string[] requiredClaims)
             {
                 string claim = requiredClaims?.FirstOrDefault();
-                var tokenProvider = this.QueueClient.TokenProvider;
-                var timeout = this.QueueClient.ConnectionSettings.OperationTimeout;
+                var tokenProvider = this.queueClient.TokenProvider;
+                var timeout = this.queueClient.ConnectionSettings.OperationTimeout;
                 var token = await tokenProvider.GetTokenAsync(appliesTo, claim, timeout).ConfigureAwait(false);
                 return new CbsToken(token.TokenValue, CbsConstants.ServiceBusSasTokenType, token.ExpiresAtUtc);
             }

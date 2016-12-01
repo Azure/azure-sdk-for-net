@@ -7,9 +7,22 @@ namespace Microsoft.Azure.ServiceBus
 
     public abstract class RetryPolicy
     {
+        const int DefaultRetryMaxCount = 10;
         static readonly TimeSpan DefaultRetryMinBackoff = TimeSpan.Zero;
         static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
-        const int DefaultRetryMaxCount = 10;
+
+        public static RetryPolicy Default
+        {
+            get
+            {
+                return new RetryExponential(DefaultRetryMinBackoff, DefaultRetryMaxBackoff, DefaultRetryMaxCount);
+            }
+        }
+
+        public static bool IsRetryableException(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
 
         public void IncrementRetryCount(string clientId)
         {
@@ -21,24 +34,6 @@ namespace Microsoft.Azure.ServiceBus
             throw new NotImplementedException();
         }
 
-        public static bool IsRetryableException(Exception exception)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static RetryPolicy Default
-        {
-            get
-            {
-                return new RetryExponential(DefaultRetryMinBackoff, DefaultRetryMaxBackoff, DefaultRetryMaxCount);
-            }
-        }
-
-        protected int RetryCount(string clientId)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Gets the Interval after which nextRetry should be done.
         /// </summary>
@@ -46,6 +41,11 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="lastException">the last exception</param>
         /// <param name="remainingTime">remaining time to retry</param>
         /// <returns>return null Duration when not Allowed.</returns>
-        public abstract TimeSpan? GetNextRetryInterval(String clientId, Exception lastException, TimeSpan remainingTime);
+        public abstract TimeSpan? GetNextRetryInterval(string clientId, Exception lastException, TimeSpan remainingTime);
+
+        protected int RetryCount(string clientId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

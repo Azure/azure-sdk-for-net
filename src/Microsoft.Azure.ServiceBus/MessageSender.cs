@@ -9,6 +9,10 @@ namespace Microsoft.Azure.ServiceBus
 
     abstract class MessageSender : ClientEntity
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.ReadabilityRules",
+            "SA1126:PrefixCallsCorrectly",
+            Justification = "This is not a method call, but a type.")]
         protected MessageSender()
             : base(nameof(MessageSender) + StringUtility.GetRandomString())
         {

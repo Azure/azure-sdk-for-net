@@ -4,9 +4,6 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// RetryPolicy implementation where the delay between retries will grow in a staggered exponential manner.

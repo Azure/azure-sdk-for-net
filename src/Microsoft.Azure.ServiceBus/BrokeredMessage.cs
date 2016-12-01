@@ -16,9 +16,10 @@ namespace Microsoft.Azure.ServiceBus
     public sealed class BrokeredMessage : IDisposable
     {
         /// <summary> The message version </summary>
-        internal static readonly int MessageVersion11 = 11;
-        internal static int MessageVersion = MessageVersion11; // non-readonly for testing purposes
+        static readonly int MessageVersion11 = 11;
+        static int messageVersion = MessageVersion11; // non-readonly for testing purposes
 
+        readonly object disposablesSyncObject = new object();
         readonly bool ownsBodyStream;
         readonly bool bodyObjectDecoded;
 
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus
         object bodyObject;
         string contentType;
         string correlationId;
-        bool   disposed;
+        bool disposed;
         string deadLetterSource;
         DateTime enqueuedTimeUtc;
         int getBodyCalled;
@@ -41,7 +42,8 @@ namespace Microsoft.Azure.ServiceBus
         string partitionKey;
         IDictionary<string, object> properties;
         string publisher;
-        //TODO: ReceiveContext receiveContext;
+
+        // TODO: ReceiveContext receiveContext;
         ReceiverHeaders receiverHeaders;
         string replyTo;
         string replyToSessionId;
@@ -52,19 +54,18 @@ namespace Microsoft.Azure.ServiceBus
         int version;
         string viaPartitionKey;
         
-        //TODO: Check back to see if this can be safely removed
+        // TODO: Check back to see if this can be safely removed
         volatile List<IDisposable> attachedDisposables;
-        readonly object disposablesSyncObject = new object();
 
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
         public BrokeredMessage() 
         {
-            this.version = BrokeredMessage.MessageVersion;
+            this.version = BrokeredMessage.messageVersion;
         }
 
         /// <summary>Initializes a new instance of the 
         /// <see cref="BrokeredMessage" /> class from a given object by using DataContractSerializer with a binary XmlDictionaryWriter.</summary> 
-        ///<param name="serializableObject">The serializable object.</param>
+        /// <param name="serializableObject">The serializable object.</param>
         public BrokeredMessage(object serializableObject)
             : this(serializableObject, serializableObject == null ? null : new DataContractBinarySerializer(GetObjectType(serializableObject)))
         {
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (serializer == null)
                 {
-                    //throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
+                    ////throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
                     throw new ArgumentNullException("serializer");
                 }
 
@@ -145,56 +146,6 @@ namespace Microsoft.Azure.ServiceBus
             this.AttachDisposables(BrokeredMessage.CloneDisposables(originalMessage.attachedDisposables));
         }
 
-        internal static IEnumerable<IDisposable> CloneDisposables(IEnumerable<IDisposable> disposables)
-        {
-            // clone the disposables if they support it
-            if (disposables == null)
-            {
-                return null;
-            }
-
-            List<IDisposable> clonedDisposables = new List<IDisposable>();
-            foreach (IDisposable obj in disposables)
-            {
-                ICloneable cloneable = obj as ICloneable;
-                if (cloneable != null)
-                {
-                    object clone = cloneable.Clone();
-                    Fx.Assert(clone is IDisposable, "cloned object must also implement IDisposable");
-                    clonedDisposables.Add((IDisposable)clone);
-                }
-            }
-            return clonedDisposables.Count > 0 ? clonedDisposables : null;
-        }
-
-        static Stream CloneStream(Stream originalStream, bool canThrowException = false)
-        {
-            Stream clonedStream = null;
-
-            if (originalStream != null)
-            {
-                MemoryStream memoryStream;
-                ICloneable cloneable;
-
-                if ((memoryStream = originalStream as MemoryStream) != null)
-                {
-                    // Note: memoryStream.GetBuffer() doesn't work
-                    clonedStream = new MemoryStream(memoryStream.ToArray(), 0, (int)memoryStream.Length, false, true);
-                }
-                else if ((cloneable = originalStream as ICloneable) != null)
-                {
-                    clonedStream = (Stream)cloneable.Clone();
-                }
-                else if (canThrowException)
-                {
-                    //TODO: throw Fx.Exception.AsError(new InvalidOperationException(SRClient.BrokeredMessageStreamNotCloneable(originalStream.GetType().FullName)));
-                    throw new InvalidOperationException("BrokeredMessageStreamNotCloneable");
-                }
-            }
-
-            return clonedStream;
-        }
-
         [Flags]
         internal enum MessageMembers : int
         {
@@ -248,7 +199,6 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 else
                 {
-
                     this.initializedMembers |= MessageMembers.CorrelationId;
                 }
             }
@@ -270,40 +220,6 @@ namespace Microsoft.Azure.ServiceBus
                 this.ThrowIfDisposed();
                 this.CopySessionId(value);
                 this.PartitionKey = value;
-            }
-        }
-
-        /// <summary> Gets or sets the the Publisher. </summary>
-        /// <value> Identifies the Publisher Sending the Message. </value>
-        /// <exception cref="ObjectDisposedException">Thrown if message is in disposed state.</exception>
-        /// <exception cref="InvalidOperationException">Thrown if <seealso cref="PartitionKey"/> or <seealso cref="SessionId"/> are set to different values.</exception>
-        internal string Publisher
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.publisher;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                BrokeredMessage.ValidatePartitionKey("Publisher", value);
-                if (value != null)
-                {
-                    this.ThrowIfDominatingPropertyIsNotEqualToNonNullDormantProperty(MessageMembers.Publisher, MessageMembers.PartitionKey, value, this.partitionKey);
-                }
-
-                if (string.IsNullOrEmpty(value))
-                {
-                    this.ClearInitializedMember(MessageMembers.Publisher);
-                }
-                else
-                {
-                    this.initializedMembers |= MessageMembers.Publisher;
-                }
-
-                this.publisher = value;
             }
         }
 
@@ -414,7 +330,8 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 this.ThrowIfDisposed();
-                //this.ThrowIfNotLocked(); TODO
+                
+                // TODO: this.ThrowIfNotLocked();
                 return this.receiverHeaders.LockedUntilUtc;
             }
 
@@ -428,7 +345,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        //TODO:Fix expected exception list once CSDMain# 220699 is fixed
+        // TODO:Fix expected exception list once CSDMain# 220699 is fixed
 
         /// <summary>Gets the lock token assigned by Service Bus to this message.</summary>
         /// <value>The lock token assigned by Service Bus to this message.</value>
@@ -439,7 +356,8 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 this.ThrowIfDisposed();
-                //this.ThrowIfNotLocked(); TODO
+                
+                // TODO: this.ThrowIfNotLocked();
                 return this.receiverHeaders.LockToken;
             }
 
@@ -482,33 +400,23 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        //TODO:Fix Expected exception list once CSDMain#220699 is fixed.
+        ///// <summary> Gets or sets a context for the receive. </summary>
+        ///// <value> The receive context. </value>
+        ///// TODO
+        ////internal ReceiveContext ReceiveContext
+        ////{
+        ////    get
+        ////    {
+        ////        this.ThrowIfDisposed();
+        ////        return this.receiveContext;
+        ////    }
 
-        internal int Version
-        {
-            get
-            {
-                return this.version;
-            }
-        }
-
-        /// <summary> Gets or sets a context for the receive. </summary>
-        /// <value> The receive context. </value>
-        /// TODO
-        //internal ReceiveContext ReceiveContext
-        //{
-        //    get
-        //    {
-        //        this.ThrowIfDisposed();
-        //        return this.receiveContext;
-        //    }
-
-        //    set
-        //    {
-        //        this.ThrowIfDisposed();
-        //        this.receiveContext = value;
-        //    }
-        //}
+        ////    set
+        ////    {
+        ////        this.ThrowIfDisposed();
+        ////        this.receiveContext = value;
+        ////    }
+        ////}
 
         /// <summary>Gets or sets the type of the content.</summary>
         /// <value>The type of the content of the message body. This is a 
@@ -578,27 +486,6 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     this.initializedMembers |= MessageMembers.ViaPartitionKey;
                 }
-            }
-        }
-
-        internal short PartitionId
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.partitionId;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException("PartitionId"));
-                }
-
-                this.ThrowIfDisposed();
-                this.initializedMembers |= MessageMembers.PartitionId;
-                this.partitionId = value;
             }
         }
 
@@ -770,32 +657,6 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary> Gets the size of the message header in bytes. </summary>
-        /// <value> The size of the message header. </value>
-        /// <exception cref="ObjectDisposedException">Thrown if message is in disposed state</exception>
-        internal long HeaderSize
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.headerSize;
-            }
-        }
-
-        internal long BodySize
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                if (this.bodyStream != null && this.bodyStream.CanSeek)
-                {
-                    this.bodySize = this.bodyStream.Length;
-                }
-
-                return this.bodySize;
-            }
-        }
-
         /// <summary>Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. Messages older than their TimeToLive value will expire and no longer be retained in the message store. Subscribers will be unable to receive expired messages.TimeToLive is the maximum lifetime that a message can receive, but its value cannot exceed the entity specified the 
         /// <see cref="Microsoft.ServiceBus.Messaging.QueueDescription.DefaultMessageTimeToLive" /> value on the destination queue or subscription. If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the entity’s DefaultMessageTimeToLive value.</summary> 
         /// <value>The message’s time to live value.</value>
@@ -866,6 +727,96 @@ namespace Microsoft.Azure.ServiceBus
                 // in a multi-threaded scenario.
                 this.ThrowIfDisposed();
                 return this.getBodyCalled == 1 || this.messageConsumed == 1;
+            }
+        }
+
+        internal short PartitionId
+        {
+            get
+            {
+                this.ThrowIfDisposed();
+                return this.partitionId;
+            }
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException("PartitionId"));
+                }
+
+                this.ThrowIfDisposed();
+                this.initializedMembers |= MessageMembers.PartitionId;
+                this.partitionId = value;
+            }
+        }
+
+        // TODO:Fix Expected exception list once CSDMain#220699 is fixed.
+        internal int Version
+        {
+            get
+            {
+                return this.version;
+            }
+        }
+
+        /// <summary> Gets or sets the the Publisher. </summary>
+        /// <value> Identifies the Publisher Sending the Message. </value>
+        /// <exception cref="ObjectDisposedException">Thrown if message is in disposed state.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if <seealso cref="PartitionKey"/> or <seealso cref="SessionId"/> are set to different values.</exception>
+        internal string Publisher
+        {
+            get
+            {
+                this.ThrowIfDisposed();
+                return this.publisher;
+            }
+
+            set
+            {
+                this.ThrowIfDisposed();
+                BrokeredMessage.ValidatePartitionKey("Publisher", value);
+                if (value != null)
+                {
+                    this.ThrowIfDominatingPropertyIsNotEqualToNonNullDormantProperty(MessageMembers.Publisher, MessageMembers.PartitionKey, value, this.partitionKey);
+                }
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.ClearInitializedMember(MessageMembers.Publisher);
+                }
+                else
+                {
+                    this.initializedMembers |= MessageMembers.Publisher;
+                }
+
+                this.publisher = value;
+            }
+        }
+
+        /// <summary> Gets the size of the message header in bytes. </summary>
+        /// <value> The size of the message header. </value>
+        /// <exception cref="ObjectDisposedException">Thrown if message is in disposed state</exception>
+        internal long HeaderSize
+        {
+            get
+            {
+                this.ThrowIfDisposed();
+                return this.headerSize;
+            }
+        }
+
+        internal long BodySize
+        {
+            get
+            {
+                this.ThrowIfDisposed();
+                if (this.bodyStream != null && this.bodyStream.CanSeek)
+                {
+                    this.bodySize = this.bodyStream.Length;
+                }
+
+                return this.bodySize;
             }
         }
 
@@ -962,7 +913,7 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 // First get will be 0, with subsequence get being 1 (true)
-                return 1 == Interlocked.Exchange(ref this.messageConsumed, 1);
+                return Interlocked.Exchange(ref this.messageConsumed, 1) == 1;
             }
 
             set
@@ -1009,12 +960,11 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="ArgumentNullException"> Thrown when invoked with a Null serializer object. </exception>
         /// <exception cref="InvalidOperationException"> Thrown if the message contains a Null body stream, contains no data, 
         /// or if the stream has been read once (through any GetBody() calls). </exception>
-        // TODO:
         public T GetBody<T>(XmlObjectSerializer serializer)
         {
             if (serializer == null)
             {
-                //TODO: throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
+                // TODO: throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
                 throw new ArgumentNullException("serializer");
             }
 
@@ -1023,7 +973,7 @@ namespace Microsoft.Azure.ServiceBus
 
             if (this.BodyStream == null)
             {
-                //TODO: Should use IsValueType??
+                // TODO: Should use IsValueType??
                 if (typeof(T) == typeof(ValueType))
                 {
                     throw new InvalidOperationException("MessageBodyNull");
@@ -1067,7 +1017,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfDisposed();
             this.ThrowIfNotLocked();
 
-            return this.Receiver.CompleteAsync(new Guid[] {this.LockToken});
+            return this.Receiver.CompleteAsync(new Guid[] { this.LockToken });
         }
 
         // Summary:
@@ -1103,44 +1053,6 @@ namespace Microsoft.Azure.ServiceBus
             return string.Format(CultureInfo.CurrentCulture, "{0}{{MessageId:{1}}}", base.ToString(), this.MessageId);
         }
 
-        /// <summary> Validate message identifier. </summary>
-        /// <exception cref="ArgumentException">
-        /// Thrown when messageId is null, or empty or greater than the maximum message length.
-        /// </exception>
-        /// <param name="messageId"> Identifier for the message. </param>
-        static void ValidateMessageId(string messageId)
-        {
-            if (string.IsNullOrEmpty(messageId) ||
-                messageId.Length > Constants.MaxMessageIdLength)
-            {
-                //TODO: throw FxTrace.Exception.Argument("messageId", SRClient.MessageIdIsNullOrEmptyOrOverMaxValue(Constants.MaxMessageIdLength));
-                throw new ArgumentException("MessageIdIsNullOrEmptyOrOverMaxValue");
-            }
-        }
-
-        /// <summary> Validate session identifier. </summary>
-        /// <exception cref="ArgumentException">
-        /// Thrown when sessionId is greater than the maximum session ID length.
-        /// </exception>
-        /// <param name="sessionId"> Identifier for the session. </param>
-        static void ValidateSessionId(string sessionId)
-        {
-            if (sessionId != null && sessionId.Length > Constants.MaxSessionIdLength)
-            {
-                //TODO: throw FxTrace.Exception.Argument("sessionId", SRClient.SessionIdIsOverMaxValue(Constants.MaxSessionIdLength));
-                throw new ArgumentException("SessionIdIsOverMaxValue");
-            }
-        }
-
-        static void ValidatePartitionKey(string partitionKeyPropertyName, string partitionKey)
-        {
-            if (partitionKey != null && partitionKey.Length > Constants.MaxPartitionKeyLength)
-            {
-                //TODO: throw FxTrace.Exception.Argument(partitionKeyPropertyName, SRClient.PropertyOverMaxValue(partitionKeyPropertyName, Constants.MaxPartitionKeyLength));
-                throw new ArgumentException("PropertyValueOverMaxValue");
-            }
-        }
-
         /// <summary>Clones a message, so that it is possible to send a clone of a message as a new message.</summary>
         /// <returns>The <see cref="BrokeredMessage" /> that contains the cloned message.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times",
@@ -1150,6 +1062,28 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfDisposed();
 
             return new BrokeredMessage(this, clientSideCloning: true);
+        }
+
+        internal static IEnumerable<IDisposable> CloneDisposables(IEnumerable<IDisposable> disposables)
+        {
+            // clone the disposables if they support it
+            if (disposables == null)
+            {
+                return null;
+            }
+
+            List<IDisposable> clonedDisposables = new List<IDisposable>();
+            foreach (IDisposable obj in disposables)
+            {
+                ICloneable cloneable = obj as ICloneable;
+                if (cloneable != null)
+                {
+                    object clone = cloneable.Clone();
+                    Fx.Assert(clone is IDisposable, "cloned object must also implement IDisposable");
+                    clonedDisposables.Add((IDisposable)clone);
+                }
+            }
+            return clonedDisposables.Count > 0 ? clonedDisposables : null;
         }
 
         internal object ClearBodyObject()
@@ -1196,6 +1130,112 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        internal void CopySessionId(string sessionId)
+        {
+            BrokeredMessage.ValidateSessionId(sessionId);
+            this.sessionId = sessionId;
+            if (sessionId == null)
+            {
+                this.ClearInitializedMember(MessageMembers.SessionId);
+            }
+            else
+            {
+                this.initializedMembers |= MessageMembers.SessionId;
+            }
+        }
+
+        internal void CopyPartitionKey(string partitionKey)
+        {
+            BrokeredMessage.ValidatePartitionKey("PartitionKey", partitionKey);
+            this.partitionKey = partitionKey;
+            if (partitionKey == null)
+            {
+                this.ClearInitializedMember(MessageMembers.PartitionKey);
+            }
+            else
+            {
+                this.initializedMembers |= MessageMembers.PartitionKey;
+            }
+        }
+
+        internal bool IsMembersSet(MessageMembers members)
+        {
+            bool membersSet = ((this.InitializedMembers & members) != 0);
+
+            return membersSet;
+        }
+
+        static Stream CloneStream(Stream originalStream, bool canThrowException = false)
+        {
+            Stream clonedStream = null;
+
+            if (originalStream != null)
+            {
+                MemoryStream memoryStream;
+                ICloneable cloneable;
+
+                if ((memoryStream = originalStream as MemoryStream) != null)
+                {
+                    // Note: memoryStream.GetBuffer() doesn't work
+                    clonedStream = new MemoryStream(memoryStream.ToArray(), 0, (int)memoryStream.Length, false, true);
+                }
+                else if ((cloneable = originalStream as ICloneable) != null)
+                {
+                    clonedStream = (Stream)cloneable.Clone();
+                }
+                else if (canThrowException)
+                {
+                    // TODO: throw Fx.Exception.AsError(new InvalidOperationException(SRClient.BrokeredMessageStreamNotCloneable(originalStream.GetType().FullName)));
+                    throw new InvalidOperationException("BrokeredMessageStreamNotCloneable");
+                }
+            }
+
+            return clonedStream;
+        }
+
+        /// <summary> Validate message identifier. </summary>
+        /// <exception cref="ArgumentException">
+        /// Thrown when messageId is null, or empty or greater than the maximum message length.
+        /// </exception>
+        /// <param name="messageId"> Identifier for the message. </param>
+        static void ValidateMessageId(string messageId)
+        {
+            if (string.IsNullOrEmpty(messageId) ||
+                messageId.Length > Constants.MaxMessageIdLength)
+            {
+                // TODO: throw FxTrace.Exception.Argument("messageId", SRClient.MessageIdIsNullOrEmptyOrOverMaxValue(Constants.MaxMessageIdLength));
+                throw new ArgumentException("MessageIdIsNullOrEmptyOrOverMaxValue");
+            }
+        }
+
+        /// <summary> Validate session identifier. </summary>
+        /// <exception cref="ArgumentException">
+        /// Thrown when sessionId is greater than the maximum session ID length.
+        /// </exception>
+        /// <param name="sessionId"> Identifier for the session. </param>
+        static void ValidateSessionId(string sessionId)
+        {
+            if (sessionId != null && sessionId.Length > Constants.MaxSessionIdLength)
+            {
+                // TODO: throw FxTrace.Exception.Argument("sessionId", SRClient.SessionIdIsOverMaxValue(Constants.MaxSessionIdLength));
+                throw new ArgumentException("SessionIdIsOverMaxValue");
+            }
+        }
+
+        static void ValidatePartitionKey(string partitionKeyPropertyName, string partitionKey)
+        {
+            if (partitionKey != null && partitionKey.Length > Constants.MaxPartitionKeyLength)
+            {
+                // TODO: throw FxTrace.Exception.Argument(partitionKeyPropertyName, SRClient.PropertyOverMaxValue(partitionKeyPropertyName, Constants.MaxPartitionKeyLength));
+                throw new ArgumentException("PropertyValueOverMaxValue");
+            }
+        }
+
+        static Type GetObjectType(object value)
+        {
+            return (value == null) ? typeof(object) : value.GetType();
+        }
+
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources. </summary>
         /// <param name="disposing"> true if resources should be disposed, false if not. </param>
@@ -1226,11 +1266,6 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        static Type GetObjectType(object value)
-        {
-            return (value == null) ? typeof(object) : value.GetType();
-        }
-
         void ClearInitializedMember(MessageMembers memberToClear)
         {
             this.initializedMembers &= ~memberToClear;
@@ -1238,9 +1273,9 @@ namespace Microsoft.Azure.ServiceBus
 
         void SetGetBodyCalled()
         {
-            if (1 == Interlocked.Exchange(ref this.getBodyCalled, 1))
+            if (Interlocked.Exchange(ref this.getBodyCalled, 1) == 1)
             {
-                //TODO: throw Fx.Exception.AsError(new InvalidOperationException(SRClient.MessageBodyConsumed));
+                // TODO: throw Fx.Exception.AsError(new InvalidOperationException(SRClient.MessageBodyConsumed));
                 throw new InvalidOperationException("MessageBodyConsumed");
             }
         }
@@ -1348,42 +1383,6 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal void CopySessionId(string sessionId)
-        {
-            BrokeredMessage.ValidateSessionId(sessionId);
-            this.sessionId = sessionId;
-            if (sessionId == null)
-            {
-                this.ClearInitializedMember(MessageMembers.SessionId);
-            }
-            else
-            {
-                this.initializedMembers |= MessageMembers.SessionId;
-            }
-        }
-
-        internal void CopyPartitionKey(string partitionKey)
-        {
-            BrokeredMessage.ValidatePartitionKey("PartitionKey", partitionKey);
-            this.partitionKey = partitionKey;
-            if (partitionKey == null)
-            {
-                this.ClearInitializedMember(MessageMembers.PartitionKey);
-            }
-            else
-            {
-                this.initializedMembers |= MessageMembers.PartitionKey;
-            }
-        }
-
-
-        internal bool IsMembersSet(MessageMembers members)
-        {
-            bool membersSet = ((this.InitializedMembers & members) != 0);
-
-            return membersSet;
-        }
-
         /// <summary> Ensures that receiver headers. </summary>
         void EnsureReceiverHeaders()
         {
@@ -1399,7 +1398,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.disposed)
             {
-                //TODO: throw Fx.Exception.ObjectDisposed("BrokeredMessage has been disposed.");
+                // TODO: throw Fx.Exception.ObjectDisposed("BrokeredMessage has been disposed.");
                 throw new ObjectDisposedException("BrokeredMessage has been disposed.");
             }
         }
@@ -1433,13 +1432,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             if ((this.initializedMembers & dormantProperty) != 0 && !string.Equals(dominatingPropsValue, dormantPropsValue))
             {
-                //TODO: throw FxTrace.Exception.AsError(new InvalidOperationException(SRClient.DominatingPropertyMustBeEqualsToNonNullDormantProperty(dominatingProperty, dormantProperty)));
+                // TODO: throw FxTrace.Exception.AsError(new InvalidOperationException(SRClient.DominatingPropertyMustBeEqualsToNonNullDormantProperty(dominatingProperty, dormantProperty)));
                 throw new InvalidOperationException("DominatingPropertyMustBeEqualsToNonNullDormantProperty");
             }
         }
 
         /// <summary> Receiver headers. </summary>
-        sealed class ReceiverHeaders
+        internal sealed class ReceiverHeaders
         {
             /// <summary> Gets or sets the number of deliveries. </summary>
             /// <value> The number of deliveries. </value>

@@ -52,10 +52,10 @@ namespace Microsoft.Azure.ServiceBus
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
         }
 
-        //internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
-        //{
-        //    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
-        //}
+        ////internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
+        ////{
+        ////    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
+        ////}
 
         /// <summary>
         /// Construct a TokenProvider based on the provided Key Name & Shared Access Key.
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.ServiceBus
         public Task<SecurityToken> GetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {
             TimeoutHelper.ThrowIfNegativeArgument(timeout);
-            appliesTo = NormalizeAppliesTo(appliesTo);
+            appliesTo = this.NormalizeAppliesTo(appliesTo);
             return this.OnGetTokenAsync(appliesTo, action, timeout);
         }
 

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public ArgumentException ArgumentNullOrWhiteSpace(string paramName)
         {
-            return Argument(paramName, Resources.ArgumentNullOrWhiteSpace.FormatForUser(paramName));
+            return this.Argument(paramName, Resources.ArgumentNullOrWhiteSpace.FormatForUser(paramName));
         }
 
         public ArgumentOutOfRangeException ArgumentOutOfRange(string paramName, object actualValue, string message)

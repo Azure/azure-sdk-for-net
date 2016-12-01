@@ -31,6 +31,8 @@ namespace Microsoft.Azure.ServiceBus
     /// </example>
     public class ServiceBusConnectionSettings
     {
+        const char KeyValueSeparator = '=';
+        const char KeyValuePairDelimiter = ';';
         static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
         static readonly string EndpointScheme = "amqps";
         static readonly string EndpointFormat = EndpointScheme + "://{0}.servicebus.windows.net";
@@ -38,8 +40,6 @@ namespace Microsoft.Azure.ServiceBus
         static readonly string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
         static readonly string SharedAccessKeyConfigName = "SharedAccessKey";
         static readonly string EntityPathConfigName = "EntityPath";
-        const char KeyValueSeparator = '=';
-        const char KeyValuePairDelimiter = ';';
 
         /// <summary>
         /// Build a connection string consumable by <see cref="QueueClient.Create(string)"/>
@@ -51,6 +51,23 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionSettings(string namespaceName, string entityPath, string sharedAccessKeyName, string sharedAccessKey)
             : this(namespaceName, entityPath, sharedAccessKeyName, sharedAccessKey, DefaultOperationTimeout, RetryPolicy.Default)
         {
+        }
+
+        /// <summary>
+        /// ConnectionString format:
+        /// Endpoint=sb://namespace_DNS_Name;EntityPath=EVENT_HUB_NAME;SharedAccessKeyName=SHARED_ACCESS_KEY_NAME;SharedAccessKey=SHARED_ACCESS_KEY
+        /// </summary>
+        /// <param name="connectionString">ServiceBus ConnectionString</param>
+        public ServiceBusConnectionSettings(string connectionString)
+        {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
+            }
+
+            this.OperationTimeout = DefaultOperationTimeout;
+            this.RetryPolicy = RetryPolicy.Default;
+            this.ParseConnectionString(connectionString);
         }
 
         ServiceBusConnectionSettings(
@@ -69,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(string.IsNullOrWhiteSpace(sharedAccessKeyName) ? nameof(sharedAccessKeyName) : nameof(sharedAccessKey));
             }
-            
+
             if (namespaceName.Contains("."))
             {
                 // It appears to be a fully qualified host name, use it.
@@ -85,23 +102,6 @@ namespace Microsoft.Azure.ServiceBus
             this.SasKeyName = sharedAccessKeyName;
             this.OperationTimeout = operationTimeout;
             this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
-        }
-
-        /// <summary>
-        /// ConnectionString format:
-        /// Endpoint=sb://namespace_DNS_Name;EntityPath=EVENT_HUB_NAME;SharedAccessKeyName=SHARED_ACCESS_KEY_NAME;SharedAccessKey=SHARED_ACCESS_KEY
-        /// </summary>
-        /// <param name="connectionString">ServiceBus ConnectionString</param>
-        public ServiceBusConnectionSettings(string connectionString)
-        {
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
-            }
-
-            this.OperationTimeout = DefaultOperationTimeout;
-            this.RetryPolicy = RetryPolicy.Default;
-            this.ParseConnectionString(connectionString);
         }
 
         public Uri Endpoint { get; set; }

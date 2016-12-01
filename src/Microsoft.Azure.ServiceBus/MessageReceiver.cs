@@ -5,11 +5,15 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
     using System.Linq;
+    using System.Threading.Tasks;
 
     abstract class MessageReceiver : ClientEntity
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.ReadabilityRules",
+            "SA1126:PrefixCallsCorrectly",
+            Justification = "This is not a method call, but a type.")]
         protected MessageReceiver(ReceiveMode receiveMode)
             : base(nameof(MessageReceiver) + StringUtility.GetRandomString())
         {
@@ -65,19 +69,19 @@ namespace Microsoft.Azure.ServiceBus
 
         protected abstract Task OnDeadLetterAsync(IEnumerable<Guid> lockTokens);
 
-        void ThrowIfNotPeekLockMode()
-        {
-            if (this.ReceiveMode != ReceiveMode.PeekLock)
-            {
-                throw Fx.Exception.AsError(new InvalidOperationException("The operation is only supported in 'PeekLock' receive mode."));
-            }
-        }
-
         static void ValidateLockTokens(IEnumerable<Guid> lockTokens)
         {
             if (lockTokens == null || !lockTokens.Any())
             {
                 throw Fx.Exception.ArgumentNull("lockTokens");
+            }
+        }
+
+        void ThrowIfNotPeekLockMode()
+        {
+            if (this.ReceiveMode != ReceiveMode.PeekLock)
+            {
+                throw Fx.Exception.AsError(new InvalidOperationException("The operation is only supported in 'PeekLock' receive mode."));
             }
         }
     }

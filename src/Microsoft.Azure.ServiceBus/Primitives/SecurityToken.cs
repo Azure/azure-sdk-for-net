@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus
 
             this.token = tokenString;
             this.expiresAtUtc = expiresAtUtc;
-            this.audience = GetAudienceFromToken(tokenString);
+            this.audience = this.GetAudienceFromToken(tokenString);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors",
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             this.token = tokenString;
-            GetExpirationDateAndAudienceFromToken(tokenString, out this.expiresAtUtc, out this.audience);
+            this.GetExpirationDateAndAudienceFromToken(tokenString, out this.expiresAtUtc, out this.audience);
         }
 
         public string Audience
@@ -79,6 +79,11 @@ namespace Microsoft.Azure.ServiceBus
             {
                 return this.expiresAtUtc;
             }
+        }
+
+        public object TokenValue
+        {
+            get { return this.token; }
         }
 
         protected virtual string ExpiresOnFieldName
@@ -113,40 +118,6 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        public object TokenValue
-        {
-            get { return this.token; }
-        }
-
-        string GetAudienceFromToken(string token)
-        {
-            string audience;
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
-            if (!decodedToken.TryGetValue(AudienceFieldName, out audience))
-            {
-                throw new FormatException(Resources.TokenMissingAudience);
-            }
-
-            return audience;
-        }
-
-        void GetExpirationDateAndAudienceFromToken(string token, out DateTime expiresOn, out string audience)
-        {
-            string expiresIn;
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
-            if (!decodedToken.TryGetValue(ExpiresOnFieldName, out expiresIn))
-            {
-                throw new FormatException(Resources.TokenMissingExpiresOn);
-            }
-
-            if (!decodedToken.TryGetValue(AudienceFieldName, out audience))
-            {
-                throw new FormatException(Resources.TokenMissingAudience);
-            }
-
-            expiresOn = (EpochTime + TimeSpan.FromSeconds(double.Parse(expiresIn, CultureInfo.InvariantCulture)));
-        }
-
         static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -164,6 +135,34 @@ namespace Microsoft.Azure.ServiceBus
 
             return dictionary;
         }
-    }
 
+        string GetAudienceFromToken(string token)
+        {
+            string audience;
+            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
+            if (!decodedToken.TryGetValue(this.AudienceFieldName, out audience))
+            {
+                throw new FormatException(Resources.TokenMissingAudience);
+            }
+
+            return audience;
+        }
+
+        void GetExpirationDateAndAudienceFromToken(string token, out DateTime expiresOn, out string audience)
+        {
+            string expiresIn;
+            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
+            if (!decodedToken.TryGetValue(this.ExpiresOnFieldName, out expiresIn))
+            {
+                throw new FormatException(Resources.TokenMissingExpiresOn);
+            }
+
+            if (!decodedToken.TryGetValue(this.AudienceFieldName, out audience))
+            {
+                throw new FormatException(Resources.TokenMissingAudience);
+            }
+
+            expiresOn = (EpochTime + TimeSpan.FromSeconds(double.Parse(expiresIn, CultureInfo.InvariantCulture)));
+        }
+    }
 }
