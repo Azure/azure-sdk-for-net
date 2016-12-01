@@ -144,7 +144,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             IList<ArraySegment<byte>> deliveryTags = this.ConvertLockTokensToDeliveryTags(lockTokens);
 
             ReceivingAmqpLink receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-            Task[] disposeMessageTasks = new Task[deliveryTags.Count];
+            Task<Outcome>[] disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
             int i = 0;
             foreach (ArraySegment<byte> deliveryTag in deliveryTags)
             {
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         this);
             }
 
-            Task.WaitAll(disposeMessageTasks);
+            await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
         }
 
         IList<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)

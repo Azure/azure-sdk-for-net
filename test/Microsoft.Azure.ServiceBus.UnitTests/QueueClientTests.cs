@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using Xunit;
     using Xunit.Abstractions;
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             QueueClient queueClient = QueueClient.Create(this.connectionString, ReceiveMode.ReceiveAndDelete);
             await this.SendMessagesAsync(queueClient, 1);
             BrokeredMessage message = await queueClient.ReceiveAsync();
-            Assert.NotNull((object)message);
+            Assert.NotNull(message);
 
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.CompleteAsync());
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await message.AbandonAsync());
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             queueClient = QueueClient.Create(this.connectionString);
             await this.SendMessagesAsync(queueClient, 1);
             message = await queueClient.ReceiveAsync();
-            Assert.NotNull((object)message);
+            Assert.NotNull(message);
             await message.AbandonAsync();
             await Task.Delay(TimeSpan.FromMilliseconds(100));
             message = await queueClient.ReceiveAsync();
@@ -202,7 +203,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Once Request response link is implemented,  Call ReceiveBySequenceNumber() here and complete the rest of the 5 messages
         }
 
-        async Task SendMessagesAsync(QueueClient queueClient, int messageCount)
+        async Task SendMessagesAsync(QueueClient queueClient, int messageCount, [CallerMemberName] string invokingMethod = "")
         {
             if (messageCount == 0)
             {
@@ -213,7 +214,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             for (int i = 0; i < messageCount; i++)
             {
                 BrokeredMessage message = new BrokeredMessage("test" + i);
-                message.Label = "test" + i;
+                message.Label = $"test{i}-{invokingMethod}";
                 messagesToSend.Add(message);
             }
 

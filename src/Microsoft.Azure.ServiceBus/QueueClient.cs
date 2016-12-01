@@ -129,9 +129,9 @@ namespace Microsoft.Azure.ServiceBus
             return connectionSettings.CreateQueueClient(mode);
         }
 
-        public sealed override async Task CloseAsync()
+        public sealed override Task CloseAsync()
         {
-            await this.OnCloseAsync().ConfigureAwait(false);
+            return this.OnCloseAsync();
         }
 
         /// <summary>
