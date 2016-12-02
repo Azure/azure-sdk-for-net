@@ -50,10 +50,8 @@ namespace Microsoft.Azure.ServiceBus
             {
                 return TimeSpan.MaxValue;
             }
-            else
-            {
-                return TimeSpan.FromMilliseconds(milliseconds);
-            }
+
+            return TimeSpan.FromMilliseconds(milliseconds);
         }
 
         public static int ToMilliseconds(TimeSpan timeout)
@@ -62,15 +60,13 @@ namespace Microsoft.Azure.ServiceBus
             {
                 return Timeout.Infinite;
             }
-            else
+
+            long ticks = Ticks.FromTimeSpan(timeout);
+            if (ticks / TimeSpan.TicksPerMillisecond > int.MaxValue)
             {
-                long ticks = Ticks.FromTimeSpan(timeout);
-                if (ticks / TimeSpan.TicksPerMillisecond > int.MaxValue)
-                {
-                    return int.MaxValue;
-                }
-                return Ticks.ToMilliseconds(ticks);
+                return int.MaxValue;
             }
+            return Ticks.ToMilliseconds(ticks);
         }
 
         public static TimeSpan Min(TimeSpan val1, TimeSpan val2)
@@ -79,10 +75,8 @@ namespace Microsoft.Azure.ServiceBus
             {
                 return val2;
             }
-            else
-            {
-                return val1;
-            }
+
+            return val1;
         }
 
         public static DateTime Min(DateTime val1, DateTime val2)
@@ -91,10 +85,8 @@ namespace Microsoft.Azure.ServiceBus
             {
                 return val2;
             }
-            else
-            {
-                return val1;
-            }
+
+            return val1;
         }
 
         public static TimeSpan Add(TimeSpan timeout1, TimeSpan timeout2)
@@ -164,10 +156,8 @@ namespace Microsoft.Azure.ServiceBus
                 waitHandle.WaitOne();
                 return true;
             }
-            else
-            {
-                return waitHandle.WaitOne(timeout);
-            }
+
+            return waitHandle.WaitOne(timeout);
         }
 
         public TimeSpan RemainingTime()
@@ -177,22 +167,19 @@ namespace Microsoft.Azure.ServiceBus
                 this.SetDeadline();
                 return this.originalTimeout;
             }
-            else if (this.deadline == DateTime.MaxValue)
+
+            if (this.deadline == DateTime.MaxValue)
             {
                 return TimeSpan.MaxValue;
             }
-            else
+
+            TimeSpan remaining = this.deadline - DateTime.UtcNow;
+            if (remaining <= TimeSpan.Zero)
             {
-                TimeSpan remaining = this.deadline - DateTime.UtcNow;
-                if (remaining <= TimeSpan.Zero)
-                {
-                    return TimeSpan.Zero;
-                }
-                else
-                {
-                    return remaining;
-                }
+                return TimeSpan.Zero;
             }
+
+            return remaining;
         }
 
         public TimeSpan ElapsedTime()

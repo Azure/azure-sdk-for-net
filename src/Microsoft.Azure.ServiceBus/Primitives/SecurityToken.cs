@@ -121,10 +121,10 @@ namespace Microsoft.Azure.ServiceBus
         static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
-            IEnumerable<string> valueEncodedPairs = encodedString.Split(new string[] { pairSeparator }, StringSplitOptions.None);
+            IEnumerable<string> valueEncodedPairs = encodedString.Split(new[] { pairSeparator }, StringSplitOptions.None);
             foreach (string valueEncodedPair in valueEncodedPairs)
             {
-                string[] pair = valueEncodedPair.Split(new string[] { keyValueSeparator }, StringSplitOptions.None);
+                string[] pair = valueEncodedPair.Split(new[] { keyValueSeparator }, StringSplitOptions.None);
                 if (pair.Length != 2)
                 {
                     throw new FormatException(Resources.InvalidEncoding);

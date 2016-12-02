@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     public enum ReceiveMode
     {
-        /// <summary>Specifies the PeekLock receive mode. This is the default value for <see cref="Microsoft.ServiceBus.Messaging.ReceiveMode" />.</summary>
+        /// <summary>Specifies the PeekLock receive mode. This is the default value for <see cref="Microsoft.Azure.ServiceBus.ReceiveMode" />.</summary>
         PeekLock,
 
         /// <summary>Specifies the ReceiveAndDelete receive mode.</summary>

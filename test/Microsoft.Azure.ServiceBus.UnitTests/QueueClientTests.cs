@@ -132,7 +132,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(receivedMessages.Count() == MessageCount);
 
             // 5 of these messages should have deliveryCount = 2
-            int messagesWithDeliveryCount2 = receivedMessages.Where((message) => message.DeliveryCount == 2).Count();
+            int messagesWithDeliveryCount2 = receivedMessages.Count(message => message.DeliveryCount == 2);
             Assert.True(messagesWithDeliveryCount2 == abandonMessagesCount);
 
             // Complete Messages
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task PeekLockWithDeadLetterTest()
         {
             const int MessageCount = 10;
-            IEnumerable<BrokeredMessage> receivedMessages = null;
+            IEnumerable<BrokeredMessage> receivedMessages;
 
             // Create QueueClient With PeekLock
             QueueClient queueClient = QueueClient.Create(this.connectionString);

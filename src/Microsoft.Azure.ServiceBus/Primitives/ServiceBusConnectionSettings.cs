@@ -31,11 +31,11 @@ namespace Microsoft.Azure.ServiceBus
     /// </example>
     public class ServiceBusConnectionSettings
     {
-        const char KeyValueSeparator = '=';
-        const char KeyValuePairDelimiter = ';';
+        const string KeyValueSeparator = "=";
+        const string KeyValuePairDelimiter = ";";
         static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
         static readonly string EndpointScheme = "amqps";
-        static readonly string EndpointFormat = EndpointScheme + "://{0}.servicebus.windows.net";
+        static readonly string EndpointFormat = $"{EndpointScheme}://{{0}}.servicebus.windows.net";
         static readonly string EndpointConfigName = "Endpoint";
         static readonly string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
         static readonly string SharedAccessKeyConfigName = "SharedAccessKey";
@@ -82,7 +82,8 @@ namespace Microsoft.Azure.ServiceBus
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(string.IsNullOrWhiteSpace(namespaceName) ? nameof(namespaceName) : nameof(entityPath));
             }
-            else if (string.IsNullOrWhiteSpace(sharedAccessKeyName) || string.IsNullOrWhiteSpace(sharedAccessKey))
+
+            if (string.IsNullOrWhiteSpace(sharedAccessKeyName) || string.IsNullOrWhiteSpace(sharedAccessKey))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(string.IsNullOrWhiteSpace(sharedAccessKeyName) ? nameof(sharedAccessKeyName) : nameof(sharedAccessKey));
             }
@@ -134,9 +135,11 @@ namespace Microsoft.Azure.ServiceBus
 
         public ServiceBusConnectionSettings Clone()
         {
-            var clone = new ServiceBusConnectionSettings(this.ToString());
-            clone.OperationTimeout = this.OperationTimeout;
-            clone.RetryPolicy = this.RetryPolicy;
+            var clone = new ServiceBusConnectionSettings(this.ToString())
+            {
+                OperationTimeout = this.OperationTimeout,
+                RetryPolicy = this.RetryPolicy
+            };
             return clone;
         }
 
@@ -192,7 +195,7 @@ namespace Microsoft.Azure.ServiceBus
             foreach (var keyValuePair in keyValuePairs)
             {
                 // Now split based on the _first_ '='
-                string[] keyAndValue = keyValuePair.Split(new[] { KeyValueSeparator }, 2);
+                string[] keyAndValue = keyValuePair.Split(new[] { KeyValueSeparator[0] }, 2);
                 string key = keyAndValue[0];
                 if (keyAndValue.Length != 2)
                 {

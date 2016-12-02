@@ -18,7 +18,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public static long FromMilliseconds(int milliseconds)
         {
-            return checked((long)milliseconds * TimeSpan.TicksPerMillisecond);
+            return checked(milliseconds * TimeSpan.TicksPerMillisecond);
         }
 
         public static int ToMilliseconds(long ticks)

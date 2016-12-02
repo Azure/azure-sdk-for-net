@@ -3,8 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
-    using System;
-
     static class Constants
     {
         public const int MaxMessageIdLength = 128;

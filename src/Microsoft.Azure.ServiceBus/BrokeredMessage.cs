@@ -89,7 +89,7 @@ namespace Microsoft.Azure.ServiceBus
                 if (serializer == null)
                 {
                     ////throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
-                    throw new ArgumentNullException("serializer");
+                    throw new ArgumentNullException(nameof(serializer));
                 }
 
                 MemoryStream stream = new MemoryStream(256);
@@ -671,10 +671,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     return TimeSpan.MaxValue;
                 }
-                else
-                {
-                    return this.timeToLive;
-                }
+
+                return this.timeToLive;
             }
 
             set
@@ -940,15 +938,14 @@ namespace Microsoft.Azure.ServiceBus
                 this.SetGetBodyCalled();
                 return (T)(object)this.BodyStream;
             }
-            else if (this.bodyObjectDecoded && this.bodyObject != null)
+
+            if (this.bodyObjectDecoded && this.bodyObject != null)
             {
                 this.SetGetBodyCalled();
                 return (T)this.bodyObject;
             }
-            else
-            {
-                return this.GetBody<T>(new DataContractBinarySerializer(typeof(T)));
-            }
+
+            return this.GetBody<T>(new DataContractBinarySerializer(typeof(T)));
         }
 
         /// <summary>Deserializes the BrokeredMessage body into an object of the specified type using 
@@ -965,7 +962,7 @@ namespace Microsoft.Azure.ServiceBus
             if (serializer == null)
             {
                 // TODO: throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
-                throw new ArgumentNullException("serializer");
+                throw new ArgumentNullException(nameof(serializer));
             }
 
             this.ThrowIfDisposed();
@@ -981,7 +978,8 @@ namespace Microsoft.Azure.ServiceBus
                 
                 return default(T);
             }
-            else if (this.BodyStream.CanSeek)
+
+            if (this.BodyStream.CanSeek)
             {
                 if (this.BodyStream.Length == 0)
                 {
@@ -1006,7 +1004,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfDisposed();
             this.ThrowIfNotLocked();
 
-            return this.Receiver.AbandonAsync(new Guid[] { this.LockToken });
+            return this.Receiver.AbandonAsync(new[] { this.LockToken });
         }
 
         // Summary:
@@ -1017,7 +1015,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfDisposed();
             this.ThrowIfNotLocked();
 
-            return this.Receiver.CompleteAsync(new Guid[] { this.LockToken });
+            return this.Receiver.CompleteAsync(new[] { this.LockToken });
         }
 
         // Summary:
@@ -1027,7 +1025,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfDisposed();
             this.ThrowIfNotLocked();
 
-            return this.Receiver.DeadLetterAsync(new Guid[] { this.LockToken });
+            return this.Receiver.DeadLetterAsync(new[] { this.LockToken });
         }
 
         // Summary:
@@ -1037,7 +1035,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfDisposed();
             this.ThrowIfNotLocked();
 
-            return this.Receiver.DeferAsync(new Guid[] { this.LockToken });
+            return this.Receiver.DeferAsync(new[] { this.LockToken });
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>

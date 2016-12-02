@@ -91,7 +91,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0)
             {
-                object netObject = null;
+                object netObject;
                 if (!TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out netObject))
                 {
                     netObject = amqpMessage.ValueBody.Value;
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 foreach (var pair in amqpMessage.ApplicationProperties.Map)
                 {
-                    object netObject = null;
+                    object netObject;
                     if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out netObject))
                     {
                         brokeredMessage.Properties[pair.Key.ToString()] = netObject;
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             brokeredMessage.DeadLetterSource = (string)pair.Value;
                             break;
                         default:
-                            object netObject = null;
+                            object netObject;
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out netObject))
                             {
                                 brokeredMessage.Properties[key] = netObject;
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             foreach (KeyValuePair<string, object> pair in brokeredMessage.Properties)
             {
-                object amqpObject = null;
+                object amqpObject;
                 if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out amqpObject))
                 {
                     amqpMessage.ApplicationProperties.Map.Add(pair.Key, amqpObject);
@@ -461,15 +461,15 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         if (describedType.Descriptor is AmqpSymbol)
                         {
                             AmqpSymbol symbol = (AmqpSymbol)describedType.Descriptor;
-                            if (symbol.Equals((AmqpSymbol)UriName))
+                            if (symbol.Equals(UriName))
                             {
                                 netObject = new Uri((string)describedType.Value);
                             }
-                            else if (symbol.Equals((AmqpSymbol)TimeSpanName))
+                            else if (symbol.Equals(TimeSpanName))
                             {
                                 netObject = new TimeSpan((long)describedType.Value);
                             }
-                            else if (symbol.Equals((AmqpSymbol)DateTimeOffsetName))
+                            else if (symbol.Equals(DateTimeOffsetName))
                             {
                                 netObject = new DateTimeOffset(new DateTime((long)describedType.Value, DateTimeKind.Utc));
                             }

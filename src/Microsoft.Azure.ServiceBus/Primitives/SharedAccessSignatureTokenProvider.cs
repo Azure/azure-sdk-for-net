@@ -203,7 +203,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (string.IsNullOrEmpty(sharedAccessSignature))
                 {
-                    throw new ArgumentNullException("sharedAccessSignature");
+                    throw new ArgumentNullException(nameof(sharedAccessSignature));
                 }
 
                 IDictionary<string, string> parsedFields = ExtractFieldValues(sharedAccessSignature);
@@ -239,17 +239,17 @@ namespace Microsoft.Azure.ServiceBus
 
                 if (!string.Equals(tokenLines[0].Trim(), SharedAccessSignature, StringComparison.OrdinalIgnoreCase) || tokenLines.Length != 2)
                 {
-                    throw new ArgumentNullException("sharedAccessSignature");
+                    throw new ArgumentNullException(nameof(sharedAccessSignature));
                 }
 
                 IDictionary<string, string> parsedFields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-                string[] tokenFields = tokenLines[1].Trim().Split(new string[] { SasPairSeparator }, StringSplitOptions.None);
+                string[] tokenFields = tokenLines[1].Trim().Split(new[] { SasPairSeparator }, StringSplitOptions.None);
 
                 foreach (string tokenField in tokenFields)
                 {
                     if (tokenField != string.Empty)
                     {
-                        string[] fieldParts = tokenField.Split(new string[] { SasKeyValueSeparator }, StringSplitOptions.None);
+                        string[] fieldParts = tokenField.Split(new[] { SasKeyValueSeparator }, StringSplitOptions.None);
                         if (string.Equals(fieldParts[0], SignedResource, StringComparison.OrdinalIgnoreCase))
                         {
                             // We need to preserve the casing of the escape characters in the audience,
