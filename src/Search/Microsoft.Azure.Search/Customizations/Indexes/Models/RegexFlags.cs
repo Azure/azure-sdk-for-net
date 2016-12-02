@@ -72,11 +72,7 @@ namespace Microsoft.Azure.Search.Models
         /// Name of the regex flag, or an expression comprised of two or more flags separated by vertical bars (|).
         /// </param>
         /// <returns>A RegexFlags instance with the given expression.</returns>
-        public static RegexFlags Create(string flagExpression)
-        {
-            // Regex flags are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(flagExpression) ?? new RegexFlags(flagExpression);
-        }
+        public static RegexFlags Create(string flagExpression) => Lookup(flagExpression) ?? new RegexFlags(flagExpression);
 
         /// <summary>
         /// Overloads the bitwise OR operator to combines two RegexFlags.
@@ -99,7 +95,14 @@ namespace Microsoft.Azure.Search.Models
                 return lhs;
             }
 
-            return new RegexFlags(String.Format("{0}|{1}", lhs, rhs));
+            return new RegexFlags($"{lhs}|{rhs}");
         }
+
+        /// <summary>
+        /// Defines implicit conversion from string to RegexFlags.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a RegexFlags.</returns>
+        public static implicit operator RegexFlags(string name) => Create(name);
     }
 }

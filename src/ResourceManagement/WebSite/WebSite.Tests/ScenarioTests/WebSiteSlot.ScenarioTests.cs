@@ -14,6 +14,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Resources;
@@ -51,9 +52,9 @@ namespace WebSites.Tests.ScenarioTests
                             Location = location
                         });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName, new ServerFarmWithRichSku()
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan()
                     {
-                        ServerFarmWithRichSkuName = whpName,
+                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -62,24 +63,26 @@ namespace WebSites.Tests.ScenarioTests
                         }
                     });
 
-                webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site
+                webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                     {
-                        SiteName = webSiteName,
+                        Name = webSiteName,
                         Location = location,
                         Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                         ServerFarmId = serverFarmId
                     });
 
-                webSitesClient.Sites.CreateOrUpdateSiteSlot(resourceGroupName, webSiteName, new Site()
+                string siteSlotResourceName = webSiteName + "/" + slotName;
+                webSitesClient.WebApps.CreateOrUpdateSlot(resourceGroupName, webSiteName, new Site()
                     {
+                        Name = siteSlotResourceName,
                         Location = location,
                         ServerFarmId = serverFarmId
                     }, slotName);
 
                 // TODO: Replace with GetSite with slotName API once its CSM related issue is resolved.
-                var webSiteSlotCollection = webSitesClient.Sites.GetSiteSlots(resourceGroupName, webSiteName);
-                Assert.Equal(1, webSiteSlotCollection.Value.Count);
-                Assert.Equal(siteWithSlotName, webSiteSlotCollection.Value[0].SiteName);
+                var webSiteSlotCollection = webSitesClient.WebApps.ListSlots(resourceGroupName, webSiteName);
+                Assert.Equal(1, webSiteSlotCollection.Count());
+                Assert.Equal(siteSlotResourceName, webSiteSlotCollection.ToList()[0].Name);
             }
         }
 
@@ -106,9 +109,9 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName, new ServerFarmWithRichSku
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan()
                     {
-                        ServerFarmWithRichSkuName = whpName,
+                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -118,25 +121,27 @@ namespace WebSites.Tests.ScenarioTests
                         }
                     });
 
-                webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site
+                webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    SiteName = webSiteName,
+                    Name = webSiteName,
                     Location = location,
                     ServerFarmId = serverFarmId
                 });
 
-                webSitesClient.Sites.CreateOrUpdateSiteSlot(resourceGroupName, webSiteName, slot: slotName, siteEnvelope:
+                string siteSlotResourceName = webSiteName + "/" + slotName;
+                webSitesClient.WebApps.CreateOrUpdateSlot(resourceGroupName, webSiteName, slot: slotName, siteEnvelope:
                     new Site
                     {
+                        Name = siteSlotResourceName,
                         Location = location,
                         ServerFarmId = serverFarmId
                     });
 
-                var webSiteSlots = webSitesClient.Sites.GetSiteSlots(resourceGroupName, webSiteName);
+                var webSiteSlots = webSitesClient.WebApps.ListSlots(resourceGroupName, webSiteName);
 
-                Assert.Equal(1, webSiteSlots.Value.Count);
-                Assert.Equal(siteWithSlotName, webSiteSlots.Value[0].SiteName);
-                Assert.Equal(serverFarmId, webSiteSlots.Value[0].ServerFarmId, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(1, webSiteSlots.Count());
+                Assert.Equal(siteSlotResourceName, webSiteSlots.ToList()[0].Name);
+                Assert.Equal(serverFarmId, webSiteSlots.ToList()[0].ServerFarmId, StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -163,10 +168,10 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName,
-                    new ServerFarmWithRichSku
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName,
+                    new AppServicePlan
                     {
-                        ServerFarmWithRichSkuName = whpName,
+                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -176,25 +181,26 @@ namespace WebSites.Tests.ScenarioTests
                         }
                     });
 
-                webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site
+                webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    SiteName = webSiteName,
+                    Name = webSiteName,
                     Location = location,
                     ServerFarmId = serverFarmId
                 });
 
-                webSitesClient.Sites.CreateOrUpdateSiteSlot(resourceGroupName, webSiteName, slot: slotName, siteEnvelope:
+                webSitesClient.WebApps.CreateOrUpdateSlot(resourceGroupName, webSiteName, slot: slotName, siteEnvelope:
                     new Site
                     {
+                        Name = webSiteName + "/" + slotName,
                         Location = location,
                         ServerFarmId = serverFarmId
                     });
 
-                webSitesClient.Sites.DeleteSiteSlot(resourceGroupName, webSiteName, slotName, deleteAllSlots: true.ToString());
+                webSitesClient.WebApps.DeleteSlot(resourceGroupName, webSiteName, slotName);
 
-                var webSites = webSitesClient.Sites.GetSiteSlots(resourceGroupName, webSiteName);
+                var webSites = webSitesClient.WebApps.ListSlots(resourceGroupName, webSiteName);
 
-                Assert.Equal(0, webSites.Value.Count);
+                Assert.Equal(0, webSites.Count());
             }
         }
     }

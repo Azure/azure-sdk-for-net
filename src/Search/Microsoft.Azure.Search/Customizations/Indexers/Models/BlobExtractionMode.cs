@@ -43,10 +43,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the blob extraction mode.</param>
         /// <returns>A BlobExtractionMode instance with the given name.</returns>
-        public static BlobExtractionMode Create(string name)
-        {
-            // Data source type names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new BlobExtractionMode(name);
-        }
+        public static BlobExtractionMode Create(string name) => Lookup(name) ?? new BlobExtractionMode(name);
+
+        /// <summary>
+        /// Defines implicit conversion from string to BlobExtractionMode.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a BlobExtractionMode.</returns>
+        public static implicit operator BlobExtractionMode(string name) => Create(name);
     }
 }

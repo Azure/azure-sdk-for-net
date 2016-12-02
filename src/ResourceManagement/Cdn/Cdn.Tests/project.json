@@ -30,7 +30,7 @@
       "type": "platform",
       "version": "1.0.0"
     },
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.4.0-preview",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.0-preview",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.3,4.0.0)",
     "Microsoft.Azure.Management.Cdn": "2.0.0",
     "Microsoft.Azure.ResourceManager": "1.0.0-preview",

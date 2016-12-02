@@ -14,6 +14,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -47,9 +48,9 @@ namespace WebSites.Tests.ScenarioTests
                         Location = locationName
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, farmName, new ServerFarmWithRichSku
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, farmName, new AppServicePlan
                 {
-                    ServerFarmWithRichSkuName = farmName,
+                    Name = farmName,
                     Location = locationName,
                     Sku = new SkuDescription
                     {
@@ -60,15 +61,15 @@ namespace WebSites.Tests.ScenarioTests
                 });
 
                 var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId, resourceGroupName, farmName);
-                webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, siteName, new Site
+                webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, siteName, new Site
                 {
-                    SiteName = siteName,
+                    Name = siteName,
                     Location = locationName,
                     ServerFarmId = serverfarmId
                 });
 
-                var backupResponse = webSitesClient.Sites.ListSiteBackups(resourceGroupName, siteName);
-                Assert.Equal(0, backupResponse.Value.Count); // , "Backup list should be empty"
+                var backupResponse = webSitesClient.WebApps.ListBackups(resourceGroupName, siteName);
+                Assert.Equal(0, backupResponse.Count()); // , "Backup list should be empty"
 
                 // the following URL just have a proper format, but it is not valid - for an API test it is not needed to be valid,
                 // since we are just testing a roundtrip here
@@ -90,9 +91,9 @@ namespace WebSites.Tests.ScenarioTests
                     StorageAccountUrl = storageUrl
                 };
 
-                webSitesClient.Sites.UpdateSiteBackupConfiguration(resourceGroupName, siteName, sr);
+                webSitesClient.WebApps.UpdateBackupConfiguration(resourceGroupName, siteName, sr);
 
-                var backupConfiguration = webSitesClient.Sites.GetSiteBackupConfiguration(resourceGroupName, siteName);
+                var backupConfiguration = webSitesClient.WebApps.GetBackupConfiguration(resourceGroupName, siteName);
 
                 Assert.Equal(sr.Enabled, backupConfiguration.Enabled);
                 Assert.Equal(sr.BackupSchedule.FrequencyInterval, backupConfiguration.BackupSchedule.FrequencyInterval);
@@ -100,13 +101,13 @@ namespace WebSites.Tests.ScenarioTests
                 Assert.Equal(sr.BackupSchedule.KeepAtLeastOneBackup, backupConfiguration.BackupSchedule.KeepAtLeastOneBackup);
                 Assert.Equal(sr.Name, backupConfiguration.BackupRequestName);
 
-                webSitesClient.Sites.DeleteSite(resourceGroupName, siteName, deleteAllSlots: true.ToString(), deleteMetrics: true.ToString());
+                webSitesClient.WebApps.Delete(resourceGroupName, siteName, deleteMetrics: true);
 
-                webSitesClient.ServerFarms.DeleteServerFarm(resourceGroupName, farmName);
+                webSitesClient.AppServicePlans.Delete(resourceGroupName, farmName);
 
-                var serverFarmResponse = webSitesClient.ServerFarms.GetServerFarms(resourceGroupName);
+                var serverFarmResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Equal(0, serverFarmResponse.Value.Count);
+                Assert.Equal(0, serverFarmResponse.Count());
             }
         }
     }

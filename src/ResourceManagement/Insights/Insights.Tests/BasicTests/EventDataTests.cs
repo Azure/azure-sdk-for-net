@@ -174,7 +174,6 @@ namespace Insights.Tests.BasicTests
             if (exp != null)
             {
                 Assert.Equal(exp.Action, act.Action);
-                Assert.Equal(exp.Condition, act.Condition);
                 Assert.Equal(exp.Role, act.Role);
                 Assert.Equal(exp.Scope, act.Scope);
             }
@@ -185,7 +184,7 @@ namespace Insights.Tests.BasicTests
             return new List<EventData>()
             {
                 new EventData(
-                    authorization: new SenderAuthorization(action: "action", condition: "condition", role: "role" , scope: "scope"),
+                    authorization: new SenderAuthorization(action: "action", role: "role" , scope: "scope"),
                     claims: new Dictionary<string, string> { {"prop1", "val1"} },
                     correlationId: Guid.NewGuid().ToString("N"),
                     description: "description",

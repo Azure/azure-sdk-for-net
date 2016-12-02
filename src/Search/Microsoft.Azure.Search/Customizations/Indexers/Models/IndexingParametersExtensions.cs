@@ -13,29 +13,27 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public static class IndexingParametersExtensions
     {
-        private const string ParsingModeKey = "parsingMode";
-
-        /// <summary>
-        /// Specifies that the indexer will index only the storage metadata and completely skip the document extraction process. This is useful when
-        /// you don't need the document content, nor do you need any of the content type-specific metadata properties.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details.
-        /// </summary>
-        /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <remarks>
-        /// This option only applies to indexers that index Azure Blob Storage.
-        /// </remarks>
-        /// <returns>The IndexingParameters instance.</returns>
+        /// <summary> 
+        /// Specifies that the indexer will index only the storage metadata and completely skip the document extraction process. This is useful when 
+        /// you don't need the document content, nor do you need any of the content type-specific metadata properties. 
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details. 
+        /// </summary> 
+        /// <param name="parameters">IndexingParameters to configure.</param> 
+        /// <remarks> 
+        /// This option only applies to indexers that index Azure Blob Storage. 
+        /// </remarks> 
+        /// <returns>The IndexingParameters instance.</returns> 
         [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.StorageMetadata).")]
         public static IndexingParameters IndexStorageMetadataOnly(this IndexingParameters parameters)
-        {
-            return parameters.SetBlobExtractionMode(BlobExtractionMode.StorageMetadata);
-        }
-
+        { 
+            return parameters.SetBlobExtractionMode(BlobExtractionMode.StorageMetadata); 
+        } 
+ 
         /// <summary>
         /// Specifies that the indexer will index only the blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and ExcludeFileNameExtensions, blobs
         /// with that extension will be excluded from indexing (that is, ExcludeFileNameExtensions takes precedence).
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extensions">File extensions to include in indexing.</param>
@@ -60,7 +58,7 @@ namespace Microsoft.Azure.Search.Models
         /// Specifies that the indexer will not index blobs with the file name extensions you specify. Each string is a file extensions with a
         /// leading dot. For example, ".pdf", ".docx", etc. If you pass the same file extension to this method and IndexFileNameExtensions, blobs
         /// with that extension will be excluded from indexing (that is, this method takes precedence).
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="extensions">File extensions to exclude from indexing.</param>
@@ -82,92 +80,21 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Specifies that the indexer will extract metadata, but skip content extraction for all blobs. If you want to skip content extraction for
-        /// only some blobs, add AzureSearch_SkipContent metadata to those blobs individually instead of using this option.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-indexing-azure-blob-storage/" /> for details.
-        /// </summary>
-        /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <remarks>
-        /// This option only applies to indexers that index Azure Blob Storage.
-        /// </remarks>
-        /// <returns>The IndexingParameters instance.</returns>
+        /// Specifies that the indexer will extract metadata, but skip content extraction for all blobs. If you want to skip content extraction for 
+        /// only some blobs, add AzureSearch_SkipContent metadata to those blobs individually instead of using this option. 
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details. 
+        /// </summary> 
+        /// <param name="parameters">IndexingParameters to configure.</param> 
+        /// <remarks> 
+        /// This option only applies to indexers that index Azure Blob Storage. 
+        /// </remarks> 
+        /// <returns>The IndexingParameters instance.</returns> 
         [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.AllMetadata).")]
         public static IndexingParameters SkipContent(this IndexingParameters parameters)
-        {
-            return parameters.SetBlobExtractionMode(BlobExtractionMode.AllMetadata);
-        }
-
-        /// <summary>
-        /// Tells the indexer to assume that all blobs contain JSON, which it will then parse such that each blob's JSON will map to a single
-        /// document in the Azure Search index.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-index-json-blobs/" /> for details.
-        /// </summary>
-        /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <remarks>
-        /// This option only applies to indexers that index Azure Blob Storage.
-        /// </remarks>
-        /// <returns>The IndexingParameters instance.</returns>
-        public static IndexingParameters ParseJson(this IndexingParameters parameters)
-        {
-            return Configure(parameters, ParsingModeKey, "json");
-        }
-
-        /// <summary>
-        /// Tells the indexer to assume that all blobs contain JSON arrays, which it will then parse such that each JSON object in each array will
-        /// map to a single document in the Azure Search index.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-index-json-blobs/" /> for details.
-        /// </summary>
-        /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <param name="documentRoot">
-        /// An optional JSON Pointer that tells the indexer how to find the JSON array if it's not the top-level JSON property of each blob. If this
-        /// parameter is null or empty, the indexer will assume that the JSON array can be found in the top-level JSON property of each blob.
-        /// Default is null.
-        /// </param>
-        /// <remarks>
-        /// This option only applies to indexers that index Azure Blob Storage.
-        /// </remarks>
-        /// <returns>The IndexingParameters instance.</returns>
-        public static IndexingParameters ParseJsonArrays(this IndexingParameters parameters, string documentRoot = null)
-        {
-            Configure(parameters, ParsingModeKey, "jsonArray");
-
-            if (!string.IsNullOrEmpty(documentRoot))
-            {
-                Configure(parameters, "documentRoot", documentRoot);
-            }
-
-            return parameters;
-        }
-
-        /// <summary>
-        /// Tells the indexer to assume that all blobs are delimited text files. Currently only comma-separated value (CSV) text files are supported.
-        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/search-howto-index-csv-blobs/" /> for details.
-        /// </summary>
-        /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <param name="headers">
-        /// Specifies column headers that the indexer will use to map values to specific fields in the Azure Search index. If you don't specify any
-        /// headers, the indexer assumes that the first non-blank line of each blob contains comma-separated headers.
-        /// </param>
-        /// <remarks>
-        /// This option only applies to indexers that index Azure Blob Storage.
-        /// </remarks>
-        /// <returns>The IndexingParameters instance.</returns>
-        public static IndexingParameters ParseDelimitedTextFiles(this IndexingParameters parameters, params string[] headers)
-        {
-            Configure(parameters, ParsingModeKey, "delimitedText");
-
-            if (headers?.Length > 0)
-            {
-                Configure(parameters, "delimitedTextHeaders", headers.ToCommaSeparatedString());
-            }
-            else
-            {
-                Configure(parameters, "firstLineContainsHeaders", true);
-            }
-
-            return parameters;
-        }
-
+        { 
+            return parameters.SetBlobExtractionMode(BlobExtractionMode.AllMetadata); 
+        } 
+ 
         /// <summary>
         /// Specifies which parts of a blob will be indexed by the blob storage indexer. 
         /// </summary>
