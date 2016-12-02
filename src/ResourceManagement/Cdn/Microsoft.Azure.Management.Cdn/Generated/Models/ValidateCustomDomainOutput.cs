@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// domain is validated or not.</param>
         /// <param name="reason">The reason why the custom domain is not
         /// valid.</param>
-        /// <param name="message">The message describing why the custom domain
-        /// is not valid.</param>
+        /// <param name="message">Error message describing why the custom
+        /// domain is not valid.</param>
         public ValidateCustomDomainOutput(bool? customDomainValidated = default(bool?), string reason = default(string), string message = default(string))
         {
             CustomDomainValidated = customDomainValidated;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string Reason { get; set; }
 
         /// <summary>
-        /// Gets or sets the message describing why the custom domain is not
+        /// Gets or sets error message describing why the custom domain is not
         /// valid.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "message")]

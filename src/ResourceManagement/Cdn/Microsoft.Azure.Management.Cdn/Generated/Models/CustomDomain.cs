@@ -11,9 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// CDN CustomDomain represents a mapping between a user-specified domain
-    /// name and a CDN endpoint. This is to use custom domain names to
-    /// represent the URLs for branding purposes.
+    /// Customer provided domain for branding purposes, e.g. www.consoto.com.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class CustomDomain : Resource
@@ -37,8 +35,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
         /// <param name="validationData">Special validation or data may be
         /// required when delivering CDN to some regions due to local
-        /// compliance reasons. (e.g. ICP license number of a custom domain
-        /// is required to deliver content in China.)</param>
+        /// compliance reasons. E.g. ICP license number of a custom domain is
+        /// required to deliver content in China.</param>
         /// <param name="provisioningState">Provisioning status of the custom
         /// domain.</param>
         public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string resourceState = default(string), string validationData = default(string), string provisioningState = default(string))
@@ -67,8 +65,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Gets or sets special validation or data may be required when
         /// delivering CDN to some regions due to local compliance reasons.
-        /// (e.g. ICP license number of a custom domain is required to
-        /// deliver content in China.)
+        /// E.g. ICP license number of a custom domain is required to deliver
+        /// content in China.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.validationData")]
         public string ValidationData { get; set; }

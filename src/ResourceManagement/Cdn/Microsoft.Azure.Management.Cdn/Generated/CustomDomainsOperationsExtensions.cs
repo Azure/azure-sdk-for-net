@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class CustomDomainsOperationsExtensions
     {
             /// <summary>
-            /// Lists the existing CDN custom domains within an endpoint.
+            /// Lists all of the existing custom domains within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the existing CDN custom domains within an endpoint.
+            /// Lists all of the existing custom domains within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN custom domain within an endpoint.
+            /// Gets an exisitng custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN custom domain within an endpoint.
+            /// Gets an exisitng custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN custom domain within an endpoint.
+            /// Creates a new custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN custom domain within an endpoint.
+            /// Creates a new custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN custom domain within an endpoint.
+            /// Creates a new custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN custom domain within an endpoint.
+            /// Creates a new custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN custom domain within an endpoint.
+            /// Deletes an existing custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN custom domain within an endpoint.
+            /// Deletes an existing custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN custom domain within an endpoint.
+            /// Deletes an existing custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN custom domain within an endpoint.
+            /// Deletes an existing custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the existing CDN custom domains within an endpoint.
+            /// Lists all of the existing custom domains within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the existing CDN custom domains within an endpoint.
+            /// Lists all of the existing custom domains within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class ProfilesOperationsExtensions
     {
             /// <summary>
-            /// Lists all the CDN profiles within an Azure subscription.
+            /// Lists all of the CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within an Azure subscription.
+            /// Lists all of the CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within a resource group.
+            /// Lists all of the CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within a resource group.
+            /// Lists all of the CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Cdn
 
             /// <summary>
             /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all subresources including
+            /// profile will result in the deletion of all of the sub-resources including
             /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Cdn
 
             /// <summary>
             /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all subresources including
+            /// profile will result in the deletion of all of the sub-resources including
             /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.Cdn
 
             /// <summary>
             /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all subresources including
+            /// profile will result in the deletion of all of the sub-resources including
             /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.Cdn
 
             /// <summary>
             /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all subresources including
+            /// profile will result in the deletion of all of the sub-resources including
             /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
@@ -446,7 +446,47 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within an Azure subscription.
+            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ResourceUsage> ListResourceUsage(this IProfilesOperations operations, string resourceGroupName, string profileName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProfilesOperations)s).ListResourceUsageAsync(resourceGroupName, profileName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceUsage>> ListResourceUsageAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListResourceUsageWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all of the CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -460,7 +500,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within an Azure subscription.
+            /// Lists all of the CDN profiles within an Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -480,7 +520,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within a resource group.
+            /// Lists all of the CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -494,7 +534,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all the CDN profiles within a resource group.
+            /// Lists all of the CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -508,6 +548,40 @@ namespace Microsoft.Azure.Management.Cdn
             public static async Task<Microsoft.Rest.Azure.IPage<Profile>> ListByResourceGroupNextAsync(this IProfilesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ResourceUsage> ListResourceUsageNext(this IProfilesOperations operations, string nextPageLink)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProfilesOperations)s).ListResourceUsageNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks the quota and actual usage of endpoints under the given CDN profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceUsage>> ListResourceUsageNextAsync(this IProfilesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

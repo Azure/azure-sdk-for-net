@@ -106,7 +106,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters.
+            /// Creates a new CDN endpoint with the specified endpoint name under the
+            /// specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -129,7 +130,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters.
+            /// Creates a new CDN endpoint with the specified endpoint name under the
+            /// specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -158,7 +160,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters.
+            /// Creates a new CDN endpoint with the specified endpoint name under the
+            /// specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -181,7 +184,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters.
+            /// Creates a new CDN endpoint with the specified endpoint name under the
+            /// specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,8 +214,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN endpoint with the specified parameters. Only tags
-            /// and OriginHostHeader can be updated after creating an endpoint. To update
+            /// Updates an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile. Only tags and
+            /// Origin HostHeader can be updated after creating an endpoint. To update
             /// origins, use the Update Origin operation. To update custom domains, use
             /// the Update Custom Domain operation.
             /// </summary>
@@ -236,8 +241,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN endpoint with the specified parameters. Only tags
-            /// and OriginHostHeader can be updated after creating an endpoint. To update
+            /// Updates an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile. Only tags and
+            /// Origin HostHeader can be updated after creating an endpoint. To update
             /// origins, use the Update Origin operation. To update custom domains, use
             /// the Update Custom Domain operation.
             /// </summary>
@@ -268,8 +274,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN endpoint with the specified parameters. Only tags
-            /// and OriginHostHeader can be updated after creating an endpoint. To update
+            /// Updates an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile. Only tags and
+            /// Origin HostHeader can be updated after creating an endpoint. To update
             /// origins, use the Update Origin operation. To update custom domains, use
             /// the Update Custom Domain operation.
             /// </summary>
@@ -294,8 +301,9 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN endpoint with the specified parameters. Only tags
-            /// and OriginHostHeader can be updated after creating an endpoint. To update
+            /// Updates an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile. Only tags and
+            /// Origin HostHeader can be updated after creating an endpoint. To update
             /// origins, use the Update Origin operation. To update custom domains, use
             /// the Update Custom Domain operation.
             /// </summary>
@@ -326,7 +334,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN endpoint with the specified parameters.
+            /// Deletes an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,7 +355,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN endpoint with the specified parameters.
+            /// Deletes an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -369,7 +379,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN endpoint with the specified parameters.
+            /// Deletes an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -389,7 +400,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN endpoint with the specified parameters.
+            /// Deletes an existing CDN endpoint with the specified endpoint name under
+            /// the specified subscription, resource group and profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -412,7 +424,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint.
+            /// Starts an existing CDN endpoint that is on a stopped state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -432,7 +444,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint.
+            /// Starts an existing CDN endpoint that is on a stopped state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -458,7 +470,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint.
+            /// Starts an existing CDN endpoint that is on a stopped state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -478,7 +490,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint.
+            /// Starts an existing CDN endpoint that is on a stopped state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -596,7 +608,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content.
+            /// Removes a content from CDN.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -620,7 +632,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content.
+            /// Removes a content from CDN.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -647,7 +659,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content.
+            /// Removes a content from CDN.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -671,7 +683,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content.
+            /// Removes a content from CDN.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -698,7 +710,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content. Available for Verizon Profiles.
+            /// Pre-loads a content to CDN. Available for Verizon Profiles.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -713,7 +725,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Should describe a file path.
+            /// The path to the content to be loaded. Path should be a relative file URL
+            /// of the origin.
             /// </param>
             public static void LoadContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths)
             {
@@ -721,7 +734,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content. Available for Verizon Profiles.
+            /// Pre-loads a content to CDN. Available for Verizon Profiles.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -736,7 +749,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Should describe a file path.
+            /// The path to the content to be loaded. Path should be a relative file URL
+            /// of the origin.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -747,7 +761,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content. Available for Verizon Profiles.
+            /// Pre-loads a content to CDN. Available for Verizon Profiles.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -762,7 +776,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Should describe a file path.
+            /// The path to the content to be loaded. Path should be a relative file URL
+            /// of the origin.
             /// </param>
             public static void BeginLoadContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths)
             {
@@ -770,7 +785,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content. Available for Verizon Profiles.
+            /// Pre-loads a content to CDN. Available for Verizon Profiles.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -785,7 +800,8 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the endpoint under the profile which is unique globally.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Should describe a file path.
+            /// The path to the content to be loaded. Path should be a relative file URL
+            /// of the origin.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -796,8 +812,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Validates a custom domain mapping to ensure it maps to the correct CNAME
-            /// in DNS.
+            /// Validates the custom domain mapping to ensure it maps to the correct CDN
+            /// endpoint in DNS.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -820,8 +836,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Validates a custom domain mapping to ensure it maps to the correct CNAME
-            /// in DNS.
+            /// Validates the custom domain mapping to ensure it maps to the correct CDN
+            /// endpoint in DNS.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -844,6 +860,54 @@ namespace Microsoft.Azure.Management.Cdn
             public static async System.Threading.Tasks.Task<ValidateCustomDomainOutput> ValidateCustomDomainAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ValidateCustomDomainWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, hostName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks the quota and usage of geo filters and custom domains under the
+            /// given endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ResourceUsage> ListResourceUsage(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).ListResourceUsageAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks the quota and usage of geo filters and custom domains under the
+            /// given endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile which is unique within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint under the profile which is unique globally.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceUsage>> ListResourceUsageAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListResourceUsageWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -878,6 +942,42 @@ namespace Microsoft.Azure.Management.Cdn
             public static async Task<Microsoft.Rest.Azure.IPage<Endpoint>> ListByProfileNextAsync(this IEndpointsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByProfileNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks the quota and usage of geo filters and custom domains under the
+            /// given endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ResourceUsage> ListResourceUsageNext(this IEndpointsOperations operations, string nextPageLink)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).ListResourceUsageNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks the quota and usage of geo filters and custom domains under the
+            /// given endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceUsage>> ListResourceUsageNextAsync(this IEndpointsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

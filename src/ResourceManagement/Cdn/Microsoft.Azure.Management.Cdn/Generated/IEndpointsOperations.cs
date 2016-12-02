@@ -71,7 +71,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Creates a new CDN endpoint with the specified parameters.
+        /// Creates a new CDN endpoint with the specified endpoint name under
+        /// the specified subscription, resource group and profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -102,7 +103,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpoint, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Creates a new CDN endpoint with the specified parameters.
+        /// Creates a new CDN endpoint with the specified endpoint name under
+        /// the specified subscription, resource group and profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -133,8 +135,9 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpoint, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Updates an existing CDN endpoint with the specified parameters.
-        /// Only tags and OriginHostHeader can be updated after creating an
+        /// Updates an existing CDN endpoint with the specified endpoint name
+        /// under the specified subscription, resource group and profile.
+        /// Only tags and Origin HostHeader can be updated after creating an
         /// endpoint. To update origins, use the Update Origin operation. To
         /// update custom domains, use the Update Custom Domain operation.
         /// </summary>
@@ -167,8 +170,9 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Updates an existing CDN endpoint with the specified parameters.
-        /// Only tags and OriginHostHeader can be updated after creating an
+        /// Updates an existing CDN endpoint with the specified endpoint name
+        /// under the specified subscription, resource group and profile.
+        /// Only tags and Origin HostHeader can be updated after creating an
         /// endpoint. To update origins, use the Update Origin operation. To
         /// update custom domains, use the Update Custom Domain operation.
         /// </summary>
@@ -201,7 +205,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes an existing CDN endpoint with the specified parameters.
+        /// Deletes an existing CDN endpoint with the specified endpoint name
+        /// under the specified subscription, resource group and profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -226,7 +231,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes an existing CDN endpoint with the specified parameters.
+        /// Deletes an existing CDN endpoint with the specified endpoint name
+        /// under the specified subscription, resource group and profile.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -251,7 +257,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Starts an existing stopped CDN endpoint.
+        /// Starts an existing CDN endpoint that is on a stopped state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -279,7 +285,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> StartWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Starts an existing stopped CDN endpoint.
+        /// Starts an existing CDN endpoint that is on a stopped state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -363,7 +369,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginStopWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Forcibly purges CDN endpoint content.
+        /// Removes a content from CDN.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -392,7 +398,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> PurgeContentWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Forcibly purges CDN endpoint content.
+        /// Removes a content from CDN.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -421,8 +427,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginPurgeContentWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Forcibly pre-loads CDN endpoint content. Available for Verizon
-        /// Profiles.
+        /// Pre-loads a content to CDN. Available for Verizon Profiles.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -434,7 +439,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
         /// <param name='contentPaths'>
-        /// The path to the content to be loaded. Should describe a file path.
+        /// The path to the content to be loaded. Path should be a relative
+        /// file URL of the origin.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -450,8 +456,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> LoadContentWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Forcibly pre-loads CDN endpoint content. Available for Verizon
-        /// Profiles.
+        /// Pre-loads a content to CDN. Available for Verizon Profiles.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -463,7 +468,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the endpoint under the profile which is unique globally.
         /// </param>
         /// <param name='contentPaths'>
-        /// The path to the content to be loaded. Should describe a file path.
+        /// The path to the content to be loaded. Path should be a relative
+        /// file URL of the origin.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -479,8 +485,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginLoadContentWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Validates a custom domain mapping to ensure it maps to the correct
-        /// CNAME in DNS.
+        /// Validates the custom domain mapping to ensure it maps to the
+        /// correct CDN endpoint in DNS.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -511,6 +517,35 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ValidateCustomDomainOutput>> ValidateCustomDomainWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
+        /// Checks the quota and usage of geo filters and custom domains under
+        /// the given endpoint.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='profileName'>
+        /// Name of the CDN profile which is unique within the resource group.
+        /// </param>
+        /// <param name='endpointName'>
+        /// Name of the endpoint under the profile which is unique globally.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceUsage>>> ListResourceUsageWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
         /// Lists existing CDN endpoints.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -532,5 +567,28 @@ namespace Microsoft.Azure.Management.Cdn
         /// Thrown when a required parameter is null
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Endpoint>>> ListByProfileNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Checks the quota and usage of geo filters and custom domains under
+        /// the given endpoint.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceUsage>>> ListResourceUsageNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

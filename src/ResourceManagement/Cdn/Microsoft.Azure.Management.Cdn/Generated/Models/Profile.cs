@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the Profile class.
         /// </summary>
         /// <param name="location">Resource location.</param>
-        /// <param name="sku">The SKU (pricing tier) of the CDN
-        /// profile.</param>
+        /// <param name="sku">The pricing tier (defines a CDN provider,
+        /// feature list and rate) of the CDN profile.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -48,7 +48,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Gets or sets the SKU (pricing tier) of the CDN profile.
+        /// Gets or sets the pricing tier (defines a CDN provider, feature
+        /// list and rate) of the CDN profile.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

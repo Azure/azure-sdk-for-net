@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn
     public partial interface IOriginsOperations
     {
         /// <summary>
-        /// Lists the existing CDN origins within an endpoint.
+        /// Lists all of the existing origins within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Origin>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets an existing CDN origin within an endpoint.
+        /// Gets an existing origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Updates an existing CDN origin within an endpoint.
+        /// Updates an existing origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Updates an existing CDN origin within an endpoint.
+        /// Updates an existing origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Lists the existing CDN origins within an endpoint.
+        /// Lists all of the existing origins within an endpoint.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

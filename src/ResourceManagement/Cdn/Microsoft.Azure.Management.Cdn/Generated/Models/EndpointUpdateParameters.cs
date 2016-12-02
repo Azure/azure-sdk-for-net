@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Endpoint properties required for new endpoint creation.
+    /// Properties required to create a new endpoint.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class EndpointUpdateParameters : Microsoft.Rest.Azure.IResource
@@ -25,18 +25,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the EndpointUpdateParameters class.
         /// </summary>
         /// <param name="tags">Endpoint tags.</param>
-        /// <param name="originHostHeader">The host header the CDN provider
-        /// will send along with content requests to origins. The default
-        /// value is the host name of the origin.</param>
-        /// <param name="originPath">The path used for origin requests.</param>
+        /// <param name="originHostHeader">The host header CDN sends along
+        /// with content requests to origin. The default value is the host
+        /// name of the origin.</param>
+        /// <param name="originPath">The path used when CDN sends request to
+        /// origin.</param>
         /// <param name="contentTypesToCompress">List of content types on
-        /// which compression will be applied. The value for the elements
-        /// should be a valid MIME type.</param>
+        /// which compression applies. The value should be a valid MIME
+        /// type.</param>
         /// <param name="isCompressionEnabled">Indicates whether content
-        /// compression is enabled. The default value is false. If
-        /// compression is enabled, the content transferred from the CDN
-        /// endpoint to the end user will be compressed. The requested
-        /// content must be larger than 1 byte and smaller than 1 MB.</param>
+        /// compression is enabled on CDN. Default value is false. If
+        /// compression is enabled, content will be served as compressed if
+        /// user requests for a compressed version. Content won't be
+        /// compressed on CDN when requested content is smaller than 1 byte
+        /// or larger than 1 MB.</param>
         /// <param name="isHttpAllowed">Indicates whether HTTP traffic is
         /// allowed on the endpoint. Default value is true. At least one
         /// protocol (HTTP or HTTPS) must be allowed.</param>
@@ -47,11 +49,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// caching behavior. Possible values include: 'IgnoreQueryString',
         /// 'BypassCaching', 'UseQueryString', 'NotSet'</param>
         /// <param name="optimizationType">Customer can specify what scenario
-        /// they want this CDN endpoint to optimize. (e.g. Download, Media
-        /// services, and etc.) With this information we can apply scenario
-        /// driven optimization.</param>
-        /// <param name="geoFilters">The list of geo filters for the CDN
-        /// endpoint.</param>
+        /// they want this CDN endpoint to optimize, e.g. Download, Media
+        /// services. With this information we can apply scenario driven
+        /// optimization.</param>
+        /// <param name="geoFilters">List of rules defining user geo access
+        /// within a CDN endpoint. Each geo filter defines an acess rule to a
+        /// specified path or content, e.g. block APAC for path
+        /// /pictures/</param>
         public EndpointUpdateParameters(System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), System.Collections.Generic.IList<GeoFilter> geoFilters = default(System.Collections.Generic.IList<GeoFilter>))
         {
             Tags = tags;
@@ -73,32 +77,31 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the host header the CDN provider will send along with
-        /// content requests to origins. The default value is the host name
-        /// of the origin.
+        /// Gets or sets the host header CDN sends along with content requests
+        /// to origin. The default value is the host name of the origin.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.originHostHeader")]
         public string OriginHostHeader { get; set; }
 
         /// <summary>
-        /// Gets or sets the path used for origin requests.
+        /// Gets or sets the path used when CDN sends request to origin.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.originPath")]
         public string OriginPath { get; set; }
 
         /// <summary>
-        /// Gets or sets list of content types on which compression will be
-        /// applied. The value for the elements should be a valid MIME type.
+        /// Gets or sets list of content types on which compression applies.
+        /// The value should be a valid MIME type.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.contentTypesToCompress")]
         public System.Collections.Generic.IList<string> ContentTypesToCompress { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether content compression is enabled. The
-        /// default value is false. If compression is enabled, the content
-        /// transferred from the CDN endpoint to the end user will be
-        /// compressed. The requested content must be larger than 1 byte and
-        /// smaller than 1 MB.
+        /// Gets or sets indicates whether content compression is enabled on
+        /// CDN. Default value is false. If compression is enabled, content
+        /// will be served as compressed if user requests for a compressed
+        /// version. Content won't be compressed on CDN when requested
+        /// content is smaller than 1 byte or larger than 1 MB.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.isCompressionEnabled")]
         public bool? IsCompressionEnabled { get; set; }
@@ -129,14 +132,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets customer can specify what scenario they want this CDN
-        /// endpoint to optimize. (e.g. Download, Media services, and etc.)
-        /// With this information we can apply scenario driven optimization.
+        /// endpoint to optimize, e.g. Download, Media services. With this
+        /// information we can apply scenario driven optimization.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.optimizationType")]
         public string OptimizationType { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of geo filters for the CDN endpoint.
+        /// Gets or sets list of rules defining user geo access within a CDN
+        /// endpoint. Each geo filter defines an acess rule to a specified
+        /// path or content, e.g. block APAC for path /pictures/
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.geoFilters")]
         public System.Collections.Generic.IList<GeoFilter> GeoFilters { get; set; }

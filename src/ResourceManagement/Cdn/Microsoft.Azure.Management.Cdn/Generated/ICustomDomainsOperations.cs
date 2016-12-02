@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn
     public partial interface ICustomDomainsOperations
     {
         /// <summary>
-        /// Lists the existing CDN custom domains within an endpoint.
+        /// Lists all of the existing custom domains within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<CustomDomain>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets an existing CDN custom domain within an endpoint.
+        /// Gets an exisitng custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Creates a new CDN custom domain within an endpoint.
+        /// Creates a new custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Creates a new CDN custom domain within an endpoint.
+        /// Creates a new custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes an existing CDN custom domain within an endpoint.
+        /// Deletes an existing custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes an existing CDN custom domain within an endpoint.
+        /// Deletes an existing custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Lists the existing CDN custom domains within an endpoint.
+        /// Lists all of the existing custom domains within an endpoint.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

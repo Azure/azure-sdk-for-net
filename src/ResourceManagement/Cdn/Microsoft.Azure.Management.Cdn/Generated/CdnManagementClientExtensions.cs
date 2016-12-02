@@ -18,9 +18,8 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class CdnManagementClientExtensions
     {
             /// <summary>
-            /// Check the availability of a resource name without creating the resource.
-            /// This is needed for resources where name is globally unique, such as a CDN
-            /// endpoint.
+            /// Check the availability of a resource name. This is needed for resources
+            /// where name is globally unique, such as a CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,9 +33,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Check the availability of a resource name without creating the resource.
-            /// This is needed for resources where name is globally unique, such as a CDN
-            /// endpoint.
+            /// Check the availability of a resource name. This is needed for resources
+            /// where name is globally unique, such as a CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,6 +48,36 @@ namespace Microsoft.Azure.Management.Cdn
             public static async System.Threading.Tasks.Task<CheckNameAvailabilityOutput> CheckNameAvailabilityAsync(this ICdnManagementClient operations, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ResourceUsage> CheckResourceUsage(this ICdnManagementClient operations)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICdnManagementClient)s).CheckResourceUsageAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceUsage>> CheckResourceUsageAsync(this ICdnManagementClient operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CheckResourceUsageWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,6 +106,42 @@ namespace Microsoft.Azure.Management.Cdn
             public static async Task<Microsoft.Rest.Azure.IPage<Operation>> ListOperationsAsync(this ICdnManagementClient operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ResourceUsage> CheckResourceUsageNext(this ICdnManagementClient operations, string nextPageLink)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICdnManagementClient)s).CheckResourceUsageNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceUsage>> CheckResourceUsageNextAsync(this ICdnManagementClient operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CheckResourceUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

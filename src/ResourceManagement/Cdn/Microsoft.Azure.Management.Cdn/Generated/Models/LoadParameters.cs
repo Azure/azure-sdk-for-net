@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters required for endpoint load.
+    /// Parameters required for content load.
     /// </summary>
     public partial class LoadParameters
     {
@@ -24,15 +24,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the LoadParameters class.
         /// </summary>
         /// <param name="contentPaths">The path to the content to be loaded.
-        /// Should describe a file path.</param>
+        /// Path should be a relative file URL of the origin.</param>
         public LoadParameters(System.Collections.Generic.IList<string> contentPaths)
         {
             ContentPaths = contentPaths;
         }
 
         /// <summary>
-        /// Gets or sets the path to the content to be loaded. Should describe
-        /// a file path.
+        /// Gets or sets the path to the content to be loaded. Path should be
+        /// a relative file URL of the origin.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "contentPaths")]
         public System.Collections.Generic.IList<string> ContentPaths { get; set; }

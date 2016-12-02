@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the existing CDN origins within an endpoint.
+        /// Lists all of the existing origins within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an existing CDN origin within an endpoint.
+        /// Gets an existing origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing CDN origin within an endpoint.
+        /// Updates an existing origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing CDN origin within an endpoint.
+        /// Updates an existing origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Lists the existing CDN origins within an endpoint.
+        /// Lists all of the existing origins within an endpoint.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

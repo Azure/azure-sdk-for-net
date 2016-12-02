@@ -88,10 +88,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// </summary>
         ICustomDomainsOperations CustomDomains { get; }
 
+        /// <summary>
+        /// Gets the IEdgeNodesOperations.
+        /// </summary>
+        IEdgeNodesOperations EdgeNodes { get; }
+
             /// <summary>
-        /// Check the availability of a resource name without creating the
-        /// resource. This is needed for resources where name is globally
-        /// unique, such as a CDN endpoint.
+        /// Check the availability of a resource name. This is needed for
+        /// resources where name is globally unique, such as a CDN endpoint.
         /// </summary>
         /// <param name='name'>
         /// The resource name to validate.
@@ -105,6 +109,18 @@ namespace Microsoft.Azure.Management.Cdn
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string name, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the
+        /// given subscription.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceUsage>>> CheckResourceUsageWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
         /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <param name='customHeaders'>
@@ -114,6 +130,21 @@ namespace Microsoft.Azure.Management.Cdn
         /// The cancellation token.
         /// </param>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Operation>>> ListOperationsWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Check the quota and actual usage of the CDN profiles under the
+        /// given subscription.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceUsage>>> CheckResourceUsageNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Lists all of the available CDN REST API operations.

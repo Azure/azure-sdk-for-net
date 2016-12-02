@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters required for endpoint purge.
+    /// Parameters required for content purge.
     /// </summary>
     public partial class PurgeParameters
     {

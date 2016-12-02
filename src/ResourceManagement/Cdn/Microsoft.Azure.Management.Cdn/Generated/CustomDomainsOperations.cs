@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the existing CDN custom domains within an endpoint.
+        /// Lists all of the existing custom domains within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an existing CDN custom domain within an endpoint.
+        /// Gets an exisitng custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN custom domain within an endpoint.
+        /// Creates a new custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN custom domain within an endpoint.
+        /// Creates a new custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -779,7 +779,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN custom domain within an endpoint.
+        /// Deletes an existing custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN custom domain within an endpoint.
+        /// Deletes an existing custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -1027,7 +1027,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Lists the existing CDN custom domains within an endpoint.
+        /// Lists all of the existing custom domains within an endpoint.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

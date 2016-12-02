@@ -501,6 +501,91 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public void ProfileCheckUsageTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create clients
+                var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
+                var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
+
+                // CheckUsage on subscription should return zero profiles
+                var subscriptionLevelUsages = cdnMgmtClient.CheckResourceUsage();
+                Assert.Equal(1, subscriptionLevelUsages.Count());
+
+                var defaultUsage = subscriptionLevelUsages.First();
+                Assert.Equal(8, defaultUsage.Limit);
+                Assert.Equal(0, defaultUsage.CurrentValue);
+
+                // Create resource group
+                var resourceGroupName = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create a standard cdn profile
+                string profileName = TestUtilities.GenerateName("profile");
+                Profile createParameters = new Profile
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        }
+                };
+
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
+                VerifyProfileCreated(profile, createParameters);
+
+                subscriptionLevelUsages = cdnMgmtClient.CheckResourceUsage();
+                Assert.Equal(1, subscriptionLevelUsages.Count());
+
+                var usageAfterCreation = subscriptionLevelUsages.First();
+                Assert.Equal(8, usageAfterCreation.Limit);
+                Assert.Equal(1, usageAfterCreation.CurrentValue);
+
+                // test Profile level usage
+                var profileLevelUsages = cdnMgmtClient.Profiles.ListResourceUsage(resourceGroupName, profileName);
+                Assert.Equal(1, profileLevelUsages.Count());
+
+                var profileLevelUsage = profileLevelUsages.First();
+                Assert.Equal(10, profileLevelUsage.Limit);
+                Assert.Equal(0, profileLevelUsage.CurrentValue);
+
+                //Create an endpoint under this profile
+                string endpointName = TestUtilities.GenerateName("endpoint");
+                var endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    }
+                };
+
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+
+                profileLevelUsages = cdnMgmtClient.Profiles.ListResourceUsage(resourceGroupName, profileName);
+                Assert.Equal(1, profileLevelUsages.Count());
+
+                var profileLevelUsageAfterEndpointCreation = profileLevelUsages.First();
+                Assert.Equal(10, profileLevelUsageAfterEndpointCreation.Limit);
+                Assert.Equal(1, profileLevelUsageAfterEndpointCreation.CurrentValue);
+
+                // Delete resource group
+                CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
+
         private static void VerifyProfileCreated(Profile profile, Profile parameters)
         {
             Assert.Equal(profile.Location, parameters.Location);

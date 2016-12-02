@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// The SKU (pricing tier) of the CDN profile.
+    /// The pricing tier (defines a CDN provider, feature list and rate) of
+    /// the CDN profile.
     /// </summary>
     public partial class Sku
     {

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Origins to be added when creating a CDN endpoint.
+    /// Origin to be added when creating a CDN endpoint.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class DeepCreatedOrigin : Microsoft.Rest.Azure.IResource
@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the DeepCreatedOrigin class.
         /// </summary>
         /// <param name="name">Origin name</param>
-        /// <param name="hostName">The address of the origin. Domain names,
-        /// IPv4 addresses, and IPv6 addresses are supported.</param>
+        /// <param name="hostName">The address of the origin. It can be a
+        /// domain names, IPv4 address, or IPv6 address.</param>
         /// <param name="httpPort">The value of the HTTP port. Must be between
         /// 1 and 65535</param>
         /// <param name="httpsPort">The value of the HTTPS port. Must be
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the address of the origin. Domain names, IPv4
-        /// addresses, and IPv6 addresses are supported.
+        /// Gets or sets the address of the origin. It can be a domain names,
+        /// IPv4 address, or IPv6 address.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }

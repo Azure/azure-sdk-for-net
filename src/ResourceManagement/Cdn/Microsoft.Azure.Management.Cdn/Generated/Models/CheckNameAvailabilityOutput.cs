@@ -41,20 +41,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Gets or sets indicates whether the name is available.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "NameAvailable")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nameAvailable")]
         public bool? NameAvailable { get; set; }
 
         /// <summary>
         /// Gets or sets the reason why the name is not available.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "Reason")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "reason")]
         public string Reason { get; set; }
 
         /// <summary>
         /// Gets or sets the detailed error message describing why the name is
         /// not available.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "Message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
     }

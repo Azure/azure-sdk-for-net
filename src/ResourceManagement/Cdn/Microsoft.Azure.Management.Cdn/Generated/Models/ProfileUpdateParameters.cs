@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile properties required for profile update.
+    /// Properties required to update a profile.
     /// </summary>
     public partial class ProfileUpdateParameters : Microsoft.Rest.Azure.IResource
     {

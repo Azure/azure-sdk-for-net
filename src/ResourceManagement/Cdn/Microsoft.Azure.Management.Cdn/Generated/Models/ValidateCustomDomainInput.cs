@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Input of the custom domain to be validated.
+    /// Input of the custom domain to be validated for DNS mapping.
     /// </summary>
     public partial class ValidateCustomDomainInput
     {
