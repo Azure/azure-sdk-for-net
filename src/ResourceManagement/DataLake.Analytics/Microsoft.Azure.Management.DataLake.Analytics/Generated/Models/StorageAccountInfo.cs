@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// Azure Storage account information.
     /// </summary>
     [JsonTransformation]
-    public partial class StorageAccountInfo
+    public partial class StorageAccountInfo : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountInfo class.
@@ -30,24 +30,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
+        /// <param name="name">Resource name</param>
         /// <param name="accessKey">the access key associated with this Azure
         /// Storage account that will be used to connect to it.</param>
-        /// <param name="name">the account name associated with the Azure
-        /// storage account.</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="type">Resource type</param>
         /// <param name="suffix">the optional suffix for the storage
         /// account.</param>
-        public StorageAccountInfo(string accessKey, string name = default(string), string suffix = default(string))
+        public StorageAccountInfo(string name, string accessKey, string id = default(string), string type = default(string), string suffix = default(string))
+            : base(name, id, type)
         {
-            Name = name;
             AccessKey = accessKey;
             Suffix = suffix;
         }
-
-        /// <summary>
-        /// Gets the account name associated with the Azure storage account.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or sets the access key associated with this Azure Storage
@@ -68,8 +63,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (AccessKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
