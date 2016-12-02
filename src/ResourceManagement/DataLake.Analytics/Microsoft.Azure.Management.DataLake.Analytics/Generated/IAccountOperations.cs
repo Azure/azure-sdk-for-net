@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake
         /// Analytics account.the account will be associated with.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to create.
         /// </param>
         /// <param name='parameters'>
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates the specified Data Lake Analytics account. This supplies
         /// the user with computation services for Data Lake Analytics
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake
         /// Analytics account.the account will be associated with.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to create.
         /// </param>
         /// <param name='parameters'>
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the Data Lake Analytics account object specified by the
         /// accountName with the contents of the account object.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake
         /// Analytics account.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to update.
         /// </param>
         /// <param name='parameters'>
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the Data Lake Analytics account object specified by the
         /// accountName with the contents of the account object.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake
         /// Analytics account.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to update.
         /// </param>
         /// <param name='parameters'>
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of Data Lake Analytics accounts, if any,
         /// within a specific resource group. This includes a link to the

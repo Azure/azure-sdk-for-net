@@ -225,12 +225,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the Azure resource group that contains the Data Lake Store
             /// account.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='name'>
             /// The name of the Data Lake Store account to delete.
             /// </param>
-            public static void Delete(this IAccountOperations operations, string resourceGroupName, string accountName)
+            public static void Delete(this IAccountOperations operations, string resourceGroupName, string name)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).DeleteAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAccountOperations)s).DeleteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -243,15 +243,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the Azure resource group that contains the Data Lake Store
             /// account.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='name'>
             /// The name of the Data Lake Store account to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAccountOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -264,12 +264,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the Azure resource group that contains the Data Lake Store
             /// account.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='name'>
             /// The name of the Data Lake Store account to delete.
             /// </param>
-            public static void BeginDelete(this IAccountOperations operations, string resourceGroupName, string accountName)
+            public static void BeginDelete(this IAccountOperations operations, string resourceGroupName, string name)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).BeginDeleteAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAccountOperations)s).BeginDeleteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -282,15 +282,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the Azure resource group that contains the Data Lake Store
             /// account.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='name'>
             /// The name of the Data Lake Store account to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IAccountOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -303,12 +303,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the Azure resource group that contains the Data Lake Store
             /// account.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='name'>
             /// The name of the Data Lake Store account to retrieve.
             /// </param>
-            public static DataLakeStoreAccount Get(this IAccountOperations operations, string resourceGroupName, string accountName)
+            public static DataLakeStoreAccount Get(this IAccountOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,15 +321,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The name of the Azure resource group that contains the Data Lake Store
             /// account.
             /// </param>
-            /// <param name='accountName'>
+            /// <param name='name'>
             /// The name of the Data Lake Store account to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeStoreAccount> GetAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeStoreAccount> GetAsync(this IAccountOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

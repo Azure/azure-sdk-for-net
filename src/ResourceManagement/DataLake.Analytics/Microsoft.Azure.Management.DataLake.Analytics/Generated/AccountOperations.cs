@@ -862,7 +862,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.the account will be associated with.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to create.
         /// </param>
         /// <param name='parameters'>
@@ -874,11 +874,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DataLakeAnalyticsAccount> _response = await BeginCreateWithHttpMessagesAsync(
-                resourceGroupName, name, parameters, customHeaders, cancellationToken);
+                resourceGroupName, accountName, parameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -892,7 +892,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.the account will be associated with.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to create.
         /// </param>
         /// <param name='parameters'>
@@ -916,15 +916,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (name == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (parameters == null)
             {
@@ -950,7 +950,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
@@ -959,7 +959,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -1121,7 +1121,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to update.
         /// </param>
         /// <param name='parameters'>
@@ -1133,11 +1133,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DataLakeAnalyticsAccount> _response = await BeginUpdateWithHttpMessagesAsync(
-                resourceGroupName, name, parameters, customHeaders, cancellationToken);
+                resourceGroupName, accountName, parameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -1151,7 +1151,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The name of the Azure resource group that contains the Data Lake Analytics
         /// account.
         /// </param>
-        /// <param name='name'>
+        /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to update.
         /// </param>
         /// <param name='parameters'>
@@ -1175,15 +1175,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeAnalyticsAccount>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (name == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1201,7 +1201,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -1210,7 +1210,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{accountName}", Uri.EscapeDataString(accountName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)

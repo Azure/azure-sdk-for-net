@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the Azure resource group that contains the Data Lake Store
         /// account.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='name'>
         /// The name of the Data Lake Store account to delete.
         /// </param>
         /// <param name='customHeaders'>
@@ -583,11 +583,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(
-                resourceGroupName, accountName, customHeaders, cancellationToken);
+                resourceGroupName, name, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the Azure resource group that contains the Data Lake Store
         /// account.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='name'>
         /// The name of the Data Lake Store account to delete.
         /// </param>
         /// <param name='customHeaders'>
@@ -616,15 +616,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (accountName == null)
+            if (name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -642,7 +642,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{name}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -761,7 +761,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the Azure resource group that contains the Data Lake Store
         /// account.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='name'>
         /// The name of the Data Lake Store account to retrieve.
         /// </param>
         /// <param name='customHeaders'>
@@ -782,15 +782,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DataLakeStoreAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataLakeStoreAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (accountName == null)
+            if (name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -816,7 +816,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{name}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{accountName}", Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)

@@ -48,9 +48,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// exist or just open the existing file for append. Possible values include:
             /// 'autocreate'
             /// </param>
-            public static void ConcurrentAppend(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?))
+            /// <param name='syncFlag'>
+            /// Optionally indicates what to do after completion of the concurrent append.
+            /// DATA indicates more data is coming so no sync takes place, METADATA
+            /// indicates a sync should be done to refresh metadata of the file only.
+            /// CLOSE indicates that both the stream and metadata should be refreshed
+            /// upon append completion. Possible values include: 'DATA', 'METADATA',
+            /// 'CLOSE'
+            /// </param>
+            public static void ConcurrentAppend(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), SyncFlag? syncFlag = default(SyncFlag?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(accountName, filePath, streamContents, appendMode), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(accountName, filePath, streamContents, appendMode, syncFlag), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,12 +87,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// exist or just open the existing file for append. Possible values include:
             /// 'autocreate'
             /// </param>
+            /// <param name='syncFlag'>
+            /// Optionally indicates what to do after completion of the concurrent append.
+            /// DATA indicates more data is coming so no sync takes place, METADATA
+            /// indicates a sync should be done to refresh metadata of the file only.
+            /// CLOSE indicates that both the stream and metadata should be refreshed
+            /// upon append completion. Possible values include: 'DATA', 'METADATA',
+            /// 'CLOSE'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcurrentAppendAsync(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConcurrentAppendAsync(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), SyncFlag? syncFlag = default(SyncFlag?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ConcurrentAppendWithHttpMessagesAsync(accountName, filePath, streamContents, appendMode, null, cancellationToken).ConfigureAwait(false);
+                await operations.ConcurrentAppendWithHttpMessagesAsync(accountName, filePath, streamContents, appendMode, syncFlag, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

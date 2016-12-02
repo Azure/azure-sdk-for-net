@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the Azure resource group that contains the Data Lake
         /// Store account.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='name'>
         /// The name of the Data Lake Store account to delete.
         /// </param>
         /// <param name='customHeaders'>
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified Data Lake Store account.
         /// </summary>
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the Azure resource group that contains the Data Lake
         /// Store account.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='name'>
         /// The name of the Data Lake Store account to delete.
         /// </param>
         /// <param name='customHeaders'>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the specified Data Lake Store account.
         /// </summary>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The name of the Azure resource group that contains the Data Lake
         /// Store account.
         /// </param>
-        /// <param name='accountName'>
+        /// <param name='name'>
         /// The name of the Data Lake Store account to retrieve.
         /// </param>
         /// <param name='customHeaders'>
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeStoreAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeStoreAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Attempts to enable a user managed key vault for encryption of the
         /// specified Data Lake Store account.

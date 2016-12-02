@@ -47,6 +47,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// doesn't exist or just open the existing file for append. Possible
         /// values include: 'autocreate'
         /// </param>
+        /// <param name='syncFlag'>
+        /// Optionally indicates what to do after completion of the concurrent
+        /// append. DATA indicates more data is coming so no sync takes
+        /// place, METADATA indicates a sync should be done to refresh
+        /// metadata of the file only. CLOSE indicates that both the stream
+        /// and metadata should be refreshed upon append completion. Possible
+        /// values include: 'DATA', 'METADATA', 'CLOSE'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -59,7 +67,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), SyncFlag? syncFlag = default(SyncFlag?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Sets or removes the expiration time on the specified file. This
         /// operation can only be executed against files. Folders are not
