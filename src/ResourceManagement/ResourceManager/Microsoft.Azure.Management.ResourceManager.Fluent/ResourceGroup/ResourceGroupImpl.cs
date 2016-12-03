@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             get
             {
-                return EnumNameAttribute.FromName<Region>(RegionName);
+                return Region.Create(RegionName);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public IWithCreate WithRegion(Region region)
         {
-            return WithRegion(EnumNameAttribute.GetName(region));
+            return WithRegion(region.Name);
         }
 
         public IWithCreate WithTags(IDictionary<string, string> tags)

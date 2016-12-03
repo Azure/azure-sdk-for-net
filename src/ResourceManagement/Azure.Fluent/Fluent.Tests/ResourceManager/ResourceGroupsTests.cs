@@ -24,7 +24,7 @@ namespace Fluent.Tests.ResourceManager
                 Assert.NotNull(resourceGroup.Name);
                 Assert.True(resourceGroup.Name.Equals(rgName, StringComparison.OrdinalIgnoreCase));
                 Assert.NotNull(resourceGroup.RegionName);
-                Assert.True(resourceGroup.RegionName.Equals(EnumNameAttribute.GetName(Region.US_EAST2), StringComparison.OrdinalIgnoreCase));
+                Assert.True(resourceGroup.RegionName.Equals(Region.US_EAST2));
                 Assert.NotNull(resourceGroup.Id);
                 Assert.NotNull(resourceGroup.Tags);
                 Assert.Equal(resourceGroup.Tags.Count, 3);

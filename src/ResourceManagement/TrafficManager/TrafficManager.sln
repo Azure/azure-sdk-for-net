@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{190F5472-213F-49A6-A42E-543EB28812C2}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "Microsoft.Azure.Management.Dns.Fluent\Microsoft.Azure.Management.TrafficManager.Fluent.xproj", "{465F8B31-9956-466E-9C3A-9BD4B3B2612D}"
+Project("{190F5472-213F-49A6-A42E-543EB28812C2}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "Microsoft.Azure.Management.TrafficManager.Fluent\Microsoft.Azure.Management.TrafficManager.Fluent.xproj", "{465F8B31-9956-466E-9C3A-9BD4B3B2612D}"
 EndProject
 Project("{190F5472-213F-49A6-A42E-543EB28812C2}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent\Microsoft.Azure.Management.ResourceManager.Fluent.xproj", "{2157A59C-7226-4A6B-997C-5F9C2F131207}"
 EndProject

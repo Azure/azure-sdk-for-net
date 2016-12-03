@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return EnumNameAttribute.FromName<Region>(this.RegionName);
+                return Region.Create(this.RegionName);
             }
         }
 

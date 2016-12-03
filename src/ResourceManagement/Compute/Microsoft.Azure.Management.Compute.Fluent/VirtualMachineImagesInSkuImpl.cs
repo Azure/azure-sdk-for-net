@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public PagedList<IVirtualMachineImage> List()
         {
             List<IVirtualMachineImage> firstPage = new List<IVirtualMachineImage>();
-            var innerImages = innerCollection.List(EnumNameAttribute.GetName(sku.Region), sku.Publisher.Name, sku.Offer.Name, sku.Name);
+            var innerImages = innerCollection.List(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name);
             foreach(var innerImage in innerImages)
             {
                 var version = innerImage.Name;
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     sku.Offer.Name,
                     sku.Name,
                     version,
-                    innerCollection.Get(EnumNameAttribute.GetName(sku.Region), sku.Publisher.Name, sku.Offer.Name, sku.Name, version)));
+                    innerCollection.Get(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, version)));
             }
             return new PagedList<IVirtualMachineImage>(firstPage);
         }
