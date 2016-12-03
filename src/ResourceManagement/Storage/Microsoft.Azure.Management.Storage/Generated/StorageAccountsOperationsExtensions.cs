@@ -11,8 +11,8 @@ namespace Microsoft.Azure.Management.Storage
     using Azure;
     using Management;
     using Rest;
-   using Rest.Azure;
-   using Models;
+    using Rest.Azure;
+    using Models;
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading;
