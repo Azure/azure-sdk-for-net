@@ -47,6 +47,7 @@ namespace AzureStackAdmin.Tests
                         'namespace': 'Microsoft.Sql.Admin',
                         'providerLocation': 'local',
                         'providerType': 'NotSpecified',
+                        'routingResourceManagerType': 'Default',
                         'extensions': [
                             {
                                 'name': 'SqlAdminExtension',
@@ -94,6 +95,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal("hostingservers", result.ProviderRegistration.Properties.ResourceTypes[0].Name);
             Assert.Equal("SqlAdminExtension", result.ProviderRegistration.Properties.Extensions[0].Name);
             Assert.Equal("2014-04-01-preview", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].ApiVersions[0]);
+            Assert.Equal(ResourceManagerType.Default, result.ProviderRegistration.Properties.RoutingResourceManagerType);
             Assert.Equal("https://azstack:30010", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].EndpointUri);
             Assert.Equal(new TimeSpan(0, 0, 0), result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Timeout);
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Enabled);
@@ -118,6 +120,7 @@ namespace AzureStackAdmin.Tests
                         'namespace': 'Microsoft.Sql.Admin',
                         'providerLocation': 'local',
                         'providerType': 'NotSpecified',
+                        'routingResourceManagerType': 'Admin',
                         'extensions': [
                             {
                                 'name': 'SqlAdminExtension',
@@ -163,6 +166,7 @@ namespace AzureStackAdmin.Tests
                                          DisplayName = "Microsoft.Sql.Admin",
                                          ExtensionName = "Microsoft.Sql.Admin",
                                          Enabled = true,
+                                         RoutingResourceManagerType = ResourceManagerType.Admin,
                                          Extensions = new Extension[]
                                                       {
                                                           new Extension() {Name = "SqlAdminExtension", Uri = "https://azstack:13002/"}
@@ -199,6 +203,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal("local", result.ProviderRegistration.Location);
             Assert.Equal("Microsoft.Sql.Admin", result.ProviderRegistration.Properties.Namespace);
             Assert.Equal("local", result.ProviderRegistration.Properties.ProviderLocation);
+            Assert.Equal(ResourceManagerType.Admin, result.ProviderRegistration.Properties.RoutingResourceManagerType);
             Assert.Equal("hostingservers", result.ProviderRegistration.Properties.ResourceTypes[0].Name);
             Assert.Equal("SqlAdminExtension", result.ProviderRegistration.Properties.Extensions[0].Name);
             Assert.Equal("2014-04-01-preview", result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].ApiVersions[0]);
