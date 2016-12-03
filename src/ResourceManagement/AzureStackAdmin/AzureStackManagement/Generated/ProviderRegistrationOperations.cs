@@ -194,9 +194,9 @@ namespace Microsoft.AzureStack.Management
                         propertiesValue["providerLocation"] = parameters.ProviderRegistration.Properties.ProviderLocation;
                     }
                     
-                    if (parameters.ProviderRegistration.Properties.ResourceManagerType != null)
+                    if (parameters.ProviderRegistration.Properties.RoutingResourceManagerType != null)
                     {
-                        propertiesValue["resourceManagerType"] = parameters.ProviderRegistration.Properties.ResourceManagerType.Value.ToString();
+                        propertiesValue["routingResourceManagerType"] = parameters.ProviderRegistration.Properties.RoutingResourceManagerType.Value.ToString();
                     }
                     
                     if (parameters.ProviderRegistration.Properties.Enabled != null)
@@ -519,11 +519,11 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
-                                JToken resourceManagerTypeValue = propertiesValue2["resourceManagerType"];
-                                if (resourceManagerTypeValue != null && resourceManagerTypeValue.Type != JTokenType.Null)
+                                JToken routingResourceManagerTypeValue = propertiesValue2["routingResourceManagerType"];
+                                if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
                                 {
-                                    ResourceManagerType resourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)resourceManagerTypeValue), true));
-                                    propertiesInstance.ResourceManagerType = resourceManagerTypeInstance;
+                                    ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                    propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
                                 }
                                 
                                 JToken enabledValue = propertiesValue2["enabled"];
@@ -1152,11 +1152,11 @@ namespace Microsoft.AzureStack.Management
                                     propertiesInstance.ProviderLocation = providerLocationInstance;
                                 }
                                 
-                                JToken resourceManagerTypeValue = propertiesValue["resourceManagerType"];
-                                if (resourceManagerTypeValue != null && resourceManagerTypeValue.Type != JTokenType.Null)
+                                JToken routingResourceManagerTypeValue = propertiesValue["routingResourceManagerType"];
+                                if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
                                 {
-                                    ResourceManagerType resourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)resourceManagerTypeValue), true));
-                                    propertiesInstance.ResourceManagerType = resourceManagerTypeInstance;
+                                    ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                    propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
                                 }
                                 
                                 JToken enabledValue = propertiesValue["enabled"];
@@ -1633,11 +1633,11 @@ namespace Microsoft.AzureStack.Management
                                             propertiesInstance.ProviderLocation = providerLocationInstance;
                                         }
                                         
-                                        JToken resourceManagerTypeValue = propertiesValue["resourceManagerType"];
-                                        if (resourceManagerTypeValue != null && resourceManagerTypeValue.Type != JTokenType.Null)
+                                        JToken routingResourceManagerTypeValue = propertiesValue["routingResourceManagerType"];
+                                        if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
                                         {
-                                            ResourceManagerType resourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)resourceManagerTypeValue), true));
-                                            propertiesInstance.ResourceManagerType = resourceManagerTypeInstance;
+                                            ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
+                                            propertiesInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
                                         }
                                         
                                         JToken enabledValue = propertiesValue["enabled"];

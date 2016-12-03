@@ -145,17 +145,6 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._provisioningState = value; }
         }
         
-        private Microsoft.AzureStack.Management.Models.ResourceManagerType? _resourceManagerType;
-        
-        /// <summary>
-        /// Optional. Gets or sets the resource manager type.
-        /// </summary>
-        public Microsoft.AzureStack.Management.Models.ResourceManagerType? ResourceManagerType
-        {
-            get { return this._resourceManagerType; }
-            set { this._resourceManagerType = value; }
-        }
-        
         private IList<ResourceType> _resourceTypes;
         
         /// <summary>
@@ -165,6 +154,17 @@ namespace Microsoft.AzureStack.Management.Models
         {
             get { return this._resourceTypes; }
             set { this._resourceTypes = value; }
+        }
+        
+        private Microsoft.AzureStack.Management.Models.ResourceManagerType? _routingResourceManagerType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource manager type.
+        /// </summary>
+        public Microsoft.AzureStack.Management.Models.ResourceManagerType? RoutingResourceManagerType
+        {
+            get { return this._routingResourceManagerType; }
+            set { this._routingResourceManagerType = value; }
         }
         
         /// <summary>
