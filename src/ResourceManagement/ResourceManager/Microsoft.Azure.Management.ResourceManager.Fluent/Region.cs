@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     public partial class Region
     {
         private static IDictionary<string, Region> regions = new Dictionary<string, Region>();
-        private static readonly Regex sWhitespace = new Regex(@"\s+");
 
         #region Americas
         public static readonly Region US_WEST = new Region("westus");
@@ -83,7 +82,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public static Region Create(string name)
         {
-            name = sWhitespace.Replace(name, "").ToLowerInvariant();
+            name = name.Replace(" ", "").ToLowerInvariant();
             Region region = null;
             if (regions.TryGetValue(name, out region))
             {
@@ -113,23 +112,21 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public override bool Equals(object obj)
         {
-
-            string value = this.ToString();
             if (!(obj is Region))
             {
                 return false;
             }
 
-            if (obj == this)
+            if (object.ReferenceEquals(obj, this))
             {
                 return true;
             }
             Region rhs = (Region)obj;
-            if (value == null)
+            if (Name == null)
             {
                 return rhs.Name == null;
             }
-            return value.Equals(rhs.Name);
+            return Name.Equals(rhs.Name, System.StringComparison.OrdinalIgnoreCase);
         }
     }
 }
