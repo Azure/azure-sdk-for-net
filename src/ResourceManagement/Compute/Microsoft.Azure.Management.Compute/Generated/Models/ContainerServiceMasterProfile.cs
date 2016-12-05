@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile for container service master
+    /// Profile for the container service master.
     /// </summary>
     public partial class ContainerServiceMasterProfile
     {
@@ -25,11 +25,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerServiceMasterProfile
         /// class.
         /// </summary>
-        /// <param name="dnsPrefix">DNS prefix to be used to create FQDN for
-        /// master</param>
+        /// <param name="dnsPrefix">DNS prefix to be used to create the FQDN
+        /// for master.</param>
         /// <param name="count">Number of masters (VMs) in the container
-        /// cluster</param>
-        /// <param name="fqdn">FDQN for the master</param>
+        /// service cluster. Allowed values are 1, 3, and 5. The default
+        /// value is 1.</param>
+        /// <param name="fqdn">FDQN for the master.</param>
         public ContainerServiceMasterProfile(string dnsPrefix, int? count = default(int?), string fqdn = default(string))
         {
             Count = count;
@@ -38,19 +39,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets number of masters (VMs) in the container cluster
+        /// Gets or sets number of masters (VMs) in the container service
+        /// cluster. Allowed values are 1, 3, and 5. The default value is 1.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }
 
         /// <summary>
-        /// Gets or sets DNS prefix to be used to create FQDN for master
+        /// Gets or sets DNS prefix to be used to create the FQDN for master.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dnsPrefix")]
         public string DnsPrefix { get; set; }
 
         /// <summary>
-        /// Gets FDQN for the master
+        /// Gets FDQN for the master.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }

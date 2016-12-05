@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes Windows Configuration of the OS Profile.
+    /// Describes Windows configuration of the OS Profile.
     /// </summary>
     public partial class LinuxConfiguration
     {
@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the LinuxConfiguration class.
         /// </summary>
-        /// <param name="disablePasswordAuthentication">whether Authentication
-        /// using user name and password is allowed or not</param>
-        /// <param name="ssh">the SSH configuration for linux VMs</param>
+        /// <param name="disablePasswordAuthentication">Specifies whether
+        /// password authentication should be disabled.</param>
+        /// <param name="ssh">The SSH configuration for linux VMs.</param>
         public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration))
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
@@ -33,14 +33,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether Authentication using user name and password
-        /// is allowed or not
+        /// Gets or sets specifies whether password authentication should be
+        /// disabled.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "disablePasswordAuthentication")]
         public bool? DisablePasswordAuthentication { get; set; }
 
         /// <summary>
-        /// Gets or sets the SSH configuration for linux VMs
+        /// Gets or sets the SSH configuration for linux VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ssh")]
         public SshConfiguration Ssh { get; set; }

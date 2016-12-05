@@ -65,13 +65,13 @@ namespace Compute.Tests
                     inputContainerService.AgentPoolProfiles[0].Count = 2;
                     UpdateContainerService(rgName, csName, inputContainerService);
 
-                    containerService = m_CrpClient.ContainerService.Get(rgName, containerService.Name);
+                    containerService = m_CrpClient.ContainerServices.Get(rgName, containerService.Name);
                     ValidateContainerService(inputContainerService, containerService);
 
-                    var listResult = m_CrpClient.ContainerService.List(rgName);
+                    var listResult = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(listResult.Any(a => a.Name == containerService.Name));
-                    m_CrpClient.ContainerService.Delete(rgName, containerService.Name);
-                    var listResultAfterDeletion = m_CrpClient.ContainerService.List(rgName);
+                    m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
+                    var listResultAfterDeletion = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(!listResultAfterDeletion.Any());
                 }
                 finally

@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the WinRMListener class.
         /// </summary>
-        /// <param name="protocol">the Protocol used by WinRM listener.
-        /// Currently only Http and Https are supported. Possible values
-        /// include: 'Http', 'Https'</param>
-        /// <param name="certificateUrl">the Certificate URL in KMS for Https
+        /// <param name="protocol">The Protocol used by the WinRM listener.
+        /// Http and Https are supported. Possible values include: 'Http',
+        /// 'Https'</param>
+        /// <param name="certificateUrl">The Certificate URL in KMS for Https
         /// listeners. Should be null for Http listeners.</param>
         public WinRMListener(ProtocolTypes? protocol = default(ProtocolTypes?), string certificateUrl = default(string))
         {
@@ -35,9 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the Protocol used by WinRM listener. Currently only
-        /// Http and Https are supported. Possible values include: 'Http',
-        /// 'Https'
+        /// Gets or sets the Protocol used by the WinRM listener. Http and
+        /// Https are supported. Possible values include: 'Http', 'Https'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "protocol")]
         public ProtocolTypes? Protocol { get; set; }

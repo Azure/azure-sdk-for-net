@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the BootDiagnostics class.
         /// </summary>
-        /// <param name="enabled">whether boot diagnostics should be enabled
+        /// <param name="enabled">Whether boot diagnostics should be enabled
         /// on the Virtual Machine.</param>
-        /// <param name="storageUri">the boot diagnostics storage Uri. It
-        /// should be a valid Uri</param>
+        /// <param name="storageUri">URI of the storage account to use for
+        /// placing the console output and screenshot.</param>
         public BootDiagnostics(bool? enabled = default(bool?), string storageUri = default(string))
         {
             Enabled = enabled;
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the boot diagnostics storage Uri. It should be a
-        /// valid Uri
+        /// Gets or sets URI of the storage account to use for placing the
+        /// console output and screenshot.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; set; }

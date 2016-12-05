@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetVM class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="instanceId">the virtual machine instance id.</param>
-        /// <param name="sku">the virtual machine sku.</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="instanceId">The virtual machine instance ID.</param>
+        /// <param name="sku">The virtual machine SKU.</param>
         /// <param name="latestModelApplied">Specifies whether the latest
         /// model has been applied to the virtual machine.</param>
         /// <param name="instanceView">the virtual machine instance
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="licenseType">the license type, which is for bring
         /// your own license scenario.</param>
-        /// <param name="plan">the purchase plan when deploying virtual
+        /// <param name="plan">The purchase plan when deploying virtual
         /// machine from VM Marketplace images.</param>
         /// <param name="resources">the virtual machine child extension
         /// resources.</param>
@@ -70,13 +70,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the virtual machine instance id.
+        /// Gets the virtual machine instance ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "instanceId")]
         public string InstanceId { get; private set; }
 
         /// <summary>
-        /// Gets the virtual machine sku.
+        /// Gets the virtual machine SKU.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }

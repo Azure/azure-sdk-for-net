@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the WinRMConfiguration class.
         /// </summary>
-        /// <param name="listeners">the list of Windows Remote Management
+        /// <param name="listeners">The list of Windows Remote Management
         /// listeners</param>
         public WinRMConfiguration(System.Collections.Generic.IList<WinRMListener> listeners = default(System.Collections.Generic.IList<WinRMListener>))
         {

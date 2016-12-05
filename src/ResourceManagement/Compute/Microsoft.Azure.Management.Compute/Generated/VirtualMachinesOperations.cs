@@ -713,7 +713,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get a virtual machine.
+        /// Retrieves information about the model view or the instance view of a
+        /// virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -911,8 +912,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Shuts down the Virtual Machine and releases the compute resources. You are
-        /// not billed for the compute resources that this Virtual Machine uses.
+        /// Shuts down the virtual machine and releases the compute resources. You are
+        /// not billed for the compute resources that this virtual machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -935,8 +936,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Shuts down the Virtual Machine and releases the compute resources. You are
-        /// not billed for the compute resources that this Virtual Machine uses.
+        /// Shuts down the virtual machine and releases the compute resources. You are
+        /// not billed for the compute resources that this virtual machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1096,7 +1097,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Sets the state of the VM as Generalized.
+        /// Sets the state of the virtual machine to generalized.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1256,7 +1257,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list virtual machines under a resource group.
+        /// Lists all of the virtual machines in the specified resource group. Use the
+        /// nextLink property in the response to get the next page of virtual
+        /// machines.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1436,9 +1439,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets the list of Virtual Machines in the subscription. Use nextLink
-        /// property in the response to get the next page of Virtual Machines. Do
-        /// this till nextLink is not null to fetch all the Virtual Machines.
+        /// Lists all of the virtual machines in the specified subscription. Use the
+        /// nextLink property in the response to get the next page of virtual
+        /// machines.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1609,8 +1612,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all available virtual machine sizes it can be resized to for a
-        /// virtual machine.
+        /// Lists all available virtual machine sizes to which the specified virtual
+        /// machine can be resized.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1799,7 +1802,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to power off (stop) a virtual machine.
+        /// The operation to power off (stop) a virtual machine. The virtual machine
+        /// can be restarted with the same provisioned resources. You are still
+        /// charged for this virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1822,7 +1827,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to power off (stop) a virtual machine.
+        /// The operation to power off (stop) a virtual machine. The virtual machine
+        /// can be restarted with the same provisioned resources. You are still
+        /// charged for this virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2531,7 +2538,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list virtual machines under a resource group.
+        /// Lists all of the virtual machines in the specified resource group. Use the
+        /// nextLink property in the response to get the next page of virtual
+        /// machines.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2699,9 +2708,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets the list of Virtual Machines in the subscription. Use nextLink
-        /// property in the response to get the next page of Virtual Machines. Do
-        /// this till nextLink is not null to fetch all the Virtual Machines.
+        /// Lists all of the virtual machines in the specified subscription. Use the
+        /// nextLink property in the response to get the next page of virtual
+        /// machines.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

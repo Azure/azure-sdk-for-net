@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineExtensionImage
         /// class.
         /// </summary>
-        /// <param name="location">Resource location</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="operatingSystem">the operating system this extension
         /// supports.</param>
         /// <param name="computeRole">the type of role (IaaS or PaaS) this
@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="handlerSchema">the schema defined by publisher, where
         /// extension consumers should provide settings in a matching
         /// schema.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="vmScaleSetEnabled">whether the extension can be used
         /// on xRP VMScaleSets. By default existing extensions are usable on
         /// scalesets, but there might be cases where a publisher wants to

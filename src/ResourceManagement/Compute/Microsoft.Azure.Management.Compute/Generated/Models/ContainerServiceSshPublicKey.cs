@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="keyData">Certificate public key used to authenticate
-        /// with VM through SSH. The certificate must be in Pem format with
+        /// with VMs through SSH. The certificate must be in PEM format with
         /// or without headers.</param>
         public ContainerServiceSshPublicKey(string keyData)
         {
@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets certificate public key used to authenticate with VM
-        /// through SSH. The certificate must be in Pem format with or
+        /// Gets or sets certificate public key used to authenticate with VMs
+        /// through SSH. The certificate must be in PEM format with or
         /// without headers.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "keyData")]

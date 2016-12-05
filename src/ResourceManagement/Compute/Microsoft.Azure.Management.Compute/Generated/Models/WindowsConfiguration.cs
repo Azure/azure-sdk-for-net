@@ -23,15 +23,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the WindowsConfiguration class.
         /// </summary>
-        /// <param name="provisionVMAgent">whether VM Agent should be
-        /// provisioned on the Virtual Machine.</param>
-        /// <param name="enableAutomaticUpdates">whether Windows updates are
-        /// automatically installed on the VM</param>
-        /// <param name="timeZone">the Time Zone of the VM</param>
-        /// <param name="additionalUnattendContent">the additional base-64
-        /// encoded XML formatted information that can be included in the
+        /// <param name="provisionVMAgent">Indicates whether the virtual
+        /// machine agent should be provisioned on the Virtual Machine. If
+        /// not specified, then the default behavior is to set it to
+        /// true.</param>
+        /// <param name="enableAutomaticUpdates">Indicates whether Windows
+        /// updates are automatically installed on the VM.</param>
+        /// <param name="timeZone">The time zone of the VM</param>
+        /// <param name="additionalUnattendContent">Additional base-64 encoded
+        /// XML formatted information that can be included in the
         /// Unattend.xml file.</param>
-        /// <param name="winRM">the Windows Remote Management configuration of
+        /// <param name="winRM">The Windows Remote Management configuration of
         /// the VM</param>
         public WindowsConfiguration(bool? provisionVMAgent = default(bool?), bool? enableAutomaticUpdates = default(bool?), string timeZone = default(string), System.Collections.Generic.IList<AdditionalUnattendContent> additionalUnattendContent = default(System.Collections.Generic.IList<AdditionalUnattendContent>), WinRMConfiguration winRM = default(WinRMConfiguration))
         {
@@ -43,28 +45,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether VM Agent should be provisioned on the Virtual
-        /// Machine.
+        /// Gets or sets indicates whether the virtual machine agent should be
+        /// provisioned on the Virtual Machine. If not specified, then the
+        /// default behavior is to set it to true.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "provisionVMAgent")]
         public bool? ProvisionVMAgent { get; set; }
 
         /// <summary>
-        /// Gets or sets whether Windows updates are automatically installed
-        /// on the VM
+        /// Gets or sets indicates whether Windows updates are automatically
+        /// installed on the VM.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enableAutomaticUpdates")]
         public bool? EnableAutomaticUpdates { get; set; }
 
         /// <summary>
-        /// Gets or sets the Time Zone of the VM
+        /// Gets or sets the time zone of the VM
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "timeZone")]
         public string TimeZone { get; set; }
 
         /// <summary>
-        /// Gets or sets the additional base-64 encoded XML formatted
-        /// information that can be included in the Unattend.xml file.
+        /// Gets or sets additional base-64 encoded XML formatted information
+        /// that can be included in the Unattend.xml file.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "additionalUnattendContent")]
         public System.Collections.Generic.IList<AdditionalUnattendContent> AdditionalUnattendContent { get; set; }

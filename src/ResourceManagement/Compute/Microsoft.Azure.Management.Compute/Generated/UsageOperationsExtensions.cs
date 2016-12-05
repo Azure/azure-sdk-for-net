@@ -18,13 +18,15 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class UsageOperationsExtensions
     {
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// Gets, for the specified location, the current compute resource usage
+            /// information as well as the limits for compute resources under the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The location upon which resource usage is queried.
+            /// The location for which resource usage is queried.
             /// </param>
             public static Microsoft.Rest.Azure.IPage<Usage> List(this IUsageOperations operations, string location)
             {
@@ -32,13 +34,15 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// Gets, for the specified location, the current compute resource usage
+            /// information as well as the limits for compute resources under the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The location upon which resource usage is queried.
+            /// The location for which resource usage is queried.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -52,7 +56,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// Gets, for the specified location, the current compute resource usage
+            /// information as well as the limits for compute resources under the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -66,7 +72,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// Gets, for the specified location, the current compute resource usage
+            /// information as well as the limits for compute resources under the
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

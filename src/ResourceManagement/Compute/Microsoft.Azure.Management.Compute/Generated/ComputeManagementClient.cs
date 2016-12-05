@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// subscription credentials which uniquely identify Microsoft Azure
+        /// Subscription credentials that uniquely identify the Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
@@ -108,9 +108,9 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
 
         /// <summary>
-        /// Gets the IContainerServiceOperations.
+        /// Gets the IContainerServicesOperations.
         /// </summary>
-        public virtual IContainerServiceOperations ContainerService { get; private set; }
+        public virtual IContainerServicesOperations ContainerServices { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.Compute
             this.VirtualMachines = new VirtualMachinesOperations(this);
             this.VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             this.VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
-            this.ContainerService = new ContainerServiceOperations(this);
+            this.ContainerServices = new ContainerServicesOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

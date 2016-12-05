@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile for Linux VMs
+    /// Profile for Linux VMs in the container service cluster.
     /// </summary>
     public partial class ContainerServiceLinuxProfile
     {
@@ -25,10 +25,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerServiceLinuxProfile
         /// class.
         /// </summary>
-        /// <param name="adminUsername">The administrator username to use for
-        /// all Linux VMs</param>
-        /// <param name="ssh">Specifies the ssh key configuration for Linux
-        /// VMs</param>
+        /// <param name="adminUsername">The administrator user name to use for
+        /// Linux VMs.</param>
+        /// <param name="ssh">The ssh key configuration for Linux VMs.</param>
         public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
         {
             AdminUsername = adminUsername;
@@ -36,13 +35,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the administrator username to use for all Linux VMs
+        /// Gets or sets the administrator user name to use for Linux VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "adminUsername")]
         public string AdminUsername { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the ssh key configuration for Linux VMs
+        /// Gets or sets the ssh key configuration for Linux VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "ssh")]
         public ContainerServiceSshConfiguration Ssh { get; set; }
@@ -62,6 +61,17 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (Ssh == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Ssh");
+            }
+            if (this.AdminUsername != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.AdminUsername, "^[a-z][a-z0-9_-]*$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "AdminUsername", "^[a-z][a-z0-9_-]*$");
+                }
+            }
+            if (this.Ssh != null)
+            {
+                this.Ssh.Validate();
             }
         }
     }

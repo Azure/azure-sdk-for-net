@@ -24,14 +24,19 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='offer'>
+            /// A valid image publisher offer.
             /// </param>
             /// <param name='skus'>
+            /// A valid image SKU.
             /// </param>
             /// <param name='version'>
+            /// A valid image SKU version.
             /// </param>
             public static VirtualMachineImage Get(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string version)
             {
@@ -45,14 +50,19 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='offer'>
+            /// A valid image publisher offer.
             /// </param>
             /// <param name='skus'>
+            /// A valid image SKU.
             /// </param>
             /// <param name='version'>
+            /// A valid image SKU version.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -66,18 +76,23 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine images.
+            /// Gets a list of all virtual machine image versions for the specified
+            /// location, publisher, offer, and SKU.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='offer'>
+            /// A valid image publisher offer.
             /// </param>
             /// <param name='skus'>
+            /// A valid image SKU.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -88,18 +103,23 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine images.
+            /// Gets a list of all virtual machine image versions for the specified
+            /// location, publisher, offer, and SKU.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='offer'>
+            /// A valid image publisher offer.
             /// </param>
             /// <param name='skus'>
+            /// A valid image SKU.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -116,14 +136,17 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine image offers.
+            /// Gets a list of virtual machine image offers for the specified location and
+            /// publisher.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             public static System.Collections.Generic.IList<VirtualMachineImageResource> ListOffers(this IVirtualMachineImagesOperations operations, string location, string publisherName)
             {
@@ -131,14 +154,17 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine image offers.
+            /// Gets a list of virtual machine image offers for the specified location and
+            /// publisher.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -152,12 +178,14 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine image publishers.
+            /// Gets a list of virtual machine image publishers for the specified Azure
+            /// location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             public static System.Collections.Generic.IList<VirtualMachineImageResource> ListPublishers(this IVirtualMachineImagesOperations operations, string location)
             {
@@ -165,12 +193,14 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine image publishers.
+            /// Gets a list of virtual machine image publishers for the specified Azure
+            /// location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -184,16 +214,20 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine image skus.
+            /// Gets a list of virtual machine image SKUs for the specified location,
+            /// publisher, and offer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='offer'>
+            /// A valid image publisher offer.
             /// </param>
             public static System.Collections.Generic.IList<VirtualMachineImageResource> ListSkus(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer)
             {
@@ -201,16 +235,20 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets a list of virtual machine image skus.
+            /// Gets a list of virtual machine image SKUs for the specified location,
+            /// publisher, and offer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
+            /// A valid image publisher.
             /// </param>
             /// <param name='offer'>
+            /// A valid image publisher offer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

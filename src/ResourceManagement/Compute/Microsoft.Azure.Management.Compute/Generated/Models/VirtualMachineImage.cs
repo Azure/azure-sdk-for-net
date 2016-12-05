@@ -24,10 +24,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImage class.
         /// </summary>
-        /// <param name="name">the name of the resource.</param>
-        /// <param name="location">the location of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="location">The supported Azure location of the
+        /// resource.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="tags">the tags attached to the resource.</param>
+        /// <param name="tags">The tags attached to the resource.</param>
         public VirtualMachineImage(string name, string location, string id = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), System.Collections.Generic.IList<DataDiskImage> dataDiskImages = default(System.Collections.Generic.IList<DataDiskImage>))
             : base(name, location, id, tags)
         {

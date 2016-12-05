@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Create or update Availability Set parameters.
+    /// Create or update availability set parameters.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class AvailabilitySet : Resource
@@ -24,17 +24,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the AvailabilitySet class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="platformUpdateDomainCount">Update Domain
         /// count.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count.</param>
-        /// <param name="virtualMachines">a list containing reference to all
-        /// Virtual Machines created under this Availability Set.</param>
-        /// <param name="statuses">the resource status information.</param>
+        /// <param name="virtualMachines">A list of references to all virtual
+        /// machines in the availability set.</param>
+        /// <param name="statuses">The resource status information.</param>
         public AvailabilitySet(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IList<SubResource> virtualMachines = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
             : base(location, id, name, type, tags)
         {
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? PlatformFaultDomainCount { get; set; }
 
         /// <summary>
-        /// Gets or sets a list containing reference to all Virtual Machines
-        /// created under this Availability Set.
+        /// Gets or sets a list of references to all virtual machines in the
+        /// availability set.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualMachines")]
         public System.Collections.Generic.IList<SubResource> VirtualMachines { get; set; }

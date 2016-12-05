@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the BootDiagnosticsInstanceView
         /// class.
         /// </summary>
-        /// <param name="consoleScreenshotBlobUri">the console screenshot blob
-        /// Uri.</param>
-        /// <param name="serialConsoleLogBlobUri">the Linux serial console log
+        /// <param name="consoleScreenshotBlobUri">The console screenshot blob
+        /// URI.</param>
+        /// <param name="serialConsoleLogBlobUri">The Linux serial console log
         /// blob Uri.</param>
         public BootDiagnosticsInstanceView(string consoleScreenshotBlobUri = default(string), string serialConsoleLogBlobUri = default(string))
         {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the console screenshot blob Uri.
+        /// Gets or sets the console screenshot blob URI.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "consoleScreenshotBlobUri")]
         public string ConsoleScreenshotBlobUri { get; set; }

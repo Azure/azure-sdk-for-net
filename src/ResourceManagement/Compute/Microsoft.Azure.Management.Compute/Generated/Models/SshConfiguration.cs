@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the SshConfiguration class.
         /// </summary>
-        /// <param name="publicKeys">the list of SSH public keys used to
-        /// authenticate with linux based VMs</param>
+        /// <param name="publicKeys">The list of SSH public keys used to
+        /// authenticate with linux based VMs.</param>
         public SshConfiguration(System.Collections.Generic.IList<SshPublicKey> publicKeys = default(System.Collections.Generic.IList<SshPublicKey>))
         {
             PublicKeys = publicKeys;
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the list of SSH public keys used to authenticate with
-        /// linux based VMs
+        /// linux based VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "publicKeys")]
         public System.Collections.Generic.IList<SshPublicKey> PublicKeys { get; set; }

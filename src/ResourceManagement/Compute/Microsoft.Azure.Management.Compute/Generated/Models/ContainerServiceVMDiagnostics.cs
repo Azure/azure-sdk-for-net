@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes VM Diagnostics.
+    /// Profile for diagnostics on the container service VMs.
     /// </summary>
     public partial class ContainerServiceVMDiagnostics
     {
@@ -25,29 +25,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerServiceVMDiagnostics
         /// class.
         /// </summary>
-        /// <param name="enabled">whether VM Diagnostic Agent should be
-        /// provisioned on the Virtual Machine.</param>
-        /// <param name="storageUri">whether VM Diagnostic Agent should be
-        /// provisioned on the Virtual Machine.</param>
-        public ContainerServiceVMDiagnostics(bool? enabled = default(bool?), string storageUri = default(string))
+        /// <param name="enabled">Whether the VM diagnostic agent is
+        /// provisioned on the VM.</param>
+        /// <param name="storageUri">The URI of the storage account where
+        /// diagnostics are stored.</param>
+        public ContainerServiceVMDiagnostics(bool enabled, string storageUri = default(string))
         {
             Enabled = enabled;
             StorageUri = storageUri;
         }
 
         /// <summary>
-        /// Gets or sets whether VM Diagnostic Agent should be provisioned on
-        /// the Virtual Machine.
+        /// Gets or sets whether the VM diagnostic agent is provisioned on the
+        /// VM.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enabled")]
-        public bool? Enabled { get; set; }
+        public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets whether VM Diagnostic Agent should be provisioned on the
-        /// Virtual Machine.
+        /// Gets the URI of the storage account where diagnostics are stored.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

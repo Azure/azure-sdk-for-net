@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// SSH configuration for Linux based VMs running on Azure
+    /// SSH configuration for Linux-based VMs running on Azure.
     /// </summary>
     public partial class ContainerServiceSshConfiguration
     {
@@ -25,19 +25,42 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerServiceSshConfiguration
         /// class.
         /// </summary>
-        /// <param name="publicKeys">the list of SSH public keys used to
-        /// authenticate with Linux based VMs</param>
-        public ContainerServiceSshConfiguration(System.Collections.Generic.IList<ContainerServiceSshPublicKey> publicKeys = default(System.Collections.Generic.IList<ContainerServiceSshPublicKey>))
+        /// <param name="publicKeys">The list of SSH public keys used to
+        /// authenticate with Linux-based VMs.</param>
+        public ContainerServiceSshConfiguration(System.Collections.Generic.IList<ContainerServiceSshPublicKey> publicKeys)
         {
             PublicKeys = publicKeys;
         }
 
         /// <summary>
         /// Gets or sets the list of SSH public keys used to authenticate with
-        /// Linux based VMs
+        /// Linux-based VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "publicKeys")]
         public System.Collections.Generic.IList<ContainerServiceSshPublicKey> PublicKeys { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PublicKeys == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PublicKeys");
+            }
+            if (this.PublicKeys != null)
+            {
+                foreach (var element in this.PublicKeys)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

@@ -25,8 +25,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the NetworkInterfaceReference class.
         /// </summary>
         /// <param name="id">Resource Id</param>
-        /// <param name="primary">whether this is a primary NIC on a virtual
-        /// machine</param>
+        /// <param name="primary">Specifies the primary network interface in
+        /// case the virtual machine has more than 1 network
+        /// interface.</param>
         public NetworkInterfaceReference(string id = default(string), bool? primary = default(bool?))
             : base(id)
         {
@@ -34,7 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets whether this is a primary NIC on a virtual machine
+        /// Gets or sets specifies the primary network interface in case the
+        /// virtual machine has more than 1 network interface.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }

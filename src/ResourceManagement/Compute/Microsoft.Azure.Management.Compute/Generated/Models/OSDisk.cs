@@ -23,23 +23,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDisk class.
         /// </summary>
-        /// <param name="name">the disk name.</param>
-        /// <param name="vhd">the Virtual Hard Disk.</param>
-        /// <param name="createOption">the create option. Possible values
+        /// <param name="name">The disk name.</param>
+        /// <param name="vhd">The virtual hard disk.</param>
+        /// <param name="createOption">The create option. Possible values
         /// include: 'fromImage', 'empty', 'attach'</param>
-        /// <param name="osType">the Operating System type. Possible values
+        /// <param name="osType">The Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
         /// <param name="encryptionSettings">the disk encryption
         /// settings.</param>
-        /// <param name="image">the Source User Image VirtualHardDisk. This
-        /// VirtualHardDisk will be copied before using it to attach to the
-        /// Virtual Machine. If SourceImage is provided, the destination
-        /// VirtualHardDisk should not exist.</param>
-        /// <param name="caching">the caching type. Possible values include:
+        /// <param name="image">The source user image virtual hard disk. The
+        /// virtual hard disk will be copied before using it to attach to the
+        /// virtual machine. If SourceImage is provided, the destination
+        /// virtual hard disk must not exist.</param>
+        /// <param name="caching">The caching type. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
-        /// <param name="diskSizeGB">the initial disk size in GB for blank
-        /// data disks, and the new desired size for existing OS and Data
-        /// disks.</param>
+        /// <param name="diskSizeGB">The initial disk size, in GB, for blank
+        /// data disks, and the new desired size for resizing existing OS and
+        /// data disks.</param>
         public OSDisk(string name, VirtualHardDisk vhd, DiskCreateOptionTypes createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?))
         {
             OsType = osType;
@@ -72,16 +72,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the Virtual Hard Disk.
+        /// Gets or sets the virtual hard disk.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "vhd")]
         public VirtualHardDisk Vhd { get; set; }
 
         /// <summary>
-        /// Gets or sets the Source User Image VirtualHardDisk. This
-        /// VirtualHardDisk will be copied before using it to attach to the
-        /// Virtual Machine. If SourceImage is provided, the destination
-        /// VirtualHardDisk should not exist.
+        /// Gets or sets the source user image virtual hard disk. The virtual
+        /// hard disk will be copied before using it to attach to the virtual
+        /// machine. If SourceImage is provided, the destination virtual hard
+        /// disk must not exist.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "image")]
         public VirtualHardDisk Image { get; set; }
@@ -101,8 +101,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public DiskCreateOptionTypes CreateOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the initial disk size in GB for blank data disks, and
-        /// the new desired size for existing OS and Data disks.
+        /// Gets or sets the initial disk size, in GB, for blank data disks,
+        /// and the new desired size for resizing existing OS and data disks.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

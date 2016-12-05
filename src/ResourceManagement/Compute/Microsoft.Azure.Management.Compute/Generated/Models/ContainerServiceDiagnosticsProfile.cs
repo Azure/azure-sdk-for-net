@@ -22,18 +22,35 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// ContainerServiceDiagnosticsProfile class.
         /// </summary>
-        /// <param name="vmDiagnostics">Profile for container service VM
-        /// diagnostic agent</param>
-        public ContainerServiceDiagnosticsProfile(ContainerServiceVMDiagnostics vmDiagnostics = default(ContainerServiceVMDiagnostics))
+        /// <param name="vmDiagnostics">Profile for the container service VM
+        /// diagnostic agent.</param>
+        public ContainerServiceDiagnosticsProfile(ContainerServiceVMDiagnostics vmDiagnostics)
         {
             VmDiagnostics = vmDiagnostics;
         }
 
         /// <summary>
-        /// Gets or sets profile for container service VM diagnostic agent
+        /// Gets or sets profile for the container service VM diagnostic agent.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "vmDiagnostics")]
         public ContainerServiceVMDiagnostics VmDiagnostics { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VmDiagnostics == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmDiagnostics");
+            }
+            if (this.VmDiagnostics != null)
+            {
+                this.VmDiagnostics.Validate();
+            }
+        }
     }
 }
