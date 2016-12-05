@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public PagedList<IVirtualMachineSize> ListByRegion(Region region)
         {
-            return ListByRegion(region.ToString());
+            return ListByRegion(region.Name);
         }
 
         protected override IVirtualMachineSize WrapModel(VirtualMachineSize inner)
