@@ -14,10 +14,14 @@
     <AutoRestProjects>true</AutoRestProjects>
     <TestProject>true</TestProject>
   </PropertyGroup>
-  <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <ItemGroup>
+    <Reference Include="Microsoft.Azure.Batch, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\Azure.Batch.5.1.2\lib\net45\Microsoft.Azure.Batch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.OData">
       <SpecificVersion>False</SpecificVersion>
@@ -122,9 +126,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Src\Batch.csproj">
-      <Project>{3328fbbf-9c20-4775-b367-856c09dc13bf}</Project>
-      <Name>Batch</Name>
+    <ProjectReference Include="..\..\Src\AzureBatchFileStaging\Batch.FileStaging.csproj">
+      <Project>{a7b9cd95-7ec3-4ccf-b20f-951fd2d028f1}</Project>
+      <Name>Batch.FileStaging</Name>
+      <Aliases>fs</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\Common\BatchTestCommon.csproj">
       <Project>{B697759F-6EF9-4142-8BD3-D78BF18C678E}</Project>
@@ -136,31 +141,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\ApplicationPackageFixture.cs" />
-    <Compile Include="Application\ApplicationPackagesReferencesOnTasksIntegrationTests.cs" />
-    <Compile Include="CloudJobIntegrationTests.cs" />
     <Compile Include="Fixtures\IaasLinuxPoolFixture.cs" />
     <Compile Include="Fixtures\PaasWindowsPoolFixture.cs" />
-    <Compile Include="Application\ApplicationIntegrationCommon.cs" />
-    <Compile Include="Application\ApplicationManagementIntegrationTests.cs" />
-    <Compile Include="Application\ApplicationPackagesReferencesIntegrationTests.cs" />
-    <Compile Include="Application\JobWithApplicationPackageReferencesIntegrationTests.cs" />
     <Compile Include="AddTaskCollectionIntegrationTests.cs" />
-    <Compile Include="Application\ApplicationPackagesIntegrationTests.cs" />
-    <Compile Include="BatchRequestIntegrationTests.cs" />
-    <Compile Include="AutoScaleIntegrationTests.cs" />
-    <Compile Include="IntegrationTestUtilities\FileUploadUtilities.cs" />
-    <Compile Include="TaskDependencyIntegrationTests.cs" />
     <Compile Include="IntegrationTestUtilities\TestUtilities.cs" />
-    <Compile Include="CloudJobScheduleIntegrationTests.cs" />
-    <Compile Include="CloudPoolIntegrationTests.cs" />
     <Compile Include="CloudTaskIntegrationTests.cs" />
-    <Compile Include="ComputeNodeIntegrationTests.cs" />
     <Compile Include="Fixtures\PoolFixture.cs" />
     <Compile Include="JobPrepReleaseIntegrationTests.cs" />
-    <Compile Include="CloudCertificateIntegrationTests.cs" />
-    <Compile Include="NodeFileIntegrationTests.cs" />
-    <Compile Include="ObjectModelFeatureIntegrationTests.cs" />
     <Compile Include="IntegrationTestUtilities\SynchronizationContextHelper.cs" />
     <Compile Include="TestResources\Resources.cs" />
     <Compile Include="EndToEndIntegrationTests.cs" />
