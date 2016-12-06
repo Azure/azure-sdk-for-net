@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT, IUpdatableT>,
         IIndependentChild,
         IWithParentResource<IFluentResourceT, FluentParentModelT>
-        where IResourceT : class, IResource
+        where IResourceT : class
         where IUpdatableT : class
         where IFluentResourceT : class, IResourceT
         where FluentResourceT : class

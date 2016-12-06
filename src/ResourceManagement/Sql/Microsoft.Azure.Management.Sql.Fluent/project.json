@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-beta3",
   "title": "Microsoft Azure Sql Management Library",
   "description": "Provides Sql management (Fluent) capabilities for Microsoft Azure.",
@@ -21,7 +21,8 @@
 
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)"
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
+    "System.ObjectModel": "4.0.12"
   },
 
   "frameworks": {
