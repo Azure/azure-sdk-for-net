@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -27,16 +29,32 @@ namespace ContainerRegistry.Tests
 {
     public class ContainerRegistryTestUtilities
     {
-        public static string DefaultLocation = "southcentralus";
-
-        public static SkuName DefaultStorageAccountSku = SkuName.StandardGRS;
-        public static Kind DefaultStorageAccountKind = Kind.Storage;
+        public const string ContainerRegistryNamespace = "Microsoft.ContainerRegistry";
+        public const string ContainerRegistryResourceType = "registries";
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
             { "key1","value1"},
             { "key2","value2"}
         };
+
+        public static string GetDefaultRegistryLocation(ResourceManagementClient client)
+        {
+            Provider provider = client.Providers.Get(ContainerRegistryNamespace);
+            ProviderResourceType resourceType = provider.ResourceTypes.First(
+                t => StringComparer.OrdinalIgnoreCase.Equals(t.ResourceType, ContainerRegistryResourceType));
+            string location = resourceType.Locations.First();
+            return NormalizeLocation(location);
+        }
+
+        public static string GetNonDefaultRegistryLocation(ResourceManagementClient client)
+        {
+            Provider provider = client.Providers.Get(ContainerRegistryNamespace);
+            ProviderResourceType resourceType = provider.ResourceTypes.First(
+                t => StringComparer.OrdinalIgnoreCase.Equals(t.ResourceType, ContainerRegistryResourceType));
+            string location = resourceType.Locations.ToArray()[1];
+            return NormalizeLocation(location);
+        }
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
@@ -59,47 +77,45 @@ namespace ContainerRegistry.Tests
             return client;
         }
 
-        public static string CreateResourceGroup(ResourceManagementClient client)
+        public static ResourceGroup CreateResourceGroup(ResourceManagementClient client)
         {
             var rgName = TestUtilities.GenerateName("acr_rg");
 
-            var createRequest = client.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup
+            return client.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup
             {
-                Location = DefaultLocation
+                Location = GetDefaultRegistryLocation(client)
             });
-
-            return rgName;
         }
 
-        public static string CreateStorageAccount(StorageManagementClient client, string rgName)
+        public static string CreateStorageAccount(StorageManagementClient client, ResourceGroup resourceGroup)
         {
             string storageName = TestUtilities.GenerateName("acrstorage");
 
-            var createRequest = client.StorageAccounts.Create(rgName, storageName, new StorageAccountCreateParameters
+            var createRequest = client.StorageAccounts.Create(resourceGroup.Name, storageName, new StorageAccountCreateParameters
             {
-                Location = DefaultLocation,
-                Sku = new Sku { Name = DefaultStorageAccountSku },
-                Kind = DefaultStorageAccountKind
+                Location = resourceGroup.Location,
+                Sku = new Sku { Name = SkuName.StandardLRS },
+                Kind = Kind.Storage
             });
 
             return storageName;
         }
 
-        public static string CreateContainerRegistry(ContainerRegistryManagementClient client, string rgName, string storageName, string storageKey)
+        public static string CreateContainerRegistry(ContainerRegistryManagementClient client, ResourceGroup resourceGroup, string storageName, string storageKey)
         {
             string registryName = TestUtilities.GenerateName("acrregistry");
-            Registry registry = GetDefaultRegistryProperties(storageName, storageKey);
+            Registry registry = GetDefaultRegistryProperties(resourceGroup, storageName, storageKey);
 
-            var createRequest = client.Registries.CreateOrUpdate(rgName, registryName, registry);
+            var createRequest = client.Registries.CreateOrUpdate(resourceGroup.Name, registryName, registry);
 
             return registryName;
         }
 
-        public static Registry GetDefaultRegistryProperties(string storageName, string storageKey)
+        public static Registry GetDefaultRegistryProperties(ResourceGroup resourceGroup, string storageName, string storageKey)
         {
             Registry registry = new Registry
             {
-                Location = DefaultLocation,
+                Location = resourceGroup.Location,
                 StorageAccount = new StorageAccountProperties
                 {
                     Name = storageName,
@@ -111,9 +127,9 @@ namespace ContainerRegistry.Tests
             return registry;
         }
 
-        public static string GetStorageAccessKey(StorageManagementClient client, string rgName, string storageName)
+        public static string GetStorageAccessKey(StorageManagementClient client, ResourceGroup resourceGroup, string storageName)
         {
-            return client.StorageAccounts.ListKeys(rgName, storageName).Keys[0].Value;
+            return client.StorageAccounts.ListKeys(resourceGroup.Name, storageName).Keys[0].Value;
         }
 
         public static void VerifyRegistryProperties(Registry registry, string storageName, bool useDefaults)
@@ -133,13 +149,17 @@ namespace ContainerRegistry.Tests
 
             if (useDefaults)
             {
-                Assert.Equal(registry.Location, DefaultLocation);
                 Assert.Equal(registry.AdminUserEnabled, false);
                 Assert.NotNull(registry.Tags);
                 Assert.Equal(2, registry.Tags.Count);
                 Assert.Equal(registry.Tags["key1"], "value1");
                 Assert.Equal(registry.Tags["key2"], "value2");
             }
+        }
+
+        private static string NormalizeLocation(string location)
+        {
+            return location.Replace(" ", "").ToLower();
         }
     }
 }

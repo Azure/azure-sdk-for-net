@@ -1,12 +1,12 @@
 ﻿{
   "version": "1.0.0-preview",
-  "description": "Microsoft Azure Management Container Registry Library",
+  "description": "Microsoft Azure Container Registry Management Library",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Microsoft Azure Management Container Registry Library",
+    "summary": "Microsoft Azure Container Registry Management Library",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
-    "tags": [ "Microsoft Azure Container Registry management", "Container Registry", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+    "tags": [ "Microsoft Azure Container Registry Management", "Container Registry", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "requireLicenseAcceptance": true
@@ -19,12 +19,12 @@
   },
 
   "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.4,4.0.0)"
   },
 
   "frameworks": {
     "net45": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
       }
     },
     "netstandard1.5": {
@@ -34,15 +34,13 @@
         "System.Diagnostics.Tools": "4.0.1",
         "System.Net.Http": "4.1.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Threading.Tasks": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Threading.Tasks": "4.0.11"
       }
     },
     "netstandard1.1": {
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+        "System.Runtime.Serialization.Primitives": "4.1.1"
       }
     }
   }
