@@ -3,7 +3,6 @@
 namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Cdn.Fluent;
     using Models;
     using Resource.Fluent.Core;
 

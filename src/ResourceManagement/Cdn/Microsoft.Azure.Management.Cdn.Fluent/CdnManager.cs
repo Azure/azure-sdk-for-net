@@ -29,9 +29,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 restClient.Handlers.ToArray());
             client.SubscriptionId = subscriptionId;
         }
-
-        #region DnsZoneManager builder
-
+        
         public static ICdnManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new CdnManager(RestClient.Configure()
@@ -49,9 +47,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             return new Configurable();
         }
-
-        #endregion
-
+        
 
         #region IConfigurable and it's implementation
 

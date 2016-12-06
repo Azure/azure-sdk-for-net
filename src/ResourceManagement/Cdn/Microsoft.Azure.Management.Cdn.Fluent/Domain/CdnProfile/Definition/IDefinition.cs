@@ -2,13 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Cdn.Fluent;
-    using Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.StandardEndpoint;
-    using Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition;
-    using Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.PremiumEndpoint;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// The entirety of the CDN profile.

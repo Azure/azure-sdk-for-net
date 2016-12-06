@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.StandardEndpoint
 {
-    using Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition;
-
     /// <summary>
     /// The stage of the CDN profile endpoint definition allowing to specify the origin.
     /// </summary>

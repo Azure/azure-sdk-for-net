@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.HostName() as string;
+                return this.HostName;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.HttpPort();
+                return this.HttpPort;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.IsHttpAllowed();
+                return this.IsHttpAllowed;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.GeoFilters() as System.Collections.Generic.IList<GeoFilter>;
+                return this.GeoFilters;
             }
         }
 
@@ -141,22 +141,13 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
  
             this.Start();
         }
-
-        /// <return>Endpoint state.</return>
-        EndpointResourceState ICdnEndpoint.ResourceState
-        {
-            get
-            {
-                return this.ResourceState();
-            }
-        }
-
+        
         /// <return>Endpoint provisioning state.</return>
         string ICdnEndpoint.ProvisioningState
         {
             get
             {
-                return this.ProvisioningState() as string;
+                return this.ProvisioningState;
             }
         }
 
@@ -175,7 +166,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.IsHttpsAllowed();
+                return this.IsHttpsAllowed;
             }
         }
 
@@ -184,7 +175,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.HttpsPort();
+                return this.HttpsPort;
             }
         }
 
@@ -193,7 +184,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.ContentTypesToCompress() as System.Collections.Generic.IList<string>;
+                return this.ContentTypesToCompress;
             }
         }
 
@@ -202,16 +193,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.IsCompressionEnabled();
+                return this.IsCompressionEnabled;
             }
         }
 
         /// <return>List of custom domains associated with current endpoint.</return>
-        System.Collections.Generic.IList<string> ICdnEndpoint.CustomDomains
+        IReadOnlyCollection<string> ICdnEndpoint.CustomDomains
         {
             get
             {
-                return this.CustomDomains() as System.Collections.Generic.IList<string>;
+                return this.CustomDomains;
             }
         }
 
@@ -220,7 +211,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.OriginHostName() as string;
+                return this.OriginHostName;
             }
         }
 
@@ -229,7 +220,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.OriginPath() as string;
+                return this.OriginPath;
             }
         }
 
@@ -238,7 +229,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.OriginHostHeader() as string;
+                return this.OriginHostHeader;
             }
         }
 
@@ -247,7 +238,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.QueryStringCachingBehavior();
+                return this.QueryStringCachingBehavior;
             }
         }
 
@@ -266,7 +257,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.OptimizationType() as string;
+                return this.OptimizationType;
             }
         }
 

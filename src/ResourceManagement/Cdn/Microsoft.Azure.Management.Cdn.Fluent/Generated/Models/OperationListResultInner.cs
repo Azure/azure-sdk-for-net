@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         /// resource provider.</param>
         /// <param name="nextLink">URL to get the next set of operation list
         /// results if there are any.</param>
-        public OperationListResultInner(System.Collections.Generic.IList<Operation> value = default(System.Collections.Generic.IList<Operation>), string nextLink = default(string))
+        public OperationListResultInner(System.Collections.Generic.IList<OperationInner> value = default(System.Collections.Generic.IList<OperationInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         /// provider.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<Operation> Value { get; set; }
+        public System.Collections.Generic.IList<OperationInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets URL to get the next set of operation list results if

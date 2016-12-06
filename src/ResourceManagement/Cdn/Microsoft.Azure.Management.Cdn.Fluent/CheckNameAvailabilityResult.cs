@@ -14,24 +14,25 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Get the reason value.
         /// </summary>
         /// <return>The reason value.</return>
-        public string Reason()
+        public string Reason
         {
-            //$ return this.inner.Reason();
-            //$ }
-
-            return null;
+            get
+            {
+                return this.inner.Reason;
+            }
         }
 
         /// <summary>
         /// Indicates whether the name is available.
         /// </summary>
         /// <return>The nameAvailable value.</return>
-        public bool NameAvailable()
+        public bool NameAvailable
         {
-            //$ return this.inner.NameAvailable();
-            //$ }
-
-            return false;
+            get
+            {
+                return (this.inner.NameAvailable.HasValue) ?
+                    this.inner.NameAvailable.Value : false;
+            }
         }
 
         /// <summary>
@@ -40,21 +41,19 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="inner">Server response for CheckNameAvailability request.</param>
         public  CheckNameAvailabilityResult(CheckNameAvailabilityOutputInner inner)
         {
-            //$ this.inner = inner;
-            //$ }
-
+            this.inner = inner;
         }
 
         /// <summary>
         /// Get the message value.
         /// </summary>
         /// <return>The message value.</return>
-        public string Message()
+        public string Message
         {
-            //$ return this.inner.Message();
-            //$ }
-
-            return null;
+            get
+            {
+                return this.inner.Message;
+            }
         }
     }
 }

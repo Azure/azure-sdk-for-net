@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.RegionName() as string;
+                return this.RegionName;
             }
         }
 
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.Sku() as Sku;
+                return this.Sku;
             }
         }
 
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             get
             {
-                return this.ResourceState() as string;
+                return this.ResourceState;
             }
         }
 

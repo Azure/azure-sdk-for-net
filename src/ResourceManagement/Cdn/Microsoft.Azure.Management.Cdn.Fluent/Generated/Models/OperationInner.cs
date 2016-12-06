@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
     /// <summary>
     /// CDN REST API operation
     /// </summary>
-    public partial class Operation
+    public partial class OperationInner
     {
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        public Operation() { }
+        public OperationInner() { }
 
         /// <summary>
         /// Initializes a new instance of the Operation class.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         /// {provider}/{resource}/{operation}</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        public OperationInner(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
             Display = display;

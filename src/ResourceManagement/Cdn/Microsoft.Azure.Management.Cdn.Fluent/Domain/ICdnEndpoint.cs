@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void PurgeContent(IList<string> contentPaths);
 
         /// <return>List of content types to be compressed.</return>
-        System.Collections.Generic.IList<string> ContentTypesToCompress { get; }
+        IList<string> ContentTypesToCompress { get; }
 
         /// <summary>
         /// Stops current running CDN endpoint.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void Stop();
 
         /// <return>List of custom domains associated with current endpoint.</return>
-        System.Collections.Generic.IList<string> CustomDomains { get; }
+        IReadOnlyCollection<string> CustomDomains { get; }
 
         /// <summary>
         /// Forcibly pre-loads current CDN endpoint content. Available for Verizon Profiles.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         string OptimizationType { get; }
 
         /// <return>Endpoint state.</return>
-        EndpointResourceState ResourceState { get; }
+        string ResourceState { get; }
 
         /// <return>List of Geo filters.</return>
         System.Collections.Generic.IList<GeoFilter> GeoFilters { get; }

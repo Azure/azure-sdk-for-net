@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         private IEndpointsOperations client;
         private IOriginsOperations originsClient;
         private ICustomDomainsOperations customDomainsClient;
-        protected IList<CdnEndpointImpl> ListChildResources()
+
+        protected override IList<CdnEndpointImpl> ListChildResources()
         {
             //$ List<CdnEndpointImpl> childResources = new ArrayList<>();
             //$ 
@@ -108,7 +109,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return null;
         }
 
-        protected CdnEndpointImpl NewChildResource(string name)
+        protected override CdnEndpointImpl NewChildResource(string name)
         {
             //$ CdnEndpointImpl endpoint = new CdnEndpointImpl(name,
             //$ this.Parent(),

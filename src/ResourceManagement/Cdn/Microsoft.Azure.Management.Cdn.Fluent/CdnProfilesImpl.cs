@@ -3,7 +3,6 @@
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Threading;
@@ -20,64 +19,55 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         private IOriginsOperations originsClient;
         private ICustomDomainsOperations customDomainsClient;
         private ICdnManagementClient cdnManagementClient;
+
         public PagedList<Operation> ListOperations()
         {
-            //$ return (new PagedListConverter<OperationInner, Operation>() {
-            //$ @Override
-            //$ public Operation typeConvert(OperationInner inner) {
-            //$ return new Operation(inner);
-            //$ }
-            //$ }).Convert(this.cdnManagementClient.ListOperations());
-
-            return null;
-        }
-
-        public void LoadEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
-        {
-            //$ this.cdnManagementClient.Endpoints().LoadContent(resourceGroupName, profileName, endpointName, contentPaths);
-
+            return this.Manager.Profiles.ListOperations();
         }
 
         public PagedList<ICdnProfile> List()
         {
-            //$ return wrapList(this.InnerCollection.List());
+            var pagedList = new PagedList<ProfileInner>(this.InnerCollection.List());
+            return WrapList(pagedList);
+        }
 
-            return null;
+        public void LoadEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
+        {
+            this.cdnManagementClient.Endpoints.LoadContent(resourceGroupName, profileName, endpointName, contentPaths);
+        }
+
+        public void PurgeEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
+        {
+            this.cdnManagementClient.Endpoints.PurgeContent(resourceGroupName, profileName, endpointName, contentPaths);
         }
 
         public void StartEndpoint(string resourceGroupName, string profileName, string endpointName)
         {
-            //$ this.cdnManagementClient.Endpoints().Start(resourceGroupName, profileName, endpointName);
-
+            this.cdnManagementClient.Endpoints.Start(resourceGroupName, profileName, endpointName);
         }
 
         public void StopEndpoint(string resourceGroupName, string profileName, string endpointName)
         {
-            //$ this.cdnManagementClient.Endpoints().Stop(resourceGroupName, profileName, endpointName);
-
+            this.cdnManagementClient.Endpoints.Stop(resourceGroupName, profileName, endpointName);
         }
 
         public CheckNameAvailabilityResult CheckEndpointNameAvailability(string name)
         {
-            //$ return new CheckNameAvailabilityResult(this.cdnManagementClient.CheckNameAvailability(name));
-
-            return null;
+            return new CheckNameAvailabilityResult(this.cdnManagementClient.CheckNameAvailability(name));
         }
 
-        public async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return this.InnerCollection.DeleteAsync(groupName, name);
-
-            return null;
+            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
         public string GenerateSsoUri(string resourceGroupName, string profileName)
         {
-            //$ SsoUriInner ssoUri = this.cdnManagementClient.Profiles().GenerateSsoUri(resourceGroupName, profileName);
-            //$ if (ssoUri != null) {
-            //$ return ssoUri.SsoUriValue();
-            //$ }
-            //$ return null;
+            SsoUriInner ssoUri = this.cdnManagementClient.Profiles.GenerateSsoUri(resourceGroupName, profileName);
+            if (ssoUri != null)
+            {
+                return ssoUri.SsoUriValue;
+            }
 
             return null;
         }
@@ -85,67 +75,50 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         internal  CdnProfilesImpl(ICdnManagementClient cdnManagementClient, CdnManager cdnManager)
             : base(cdnManagementClient.Profiles, cdnManager)
         {
-            //$ {
-            //$ super(cdnManagementClient.Profiles(), cdnManager);
-            //$ this.endpointsClient = cdnManagementClient.Endpoints();
-            //$ this.originsClient = cdnManagementClient.Origins();
-            //$ this.customDomainsClient = cdnManagementClient.CustomDomains();
-            //$ this.cdnManagementClient = cdnManagementClient;
-            //$ }
-
+            this.endpointsClient = cdnManagementClient.Endpoints;
+            this.originsClient = cdnManagementClient.Origins;
+            this.customDomainsClient = cdnManagementClient.CustomDomains;
+            this.cdnManagementClient = cdnManagementClient;
         }
 
         public CdnProfileImpl Define(string name)
         {
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
-        public async Task<ICdnProfile> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<ICdnProfile> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return wrapModel(this.InnerCollection.Get(groupName, name));
-
-            return null;
+            ProfileInner profileInner = await this.InnerCollection.GetAsync(groupName, name, cancellationToken);
+            return WrapModel(profileInner);
         }
 
         public PagedList<ICdnProfile> ListByGroup(string groupName)
         {
-            //$ return wrapList(this.InnerCollection.ListByResourceGroup(groupName));
-
-            return null;
+            return WrapList(new PagedList<ProfileInner>(this.InnerCollection.ListByResourceGroup(groupName)));
         }
 
-        protected CdnProfileImpl WrapModel(string name)
+        protected override CdnProfileImpl WrapModel(string name)
         {
-            //$ return new CdnProfileImpl(name,
-            //$ new ProfileInner(),
-            //$ this.InnerCollection,
-            //$ this.endpointsClient,
-            //$ this.originsClient,
-            //$ this.customDomainsClient,
-            //$ this.MyManager);
-
-            return null;
+            return new CdnProfileImpl(
+                name,
+                new ProfileInner(),
+                this.InnerCollection,
+                this.endpointsClient,
+                this.originsClient,
+                this.customDomainsClient,
+                this.Manager);
         }
 
-        protected CdnProfileImpl WrapModel(ProfileInner inner)
+        protected override ICdnProfile WrapModel(ProfileInner inner)
         {
-            //$ return new CdnProfileImpl(inner.Name(),
-            //$ inner,
-            //$ this.InnerCollection,
-            //$ this.endpointsClient,
-            //$ this.originsClient,
-            //$ this.customDomainsClient,
-            //$ this.MyManager);
-
-            return null;
-        }
-
-        public void PurgeEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
-        {
-            //$ this.cdnManagementClient.Endpoints().PurgeContent(resourceGroupName, profileName, endpointName, contentPaths);
-
+            return new CdnProfileImpl(
+                inner.Name,
+                inner,
+                this.InnerCollection,
+                this.endpointsClient,
+                this.originsClient,
+                this.customDomainsClient,
+                this.Manager);
         }
     }
 }

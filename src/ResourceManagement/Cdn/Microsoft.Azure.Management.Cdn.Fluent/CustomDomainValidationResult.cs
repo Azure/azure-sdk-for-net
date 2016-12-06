@@ -14,24 +14,25 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Get the customDomainValidated value.
         /// </summary>
         /// <return>The customDomainValidated value.</return>
-        public bool CustomDomainValidated()
+        public bool CustomDomainValidated
         {
-            //$ return this.inner.CustomDomainValidated();
-            //$ }
-
-            return false;
+            get
+            {
+                return (this.inner.CustomDomainValidated.HasValue) ? 
+                    this.inner.CustomDomainValidated.Value : false;
+            }
         }
 
         /// <summary>
         /// Get the reason value.
         /// </summary>
         /// <return>The reason value.</return>
-        public string Reason()
+        public string Reason
         {
-            //$ return this.inner.Reason();
-            //$ }
-
-            return null;
+            get
+            {
+                return this.inner.Reason;
+            }
         }
 
         /// <summary>
@@ -40,21 +41,19 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="inner">Server response for CustomDomainValidation request.</param>
         public  CustomDomainValidationResult(ValidateCustomDomainOutputInner inner)
         {
-            //$ this.inner = inner;
-            //$ }
-
+            this.inner = inner;
         }
 
         /// <summary>
         /// Get the message value.
         /// </summary>
         /// <return>The message value.</return>
-        public string Message()
+        public string Message
         {
-            //$ return this.inner.Message();
-            //$ }
-
-            return null;
+            get
+            {
+                return this.inner.Message;
+            }
         }
     }
 }
