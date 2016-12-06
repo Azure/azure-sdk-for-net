@@ -128,5 +128,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             }
             return Name.Equals(rhs.Name, System.StringComparison.OrdinalIgnoreCase);
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

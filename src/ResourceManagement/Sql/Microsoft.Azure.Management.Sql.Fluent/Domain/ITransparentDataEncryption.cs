@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasId
     {
         /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities();
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities();
 
         /// <return>Name of the SQL Database to which this replication belongs.</return>
         string DatabaseName { get; }

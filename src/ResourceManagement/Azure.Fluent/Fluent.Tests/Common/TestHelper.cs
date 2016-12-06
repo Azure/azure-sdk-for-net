@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 using Xunit.Abstractions;
+using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace Fluent.Tests.Common
 {
@@ -81,5 +82,17 @@ namespace Fluent.Tests.Common
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
+        public static ISqlManager CreateSqlManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+
+            RestClient restClient = RestClient.Configure()
+                    .WithBaseUri(AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint)
+                    .WithCredentials(credentials)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .Build();
+            
+            return SqlManager.Authenticate(restClient, credentials.DefaultSubscriptionId);
+        }
     }
 }

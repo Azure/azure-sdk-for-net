@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public void DeleteByGroup(string groupName, string name)
         {
-            this.DeleteByGroupAsync(groupName, name, CancellationToken.None);
+            this.DeleteByGroupAsync(groupName, name, CancellationToken.None).Wait();
         }
 
         #endregion

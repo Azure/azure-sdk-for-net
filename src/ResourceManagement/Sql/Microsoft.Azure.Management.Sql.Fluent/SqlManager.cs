@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="restClient"> the RestClient to be used for API calls</param>
         /// <param name="subscriptionId"> the subscription</param>
         /// <return>The SqlManager</return>
-        public static ISqlManager Authenticate(RestClient restClient, String subscriptionId)
+        public static ISqlManager Authenticate(RestClient restClient, string subscriptionId)
         {
             return new SqlManager(restClient, subscriptionId);
         }
