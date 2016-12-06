@@ -15,8 +15,8 @@ namespace Microsoft.Azure.ServiceBus
         bool deadlineSet;
         TimeSpan originalTimeout;
 
-        public TimeoutHelper(TimeSpan timeout) :
-            this(timeout, false)
+        public TimeoutHelper(TimeSpan timeout)
+            : this(timeout, false)
         {
         }
 

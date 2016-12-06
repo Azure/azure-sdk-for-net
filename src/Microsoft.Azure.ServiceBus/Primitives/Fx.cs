@@ -102,8 +102,10 @@ namespace Microsoft.Azure.ServiceBus
                 internal const string Infinite = "infinite";
             }
 
-            [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Constructor,
-                AllowMultiple = true, Inherited = false)]
+            [AttributeUsage(
+                AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Constructor,
+                AllowMultiple = true,
+                Inherited = false)]
             [Conditional("CODE_ANALYSIS")]
             public sealed class ExternalResourceAttribute : Attribute
             {
@@ -298,8 +300,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor,
-                    AllowMultiple = true, Inherited = false)]
+                [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = true, Inherited = false)]
                 [Conditional("CODE_ANALYSIS")]
                 public class ThrowsAttribute : Attribute
                 {
@@ -352,10 +353,12 @@ namespace Microsoft.Azure.ServiceBus
                     public string From { get; set; }
                 }
 
-                [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Module | AttributeTargets.Class |
+                [AttributeUsage(
+                    AttributeTargets.Assembly | AttributeTargets.Module | AttributeTargets.Class |
                     AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method |
                     AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface |
-                    AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
+                    AttributeTargets.Delegate, AllowMultiple = false,
+                    Inherited = false)]
                 [Conditional("CODE_ANALYSIS")]
                 public sealed class SecurityNoteAttribute : Attribute
                 {

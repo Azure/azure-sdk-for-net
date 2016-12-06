@@ -39,7 +39,10 @@ namespace Microsoft.Azure.ServiceBus
             this.audience = audience;
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Existing public class, changes will be breaking. Current usage is safe.")]
+        [SuppressMessage(
+            "Microsoft.Usage",
+            "CA2214:DoNotCallOverridableMethodsInConstructors",
+            Justification = "Existing public class, changes will be breaking. Current usage is safe.")]
         public SecurityToken(string tokenString, DateTime expiresAtUtc)
         {
             if (tokenString == null)
@@ -52,7 +55,9 @@ namespace Microsoft.Azure.ServiceBus
             this.audience = this.GetAudienceFromToken(tokenString);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors",
+        [SuppressMessage(
+            "Microsoft.Usage",
+            "CA2214:DoNotCallOverridableMethodsInConstructors",
             Justification = "Existing public class, changes will be breaking. Current usage is safe.")]
         public SecurityToken(string tokenString)
         {

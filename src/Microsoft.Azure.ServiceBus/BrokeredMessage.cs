@@ -53,18 +53,18 @@ namespace Microsoft.Azure.ServiceBus
         string to;
         int version;
         string viaPartitionKey;
-        
+
         // TODO: Check back to see if this can be safely removed
         volatile List<IDisposable> attachedDisposables;
 
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
-        public BrokeredMessage() 
+        public BrokeredMessage()
         {
             this.version = BrokeredMessage.messageVersion;
         }
 
-        /// <summary>Initializes a new instance of the 
-        /// <see cref="BrokeredMessage" /> class from a given object by using DataContractSerializer with a binary XmlDictionaryWriter.</summary> 
+        /// <summary>Initializes a new instance of the
+        /// <see cref="BrokeredMessage" /> class from a given object by using DataContractSerializer with a binary XmlDictionaryWriter.</summary>
         /// <param name="serializableObject">The serializable object.</param>
         public BrokeredMessage(object serializableObject)
             : this(serializableObject, serializableObject == null ? null : new DataContractBinarySerializer(GetObjectType(serializableObject)))
@@ -74,12 +74,12 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary> Constructor that creates a BrokeredMessage from a given object using the provided XmlObjectSerializer </summary>
         /// <remarks> You should be aware of the exceptions that their provided Serializer can throw and take appropriate
-        /// actions. Please refer to <see href="http://msdn.microsoft.com/en-us/library/ms574055.aspx"/> for 
+        /// actions. Please refer to <see href="http://msdn.microsoft.com/en-us/library/ms574055.aspx"/> for
         /// a possible list of exceptions and their cause. </remarks>
         /// <param name="serializableObject"> The serializable object. </param>
         /// <param name="serializer">         The serializer object. </param>
-        /// <exception cref="ArgumentNullException">Thrown when null serializer is passed to the method 
-        /// TODO: 
+        /// <exception cref="ArgumentNullException">Thrown when null serializer is passed to the method
+        /// TODO:
         /// with a non-null serializableObject</exception>
         public BrokeredMessage(object serializableObject, XmlObjectSerializer serializer)
             : this()
@@ -108,11 +108,11 @@ namespace Microsoft.Azure.ServiceBus
         {
         }
 
-        /// <summary>Initializes a new instance of the 
-        /// <see cref="BrokeredMessage" /> class using the supplied stream as its body.</summary> 
+        /// <summary>Initializes a new instance of the
+        /// <see cref="BrokeredMessage" /> class using the supplied stream as its body.</summary>
         /// <param name="messageBodyStream">The message body stream.</param>
-        /// <param name="ownsStream">true to indicate that the stream will be closed when the message is 
-        /// closed; false to indicate that the stream will not be closed when the message is closed.</param> 
+        /// <param name="ownsStream">true to indicate that the stream will be closed when the message is
+        /// closed; false to indicate that the stream will not be closed when the message is closed.</param>
         public BrokeredMessage(Stream messageBodyStream, bool ownsStream)
             : this()
         {
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 this.ThrowIfDisposed();
-                
+
                 // TODO: this.ThrowIfNotLocked();
                 return this.receiverHeaders.LockedUntilUtc;
             }
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 this.ThrowIfDisposed();
-                
+
                 // TODO: this.ThrowIfNotLocked();
                 return this.receiverHeaders.LockToken;
             }
@@ -378,8 +378,8 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the identifier of the message. This is a 
-        /// user-defined value that Service Bus can use to identify duplicate messages, if enabled.</summary> 
+        /// <summary>Gets or sets the identifier of the message. This is a
+        /// user-defined value that Service Bus can use to identify duplicate messages, if enabled.</summary>
         /// <value>The identifier of the message.</value>
         /// <exception cref="System.ObjectDisposedException">Thrown if the message is in a disposed state.</exception>
         /// <exception cref="System.ArgumentException">Thrown if the message identifier is null or exceeds 128 characters in length.</exception>
@@ -419,8 +419,8 @@ namespace Microsoft.Azure.ServiceBus
         ////}
 
         /// <summary>Gets or sets the type of the content.</summary>
-        /// <value>The type of the content of the message body. This is a 
-        /// content type identifier utilized by the sender and receiver for application specific logic.</value> 
+        /// <value>The type of the content of the message body. This is a
+        /// content type identifier utilized by the sender and receiver for application specific logic.</value>
         /// <exception cref="System.ObjectDisposedException">Thrown if the message is in disposed state.</exception>
         public string ContentType
         {
@@ -574,10 +574,10 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This 
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary> 
-        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending. 
-        /// It is utilized to delay messages sending to a specific time in the future.</value> 
+        /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This
+        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
+        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending.
+        /// It is utilized to delay messages sending to a specific time in the future.</value>
         /// <exception cref="System.ObjectDisposedException">Thrown if the message is in disposed state.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if the passed in value is DateTime.MaxValue.</exception>
         public DateTime ScheduledEnqueueTimeUtc
@@ -657,8 +657,8 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. Messages older than their TimeToLive value will expire and no longer be retained in the message store. Subscribers will be unable to receive expired messages.TimeToLive is the maximum lifetime that a message can receive, but its value cannot exceed the entity specified the 
-        /// <see cref="Microsoft.ServiceBus.Messaging.QueueDescription.DefaultMessageTimeToLive" /> value on the destination queue or subscription. If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the entity’s DefaultMessageTimeToLive value.</summary> 
+        /// <summary>Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. Messages older than their TimeToLive value will expire and no longer be retained in the message store. Subscribers will be unable to receive expired messages.TimeToLive is the maximum lifetime that a message can receive, but its value cannot exceed the entity specified the
+        /// <see cref="Microsoft.ServiceBus.Messaging.QueueDescription.DefaultMessageTimeToLive" /> value on the destination queue or subscription. If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the entity’s DefaultMessageTimeToLive value.</summary>
         /// <value>The message’s time to live value.</value>
         /// <exception cref="System.ObjectDisposedException">Thrown if the message is in disposed state.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if the passed in value is less than or equal to TimeSpan.Zero.</exception>
@@ -901,10 +901,10 @@ namespace Microsoft.Azure.ServiceBus
         /// Indicate if the BorkeredMessage has been accessed (or marked) as consumed.
         /// </summary>
         /// <remarks>Initially IsConsumed is false. First read of this property will also
-        /// marked the IsConsumed to be true (atomically). Subsequence will be false. 
-        /// 
-        /// Also note that this does not take transaction into account, so if a message 
-        /// is marked as consumed but then transaction is aborted, this property will 
+        /// marked the IsConsumed to be true (atomically). Subsequence will be false.
+        ///
+        /// Also note that this does not take transaction into account, so if a message
+        /// is marked as consumed but then transaction is aborted, this property will
         /// continue to indicate false.</remarks>
         internal bool IsConsumed
         {
@@ -923,14 +923,14 @@ namespace Microsoft.Azure.ServiceBus
 
         internal MessageReceiver Receiver { get; set; }
 
-        /// <summary>Deserializes the brokered message body into an object of the specified type by using the 
-        /// <see cref="System.Runtime.Serialization.DataContractSerializer" /> with a binary 
-        /// <see cref="System.Xml.XmlDictionaryReader" />.</summary> 
+        /// <summary>Deserializes the brokered message body into an object of the specified type by using the
+        /// <see cref="System.Runtime.Serialization.DataContractSerializer" /> with a binary
+        /// <see cref="System.Xml.XmlDictionaryReader" />.</summary>
         /// <typeparam name="T">The type to which the message body will be deserialized.</typeparam>
         /// <returns>The deserialized object or graph.</returns>
         /// <exception cref="System.ObjectDisposedException">If the message is in disposed state or the message body stream is already disposed.</exception>
-        /// <exception cref="System.InvalidOperationException">If the message contains a null body stream or the 
-        /// body stream contains no data or the message body has already been consumed.</exception> 
+        /// <exception cref="System.InvalidOperationException">If the message contains a null body stream or the
+        /// body stream contains no data or the message body has already been consumed.</exception>
         public T GetBody<T>()
         {
             if (typeof(T) == typeof(Stream))
@@ -948,14 +948,14 @@ namespace Microsoft.Azure.ServiceBus
             return this.GetBody<T>(new DataContractBinarySerializer(typeof(T)));
         }
 
-        /// <summary>Deserializes the BrokeredMessage body into an object of the specified type using 
+        /// <summary>Deserializes the BrokeredMessage body into an object of the specified type using
         /// DataContractSerializer with a Binary XmlObjectSerializer. </summary>
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="serializer"> The serializer object. </param>
         /// <returns> The deserialized object/graph</returns>
         /// <exception cref="ObjectDisposedException"> Thrown if the message is in disposed state. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when invoked with a Null serializer object. </exception>
-        /// <exception cref="InvalidOperationException"> Thrown if the message contains a Null body stream, contains no data, 
+        /// <exception cref="InvalidOperationException"> Thrown if the message contains a Null body stream, contains no data,
         /// or if the stream has been read once (through any GetBody() calls). </exception>
         public T GetBody<T>(XmlObjectSerializer serializer)
         {
@@ -975,7 +975,7 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     throw new InvalidOperationException("MessageBodyNull");
                 }
-                
+
                 return default(T);
             }
 
@@ -1053,7 +1053,9 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Clones a message, so that it is possible to send a clone of a message as a new message.</summary>
         /// <returns>The <see cref="BrokeredMessage" /> that contains the cloned message.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Usage",
+            "CA2202:Do not dispose objects multiple times",
             Justification = "Safe here. Any future behavior change is easy to detect")]
         public BrokeredMessage Clone()
         {

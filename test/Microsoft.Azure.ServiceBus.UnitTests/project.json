@@ -1,7 +1,17 @@
 ﻿{
   "version": "1.0.0",
   "testRunner": "xunit",
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "additionalArguments": [ "/ruleset:./../../build/StyleCop.Analyzers.ruleset", "/additionalfile:./../../build/stylecop.json" ]
+  },
+
   "dependencies": {
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+    },
     "Microsoft.Azure.ServiceBus": {
       "target": "project"
     },
@@ -9,19 +19,20 @@
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
+
   "frameworks": {
-      "netcoreapp1.0": {
-        "dependencies": {
-          "Microsoft.NETCore.App": {
-            "type": "platform",
-            "version": "1.0.0"
-          }
-        },
-        "imports": [
-          "dnxcore50",
-          "portable-net46+win8"
-        ]
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
       },
+      "imports": [
+        "dnxcore50",
+        "portable-net46+win8"
+      ]
+    },
     "net451": {
     }
   }

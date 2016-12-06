@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <param name="tokenTimeToLive">The token time to live</param> 
+        /// <param name="tokenTimeToLive">The token time to live</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)

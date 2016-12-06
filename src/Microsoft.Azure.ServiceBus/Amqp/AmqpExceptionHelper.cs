@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 return (AmqpSymbol)condition;
             }
-            
+
             // Most of the time we should have an error condition
             foreach (var kvp in ConditionToStatusMap)
             {

@@ -101,7 +101,7 @@ namespace Microsoft.Azure.ServiceBus
                 string targetUri,
                 TimeSpan timeToLive)
             {
-                // Note that target URI is not normalized because in IoT scenario it 
+                // Note that target URI is not normalized because in IoT scenario it
                 // is case sensitive.
                 string expiresOn = BuildExpiresOn(timeToLive);
                 string audienceUri = WebUtility.UrlEncode(targetUri);

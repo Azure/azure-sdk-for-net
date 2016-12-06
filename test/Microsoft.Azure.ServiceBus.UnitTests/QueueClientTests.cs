@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             this.output = output;
             this.connectionString = Environment.GetEnvironmentVariable("QUEUECLIENTCONNECTIONSTRING");
-            
+
             if (string.IsNullOrWhiteSpace(this.connectionString))
             {
                 throw new InvalidOperationException("QUEUECLIENTCONNECTIONSTRING environment variable was not found!");
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         async Task BrokeredMessageOperationsTest()
         {
-            // Create QueueClient with ReceiveDelete, 
+            // Create QueueClient with ReceiveDelete,
             // Send and Receive a message, Try to Complete/Abandon/Defer/DeadLetter should throw InvalidOperationException()
             QueueClient queueClient = QueueClient.Create(this.connectionString, ReceiveMode.ReceiveAndDelete);
             await this.SendMessagesAsync(queueClient, 1);
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Send messages
             await this.SendMessagesAsync(queueClient, MessageCount);
 
-            // Receive 5 messages And Defer them 
+            // Receive 5 messages And Defer them
             int deferMessagesCount = 5;
             IEnumerable<BrokeredMessage> receivedMessages = await this.ReceiveMessagesAsync(queueClient, deferMessagesCount);
             Assert.True(receivedMessages.Count() == deferMessagesCount);
@@ -225,19 +225,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task<IEnumerable<BrokeredMessage>> ReceiveMessagesAsync(QueueClient queueClient, int messageCount)
         {
             int receiveAttempts = 0;
-            List<BrokeredMessage> messagesToReturn = new List<BrokeredMessage>(); 
+            List<BrokeredMessage> messagesToReturn = new List<BrokeredMessage>();
 
             while (receiveAttempts++ < QueueClientTests.MaxAttemptsCount && messagesToReturn.Count < messageCount)
             {
                 var messages = await queueClient.ReceiveAsync(messageCount);
                 if (messages != null)
                 {
-                    messagesToReturn.AddRange(messages); 
+                    messagesToReturn.AddRange(messages);
                 }
             }
 
             this.Log(string.Format("Received {0} messages", messagesToReturn.Count));
-            
+
             return messagesToReturn;
         }
 

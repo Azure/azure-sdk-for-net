@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using System.Runtime.Serialization;
     using System.Xml;
 
-    // This class is almost identical to DataContractSerializer; only difference is that 
+    // This class is almost identical to DataContractSerializer; only difference is that
     // ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer instead of text.
     sealed class DataContractBinarySerializer : XmlObjectSerializer
     {

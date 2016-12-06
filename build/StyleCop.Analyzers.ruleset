@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for StyleCop.Analyzers" Description="Code analysis rules Microsoft.Azure.ServiceBus." ToolsVersion="14.0">
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1119" Action="None" />
+    <!--StatementMustNotUseUnnecessaryParenthesis - https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1119.md-->
+    <Rule Id="SA1400" Action="None" />
+    <!--AccessModifierMustBeDeclared - https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1400.md-->
+    <Rule Id="SA1513" Action="None" />
+    <!--ClosingBraceMustBeFollowedByBlankLine - https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1513.md-->
+    <Rule Id="SA1652" Action="None" />
+    <!--Turning off the need for documentation while in early development-->
+    <!--SA1652EnableXmlDocumentationOutput - https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1652.md-->
+  </Rules>
+</RuleSet>

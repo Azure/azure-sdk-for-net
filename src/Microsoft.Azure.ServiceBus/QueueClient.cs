@@ -136,7 +136,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Send <see cref="BrokeredMessage"/> to Queue. 
+        /// Send <see cref="BrokeredMessage"/> to Queue.
         /// <see cref="SendAsync(BrokeredMessage)"/> sends the <see cref="BrokeredMessage"/> to a Service Gateway, which in-turn will forward the BrokeredMessage to the queue.
         /// </summary>
         /// <param name="brokeredMessage">the <see cref="BrokeredMessage"/> to be sent.</param>

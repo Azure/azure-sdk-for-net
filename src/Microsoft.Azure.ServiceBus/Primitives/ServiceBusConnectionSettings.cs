@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
     /// ServiceBusConnectionSettings can be used to construct a connection string which can establish communication with ServiceBus entities.
     /// It can also be used to perform basic validation on an existing connection string.
     /// <para/>
-    /// A connection string is basically a string consisted of key-value pair separated by ";". 
+    /// A connection string is basically a string consisted of key-value pair separated by ";".
     /// Basic format is "&lt;key&gt;=&lt;value&gt;[;&lt;key&gt;=&lt;value&gt;]" where supported key name are as follow:
     /// <para/> Endpoint - the URL that contains the servicebus namespace
     /// <para/> EntityPath - the path to the service bus entity (queue/topic/eventhub/subscription/consumergroup/partition)
@@ -22,9 +22,9 @@ namespace Microsoft.Azure.ServiceBus
     /// Sample code:
     /// <code>
     /// var connectionSettings = new ServiceBusConnectionSettings(
-    ///     "ServiceBusNamespaceName", 
-    ///     "ServiceBusEntityName", // eventHub, queue, or topic name 
-    ///     "SharedAccessSignatureKeyName", 
+    ///     "ServiceBusNamespaceName",
+    ///     "ServiceBusEntityName", // eventHub, queue, or topic name
+    ///     "SharedAccessSignatureKeyName",
     ///     "SharedAccessSignatureKey");
     ///  string connectionString = connectionSettings.ToString();
     /// </code>

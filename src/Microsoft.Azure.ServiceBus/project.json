@@ -1,14 +1,15 @@
 ﻿{
   "version": "0.0.1-preview",
   "title": "Microsoft.Azure.ServiceBus",
-  "description": "Microsoft.Azure.ServicBus Class Library",
+  "description": "Microsoft.Azure.ServiceBus Class Library",
   "authors": [ "Microsoft" ],
 
   "buildOptions": {
     "warningsAsErrors": true,
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../build/MSSharedLibSN1024.snk"
+    "keyFile": "../../build/MSSharedLibSN1024.snk",
+    "additionalArguments": [ "/ruleset:./../../build/StyleCop.Analyzers.ruleset", "/additionalfile:./../../build/stylecop.json" ]
   },
 
   "packOptions": {
@@ -21,6 +22,10 @@
   },
 
   "dependencies": {
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+    },
     "Microsoft.Azure.Amqp": "2.0.0"
   },
 

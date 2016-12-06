@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     {
         public static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
-        public AmqpMessageReceiver(QueueClient queueClient) 
+        public AmqpMessageReceiver(QueueClient queueClient)
             : base(queueClient.Mode)
         {
             this.QueueClient = queueClient;
