@@ -15,15 +15,15 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="FluentParentModel">The fluent model for parent resource.</typeparam>
     /// <typeparam name="InnerModel">Azure inner resource class type.</typeparam>
     /// <typeparam name="FluentModelImpl">The implementation type of the fluent model type.</typeparam>
-    public abstract class IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IResourceT, IUpdatableT>  :
-        IndependentChildImpl<IFluentResourceT,FluentParentModelT,InnerModelT, FluentResourceT, IResourceT, IUpdatableT>,
+    public abstract class IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT>  :
+        IndependentChildImpl<IFluentResourceT,FluentParentModelT,InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT>,
         IIndependentChildResource
         where InnerModelT : Fluent.Resource
-        where FluentResourceT : IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IResourceT, IUpdatableT>, IFluentResourceT
+        where FluentResourceT : IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT>, IFluentResourceT
         where FluentParentModelT : class, IGroupableResource
-        where IResourceT : class, IResource
+        where IDefinitionT : class
         where IUpdatableT : class
-        where IFluentResourceT : class, IResourceT
+        where IFluentResourceT : class, IDefinitionT
     {
         /// <summary>
         /// Removes a tag from the resource.

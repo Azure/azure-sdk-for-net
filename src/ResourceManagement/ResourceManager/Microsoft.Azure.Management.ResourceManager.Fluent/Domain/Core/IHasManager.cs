@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// An interface representing a model that exposes a management client.
     /// </summary>
     /// <typeparam name="ManagerT">the manager client type</typeparam>
-    interface IHasManager<ManagerT>
+    public interface IHasManager<ManagerT>
     {
         /// <summary>
         /// Gets the manager client type of this resource type.
