@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Inner.InstanceView;
         }
 
-        public IDictionary<string,string> Tags()
+        public IReadOnlyDictionary<string,string> Tags()
         {
             IDictionary<string, string> tags = this.Inner.Tags;
             if (tags == null)

@@ -230,15 +230,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <returns>the public settings of the virtual machine extension as key value pairs</returns>
-        System.Collections.Generic.IDictionary<string,object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.PublicSettings
+        System.Collections.Generic.IReadOnlyDictionary<string,object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettings
         {
             get
             { 
-            return this.PublicSettings() as System.Collections.Generic.IDictionary<string,object>;
+            return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string,object>;
             }
         }
         /// <returns>the version name of the virtual machine extension image this extension is created from</returns>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.VersionName
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.VersionName
         {
             get
             { 
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
         /// <returns>the type name of the virtual machine extension image this extension is created from</returns>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.TypeName
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.TypeName
         {
             get
             { 
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
         /// <returns>the instance view of this virtual machine extension</returns>
-        Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.InstanceView
+        Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.InstanceView
         {
             get
             { 
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
         /// <returns>the provisioning state of this virtual machine extension</returns>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.ProvisioningState
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.ProvisioningState
         {
             get
             { 
@@ -270,15 +270,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
         /// <returns>the tags for this virtual machine extension</returns>
-        System.Collections.Generic.IDictionary<string,string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.Tags
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
         {
             get
             { 
-            return this.Tags() as System.Collections.Generic.IDictionary<string,string>;
+            return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string, string>;
             }
         }
         /// <returns>the publisher name of the virtual machine extension image this extension is created from</returns>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.PublisherName
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublisherName
         {
             get
             { 
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
         /// <returns>the public settings of the virtual machine extension as a json string</returns>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.PublicSettingsAsJsonString
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettingsAsJsonString
         {
             get
             { 
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
         /// <returns>true if this extension is configured to upgrade automatically when a new minor version of</returns>
         /// <returns>virtual machine extension image that this extension based on is published</returns>
-        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.AutoUpgradeMinorVersionEnabled
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.AutoUpgradeMinorVersionEnabled
         {
             get
             { 

@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             }
         }
 
-        IDictionary<string, string> IResource.Tags
+        IReadOnlyDictionary<string, string> IResource.Tags
         {
             get
             {

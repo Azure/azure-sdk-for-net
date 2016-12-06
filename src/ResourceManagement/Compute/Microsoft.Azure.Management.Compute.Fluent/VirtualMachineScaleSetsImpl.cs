@@ -22,14 +22,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         GroupableResources<IVirtualMachineScaleSet, VirtualMachineScaleSetImpl, VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {
+        private IVirtualMachineScaleSetVMsOperations vmInstanceClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
         public  VirtualMachineScaleSetsImpl (
             IVirtualMachineScaleSetsOperations client,
+            IVirtualMachineScaleSetVMsOperations vmInstanceClient,
             ComputeManager computeManager,
             IStorageManager storageManager,
             INetworkManager networkManager) : base(client, computeManager)
         {
+            this.vmInstanceClient = vmInstanceClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
         }
@@ -140,6 +143,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new VirtualMachineScaleSetImpl(name,
                 inner,
                 this.InnerCollection,
+                this.vmInstanceClient,
                 this.Manager,
                 this.storageManager,
                 this.networkManager);
@@ -150,6 +154,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new VirtualMachineScaleSetImpl(inner.Name,
                 inner,
                 this.InnerCollection,
+                this.vmInstanceClient,
                 this.Manager,
                 this.storageManager,
                 this.networkManager);

@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the name of this child object</returns>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.INetwork>.Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             { 

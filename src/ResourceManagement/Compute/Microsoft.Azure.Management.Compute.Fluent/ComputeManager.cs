@@ -114,7 +114,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineImages == null)
                 {
-                    virtualMachineImages = new VirtualMachineImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, client.VirtualMachineExtensionImages));
+                    virtualMachineImages = new VirtualMachineImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, 
+                        client.VirtualMachineExtensionImages), client.VirtualMachineImages);
                 }
                 return virtualMachineImages;
             }
@@ -149,7 +150,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineScaleSets == null)
                 {
-                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets, this, 
+                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets,
+                        client.VirtualMachineScaleSetVMs,
+                        this, 
                         this.storageManager,
                         this.networkManager);
                 }

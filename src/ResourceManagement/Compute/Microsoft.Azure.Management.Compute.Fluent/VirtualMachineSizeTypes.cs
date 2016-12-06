@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
                 return false;
             }
 
-            if (obj == this)
+            if (object.ReferenceEquals(obj, this))
             {
                 return true;
             }
