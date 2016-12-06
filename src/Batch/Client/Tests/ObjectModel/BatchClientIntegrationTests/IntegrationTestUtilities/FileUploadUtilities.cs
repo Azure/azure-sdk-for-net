@@ -1,34 +1,96 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Text;
-using System.IO;
-using System.Threading;
-using System.Diagnostics;
-using System.Security;
-using System.Runtime.InteropServices;
-
+﻿using Microsoft.Azure.Batch;
+using Microsoft.Azure.Batch.FileStaging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-using BatchFS=Microsoft.Azure.Batch.FileStaging;
-
-namespace Microsoft.Azure.Batch.FileStaging
+namespace BatchClientIntegrationTests.IntegrationTestUtilities
 {
+    // File staging classes - these implementations are to allow tests to take advantage of
+    // file staging rather than having to manage resource files in the tests.  Some error checks
+    // are removed compared to real implementations.  The production implementations are in
+    // a separate DLL/NuGet package and are tested via that DLL's tests.
+
+    /// <summary>
+    /// Holds storage account information.
+    /// </summary>
+    public class StagingStorageAccount
+    {
+        /// <summary>
+        /// Specifies the storage account to be used.
+        /// </summary>
+        public string StorageAccount
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Specifies the storage account key to be used.
+        /// </summary>
+        public string StorageAccountKey
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// The serviced endpoint for blob storage.
+        /// </summary>
+        public string BlobEndpoint
+        {
+            get;
+            internal set;
+        }
+
+        // Constructed here to give immediate validation/failure experience.
+        internal Uri BlobUri
+        {
+            get;
+            set;
+        }
+
+        private StagingStorageAccount()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the StagingStorageAccount class using the specified credentials and service endpoint.
+        /// </summary>
+        /// <param name="storageAccount">A string specifying the storage account to be used.</param>
+        /// <param name="storageAccountKey">A string specifying the storage account key to be used.</param>
+        /// <param name="blobEndpoint">A string specifying the primary Blob service endpoint.</param>
+        public StagingStorageAccount(string storageAccount, string storageAccountKey, string blobEndpoint)
+        {
+            this.StorageAccount = storageAccount;
+            this.StorageAccountKey = storageAccountKey;
+
+            if (string.IsNullOrWhiteSpace(this.StorageAccount))
+            {
+                throw new ArgumentOutOfRangeException("storageAccount");
+            }
+
+            if (string.IsNullOrWhiteSpace(this.StorageAccountKey))
+            {
+                throw new ArgumentOutOfRangeException("storageAccountKey");
+            }
+
+            if (string.IsNullOrWhiteSpace(blobEndpoint))
+            {
+                throw new ArgumentOutOfRangeException("blobEndpoint");
+            }
+
+            // Constructed here to give immediate validation/failure experience.
+            this.BlobUri = new Uri(blobEndpoint);
+        }
+    }
+
     /// <summary>
     /// Provides for file staging of a local file to blob storage.
     /// </summary>
@@ -72,7 +134,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             internal set;
         }
 
-#region constructors
+        #region constructors
 
         private FileToStage()
         {
@@ -107,9 +169,9 @@ namespace Microsoft.Azure.Batch.FileStaging
             }
         }
 
-#endregion // constructors
+        #endregion // constructors
 
-#region // IFileStagingProvider
+        #region // IFileStagingProvider
 
         /// <summary>
         /// See <see cref="IFileStagingProvider.StageFilesAsync"/>.
@@ -142,13 +204,13 @@ namespace Microsoft.Azure.Batch.FileStaging
         {
             if (!File.Exists(this.LocalFileToStage))
             {
-                throw new FileNotFoundException(string.Format(BatchFS.ErrorMessages.FileStagingLocalFileNotFound, this.LocalFileToStage));
+                throw new FileNotFoundException($"The following local file cannot be staged because it cannot be found: {this.LocalFileToStage}");
             }
         }
 
-#endregion // IFileStagingProvier
+        #endregion // IFileStagingProvier
 
-#region internal/private
+        #region internal/private
 
         // the staging code needs to get the secrets
         internal StagingStorageAccount StagingStorageAccount { get; set; }
@@ -190,7 +252,7 @@ namespace Microsoft.Azure.Batch.FileStaging
         private static string CreateContainerWithPolicySASIfNotExist(string account, string key, Uri blobUri, string container, string policy, DateTime start, DateTime end, SharedAccessBlobPermissions permissions)
         {
             // 1. form the credentail and initial client
-            CloudStorageAccount storageaccount = new CloudStorageAccount(new WindowsAzure.Storage.Auth.StorageCredentials(account, key), 
+            CloudStorageAccount storageaccount = new CloudStorageAccount(new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(account, key),
                                                                          blobEndpoint: blobUri,
                                                                          queueEndpoint: null,
                                                                          tableEndpoint: null,
@@ -256,18 +318,18 @@ namespace Microsoft.Azure.Batch.FileStaging
                 if (null != anyRealInstance)
                 {
                     StagingStorageAccount creds = anyRealInstance.StagingStorageAccount;
-                    string policyName = Batch.Constants.DefaultConveniencePrefix + Constants.DefaultContainerPolicyFragment;
+                    string policyName = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + Microsoft.Azure.Batch.FileStaging.Constants.DefaultContainerPolicyFragment;
                     DateTime startTime = DateTime.UtcNow;
                     DateTime expiredAtTime = startTime + new TimeSpan(24 /* hrs*/, 0, 0);
 
                     seqArtifact.DefaultContainerSAS = CreateContainerWithPolicySASIfNotExist(
-                                                            creds.StorageAccount, 
-                                                            creds.StorageAccountKey, 
+                                                            creds.StorageAccount,
+                                                            creds.StorageAccountKey,
                                                             creds.BlobUri,
-                                                            seqArtifact.BlobContainerCreated, 
-                                                            policyName, 
-                                                            startTime, 
-                                                            expiredAtTime, 
+                                                            seqArtifact.BlobContainerCreated,
+                                                            policyName,
+                                                            startTime,
+                                                            expiredAtTime,
                                                             SharedAccessBlobPermissions.Read);
 
                     return;  // done
@@ -285,7 +347,7 @@ namespace Microsoft.Azure.Batch.FileStaging
         {
             if ((null != filesToStage) && (filesToStage.Count > 0))
             {
-                foreach(IFileStagingProvider curProvider in filesToStage)
+                foreach (IFileStagingProvider curProvider in filesToStage)
                 {
                     FileToStage thisIsReal = curProvider as FileToStage;
 
@@ -314,12 +376,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                 throw new ArgumentNullException("filesStagingArtifact");
             }
 
-            SequentialFileStagingArtifact seqArtifact = fileStagingArtifact as SequentialFileStagingArtifact;
-
-            if (null == seqArtifact)
-            {
-                throw new ArgumentOutOfRangeException(BatchFS.ErrorMessages.FileStagingIncorrectArtifact);
-            }
+            SequentialFileStagingArtifact seqArtifact = (SequentialFileStagingArtifact)fileStagingArtifact;
 
             // is there any work to do?
             if (null == FindAtLeastOne(filesToStage))
@@ -340,7 +397,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             await createContainerTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // begin staging the files
-            System.Threading.Tasks.Task stageTask = StageFilesAsync(filesToStage, seqArtifact); 
+            System.Threading.Tasks.Task stageTask = StageFilesAsync(filesToStage, seqArtifact);
 
             // wait for files to be staged
             await stageTask.ConfigureAwait(continueOnCapturedContext: false);
@@ -381,15 +438,15 @@ namespace Microsoft.Azure.Batch.FileStaging
 
             // Create the storage account with the connection string.
             CloudStorageAccount storageAccount = new CloudStorageAccount(
-                                                        new WindowsAzure.Storage.Auth.StorageCredentials(storecreds.StorageAccount, storecreds.StorageAccountKey), 
-                                                        blobEndpoint: storecreds.BlobUri, 
+                                                        new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(storecreds.StorageAccount, storecreds.StorageAccountKey),
+                                                        blobEndpoint: storecreds.BlobUri,
                                                         queueEndpoint: null,
                                                         tableEndpoint: null,
                                                         fileEndpoint: null);
 
             CloudBlobClient client = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = client.GetContainerReference(containerName);
-            ICloudBlob blob = container.GetBlockBlobReference(blobName);  
+            ICloudBlob blob = container.GetBlockBlobReference(blobName);
             bool doesBlobExist;
 
             try
@@ -443,6 +500,68 @@ namespace Microsoft.Azure.Batch.FileStaging
             stageThisFile.StagedFiles = new ResourceFile[] { new ResourceFile(blobSAS, nodeFileName) };
         }
 
-#endregion internal/private
+        #endregion internal/private
+    }
+
+    /// <summary>
+    /// The file staging artifact payload for this file staging provider
+    /// </summary>
+    public sealed class SequentialFileStagingArtifact : IFileStagingArtifact
+    {
+        /// <summary>
+        /// The name of any blob container created.  
+        /// 
+        /// A blob container is created if there is at least one file 
+        /// to be uploaded that does not have an explicit container specified.
+        /// </summary>
+        public string BlobContainerCreated { get; internal set; }
+
+        /// <summary>
+        /// Optionally set by caller.  Optionally used by implementation. A name fragment that can be used when constructing default names.
+        /// 
+        /// Can only be set once.
+        /// </summary>
+        public string NamingFragment { get; set; }
+
+        /// <summary>
+        /// Holds the SAS for the default container after it is created.
+        /// </summary>
+        internal string DefaultContainerSAS { get; set; }
+    }
+    internal sealed class FileStagingLinkedSources
+    {
+
+        private static string MakeDefaultNamePlusNamingFragment(string namingFragment)
+        {
+            StringBuilder newNameBuilder = new StringBuilder();
+
+            newNameBuilder.Append(Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix);
+
+            if (!string.IsNullOrWhiteSpace(namingFragment))
+            {
+                newNameBuilder.Append(namingFragment);
+                newNameBuilder.Append("-");
+            }
+
+            string newName = newNameBuilder.ToString();
+
+            return newName;
+        }
+
+        // lock used to ensure only one name is created at a time.
+        private static object _lockForContainerNaming = new object();
+
+        internal static string ConstructDefaultName(string namingFragment)
+        {
+            lock (_lockForContainerNaming)
+            {
+                Thread.Sleep(30);  // make sure no two names are identical
+
+                string uniqueLetsHope = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss-fff");
+                string defContainerName = MakeDefaultNamePlusNamingFragment(namingFragment) + uniqueLetsHope;
+
+                return defContainerName;
+            }
+        }
     }
 }
