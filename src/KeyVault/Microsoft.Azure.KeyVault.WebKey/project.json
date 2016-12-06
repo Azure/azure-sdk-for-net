@@ -1,5 +1,5 @@
 {
-  "version": "2.0.3-preview",
+  "version": "2.0.4",
   "title": "Microsoft Azure Key Vault WebKey",
   "description": "Microsoft Azure Key Vault WebKey Class Library",
   "authors": [ "Microsoft" ],
