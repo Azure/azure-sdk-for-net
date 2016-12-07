@@ -38,6 +38,5 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-
     }
 }
