@@ -28,20 +28,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// keys:
         /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
         /// etc.</param>
-        /// <param name="enableNonSslPort">If the value is true, then the
-        /// non-ssl redis server port (6379) will be enabled.</param>
+        /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
+        /// server port (6379) is enabled.</param>
         /// <param name="tenantSettings">tenantSettings</param>
         /// <param name="shardCount">The number of shards to be created on a
         /// Premium Cluster Cache.</param>
         /// <param name="subnetId">The full resource ID of a subnet in a
-        /// virtual network to deploy the redis cache in. Example format:
+        /// virtual network to deploy the Redis cache in. Example format:
         /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
-        /// <param name="staticIP">Required when deploying a redis cache
-        /// inside an existing Azure Virtual Network.</param>
-        /// <param name="sku">What sku of redis cache to deploy.</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
-        public RedisUpdateParametersInner(System.Collections.Generic.IDictionary<string, string> redisConfiguration = default(System.Collections.Generic.IDictionary<string, string>), bool? enableNonSslPort = default(bool?), System.Collections.Generic.IDictionary<string, string> tenantSettings = default(System.Collections.Generic.IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string), Sku sku = default(Sku), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        /// <param name="staticIP">Static IP address. Required when deploying
+        /// a Redis cache inside an existing Azure Virtual Network.</param>
+        /// <param name="sku">The SKU of the Redis cache to deploy.</param>
+        /// <param name="tags">Resource tags.</param>
+        public RedisUpdateParametersInner(System.Collections.Generic.IDictionary<string, string> redisConfiguration = default(System.Collections.Generic.IDictionary<string, string>), bool? enableNonSslPort = default(bool?), System.Collections.Generic.IDictionary<string, string> tenantSettings = default(System.Collections.Generic.IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string), Sku sku = default(Sku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
         {
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
@@ -50,7 +49,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
             SubnetId = subnetId;
             StaticIP = staticIP;
             Sku = sku;
-            Location = location;
             Tags = tags;
         }
 
@@ -63,8 +61,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         public System.Collections.Generic.IDictionary<string, string> RedisConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets if the value is true, then the non-ssl redis server
-        /// port (6379) will be enabled.
+        /// Gets or sets specifies whether the non-ssl Redis server port
+        /// (6379) is enabled.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.enableNonSslPort")]
         public bool? EnableNonSslPort { get; set; }
@@ -84,33 +82,27 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
 
         /// <summary>
         /// Gets or sets the full resource ID of a subnet in a virtual network
-        /// to deploy the redis cache in. Example format:
+        /// to deploy the Redis cache in. Example format:
         /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnetId")]
         public string SubnetId { get; set; }
 
         /// <summary>
-        /// Gets or sets required when deploying a redis cache inside an
-        /// existing Azure Virtual Network.
+        /// Gets or sets static IP address. Required when deploying a Redis
+        /// cache inside an existing Azure Virtual Network.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.staticIP")]
         public string StaticIP { get; set; }
 
         /// <summary>
-        /// Gets or sets what sku of redis cache to deploy.
+        /// Gets or sets the SKU of the Redis cache to deploy.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets resource location
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets resource tags.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }

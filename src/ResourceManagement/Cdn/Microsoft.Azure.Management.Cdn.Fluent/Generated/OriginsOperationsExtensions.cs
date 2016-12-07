@@ -9,8 +9,8 @@
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
     using System.Threading.Tasks;
-   using Microsoft.Rest.Azure;
-   using Models;
+    using Microsoft.Rest.Azure;
+    using Models;
 
     /// <summary>
     /// Extension methods for OriginsOperations.

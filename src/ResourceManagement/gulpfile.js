@@ -44,9 +44,9 @@ var mappings = {
         'args': '-FT 1'
     },
     'redis': {
-        'dir': 'RedisCache/Microsoft.Azure.Management.Fluent.Redis',
+        'dir': 'RedisCache/Microsoft.Azure.Management.Redis.Fluent',
         'source': 'arm-redis/2016-04-01/swagger/redis.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Redis',
+        'package': 'Microsoft.Azure.Management.Redis.Fluent',
         'args': '-FT 1'
     },
     'graphrbac': {

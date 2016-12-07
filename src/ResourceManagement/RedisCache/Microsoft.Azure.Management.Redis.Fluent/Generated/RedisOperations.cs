@@ -43,16 +43,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
         /// <summary>
         /// Create or replace (overwrite/recreate, with potential downtime) an
-        /// existing redis cache
+        /// existing Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create redis operation.
+        /// Parameters supplied to the Create Redis operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,16 +72,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
         /// <summary>
         /// Create or replace (overwrite/recreate, with potential downtime) an
-        /// existing redis cache
+        /// existing Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create redis operation.
+        /// Parameters supplied to the Create Redis operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -256,6 +256,24 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<RedisResourceInner>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
             if ((int)_statusCode == 200)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -281,16 +299,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Update an existing Redis cache
+        /// Update an existing Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update redis operation.
+        /// Parameters supplied to the Update Redis operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -309,16 +327,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Update an existing Redis cache
+        /// Update an existing Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update redis operation.
+        /// Parameters supplied to the Update Redis operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -514,13 +532,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Deletes a redis cache. This operation takes a while to complete.
+        /// Deletes a Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -537,13 +555,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Deletes a redis cache. This operation takes a while to complete.
+        /// Deletes a Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -699,13 +717,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Gets a redis cache (resource description).
+        /// Gets a Redis cache (resource description).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -890,7 +908,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Gets all redis caches in a resource group.
+        /// Lists all Redis caches in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1072,7 +1090,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Gets all redis caches in the specified subscription.
+        /// Gets all Redis caches in the specified subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1245,14 +1263,14 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Retrieve a redis cache's access keys. This operation requires write
+        /// Retrieve a Redis cache's access keys. This operation requires write
         /// permission to the cache resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1437,17 +1455,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Regenerate redis cache's access keys. This operation requires write
+        /// Regenerate Redis cache's access keys. This operation requires write
         /// permission to the cache resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='keyType'>
-        /// Which redis access key to reset. Possible values include: 'Primary',
+        /// The Redis access key to regenerate. Possible values include: 'Primary',
         /// 'Secondary'
         /// </param>
         /// <param name='customHeaders'>
@@ -1642,17 +1660,17 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Reboot specified redis node(s). This operation requires write permission
+        /// Reboot specified Redis node(s). This operation requires write permission
         /// to the cache resource. There can be potential data loss.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Specifies which redis node(s) to reboot.
+        /// Specifies which Redis node(s) to reboot.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1823,16 +1841,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Import data into redis cache.
+        /// Import data into Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for redis import operation.
+        /// Parameters for Redis import operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1849,16 +1867,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Import data into redis cache.
+        /// Import data into Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for redis import operation.
+        /// Parameters for Redis import operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2029,16 +2047,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Import data into redis cache.
+        /// Import data into Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for redis export operation.
+        /// Parameters for Redis export operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2055,16 +2073,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Import data into redis cache.
+        /// Import data into Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for redis export operation.
+        /// Parameters for Redis export operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2235,7 +2253,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Gets all redis caches in a resource group.
+        /// Lists all Redis caches in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2403,7 +2421,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Gets all redis caches in the specified subscription.
+        /// Gets all Redis caches in the specified subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

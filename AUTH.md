@@ -32,7 +32,7 @@ This approach enables unattended authentication for your application (i.e. no in
 Similarly to the [file-based approach](#using-an-authentication-file), this method requires a [service principal registration](#creating-a-service-principal-in-azure), but instead of storing the credentials in a local file, the required inputs can be supplied directly via an instance of the `AzureCredentials` class:
 
 ```
-AzureCredentials credentials = AzureCredentials.fromServicePrincipal(client, key, tenant, AzureEnvironment.AZURE);
+AzureCredentials credentials = AzureCredentials.FromServicePrincipal(client, key, tenant, AzureEnvironment.AZURE);
 Azure azure = Azure.authenticate(credentials).withSubscription(subscriptionId);
 ```
 

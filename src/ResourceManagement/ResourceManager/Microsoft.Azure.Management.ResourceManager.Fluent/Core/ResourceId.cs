@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// Instantiate itself from a resource id, and give easy access to resource information like subscription, resourceGroup,
     /// resource name.
     /// </summary>
-    public sealed partial class ResourceId 
+    public sealed partial class ResourceId
     {
         private string subscriptionId;
         private string resourceGroupName;
@@ -75,31 +75,38 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             // Example of id is id=/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/ans/providers/Microsoft.Network/applicationGateways/something
             // Remove the first '/' and then split using '/'
             string[] splits = id.Substring(1).Split('/');
-            
-            if (splits.Length % 2 == 1) {
+
+            if (splits.Length % 2 == 1)
+            {
                 throw new System.ArgumentException();
             }
             ResourceId resourceId = new ResourceId();
-            
+
             resourceId.id = id;
             resourceId.subscriptionId = splits[1];
             resourceId.resourceGroupName = splits[3];
+
+            // In case of a resource group Id is passed, then name is resource group name.
+            if (splits.Length == 4)
+            {
+                resourceId.name = resourceId.resourceGroupName;
+                return resourceId;
+            }
+
             resourceId.providerNamespace = splits[5];
-            
-            
             resourceId.name = splits[splits.Length - 1];
             resourceId.resourceType = splits[splits.Length - 2];
-            
+
             int numberOfParents = splits.Length / 2 - 4;
-            if (numberOfParents == 0) {
-            return resourceId;
+            if (numberOfParents == 0)
+            {
+                return resourceId;
             }
             string resourceType = splits[splits.Length - 2];
-            
-            resourceId.parent = ResourceId.ParseResourceId(id.Substring(0, id.Length - ("/" + resourceType + "/" + resourceId.Name).Length));
-            
-            return resourceId;
 
+            resourceId.parent = ResourceId.ParseResourceId(id.Substring(0, id.Length - ("/" + resourceType + "/" + resourceId.Name).Length));
+
+            return resourceId;
         }
 
         /// <return>The id of the resource.</return>

@@ -8,7 +8,6 @@
 
 namespace Microsoft.Azure.Management.Cdn.Fluent.Models
 {
-
     /// <summary>
     /// Defines values for ResourceType.
     /// </summary>
