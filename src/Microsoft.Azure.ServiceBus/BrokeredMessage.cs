@@ -15,10 +15,6 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>Represents the unit of communication between ServiceBus client and Service.</summary>
     public sealed class BrokeredMessage : IDisposable
     {
-        /// <summary> The message version </summary>
-        static readonly int MessageVersion11 = 11;
-        static int messageVersion = MessageVersion11; // non-readonly for testing purposes
-
         readonly object disposablesSyncObject = new object();
         readonly bool ownsBodyStream;
         readonly bool bodyObjectDecoded;
@@ -51,7 +47,6 @@ namespace Microsoft.Azure.ServiceBus
         string sessionId;
         TimeSpan timeToLive;
         string to;
-        int version;
         string viaPartitionKey;
 
         // TODO: Check back to see if this can be safely removed
@@ -60,7 +55,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
         public BrokeredMessage()
         {
-            this.version = BrokeredMessage.messageVersion;
         }
 
         /// <summary>Initializes a new instance of the
@@ -131,7 +125,6 @@ namespace Microsoft.Azure.ServiceBus
 
         BrokeredMessage(BrokeredMessage originalMessage, bool clientSideCloning)
         {
-            this.version = originalMessage.version;
             this.CopyMessageHeaders(originalMessage, clientSideCloning);
 
             this.bodyObject = originalMessage.bodyObject;
@@ -293,11 +286,6 @@ namespace Microsoft.Azure.ServiceBus
                 else
                 {
                     this.initializedMembers |= MessageMembers.DeadLetterSource;
-                }
-
-                if (this.version < BrokeredMessage.MessageVersion11)
-                {
-                    this.version = BrokeredMessage.MessageVersion11;
                 }
             }
         }
@@ -746,15 +734,6 @@ namespace Microsoft.Azure.ServiceBus
                 this.ThrowIfDisposed();
                 this.initializedMembers |= MessageMembers.PartitionId;
                 this.partitionId = value;
-            }
-        }
-
-        // TODO:Fix Expected exception list once CSDMain#220699 is fixed.
-        internal int Version
-        {
-            get
-            {
-                return this.version;
             }
         }
 
