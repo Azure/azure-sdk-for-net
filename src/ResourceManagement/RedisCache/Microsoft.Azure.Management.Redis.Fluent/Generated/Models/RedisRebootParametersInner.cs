@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies which redis node(s) to reboot.
+    /// Specifies which Redis node(s) to reboot.
     /// </summary>
     public partial class RedisRebootParametersInner
     {
@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the RedisRebootParametersInner class.
         /// </summary>
-        /// <param name="rebootType">Which redis node(s) to reboot. Depending
+        /// <param name="rebootType">Which Redis node(s) to reboot. Depending
         /// on this value data loss is possible. Possible values include:
         /// 'PrimaryNode', 'SecondaryNode', 'AllNodes'</param>
-        /// <param name="shardId">In case of cluster cache, this specifies
-        /// shard id which should be rebooted.</param>
+        /// <param name="shardId">If clustering is enabled, the ID of the
+        /// shard to be rebooted.</param>
         public RedisRebootParametersInner(string rebootType, int? shardId = default(int?))
         {
             RebootType = rebootType;
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         }
 
         /// <summary>
-        /// Gets or sets which redis node(s) to reboot. Depending on this
+        /// Gets or sets which Redis node(s) to reboot. Depending on this
         /// value data loss is possible. Possible values include:
         /// 'PrimaryNode', 'SecondaryNode', 'AllNodes'
         /// </summary>
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         public string RebootType { get; set; }
 
         /// <summary>
-        /// Gets or sets in case of cluster cache, this specifies shard id
-        /// which should be rebooted.
+        /// Gets or sets if clustering is enabled, the ID of the shard to be
+        /// rebooted.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "shardId")]
         public int? ShardId { get; set; }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for redis export operation.
+    /// Parameters for Redis export operation.
     /// </summary>
     public partial class ExportRDBParametersInner
     {

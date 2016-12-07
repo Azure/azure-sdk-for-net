@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     {
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an
-            /// existing redis cache
+            /// existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create redis operation.
+            /// Parameters supplied to the Create Redis operation.
             /// </param>
             public static RedisResourceInner Create(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParametersInner parameters)
             {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an
-            /// existing redis cache
+            /// existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create redis operation.
+            /// Parameters supplied to the Create Redis operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an
-            /// existing redis cache
+            /// existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -76,10 +76,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create redis operation.
+            /// Parameters supplied to the Create Redis operation.
             /// </param>
             public static RedisResourceInner BeginCreate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParametersInner parameters)
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an
-            /// existing redis cache
+            /// existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -97,10 +97,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Create redis operation.
+            /// Parameters supplied to the Create Redis operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Update an existing Redis cache
+            /// Update an existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -123,10 +123,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Update redis operation.
+            /// Parameters supplied to the Update Redis operation.
             /// </param>
             public static RedisResourceInner Update(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParametersInner parameters)
             {
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Update an existing Redis cache
+            /// Update an existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,10 +143,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Update redis operation.
+            /// Parameters supplied to the Update Redis operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Update an existing Redis cache
+            /// Update an existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -169,10 +169,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Update redis operation.
+            /// Parameters supplied to the Update Redis operation.
             /// </param>
             public static RedisResourceInner BeginUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParametersInner parameters)
             {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Update an existing Redis cache
+            /// Update an existing Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -189,10 +189,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Update redis operation.
+            /// Parameters supplied to the Update Redis operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Deletes a redis cache. This operation takes a while to complete.
+            /// Deletes a Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             public static void Delete(this IRedisOperations operations, string resourceGroupName, string name)
             {
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Deletes a redis cache. This operation takes a while to complete.
+            /// Deletes a Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Deletes a redis cache. This operation takes a while to complete.
+            /// Deletes a Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             public static void BeginDelete(this IRedisOperations operations, string resourceGroupName, string name)
             {
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Deletes a redis cache. This operation takes a while to complete.
+            /// Deletes a Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets a redis cache (resource description).
+            /// Gets a Redis cache (resource description).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             public static RedisResourceInner Get(this IRedisOperations operations, string resourceGroupName, string name)
             {
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets a redis cache (resource description).
+            /// Gets a Redis cache (resource description).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in a resource group.
+            /// Lists all Redis caches in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in a resource group.
+            /// Lists all Redis caches in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in the specified subscription.
+            /// Gets all Redis caches in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in the specified subscription.
+            /// Gets all Redis caches in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Retrieve a redis cache's access keys. This operation requires write
+            /// Retrieve a Redis cache's access keys. This operation requires write
             /// permission to the cache resource.
             /// </summary>
             /// <param name='operations'>
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             public static RedisAccessKeysInner ListKeys(this IRedisOperations operations, string resourceGroupName, string name)
             {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Retrieve a redis cache's access keys. This operation requires write
+            /// Retrieve a Redis cache's access keys. This operation requires write
             /// permission to the cache resource.
             /// </summary>
             /// <param name='operations'>
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Regenerate redis cache's access keys. This operation requires write
+            /// Regenerate Redis cache's access keys. This operation requires write
             /// permission to the cache resource.
             /// </summary>
             /// <param name='operations'>
@@ -434,10 +434,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='keyType'>
-            /// Which redis access key to reset. Possible values include: 'Primary',
+            /// The Redis access key to regenerate. Possible values include: 'Primary',
             /// 'Secondary'
             /// </param>
             public static RedisAccessKeysInner RegenerateKey(this IRedisOperations operations, string resourceGroupName, string name, RedisKeyType keyType)
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Regenerate redis cache's access keys. This operation requires write
+            /// Regenerate Redis cache's access keys. This operation requires write
             /// permission to the cache resource.
             /// </summary>
             /// <param name='operations'>
@@ -456,10 +456,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='keyType'>
-            /// Which redis access key to reset. Possible values include: 'Primary',
+            /// The Redis access key to regenerate. Possible values include: 'Primary',
             /// 'Secondary'
             /// </param>
             /// <param name='cancellationToken'>
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Reboot specified redis node(s). This operation requires write permission
+            /// Reboot specified Redis node(s). This operation requires write permission
             /// to the cache resource. There can be potential data loss.
             /// </summary>
             /// <param name='operations'>
@@ -484,10 +484,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Specifies which redis node(s) to reboot.
+            /// Specifies which Redis node(s) to reboot.
             /// </param>
             public static void ForceReboot(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParametersInner parameters)
             {
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Reboot specified redis node(s). This operation requires write permission
+            /// Reboot specified Redis node(s). This operation requires write permission
             /// to the cache resource. There can be potential data loss.
             /// </summary>
             /// <param name='operations'>
@@ -505,10 +505,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Specifies which redis node(s) to reboot.
+            /// Specifies which Redis node(s) to reboot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -528,10 +528,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis import operation.
+            /// Parameters for Redis import operation.
             /// </param>
             public static void ImportData(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParametersInner parameters)
             {
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -548,10 +548,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis import operation.
+            /// Parameters for Redis import operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -571,10 +571,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis import operation.
+            /// Parameters for Redis import operation.
             /// </param>
             public static void BeginImportData(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParametersInner parameters)
             {
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -591,10 +591,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis import operation.
+            /// Parameters for Redis import operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -605,7 +605,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -614,10 +614,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis export operation.
+            /// Parameters for Redis export operation.
             /// </param>
             public static void ExportData(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParametersInner parameters)
             {
@@ -625,7 +625,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -634,10 +634,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis export operation.
+            /// Parameters for Redis export operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -657,10 +657,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis export operation.
+            /// Parameters for Redis export operation.
             /// </param>
             public static void BeginExportData(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParametersInner parameters)
             {
@@ -668,7 +668,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into redis cache.
+            /// Import data into Redis cache.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -677,10 +677,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the redis cache.
+            /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for redis export operation.
+            /// Parameters for Redis export operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in a resource group.
+            /// Lists all Redis caches in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -705,7 +705,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in a resource group.
+            /// Lists all Redis caches in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -725,7 +725,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in the specified subscription.
+            /// Gets all Redis caches in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -739,7 +739,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets all redis caches in the specified subscription.
+            /// Gets all Redis caches in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
