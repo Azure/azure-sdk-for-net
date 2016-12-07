@@ -1,5 +1,5 @@
 {
-  "version": "2.0.2-preview",
+  "version": "2.0.2",
   "description": "Microsoft Azure Key Vault Extensions tests",
   "authors": [ "Microsoft Corporation" ],
 
@@ -34,10 +34,10 @@
   },
 
   "dependencies": {
-    "Microsoft.Azure.KeyVault": "[2.0.5-preview, 3.0)",
-    "Microsoft.Azure.KeyVault.Cryptography": "[2.0.3-preview, 3.0)",
-    "Microsoft.Azure.KeyVault.Extensions": "[2.0.3-preview, 3.0)",
-    "Microsoft.Azure.KeyVault.Core": "[2.0.3-preview, 3.0)",
+    "Microsoft.Azure.KeyVault": "[2.0.6, 3.0)",
+    "Microsoft.Azure.KeyVault.Cryptography": "[2.0.4, 3.0)",
+    "Microsoft.Azure.KeyVault.Extensions": "[2.0.4, 3.0)",
+    "Microsoft.Azure.KeyVault.Core": "[2.0.4, 3.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview, 2.0.0)",
     "Microsoft.Azure.KeyVault.TestFramework": "[2.0.2-preview, 3.0)",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
