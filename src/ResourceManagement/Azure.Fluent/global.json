@@ -1,3 +1,14 @@
 {
-  "projects": [ "../ResourceManager", "../Storage", "../Compute", "../Network", "../Batch", "../Graph.RBAC", "../KeyVault", "../TrafficManager", "../Dns" ]
+  "projects": [ 
+  	"../ResourceManager", 
+  	"../Storage", 
+  	"../Compute", 
+  	"../Network", 
+  	"../Batch", 
+  	"../Graph.RBAC", 
+  	"../KeyVault", 
+  	"../TrafficManager", 
+  	"../Dns",
+  	"../Cdn",
+  	"../RedisCache" ]
 }

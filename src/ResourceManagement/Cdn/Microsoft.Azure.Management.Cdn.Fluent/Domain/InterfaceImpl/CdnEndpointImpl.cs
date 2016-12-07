@@ -20,20 +20,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 
     public partial class CdnEndpointImpl 
     {
-        CdnProfile.Update.IUpdate CdnEndpoint.UpdateDefinition.IAttachablePremium<CdnProfile.Update.IUpdate>.Attach
+        IUpdate CdnEndpoint.UpdateDefinition.IAttachablePremium<CdnProfile.Update.IUpdate>.Attach()
         {
-            get
-            {
-                return this.Attach() as CdnProfile.Update.IUpdate;
-            }
+            return this.Attach();
         }
 
-        CdnProfile.Definition.IWithPremiumVerizonCreate CdnEndpoint.Definition.IAttachablePremium<CdnProfile.Definition.IWithPremiumVerizonCreate>.Attach
+        IWithPremiumVerizonCreate CdnEndpoint.Definition.IAttachablePremium<IWithPremiumVerizonCreate>.Attach()
         {
-            get
-            {
-                return this.Attach() as CdnProfile.Definition.IWithPremiumVerizonCreate;
-            }
+            return this.Attach();
         }
 
         /// <summary>
@@ -405,20 +399,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
 
-        CdnProfile.Update.IUpdate CdnEndpoint.UpdateDefinition.IAttachableStandard<CdnProfile.Update.IUpdate>.Attach
+        IUpdate CdnEndpoint.UpdateDefinition.IAttachableStandard<IUpdate>.Attach()
         {
-            get
-            {
-                return this.Attach() as CdnProfile.Update.IUpdate;
-            }
+            return this.Attach();
         }
 
-        CdnProfile.Definition.IWithStandardCreate CdnEndpoint.Definition.IAttachableStandard<CdnProfile.Definition.IWithStandardCreate>.Attach
+        IWithStandardCreate CdnEndpoint.Definition.IAttachableStandard<IWithStandardCreate>.Attach()
         {
-            get
-            {
-                return this.Attach() as CdnProfile.Definition.IWithStandardCreate;
-            }
+            return this.Attach();
         }
 
         /// <summary>
