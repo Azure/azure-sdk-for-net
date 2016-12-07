@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Response to put/get patch schedules for redis cache.
+    /// Response to put/get patch schedules for Redis cache.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RedisPatchScheduleInner
@@ -24,12 +24,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the RedisPatchScheduleInner class.
         /// </summary>
-        /// <param name="scheduleEntries">List of patch schedules for redis
+        /// <param name="scheduleEntries">List of patch schedules for a Redis
         /// cache.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="location">Resource location.</param>
         public RedisPatchScheduleInner(System.Collections.Generic.IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
@@ -40,31 +40,31 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets resource ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets resource name.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets resource type.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets resource location
+        /// Gets resource location.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }
 
         /// <summary>
-        /// Gets or sets list of patch schedules for redis cache.
+        /// Gets or sets list of patch schedules for a Redis cache.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.scheduleEntries")]
         public System.Collections.Generic.IList<ScheduleEntry> ScheduleEntries { get; set; }
