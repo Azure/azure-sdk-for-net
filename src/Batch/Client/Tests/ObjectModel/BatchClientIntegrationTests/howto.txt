@@ -13,4 +13,4 @@
         9. MABOM_BatchManagementEndpoint
         10.MABOM_BatchAccountResourceGroupName
 
-
+You can use the SetupBatchIntegrationTestEnvironment script in the Batch root directory to set these up automatically.
