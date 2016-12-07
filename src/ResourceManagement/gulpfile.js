@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var args = require('yargs').argv;
+var colors = require('colors');
 var exec = require('child_process').exec;
 var fs = require('fs');
 
@@ -83,8 +84,14 @@ var mappings = {
         'source': 'arm-trafficmanager/2015-11-01/swagger/trafficmanager.json',
         'package': 'Microsoft.Azure.Management.TrafficManager.Fluent',
         'args': '-FT 2'
+    },
+    'appservice': {
+        'dir': 'AppService/Microsoft.Azure.Management.AppService.Fluent',
+        'source': 'arm-web/compositeWebAppClient.json',
+        'package': 'Microsoft.Azure.Management.AppService.Fluent',
+        'composite': true,
+        'args': '-FT 1'
     }
-
 };
 
 gulp.task('default', function() {
