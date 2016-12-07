@@ -18,39 +18,49 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Analytics;
     using Newtonsoft.Json;
     using Rest;
-    using Rest.Serialization;
+    using Rest.Azure;
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store account information.
+    /// The Sub Resource model definition.
     /// </summary>
-    [JsonTransformation]
-    public partial class DataLakeStoreAccountInfo : SubResource
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public DataLakeStoreAccountInfo() { }
+        public SubResource() { }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
         /// <param name="name">Resource name</param>
         /// <param name="id">Resource Id</param>
         /// <param name="type">Resource type</param>
-        /// <param name="suffix">the optional suffix for the Data Lake Store
-        /// account.</param>
-        public DataLakeStoreAccountInfo(string name, string id = default(string), string type = default(string), string suffix = default(string))
-            : base(name, id, type)
+        public SubResource(string name, string id = default(string), string type = default(string))
         {
-            Suffix = suffix;
+            Id = id;
+            Name = name;
+            Type = type;
         }
 
         /// <summary>
-        /// Gets or sets the optional suffix for the Data Lake Store account.
+        /// Gets resource Id
         /// </summary>
-        [JsonProperty(PropertyName = "properties.suffix")]
-        public string Suffix { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets resource name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; protected set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,9 +68,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
         }
     }
 }

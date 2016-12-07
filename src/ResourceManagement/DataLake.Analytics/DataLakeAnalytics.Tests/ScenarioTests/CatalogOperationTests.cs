@@ -290,7 +290,7 @@ namespace DataLakeAnalytics.Tests
                     using (var jobClient = commonData.GetDataLakeAnalyticsJobManagementClient(context))
                     {
                         // create the secret
-                        var secretCreateResponse = clientToUse.Catalog.CreateSecret(
+                        clientToUse.Catalog.CreateSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
                             commonData.DatabaseName, commonData.SecretName,
                             new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
