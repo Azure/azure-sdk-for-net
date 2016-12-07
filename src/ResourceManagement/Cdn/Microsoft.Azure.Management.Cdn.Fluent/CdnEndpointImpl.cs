@@ -1,26 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.Cdn.Fluent
 {
-    using CdnEndpoint.Definition.Blank.StandardEndpoint;
-    using System.Collections.Generic;
-    using System.Threading;
     using CdnEndpoint.UpdatePremiumEndpoint;
-    using CdnProfile.Definition;
-    using CdnEndpoint.Definition;
-    using CdnEndpoint.UpdateDefinition.Blank.StandardEndpoint;
-    using System.Threading.Tasks;
-    using CdnProfile.Update;
-    using CdnEndpoint.Definition.Blank.PremiumEndpoint;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using CdnEndpoint.UpdateDefinition.Blank.PremiumEndpoint;
     using CdnEndpoint.UpdateStandardEndpoint;
-    using CdnEndpoint.UpdateDefinition;
+    using CdnProfile.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
-    using Resource.Fluent.Core.ResourceActions;
-    using System.Linq;
+    using Resource.Fluent;
     using Resource.Fluent.Core.ChildResourceActions;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for CdnEndpoint.
@@ -42,8 +36,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         private IEndpointsOperations client;
         private IOriginsOperations originsClient;
         private ICustomDomainsOperations customDomainsClient;
-        private IList<CustomDomainInner> customDomainList;
-        private IList<CustomDomainInner> deletedCustomDomainList;
+        private List<CustomDomainInner> customDomainList;
+        private List<CustomDomainInner> deletedCustomDomainList;
 
         string IExternalChildResource<ICdnEndpoint, ICdnProfile>.Id
         {
@@ -255,68 +249,28 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             }
             return this;
         }
-        
-        public CdnEndpointImpl WithoutGeoFilter(string relativePath)
-        {
-            //$ for (Iterator<GeoFilter> iter = this.Inner.GeoFilters().ListIterator(); iter.HasNext();) {
-            //$ GeoFilter geoFilter = iter.Next();
-            //$ if (geoFilter.RelativePath().Equals(relativePath)) {
-            //$ iter.Remove();
-            //$ }
-            //$ }
-            //$ return this;
-
-            return this;
-        }
 
         public CdnEndpointImpl WithHttpsAllowed(bool httpsAllowed)
         {
-            //$ this.Inner.WithIsHttpsAllowed(httpsAllowed);
-            //$ return this;
-
+            this.Inner.IsHttpsAllowed = httpsAllowed;
             return this;
         }
-        
+
         public CdnEndpointImpl WithContentTypesToCompress(IList<string> contentTypesToCompress)
         {
-            //$ this.Inner.WithContentTypesToCompress(contentTypesToCompress);
-            //$ return this;
-
+            foreach (var contentType in contentTypesToCompress)
+            {
+                this.Inner.ContentTypesToCompress.Add(contentType);
+            }
             return this;
         }
 
-        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode)
+        public CdnEndpointImpl WithoutContentTypeToCompress(string contentTypeToCompress)
         {
-            //$ GeoFilter geoFilter = this.CreateGeoFiltersObject(relativePath, action);
-            //$ 
-            //$ if (geoFilter.CountryCodes() == null) {
-            //$ geoFilter.WithCountryCodes(new ArrayList<String>());
-            //$ }
-            //$ geoFilter.CountryCodes().Add(countryCode.ToString());
-            //$ 
-            //$ this.Inner.GeoFilters().Add(geoFilter);
-            //$ return this;
-
-            return this;
-        }
-
-        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes)
-        {
-            //$ GeoFilter geoFilter = this.CreateGeoFiltersObject(relativePath, action);
-            //$ 
-            //$ if (geoFilter.CountryCodes() == null) {
-            //$ geoFilter.WithCountryCodes(new ArrayList<String>());
-            //$ } else {
-            //$ geoFilter.CountryCodes().IsEmpty();
-            //$ }
-            //$ 
-            //$ foreach(var countryCode in countryCodes)  {
-            //$ geoFilter.CountryCodes().Add(countryCode.ToString());
-            //$ }
-            //$ 
-            //$ this.Inner.GeoFilters().Add(geoFilter);
-            //$ return this;
-
+            if(this.Inner.ContentTypesToCompress != null)
+            {
+                this.Inner.ContentTypesToCompress.Remove(contentTypeToCompress);
+            }
             return this;
         }
 
@@ -338,82 +292,118 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        public CdnEndpointImpl WithoutCustomDomain(string hostName)
+        public CdnEndpointImpl WithoutGeoFilter(string relativePath)
         {
-            //$ for (Iterator<CustomDomainInner> iter = this.customDomainList.ListIterator(); iter.HasNext();) {
-            //$ CustomDomainInner customDomain = iter.Next();
-            //$ if (hostName.Equals(customDomain.HostName())) {
-            //$ iter.Remove();
-            //$ deletedCustomDomainList.Add(customDomain);
-            //$ }
-            //$ }
-            //$ return this;
-
+            if (this.Inner.GeoFilters != null && this.Inner.GeoFilters.Any())
+            {
+                var cleanList = this.Inner.GeoFilters
+                    .Where(s => !s.RelativePath.Equals(relativePath, System.StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+                this.Inner.GeoFilters = cleanList;
+            }
             return this;
         }
-        
-        public CdnEndpointImpl WithCompressionEnabled(bool compressionEnabled)
-        {
-            //$ this.Inner.WithIsCompressionEnabled(compressionEnabled);
-            //$ return this;
 
+        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode)
+        {
+            var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
+
+            if (geoFilter.CountryCodes == null)
+            {
+                geoFilter.CountryCodes = new List<string>();
+            }
+            geoFilter.CountryCodes.Add(countryCode.ToString());
+            this.Inner.GeoFilters.Add(geoFilter);
+            return this;
+        }
+
+        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, IList<CountryISOCode> countryCodes)
+        {
+            var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
+
+            if(geoFilter.CountryCodes == null)
+            {
+                geoFilter.CountryCodes = new List<string>();
+            }
+            else
+            {
+                geoFilter.CountryCodes.Clear();
+            }
+            foreach (var countryCode in countryCodes)
+            {
+                geoFilter.CountryCodes.Add(countryCode.ToString());
+            }
+            this.Inner.GeoFilters.Add(geoFilter);
             return this;
         }
 
         public CdnEndpointImpl WithoutGeoFilters()
         {
-            //$ if (this.Inner.GeoFilters() != null) {
-            //$ this.Inner.GeoFilters().Clear();
-            //$ }
-            //$ return this;
-
+            if(this.Inner.GeoFilters != null)
+            {
+                this.Inner.GeoFilters.Clear();
+            }
             return this;
         }
-        
+
         public CdnEndpointImpl WithGeoFilters(IList<GeoFilter> geoFilters)
         {
-            //$ this.Inner.WithGeoFilters(geoFilters);
-            //$ return this;
-
+            this.Inner.GeoFilters = geoFilters;
             return this;
         }
 
-        public CdnEndpointImpl WithHttpAllowed(bool httpAllowed)
+        public CdnEndpointImpl WithoutCustomDomain(string hostName)
         {
-            //$ this.Inner.WithIsHttpAllowed(httpAllowed);
-            //$ return this;
-
-            return this;
-        }
-
-        public CdnEndpointImpl WithoutContentTypeToCompress(string contentTypeToCompress)
-        {
-            //$ if (this.Inner.ContentTypesToCompress() != null) {
-            //$ this.Inner.ContentTypesToCompress().Remove(contentTypeToCompress);
-            //$ }
-            //$ return this;
-
-            return this;
-        }
-
-        public CdnEndpointImpl WithOriginPath(string originPath)
-        {
-            //$ this.Inner.WithOriginPath(originPath);
-            //$ return this;
-
+            if(this.customDomainList != null && this.customDomainList.Any())
+            {
+                var cleanList = this.customDomainList
+                            .Where(s => 
+                            {
+                                if (s.HostName.Equals(hostName, System.StringComparison.OrdinalIgnoreCase))
+                                {
+                                    deletedCustomDomainList.Add(s);
+                                    return false;
+                                }
+                                return true;
+                            })
+                            .ToList();
+                this.customDomainList = cleanList;
+            }
             return this;
         }
 
         public CdnEndpointImpl WithCustomDomain(string hostName)
         {
-            //$ if (this.customDomainList != null) {
-            //$ this.customDomainList.Add(new CustomDomainInner().WithHostName(hostName));
-            //$ }
-            //$ return this;
+            if (this.customDomainList == null)
+            {
+                this.customDomainList = new List<CustomDomainInner>();
+            }
+            this.customDomainList.Add(new CustomDomainInner
+                                            {
+                                                HostName = hostName
+                                            });
 
             return this;
         }
 
+        public CdnEndpointImpl WithCompressionEnabled(bool compressionEnabled)
+        {
+            this.Inner.IsCompressionEnabled = compressionEnabled;
+            return this;
+        }
+        
+        public CdnEndpointImpl WithHttpAllowed(bool httpAllowed)
+        {
+            this.Inner.IsHttpAllowed = httpAllowed;
+            return this;
+        }
+        
+        public CdnEndpointImpl WithOriginPath(string originPath)
+        {
+            this.Inner.OriginPath = originPath;
+            return this;
+        }
+        
         public CustomDomainValidationResult ValidateCustomDomain(string hostName)
         {
             return this.Parent.ValidateEndpointCustomDomain(this.Name(), hostName);
@@ -424,11 +414,21 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this.Parent;
         }
 
-        public CdnProfileImpl Attach()
+        internal CdnEndpointImpl(
+            string name,
+            CdnProfileImpl parent,
+            EndpointInner inner,
+            IEndpointsOperations client,
+            IOriginsOperations originsClient,
+            ICustomDomainsOperations customDomainsClient)
+            : base(name, parent, inner)
         {
-            //$ return this.Parent().WithEndpoint(this);
+            this.client = client;
+            this.originsClient = originsClient;
+            this.customDomainsClient = customDomainsClient;
+            this.customDomainList = new List<CustomDomainInner>();
+            this.deletedCustomDomainList = new List<CustomDomainInner>();
 
-            return null;
         }
         
         public void PurgeContent(IList<string> contentPaths)
@@ -443,202 +443,149 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 
         public void Stop()
         {
-            //$ this.Parent().StopEndpoint(this.Name());
-
+            this.Parent.StopEndpoint(this.Name());
         }
 
         public void Start()
         {
-            //$ this.Parent().StartEndpoint(this.Name());
+            this.Parent.StartEndpoint(this.Name());
+        }
 
+        public CdnProfileImpl Attach()
+        {
+            return this.Parent.WithEndpoint(this);
         }
 
         public ICdnEndpoint Refresh()
         {
-            //$ EndpointInner inner = this.client.Get(this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name());
-            //$ this.SetInner(inner);
-            //$ this.customDomainList.Clear();
-            //$ this.deletedCustomDomainList.Clear();
-            //$ this.customDomainList.AddAll(this.customDomainsClient.ListByEndpoint(
-            //$ this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name()));
-            //$ return this;
-
+            EndpointInner inner = this.client.Get(
+                this.Parent.ResourceGroupName,
+                this.Parent.Name,
+                this.Name());
+            this.SetInner(inner);
+            this.customDomainList.Clear();
+            this.deletedCustomDomainList.Clear();
+            this.customDomainList.AddRange(
+                this.customDomainsClient.ListByEndpoint(
+                    this.Parent.ResourceGroupName,
+                    this.Parent.Name,
+                    this.Name()));
             return this;
-        }
-        
-        internal  CdnEndpointImpl(
-            string name, 
-            CdnProfileImpl parent, 
-            EndpointInner inner, 
-            IEndpointsOperations client, 
-            IOriginsOperations originsClient, 
-            ICustomDomainsOperations customDomainsClient)
-            : base(name, parent, inner)
-        {
-            this.client = client;
-            this.originsClient = originsClient;
-            this.customDomainsClient = customDomainsClient;
-            this.customDomainList = new List<CustomDomainInner>();
-            this.deletedCustomDomainList = new List<CustomDomainInner>();
-
         }
         
         private GeoFilter CreateGeoFiltersObject(string relativePath, GeoFilterActions action)
         {
-            //$ if (this.Inner.GeoFilters() == null) {
-            //$ this.Inner.WithGeoFilters(new ArrayList<GeoFilter>());
-            //$ }
-            //$ GeoFilter geoFilter = null;
-            //$ foreach(var filter in this.Inner.GeoFilters())  {
-            //$ if (filter.RelativePath().Equals(relativePath)) {
-            //$ geoFilter = filter;
-            //$ break;
-            //$ }
-            //$ }
-            //$ if (geoFilter == null) {
-            //$ geoFilter = new GeoFilter();
-            //$ }
-            //$ else {
-            //$ this.Inner.GeoFilters().Remove(geoFilter);
-            //$ }
-            //$ geoFilter.WithRelativePath(relativePath)
-            //$ .WithAction(action);
-            //$ 
-            //$ return geoFilter;
-            //$ }
+            if (this.Inner.GeoFilters == null)
+            {
+                this.Inner.GeoFilters = new List<GeoFilter>();
+            }
+            var geoFilter = this.Inner.GeoFilters
+                .FirstOrDefault(s => s.RelativePath.Equals(
+                    relativePath, 
+                    System.StringComparison.OrdinalIgnoreCase));
 
-            return null;
+            if (geoFilter == null)
+            {
+                geoFilter = new GeoFilter();
+            }
+            else
+            {
+                this.Inner.GeoFilters.Remove(geoFilter);
+            }
+            geoFilter.RelativePath = relativePath;
+            geoFilter.Action = action;
+            return geoFilter;
         }
-        
+
+        public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.client.DeleteAsync(
+                this.Parent.ResourceGroupName,
+                this.Parent.Name,
+                this.Name(),
+                cancellationToken);
+        }
+
         public async override Task<ICdnEndpoint> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ CdnEndpointImpl self = this;
-            //$ return this.client.CreateAsync(this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name(),
-            //$ this.Inner)
-            //$ .Map(new Func1<EndpointInner, CdnEndpoint>() {
-            //$ @Override
-            //$ public CdnEndpoint call(EndpointInner inner) {
-            //$ self.SetInner(inner);
-            //$ foreach(var itemToCreate in self.CustomDomainList)  {
-            //$ self.CustomDomainsClient.Create(
-            //$ self.Parent().ResourceGroupName(),
-            //$ self.Parent().Name(),
-            //$ self.Name(),
-            //$ ResourceNamer.RandomResourceName("CustomDomain", 50),
-            //$ itemToCreate.HostName());
-            //$ }
-            //$ self.CustomDomainList.Clear();
-            //$ self.CustomDomainList.AddAll(self.CustomDomainsClient.ListByEndpoint(
-            //$ self.Parent().ResourceGroupName(),
-            //$ self.Parent().Name(),
-            //$ self.Name()));
-            //$ return self;
-            //$ }
-            //$ });
+            var endpointInner = await this.client.CreateAsync(
+                this.Parent.ResourceGroupName,
+                this.Parent.Name,
+                this.Name(),
+                this.Inner,
+                cancellationToken);
+            this.SetInner(endpointInner);
+            
+            foreach (var itemToCreate in this.customDomainList)
+            {
+                await this.customDomainsClient.CreateAsync(
+                    this.Parent.ResourceGroupName,
+                    this.Parent.Name,
+                    this.Name(),
+                    ResourceNamer.RandomResourceName("CustomDomain", 50),
+                    itemToCreate.HostName,
+                    cancellationToken);
+            }
 
-            return null;
+            this.customDomainList.Clear();
+            this.customDomainList.AddRange(
+                await this.customDomainsClient.ListByEndpointAsync(
+                    this.Parent.ResourceGroupName,
+                    this.Parent.Name,
+                    this.Name(),
+                    cancellationToken));
+            return this;
         }
 
         public async override Task<ICdnEndpoint> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ CdnEndpointImpl self = this;
-            //$ EndpointUpdateParametersInner updateInner = new EndpointUpdateParametersInner();
-            //$ updateInner.WithIsHttpAllowed(this.Inner.IsHttpAllowed())
-            //$ .WithIsHttpsAllowed(this.Inner.IsHttpsAllowed())
-            //$ .WithOriginPath(this.Inner.OriginPath())
-            //$ .WithOriginHostHeader(this.Inner.OriginHostHeader())
-            //$ .WithIsCompressionEnabled(this.Inner.IsCompressionEnabled())
-            //$ .WithContentTypesToCompress(this.Inner.ContentTypesToCompress())
-            //$ .WithGeoFilters(this.Inner.GeoFilters())
-            //$ .WithOptimizationType(this.Inner.OptimizationType())
-            //$ .WithQueryStringCachingBehavior(this.Inner.QueryStringCachingBehavior())
-            //$ .WithTags(this.Inner.GetTags());
-            //$ 
-            //$ DeepCreatedOrigin originInner = this.Inner.Origins().Get(0);
-            //$ OriginUpdateParametersInner originParameters = new OriginUpdateParametersInner()
-            //$ .WithHostName(originInner.HostName())
-            //$ .WithHttpPort(originInner.HttpPort())
-            //$ .WithHttpsPort(originInner.HttpsPort());
-            //$ 
-            //$ Observable<OriginInner> originObservable = this.originsClient.UpdateAsync(
-            //$ this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name(),
-            //$ originInner.Name(),
-            //$ originParameters);
-            //$ 
-            //$ Observable<CdnEndpoint> endpointObservable = this.client.UpdateAsync(
-            //$ this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name(),
-            //$ updateInner)
-            //$ .Map(new Func1<EndpointInner, CdnEndpoint>() {
-            //$ @Override
-            //$ public CdnEndpoint call(EndpointInner inner) {
-            //$ self.SetInner(inner);
-            //$ return self;
-            //$ }
-            //$ });
-            //$ 
-            //$ List<Observable<CustomDomainInner>> customDomainDeleteObservables = new ArrayList<>();
-            //$ 
-            //$ foreach(var itemToDelete in this.deletedCustomDomainList)  {
-            //$ customDomainDeleteObservables.Add(this.customDomainsClient.DeleteAsync(
-            //$ this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name(),
-            //$ itemToDelete.Name()));
-            //$ }
-            //$ Observable<CustomDomainInner> deleteObservable = Observable.Zip(customDomainDeleteObservables, new FuncN<CustomDomainInner>() {
-            //$ @Override
-            //$ public CustomDomainInner call(Object... objects) {
-            //$ return null;
-            //$ }
-            //$ });
-            //$ 
-            //$ return Observable.Zip(
-            //$ originObservable,
-            //$ endpointObservable,
-            //$ deleteObservable,
-            //$ new Func3<OriginInner, CdnEndpoint, CustomDomainInner, CdnEndpoint>() {
-            //$ @Override
-            //$ public CdnEndpoint call(OriginInner originInner, CdnEndpoint cdnEndpoint, CustomDomainInner customDomain) {
-            //$ return cdnEndpoint;
-            //$ }
-            //$ }).DoOnNext(new Action1<CdnEndpoint>() {
-            //$ @Override
-            //$ public void call(CdnEndpoint cdnEndpoint) {
-            //$ self.DeletedCustomDomainList.Clear();
-            //$ }
-            //$ });
+            EndpointUpdateParametersInner updateInner = new EndpointUpdateParametersInner
+                                                        {
+                                                            IsHttpAllowed = this.Inner.IsHttpAllowed,
+                                                            IsHttpsAllowed = this.Inner.IsHttpsAllowed,
+                                                            OriginPath = this.Inner.OriginPath,
+                                                            OriginHostHeader = this.Inner.OriginHostHeader,
+                                                            IsCompressionEnabled = this.Inner.IsCompressionEnabled,
+                                                            ContentTypesToCompress = this.Inner.ContentTypesToCompress,
+                                                            GeoFilters = this.Inner.GeoFilters,
+                                                            OptimizationType = this.Inner.OptimizationType,
+                                                            QueryStringCachingBehavior = this.Inner.QueryStringCachingBehavior,
+                                                            Tags = this.Inner.Tags
+                                                        };
+            
+            DeepCreatedOrigin originInner = this.Inner.Origins.ElementAt(0);
+            OriginUpdateParametersInner originParameters = new OriginUpdateParametersInner
+                                                            {
+                                                                HostName = originInner.HostName,
+                                                                HttpPort = originInner.HttpPort,
+                                                                HttpsPort = originInner.HttpsPort
+                                                            };
 
-            return null;
-        }
 
-        public async override Task DeleteAsync(CancellationToken cancellationToke)
-        {
-            //$ return this.client.DeleteAsync(this.Parent().ResourceGroupName(),
-            //$ this.Parent().Name(),
-            //$ this.Name()).Map(new Func1<Void, Void>() {
-            //$ @Override
-            //$ public Void call(Void result) {
-            //$ return result;
-            //$ }
-            //$ });
-            /*
+            await Task.WhenAll(this.deletedCustomDomainList
+                .Select(itemToDelete => this.customDomainsClient.DeleteAsync(
+                    this.Parent.ResourceGroupName,
+                    this.Parent.Name,
+                    this.Name(),
+                    itemToDelete.Name)));
 
-            await this.client.DeleteAsync(
+            this.deletedCustomDomainList.Clear();
+
+            await this.originsClient.UpdateAsync(
                 this.Parent.ResourceGroupName,
                 this.Parent.Name,
-                this.Name,
-                cancellationToken);
-             */
+                this.Name(),
+                originInner.Name,
+                originParameters);
+
+            var endpointInner = await this.client.UpdateAsync(
+                this.Parent.ResourceGroupName,
+                this.Parent.Name,
+                this.Name(),
+                updateInner);
+            this.SetInner(endpointInner);
+
+            return this;
         }
     }
 }

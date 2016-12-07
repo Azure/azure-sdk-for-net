@@ -31,12 +31,20 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return WrapList(pagedList);
         }
 
-        public void LoadEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
+        public void LoadEndpointContent(
+            string resourceGroupName, 
+            string profileName, 
+            string endpointName, 
+            IList<string> contentPaths)
         {
             this.cdnManagementClient.Endpoints.LoadContent(resourceGroupName, profileName, endpointName, contentPaths);
         }
 
-        public void PurgeEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
+        public void PurgeEndpointContent(
+            string resourceGroupName, 
+            string profileName, 
+            string endpointName, 
+            IList<string> contentPaths)
         {
             this.cdnManagementClient.Endpoints.PurgeContent(resourceGroupName, profileName, endpointName, contentPaths);
         }
@@ -56,7 +64,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return new CheckNameAvailabilityResult(this.cdnManagementClient.CheckNameAvailability(name));
         }
 
-        public async override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByGroupAsync(
+            string groupName, 
+            string name, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
@@ -86,7 +97,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return WrapModel(name);
         }
 
-        public async override Task<ICdnProfile> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<ICdnProfile> GetByGroupAsync(
+            string groupName, 
+            string name, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             ProfileInner profileInner = await this.InnerCollection.GetAsync(groupName, name, cancellationToken);
             return WrapModel(profileInner);

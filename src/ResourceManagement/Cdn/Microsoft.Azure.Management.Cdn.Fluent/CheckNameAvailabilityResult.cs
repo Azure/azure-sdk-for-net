@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Result of the custom domain validation.
     /// </summary>
-    public partial class CheckNameAvailabilityResult 
+    public class CheckNameAvailabilityResult 
     {
         private CheckNameAvailabilityOutputInner inner;
         /// <summary>
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Construct CheckNameAvailabilityResult object from server response object.
         /// </summary>
         /// <param name="inner">Server response for CheckNameAvailability request.</param>
-        public  CheckNameAvailabilityResult(CheckNameAvailabilityOutputInner inner)
+        public CheckNameAvailabilityResult(CheckNameAvailabilityOutputInner inner)
         {
             this.inner = inner;
         }
