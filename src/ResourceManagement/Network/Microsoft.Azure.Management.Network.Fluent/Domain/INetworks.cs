@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetwork>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetwork>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.INetwork>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetwork>
     {

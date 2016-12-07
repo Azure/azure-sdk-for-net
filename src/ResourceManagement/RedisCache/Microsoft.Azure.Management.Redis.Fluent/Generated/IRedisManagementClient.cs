@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     using Models;
 
     /// <summary>
-    /// REST API for Azure Redis Cache Service
+    /// REST API for Azure Redis Cache Service.
     /// </summary>
     public partial interface IRedisManagementClient : System.IDisposable
     {
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// Gets subscription credentials which uniquely identify the
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </summary>
         string SubscriptionId { get; set; }
 

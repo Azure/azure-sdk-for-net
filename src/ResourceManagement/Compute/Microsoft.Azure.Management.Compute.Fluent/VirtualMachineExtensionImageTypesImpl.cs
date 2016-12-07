@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public PagedList<IVirtualMachineExtensionImageType> List ()
         {
-            return WrapList(this.client.ListTypes(EnumNameAttribute.GetName(this.publisher.Region), this.publisher.Name));
+            return WrapList(this.client.ListTypes(this.publisher.Region.Name, this.publisher.Name));
         }
 
         protected override IVirtualMachineExtensionImageType WrapModel (VirtualMachineExtensionImageInner inner)

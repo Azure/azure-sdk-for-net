@@ -15,25 +15,22 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     /// <typeparam name="IFluentResourceT">The fluent wrapper interface for the resource</typeparam>
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
-    /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which InnerResourceT inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
     /// <typeparam name="ManagerT"></typeparam
     /// <typeparam name="IDefintionAfterRegion">The definition stage to continue after defining the region</typeparam>
     /// <typeparam name="IDefintionAfterResourceGroup">The definition stage to continue after defining the resource gorup</typeparam>
     public abstract class GroupableResource<IFluentResourceT,
         InnerResourceT,
-        InnerResourceBaseT,
         FluentResourceT,
         ManagerT,
         IDefinitionAfterRegion,
         IDefinitionAfterResourceGroup,
         DefTypeWithTags,
         UTypeWithTags> :
-        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>,
+        ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>,
         IGroupableResource
         where FluentResourceT : GroupableResource<IFluentResourceT,
             InnerResourceT,
-            InnerResourceBaseT,
             FluentResourceT,
             ManagerT,
             IDefinitionAfterRegion,
@@ -42,8 +39,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             UTypeWithTags>, IFluentResourceT
         where ManagerT : IManagerBase
         where IFluentResourceT : class, IResource
-        where InnerResourceBaseT: class
-        where InnerResourceT : class, InnerResourceBaseT
+        where InnerResourceT : Microsoft.Azure.Management.Resource.Fluent.Resource
         where IDefinitionAfterRegion : class
         where IDefinitionAfterResourceGroup : class
         where DefTypeWithTags : class
@@ -113,7 +109,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             groupName = creatable.Name;
             newGroup = creatable;
-            AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this as IDefinitionAfterResourceGroup;
         }
 
@@ -126,6 +122,16 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         public IDefinitionAfterResourceGroup WithExistingResourceGroup(IResourceGroup group)
         {
             return WithExistingResourceGroup(group.Name);
+        }
+
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(string name, Region region)
+        {
+            return this.WithNewResourceGroup(this.manager.ResourceManager.ResourceGroups.Define(name).WithRegion(region));
+        }
+
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(Region region)
+        {
+            return this.WithNewResourceGroup(this.Name + "group", region);
         }
 
         #endregion

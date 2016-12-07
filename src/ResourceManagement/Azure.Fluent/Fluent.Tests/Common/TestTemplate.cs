@@ -16,7 +16,7 @@ namespace Azure.Tests.Common
 {
     public abstract class TestTemplate<T, C>
         where T : IGroupableResource
-        where C : ISupportsListing<T>, ISupportsGettingByGroup<T>, ISupportsDeleting, ISupportsGettingById<T>
+        where C : ISupportsListing<T>, ISupportsGettingByGroup<T>, ISupportsDeletingById, ISupportsGettingById<T>
     {
         protected string testId = "" + DateTime.Now.Ticks % 100000L;
         private T resource;
@@ -77,8 +77,8 @@ namespace Azure.Tests.Common
         public void VerifyDeleting()
         {
             var groupName = this.resource.ResourceGroupName;
-            this.collection.Delete(this.resource.Id);
-            this.resourceGroups.Delete(groupName);
+            this.collection.DeleteById(this.resource.Id);
+            this.resourceGroups.DeleteByName(groupName);
         }
 
         /**

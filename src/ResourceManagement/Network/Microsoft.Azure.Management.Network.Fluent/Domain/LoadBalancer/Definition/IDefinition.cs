@@ -6,15 +6,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
     /// <summary>
     /// The stage of a load balancer definition describing the nature of the frontend of the load balancer: internal or Internet-facing.
     /// </summary>
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the inbound NAT rule</param>
         /// <returns>the first stage of the new inbound NAT rule definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> DefineInboundNatRule(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> DefineInboundNatRule(string name);
 
     }
     /// <summary>
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool</param>
         /// <returns>the first stage of the new inbound NAT pool definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool> DefineInboundNatPool(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool> DefineInboundNatPool(string name);
 
     }
     /// <summary>
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> DefinePublicFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend> DefinePublicFrontend(string name);
 
     }
     /// <summary>
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name to assign to the backend</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Backend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> DefineBackend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe> DefineBackend(string name);
 
     }
     /// <summary>
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.TcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineTcpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineTcpProbe(string name);
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// </summary>
         /// <param name="name">name the name of the probe</param>
         /// <returns>the first stage of the new probe definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.HttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineHttpProbe(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineHttpProbe(string name);
 
     }
     /// <summary>
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     public interface IWithPrivateFrontend  :
         IWithNetworkSubnet
     {
-        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> DefinePrivateFrontend(string name);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend> DefinePrivateFrontend(string name);
 
     }
     /// <summary>

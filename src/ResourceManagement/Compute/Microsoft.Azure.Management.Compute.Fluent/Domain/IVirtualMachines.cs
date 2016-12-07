@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         ISupportsCreating<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IBlank>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {

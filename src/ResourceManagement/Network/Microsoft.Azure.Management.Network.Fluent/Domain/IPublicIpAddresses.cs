@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IPublicIpAddresses  :
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsCreating<Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IBlank>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,

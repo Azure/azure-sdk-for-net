@@ -204,7 +204,7 @@ namespace ManageNetworkSecurityGroup
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterface1)
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
+                            .WithRootUsername(userName)
                             .WithSsh(sshKey)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
@@ -229,7 +229,7 @@ namespace ManageNetworkSecurityGroup
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterface2)
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
+                            .WithRootUsername(userName)
                             .WithSsh(sshKey)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
@@ -280,7 +280,7 @@ namespace ManageNetworkSecurityGroup
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

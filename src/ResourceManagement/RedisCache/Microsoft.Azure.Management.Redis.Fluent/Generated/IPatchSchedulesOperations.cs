@@ -17,16 +17,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     public partial interface IPatchSchedulesOperations
     {
         /// <summary>
-        /// Create or replace the patching schedule for redis cache.
+        /// Create or replace the patching schedule for Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters to set patch schedules for redis cache.
+        /// Parameters to set patch schedules for Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisPatchScheduleInner>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisPatchScheduleInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes the patching schedule for redis cache.
+        /// Deletes the patching schedule for Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -67,13 +67,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets the patching schedule for redis cache.
+        /// Gets the patching schedule for Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the redis cache.
+        /// The name of the Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

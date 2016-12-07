@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the load balancer public frontend that this public IP address is assigned to</returns>
-        Microsoft.Azure.Management.Network.Fluent.IPublicFrontend Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress.GetAssignedLoadBalancerFrontend() { 
-            return this.GetAssignedLoadBalancerFrontend() as Microsoft.Azure.Management.Network.Fluent.IPublicFrontend;
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress.GetAssignedLoadBalancerFrontend() { 
+            return this.GetAssignedLoadBalancerFrontend() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend;
         }
 
         /// <returns>true if this public IP address is assigned to a load balancer</returns>

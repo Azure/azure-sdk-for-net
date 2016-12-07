@@ -120,8 +120,8 @@ namespace ManageVirtualMachineExtension
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithNewPrimaryPublicIpAddress(pipDnsLabelLinuxVM)
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
-                            .WithRootUserName(firstLinuxUserName)
-                            .WithPassword(firstLinuxUserPassword)
+                            .WithRootUsername(firstLinuxUserName)
+                            .WithRootPassword(firstLinuxUserPassword)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
 
@@ -219,8 +219,8 @@ namespace ManageVirtualMachineExtension
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithNewPrimaryPublicIpAddress(pipDnsLabelWindowsVM)
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(firstWindowsUserName)
-                            .WithPassword(firstWindowsUserPassword)
+                            .WithAdminUsername(firstWindowsUserName)
+                            .WithAdminPassword(firstWindowsUserPassword)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .DefineNewExtension(windowsCustomScriptExtensionName)
                                 .WithPublisher(windowsCustomScriptExtensionPublisherName)
@@ -290,7 +290,7 @@ namespace ManageVirtualMachineExtension
                 finally
                 {
                     Console.WriteLine($"Deleting resource group : {rgName}");
-                    azure.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
                     Console.WriteLine($"Deleted resource group : {rgName}");
                 }
             }

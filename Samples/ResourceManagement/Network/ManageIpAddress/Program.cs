@@ -81,8 +81,8 @@ namespace ManageIpAddress
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithExistingPrimaryPublicIpAddress(publicIpAddress)
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(userName)
-                            .WithPassword(password)
+                            .WithAdminUsername(userName)
+                            .WithAdminPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
 
@@ -145,7 +145,7 @@ namespace ManageIpAddress
                     //============================================================
                     // Delete the public ip
                     Console.WriteLine("Deleting the public IP address");
-                    azure.PublicIpAddresses.Delete(publicIpAddress.Id);
+                    azure.PublicIpAddresses.DeleteById(publicIpAddress.Id);
                     Console.WriteLine("Deleted the public IP address");
                 }
                 catch (Exception ex)
@@ -157,7 +157,7 @@ namespace ManageIpAddress
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (NullReferenceException)

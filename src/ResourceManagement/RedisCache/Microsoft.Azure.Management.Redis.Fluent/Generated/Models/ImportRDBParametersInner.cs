@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for redis import operation.
+    /// Parameters for Redis import operation.
     /// </summary>
     public partial class ImportRDBParametersInner
     {
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the ImportRDBParametersInner class.
         /// </summary>
-        /// <param name="files">files to import</param>
+        /// <param name="files">files to import.</param>
         /// <param name="format">File format.</param>
         public ImportRDBParametersInner(System.Collections.Generic.IList<string> files, string format = default(string))
         {
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         public string Format { get; set; }
 
         /// <summary>
-        /// Gets or sets files to import
+        /// Gets or sets files to import.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "files")]
         public System.Collections.Generic.IList<string> Files { get; set; }

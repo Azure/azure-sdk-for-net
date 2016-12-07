@@ -78,8 +78,8 @@ namespace ManageVirtualMachinesInParallel
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName("tirekicker")
-                            .WithPassword("12NewPA$$w0rd!")
+                            .WithRootUsername("tirekicker")
+                            .WithRootPassword("12NewPA$$w0rd!")
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithNewStorageAccount(creatableStorageAccount);
                         creatableVirtualMachines.Add(creatableVirtualMachine);
@@ -88,7 +88,6 @@ namespace ManageVirtualMachinesInParallel
                     var startTime = DateTimeOffset.Now.UtcDateTime;
                     Console.WriteLine("Creating the virtual machines");
 
-                    var endTime = DateTimeOffset.Now.UtcDateTime;
                     Console.WriteLine("Created virtual machines");
 
                     var virtualMachines = azure.VirtualMachines.Create(creatableVirtualMachines.ToArray());
@@ -98,8 +97,9 @@ namespace ManageVirtualMachinesInParallel
                         Console.WriteLine(virtualMachine.Id);
                     }
 
-                    Console.WriteLine($"Created VM: took {(endTime - startTime).Seconds} seconds");
-                    Console.ReadLine();
+                    var endTime = DateTimeOffset.Now.UtcDateTime;
+
+                    Console.WriteLine($"Created VM: took {(endTime - startTime).TotalSeconds} seconds");
                 }
                 catch (Exception ex)
                 {
@@ -108,7 +108,7 @@ namespace ManageVirtualMachinesInParallel
                 finally
                 {
                     Console.WriteLine($"Deleting resource group : {rgName}");
-                    azure.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
                     Console.WriteLine($"Deleted resource group : {rgName}");
                 }
             }

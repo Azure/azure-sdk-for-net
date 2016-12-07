@@ -37,22 +37,22 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             return CreateFluentModel(name);
         }
 
-        public void Delete(string id)
+        public void DeleteById(string id)
         {
-            DeleteAsync(id).Wait();
+            DeleteByIdAsync(id).Wait();
         }
 
-        public void Delete(string groupName, string name)
+        public void DeleteByGroup(string groupName, string name)
         {
-            DeleteAsync(groupName, name).Wait();
+            DeleteByGroupAsync(groupName, name).Wait();
         }
 
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            return DeleteByGroupAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
-        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return client.DeleteAsync(groupName, name, cancellationToken);
         }

@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// Initializes a new instance of the RedisAccessKeysInner class.
         /// </summary>
         /// <param name="primaryKey">The current primary key that clients can
-        /// use to authenticate with redis cache.</param>
+        /// use to authenticate with Redis cache.</param>
         /// <param name="secondaryKey">The current secondary key that clients
-        /// can use to authenticate with redis cache.</param>
+        /// can use to authenticate with Redis cache.</param>
         public RedisAccessKeysInner(string primaryKey = default(string), string secondaryKey = default(string))
         {
             PrimaryKey = primaryKey;
@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
 
         /// <summary>
         /// Gets the current primary key that clients can use to authenticate
-        /// with redis cache.
+        /// with Redis cache.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; private set; }
 
         /// <summary>
         /// Gets the current secondary key that clients can use to
-        /// authenticate with redis cache.
+        /// authenticate with Redis cache.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; private set; }

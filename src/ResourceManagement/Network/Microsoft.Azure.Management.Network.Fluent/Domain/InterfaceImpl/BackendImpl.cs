@@ -5,15 +5,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Network.Fluent.Backend.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
-    public partial class BackendImpl 
+    public partial class LoadBalancerBackendImpl 
     {
         /// <summary>
         /// Attaches the child definition to the parent resource update.
@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>a list of the resource IDs of the virtual machines associated with this backend</returns>
-        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Network.Fluent.IBackend.GetVirtualMachineIds() { 
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend.GetVirtualMachineIds() { 
             return this.GetVirtualMachineIds() as System.Collections.Generic.ISet<string>;
         }
 
         /// <returns>a map of names of the IP configurations of network interfaces assigned to this backend,</returns>
         /// <returns>indexed by their NIC's resource id</returns>
-        System.Collections.Generic.IDictionary<string,string> Microsoft.Azure.Management.Network.Fluent.IBackend.BackendNicIpConfigurationNames
+        System.Collections.Generic.IDictionary<string,string> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend.BackendNicIpConfigurationNames
         {
             get
             { 

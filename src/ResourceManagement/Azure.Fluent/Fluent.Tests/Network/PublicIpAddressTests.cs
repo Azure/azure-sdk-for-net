@@ -42,7 +42,7 @@ namespace Fluent.Tests.Network
             Assert.True(resource.LeafDomainLabel.Equals(updatedDnsName, StringComparison.OrdinalIgnoreCase));
             Assert.True(resource.IdleTimeoutInMinutes == updatedIdleTimeout);
 
-            manager.PublicIpAddresses.Delete(pip.Id);
+            manager.PublicIpAddresses.DeleteById(pip.Id);
 
         }
 

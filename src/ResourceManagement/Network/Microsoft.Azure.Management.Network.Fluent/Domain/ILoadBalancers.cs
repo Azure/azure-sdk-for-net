@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
     {

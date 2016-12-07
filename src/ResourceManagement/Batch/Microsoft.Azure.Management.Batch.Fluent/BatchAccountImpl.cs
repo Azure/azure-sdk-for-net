@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         GroupableResource<
             IBatchAccount,
             BatchAccountInner,
-            Microsoft.Azure.Management.Resource.Fluent.Resource,
             BatchAccountImpl,
             BatchManager,
             BatchAccount.Definition.IWithGroup,
@@ -152,7 +151,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             if (creatableStorageAccountKey == null)
             {
                 creatableStorageAccountKey = creatable.Key;
-                AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             }
             existingStorageAccountToAssociate = null;
 

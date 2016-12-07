@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return WrapList(pagedList);
         }
 
-        public override async Task<IVault> GetByGroupAsync(string groupName, string name)
+        public override async Task<IVault> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await InnerCollection.GetAsync(groupName, name);
+            var inner = await InnerCollection.GetAsync(groupName, name, cancellationToken);
             return WrapModel(inner);
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
-        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name);
         }

@@ -65,18 +65,18 @@ namespace ManageVirtualMachine
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(userName)
-                            .WithPassword(password)
+                            .WithAdminUsername(userName)
+                            .WithAdminPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
                     var endTime = DateTimeOffset.Now.UtcDateTime;
 
-                    Console.WriteLine($"Created VM: took {(endTime - startTime).Seconds} seconds");
+                    Console.WriteLine($"Created VM: took {(endTime - startTime).TotalSeconds} seconds");
 
                     Utilities.PrintVirtualMachine(windowsVM);
 
                     windowsVM.Update()
-                            .WithTag("who-rocks", "java")
+                            .WithTag("who-rocks", "open source")
                             .WithTag("where", "on azure")
                             .Apply();
 
@@ -181,8 +181,8 @@ namespace ManageVirtualMachine
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword(password)
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
 
@@ -205,7 +205,7 @@ namespace ManageVirtualMachine
                     // Delete the virtual machine
                     Console.WriteLine("Deleting VM: " + windowsVM.Id);
 
-                    azure.VirtualMachines.Delete(windowsVM.Id);
+                    azure.VirtualMachines.DeleteById(windowsVM.Id);
 
                     Console.WriteLine("Deleted VM: " + windowsVM.Id);
                 }
@@ -216,7 +216,7 @@ namespace ManageVirtualMachine
                 finally
                 {
                     Console.WriteLine($"Deleting resource group : {rgName}");
-                    azure.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
                     Console.WriteLine($"Deleted resource group : {rgName}");
                 }
             }

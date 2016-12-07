@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         GroupableResource<
             IStorageAccount,
             StorageAccountInner,
-            Microsoft.Azure.Management.Resource.Fluent.Resource,
             StorageAccountImpl,
             IStorageManager,
             IWithGroup,
@@ -321,7 +320,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         {
             if (this.newGroup != null)
             {
-                IResource rg = this.CreatedResource(newGroup.Key);
+                var rg = this.CreatedResource(newGroup.Key);
             }
 
             createParameters.Location = RegionName;

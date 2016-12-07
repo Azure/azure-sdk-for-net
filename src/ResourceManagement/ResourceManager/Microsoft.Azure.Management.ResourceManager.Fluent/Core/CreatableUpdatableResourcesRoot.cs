@@ -19,10 +19,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         CreatableUpdatable<ICreatableUpdatableResourcesRoot<IFluentResourceT>,
             InnerResourceT,
             CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT>,
-            IResource,
+            IHasId,
             object>,
+        IHasId,
         ICreatableUpdatableResourcesRoot<IFluentResourceT>
-        where IFluentResourceT : class, IResource
+        where IFluentResourceT : class, IHasId
     {
         private List<string> keys;
 
@@ -36,11 +37,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             foreach (ICreatable<IFluentResourceT> item in creatables)
             {
                 this.keys.Add(item.Key);
-                this.AddCreatableDependency(item as IResourceCreator<IResource>);
+                this.AddCreatableDependency(item as IResourceCreator<IHasId>);
             }
         }
 
-        public IResource CreatedRelatedResource(string key)
+        public IHasId CreatedRelatedResource(string key)
         {
             return this.CreatorTaskGroup.CreatedResource(key);
         }
@@ -69,56 +70,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
         #endregion
 
-        #region IResource empty Impl
+        #region IHasId empty Impl
         public string Id
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public new string Key
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public new string Name
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public Region Region
-        {
-            get
-            {
-                return default(Region);
-            }
-        }
-
-        public string RegionName
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public IDictionary<string, string> Tags
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public string Type
         {
             get
             {

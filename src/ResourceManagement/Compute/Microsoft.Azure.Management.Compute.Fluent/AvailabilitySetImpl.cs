@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     internal partial class AvailabilitySetImpl : GroupableResource<IAvailabilitySet,
         AvailabilitySetInner,
-        Microsoft.Azure.Management.Resource.Fluent.Resource,
         AvailabilitySetImpl,
         IComputeManager, 
         AvailabilitySet.Definition.IWithGroup,

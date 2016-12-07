@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Patch schedule entry for Premium Redis Cache.
+    /// Patch schedule entry for a Premium Redis Cache.
     /// </summary>
     public partial class ScheduleEntry
     {
@@ -23,9 +23,10 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleEntry class.
         /// </summary>
-        /// <param name="dayOfWeek">Day of week when cache can be patched.
-        /// Possible values include: 'Monday', 'Tuesday', 'Wednesday',
-        /// 'Thursday', 'Friday', 'Saturday', 'Sunday'</param>
+        /// <param name="dayOfWeek">Day of the week when a cache can be
+        /// patched. Possible values include: 'Monday', 'Tuesday',
+        /// 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+        /// 'Everyday', 'Weekend'</param>
         /// <param name="startHourUtc">Start hour after which cache patching
         /// can start.</param>
         /// <param name="maintenanceWindow">ISO8601 timespan specifying how
@@ -38,9 +39,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         }
 
         /// <summary>
-        /// Gets or sets day of week when cache can be patched. Possible
+        /// Gets or sets day of the week when a cache can be patched. Possible
         /// values include: 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-        /// 'Friday', 'Saturday', 'Sunday'
+        /// 'Friday', 'Saturday', 'Sunday', 'Everyday', 'Weekend'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dayOfWeek")]
         public DayOfWeek DayOfWeek { get; set; }

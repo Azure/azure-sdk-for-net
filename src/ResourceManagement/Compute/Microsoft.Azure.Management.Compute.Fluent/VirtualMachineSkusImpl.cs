@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public PagedList<IVirtualMachineSku> List()
         {
-            IEnumerable<VirtualMachineImageResourceInner> innerSkus = innerCollection.ListSkus(EnumNameAttribute.GetName(offer.Region), offer.Publisher.Name, offer.Name);
+            IEnumerable<VirtualMachineImageResourceInner> innerSkus = innerCollection.ListSkus(offer.Region.Name, offer.Publisher.Name, offer.Name);
             var pagedList = new PagedList<VirtualMachineImageResourceInner>(innerSkus);
             return WrapList(pagedList);
         }

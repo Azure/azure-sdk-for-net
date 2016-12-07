@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         ISupportsCreating<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IBlank>,
-        ISupportsDeleting,
+        ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>
     {

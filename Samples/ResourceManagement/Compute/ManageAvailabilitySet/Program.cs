@@ -90,8 +90,8 @@ namespace ManageAvailabilitySet
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(userName)
-                            .WithPassword(password)
+                            .WithAdminUsername(userName)
+                            .WithAdminPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithExistingAvailabilitySet(availSet1)
                             .Create();
@@ -111,8 +111,8 @@ namespace ManageAvailabilitySet
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword(password)
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithExistingAvailabilitySet(availSet1)
                             .Create();
@@ -161,7 +161,7 @@ namespace ManageAvailabilitySet
 
                     Console.WriteLine("Deleting an availability set: " + availSet2.Id);
 
-                    azure.AvailabilitySets.Delete(availSet2.Id);
+                    azure.AvailabilitySets.DeleteById(availSet2.Id);
 
                     Console.WriteLine("Deleted availability set: " + availSet2.Id);
                 }
@@ -174,7 +174,7 @@ namespace ManageAvailabilitySet
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (Exception ex)

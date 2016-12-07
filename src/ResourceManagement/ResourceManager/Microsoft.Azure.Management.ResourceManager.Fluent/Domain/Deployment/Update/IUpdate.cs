@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Deployment.Update
     public interface IWithParameters 
     {
         /// <summary>
-        /// Specifies the parameters as a Java object.
+        /// Specifies the parameters as an object.
         /// </summary>
-        /// <param name="parameters">parameters the Java object</param>
+        /// <param name="parameters">the object</param>
         /// <returns>the next stage of the deployment update</returns>
         IUpdate WithParameters (object parameters);
 
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Deployment.Update
     public interface IWithTemplate 
     {
         /// <summary>
-        /// Specifies the template as a Java object.
+        /// Specifies the template as an object.
         /// </summary>
-        /// <param name="template">template the Java object</param>
+        /// <param name="template">the object</param>
         /// <returns>the next stage of the deployment update</returns>
         IUpdate WithTemplate (object template);
 

@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public PagedList<IVirtualMachinePublisher> ListByRegion(Region region)
         {
-            return this.ListByRegion(EnumNameAttribute.GetName(region));
+            return this.ListByRegion(region.Name);
         }
 
         protected override IVirtualMachinePublisher WrapModel(VirtualMachineImageResourceInner inner)
         {
-            return new VirtualMachinePublisherImpl(EnumNameAttribute.FromName<Region>(inner.Location), inner.Name, 
+            return new VirtualMachinePublisherImpl(Region.Create(inner.Location), inner.Name, 
                 this.innerCollection, 
                 this.extensionsInnerCollection);
         }

@@ -5,16 +5,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
@@ -24,14 +24,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
-    public partial class InboundNatRuleImpl 
+    public partial class LoadBalancerInboundNatRuleImpl 
     {
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFloatingIpEnabled() { 
-            return this.WithFloatingIpEnabled() as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFloatingIpEnabled() { 
+            return this.WithFloatingIpEnabled() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -39,24 +39,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">enabled true if floating IP should be enabled</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFloatingIp(bool enabled) { 
-            return this.WithFloatingIp( enabled) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFloatingIp(bool enabled) { 
+            return this.WithFloatingIp( enabled) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFloatingIpDisabled() { 
-            return this.WithFloatingIpDisabled() as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFloatingIpDisabled() { 
+            return this.WithFloatingIpDisabled() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIpEnabled() { 
-            return this.WithFloatingIpEnabled() as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIpEnabled() { 
+            return this.WithFloatingIpEnabled() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -64,24 +64,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">enabled true if floating IP should be enabled</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIp(bool enabled) { 
-            return this.WithFloatingIp( enabled) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIp(bool enabled) { 
+            return this.WithFloatingIp( enabled) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIpDisabled() { 
-            return this.WithFloatingIpDisabled() as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFloatingIpDisabled() { 
+            return this.WithFloatingIpDisabled() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
         /// Enables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate>.WithFloatingIpEnabled() { 
-            return this.WithFloatingIpEnabled() as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIpEnabled() { 
+            return this.WithFloatingIpEnabled() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -89,16 +89,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="enabled">enabled true if floating IP should be enabled</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate>.WithFloatingIp(bool enabled) { 
-            return this.WithFloatingIp( enabled) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIp(bool enabled) { 
+            return this.WithFloatingIp( enabled) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate>.WithFloatingIpDisabled() { 
-            return this.WithFloatingIpDisabled() as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>.WithFloatingIpDisabled() { 
+            return this.WithFloatingIpDisabled() as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -106,16 +106,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="minutes">minutes a number of minutes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IWithIdleTimeout.WithIdleTimeoutInMinutes(int minutes) { 
-            return this.WithIdleTimeoutInMinutes( minutes) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithIdleTimeout.WithIdleTimeoutInMinutes(int minutes) { 
+            return this.WithIdleTimeoutInMinutes( minutes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <returns>the associated frontend</returns>
-        Microsoft.Azure.Management.Network.Fluent.IFrontend Microsoft.Azure.Management.Network.Fluent.IHasFrontend.Frontend
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend Microsoft.Azure.Management.Network.Fluent.IHasFrontend.Frontend
         {
             get
             { 
-            return this.Frontend() as Microsoft.Azure.Management.Network.Fluent.IFrontend;
+            return this.Frontend() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend;
             }
         }
         /// <returns>the protocol</returns>
@@ -139,8 +139,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithFrontendPort(int port) { 
-            return this.WithFrontendPort( port) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithFrontendPort(int port) { 
+            return this.WithFrontendPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -148,8 +148,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>.WithFrontendPort(int port) { 
-            return this.WithFrontendPort( port) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>.WithFrontendPort(int port) { 
+            return this.WithFrontendPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -157,8 +157,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="minutes">minutes a number of minutes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithIdleTimeout<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithIdleTimeoutInMinutes(int minutes) { 
-            return this.WithIdleTimeoutInMinutes( minutes) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithIdleTimeout<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>.WithIdleTimeoutInMinutes(int minutes) { 
+            return this.WithIdleTimeoutInMinutes( minutes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="minutes">minutes a number of minutes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithIdleTimeout<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>.WithIdleTimeoutInMinutes(int minutes) { 
-            return this.WithIdleTimeoutInMinutes( minutes) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithIdleTimeout<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>.WithIdleTimeoutInMinutes(int minutes) { 
+            return this.WithIdleTimeoutInMinutes( minutes) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -199,8 +199,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">protocol a transport protocol</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,string>.WithProtocol(string protocol) { 
-            return this.WithProtocol( protocol) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,string>.WithProtocol(string protocol) { 
+            return this.WithProtocol( protocol) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -208,8 +208,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">protocol a transport protocol</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>,string>.WithProtocol(string protocol) { 
-            return this.WithProtocol( protocol) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>,string>.WithProtocol(string protocol) { 
+            return this.WithProtocol( protocol) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">protocol a transport protocol</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate,string>.WithProtocol(string protocol) { 
-            return this.WithProtocol( protocol) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate,string>.WithProtocol(string protocol) { 
+            return this.WithProtocol( protocol) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="frontendName">frontendName an existing frontend name on this load balancer</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFrontend(string frontendName) { 
-            return this.WithFrontend( frontendName) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithFrontend(string frontendName) { 
+            return this.WithFrontend( frontendName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -235,8 +235,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="frontendName">frontendName an existing frontend name on this load balancer</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFrontend(string frontendName) { 
-            return this.WithFrontend( frontendName) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFrontend(string frontendName) { 
+            return this.WithFrontend( frontendName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -244,8 +244,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="frontendName">frontendName an existing frontend name from this load balancer</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate>.WithFrontend(string frontendName) { 
-            return this.WithFrontend( frontendName) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasFrontend.Update.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>.WithFrontend(string frontendName) { 
+            return this.WithFrontend( frontendName) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -253,8 +253,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IWithFrontendPort.WithFrontendPort(int port) { 
-            return this.WithFrontendPort( port) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFrontendPort.WithFrontendPort(int port) { 
+            return this.WithFrontendPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -264,8 +264,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithBackendPort(int port) { 
-            return this.WithBackendPort( port) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>.WithBackendPort(int port) { 
+            return this.WithBackendPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -275,8 +275,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithBackendPort(int port) { 
-            return this.WithBackendPort( port) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithBackendPort(int port) { 
+            return this.WithBackendPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -284,12 +284,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate>.WithBackendPort(int port) { 
-            return this.WithBackendPort( port) as Microsoft.Azure.Management.Network.Fluent.InboundNatRule.Update.IUpdate;
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate>.WithBackendPort(int port) { 
+            return this.WithBackendPort( port) as Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <returns>the resource ID of the network interface assigned as the backend of this inbound NAT rule</returns>
-        string Microsoft.Azure.Management.Network.Fluent.IInboundNatRule.BackendNetworkInterfaceId
+        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule.BackendNetworkInterfaceId
         {
             get
             { 
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the frontend port number associated with this NAT rule</returns>
-        int Microsoft.Azure.Management.Network.Fluent.IInboundNatRule.FrontendPort
+        int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule.FrontendPort
         {
             get
             { 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the number of minutes before an idle connection is closed</returns>
-        int Microsoft.Azure.Management.Network.Fluent.IInboundNatRule.IdleTimeoutInMinutes
+        int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule.IdleTimeoutInMinutes
         {
             get
             { 
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
         /// <returns>the name of the IP configuration within the network interface associated with this NAT rule</returns>
-        string Microsoft.Azure.Management.Network.Fluent.IInboundNatRule.BackendNicIpConfigurationName
+        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule.BackendNicIpConfigurationName
         {
             get
             { 

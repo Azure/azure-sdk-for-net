@@ -84,8 +84,8 @@ namespace Azure.Tests.Common
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword("Abcdef.123456")
+                            .WithRootUsername(userName)
+                            .WithRootPassword("Abcdef.123456")
                             .WithNewAvailabilitySet(availabilitySetName)
                             .WithSize(VirtualMachineSizeTypes.StandardA1)
                             .Create();
@@ -228,14 +228,14 @@ namespace Azure.Tests.Common
                     .Append("\n\t\t\tInternet facing: ").Append(frontend.IsPublic);
                 if (frontend.IsPublic)
                 {
-                    info.Append("\n\t\t\tPublic IP Address ID: ").Append(((IPublicFrontend)frontend).PublicIpAddressId);
+                    info.Append("\n\t\t\tPublic IP Address ID: ").Append(((ILoadBalancerPublicFrontend)frontend).PublicIpAddressId);
                 }
                 else
                 {
-                    info.Append("\n\t\t\tVirtual network ID: ").Append(((IPrivateFrontend)frontend).NetworkId)
-                        .Append("\n\t\t\tSubnet name: ").Append(((IPrivateFrontend)frontend).SubnetName)
-                        .Append("\n\t\t\tPrivate IP address: ").Append(((IPrivateFrontend)frontend).PrivateIpAddress)
-                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(((IPrivateFrontend)frontend).PrivateIpAllocationMethod);
+                    info.Append("\n\t\t\tVirtual network ID: ").Append(((ILoadBalancerPrivateFrontend)frontend).NetworkId)
+                        .Append("\n\t\t\tSubnet name: ").Append(((ILoadBalancerPrivateFrontend)frontend).SubnetName)
+                        .Append("\n\t\t\tPrivate IP address: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIpAddress)
+                        .Append("\n\t\t\tPrivate IP allocation method: ").Append(((ILoadBalancerPrivateFrontend)frontend).PrivateIpAllocationMethod);
                 }
 
                 // Inbound NAT pool references

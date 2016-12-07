@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     internal partial class VaultImpl  :
         GroupableResource<IVault, 
             VaultInner,
-            Microsoft.Azure.Management.Resource.Fluent.Resource,
             VaultImpl,
             IKeyVaultManager,
             IWithGroup,

@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var args = require('yargs').argv;
-var colors = require('colors');
 var exec = require('child_process').exec;
 var fs = require('fs');
 
@@ -45,9 +44,9 @@ var mappings = {
         'args': '-FT 1'
     },
     'redis': {
-        'dir': 'RedisCache/Microsoft.Azure.Management.Fluent.Redis',
+        'dir': 'RedisCache/Microsoft.Azure.Management.Redis.Fluent',
         'source': 'arm-redis/2016-04-01/swagger/redis.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Redis',
+        'package': 'Microsoft.Azure.Management.Redis.Fluent',
         'args': '-FT 1'
     },
     'graphrbac': {
@@ -59,7 +58,33 @@ var mappings = {
         'dir': 'KeyVault/Microsoft.Azure.Management.Fluent.KeyVault',
         'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
         'package': 'Microsoft.Azure.Management.Fluent.KeyVault',
+    },
+    'sql': {
+        'dir': 'Sql/Microsoft.Azure.Management.Sql.Fluent',
+        'source': 'arm-sql/compositeSql.json',
+        'package': 'Microsoft.Azure.Management.Sql.Fluent',
+        'composite': true,
+        'args': '-FT 1'
+    },
+    'cdn': {
+        'dir': 'Cdn/Microsoft.Azure.Management.Cdn.Fluent',
+        'source': 'arm-cdn/2016-10-02/swagger/cdn.json',
+        'package': 'Microsoft.Azure.Management.Cdn.Fluent',
+        'args': '-FT 2'
+    },
+    'dns': {
+        'dir': 'Dns/Microsoft.Azure.Management.Dns.Fluent',
+        'source': 'arm-dns/2016-04-01/swagger/dns.json',
+        'package': 'Microsoft.Azure.Management.Dns.Fluent',
+        'args': '-FT 2'
+    },
+    'trafficmanager': {
+        'dir': 'TrafficManager/Microsoft.Azure.Management.TrafficManager.Fluent',
+        'source': 'arm-trafficmanager/2015-11-01/swagger/trafficmanager.json',
+        'package': 'Microsoft.Azure.Management.TrafficManager.Fluent',
+        'args': '-FT 2'
     }
+
 };
 
 gulp.task('default', function() {

@@ -42,7 +42,7 @@ namespace Fluent.Tests.Network
                 .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
-            manager.NetworkInterfaces.Delete(resource.Id);
+            manager.NetworkInterfaces.DeleteById(resource.Id);
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]

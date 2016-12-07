@@ -111,25 +111,20 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             throw new NotSupportedException();
         }
 
-        public async Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IBatchAccount> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await InnerCollection.DeleteAsync(groupName, name, cancellationToken);
-        }
-
-        public override async Task<IBatchAccount> GetByGroupAsync(string resourceGroupName, string name)
-        {
-            var batchAccount = await InnerCollection.GetAsync(resourceGroupName, name);
+            var batchAccount = await InnerCollection.GetAsync(resourceGroupName, name, cancellationToken);
             return WrapModel(batchAccount);
         }
 
         internal int GetBatchAccountQuotaByLocation(Region region)
         {
-            return locationClient.GetQuotas(EnumNameAttribute.GetName(region)).AccountQuota.GetValueOrDefault();
+            return locationClient.GetQuotas(region.Name).AccountQuota.GetValueOrDefault();
         }
     }
 }

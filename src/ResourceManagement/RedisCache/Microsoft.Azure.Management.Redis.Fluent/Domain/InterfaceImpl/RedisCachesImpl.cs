@@ -32,21 +32,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this.Define( name) as Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IBlank;
         }
 
-        /// <summary>
-        /// Deletes a resource from Azure, identifying it by its resource ID.
-        /// </summary>
-        /// <param name="id">id the resource ID of the resource to delete</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeleting.Delete (string id) {
-            this.Delete( id);
-        }
-        Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        public Task DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return InnerCollection.DeleteAsync(resourceGroupName, name, cancellationToken);
+            return this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>
@@ -71,22 +59,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <returns>an immutable representation of the resource</returns>
         Microsoft.Azure.Management.Redis.Fluent.IRedisCache Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>.GetByGroup (string resourceGroupName, string name) {
             return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Redis.Fluent.IRedisCache;
-        }
-
-
-        public override async Task<IRedisCache> GetByGroupAsync(string groupName, string name)
-        {
-            var storageAccount = await InnerCollection.GetAsync(groupName, name);
-            return WrapModel(storageAccount);
-        }
-
-        /// <summary>
-        /// Deletes a resource from Azure, identifying it by its name and its resource group.
-        /// </summary>
-        /// <param name="groupName">groupName The group the resource is part of</param>
-        /// <param name="name">name The name of the resource</param>
-        void Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.Delete (string groupName, string name) {
-            this.Delete( groupName,  name);
         }
 
         /// <summary>

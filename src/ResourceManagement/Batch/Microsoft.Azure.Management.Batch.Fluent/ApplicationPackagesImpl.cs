@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// Represents a applicationPackage collection associated with a application.
     /// </summary>
     public partial class ApplicationPackagesImpl :
-        ExternalChildResources<ApplicationPackageImpl,
+        ExternalChildResourcesCached<ApplicationPackageImpl,
             IApplicationPackage,
             Management.Batch.Fluent.Models.ApplicationPackageInner,
             IApplication,
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         {
             this.client = client;
             this.parent = parent;
-            InitializeCollection();
+            CacheCollection();
         }
 
         public ApplicationPackageImpl Define(string name)

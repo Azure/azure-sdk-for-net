@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Entry point to service principal management API.
     /// </summary>
     public interface IServicePrincipals  :
-        ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IBlank>,
+        // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>
     {
         /// <summary>

@@ -18,28 +18,22 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     /// <typeparam name="IFluentResourceT">The fluent wrapper interface for the resource</typeparam>
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
-    /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which <InnerResourceT @ref="InnerResourceT" /> inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
-    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags> : 
-        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResource, UTypeWithTags>,
+    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags> : 
+        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IHasId, UTypeWithTags>,
         IResource, IDefinitionWithTags<DefTypeWithTags>, IUpdateWithTags<UTypeWithTags>
-        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
+        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
         where IFluentResourceT : class, IResource
-        where InnerResourceBaseT : class
-        where InnerResourceT : class, InnerResourceBaseT
+        where InnerResourceT : Microsoft.Azure.Management.Resource.Fluent.Resource
         where IDefinitionAfterRegion: class
         where DefTypeWithTags : class
         where UTypeWithTags : class
     {
-
-        private TypeInfo resourceTypeInfo;
-
         protected ResourceBase(string key, InnerResourceT innerObject) : base(key, innerObject)
         {
-            EnsureResource(innerObject);
-            if (GetValue("Tags") == null)
+            if (Inner.Tags == null)
             {
-                SetValue("Tags", new Dictionary<string, string>());
+                Inner.Tags = new Dictionary<string, string>();
             }
         }
 
@@ -49,7 +43,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return GetStringValue("Id");
+                return Inner.Id;
 
             }
         }
@@ -58,7 +52,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                string name = GetStringValue("Name");
+                string name = Inner.Name;
                 if (name != null)
                 {
                     return name;
@@ -71,7 +65,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return GetStringValue("Location");
+                return Inner.Location;
             }
         }
 
@@ -79,7 +73,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return GetStringValue("Type");
+                return Inner.Type;
             }
         }
 
@@ -87,8 +81,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                Dictionary<string, string> tags = (Dictionary < string, string>)GetValue("Tags");
-                return tags;
+                return (Dictionary<string, string>)Inner.Tags;
             }
         }
 
@@ -128,7 +121,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return EnumNameAttribute.FromName<Region>(GetValue("Location") as string);
+                return Region.Create(this.RegionName);
             }
         }
 
@@ -136,7 +129,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             get
             {
-                return this.GetValue("Tags") as IDictionary<string, string>;
+                return (Dictionary<string, string>)Inner.Tags;
             }
         }
 
@@ -144,39 +137,35 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public IDefinitionAfterRegion WithRegion(string regionName)
         {
-            SetValue("Location", regionName);
+            Inner.Location = regionName;
             return this as IDefinitionAfterRegion;
         }
 
         public IDefinitionAfterRegion WithRegion(Region region)
         {
-            SetValue("Location", EnumNameAttribute.GetName(region));
-            return this as IDefinitionAfterRegion;
+            return this.WithRegion(Region.Name);
         }
 
         public FluentResourceT WithTags(IDictionary<string, string> tags)
         {
-            SetValue("Tags", tags);
+            Inner.Tags = tags;
             return this as FluentResourceT;
         }
         
         public FluentResourceT WithTag(string key, string value)
         {
-            var tags = GetValue("Tags") as IDictionary<string, string>;
-            if (!tags.ContainsKey(key))
+            if (!Inner.Tags.ContainsKey(key))
             {
-                tags.Add(key, value);
+                Inner.Tags.Add(key, value);
             }
             return this as FluentResourceT;
         }
 
         public FluentResourceT WithoutTag(string key)
         {
-            var tags = GetValue("Tags") as IDictionary<string, string>;
-            if (tags.ContainsKey(key))
+            if (Inner.Tags.ContainsKey(key))
             {
-                tags.Remove(key);
-                SetValue("Tags", tags);
+                Inner.Tags.Remove(key);
             }
             return this as FluentResourceT;
         }
@@ -213,69 +202,5 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         #endregion
-
-        private void EnsureResource(InnerResourceT innerObject)
-        {
-            var baseTypeName = typeof(InnerResourceBaseT).FullName;
-            TypeInfo typeInfo = innerObject.GetType().GetTypeInfo();
-            while (typeInfo != null && !typeInfo.FullName.Equals(baseTypeName))
-            {
-                Type baseType = typeInfo.BaseType;
-                if (baseType == null)
-                {
-                    break;
-                }
-                typeInfo = baseType.GetTypeInfo();
-            }
-
-            if (typeInfo == null)
-            {
-                throw new ArgumentException(innerObject.GetType().FullName + " is not " + baseTypeName);
-            }
-
-            if (typeInfo.GetDeclaredProperty("Id") == null)
-            {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Id property]");
-            }
-
-            if (typeInfo.GetDeclaredProperty("Location") == null)
-            {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Location property]");
-            }
-
-            if (typeInfo.GetDeclaredProperty("Name") == null)
-            {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Name property]");
-            }
-
-            if (typeInfo.GetDeclaredProperty("Tags") == null)
-            {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Tags property]");
-            }
-
-            if (typeInfo.GetDeclaredProperty("Type") == null)
-            {
-                throw new ArgumentException(typeInfo.FullName + " is not a Resource [Missing Type property]");
-            }
-
-            resourceTypeInfo = typeInfo;
-        }
-
-        private string GetStringValue(string propertyName)
-        {
-            return (string) GetValue(propertyName);
-        }
-
-        private object GetValue(string propertyName)
-        {
-            PropertyInfo propInfo = resourceTypeInfo.GetDeclaredProperty(propertyName);
-            return propInfo.GetValue(Inner);
-        }
-
-        private void SetValue(string propertyName, object val)
-        {
-            PropertyInfo propInfo = resourceTypeInfo.GetDeclaredProperty(propertyName);
-            propInfo.SetValue(Inner, val);
-        }
     }
 }
