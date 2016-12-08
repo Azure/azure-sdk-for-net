@@ -8,10 +8,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// Base interface for resources in resource groups.
     /// </summary>
     public interface IGroupableResource  :
-        IResource
+        IResource, IHasResourceGroup
     {
-        /// <returns>the name of the resource group</returns>
-        string ResourceGroupName { get; }
-
+       
     }
 }

@@ -10,10 +10,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Implementation for Azure SQL Database's SloUsageMetric.
     /// </summary>
     internal partial class SloUsageMetricImpl :
-        Wrapper<SloUsageMetricInner>,
+        Wrapper<SloUsageMetric>,
         ISloUsageMetric
     {
-        internal SloUsageMetricImpl(SloUsageMetricInner innerObject)
+        internal SloUsageMetricImpl(SloUsageMetric innerObject)
             : base(innerObject)
         {
         }
