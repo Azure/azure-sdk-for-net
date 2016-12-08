@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     {
         private readonly string randName;
         private static string[] formats = new string[] { "M/d/yyyy h:mm:ss tt" };
-        private Random random = new Random();
+        private static Random random = new Random();
 
         /**
          * Creates ResourceNamer.

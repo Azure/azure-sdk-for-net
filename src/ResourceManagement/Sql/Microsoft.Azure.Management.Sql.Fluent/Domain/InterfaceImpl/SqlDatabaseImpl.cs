@@ -243,12 +243,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>SqlWarehouse instance for more operations.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.CastToWarehouse
+        Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.CastToWarehouse()
         {
-            get
-            {
-                return this.CastToWarehouse() as Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse;
-            }
+            return this.CastToWarehouse() as Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse;
         }
 
         /// <return>Name of the SQL Server to which this database belongs.</return>
@@ -329,9 +326,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>Returns the list of usages (DatabaseMetrics) of the database.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListUsages()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListUsages()
         {
-            return this.ListUsages() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric>;
+            return this.ListUsages() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric>;
         }
 
         /// <return>The status of the Azure SQL Database.</return>
@@ -390,9 +387,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>Returns the list of all restore points on the database.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListRestorePoints()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase.ListRestorePoints()
         {
-            return this.ListRestorePoints() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint>;
+            return this.ListRestorePoints() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint>;
         }
 
         /// <return>True if this Database is SqlWarehouse.</return>

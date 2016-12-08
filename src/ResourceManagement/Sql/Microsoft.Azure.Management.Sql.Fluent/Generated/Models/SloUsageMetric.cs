@@ -13,15 +13,15 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// <summary>
     /// Represents a Slo Usage Metric.
     /// </summary>
-    public partial class SloUsageMetricInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class SloUsageMetric
     {
         /// <summary>
-        /// Initializes a new instance of the SloUsageMetricInner class.
+        /// Initializes a new instance of the SloUsageMetric class.
         /// </summary>
-        public SloUsageMetricInner() { }
+        public SloUsageMetric() { }
 
         /// <summary>
-        /// Initializes a new instance of the SloUsageMetricInner class.
+        /// Initializes a new instance of the SloUsageMetric class.
         /// </summary>
         /// <param name="serviceLevelObjective">The serviceLevelObjective for
         /// SLO usage metric. Possible values include: 'Basic', 'S0', 'S1',
@@ -30,8 +30,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
         /// for SLO usage metric.</param>
         /// <param name="inRangeTimeRatio">Gets or sets inRangeTimeRatio for
         /// SLO usage metric.</param>
-        public SloUsageMetricInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string serviceLevelObjective = default(string), System.Guid? serviceLevelObjectiveId = default(System.Guid?), double? inRangeTimeRatio = default(double?))
-            : base(location, id, name, type, tags)
+        public SloUsageMetric(string serviceLevelObjective = default(string), System.Guid? serviceLevelObjectiveId = default(System.Guid?), double? inRangeTimeRatio = default(double?))
         {
             ServiceLevelObjective = serviceLevelObjective;
             ServiceLevelObjectiveId = serviceLevelObjectiveId;
