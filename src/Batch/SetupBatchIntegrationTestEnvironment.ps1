@@ -7,10 +7,9 @@ $batchAcctName = ""
 $storageAcctName = ""
 $storageAcctRG = ""
 
-# You only need to change these if testing against a Microsoft
-# internal test environment
+# You only need to change this if testing against an environment
+# other than public Azure.
 $managementUrl = "https://management.azure.com/"
-$testTenantCertificateThumbprint = "***UNUSED***"
 
 $promptKeys = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()"  # there are undoubtedly cleaner ways to do this, but not worth investing in for a quick setup script
 
@@ -92,8 +91,6 @@ SetEnv "MABOM_StorageAccount" $storageAcctName
 SetEnv "MABOM_StorageKey" $storageKeys[0].Value
 SetEnv "MABOM_BlobEndpoint" $blobEndpoint
 SetEnv "MABOM_StorageAccountResourceGroupName" $storageAcctRG
-
-SetEnv "MABOM_BatchTRPCertificateThumbprint" $testTenantCertificateThumbprint
 
 Write-Output ""
 Write-Output "User environment variables created. These will be available only to new"
