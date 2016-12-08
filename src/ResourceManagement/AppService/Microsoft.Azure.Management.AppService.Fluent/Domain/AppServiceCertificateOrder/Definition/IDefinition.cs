@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.AppServiceCertificateOrde
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Fluent.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>

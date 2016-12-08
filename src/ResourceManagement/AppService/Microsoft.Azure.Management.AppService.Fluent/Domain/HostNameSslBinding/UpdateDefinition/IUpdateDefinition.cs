@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Appservice.Fluent.HostNameSslBinding.UpdateDefinition
 {
-    using Microsoft.Azure.Management.Fluent.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Appservice.Fluent;
     using Java.Io;

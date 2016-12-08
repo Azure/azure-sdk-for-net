@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     using System.Threading.Tasks;
     using AppServiceCertificateOrder.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Fluent.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System;

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.HostNameSslBinding.Defini
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Appservice.Fluent;
     using Java.Io;
-    using Microsoft.Azure.Management.Fluent.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Fluent;
 
     /// <summary>
     /// The first stage of a hostname SSL binding definition.
