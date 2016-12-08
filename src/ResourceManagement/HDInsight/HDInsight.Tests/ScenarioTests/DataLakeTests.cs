@@ -103,28 +103,85 @@ namespace HDInsight.Tests
                 //set variables
                 const string dnsname = "hdisdk-datalake5";
 
-                var spec = GetDataLakeClusterParameters();
-                spec.Version = "3.2";
+                var clusterCreateParams = GetDataLakeClusterParameters();
 
-                var createresponse = client.Clusters.Create(resourceGroup, dnsname, spec);
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, clusterCreateParams);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
 
                 //TODO: Assert if data lake configurations are set once shefali adds GetConfigurations support
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
 
-                OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
+                // Assert cluster state
+                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Error"); // due to invalid script action
+                Assert.Equal(createresponse.Cluster.Properties.ErrorInfos.Count, 1);
+
+                // delete the cluster
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }
 
+        [Fact]
+        public void TestCreateDefaultFsDataLakeClusterUsingClusterParameters()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                //get clients
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+
+                //create resourcegroup
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                //set variables
+                const string dnsname = "hdisdk-defaultfsdatalake1";
+
+                var clusterCreateParams = GetDefaultFsDatalakeClusterParameters();
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, clusterCreateParams);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Running");
+                
+                var getresponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
+                Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
+
+                // delete the cluster
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        /// <summary>
+        /// ClusterCreateParameters used for DataLake default FS
+        /// </summary>
+        /// <returns></returns>
+        private ClusterCreateParameters GetDefaultFsDatalakeClusterParameters()
+        {
+            var clusterCreateParams = GetClusterSpecHelpers.GetDataLakeDefaultFsCreateParametersIaas();
+            clusterCreateParams.Principal = new ServicePrincipal(new Guid(ApplicationId), new Guid(AadTenantId), 
+                                                                    CertificateFileBytes, CertificatePassword);
+            return clusterCreateParams;
+        }
+
+        /// <summary>
+        /// ClusterCreateParameters used for DataLake additional FS
+        /// </summary>
+        /// <returns></returns>
         private ClusterCreateParameters GetDataLakeClusterParameters()
         {
-            var spec = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
-
-            ServicePrincipal servicePrincipal = new ServicePrincipal(new Guid(ApplicationId), new Guid(AadTenantId), CertificateFileBytes,
-                CertificatePassword);
-            spec.Principal = servicePrincipal;
-            return spec;
+            var clusterCreateParams = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
+            clusterCreateParams.Principal = new ServicePrincipal(new Guid(ApplicationId), new Guid(AadTenantId), 
+                                                                    CertificateFileBytes, CertificatePassword);
+            return clusterCreateParams;
         }
     }
 }

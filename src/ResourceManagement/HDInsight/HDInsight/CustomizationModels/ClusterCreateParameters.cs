@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// This account will be used for schemaless paths and the cluster will 
         /// leverage to store some cluster level files.
         /// </summary>
+        [ObsoleteAttribute("This property is deprecated. Please use AzureStorageInfo with the DefaultStorageInfo parameter instead.", true)]
         public string DefaultStorageAccountName { get; set; }
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// This account will be used for schemaless paths and the cluster will 
         /// leverage to store some cluster level files.
         /// </summary>
+        [ObsoleteAttribute("This property is deprecated. Please use AzureStorageInfo with the DefaultStorageInfo parameter instead.", true)]
         public string DefaultStorageAccountKey { get; set; }
 
         /// <summary>
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// This account will be used for schemaless paths and the cluster will 
         /// leverage to store some cluster level files.
         /// </summary>
+        [ObsoleteAttribute("This property is deprecated. Please use AzureStorageInfo with the DefaultStorageInfo parameter instead.", true)]
         public string DefaultStorageContainer { get; set; }
 
         /// <summary>
@@ -108,7 +111,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string ZookeeperNodeSize { get; set; }
 
         /// <summary>
-        /// Gets additional Azure Storage Account that you want to enable access to.
+        /// Gets additional Azure Blob Storage Account that you want to enable access to.
         /// </summary>
         public Dictionary<string, string> AdditionalStorageAccounts { get; private set; }
 
@@ -187,6 +190,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public Dictionary<string, string> ComponentVersion { get; set; }
         
+        /// <summary>
+        /// The information for default storage account for the cluster.
+        /// This account will be used for schemaless paths and the cluster will 
+        /// leverage to store some cluster level files.
+        /// </summary>
+        public StorageInfo DefaultStorageInfo { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>

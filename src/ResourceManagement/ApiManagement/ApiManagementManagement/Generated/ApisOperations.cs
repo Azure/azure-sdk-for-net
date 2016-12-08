@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -743,7 +743,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -983,6 +983,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='wsdlEndpointName'>
         /// Optional. Local name of WSDL Endpoint (port) to be imported.
         /// </param>
+        /// <param name='apiType'>
+        /// Optional. Type of Api getting imported (Soap/Http).
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -990,7 +993,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, string apiType, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1029,6 +1032,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("wsdlServiceName", wsdlServiceName);
                 tracingParameters.Add("wsdlEndpointName", wsdlEndpointName);
+                tracingParameters.Add("apiType", apiType);
                 TracingAdapter.Enter(invocationId, this, "ImportAsync", tracingParameters);
             }
             
@@ -1048,7 +1052,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (path != null)
             {
                 queryParameters.Add("path=" + Uri.EscapeDataString(path));
@@ -1060,6 +1064,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (wsdlEndpointName != null)
             {
                 queryParameters.Add("wsdlEndpointName=" + Uri.EscapeDataString(wsdlEndpointName));
+            }
+            if (apiType != null)
+            {
+                queryParameters.Add("apiType=" + Uri.EscapeDataString(apiType));
             }
             if (queryParameters.Count > 0)
             {
@@ -1215,7 +1223,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/apis";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -1799,7 +1807,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

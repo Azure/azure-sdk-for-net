@@ -27,7 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.AzureStack.Management.nuget.proj" />
-    <None Include="Microsoft.AzureStack.Management.nuspec" />
+    <None Include="Microsoft.AzureStack.Management.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

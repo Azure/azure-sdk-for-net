@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/loggers/";
             url = url + Uri.EscapeDataString(loggerid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/loggers/";
             url = url + Uri.EscapeDataString(loggerid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -496,7 +496,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/loggers/";
             url = url + Uri.EscapeDataString(loggerid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -600,6 +600,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                 bool isBufferedInstance = ((bool)isBufferedValue);
                                 valueInstance.IsBuffered = isBufferedInstance;
                             }
+                            
+                            JToken credentialsSequenceElement = ((JToken)responseDoc["credentials"]);
+                            if (credentialsSequenceElement != null && credentialsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in credentialsSequenceElement)
+                                {
+                                    string credentialsKey = ((string)property.Name);
+                                    string credentialsValue = ((string)property.Value);
+                                    valueInstance.Credentials.Add(credentialsKey, credentialsValue);
+                                }
+                            }
                         }
                         
                     }
@@ -694,7 +705,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/loggers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -822,6 +833,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     {
                                         bool isBufferedInstance = ((bool)isBufferedValue);
                                         loggerGetContractInstance.IsBuffered = isBufferedInstance;
+                                    }
+                                    
+                                    JToken credentialsSequenceElement = ((JToken)valueValue["credentials"]);
+                                    if (credentialsSequenceElement != null && credentialsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in credentialsSequenceElement)
+                                        {
+                                            string credentialsKey = ((string)property.Name);
+                                            string credentialsValue = ((string)property.Value);
+                                            loggerGetContractInstance.Credentials.Add(credentialsKey, credentialsValue);
+                                        }
                                     }
                                 }
                             }
@@ -1002,6 +1024,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         bool isBufferedInstance = ((bool)isBufferedValue);
                                         loggerGetContractInstance.IsBuffered = isBufferedInstance;
                                     }
+                                    
+                                    JToken credentialsSequenceElement = ((JToken)valueValue["credentials"]);
+                                    if (credentialsSequenceElement != null && credentialsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in credentialsSequenceElement)
+                                        {
+                                            string credentialsKey = ((string)property.Name);
+                                            string credentialsValue = ((string)property.Value);
+                                            loggerGetContractInstance.Credentials.Add(credentialsKey, credentialsValue);
+                                        }
+                                    }
                                 }
                             }
                             
@@ -1130,7 +1163,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/loggers/";
             url = url + Uri.EscapeDataString(loggerid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-07-07");
+            queryParameters.Add("api-version=2016-10-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
