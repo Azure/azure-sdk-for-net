@@ -8,16 +8,12 @@
           Condition=" '$(Scope)' != 'all' " />
 
   <!--TODO: remove when we convert them to be NetCore based-->
-  <Import Project="$(LibrarySourceFolder)\ResourceManagement\Logic\LogicManagement\*.nuget.proj" 
-          Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\ResourceManagement\Scheduler\SchedulerManagement\*.nuget.proj" 
-          Condition=" '$(Scope)' == 'all' "/>
   <Import Project="$(LibrarySourceFolder)\Authentication\Common.Authentication\*.nuget.proj"
           Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\Batch\Client\*.nuget.proj"
+  <Import Project="$(LibrarySourceFolder)\Batch\Client\Src\*.nuget.proj"
           Condition=" '$(Scope)' == 'all' "/>
-  <Import Project="$(LibrarySourceFolder)\Batch\FileConventions\*.nuget.proj"
-          Condition=" '$(Scope)' == 'all' "/>          
+  <Import Project="$(LibrarySourceFolder)\Batch\FileConventions\Src\AzureBatchFileConventions\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
