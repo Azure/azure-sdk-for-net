@@ -3,23 +3,21 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Management.Compute;
-    using Management.Compute.Fluent.Models;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageVersion.
     /// </summary>
-    internal partial class VirtualMachineExtensionImageVersionImpl  :
-        Wrapper<VirtualMachineExtensionImageInner>,
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbWFnZVZlcnNpb25JbXBs
+    internal partial class VirtualMachineExtensionImageVersionImpl :
+        Wrapper<Models.VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageVersion
     {
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachineExtensionImageType type;
-
         ///GENMHASH:D2BFC73D89DA81F8725869BCA7B43486:885573F98652685D1517794C6009732F
-        internal VirtualMachineExtensionImageVersionImpl (IVirtualMachineExtensionImagesOperations client, 
-            IVirtualMachineExtensionImageType extensionImageType, 
-            VirtualMachineExtensionImageInner inner) : base(inner)
+        internal VirtualMachineExtensionImageVersionImpl(IVirtualMachineExtensionImagesOperations client, IVirtualMachineExtensionImageType extensionImageType, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.client = client;
             this.type = extensionImageType;

@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update
 {
+    using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Compute.Fluent;
-    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update;
     using Microsoft.Azure.Management.Network.Fluent;
 
     /// <summary>
     /// The stage of a virtual machine scale set update allowing to remove the public and internal load balancer
     /// from the primary network interface configuration.
     /// </summary>
-    public interface IWithoutPrimaryLoadBalancer
+    public interface IWithoutPrimaryLoadBalancer 
     {
         /// <summary>
         /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update containing inputs for the resource to be updated
     /// (via WithApply.apply()).
     /// </summary>
-    public interface IWithApply :
+    public interface IWithApply  :
         IAppliable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply>,
         IWithSku,
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set definition allowing to specify the number of
     /// virtual machines in the scale set.
     /// </summary>
-    public interface IWithCapacity
+    public interface IWithCapacity 
     {
         /// <summary>
         /// Specifies the new number of virtual machines in the scale set.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to associate backend pools and/or inbound NAT pools
     /// of the selected internal load balancer with the primary network interface of the scale set virtual machines.
     /// </summary>
-    public interface IWithPrimaryInternalLoadBalancerBackendOrNatPool :
+    public interface IWithPrimaryInternalLoadBalancerBackendOrNatPool  :
         IWithPrimaryInternalLoadBalancerNatPool
     {
         /// <summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to remove the association between the primary network
     /// interface configuration and a backend of a load balancer.
     /// </summary>
-    public interface IWithoutPrimaryLoadBalancerBackend
+    public interface IWithoutPrimaryLoadBalancerBackend 
     {
         /// <summary>
         /// Removes the associations between the primary network interface configuration and the specified backends
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to associate inbound NAT pools of the selected internal
     /// load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithPrimaryInternalLoadBalancerNatPool :
+    public interface IWithPrimaryInternalLoadBalancerNatPool  :
         IWithApply
     {
         /// <summary>
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// of the selected Internet-facing load balancer with the primary network interface of the virtual machines in
     /// the scale set.
     /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool :
+    public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool  :
         IWithPrimaryInternetFacingLoadBalancerNatPool
     {
         /// <summary>
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to change the SKU for the virtual machines
     /// in the scale set.
     /// </summary>
-    public interface IWithSku
+    public interface IWithSku 
     {
         /// <summary>
         /// Specifies the SKU for the virtual machines in the scale set.
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify extensions.
     /// </summary>
-    public interface IWithExtension
+    public interface IWithExtension 
     {
         /// <summary>
         /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to specify load balancers for the primary
     /// network interface of the scale set virtual machines.
     /// </summary>
-    public interface IWithPrimaryLoadBalancer :
+    public interface IWithPrimaryLoadBalancer  :
         IWithPrimaryInternalLoadBalancer
     {
         /// <summary>
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// A stage of the virtual machine scale set update allowing to remove the associations between the primary network
     /// interface configuration and the specified inbound NAT pools of the load balancer.
     /// </summary>
-    public interface IWithoutPrimaryLoadBalancerNatPool
+    public interface IWithoutPrimaryLoadBalancerNatPool 
     {
         /// <summary>
         /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to specify an internal load balancer for
     /// the primary network interface of the scale set virtual machines.
     /// </summary>
-    public interface IWithPrimaryInternalLoadBalancer :
+    public interface IWithPrimaryInternalLoadBalancer  :
         IWithApply
     {
         /// <summary>
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// The stage of a virtual machine scale set update allowing to associate an inbound NAT pool of the selected
     /// Internet-facing load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancerNatPool :
+    public interface IWithPrimaryInternetFacingLoadBalancerNatPool  :
         IWithPrimaryInternalLoadBalancer
     {
         /// <summary>
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// <summary>
     /// The entirety of the load balancer update.
     /// </summary>
-    public interface IUpdate :
+    public interface IUpdate  :
         IWithPrimaryLoadBalancer,
         IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool,
         IWithPrimaryInternalLoadBalancerBackendOrNatPool

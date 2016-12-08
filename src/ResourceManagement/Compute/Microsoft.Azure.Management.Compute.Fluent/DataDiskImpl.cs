@@ -9,20 +9,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Storage.Fluent;
     using Resource.Fluent.Core.ChildResourceActions;
     using System;
+    using VirtualMachineDataDisk.UpdateDefinition;
+    using VirtualMachineDataDisk.Definition;
 
     /// <summary>
     /// The implementation for DataDisk and its create and update interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uRGF0YURpc2tJbXBs
     internal partial class DataDiskImpl :
-        ChildResource<DataDisk,
-            VirtualMachineImpl,
-            IVirtualMachine>,
-        IVirtualMachineDataDisk,
-        VirtualMachineDataDisk.Definition.IDefinition<VirtualMachine.Definition.IWithCreate>,
-        VirtualMachineDataDisk.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
-        VirtualMachineDataDisk.Update.IUpdate
+    ChildResource<Models.DataDisk, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+    IVirtualMachineDataDisk,
+    IDefinition<VirtualMachine.Definition.IWithCreate>,
+    IUpdateDefinition<VirtualMachine.Update.IUpdate>,
+    VirtualMachineDataDisk.Update.IUpdate
     {
+        ///GENMHASH:24F96ABA39A27B68AD45A8C3AFC1BEB0:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) : base(inner, parent)
         {
         }
@@ -141,7 +142,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        public VirtualMachineImpl Attach ()
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:EF19F0806CD4A333C16AC350FE19DD44
+        public VirtualMachineImpl Attach()
         {
             Parent.WithDataDisk(this);
             return Parent;

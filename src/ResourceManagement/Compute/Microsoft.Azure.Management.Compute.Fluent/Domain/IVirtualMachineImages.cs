@@ -2,14 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to virtual machine image management API.
     /// </summary>
-    public interface IVirtualMachineImages  :
+    public interface IVirtualMachineImages :
         ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>
     {
         /// <return>Entry point to virtual machine image publishers.</return>

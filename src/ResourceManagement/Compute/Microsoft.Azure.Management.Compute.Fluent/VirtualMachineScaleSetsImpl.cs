@@ -18,13 +18,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldHNJbXBs
     internal partial class VirtualMachineScaleSetsImpl  :
-        GroupableResources<IVirtualMachineScaleSet, VirtualMachineScaleSetImpl, VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
+        GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl, Models.VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {
         private IVirtualMachineScaleSetVMsOperations vmInstanceClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
-
         ///GENMHASH:D153EE3A7098DCC0FDE502B79387242D:20D58C6F0677BACCE2BBFE4994C6C570
         internal VirtualMachineScaleSetsImpl (
             IVirtualMachineScaleSetsOperations client,

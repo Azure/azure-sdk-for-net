@@ -7,11 +7,16 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+
     /// <summary>
     /// The implementation for VirtualMachineImagesInSku.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbWFnZXNJblNrdUltcGw=
-    internal partial class VirtualMachineImagesInSkuImpl : IVirtualMachineImagesInSku
+    internal partial class VirtualMachineImagesInSkuImpl :
+        IVirtualMachineImagesInSku
     {
         private IVirtualMachineSku sku;
         private IVirtualMachineImagesOperations innerCollection;

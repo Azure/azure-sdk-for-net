@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineExtensionImages virtualMachineExtensionImages;
         private IAvailabilitySets availabilitySets;
         private IVirtualMachineScaleSets virtualMachineScaleSets;
+        private IComputeUsages usages;
         #endregion
 
         #region ctrs
@@ -159,6 +160,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 return virtualMachineScaleSets;
             }
         }
+
+        public IComputeUsages Usages
+        {
+            get
+            {
+                if (usages == null)
+                {
+                    usages = new ComputeUsagesImpl(this.client);
+                }
+                return usages;
+            }
+        }
         #endregion
     }
 
@@ -171,5 +184,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         IAvailabilitySets AvailabilitySets { get; }
         IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
+        IComputeUsages Usages { get; }
     }
 }

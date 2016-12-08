@@ -3,13 +3,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
 
     /// <summary>
     /// The implementation for VirtualMachineSize.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTaXplSW1wbA==
-    internal partial class VirtualMachineSizeImpl  :
+    internal partial class VirtualMachineSizeImpl :
         IVirtualMachineSize
     {
         private VirtualMachineSize innerModel;

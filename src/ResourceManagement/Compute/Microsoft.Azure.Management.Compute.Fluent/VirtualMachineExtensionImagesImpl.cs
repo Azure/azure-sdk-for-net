@@ -3,7 +3,8 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImages.
@@ -13,7 +14,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IVirtualMachineExtensionImages
     {
         private IVirtualMachinePublishers publishers;
-
         ///GENMHASH:5CB92C08673ABFA2D2A7D4213EB2D305:FA897FEBD514346FC3C576EAB52CCC9D
         internal VirtualMachineExtensionImagesImpl(IVirtualMachinePublishers publishers)
         {

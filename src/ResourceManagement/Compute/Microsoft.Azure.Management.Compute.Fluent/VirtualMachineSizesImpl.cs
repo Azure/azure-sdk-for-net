@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTaXplc0ltcGw=
     internal partial class VirtualMachineSizesImpl :
-        ReadableWrappers<IVirtualMachineSize, VirtualMachineSizeImpl, VirtualMachineSize>,
+        ReadableWrappers<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineSizeImpl, Models.VirtualMachineSize>,
         IVirtualMachineSizes
     {
         private IVirtualMachineSizesOperations innerCollection;

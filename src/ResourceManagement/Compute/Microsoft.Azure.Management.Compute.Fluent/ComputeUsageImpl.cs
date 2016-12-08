@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Management.Fluent.Compute;
 
     /// <summary>
     /// The implementation of ComputeUsage.

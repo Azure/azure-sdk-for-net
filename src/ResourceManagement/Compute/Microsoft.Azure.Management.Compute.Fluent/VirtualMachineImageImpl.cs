@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Collections.Generic;
+
     /// <summary>
     /// The implementation for VirtualMachineImage.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbWFnZUltcGw=
-    internal partial class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
+    internal partial class VirtualMachineImageImpl :
+        IndexableWrapper<Models.VirtualMachineImageInner>,
+        IVirtualMachineImage
     {
         private Region location;
         private ImageReference imageReference;
-
         ///GENMHASH:3037DFCA1BCDE07672005B139B094F10:0578F9D5B08EF1856822AB6B7B18110E
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version)
             : base(null)

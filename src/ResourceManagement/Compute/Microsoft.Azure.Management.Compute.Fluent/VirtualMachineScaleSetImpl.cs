@@ -1,40 +1,35 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.Network.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Rest.Azure;
-using System.Text;
-using System.Text.RegularExpressions;
-using System;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Threading;
+    using System.Linq;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System;
+
     /// <summary>
     /// Implementation of VirtualMachineScaleSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEltcGw=
     internal partial class VirtualMachineScaleSetImpl :
-        GroupableParentResource<IVirtualMachineScaleSet,
-            VirtualMachineScaleSetInner,
-            VirtualMachineScaleSetImpl,
-            IComputeManager,
-            VirtualMachineScaleSet.Definition.IWithGroup,
-            VirtualMachineScaleSet.Definition.IWithSku,
-            VirtualMachineScaleSet.Definition.IWithCreate,
-            VirtualMachineScaleSet.Update.IWithApply>,
+        GroupableParentResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet, Models.VirtualMachineScaleSetInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl, IComputeManager, VirtualMachineScaleSet.Definition.IWithGroup, VirtualMachineScaleSet.Definition.IWithSku, VirtualMachineScaleSet.Definition.IWithCreate, VirtualMachineScaleSet.Update.IWithApply>,
         IVirtualMachineScaleSet,
-        VirtualMachineScaleSet.Definition.IDefinition,
-        VirtualMachineScaleSet.Update.IUpdate
+        IDefinition,
+        IUpdate
     {
         // Clients
         private IVirtualMachineScaleSetsOperations client;
@@ -72,17 +67,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private List<string> primaryInternetFacingLBInboundNatPoolsToAddOnUpdate = new List<string>();
         private List<string> primaryInternalLBBackendsToAddOnUpdate = new List<string>();
         private List<string> primaryInternalLBInboundNatPoolsToAddOnUpdate = new List<string>();
-        // cached primary virtual network
-        private INetwork primaryVirtualNetwork;
 
         ///GENMHASH:F0C80BE7722CB6620CCF10F060FE486B:9C152084C68269BCEA950F9F22FF2153
-        internal VirtualMachineScaleSetImpl(string name,
-                    VirtualMachineScaleSetInner innerModel,
-                    IVirtualMachineScaleSetsOperations client,
-                    IVirtualMachineScaleSetVMsOperations vmInstancesClient,
-                    ComputeManager computeManager,
-                    IStorageManager storageManager,
-                    INetworkManager networkManager) : base(name, innerModel, computeManager)
+        internal VirtualMachineScaleSetImpl(string name, VirtualMachineScaleSetInner innerModel, IVirtualMachineScaleSetsOperations client, IVirtualMachineScaleSetVMsOperations vmInstancesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) : base(name, innerModel, computeManager)
         {
             this.client = client;
             this.vmInstancesClient = vmInstancesClient;
@@ -963,11 +950,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
         public void Deallocate()
         {
             this.client.Deallocate(this.ResourceGroupName, this.Name);
         }
 
+        ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
         public void PowerOff()
         {
             this.client.PowerOff(this.ResourceGroupName, this.Name);

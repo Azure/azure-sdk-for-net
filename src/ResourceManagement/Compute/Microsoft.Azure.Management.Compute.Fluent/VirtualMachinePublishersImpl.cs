@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using System.Collections.Generic;
+
     /// <summary>
     /// The implementation for VirtualMachinePublishers.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVQdWJsaXNoZXJzSW1wbA==
-    internal partial class VirtualMachinePublishersImpl
-        : ReadableWrappers<IVirtualMachinePublisher, VirtualMachinePublisherImpl, VirtualMachineImageResourceInner>,
-          IVirtualMachinePublishers
+    internal partial class VirtualMachinePublishersImpl :
+        ReadableWrappers<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher, Microsoft.Azure.Management.Compute.Fluent.VirtualMachinePublisherImpl, Models.VirtualMachineImageResourceInner>,
+        IVirtualMachinePublishers
     {
         private readonly IVirtualMachineImagesOperations innerCollection;
         private readonly IVirtualMachineExtensionImagesOperations extensionsInnerCollection;

@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Management.Fluent.Compute;
 
     internal partial class ComputeUsageImpl
     {
@@ -39,11 +38,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>The unit of measurement.</return>
-        ComputeUsageUnit Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Unit
+        Models.ComputeUsageUnit Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Unit
         {
             get
             {
-                return this.Unit() as ComputeUsageUnit;
+                return this.Unit() as Models.ComputeUsageUnit;
             }
         }
     }

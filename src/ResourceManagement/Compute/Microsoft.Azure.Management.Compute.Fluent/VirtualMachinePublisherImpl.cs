@@ -1,32 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+
     /// <summary>
     /// The implementation for VirtualMachinePublisher.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVQdWJsaXNoZXJJbXBs
-    internal partial class VirtualMachinePublisherImpl : IVirtualMachinePublisher
+    internal partial class VirtualMachinePublisherImpl :
+        IVirtualMachinePublisher
     {
         private Region location;
         private string publisher;
         private IVirtualMachineOffers offers;
         private IVirtualMachineExtensionImageTypes extensionTypes;
-
         ///GENMHASH:2545F15E7242CF7DFF52ABD27674BC68:0CC035167100F57523060A76A803AC57
-        internal VirtualMachinePublisherImpl(Region location, 
-            string publisher, 
-            IVirtualMachineImagesOperations vmImagesClient,
-            IVirtualMachineExtensionImagesOperations vmExtensionImagesClient)
+        internal VirtualMachinePublisherImpl(Region location, string publisher, IVirtualMachineImagesOperations vmImagesClient, IVirtualMachineExtensionImagesOperations extensionsClient)
         {
             this.location = location;
             this.publisher = publisher;
             offers = new VirtualMachineOffersImpl(vmImagesClient, this);
-            extensionTypes = new VirtualMachineExtensionImageTypesImpl(vmExtensionImagesClient, this);
+            extensionTypes = new VirtualMachineExtensionImageTypesImpl(extensionsClient, this);
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:AC71B793CB602017F7CD103CEACA5AD0

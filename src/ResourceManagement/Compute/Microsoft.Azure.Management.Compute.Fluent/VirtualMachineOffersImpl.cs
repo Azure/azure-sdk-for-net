@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using System.Collections.Generic;
+
     /// <summary>
     /// The implementation for VirtualMachineOffers.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVPZmZlcnNJbXBs
     internal partial class VirtualMachineOffersImpl :
-        ReadableWrappers<IVirtualMachineOffer, VirtualMachineOfferImpl, VirtualMachineImageResourceInner>,
+        ReadableWrappers<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineOfferImpl, Models.VirtualMachineImageResourceInner>,
         IVirtualMachineOffers
     {
         private IVirtualMachineImagesOperations innerCollection;

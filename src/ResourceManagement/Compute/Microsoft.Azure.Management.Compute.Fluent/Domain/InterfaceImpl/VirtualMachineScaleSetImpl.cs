@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using VirtualMachineScaleSet.Update;
-    using Models;
-    using VirtualMachineScaleSet.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Storage.Fluent;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Resource.Fluent;
     using System.Threading;
 
     internal partial class VirtualMachineScaleSetImpl

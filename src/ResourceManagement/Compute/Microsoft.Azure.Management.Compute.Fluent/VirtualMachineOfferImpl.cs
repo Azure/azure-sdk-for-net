@@ -10,7 +10,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// The implementation for VirtualMachineOffer.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVPZmZlckltcGw=
-    internal partial class VirtualMachineOfferImpl : IVirtualMachineOffer
+    internal partial class VirtualMachineOfferImpl :
+        IVirtualMachineOffer
     {
         private IVirtualMachinePublisher publisher;
         private string offerName;

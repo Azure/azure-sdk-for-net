@@ -3,21 +3,20 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Management.Compute.Fluent.Models;
-    using Resource.Fluent.Core;
-    using Management.Compute;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageTypes.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbWFnZVR5cGVzSW1wbA==
-    internal partial class VirtualMachineExtensionImageTypesImpl  :
-        ReadableWrappers<IVirtualMachineExtensionImageType, VirtualMachineExtensionImageTypeImpl, VirtualMachineExtensionImageInner>,
+    internal partial class VirtualMachineExtensionImageTypesImpl :
+        ReadableWrappers<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtensionImageTypeImpl, Models.VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageTypes
     {
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachinePublisher publisher;
-
         ///GENMHASH:BC226EF2EAB4AB4B0C4E94FED5D962F0:D11D3C231EE92D6F7F22BDA2782F6427
         internal VirtualMachineExtensionImageTypesImpl (IVirtualMachineExtensionImagesOperations client, IVirtualMachinePublisher publisher)
         {

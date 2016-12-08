@@ -3,10 +3,9 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Management.Compute;
-    using Management.Compute.Fluent.Models;
-    using Resource.Fluent.Core;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
     using System.Collections.ObjectModel;
 
     /// <summary>
@@ -14,10 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25zSW1wbA==
     internal partial class VirtualMachineExtensionsImpl :
-        ExternalChildResourcesCached<VirtualMachineExtensionImpl, IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>
+        ExternalChildResourcesCached<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtensionImpl, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension, Models.VirtualMachineExtensionInner, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl>
     {
         private IVirtualMachineExtensionsOperations client;
-
         /// <summary>
         /// Creates new VirtualMachineExtensionsImpl.
         /// </summary>

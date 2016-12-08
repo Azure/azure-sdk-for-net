@@ -3,32 +3,36 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-
-    using System.Threading.Tasks;
+    using VirtualMachineExtension.UpdateDefinition;
     using System.Collections.Generic;
-    using Resource.Fluent.Core;
+    using VirtualMachineExtension.Definition;
+    using Models;
     using System.Threading;
-    using Management.Compute.Fluent.Models;
-    using Management.Compute;
-    using System.Collections.ObjectModel;
-    using Newtonsoft.Json;
+    using VirtualMachineExtension.Update;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using VirtualMachine.Definition;
+    using VirtualMachine.Update;
     using Resource.Fluent.Core.ChildResourceActions;
+    using Newtonsoft.Json;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Implementation of VirtualMachineExtension.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbXBs
-    internal partial class VirtualMachineExtensionImpl  :
-        ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
+    internal partial class VirtualMachineExtensionImpl :
+        ExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension, Models.VirtualMachineExtensionInner, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl>,
         IVirtualMachineExtension,
-        VirtualMachineExtension.Definition.IDefinition<VirtualMachine.Definition.IWithCreate>,
-        VirtualMachineExtension.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
+        IDefinition<VirtualMachine.Definition.IWithCreate>,
+        IUpdateDefinition<VirtualMachine.Update.IUpdate>,
         VirtualMachineExtension.Update.IUpdate
     {
         private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;
         private IDictionary<string, object> protectedSettings;
-
         ///GENMHASH:90947EC118BF5E99153E929733992E3D:2B5D1133EDB84DA652C7CF5DCF2A8534
         internal VirtualMachineExtensionImpl(string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner, IVirtualMachineExtensionsOperations client) : base(name, parent, inner)
         {

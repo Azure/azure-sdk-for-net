@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+
     /// <summary>
     /// The implementation for Sku.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTa3VJbXBs
-    internal partial class VirtualMachineSkuImpl : IVirtualMachineSku
+    internal partial class VirtualMachineSkuImpl :
+        IVirtualMachineSku
     {
         private IVirtualMachineOffer offer;
         private string skuName;

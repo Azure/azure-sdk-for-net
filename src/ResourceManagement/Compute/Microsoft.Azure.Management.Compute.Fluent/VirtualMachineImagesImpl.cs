@@ -6,15 +6,19 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+
     /// <summary>
     /// The implementation for VirtualMachineImages.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbWFnZXNJbXBs
-    internal partial class VirtualMachineImagesImpl : IVirtualMachineImages
+    internal partial class VirtualMachineImagesImpl :
+        IVirtualMachineImages
     {
         private IVirtualMachinePublishers publishers;
         private IVirtualMachineImagesOperations client;
-
         ///GENMHASH:ACE7DB5EC4859832FCAB3D9EEA5A3085:F45A4D9C421A9195D289FED2F4D6740A
         internal VirtualMachineImagesImpl(IVirtualMachinePublishers publishers, IVirtualMachineImagesOperations client)
         {

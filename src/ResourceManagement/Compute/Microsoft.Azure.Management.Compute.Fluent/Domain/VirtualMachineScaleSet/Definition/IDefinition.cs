@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent;
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// inputs for the resource to be created (via WithCreate.create(), but also allows for any other
     /// optional settings to be specified.
     /// </summary>
-    public interface IWithWindowsCreate :
+    public interface IWithWindowsCreate  :
         IWithCreate
     {
         /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of the Linux virtual machine scale set definition allowing to specify SSH root user name.
     /// </summary>
-    public interface IWithLinuxRootUsername
+    public interface IWithLinuxRootUsername 
     {
         /// <summary>
         /// Specifies the SSH root user name for the Linux virtual machine.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify the storage account.
     /// </summary>
-    public interface IWithStorageAccount
+    public interface IWithStorageAccount 
     {
         /// <summary>
         /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify the upgrade policy.
     /// </summary>
-    public interface IWithUpgradePolicy
+    public interface IWithUpgradePolicy 
     {
         /// <summary>
         /// Specifies the virtual machine scale set upgrade policy mode.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The entirety of the load balancer definition.
     /// </summary>
-    public interface IDefinition :
+    public interface IDefinition  :
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IBlank,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithGroup,
         IWithSku,
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of the Windows virtual machine scale set definition allowing to specify administrator user name.
     /// </summary>
-    public interface IWithWindowsAdminUsername
+    public interface IWithWindowsAdminUsername 
     {
         /// <summary>
         /// Specifies the administrator user name for the Windows virtual machine.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify the resource group.
     /// </summary>
-    public interface IWithGroup :
+    public interface IWithGroup  :
         Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithSku>
     {
     }
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of the virtual machine scale set definition allowing to specify the operating system image.
     /// </summary>
-    public interface IWithOS
+    public interface IWithOS 
     {
         /// <summary>
         /// Specifies a known marketplace Linux image used as the virtual machine's operating system.
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// for the resource to be created (via WithCreate.create()), but also allows for any other optional
     /// settings to be specified.
     /// </summary>
-    public interface IWithLinuxCreate :
+    public interface IWithLinuxCreate  :
         IWithCreate
     {
         /// <summary>
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to specify an internal load balancer for
     /// the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithPrimaryInternalLoadBalancer
+    public interface IWithPrimaryInternalLoadBalancer 
     {
         /// <summary>
         /// Specifies the internal load balancer whose backends and/or NAT pools can be assigned to the primary network
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// to be created (via WithCreate.create()), but also allowing for any other optional settings
     /// to be specified.
     /// </summary>
-    public interface IWithCreate :
+    public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IWithOsDiskSettings,
         IWithComputerNamePrefix,
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of the virtual machine scale set definition allowing to specify the custom data.
     /// </summary>
-    public interface IWithCustomData
+    public interface IWithCustomData 
     {
         /// <summary>
         /// Specifies the custom data for the virtual machine scale set.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to associate a backend pool and/or an inbound NAT pool
     /// of the selected Internet-facing load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool :
+    public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool  :
         IWithPrimaryInternetFacingLoadBalancerNatPool
     {
         /// <summary>
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of the Linux virtual machine scale set definition allowing to specify SSH root password or public key.
     /// </summary>
-    public interface IWithLinuxRootPasswordOrPublicKey
+    public interface IWithLinuxRootPasswordOrPublicKey 
     {
         /// <summary>
         /// Specifies the SSH root password for the Linux virtual machine.
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The first stage of a virtual machine scale set definition.
     /// </summary>
-    public interface IBlank :
+    public interface IBlank  :
         IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithGroup>
     {
     }
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to associate backend pools and/or inbound NAT pools
     /// of the selected internal load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithInternalLoadBalancerBackendOrNatPool :
+    public interface IWithInternalLoadBalancerBackendOrNatPool  :
         IWithInternalInternalLoadBalancerNatPool
     {
         /// <summary>
@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to associate an inbound NAT pool of the selected
     /// Internet-facing load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancerNatPool :
+    public interface IWithPrimaryInternetFacingLoadBalancerNatPool  :
         IWithPrimaryInternalLoadBalancer
     {
         /// <summary>
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of the virtual machine scale set definition allowing to specify number of
     /// virtual machines in the scale set.
     /// </summary>
-    public interface IWithCapacity
+    public interface IWithCapacity 
     {
         /// <summary>
         /// Specifies the maximum number of virtual machines in the scale set.
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine definition allowing to specify extensions.
     /// </summary>
-    public interface IWithExtension
+    public interface IWithExtension 
     {
         /// <summary>
         /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of the virtual machine scale set definition allowing to associate inbound NAT pools of the selected
     /// internal load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithInternalInternalLoadBalancerNatPool :
+    public interface IWithInternalInternalLoadBalancerNatPool  :
         IWithOS
     {
         /// <summary>
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of the Windows virtual machine scale set definition allowing to specify administrator user name.
     /// </summary>
-    public interface IWithWindowsAdminPassword
+    public interface IWithWindowsAdminPassword 
     {
         /// <summary>
         /// Specifies the administrator password for the Windows virtual machine.
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to specify the virtual network subnet for the
     /// primary network configuration.
     /// </summary>
-    public interface IWithNetworkSubnet
+    public interface IWithNetworkSubnet 
     {
         /// <summary>
         /// Associate an existing virtual network subnet with the primary network interface of the virtual machines
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify OS disk configurations.
     /// </summary>
-    public interface IWithOsDiskSettings
+    public interface IWithOsDiskSettings 
     {
         /// <summary>
         /// Specifies the name for the OS disk.
@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to specify an Internet-facing load balancer for
     /// the primary network interface of the virtual machines in the scale set.
     /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancer
+    public interface IWithPrimaryInternetFacingLoadBalancer 
     {
         /// <summary>
         /// Specifies an Internet-facing load balancer whose backends and/or NAT pools can be assigned to the primary
@@ -503,7 +503,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify SKU for the virtual machines.
     /// </summary>
-    public interface IWithSku
+    public interface IWithSku 
     {
         /// <summary>
         /// Specifies the SKU for the virtual machines in the scale set.
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// The stage of a virtual machine scale set definition allowing to specify whether
     /// or not to over-provision virtual machines in the scale set.
     /// </summary>
-    public interface IWithOverProvision
+    public interface IWithOverProvision 
     {
         /// <summary>
         /// Disables over-provisioning of virtual machines.
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// <summary>
     /// The stage of a virtual machine scale set definition allowing to specify the computer name prefix.
     /// </summary>
-    public interface IWithComputerNamePrefix
+    public interface IWithComputerNamePrefix 
     {
         /// <summary>
         /// Specifies the name prefix to use for auto-generating the names for the virtual machines in the scale set.
