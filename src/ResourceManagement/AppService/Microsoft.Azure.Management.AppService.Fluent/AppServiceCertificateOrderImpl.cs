@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         {
             //$ return Inner.ProductType();
 
-            return CertificateProductType.STANDARD_DOMAIN_VALIDATED_SSL;
+            return CertificateProductType.StandardDomainValidatedSsl;
         }
 
         ///GENMHASH:11AF5CEDE5EC5110A3D190463E690E16:0B6EB716D0098ABB085A80641A141FD0
