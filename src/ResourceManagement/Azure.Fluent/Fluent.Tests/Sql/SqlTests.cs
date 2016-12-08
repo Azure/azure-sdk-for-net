@@ -51,6 +51,23 @@ namespace Azure.Tests.Sql
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void CanOperateSqlFromRollUpClient()
+        {
+            GenerateNewRGAndSqlServerNameForTest();
+            var rollUpClient = TestHelper.CreateRollupClient();
+            var sqlServer = rollUpClient.SqlServers.Define(SQL_SERVER_NAME)
+                    .WithRegion(Region.US_CENTRAL)
+                    .WithNewResourceGroup(RG_NAME)
+                    .WithAdministratorLogin("userName")
+                    .WithAdministratorPassword("loepop77ejk~13@@")
+                    .Create();
+            Assert.NotNull(sqlServer.Databases.List());
+            rollUpClient.SqlServers.DeleteById(sqlServer.Id);
+
+            DeleteResourceGroup(RG_NAME);
+        }
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanListRecommendedElasticPools()
         {
             var sqlServer = sqlServerManager.SqlServers.GetByGroup("ans", "ans-secondary");
