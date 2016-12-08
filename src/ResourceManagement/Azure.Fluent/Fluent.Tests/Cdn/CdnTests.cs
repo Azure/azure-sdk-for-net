@@ -21,8 +21,10 @@ namespace Azure.Tests.Cdn
         private const string cdnEndpointName = "endpoint-f3757d2a3e10";
         private const string cdnPremiumEndpointName = "premiumVerizonEndpointFluentTest22";
         private const string rgName = "rgRCCDN";
+        private const string endpointOriginHostname = "mylinuxapp.azurewebsites.net";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        //[Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDCdn()
         {
 
@@ -33,13 +35,12 @@ namespace Azure.Tests.Cdn
                 var standardProfile = cdnManager.Profiles.Define(cdnStandardProfileName)
                         .WithRegion(Region.US_CENTRAL)
                         .WithNewResourceGroup(rgName)
-
                         .WithStandardAkamaiSku()
                         .WithNewEndpoint("supername.cloudapp.net")
                         .DefineNewEndpoint("akamiEndpointWithoutMuchProperties")
                             .WithOrigin("originSuperName", "storageforazdevextest.blob.core.windows.net")
                             .Attach()
-                        .DefineNewEndpoint(cdnEndpointName, "mylinuxapp.azurewebsites.net")
+                        .DefineNewEndpoint(cdnEndpointName, endpointOriginHostname)
                             .WithContentTypeToCompress("powershell/pain")
                             .WithGeoFilter("/path/videos", GeoFilterActions.Block, CountryISOCode.ARGENTINA)
                             .WithGeoFilter("/path/images", GeoFilterActions.Block, CountryISOCode.BELGIUM)
@@ -54,6 +55,21 @@ namespace Azure.Tests.Cdn
                             .WithCustomDomain("sdk-2-f3757d2a3e10.azureedge-test.net")
                             .Attach()
                         .Create();
+
+                Assert.NotNull(standardProfile);
+                Assert.Equal(cdnStandardProfileName, standardProfile.Name);
+                Assert.False(standardProfile.IsPremiumVerizon);
+                Assert.Equal(3, standardProfile.Endpoints.Count);
+                Assert.True(standardProfile.Endpoints.ContainsKey(cdnEndpointName));
+                Assert.Equal(endpointOriginHostname, standardProfile.Endpoints[cdnEndpointName].OriginHostName);
+                Assert.Equal(2, standardProfile.Endpoints[cdnEndpointName].CustomDomains.Count);
+                Assert.Equal(2, standardProfile.Endpoints[cdnEndpointName].GeoFilters.Count);
+                Assert.True(standardProfile.Endpoints[cdnEndpointName].IsCompressionEnabled);
+                Assert.True(standardProfile.Endpoints[cdnEndpointName].IsHttpAllowed);
+                Assert.True(standardProfile.Endpoints[cdnEndpointName].IsHttpsAllowed);
+                Assert.Equal(444, standardProfile.Endpoints[cdnEndpointName].HttpsPort);
+                Assert.Equal(85, standardProfile.Endpoints[cdnEndpointName].HttpPort);
+
 
                 var premiumProfile = cdnManager.Profiles.Define(cdnPremiumProfileName)
                         .WithRegion(Region.US_CENTRAL)
@@ -71,24 +87,23 @@ namespace Azure.Tests.Cdn
                             .WithHttpPort(123)
                             .Attach()
                         .Create();
+                Assert.NotNull(premiumProfile);
+                Assert.Equal(Region.US_CENTRAL, premiumProfile.Region);
+                Assert.True(premiumProfile.IsPremiumVerizon);
+                Assert.Equal(3, premiumProfile.Endpoints.Count);
+                Assert.True(premiumProfile.Endpoints.ContainsKey(cdnPremiumEndpointName));
+                Assert.True(premiumProfile.Endpoints[cdnPremiumEndpointName].IsHttpAllowed);
+                Assert.True(premiumProfile.Endpoints[cdnPremiumEndpointName].IsHttpsAllowed);
+                Assert.Equal(12, premiumProfile.Endpoints[cdnPremiumEndpointName].HttpsPort);
+                Assert.Equal(123, premiumProfile.Endpoints[cdnPremiumEndpointName].HttpPort);
 
                 var profileRead = standardProfile.Refresh();
-                
-                /*
-                foreach (var endpoint in profileRead.Endpoints.Values)
-                {
-                    System.out.println("CDN Endpoint: " + endpoint.name());
-                    System.out.println("EP Hostname: " + endpoint.hostName());
-                    System.out.println("EP Origin hostname: " + endpoint.originHostName());
-                    System.out.println("EP optimization type: " + endpoint.optimizationType());
-                    System.out.println("EP Origin host header: " + endpoint.originHostHeader());
-                    System.out.println("EP Origin path: " + endpoint.originPath());
-                    for (String customDomain : endpoint.customDomains())
-                    {
-                        System.out.println("EP custom domain: " + customDomain);
-                    }
-                }*/
-                
+
+                Assert.NotNull(profileRead);
+                Assert.Equal(standardProfile.Region, profileRead.Region);
+                Assert.Equal(standardProfile.Name, profileRead.Name);
+                Assert.Equal(standardProfile.Endpoints.Count, profileRead.Endpoints.Count);
+
                 if (!standardProfile.IsPremiumVerizon)
                 {
                     standardProfile.Update()
@@ -107,6 +122,15 @@ namespace Azure.Tests.Cdn
                     .Apply();
                 }
 
+                Assert.Equal(standardProfile.Region, profileRead.Region);
+                Assert.Equal(standardProfile.Name, profileRead.Name);
+                Assert.NotEqual(standardProfile.Endpoints.Count, profileRead.Endpoints.Count);
+                Assert.Equal(4, standardProfile.Endpoints.Count);
+                Assert.Equal(1111, standardProfile.Endpoints[cdnEndpointName].HttpPort);
+                Assert.Equal(1, standardProfile.Endpoints[cdnEndpointName].CustomDomains.Count);
+                Assert.Equal("sdk-1-f3757d2a3e10.azureedge-test.net", standardProfile.Endpoints[cdnEndpointName].CustomDomains.ElementAt(0));
+                Assert.Equal(0, standardProfile.Endpoints[cdnEndpointName].GeoFilters.Count);
+
                 premiumProfile.Update()
                         .WithTag("provider", "Verizon")
                         .WithNewPremiumEndpoint("xplattestvmss1sto0575014.blob.core.windows.net")
@@ -119,14 +143,24 @@ namespace Azure.Tests.Cdn
                         .Parent()
                         .WithoutEndpoint("supermuperep1")
                 .Apply();
+                
+                Assert.True(premiumProfile.IsPremiumVerizon);
+                Assert.Equal(5, premiumProfile.Endpoints.Count);
+                Assert.False(premiumProfile.Endpoints.ContainsKey("supermuperep1"));
+                Assert.True(premiumProfile.IsPremiumVerizon);
 
-                String ssoUri = premiumProfile.GenerateSsoUri();
+                string ssoUri = premiumProfile.GenerateSsoUri();
+                Assert.NotNull(ssoUri);
 
-                //System.out.println("Standard Akamai Endpoints: " + standardProfile.endpoints().size());
                 var standardEp = standardProfile.Endpoints[cdnEndpointName];
                 var validationResult = standardEp.ValidateCustomDomain("sdk-2-f3757d2a3e10.azureedge-test.net");
+                Assert.NotNull(validationResult);
+                Assert.True(validationResult.CustomDomainValidated);
+
                 standardProfile.StopEndpoint(standardEp.Name);
+                Assert.Equal(EndpointResourceState.Stopped, standardProfile.Endpoints[standardEp.Name].ResourceState);
                 standardEp.Start();
+                Assert.Equal(EndpointResourceState.Running, standardProfile.Endpoints[standardEp.Name].ResourceState);
 
             }
             finally
@@ -142,7 +176,7 @@ namespace Azure.Tests.Cdn
 
         private ICdnManager CreateCdnManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"D:\my.azureauth");
             return CdnManager
                 .Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -151,7 +185,7 @@ namespace Azure.Tests.Cdn
 
         private IResourceManager CreateResourceManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"D:\my.azureauth");
             IResourceManager resourceManager = ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
