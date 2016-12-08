@@ -21,7 +21,8 @@
 
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)"
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta3, 2.0)"
   },
 
   "frameworks": {

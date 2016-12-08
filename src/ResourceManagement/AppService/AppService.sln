@@ -4,6 +4,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.AppService.Fluent", "Microsoft.Azure.Management.AppService.Fluent\Microsoft.Azure.Management.AppService.Fluent.xproj", "{C4D80403-4D5E-48BF-A744-08A785F823D9}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.KeyVault.Fluent", "..\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent\Microsoft.Azure.Management.KeyVault.Fluent.xproj", "{6a390125-3757-480e-bb6c-38ec622160d1}"
+EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent\Microsoft.Azure.Management.ResourceManager.Fluent.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9136DA55-66B3-4B69-9D43-01980DA16EED}"
@@ -21,6 +23,10 @@ Global
 		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6a390125-3757-480e-bb6c-38ec622160d1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6a390125-3757-480e-bb6c-38ec622160d1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6a390125-3757-480e-bb6c-38ec622160d1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6a390125-3757-480e-bb6c-38ec622160d1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
