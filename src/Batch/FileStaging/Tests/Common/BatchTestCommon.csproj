@@ -67,9 +67,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CertificateBuilder.cs" />
-    <Compile Include="CommonResources.cs" />
-    <Compile Include="FakePage.cs" />
     <Compile Include="TestTraits.cs" />
     <Compile Include="TestCommon.cs" />
   </ItemGroup>

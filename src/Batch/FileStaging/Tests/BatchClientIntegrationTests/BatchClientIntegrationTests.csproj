@@ -141,7 +141,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\IaasLinuxPoolFixture.cs" />
     <Compile Include="Fixtures\PaasWindowsPoolFixture.cs" />
     <Compile Include="AddTaskCollectionIntegrationTests.cs" />
     <Compile Include="IntegrationTestUtilities\TestUtilities.cs" />

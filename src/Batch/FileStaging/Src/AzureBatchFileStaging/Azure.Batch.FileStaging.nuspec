@@ -19,14 +19,11 @@ For technical overview, see http://azure.microsoft.com/documentation/articles/ba
 
 API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</description>
     <summary>Resource file staging support for the Microsoft Azure Batch service.</summary>
-    <releaseNotes>
-For detailed release notes, see https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/Batch/Client/changelog.md
-    </releaseNotes>
     <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
         <dependency id="WindowsAzure.Storage" version="6.2.0" />
-        <dependency id="Azure.Batch" version="$version$" />
+        <dependency id="Azure.Batch" version="5.1.2" />
       </group>
     </dependencies>
   </metadata>
