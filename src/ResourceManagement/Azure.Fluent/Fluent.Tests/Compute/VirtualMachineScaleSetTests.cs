@@ -52,11 +52,11 @@ namespace Fluent.Tests.Compute
                     .WithExistingResourceGroup(resourceGroup)
                     .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_A0)
                     .WithExistingPrimaryNetworkSubnet(network, "subnet1")
-                    .WithPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
+                    .WithExistingPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
                     .WithoutPrimaryInternalLoadBalancer()
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                    .WithRootUserName("jvuser")
-                    .WithPassword("123OData!@#123")
+                    .WithRootUsername("jvuser")
+                    .WithRootPassword("123OData!@#123")
                     .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
                     .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
                     .DefineNewExtension("CustomScriptForLinux")
@@ -116,12 +116,12 @@ namespace Fluent.Tests.Compute
                 .WithExistingResourceGroup(resourceGroup)
                 .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_A0)
                 .WithExistingPrimaryNetworkSubnet(network, "subnet1")
-                .WithPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
+                .WithExistingPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
                 .WithPrimaryInternetFacingLoadBalancerBackends(backends[0], backends[1])
                 .WithoutPrimaryInternalLoadBalancer()
                 .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                .WithRootUserName("jvuser")
-                .WithPassword("123OData!@#123")
+                .WithRootUsername("jvuser")
+                .WithRootPassword("123OData!@#123")
                 .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
                 .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
                 .Create();
@@ -157,7 +157,7 @@ namespace Fluent.Tests.Compute
 
             virtualMachineScaleSet
                 .Update()
-                .WithPrimaryInternalLoadBalancer(internalLoadBalancer)
+                .WithExistingPrimaryInternalLoadBalancer(internalLoadBalancer)
                 .WithoutPrimaryInternalLoadBalancerNatPools(inboundNatPoolToRemove)
                 .Apply();
 

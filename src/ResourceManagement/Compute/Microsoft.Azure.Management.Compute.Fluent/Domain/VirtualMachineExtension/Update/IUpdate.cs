@@ -16,13 +16,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
         /// enables auto upgrade of the extension.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithAutoUpgradeMinorVersionEnabled();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithMinorVersionAutoUpgrade();
 
         /// <summary>
         /// enables auto upgrade of the extension.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithAutoUpgradeMinorVersionDisabled();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithoutMinorVersionAutoUpgrade();
 
     }
     /// <summary>

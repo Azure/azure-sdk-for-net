@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private IVirtualMachineScaleSetVMsOperations client;
-        private ComputeManager computeManager;
+        private IComputeManager computeManager;
         ///GENMHASH:7A41C20BB6F19CCDAC03072604BF281B:10AB7511A9B5C284B8E2E1F35126DD60
         public string WindowsTimeZone()
         {
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         internal VirtualMachineScaleSetVMImpl(VirtualMachineScaleSetVMInner inner,
             VirtualMachineScaleSetImpl parent,
             IVirtualMachineScaleSetVMsOperations client,
-            ComputeManager computeManager) : base(inner, parent)
+            IComputeManager computeManager) : base(inner, parent)
         {
             this.client = client;
             this.computeManager = computeManager;
@@ -437,8 +437,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public string PrimaryNetworkInterfaceId()
         {
             foreach(var reference in this.Inner.NetworkProfile.NetworkInterfaces)  {
-                bool isPrimary = reference.Primary ?? false;
-                if (isPrimary) {
+                if (reference.Primary ?? false) {
                     return reference.Id;
                 }
             }

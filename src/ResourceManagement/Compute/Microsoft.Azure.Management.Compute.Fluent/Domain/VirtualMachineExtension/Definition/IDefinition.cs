@@ -72,13 +72,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Defi
         /// enables auto upgrade of the extension.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithAutoUpgradeMinorVersionEnabled();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithMinorVersionAutoUpgrade();
 
         /// <summary>
         /// disables auto upgrade of the extension.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithAutoUpgradeMinorVersionDisabled();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithoutMinorVersionAutoUpgrade();
 
     }
     /// <summary>

@@ -19,6 +19,9 @@ using System;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    /// <summary>
+    /// Implementation of VirtualMachineScaleSet.
+    /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEltcGw=
     internal partial class VirtualMachineScaleSetImpl :
         GroupableParentResource<IVirtualMachineScaleSet,
@@ -126,7 +129,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             this.SetOSDiskAndOSProfileDefaults();
             this.SetPrimaryIpConfigurationSubnet();
-            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
+            this.SetPrimaryIpConfigurationBackendsAndInboundNatPools();
             await HandleOSDiskContainersAsync();
             return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
         }
@@ -205,23 +208,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:A890CDCD402F1815F0ACD6293C3C115C:8FEE8350E44B2F78F72EE527639CDC76
         public INetwork GetPrimaryNetwork()
         {
-            if (this.primaryVirtualNetwork == null)
-            {
                 string subnetId = PrimaryNicDefaultIPConfiguration().Subnet.Id;
                 string virtualNetworkId = ResourceUtils.ParentResourcePathFromResourceId(subnetId);
-                this.primaryVirtualNetwork = this.networkManager
+                return this.networkManager
                         .Networks
                         .GetById(virtualNetworkId);
-            }
-            return this.primaryVirtualNetwork;
         }
 
         ///GENMHASH:8E925C4949ADC5B976067DDC58BE3E3C:D2243C739D20D636DF7C32705C2B6CAF
         public IVirtualMachineScaleSetVMs VirtualMachines()
         {
-            //$ return new VirtualMachineScaleSetVMsImpl(this, this.vmInstancesClient, this.MyManager);
-            // TODO
-            return null;
+            return new VirtualMachineScaleSetVMsImpl(this, this.vmInstancesClient, this.Manager);
         }
 
         ///GENMHASH:1E2CA1FC9878A5C0B08DAAE75CBAD541:CA4C4022D33F6F7487EF6C4ECA5FF3D3
@@ -350,7 +347,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:ACFF159DD59B63FA783C8B3D4A7A36F5:86B1B0C90A3820575D5746DAF454199B
         public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
         {
-            this.existingPrimaryNetworkSubnetNameToAssociate = mergePath(network.Id, "subnets", subnetName);
+            this.existingPrimaryNetworkSubnetNameToAssociate = MergePath(network.Id, "subnets", subnetName);
             return this;
         }
 
@@ -375,6 +372,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:AAC1F72971316317A21BEC14F977DEDE:ABC059395726B5D6BEB36206C2DDA144
         public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
             if (this.IsInCreateMode)
@@ -392,12 +390,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:FD824AC9D26C404162A9EEEE0B9A4489:B9DC6752667EC750602BB3CBA2F9F1A0
         public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
             if (this.IsInCreateMode)
             {
                 VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         defaultPrimaryIpConfig);
                 AssociateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
                         defaultPrimaryIpConfig,
@@ -488,7 +487,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (this.IsInCreateMode)
             {
                 VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
+                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
                         defaultPrimaryIpConfig);
                 AssociateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
                         defaultPrimaryIpConfig,
@@ -511,6 +510,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:0B86CB1DFA370E0EF503AA943BA12699:72153688799C022C061CCB2A43E36DC0
         public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancer()
         {
             if (this.IsInUpdateMode())
@@ -650,7 +650,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        public VirtualMachineScaleSetImpl WithStoredLinuxImage(String imageUrl)
+        ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:51AD565B2270FC1F9104F1A5BC632E24
+        public VirtualMachineScaleSetImpl WithStoredLinuxImage(string imageUrl)
         {
             VirtualHardDisk userImageVhd = new VirtualHardDisk();
             userImageVhd.Uri = imageUrl;
@@ -814,6 +815,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
         public VirtualMachineScaleSetImpl WithOsDiskCaching(CachingTypes cachingType)
         {
             this.Inner
@@ -1065,7 +1067,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        private bool isCustomImage(VirtualMachineScaleSetStorageProfile storageProfile)
+        ///GENMHASH:F60C5902A709BFEB700B6B3CCE5663A8:76A3EB6FFB2F9BFB55AE1B46314EF027
+        private bool IsCustomImage(VirtualMachineScaleSetStorageProfile storageProfile)
         {
             return storageProfile.OsDisk.Image != null
                     && storageProfile.OsDisk.Image.Uri != null;
@@ -1077,7 +1080,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             VirtualMachineScaleSetStorageProfile storageProfile = this.Inner
                     .VirtualMachineProfile
                     .StorageProfile;
-            if (isCustomImage(storageProfile))
+            if (IsCustomImage(storageProfile))
             {
                 // There is a restriction currently that virtual machine's disk cannot be stored in multiple storage accounts
                 // if scale set is based on custom image. Remove this check once azure start supporting it.
@@ -1104,7 +1107,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
                 storageProfile.OsDisk
                         .VhdContainers
-                        .Add(mergePath(storageAccount.EndPoints.Primary.Blob, containerName));
+                        .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
                 vhdContainerName = null;
                 creatableStorageAccountKeys.Clear();
                 existingStorageAccountsToAssociate.Clear();
@@ -1132,14 +1135,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     IStorageAccount storageAccount = (IStorageAccount)CreatedResource(storageAccountKey);
                     storageProfile.OsDisk
                             .VhdContainers
-                            .Add(mergePath(storageAccount.EndPoints.Primary.Blob, containerName));
+                            .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
                 }
 
                 foreach (IStorageAccount storageAccount in this.existingStorageAccountsToAssociate)
                 {
                     storageProfile.OsDisk
                             .VhdContainers
-                            .Add(mergePath(storageAccount.EndPoints.Primary.Blob, containerName));
+                            .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
                 }
 
                 this.vhdContainerName = null;
@@ -1164,7 +1167,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.existingPrimaryNetworkSubnetNameToAssociate = null;
         }
 
-        private void setPrimaryIpConfigurationBackendsAndInboundNatPools()
+        ///GENMHASH:2582ED197AB392F5EC837F6BC8FE2FF0:29B4432F98CD641D0280C31D00CAFB2D
+        private void SetPrimaryIpConfigurationBackendsAndInboundNatPools()
         {
             if (this.IsInCreateMode)
             {
@@ -1216,7 +1220,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternetFacingLoadBalancer != null)
                 {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
                 }
             }
 
@@ -1224,7 +1228,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternalLoadBalancer != null)
                 {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
                 }
             }
 
@@ -1232,7 +1236,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternetFacingLoadBalancer != null)
                 {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
                 }
                 AssociateLoadBalancerToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
                 if (this.primaryInternetFacingLBBackendsToAddOnUpdate.Count > 0)
@@ -1244,7 +1248,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
                 if (this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.Count > 0)
                 {
-                    removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
+                    RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
                     AssociateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
                             primaryIpConfig,
                             this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.ToArray());
@@ -1255,7 +1259,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.primaryInternalLoadBalancer != null)
                 {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
+                    RemoveLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
                 }
                 AssociateLoadBalancerToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
                 if (this.primaryInternalLBBackendsToAddOnUpdate.Count > 0)
@@ -1268,7 +1272,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
                 if (this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Count > 0)
                 {
-                    removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
+                    RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
                     AssociateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
                             primaryIpConfig,
                             this.primaryInternalLBInboundNatPoolsToAddOnUpdate.ToArray());
@@ -1289,11 +1293,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Clear();
         }
 
+        ///GENMHASH:B532EFEBE670EE3FA1185DA0A91F40B5:4C1AD969AF53405CB7FB7BF930887497
         private void ClearCachedProperties()
         {
             this.primaryInternetFacingLoadBalancer = null;
             this.primaryInternalLoadBalancer = null;
-            this.primaryVirtualNetwork = null;
         }
 
         ///GENMHASH:0ACBCB3C1F81BA37F134262122B79DA2:A4F154B483C36885CF45861AA9C1885F
@@ -1415,7 +1419,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             List<SubResource> backendSubResourcesToAssociate = new List<SubResource>();
             foreach (string backendName in backendNames)
             {
-                String backendPoolId = mergePath(loadBalancerId, "backendAddressPools", backendName);
+                String backendPoolId = MergePath(loadBalancerId, "backendAddressPools", backendName);
                 bool found = false;
                 foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
                 {
@@ -1448,7 +1452,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             List<SubResource> inboundNatPoolSubResourcesToAssociate = new List<SubResource>();
             foreach (string inboundNatPool in inboundNatPools)
             {
-                string inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", inboundNatPool);
+                string inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", inboundNatPool);
                 bool found = false;
                 foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
                 {
@@ -1482,7 +1486,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             IDictionary<string, ILoadBalancerBackend> lbBackends = loadBalancer.Backends;
             foreach (ILoadBalancerBackend lbBackend in lbBackends.Values)
             {
-                string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
+                string backendId = MergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
                 foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
                 {
                     if (subResource.Id.Equals(backendId, StringComparison.OrdinalIgnoreCase))
@@ -1503,7 +1507,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             IDictionary<string, ILoadBalancerInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools;
             foreach (ILoadBalancerInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
-                String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
+                String inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
                 foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
                 {
                     if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
@@ -1547,11 +1551,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     natPoolNames);
         }
 
-        private static void removeLoadBalancerAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
+        ///GENMHASH:99E12A9D1F6C67E6350163C75A02C0CF:EB015A0D5BB20773EED2BA22F09DBFE4
+        private static void RemoveLoadBalancerAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
                                                                              VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             RemoveAllBackendAssociationFromIpConfiguration(loadBalancer, ipConfig);
-            removeAllInboundNatPoolAssociationFromIpConfiguration(loadBalancer, ipConfig);
+            RemoveAllInboundNatPoolAssociationFromIpConfiguration(loadBalancer, ipConfig);
         }
 
         ///GENMHASH:AD16DA08B5E002AC14DA8E4DF1A29686:7CAC61F59FB870FA1BA64452A78CD17B
@@ -1573,7 +1578,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        private static void removeAllInboundNatPoolAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
+        ///GENMHASH:C8D0FD360C8F8A611F6F85F99CDE83D0:C73CD8C0F99ACCAB4E6C5579E1D974E4
+        private static void RemoveAllInboundNatPoolAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
                                                                                   VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
             List<SubResource> toRemove = new List<SubResource>();
@@ -1599,7 +1605,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             List<SubResource> toRemove = new List<SubResource>();
             foreach (string backendName in backendNames)
             {
-                string backendPoolId = mergePath(loadBalancerId, "backendAddressPools", backendName);
+                string backendPoolId = MergePath(loadBalancerId, "backendAddressPools", backendName);
                 foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
                 {
                     if (subResource.Id.Equals(backendPoolId, StringComparison.OrdinalIgnoreCase))
@@ -1624,7 +1630,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             List<SubResource> toRemove = new List<SubResource>();
             foreach (string natPoolName in inboundNatPoolNames)
             {
-                string inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", natPoolName);
+                string inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", natPoolName);
                 foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
                 {
                     if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
@@ -1650,7 +1656,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        private static string mergePath(params string[] segments)
+        ///GENMHASH:E50F40651A5B1AF20BC79D94DD871BC0:8D097652777E7CA886C41C25ADBEAA28
+        private static string MergePath(params string[] segments)
         {
             StringBuilder builder = new StringBuilder();
             foreach (string segment in segments)
@@ -1681,14 +1688,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:F60C5902A709BFEB700B6B3CCE5663A8:76A3EB6FFB2F9BFB55AE1B46314EF027
-        private bool IsCustomImage(VirtualMachineScaleSetStorageProfile storageProfile)
-        {
-            return storageProfile.OsDisk.Image != null
-                && storageProfile.OsDisk.Image.Uri != null;
-        }
-
         #endregion
-
     }
 }

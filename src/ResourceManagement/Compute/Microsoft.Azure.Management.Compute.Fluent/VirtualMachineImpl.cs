@@ -57,6 +57,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
+        ///GENMHASH:0A331C2401291DF824493E64F2798884:AEA9DF2AAC2CFE9730BD7A00060D84F9
         internal VirtualMachineImpl(string name,
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
@@ -576,7 +577,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:2DC51FEC3C45675856B4AC1D97BECBFD:03CBC8ECAD4A07D8AE9ABC931CB422F4
-        public VirtualMachineImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
+        public VirtualMachineImpl WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableStorageAccountKey == null)

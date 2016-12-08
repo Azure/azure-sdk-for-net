@@ -2,12 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     /// <summary>
     /// Represents a virtual machine image SKU.
     /// </summary>
-    public interface IVirtualMachineSku 
+    public interface IVirtualMachineSku : IHasName
     {
         /// <returns>the region where this virtual machine image offer SKU is available</returns>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Region { get; }
@@ -18,11 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <returns>the virtual machine offer name that this SKU belongs to</returns>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer Offer { get; }
 
-        /// <returns>the commercial name of the virtual machine image (SKU)</returns>
-        string Name { get; }
-
         /// <returns>virtual machine images in the SKU</returns>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImagesInSku Images { get; }
-
     }
 }

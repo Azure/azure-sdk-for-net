@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent.Models
 {
-
     /// <summary>
     /// Defines values for VirtualMachineSizeTypes.
     /// </summary>

@@ -6,45 +6,46 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    /// <summary>
+    /// The implementation for VirtualMachineOffer.
+    /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVPZmZlckltcGw=
     internal partial class VirtualMachineOfferImpl : IVirtualMachineOffer
     {
         private IVirtualMachinePublisher publisher;
+        private string offerName;
         private IVirtualMachineSkus skus;
 
+        ///GENMHASH:2EFBA576A3195EDB2F27440330CF3856:B4E2AB9962FF6934486C326E46FDA9B8
         internal VirtualMachineOfferImpl(IVirtualMachinePublisher publisher, string offer, IVirtualMachineImagesOperations client)
         {
             this.publisher = publisher;
-            Name = offer;
+            this.offerName = offer;
             skus = new VirtualMachineSkusImpl(this, client);
         }
 
-        public string Name
+        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:30F55C79E023C794C43C833CF0BB159B
+        public string Name()
         {
-            get; private set;
+            return this.offerName;
         }
 
-        public Region Region
+        ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:68CDD3D656DF2167E9C39FD2066C0E83
+        public Region Region()
         {
-            get
-            {
-                return publisher.Region;
-            }
+            return publisher.Region;
         }
 
-        public IVirtualMachinePublisher Publisher
+        ///GENMHASH:8E3FF63FC02A3540865E75052785D668:AC71B793CB602017F7CD103CEACA5AD0
+        public IVirtualMachinePublisher Publisher()
         {
-            get
-            {
-                return publisher;
-            }
+            return publisher;
         }
 
-        public IVirtualMachineSkus Skus
+        ///GENMHASH:7D9DC833CD61C25D0247148117F1E9BD:C868C06D388BCDB1C1FF51CD0D7DF664
+        public IVirtualMachineSkus Skus()
         {
-            get
-            {
-                return skus;
-            }
+            return skus;
         }
     }
 }

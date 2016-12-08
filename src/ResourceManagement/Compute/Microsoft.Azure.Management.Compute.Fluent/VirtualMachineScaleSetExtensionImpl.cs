@@ -10,8 +10,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Implementation of {@link VirtualMachineScaleSetExtension}.
+    /// Implementation of VirtualMachineScaleSetExtension.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEV4dGVuc2lvbkltcGw=
     internal partial class VirtualMachineScaleSetExtensionImpl :
         ChildResource<VirtualMachineScaleSetExtensionInner,
             VirtualMachineScaleSetImpl,
@@ -23,6 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
+
         internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner, parent)
         {
             InitializeSettings();
@@ -65,13 +67,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return this.Inner.ProvisioningState;
         }
-        public VirtualMachineScaleSetExtensionImpl WithMinorVersionAutoUpgrade ()
+
+        ///GENMHASH:467F635EADCCCC617A72CEB57E5B3D41:7B7B2063CA85FFEC8E5F9CF53A22CED0
+        public VirtualMachineScaleSetExtensionImpl WithMinorVersionAutoUpgrade()
         {
             this.Inner.AutoUpgradeMinorVersion = true;
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithoutMinorVersionAutoUpgrade ()
+        ///GENMHASH:23B0698FE3BB00936E77BFAAD4E8C173:2897633350A3881BCCEECEB8CBDCFF63
+        public VirtualMachineScaleSetExtensionImpl WithoutMinorVersionAutoUpgrade()
         {
             this.Inner.AutoUpgradeMinorVersion = false;
             return this;
@@ -91,13 +96,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithPublicSetting (string key, object value)
+        ///GENMHASH:F4E714A8C40DF6CD0AE34FBA3BC4C770:79A077AE3BFC0D04AB2B4B8492338A57
+        public VirtualMachineScaleSetExtensionImpl WithPublicSetting(string key, object value)
         {
             this.publicSettings.Add(key, value);
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithProtectedSetting (string key, object value)
+        ///GENMHASH:4E0AB82616606C4EEBD304EE7CA95448:C69FF63CB6446E393F7AC97CBA0B0631
+        public VirtualMachineScaleSetExtensionImpl WithProtectedSetting(string key, object value)
         {
 
             this.protectedSettings.Add(key, value);
@@ -113,7 +120,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithProtectedSettings (IDictionary<string,object> settings)
+        ///GENMHASH:47A9BC4FAD4EEB04D8AA50F23064B253:8123EC3071CE1111531A48B680D93AAF
+        public VirtualMachineScaleSetExtensionImpl WithProtectedSettings(IDictionary<string, object> settings)
         {
             this.protectedSettings.Clear();
             foreach (var entry in settings)
@@ -147,7 +155,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        private void InitializeSettings ()
+        ///GENMHASH:1DE96DF05FCD164699FABE2722D3B823:DDB96B1018AF16195187204FD1A5F7F0
+        private void InitializeSettings()
         {
             if (this.Inner.Settings == null)
             {
@@ -170,6 +179,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:A7E70E6A25505D4B6F0EF5B2C0549275
         public VirtualMachineScaleSetImpl Attach()
         {
             NullifySettingsIfEmpty();

@@ -7,13 +7,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Represents a virtual machine image publisher.
     /// </summary>
-    public interface IVirtualMachinePublisher 
+    public interface IVirtualMachinePublisher : IHasName
     {
         /// <returns>the region where virtual machine images from this publisher are available</returns>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Region { get; }
-
-        /// <returns>the name of the publisher</returns>
-        string Name { get; }
 
         /// <returns>the offers from this publisher</returns>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffers Offers { get; }

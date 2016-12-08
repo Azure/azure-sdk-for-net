@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(info.ToString());
         }
 
-        private static string FormatDictionary(IDictionary<string, string> dictionary)
+        private static string FormatDictionary(IReadOnlyDictionary<string, string> dictionary)
         {
             if (dictionary == null)
             {
