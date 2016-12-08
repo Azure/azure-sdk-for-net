@@ -38,9 +38,10 @@ namespace WebSites.Tests.ScenarioTests
             SourceControlName = "Bitbucket"
         };
 
-        [Fact]
+        [Fact(Skip = "Obsolete API")]
         public void TestUpdateSourceControlUpdates()
         {
+            /*
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
@@ -60,6 +61,7 @@ namespace WebSites.Tests.ScenarioTests
                 var bitbucket = sourceControlListResponse.Value.FirstOrDefault(s => s.Name == "Bitbucket");
                 AssertSourceControl(BitbucketSourceControl, bitbucket);
             }
+            */
         }
 
         private static void AssertSourceControl(SourceControl expectedSourceControl, SourceControl actualSourceControl)

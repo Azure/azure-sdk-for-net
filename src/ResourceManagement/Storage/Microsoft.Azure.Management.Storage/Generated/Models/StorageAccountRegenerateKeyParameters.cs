@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The parameters used to regenerate storage account key.
+    /// </summary>
     public partial class StorageAccountRegenerateKeyParameters
     {
         /// <summary>

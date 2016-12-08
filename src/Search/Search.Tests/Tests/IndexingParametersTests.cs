@@ -4,40 +4,26 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Azure.Search.Models;
     using Xunit;
 
     public sealed class IndexingParametersTests
     {
-        private const string ExpectedParsingModeKey = "parsingMode";
-
-        [Fact]
-        public void IndexStorageMetadataOnlySetCorrectly()
-        {
-            var parameters = new IndexingParameters().IndexStorageMetadataOnly();
-            AssertHasConfigItem(parameters, "indexStorageMetadataOnly", true);
-        }
-
-        [Fact]
-        public void SkipContentSetCorrectly()
-        {
-            var parameters = new IndexingParameters().SkipContent();
-            AssertHasConfigItem(parameters, "skipContent", true);
-        }
-
-        [Fact]
-        public void ParseJsonSetCorrectly()
-        {
-            var parameters = new IndexingParameters().ParseJson();
-            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "json");
-        }
-
         [Fact]
         public void IndexFileNameExtensionsSetCorrectly()
         {
-            var parameters = new IndexingParameters().IndexFileNameExtensions(".pdf", ".docx");
-            AssertHasConfigItem(parameters, "indexedFileNameExtensions", ".pdf,.docx");
+            var parameters = new IndexingParameters().IndexFileNameExtensions(".pdf", "docx"); // . should be prefixed automatically 
+            AssertHasConfigItem(parameters, "indexedFileNameExtensions", ".pdf,.docx"); //
+        }
+
+        [Fact]
+        public void IndexFileNameExtensionsAreValidated()
+        {
+            Assert.Throws<ArgumentException>(() => new IndexingParameters().IndexFileNameExtensions(new string[] { null }));
+            Assert.Throws<ArgumentException>(() => new IndexingParameters().IndexFileNameExtensions(new string[] { String.Empty }));
+            Assert.Throws<ArgumentException>(() => new IndexingParameters().IndexFileNameExtensions(new string[] { "*.log" }));
         }
 
         [Fact]
@@ -50,8 +36,16 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void ExcludeFileNameExtensionsSetCorrectly()
         {
-            var parameters = new IndexingParameters().ExcludeFileNameExtensions(".pdf", ".docx");
+            var parameters = new IndexingParameters().ExcludeFileNameExtensions(".pdf", "docx"); // . should be prefixed automatically
             AssertHasConfigItem(parameters, "excludedFileNameExtensions", ".pdf,.docx");
+        }
+
+        [Fact]
+        public void ExcludeFileNameExtensionsAreValidated()
+        {
+            Assert.Throws<ArgumentException>(() => new IndexingParameters().ExcludeFileNameExtensions(new string[] { null }));
+            Assert.Throws<ArgumentException>(() => new IndexingParameters().ExcludeFileNameExtensions(new string[] { String.Empty }));
+            Assert.Throws<ArgumentException>(() => new IndexingParameters().ExcludeFileNameExtensions(new string[] { "*.log" }));
         }
 
         [Fact]
@@ -62,47 +56,18 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void ParseJsonArraysWithNullDocumentRootSetCorrectly()
+        public void BlobExtractionModeSetCorrectly()
         {
-            var parameters = new IndexingParameters().ParseJsonArrays();
-            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonArray");
+            var parameters = new IndexingParameters().SetBlobExtractionMode(BlobExtractionMode.AllMetadata);
+
+            AssertHasConfigItem(parameters, "dataToExtract", (string)BlobExtractionMode.AllMetadata);
         }
 
         [Fact]
-        public void ParseJsonArraysWithEmptyDocumentRootSetCorrectly()
+        public void DoNotFailOnUnsupportedContentTypeSetCorrectly()
         {
-            var parameters = new IndexingParameters().ParseJsonArrays(string.Empty);
-            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonArray");
-        }
-
-        [Fact]
-        public void ParseJsonArraysWithDocumentRootSetCorrectly()
-        {
-            const int ExpectedCount = 2;
-
-            var parameters = new IndexingParameters().ParseJsonArrays("/my/path");
-            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonArray", ExpectedCount);
-            AssertHasConfigItem(parameters, "documentRoot", "/my/path", ExpectedCount);
-        }
-
-        [Fact]
-        public void ParseDelimitedTextFilesWithInlineHeadersSetCorrectly()
-        {
-            const int ExpectedCount = 2;
-
-            var parameters = new IndexingParameters().ParseDelimitedTextFiles();
-            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "delimitedText", ExpectedCount);
-            AssertHasConfigItem(parameters, "firstLineContainsHeaders", true, ExpectedCount);
-        }
-
-        [Fact]
-        public void ParseDelimitedTextFilesWithGivenHeadersSetCorrectly()
-        {
-            const int ExpectedCount = 2;
-
-            var parameters = new IndexingParameters().ParseDelimitedTextFiles("id", "name", "address");
-            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "delimitedText", ExpectedCount);
-            AssertHasConfigItem(parameters, "delimitedTextHeaders", "id,name,address", ExpectedCount);
+            var parameters = new IndexingParameters().DoNotFailOnUnsupportedContentType();
+            AssertHasConfigItem(parameters, "failOnUnsupportedContentType", false);
         }
 
         private static void AssertHasConfigItem(

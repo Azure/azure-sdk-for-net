@@ -48,13 +48,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Azure subscription id.
+        /// The Azure subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The versiong of the Microsoft.MachineLearning resource provider API to be
-        /// used.
+        /// The version of the Microsoft.MachineLearning resource provider API to use.
         /// </summary>
         public string ApiVersion { get; private set; }
 

@@ -20,11 +20,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="location">Resource Location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource Name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="location">Specifies the location of the
+        /// resource.</param>
+        /// <param name="id">Specifies the resource ID.</param>
+        /// <param name="name">Specifies the name of the resource.</param>
+        /// <param name="type">Specifies the type of the resource.</param>
+        /// <param name="tags">Contains resource tags defined as key/value
+        /// pairs.</param>
         public Resource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
         {
             Id = id;
@@ -35,31 +37,31 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets specifies the resource ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource Name
+        /// Gets or sets specifies the name of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets resource Location
+        /// Gets or sets specifies the location of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets specifies the type of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets contains resource tags defined as key/value pairs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }

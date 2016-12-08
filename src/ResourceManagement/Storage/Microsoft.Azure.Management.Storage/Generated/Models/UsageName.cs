@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Usage Names.
+    /// The usage names that can be used; currently limited to StorageAccount.
     /// </summary>
     public partial class UsageName
     {

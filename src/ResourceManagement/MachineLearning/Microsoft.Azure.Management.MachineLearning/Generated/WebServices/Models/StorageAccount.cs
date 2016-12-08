@@ -23,8 +23,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.
         /// </summary>
-        /// <param name="name">The storage account's name.</param>
-        /// <param name="key">The storage account's active key.</param>
+        /// <param name="name">Specifies the name of the storage
+        /// account.</param>
+        /// <param name="key">Specifies the key used to access the storage
+        /// account.</param>
         public StorageAccount(string name = default(string), string key = default(string))
         {
             Name = name;
@@ -32,13 +34,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// Gets or sets the storage account's name.
+        /// Gets or sets specifies the name of the storage account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account's active key.
+        /// Gets or sets specifies the key used to access the storage account.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "key")]
         public string Key { get; set; }

@@ -383,10 +383,44 @@ namespace DataLakeStore.Tests
 
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
 
-                    // flush the stream and then compare length
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.Flush(commonData.DataLakeStoreFileSystemAccountName, filePath);
+                    //compare length
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAppend.Length);
 
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemNegativeConcurrentAppend()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = TestUtilities.GenerateName(string.Format("{0}/{1}", folderToCreate, fileToCreate));
+
+                    // Concurrent append to the file that we will create during the concurrent append call.
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.ConcurrentAppend(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)), AppendModeType.Autocreate);
+
+                    CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
+
+                    // attempt to append after concurrently appending (should fail)
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.Append(
+                        commonData.DataLakeStoreFileSystemAccountName, 
+                        filePath, 
+                        new MemoryStream()));
+
+                    // Now create a file with contents and attempt to concurrent append onto it.
+                    filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
+
+                    // Append to the file that we created
+                    Assert.Throws<AdlsErrorException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.ConcurrentAppend(
+                        commonData.DataLakeStoreFileSystemAccountName, 
+                        filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend))));
                 }
             }
         }
@@ -408,8 +442,7 @@ namespace DataLakeStore.Tests
 
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, fileContentsToAppend);
 
-                    // flush the stream and then compare length
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.Flush(commonData.DataLakeStoreFileSystemAccountName, filePath);
+                    // compare length to ensure metadata is updated.
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAppend.Length);
                 }
             }
@@ -957,7 +990,8 @@ namespace DataLakeStore.Tests
                 commonData.DataLakeStoreFileSystemClient.FileSystem.Create(
                     caboAccountName,
                     filePath,
-                    new MemoryStream());
+                    new MemoryStream(),
+                    syncFlag: SyncFlag.DATA);
             }
             else
             {

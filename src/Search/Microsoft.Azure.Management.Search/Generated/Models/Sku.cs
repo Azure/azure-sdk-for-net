@@ -8,17 +8,12 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Defines the SKU of an Azure Search Service, which determines price
     /// tier and capacity limits.
+    /// <see href="https://azure.microsoft.com/documentation/articles/search-sku-tier/" />
     /// </summary>
     public partial class Sku
     {
@@ -30,17 +25,33 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(SkuType? name = default(SkuType?))
+        /// <param name="name">The SKU of the Search service. Valid values
+        /// include: 'free': Shared service. 'basic': Dedicated service with
+        /// up to 3 replicas. 'standard': Dedicated service with up to 12
+        /// partitions and 12 replicas. 'standard2': Similar to standard, but
+        /// with more capacity per search unit. 'standard3': Offers maximum
+        /// capacity per search unit with up to 12 partitions and 12 replicas
+        /// (or up to 3 partitions with more indexes if you also set the
+        /// hostingMode property to 'highDensity'). Possible values include:
+        /// 'free', 'basic', 'standard', 'standard2', 'standard3'</param>
+        public Sku(SkuName? name = default(SkuName?))
         {
             Name = name;
         }
 
         /// <summary>
-        /// Gets or sets the SKU of the Search service. Possible values
-        /// include: 'free', 'standard', 'standard2'
+        /// Gets or sets the SKU of the Search service. Valid values include:
+        /// 'free': Shared service. 'basic': Dedicated service with up to 3
+        /// replicas. 'standard': Dedicated service with up to 12 partitions
+        /// and 12 replicas. 'standard2': Similar to standard, but with more
+        /// capacity per search unit. 'standard3': Offers maximum capacity
+        /// per search unit with up to 12 partitions and 12 replicas (or up
+        /// to 3 partitions with more indexes if you also set the hostingMode
+        /// property to 'highDensity'). Possible values include: 'free',
+        /// 'basic', 'standard', 'standard2', 'standard3'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public SkuType? Name { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        public SkuName? Name { get; set; }
 
     }
 }

@@ -52,21 +52,21 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the minimum word size. Only words longer than this
-        /// get processed. Default is 5.
+        /// get processed. Default is 5. Maximum is 300.
         /// </summary>
         [JsonProperty(PropertyName = "minWordSize")]
         public int? MinWordSize { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum subword size. Only subwords longer than
-        /// this are outputted. Default is 2.
+        /// this are outputted. Default is 2. Maximum is 300.
         /// </summary>
         [JsonProperty(PropertyName = "minSubwordSize")]
         public int? MinSubwordSize { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum subword size. Only subwords shorter than
-        /// this are outputted. Default is 15.
+        /// this are outputted. Default is 15. Maximum is 300.
         /// </summary>
         [JsonProperty(PropertyName = "maxSubwordSize")]
         public int? MaxSubwordSize { get; set; }
@@ -90,6 +90,18 @@ namespace Microsoft.Azure.Search.Models
             if (WordList == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "WordList");
+            }
+            if (this.MinWordSize > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinWordSize", 300);
+            }
+            if (this.MinSubwordSize > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MinSubwordSize", 300);
+            }
+            if (this.MaxSubwordSize > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxSubwordSize", 300);
             }
         }
     }

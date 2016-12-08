@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search
     {
             /// <summary>
             /// Creates a new Azure Search index.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search index.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexes available for an Azure Search service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexes available for an Azure Search service.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search index or updates an index if it already exists.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn800964.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search index or updates an index if it already exists.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn800964.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search index and all the documents it contains.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798926.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search index and all the documents it contains.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798926.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves an index definition from Azure Search.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798939.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves an index definition from Azure Search.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798939.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Returns statistics for the given index, including a document count and
             /// storage usage.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798942.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index-Statistics" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Returns statistics for the given index, including a document count and
             /// storage usage.
-            /// <see href="https://msdn.microsoft.com/library/azure/dn798942.aspx" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Index-Statistics" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Shows how an analyzer breaks text into tokens.
-            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/test-analyzer" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Shows how an analyzer breaks text into tokens.
-            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/test-analyzer" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -20,6 +20,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         private Dictionary<string, string> _keyValuePairs;
         private string _connString;
         private StringBuilder _parseErrorSb;
+        private string DEFAULT_TENANTID = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+
         #endregion
 
         #region Properties
@@ -103,13 +105,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void NormalizeKeyValuePairs()
         {
-            string clientId, spn, password, spnSecret, userId;
+            string clientId, spn, password, spnSecret, userId, aadTenantId;
             KeyValuePairs.TryGetValue(ConnectionStringKeys.AADClientIdKey, out clientId);
             KeyValuePairs.TryGetValue(ConnectionStringKeys.ServicePrincipalKey, out spn);
 
             KeyValuePairs.TryGetValue(ConnectionStringKeys.UserIdKey, out userId);
             KeyValuePairs.TryGetValue(ConnectionStringKeys.PasswordKey, out password);
             KeyValuePairs.TryGetValue(ConnectionStringKeys.ServicePrincipalSecretKey, out spnSecret);
+            KeyValuePairs.TryGetValue(ConnectionStringKeys.AADTenantKey, out aadTenantId);
 
             //ClientId was provided and servicePrincipal was empty, we want ServicePrincipal to be initialized
             //At some point we will deprecate ClientId keyName
@@ -124,11 +127,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey] = password;
             }
-
-            //Initialize default values if found empty
-            if (string.IsNullOrEmpty(clientId) && (string.IsNullOrEmpty(spn)))
+            
+            //Initialize default value for AADTenent
+            if(string.IsNullOrEmpty(aadTenantId))
             {
-                KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey] = "1950a258-227b-4e31-a9cf-717495945fc2";
+                KeyValuePairs[ConnectionStringKeys.AADTenantKey] = DEFAULT_TENANTID;
             }
 
             //Initialize raw tokens to a non-null/non-empty strings
