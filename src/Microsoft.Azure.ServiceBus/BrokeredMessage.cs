@@ -15,6 +15,8 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>Represents the unit of communication between ServiceBus client and Service.</summary>
     public sealed class BrokeredMessage : IDisposable
     {
+        static Func<string> messageIdGeneratorFunc = () => (string)null;
+
         readonly object disposablesSyncObject = new object();
         readonly bool ownsBodyStream;
         readonly bool bodyObjectDecoded;
@@ -55,6 +57,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
         public BrokeredMessage()
         {
+            try
+            {
+                this.messageId = messageIdGeneratorFunc();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("BrokeredMessage ID generator function has failed.", ex);
+            }
         }
 
         /// <summary>Initializes a new instance of the
@@ -901,6 +911,20 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         internal MessageReceiver Receiver { get; set; }
+
+        /// <summary>Specify generator to be used to generate BrokeredMessage.MessageId value.
+        /// <param name="messageIdGenerator">Message ID generator.</param>
+        /// <remarks>Be default, no value is assigned.</remarks>
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if invoked with null.</exception>
+        public static void SetMessageIdGenerator(Func<string> messageIdGenerator)
+        {
+            if (messageIdGenerator == null)
+            {
+                throw new ArgumentNullException(nameof(messageIdGenerator));
+            }
+            messageIdGeneratorFunc = messageIdGenerator;
+        }
 
         /// <summary>Deserializes the brokered message body into an object of the specified type by using the
         /// <see cref="System.Runtime.Serialization.DataContractSerializer" /> with a binary
