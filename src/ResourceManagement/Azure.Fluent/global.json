@@ -9,6 +9,7 @@
   	"../KeyVault", 
   	"../TrafficManager", 
   	"../Dns",
+    "../Sql",
   	"../Cdn",
   	"../RedisCache" ]
 }

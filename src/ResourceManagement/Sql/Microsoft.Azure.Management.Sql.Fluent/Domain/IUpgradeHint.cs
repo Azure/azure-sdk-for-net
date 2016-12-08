@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL database's Upgrade hint.
     /// </summary>
     public interface IUpgradeHint  :
-        IWrapper<Models.UpgradeHintInner>
+        IWrapper<Models.UpgradeHint>
     {
         /// <return>Target ServiceLevelObjectiveId for upgrade hint.</return>
         System.Guid TargetServiceLevelObjectiveId { get; }

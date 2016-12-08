@@ -28,6 +28,7 @@
     "Microsoft.Azure.Management.Graph.RBAC.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Sql.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta3, 2.0)"
   }

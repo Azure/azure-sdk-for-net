@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public IDefinitionAfterRegion WithRegion(Region region)
         {
-            return this.WithRegion(Region.Name);
+            return this.WithRegion(region.Name);
         }
 
         public FluentResourceT WithTags(IDictionary<string, string> tags)

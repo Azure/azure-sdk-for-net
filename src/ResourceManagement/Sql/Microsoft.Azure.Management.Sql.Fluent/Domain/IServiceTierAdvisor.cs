@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// ServiceLevelObjectiveUsageMetrics for the service tier
         /// advisor.
         /// </return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics { get; }
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics { get; }
 
         /// <return>The observation period start (ISO8601 format).</return>
         System.DateTime ObservationPeriodEnd { get; }
