@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition
     /// <typeparam name="Parent">The parent definition AttachableStandard.attach() returns to.</typeparam>
     public interface IAttachablePremium<ParentT> 
     {
-        ParentT Attach { get; }
+        ParentT Attach();
     }
 
     /// <summary>
@@ -201,6 +201,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition
     /// <typeparam name="Parent">The parent definition AttachableStandard.attach() returns to.</typeparam>
     public interface IAttachableStandard<ParentT> 
     {
-        ParentT Attach { get; }
+        ParentT Attach();
     }
 }

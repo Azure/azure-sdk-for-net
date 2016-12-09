@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Models;
 
-    public partial class CdnProfileImpl 
+    internal partial class CdnProfileImpl 
     {
         /// <summary>
         /// Specifies definition of an endpoint to be attached to the CDN profile.
@@ -235,12 +235,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal used for advanced management tasks.
         /// </summary>
         /// <return>URI used to login to third party web portal.</return>
-        string ICdnProfile.GenerateSsoUri
+        string ICdnProfile.GenerateSsoUri()
         {
-            get
-            {
-                return this.GenerateSsoUri() as string;
-            }
+            return this.GenerateSsoUri();
         }
 
         /// <return>Endpoints in the CDN manager profile, indexed by the name.</return>

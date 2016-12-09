@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-prerelease",
+  "version": "1.0.0-beta3",
   "title": "Microsoft Azure Redis Cache Management Library",
   "description": "Provides Redis cache service management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
