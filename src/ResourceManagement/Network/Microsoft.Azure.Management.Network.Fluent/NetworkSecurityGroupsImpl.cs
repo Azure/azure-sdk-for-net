@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkSecurityGroups.
     /// </summary>
-    public partial class NetworkSecurityGroupsImpl  :
+    internal partial class NetworkSecurityGroupsImpl  :
         GroupableResources<
             INetworkSecurityGroup,
             NetworkSecurityGroupImpl,
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         //$TODO: return NetworkSecurityGroupImpl
-        ///GENMHASH:B59141AC50BFD765AA31B7D8EBE354C5:8DE970F802CEA431AE388F5FAB7DC708
+        ///GENMHASH:B59141AC50BFD765AA31B7D8EBE354C5:DBC6065F28483C4BE88514804CCBFFAA
         override protected INetworkSecurityGroup WrapModel (NetworkSecurityGroupInner inner)
         {
             return new NetworkSecurityGroupImpl(inner.Name, inner, InnerCollection, Manager);

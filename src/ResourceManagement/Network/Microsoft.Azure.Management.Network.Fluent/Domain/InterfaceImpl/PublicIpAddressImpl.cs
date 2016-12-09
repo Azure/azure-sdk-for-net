@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
-    public partial class PublicIpAddressImpl
+    internal partial class PublicIpAddressImpl
     {
         /// <summary>
         /// Refreshes the resource to sync with Azure.

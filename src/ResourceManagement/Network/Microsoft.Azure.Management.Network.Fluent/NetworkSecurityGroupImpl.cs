@@ -9,11 +9,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core;
     using Management.Network;
     using System.Threading.Tasks;
+    using Management.Fluent.Network;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroup
     /// </summary>
-    public partial class NetworkSecurityGroupImpl :
+    internal partial class NetworkSecurityGroupImpl :
         GroupableParentResource<INetworkSecurityGroup,
             NetworkSecurityGroupInner,
             NetworkSecurityGroupImpl,
@@ -120,45 +121,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Actions
-        ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:38C53694BEF9F4813845483A7E008454
+        ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:062BFEFE0393BE2C1D9F8B1A963FDE23
         internal IList<ISubnet> ListAssociatedSubnets()
         {
-            IList<SubnetInner> subnetRefs = this.Inner.Subnets;
-            IDictionary<string, INetwork> networks = new Dictionary<string, INetwork>();
-            IList<ISubnet> subnets = new List<ISubnet>();
-
-            if (subnetRefs != null)
-            {
-                foreach (SubnetInner subnetRef in subnetRefs)
-                {
-                    string networkId = ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id);
-                    INetwork network;
-                    if (!networks.TryGetValue(networkId, out network))
-                    {
-                        try
-                        {
-                            network = Manager.Networks.GetById(networkId);
-                            networks[networkId] = network;
-                        }
-                        catch
-                        {
-                            // Skip if not in existence anymore
-                        }
-                    }
-
-                    if (network != null)
-                    {
-                        string subnetName = ResourceUtils.NameFromResourceId(subnetRef.Id);
-                        ISubnet subnet;
-                        if (network.Subnets.TryGetValue(subnetName, out subnet))
-                        {
-                            subnets.Add(subnet);
-                        }
-                    }
-                }
-            }
-
-            return subnets;
+            return this.Manager.ListAssociatedSubnets(this.Inner.Subnets);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:7399EBE775B4308D075A8364EF2A490D

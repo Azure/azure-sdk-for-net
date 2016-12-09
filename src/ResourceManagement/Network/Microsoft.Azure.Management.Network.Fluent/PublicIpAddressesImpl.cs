@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for PublicIpAddresses.
     /// </summary>
-    public partial class PublicIpAddressesImpl :
+    internal partial class PublicIpAddressesImpl :
         GroupableResources<
             IPublicIpAddress,
             PublicIpAddressImpl,

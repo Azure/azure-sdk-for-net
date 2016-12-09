@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Threading;
     using System.Threading.Tasks;
-    public partial class PublicIpAddressesImpl 
+    internal partial class PublicIpAddressesImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.

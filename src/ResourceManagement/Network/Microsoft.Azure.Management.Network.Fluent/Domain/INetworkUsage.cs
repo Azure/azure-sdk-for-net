@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     {
         Models.NetworkUsageUnit Unit { get; }
 
-        int Limit { get; }
+        long Limit { get; }
 
         Models.UsageName Name { get; }
 
-        int CurrentValue { get; }
+        long CurrentValue { get; }
     }
 }
