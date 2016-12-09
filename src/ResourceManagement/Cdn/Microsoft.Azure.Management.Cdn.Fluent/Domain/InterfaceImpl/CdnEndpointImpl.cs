@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using CdnEndpoint.UpdateDefinition;
     using Models;
 
-    public partial class CdnEndpointImpl 
+    internal partial class CdnEndpointImpl 
     {
         IUpdate CdnEndpoint.UpdateDefinition.IAttachablePremium<CdnProfile.Update.IUpdate>.Attach()
         {

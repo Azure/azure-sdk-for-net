@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Models;
 
-    public partial class CdnProfileImpl 
+    internal partial class CdnProfileImpl 
     {
         /// <summary>
         /// Specifies definition of an endpoint to be attached to the CDN profile.
