@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Storage
     /// <summary>
     /// The Azure Storage Management API.
     /// </summary>
-    public partial interface IStorageManagement : System.IDisposable
+    public partial interface IStorageManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

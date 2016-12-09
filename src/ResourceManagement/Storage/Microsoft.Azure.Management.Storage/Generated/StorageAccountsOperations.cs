@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Storage
     /// <summary>
     /// StorageAccountsOperations operations.
     /// </summary>
-    internal partial class StorageAccountsOperations : IServiceOperations<StorageManagement>, IStorageAccountsOperations
+    internal partial class StorageAccountsOperations : IServiceOperations<StorageManagementClient>, IStorageAccountsOperations
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal StorageAccountsOperations(StorageManagement client)
+        internal StorageAccountsOperations(StorageManagementClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Gets a reference to the StorageManagement
+        /// Gets a reference to the StorageManagementClient
         /// </summary>
-        public StorageManagement Client { get; private set; }
+        public StorageManagementClient Client { get; private set; }
 
         /// <summary>
         /// Checks that the storage account name is valid and is not already in use.

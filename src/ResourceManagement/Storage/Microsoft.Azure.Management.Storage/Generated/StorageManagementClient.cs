@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Storage
     /// <summary>
     /// The Azure Storage Management API.
     /// </summary>
-    public partial class StorageManagement : ServiceClient<StorageManagement>, IStorageManagement, IAzureClient
+    public partial class StorageManagementClient : ServiceClient<StorageManagementClient>, IStorageManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -86,18 +86,18 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IUsageOperations Usage { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected StorageManagement(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
+        protected StorageManagementClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -105,13 +105,13 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected StorageManagement(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected StorageManagementClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected StorageManagement(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        protected StorageManagementClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected StorageManagement(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected StorageManagementClient(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public StorageManagement(ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public StorageManagementClient(ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public StorageManagement(ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public StorageManagementClient(ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public StorageManagement(System.Uri baseUri, ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public StorageManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageManagement class.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public StorageManagement(System.Uri baseUri, ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public StorageManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

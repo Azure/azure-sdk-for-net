@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Storage
     /// <summary>
     /// UsageOperations operations.
     /// </summary>
-    internal partial class UsageOperations : IServiceOperations<StorageManagement>, IUsageOperations
+    internal partial class UsageOperations : IServiceOperations<StorageManagementClient>, IUsageOperations
     {
         /// <summary>
         /// Initializes a new instance of the UsageOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal UsageOperations(StorageManagement client)
+        internal UsageOperations(StorageManagementClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Storage
         }
 
         /// <summary>
-        /// Gets a reference to the StorageManagement
+        /// Gets a reference to the StorageManagementClient
         /// </summary>
-        public StorageManagement Client { get; private set; }
+        public StorageManagementClient Client { get; private set; }
 
         /// <summary>
         /// Gets the current usage count and the limit for the resources under the
