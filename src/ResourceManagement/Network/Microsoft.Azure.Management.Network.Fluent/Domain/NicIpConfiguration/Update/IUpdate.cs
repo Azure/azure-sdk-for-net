@@ -2,32 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
 {
-
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.Update;
-    /// <summary>
-    /// The stage of the network interface IP configuration update allowing to specify subnet.
-    /// </summary>
-    public interface IWithSubnet 
-    {
-        /// <summary>
-        /// Associate a subnet with the network interface IP configuration.
-        /// </summary>
-        /// <param name="name">name the subnet name</param>
-        /// <returns>the next stage of the network interface IP configuration update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithSubnet(string name);
 
-    }
-    /// <summary>
-    /// The stage of the network interface IP configuration update allowing to specify public IP address.
-    /// </summary>
-    public interface IWithPublicIpAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate>
-    {
-    }
     /// <summary>
     /// The entirety of a network interface IP configuration update as part of a network interface update.
     /// </summary>
@@ -39,6 +19,27 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         IWithLoadBalancer
     {
     }
+
+    /// <summary>
+    /// The stage of the network interface IP configuration update allowing to specify public IP address.
+    /// </summary>
+    public interface IWithPublicIpAddress  :
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update.IWithPublicIpAddress<Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the network interface IP configuration update allowing to specify subnet.
+    /// </summary>
+    public interface IWithSubnet 
+    {
+        /// <summary>
+        /// Associate a subnet with the network interface IP configuration.
+        /// </summary>
+        /// <param name="name">The subnet name.</param>
+        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithSubnet(string name);
+    }
+
     /// <summary>
     /// The stage of the network interface's IP configuration allowing to specify the load balancer
     /// to associate this IP configuration with.
@@ -48,32 +49,28 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         /// <summary>
         /// Specifies the load balancer to associate this IP configuration with.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
-        /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
-        /// <returns>the next stage of the update</returns>
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="backendName">The name of an existing backend on that load balancer.</param>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
         /// Specifies the load balancer inbound NAT rule to associate this IP configuration with.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
-        /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
-        /// <returns>the next stage of the update</returns>
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
-
-        /// <summary>
-        /// Removes all the existing associations with load balancer backends.
-        /// </summary>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithoutLoadBalancerBackends();
 
         /// <summary>
         /// Removes all the existing associations with load balancer inbound NAT rules.
         /// </summary>
-        /// <returns>the next stage of the update</returns>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithoutLoadBalancerInboundNatRules();
 
+        /// <summary>
+        /// Removes all the existing associations with load balancer backends.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithoutLoadBalancerBackends();
     }
+
     /// <summary>
     /// The stage of the network interface IP configuration update allowing to specify private IP.
     /// </summary>
@@ -83,9 +80,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         /// <summary>
         /// Specifies the IP version for the private IP address.
         /// </summary>
-        /// <param name="ipVersion">ipVersion an IP version</param>
-        /// <returns>the next stage of the update</returns>
+        /// <param name="ipVersion">An IP version.</param>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithPrivateIpVersion(string ipVersion);
-
     }
 }

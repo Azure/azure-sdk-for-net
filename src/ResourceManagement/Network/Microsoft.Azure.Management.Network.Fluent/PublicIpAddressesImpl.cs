@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         //$TODO: shoudl return PublicIpAddressImpl
-        ///GENMHASH:B52B92D4359429345BB9A526A6320669:940E5A7ED6EEC7923B37BF363376CDB2
+        ///GENMHASH:B52B92D4359429345BB9A526A6320669:90C57C05A1A9A5C6A7F2A81DCB266191
         override protected IPublicIpAddress WrapModel(PublicIPAddressInner inner)
         {
             return new PublicIpAddressImpl(inner.Id, inner, InnerCollection, Manager);
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:3F66CB38737E789E83D4F94D3B9FA876:B9B028D620AC932FDF66D2783E476B0D
+        ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name, cancellationToken);

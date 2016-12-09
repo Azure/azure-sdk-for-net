@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NicIpConfiguration and its create and update interfaces.
     /// </summary>
-    public partial class NicIpConfigurationImpl :
+    internal partial class NicIpConfigurationImpl :
         ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl, INetworkInterface>,
         INicIpConfiguration,
         IDefinition<NetworkInterface.Definition.IWithCreate>,
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:EE78F7961283D288F33B68D99551BF42:D53CEB54EB83B4CD2AFB7B489DE5E4E6
-        internal string PrivateIpAddressVersion()
+        internal IPVersion PrivateIpAddressVersion()
         {
-            return Inner.PrivateIPAddressVersion;
+            return new IPVersion(Inner.PrivateIPAddressVersion);
         }
 
         ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:40A9660FDDD1BECDBEBCD406933EBC9B
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:925E8594616C741FD699EF2269B3D731
-        internal string PrivateIpAllocationMethod()
+        internal IPAllocationMethod PrivateIpAllocationMethod()
         {
-            return Inner.PrivateIPAllocationMethod;
+            return new IPAllocationMethod(Inner.PrivateIPAllocationMethod);
         }
 
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:4652AD8DEBE2130BB62A479BB6FEAD47
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:EA98B464B10BD645EE3B0689825B43B8:BF9C09A5F85740EB1DF5E781C47B92F3
         internal NicIpConfigurationImpl WithPrivateIpAddressDynamic()
         {
-            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.DYNAMIC.ToString();
             Inner.PrivateIPAddress = null;
             return this;
         }
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6CDEF6BE4432158ED3F8917E000EAD56:98FC652F984FD82C56939807419E1B17
         internal NicIpConfigurationImpl WithPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
-            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.STATIC.ToString();
             Inner.PrivateIPAddress = staticPrivateIpAddress;
             return this;
         }

@@ -170,7 +170,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:3D00D26E72F1900D476D1ACE8411DAF6:AE59E633CCAEB90CB357B5CFDA9A8D39
         internal ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend()
         {
-
             if (this.HasAssignedLoadBalancer() == true)
             {
                 string refId = this.Inner.IpConfiguration.Id;
@@ -200,10 +199,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return EqualsResourceType("ipConfigurations");
         }
 
-        ///GENMHASH:1DE7D105C62AE4172B59AD39FB7ED47D:6B7C3DA604C932816415E3C9F99B8AFB
+        ///GENMHASH:1DE7D105C62AE4172B59AD39FB7ED47D:71FB3A052B839706E2B1CB9C30A82790
         internal INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
         {
-
             if (HasAssignedNetworkInterface())
             {
                 string refId = Inner.IpConfiguration.Id;
