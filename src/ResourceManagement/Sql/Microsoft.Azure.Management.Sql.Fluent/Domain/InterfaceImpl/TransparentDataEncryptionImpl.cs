@@ -56,9 +56,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.ListActivities()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption.ListActivities()
         {
-            return this.ListActivities() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity>;
+            return this.ListActivities() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity>;
         }
 
         /// <return>The name of the resource group.</return>

@@ -131,9 +131,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> ListDatabaseActivities()
         {
             var databaseActivities = this.innerCollection.ListDatabaseActivity(
-                    this.Name,
+                    this.SqlServerName(),
                     this.ResourceGroupName,
-                    this.SqlServerName());
+                    this.Name);
             return databaseActivities.Select((elasticPoolDatabaseActivityInner) => (IElasticPoolDatabaseActivity)new ElasticPoolDatabaseActivityImpl(elasticPoolDatabaseActivityInner)).ToList();
         }
 
