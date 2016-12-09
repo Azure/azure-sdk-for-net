@@ -3,12 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     /// <summary>
-    /// An interface representing a model's ability to reference a public IP address.
+    /// An interface representing a model's ability to support cookie based affinity.
     /// </summary>
-    public interface IHasPublicIpAddress 
+    public interface IHasCookieBasedAffinity 
     {
-        string PublicIpAddressId { get; }
-
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress GetPublicIpAddress();
+        bool CookieBasedAffinity { get; }
     }
 }

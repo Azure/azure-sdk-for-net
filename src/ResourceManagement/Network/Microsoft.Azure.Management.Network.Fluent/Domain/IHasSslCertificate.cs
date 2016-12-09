@@ -3,12 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     /// <summary>
-    /// An interface representing a model's ability to reference a public IP address.
+    /// An interface representing a model's ability to reference an SSL certificate.
     /// </summary>
-    public interface IHasPublicIpAddress 
+    public interface IHasSslCertificate<T> 
     {
-        string PublicIpAddressId { get; }
-
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress GetPublicIpAddress();
+        T SslCertificate { get; }
     }
 }

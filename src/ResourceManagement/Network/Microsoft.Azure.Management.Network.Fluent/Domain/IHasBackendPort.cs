@@ -2,15 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
-
     /// <summary>
-    /// An interface representing a model's ability to reference a load balancer backend port.
+    /// An interface representing a model's ability to reference a backend port.
     /// </summary>
     public interface IHasBackendPort 
     {
-        /// <returns>the backend port number the network traffic is sent to</returns>
         int BackendPort { get; }
-
     }
 }

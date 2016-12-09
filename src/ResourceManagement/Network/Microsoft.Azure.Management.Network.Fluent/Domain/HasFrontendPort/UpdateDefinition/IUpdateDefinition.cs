@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update
+namespace Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition
 {
     /// <summary>
-    /// The stage of an update allowing to modify the backend port.
+    /// The stage of a definition allowing to specify the frontend port.
     /// </summary>
-    public interface IWithBackendPort<ReturnT> 
+    public interface IWithFrontendPort<ReturnT> 
     {
         /// <summary>
-        /// Specifies the backend port.
+        /// Specifies the frontend port.
         /// </summary>
         /// <param name="port">A port number.</param>
-        ReturnT WithBackendPort(int port);
+        ReturnT WithFrontendPort(int port);
     }
 }

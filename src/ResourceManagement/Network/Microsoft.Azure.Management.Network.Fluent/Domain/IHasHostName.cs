@@ -3,12 +3,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     /// <summary>
-    /// An interface representing a model's ability to reference a public IP address.
+    /// An interface representing a model's ability to reference a host name.
     /// </summary>
-    public interface IHasPublicIpAddress 
+    public interface IHasHostName 
     {
-        string PublicIpAddressId { get; }
-
-        Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress GetPublicIpAddress();
+        string HostName { get; }
     }
 }
