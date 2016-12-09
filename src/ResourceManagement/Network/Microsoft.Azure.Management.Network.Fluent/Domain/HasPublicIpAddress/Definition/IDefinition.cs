@@ -6,16 +6,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definitio
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
     /// <summary>
-    /// The stage of the definition allowing to associate the resource with a public IP address,
-    /// but not allowing to create one with a DNS leaf label.
-    /// </summary>
-    public interface IWithPublicIpAddressNoDnsLabel<ReturnT>  :
-        IWithExistingPublicIpAddress<ReturnT>,
-        IWithNewPublicIpAddressNoDnsLabel<ReturnT>
-    {
-    }
-
-    /// <summary>
     /// The stage of the definition allowing to associate the resource with an existing public IP address.
     /// </summary>
     public interface IWithExistingPublicIpAddress<ReturnT> 
@@ -36,9 +26,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definitio
     /// <summary>
     /// The stage of the definition allowing to associate the resource with a new public IP address.
     /// </summary>
-    public interface IWithNewPublicIpAddress<ReturnT>  :
-        IWithNewPublicIpAddressNoDnsLabel<ReturnT>
+    public interface IWithNewPublicIpAddress<ReturnT> 
     {
+        /// <summary>
+        /// Creates a new public IP address to associate with the resource.
+        /// </summary>
+        /// <param name="creatable">A creatable definition for a new public IP.</param>
+        ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
+
+        /// <summary>
+        /// Creates a new public IP address in the same region and group as the resource and associates it with the resource.
+        /// <p>
+        /// The internal name and DNS label for the public IP address will be derived from the resource's name.
+        /// </summary>
+        ReturnT WithNewPublicIpAddress();
+
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
         /// and associates it with the resource.
@@ -56,24 +58,5 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Definitio
         IWithExistingPublicIpAddress<ReturnT>,
         IWithNewPublicIpAddress<ReturnT>
     {
-    }
-
-    /// <summary>
-    /// The stage of the definition allowing to associate the resource with a new public IP address.
-    /// </summary>
-    public interface IWithNewPublicIpAddressNoDnsLabel<ReturnT> 
-    {
-        /// <summary>
-        /// Creates a new public IP address to associate with the resource.
-        /// </summary>
-        /// <param name="creatable">A creatable definition for a new public IP.</param>
-        ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource and associates it with the resource.
-        /// <p>
-        /// The internal name and DNS label for the public IP address will be derived from the resource's name.
-        /// </summary>
-        ReturnT WithNewPublicIpAddress();
     }
 }

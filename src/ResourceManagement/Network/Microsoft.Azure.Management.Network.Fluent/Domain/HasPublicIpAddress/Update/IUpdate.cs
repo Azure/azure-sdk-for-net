@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
     /// <summary>
-    /// The stage of the update allowing to associate the resource with an existing public IP address.
+    /// The stage definition allowing to associate the resource with an existing public IP address.
     /// </summary>
     public interface IWithExistingPublicIpAddress<ReturnT> 
     {
@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update
     }
 
     /// <summary>
-    /// The stage of the update allowing to associate the resource with a new public IP address.
+    /// The stage definition allowing to associate the resource with a new public IP address.
     /// </summary>
-    public interface IWithNewPublicIpAddressNoDnsLabel<ReturnT> 
+    public interface IWithNewPublicIpAddress<ReturnT> 
     {
         /// <summary>
-        /// Creates a new public IP address to associate with the resource.
+        /// Creates a new public IP address to associate with the resource, based on the provided definition.
         /// </summary>
-        /// <param name="creatable">A creatable definition for a new public IP.</param>
+        /// <param name="creatable">A creatable definition for a new public IP address.</param>
         ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
 
         /// <summary>
@@ -45,24 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         ReturnT WithNewPublicIpAddress();
-    }
 
-    /// <summary>
-    /// The stage of the update allowing to associate the resource with a public IP address,
-    /// but not allowing to create one with a DNS leaf label.
-    /// </summary>
-    public interface IWithPublicIpAddressNoDnsLabel<ReturnT>  :
-        IWithExistingPublicIpAddress<ReturnT>,
-        IWithNewPublicIpAddressNoDnsLabel<ReturnT>
-    {
-    }
-
-    /// <summary>
-    /// The stage of the update allowing to associate the resource with a new public IP address.
-    /// </summary>
-    public interface IWithNewPublicIpAddress<ReturnT>  :
-        IWithNewPublicIpAddressNoDnsLabel<ReturnT>
-    {
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
         /// and associates it with the resource.

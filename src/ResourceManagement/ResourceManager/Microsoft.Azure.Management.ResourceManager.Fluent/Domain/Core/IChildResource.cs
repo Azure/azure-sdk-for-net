@@ -10,11 +10,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// Base interface used by child resources.
     /// </summary>
     public interface IChildResource<IParentT> :
+        IHasName,
         IIndexable
     {
-        /// <returns>the name of the child resource</returns>
-        string Name { get; }
-
         IParentT Parent { get; }
     }
 }

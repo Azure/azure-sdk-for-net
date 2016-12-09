@@ -8,28 +8,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDef
     /// <summary>
     /// The stage of the definition allowing to associate the resource with a new public IP address.
     /// </summary>
-    public interface IWithNewPublicIpAddress<ReturnT>  :
-        IWithNewPublicIpAddressNoDnsLabel<ReturnT>
+    public interface IWithNewPublicIpAddress<ReturnT> 
     {
         /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
-        /// and associates it with the resource.
-        /// <p>
-        /// The internal name for the public IP address will be derived from the DNS label.
+        /// Creates a new public IP address to associate with the resource, based on the provided definition.
         /// </summary>
-        /// <param name="leafDnsLabel">The leaf domain label.</param>
-        ReturnT WithNewPublicIpAddress(string leafDnsLabel);
-    }
-
-    /// <summary>
-    /// The stage of the definition allowing to associate the resource with a new public IP address.
-    /// </summary>
-    public interface IWithNewPublicIpAddressNoDnsLabel<ReturnT> 
-    {
-        /// <summary>
-        /// Creates a new public IP address to associate with the resource.
-        /// </summary>
-        /// <param name="creatable">A creatable definition for a new public IP.</param>
+        /// <param name="creatable">A creatable definition for a new public IP address.</param>
         ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
 
         /// <summary>
@@ -38,6 +22,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDef
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         ReturnT WithNewPublicIpAddress();
+
+        /// <summary>
+        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
+        /// and associates it with the resource.
+        /// <p>
+        /// The internal name for the public IP address will be derived from the DNS label.
+        /// </summary>
+        /// <param name="leafDnsLabel">The leaf domain label.</param>
+        ReturnT WithNewPublicIpAddress(string leafDnsLabel);
     }
 
     /// <summary>
@@ -64,16 +57,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.UpdateDef
     public interface IWithPublicIpAddress<ReturnT>  :
         IWithExistingPublicIpAddress<ReturnT>,
         IWithNewPublicIpAddress<ReturnT>
-    {
-    }
-
-    /// <summary>
-    /// The stage of the definition allowing to associate the resource with a public IP address,
-    /// but not allowing to create one with a DNS leaf label.
-    /// </summary>
-    public interface IWithPublicIpAddressNoDnsLabel<ReturnT>  :
-        IWithExistingPublicIpAddress<ReturnT>,
-        IWithNewPublicIpAddressNoDnsLabel<ReturnT>
     {
     }
 }

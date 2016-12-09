@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using Microsoft.Azure.Management.Network.Fluent.Models;
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
@@ -13,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string PrivateIpAddress { get; }
 
         /// <returns>the private IP address allocation method within the associated subnet</returns>
-        string PrivateIpAllocationMethod { get; }
+        IPAllocationMethod PrivateIpAllocationMethod { get; }
 
     }
 }
