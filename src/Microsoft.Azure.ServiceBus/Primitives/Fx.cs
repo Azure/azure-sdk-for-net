@@ -150,7 +150,7 @@ namespace Microsoft.Azure.ServiceBus
 
                     if (elementType == null)
                     {
-                        throw Fx.Exception.ArgumentNull("elementType");
+                        throw Fx.Exception.ArgumentNull(nameof(elementType));
                     }
 
                     this.elementType = elementType;
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.ServiceBus
 
                     if (elementType == null)
                     {
-                        throw Fx.Exception.ArgumentNull("elementType");
+                        throw Fx.Exception.ArgumentNull(nameof(elementType));
                     }
 
                     this.elementType = elementType;
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (exceptionType == null)
                         {
-                            throw Fx.Exception.ArgumentNull("exceptionType");
+                            throw Fx.Exception.ArgumentNull(nameof(exceptionType));
                         }
                         if (string.IsNullOrEmpty(diagnosis))
                         {

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (brokeredMessages == null || !brokeredMessages.Any())
             {
-                throw Fx.Exception.ArgumentNull("brokeredMessages");
+                throw Fx.Exception.ArgumentNull(nameof(brokeredMessages));
             }
 
             if (brokeredMessages.Any(brokeredMessage => brokeredMessage.IsLockTokenSet))

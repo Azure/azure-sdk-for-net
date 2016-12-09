@@ -24,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             if (stream == null)
             {
-                throw Fx.Exception.ArgumentNull("stream");
+                throw Fx.Exception.ArgumentNull(nameof(stream));
             }
 
             return this.ReadObject(XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max));
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             if (stream == null)
             {
-                throw Fx.Exception.ArgumentNull("stream");
+                throw Fx.Exception.ArgumentNull(nameof(stream));
             }
 
             XmlDictionaryWriter writer = XmlDictionaryWriter.CreateBinaryWriter(stream, null, null, false);
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             if (writer == null)
             {
-                throw Fx.Exception.ArgumentNull("writer");
+                throw Fx.Exception.ArgumentNull(nameof(writer));
             }
 
             this.dataContractSerializer.WriteObject(writer, graph);

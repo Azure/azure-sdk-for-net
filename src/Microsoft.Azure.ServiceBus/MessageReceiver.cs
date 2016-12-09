@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (lockTokens == null || !lockTokens.Any())
             {
-                throw Fx.Exception.ArgumentNull("lockTokens");
+                throw Fx.Exception.ArgumentNull(nameof(lockTokens));
             }
         }
 

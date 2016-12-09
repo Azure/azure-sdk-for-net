@@ -124,7 +124,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public static void ThrowIfNegativeArgument(TimeSpan timeout)
         {
-            ThrowIfNegativeArgument(timeout, "timeout");
+            ThrowIfNegativeArgument(timeout, nameof(timeout));
         }
 
         public static void ThrowIfNegativeArgument(TimeSpan timeout, string argumentName)
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public static void ThrowIfNonPositiveArgument(TimeSpan timeout)
         {
-            ThrowIfNonPositiveArgument(timeout, "timeout");
+            ThrowIfNonPositiveArgument(timeout, nameof(timeout));
         }
 
         public static void ThrowIfNonPositiveArgument(TimeSpan timeout, string argumentName)
