@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:D94AECC923C51EA4319E926F688C77A1
-        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ Observable<Void> pfxBytes = Observable.Just(null);
             //$ if (pfxFileUrl != null) {
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public IAppServiceCertificate Refresh()
+        public override IAppServiceCertificate Refresh()
         {
             //$ this.SetInner(client.Get(resourceGroupName(), name()));
             //$ return this;

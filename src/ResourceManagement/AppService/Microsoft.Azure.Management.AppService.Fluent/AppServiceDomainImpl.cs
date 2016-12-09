@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:A096A9B6D504D2EF53E4C2B61224B4A4
-        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ String[] domainParts = this.Name().Split("\\.");
             //$ String topLevel = domainParts[domainParts.Length - 1];
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public AppServiceDomainImpl Refresh()
+        public override AppServiceDomainImpl Refresh()
         {
             //$ this.SetInner(client.Get(resourceGroupName(), name()));
             //$ return this;

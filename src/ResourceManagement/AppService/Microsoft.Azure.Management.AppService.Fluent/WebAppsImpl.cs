@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwc0ltcGw=
     internal partial class WebAppsImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.Appservice.Fluent.IWebApp,Microsoft.Azure.Management.Appservice.Fluent.WebAppImpl,
+            Microsoft.Azure.Management.AppService.Fluent.IWebApp,Microsoft.Azure.Management.AppService.Fluent.WebAppImpl,
             Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner,
             Microsoft.Azure.Management.AppService.Fluent.WebAppsOperations,
             Microsoft.Azure.Management.AppService.Fluent.AppServiceManager>,
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public PagedList<Microsoft.Azure.Management.Appservice.Fluent.IWebApp> ListByGroup(string resourceGroupName)
+        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IWebApp> ListByGroup(string resourceGroupName)
         {
             Func<SiteInner, IWebApp> converter = inner =>
             {

@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:F27412D40851995FA8EF630919CB5FD6
-        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return client.CreateOrUpdateAsync(resourceGroupName(), name(), Inner)
             //$ .Map(innerToFluentMap(this));
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public AppServicePlanImpl Refresh()
+        public override IAppServicePlan Refresh()
         {
             //$ this.SetInner(client.Get(resourceGroupName(), name()));
             //$ return this;

@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Specifies the PFX certificate file to upload.
         /// </summary>
-        /// <param name="file">The PFX certificate file.</param>
+        /// <param name="file">The PFX certificate file.</param>F
         AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFile(string filePath)
         {
             return this.WithPfxFile(filePath) as AppServiceCertificate.Definition.IWithPfxFilePassword;

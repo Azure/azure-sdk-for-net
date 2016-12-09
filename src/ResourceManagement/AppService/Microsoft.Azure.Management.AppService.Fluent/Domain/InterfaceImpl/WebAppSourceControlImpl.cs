@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using WebAppBase.Definition;
     using WebAppBase.Update;
     using WebAppSourceControl.Definition;
-    using WebAppSourceControl.RepositoryType;
     using WebAppSourceControl.UpdateDefinition;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -85,7 +84,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        WebAppSourceControl.RepositoryType.RepositoryType Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
+        Microsoft.Azure.Management.AppService.Fluent.RepositoryType.RepositoryType Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
         {
             get
             {

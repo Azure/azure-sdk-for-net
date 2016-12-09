@@ -175,11 +175,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             this.Restart();
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.DeploymentSlots Microsoft.Azure.Management.AppService.Fluent.IWebApp.DeploymentSlots
+        Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlots Microsoft.Azure.Management.AppService.Fluent.IWebApp.DeploymentSlots
         {
             get
             {
-                return this.DeploymentSlots() as Microsoft.Azure.Management.AppService.Fluent.Models.DeploymentSlots;
+                return this.DeploymentSlots() as Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlots;
             }
         }
     }

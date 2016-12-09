@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:7165E4A72787EF020E1C59029B4D2D13:47A3B406E5605E5ECAF2C6AD49296A9F
         internal DeploymentSlotImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppImpl parent, WebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
-            : base (name.ReplaceAll(".*/", ""), innerObject, configObject, client, manager, serviceClient)
+            : base (name.Replace(".*/", ""), innerObject, configObject, client, manager, serviceClient)
         {
             //$ super(name.ReplaceAll(".*/", ""), innerObject, configObject, client, manager, serviceClient);
             //$ this.name = name.ReplaceAll(".*/", "");
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             //$ return client.DeleteHostNameBindingSlotAsync(resourceGroupName(), parent().Name(), name(), hostname);
 
-            return null;
+            return;
         }
     }
 }

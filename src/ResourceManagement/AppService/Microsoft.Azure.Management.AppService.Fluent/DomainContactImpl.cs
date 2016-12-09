@@ -14,7 +14,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uRG9tYWluQ29udGFjdEltcGw=
     internal partial class DomainContactImpl  :
-        ChildResourceImpl<Microsoft.Azure.Management.AppService.Fluent.Models.Contact,Microsoft.Azure.Management.AppService.Fluent.AppServiceDomainImpl,Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        ChildResource<
+            Microsoft.Azure.Management.AppService.Fluent.Models.Contact,
+            Microsoft.Azure.Management.AppService.Fluent.AppServiceDomainImpl,
+            Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         IDomainContact,
         IDefinition<AppServiceDomain.Definition.IWithCreate>
     {
@@ -233,12 +236,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:26A6AFA5B1D9D9F42E7BEACA61D8B1F9:465961ED63835C1034CC59EDAE98F26D
-        internal  DomainContactImpl(Contact inner, AppServiceDomainImpl parent)
+        internal DomainContactImpl(Contact inner, AppServiceDomainImpl parent)
+            : base (inner, parent)
         {
-            //$ super(inner, parent);
-            //$ Inner.WithAddressMailing(new Address());
-            //$ }
-
+            Inner.AddressMailing = new Address();
         }
 
         ///GENMHASH:2906E727CDB637085F78C05D843A1698:61E41A6FC294B4011521327802E48CFB

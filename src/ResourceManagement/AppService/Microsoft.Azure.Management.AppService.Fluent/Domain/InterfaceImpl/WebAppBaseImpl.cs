@@ -11,8 +11,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using System;
+    using Resource.Fluent.Core;
 
-    internal abstract partial class WebAppBaseImpl<FluentT,FluentImplT> 
+    internal abstract partial class WebAppBaseImpl<FluentT,FluentImplT>
+        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT>, FluentT
+        where FluentT : class, IWebAppBase<FluentT>
     {
         /// <summary>
         /// Removes source control for deployment from the web app.
@@ -78,7 +81,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithScmSiteAlsoStopped(scmSiteAlsoStopped) as WebAppBase.Definition.IWithCreate<FluentT>;
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.SiteAvailabilityState Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.AvailabilityState
+        Microsoft.Azure.Management.AppService.Fluent.Models.SiteAvailabilityState Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.AvailabilityState
         {
             get
             {
@@ -86,7 +89,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.Enabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.Enabled
         {
             get
             {
@@ -94,15 +97,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.RemoteVisualStudioVersion Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.RemoteDebuggingVersion
+        Microsoft.Azure.Management.AppService.Fluent.RemoteVisualStudioVersion Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.RemoteDebuggingVersion
         {
             get
             {
-                return this.RemoteDebuggingVersion() as Microsoft.Azure.Management.AppService.Fluent.Models.RemoteVisualStudioVersion;
+                return this.RemoteDebuggingVersion() as Microsoft.Azure.Management.AppService.Fluent.RemoteVisualStudioVersion;
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.WebSocketsEnabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.WebSocketsEnabled
         {
             get
             {
@@ -110,7 +113,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.IsDefaultContainer
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.IsDefaultContainer
         {
             get
             {
@@ -118,7 +121,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.ManagedPipelineMode Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.ManagedPipelineMode
+        Microsoft.Azure.Management.AppService.Fluent.Models.ManagedPipelineMode Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.ManagedPipelineMode
         {
             get
             {
@@ -126,7 +129,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.NodeVersion
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.NodeVersion
         {
             get
             {
@@ -134,7 +137,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.RepositorySiteName
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.RepositorySiteName
         {
             get
             {
@@ -142,7 +145,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.HostNamesDisabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.HostNamesDisabled
         {
             get
             {
@@ -150,15 +153,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.PhpVersion Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.PhpVersion
+        Microsoft.Azure.Management.AppService.Fluent.PhpVersion Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.PhpVersion
         {
             get
             {
-                return this.PhpVersion() as Microsoft.Azure.Management.AppService.Fluent.Models.PhpVersion;
+                return this.PhpVersion() as Microsoft.Azure.Management.AppService.Fluent.PhpVersion;
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.IsPremiumApp
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.IsPremiumApp
         {
             get
             {
@@ -166,7 +169,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.ScmSiteAlsoStopped
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.ScmSiteAlsoStopped
         {
             get
             {
@@ -174,7 +177,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.AutoSwapSlotName
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.AutoSwapSlotName
         {
             get
             {
@@ -182,7 +185,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.JavaContainerVersion
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.JavaContainerVersion
         {
             get
             {
@@ -190,7 +193,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.UsageState Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.UsageState
+        Microsoft.Azure.Management.AppService.Fluent.Models.UsageState Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.UsageState
         {
             get
             {
@@ -198,7 +201,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.AppServicePlanId
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.AppServicePlanId
         {
             get
             {
@@ -206,7 +209,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.GatewaySiteName
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.GatewaySiteName
         {
             get
             {
@@ -214,7 +217,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.DefaultDocuments
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.DefaultDocuments
         {
             get
             {
@@ -222,15 +225,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.PythonVersion Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.PythonVersion
+        Microsoft.Azure.Management.AppService.Fluent.PythonVersion Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.PythonVersion
         {
             get
             {
-                return this.PythonVersion() as Microsoft.Azure.Management.AppService.Fluent.Models.PythonVersion;
+                return this.PythonVersion() as Microsoft.Azure.Management.AppService.Fluent.PythonVersion;
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.AlwaysOn
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.AlwaysOn
         {
             get
             {
@@ -238,7 +241,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.HostNames
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.HostNames
         {
             get
             {
@@ -246,7 +249,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.JavaContainer
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.JavaContainer
         {
             get
             {
@@ -254,7 +257,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.OutboundIpAddresses
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.OutboundIpAddresses
         {
             get
             {
@@ -262,23 +265,23 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.NetFrameworkVersion Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.NetFrameworkVersion
+        Microsoft.Azure.Management.AppService.Fluent.NetFrameworkVersion Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.NetFrameworkVersion
         {
             get
             {
-                return this.NetFrameworkVersion() as Microsoft.Azure.Management.AppService.Fluent.Models.NetFrameworkVersion;
+                return this.NetFrameworkVersion() as Microsoft.Azure.Management.AppService.Fluent.NetFrameworkVersion;
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IConnectionString> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.ConnectionStrings
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.ConnectionStrings
         {
             get
             {
-                return this.ConnectionStrings() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IConnectionString>;
+                return this.ConnectionStrings() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString>;
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.HostNameSslStates
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.HostNameSslStates
         {
             get
             {
@@ -286,7 +289,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.TrafficManagerHostNames
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.TrafficManagerHostNames
         {
             get
             {
@@ -294,7 +297,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.MicroService
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.MicroService
         {
             get
             {
@@ -302,7 +305,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.ClientAffinityEnabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.ClientAffinityEnabled
         {
             get
             {
@@ -310,7 +313,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.ClientCertEnabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.ClientCertEnabled
         {
             get
             {
@@ -318,15 +321,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.JavaVersion Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.JavaVersion
+        Microsoft.Azure.Management.AppService.Fluent.JavaVersion Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.JavaVersion
         {
             get
             {
-                return this.JavaVersion() as Microsoft.Azure.Management.AppService.Fluent.Models.JavaVersion;
+                return this.JavaVersion() as Microsoft.Azure.Management.AppService.Fluent.JavaVersion;
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.CloningInfo Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.CloningInfo
+        Microsoft.Azure.Management.AppService.Fluent.Models.CloningInfo Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.CloningInfo
         {
             get
             {
@@ -334,7 +337,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.EnabledHostNames
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.EnabledHostNames
         {
             get
             {
@@ -342,15 +345,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IAppSetting> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.AppSettings
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IAppSetting> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.AppSettings
         {
             get
             {
-                return this.AppSettings() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IAppSetting>;
+                return this.AppSettings() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IAppSetting>;
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.RemoteDebuggingEnabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.RemoteDebuggingEnabled
         {
             get
             {
@@ -358,7 +361,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.TargetSwapSlot
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.TargetSwapSlot
         {
             get
             {
@@ -366,7 +369,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.DefaultHostName
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.DefaultHostName
         {
             get
             {
@@ -374,7 +377,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.State
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.State
         {
             get
             {
@@ -382,7 +385,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.LastModifiedTime
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.LastModifiedTime
         {
             get
             {
@@ -390,7 +393,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        int Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<T>.ContainerSize
+        int Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<FluentT>.ContainerSize
         {
             get
             {
@@ -997,9 +1000,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        T Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<T>.Refresh()
+        FluentT Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<FluentT>.Refresh()
         {
-            return this.Refresh() as T;
+            return this.Refresh() as FluentT;
         }
 
         /// <summary>

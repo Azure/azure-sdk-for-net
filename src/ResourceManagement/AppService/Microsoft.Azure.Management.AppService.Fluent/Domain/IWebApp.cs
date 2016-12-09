@@ -13,6 +13,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         IUpdatable<WebApp.Update.IUpdate>
     {
-        Microsoft.Azure.Management.AppService.Fluent.Models.DeploymentSlots DeploymentSlots { get; }
+        Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlots DeploymentSlots { get; }
     }
 }

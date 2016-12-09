@@ -2,12 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using AppServiceDomain.Definition;
-    using DomainContact.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Arm;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
 
     internal partial class DomainContactImpl 
     {
