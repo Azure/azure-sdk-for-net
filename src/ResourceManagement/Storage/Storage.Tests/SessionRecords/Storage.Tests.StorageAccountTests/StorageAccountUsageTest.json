@@ -7,17 +7,17 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b2b7939c-2f7b-4c16-bdc1-812e13d092a3"
+          "78246923-f20d-438b-8b7e-bb869af7d7d1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Storage.StorageManagement/6.0.0-preview"
+          "Microsoft.Azure.Management.Storage.StorageManagementClient/6.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 12,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 17,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 30 Nov 2016 09:11:53 GMT"
+          "Fri, 09 Dec 2016 02:41:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -45,16 +45,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "5c36488f-c5a7-49f5-98cd-1df262899205"
+          "78368a90-3bbe-4557-98f7-fdc52b275c62"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "5c36488f-c5a7-49f5-98cd-1df262899205"
+          "78368a90-3bbe-4557-98f7-fdc52b275c62"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20161130T091153Z:5c36488f-c5a7-49f5-98cd-1df262899205"
+          "JAPANEAST:20161209T024140Z:78368a90-3bbe-4557-98f7-fdc52b275c62"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
