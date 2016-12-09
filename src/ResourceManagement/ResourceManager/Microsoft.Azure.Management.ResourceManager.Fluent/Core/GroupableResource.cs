@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             groupName = creatable.Name;
             newGroup = creatable;
-            AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this as IDefinitionAfterResourceGroup;
         }
 
@@ -122,6 +122,16 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         public IDefinitionAfterResourceGroup WithExistingResourceGroup(IResourceGroup group)
         {
             return WithExistingResourceGroup(group.Name);
+        }
+
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(string name, Region region)
+        {
+            return this.WithNewResourceGroup(this.manager.ResourceManager.ResourceGroups.Define(name).WithRegion(region));
+        }
+
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(Region region)
+        {
+            return this.WithNewResourceGroup(this.Name + "group", region);
         }
 
         #endregion

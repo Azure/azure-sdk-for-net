@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     {
         private readonly string randName;
         private static string[] formats = new string[] { "M/d/yyyy h:mm:ss tt" };
+        private Random random = new Random();
 
         /**
          * Creates ResourceNamer.
@@ -44,11 +45,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             {
                 return RandomString(maxLen);
             }
+            string minRandomString = random.Next(0, 100000).ToString("D5");
 
-            var millis = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-            var jan1970millis = DateTime.ParseExact("1/1/1970 0:00:00 AM", ResourceNamer.formats,
-                                    new CultureInfo("en-US"), DateTimeStyles.None).Ticks / TimeSpan.TicksPerMillisecond;
-            String minRandomString = ((millis - jan1970millis) % 100000L).ToString();
             if (maxLen <= (prefix.Length + randName.Length + minRandomnessLength))
             {
                 var str1 = prefix + minRandomString;

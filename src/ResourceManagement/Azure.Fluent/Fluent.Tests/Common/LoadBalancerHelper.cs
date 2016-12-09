@@ -84,8 +84,8 @@ namespace Azure.Tests.Common
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword("Abcdef.123456")
+                            .WithRootUsername(userName)
+                            .WithRootPassword("Abcdef.123456")
                             .WithNewAvailabilitySet(availabilitySetName)
                             .WithSize(VirtualMachineSizeTypes.StandardA1)
                             .Create();

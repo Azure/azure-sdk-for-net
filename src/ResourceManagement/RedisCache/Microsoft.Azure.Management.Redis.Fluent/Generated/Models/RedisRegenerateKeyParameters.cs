@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies which redis access keys to reset.
+    /// Specifies which Redis access keys to reset.
     /// </summary>
     public partial class RedisRegenerateKeyParameters
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// Initializes a new instance of the RedisRegenerateKeyParameters
         /// class.
         /// </summary>
-        /// <param name="keyType">Which redis access key to reset. Possible
+        /// <param name="keyType">The Redis access key to regenerate. Possible
         /// values include: 'Primary', 'Secondary'</param>
         public RedisRegenerateKeyParameters(RedisKeyType keyType)
         {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         }
 
         /// <summary>
-        /// Gets or sets which redis access key to reset. Possible values
+        /// Gets or sets the Redis access key to regenerate. Possible values
         /// include: 'Primary', 'Secondary'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "keyType")]

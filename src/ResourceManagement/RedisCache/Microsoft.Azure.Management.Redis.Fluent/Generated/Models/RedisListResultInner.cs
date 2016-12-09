@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// The response of list redis operation.
+    /// The response of list Redis operation.
     /// </summary>
     public partial class RedisListResultInner
     {
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the RedisListResultInner class.
         /// </summary>
-        /// <param name="value">Results of the list operation</param>
+        /// <param name="value">List of Redis cache instances.</param>
         /// <param name="nextLink">Link for next set of locations.</param>
         public RedisListResultInner(System.Collections.Generic.IList<RedisResourceInner> value = default(System.Collections.Generic.IList<RedisResourceInner>), string nextLink = default(string))
         {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
         }
 
         /// <summary>
-        /// Gets or sets results of the list operation
+        /// Gets or sets list of Redis cache instances.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
         public System.Collections.Generic.IList<RedisResourceInner> Value { get; set; }

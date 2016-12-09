@@ -90,6 +90,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
             return this.value.GetHashCode();
         }
 
+        public static bool operator ==(VirtualMachineSizeTypes lhs, VirtualMachineSizeTypes rhs)
+        {
+            if (object.ReferenceEquals(lhs, null))
+            {
+                return object.ReferenceEquals(rhs, null);
+            }
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(VirtualMachineSizeTypes lhs, VirtualMachineSizeTypes rhs)
+        {
+            return !(lhs == rhs);
+        }
+
         public override bool Equals(object obj)
         {
 

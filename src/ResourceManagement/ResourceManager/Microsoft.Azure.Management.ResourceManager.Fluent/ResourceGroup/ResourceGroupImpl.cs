@@ -16,7 +16,7 @@ using Microsoft.Azure.Management.Resource.Fluent;
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class ResourceGroupImpl : 
-            CreatableUpdatable<IResourceGroup, ResourceGroupInner, ResourceGroupImpl, IResource, ResourceGroup.Update.IUpdate>,
+            CreatableUpdatable<IResourceGroup, ResourceGroupInner, ResourceGroupImpl, IHasId, ResourceGroup.Update.IUpdate>,
             IResourceGroup,
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         {
             get
             {
-                return EnumNameAttribute.FromName<Region>(RegionName);
+                return Region.Create(RegionName);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public IWithCreate WithRegion(Region region)
         {
-            return WithRegion(EnumNameAttribute.GetName(region));
+            return WithRegion(region.Name);
         }
 
         public IWithCreate WithTags(IDictionary<string, string> tags)

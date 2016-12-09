@@ -175,8 +175,8 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword(password)
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithNewStorageAccount(creatableStorageAccount);
                         frontendCreatableVirtualMachines.Add(creatableVirtualMachine);
@@ -195,8 +195,8 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUserName(userName)
-                            .WithPassword(password)
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithNewStorageAccount(creatableStorageAccount);
                         backendCreatableVirtualMachines.Add(creatableVirtualMachine);

@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         {
             if (this.newGroup != null)
             {
-                IResource rg = this.CreatedResource(newGroup.Key);
+                var rg = this.CreatedResource(newGroup.Key);
             }
 
             createParameters.Location = RegionName;

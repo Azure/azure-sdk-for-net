@@ -81,8 +81,8 @@ namespace ManageIpAddress
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithExistingPrimaryPublicIpAddress(publicIpAddress)
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUserName(userName)
-                            .WithPassword(password)
+                            .WithAdminUsername(userName)
+                            .WithAdminPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .Create();
 

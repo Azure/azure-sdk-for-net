@@ -24,8 +24,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         internal DeploymentOperationImpl(DeploymentOperationInner innerModel, IDeploymentOperationsOperations client) : base(innerModel.Id, innerModel)
         {
             this.client = client;
-            resourceGroupName = ResourceUtils.GroupFromResourceId(innerModel.Id);
-            deploymentName = ResourceUtils.ExtractFromResourceId(innerModel.Id, "deployments");
+            var resourceId = ResourceId.ParseResourceId(innerModel.Id);
+
+            resourceGroupName = resourceId.ResourceGroupName;
+            deploymentName = resourceId.Name;
         }
 
         #region Getters 
