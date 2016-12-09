@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using AppServiceDomain.Definition;
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             return this.WithCity(city) as DomainContact.Definition.IWithStateOrProvince<AppServiceDomain.Definition.IWithCreate>;
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.FirstName
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.FirstName
         {
             get
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.Phone
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Phone
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.LastName
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.LastName
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Address Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.AddressMailing
+        Microsoft.Azure.Management.AppService.Fluent.Models.Address Microsoft.Azure.Management.AppService.Fluent.IDomainContact.AddressMailing
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.Email
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Email
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.MiddleName
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.MiddleName
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.Fax
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Fax
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.JobTitle
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.JobTitle
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IDomainContact.Organization
+        string Microsoft.Azure.Management.AppService.Fluent.IDomainContact.Organization
         {
             get
             {

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Java.Io;
     using System.Collections.Generic;
     using System;
 
@@ -17,11 +16,19 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlSW1wbA==
     internal partial class AppServiceCertificateImpl  :
-        GroupableResource<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate,Microsoft.Azure.Management.AppService.Fluent.Models.CertificateInner,Microsoft.Azure.Management.Appservice.Fluent.AppServiceCertificateImpl,Microsoft.Azure.Management.AppService.Fluent.Models.AppServiceManager>,
+        GroupableResource<
+            IAppServiceCertificate,
+            CertificateInner,
+            AppServiceCertificateImpl,
+            AppServiceManager,
+            IWithGroup,
+            IWithCertificate,
+            IWithCreate,
+            IWithCreate>,
         IAppServiceCertificate,
         IDefinition
     {
-        private CertificatesInner client;
+        private CertificatesOperations client;
         private string pfxFileUrl;
         private IAppServiceCertificateOrder certificateOrder;
         ///GENMHASH:FE752DDF44282A56AF34B30988879EA2:796AE580B30EF9EFB269764BDE769297
@@ -33,11 +40,11 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:33ACB5F5716AE1E9ACE170EA372F5E74:7104B35B584CA7CA69B3635CA39E3D6F
-        public byte PfxBlob()
+        public byte[] PfxBlob()
         {
             //$ return Inner.PfxBlob();
 
-            return 0;
+            return new byte[4];
         }
 
         ///GENMHASH:66993FA323F1120EEA87A92DAC759CE2:04076664CA806EC34620BE36025013D3
@@ -106,7 +113,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:D94AECC923C51EA4319E926F688C77A1
-        public async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ Observable<Void> pfxBytes = Observable.Just(null);
             //$ if (pfxFileUrl != null) {
@@ -167,7 +174,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:AC6417B918116F35EBE473B129196305:384E705246D7390325CE35ED8089B693
-        public AppServiceCertificateImpl WithPfxFile(File file)
+        public AppServiceCertificateImpl WithPfxFile(string path)
         {
             //$ try {
             //$ byte[] fileContent = Files.ReadAllBytes(file.ToPath());
@@ -180,12 +187,10 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
-        internal  AppServiceCertificateImpl(string name, CertificateInner innerObject, CertificatesInner client, AppServiceManager manager)
+        internal  AppServiceCertificateImpl(string name, CertificateInner innerObject, CertificatesOperations client, AppServiceManager manager)
+            : base(name, innerObject, manager)
         {
-            //$ super(name, innerObject, manager);
-            //$ this.client = client;
-            //$ }
-
+            this.client = client;
         }
 
         ///GENMHASH:2011D9A3168939FB5CC6C7A6E7141572:CEC8E083AF5149E6FBE98797F626ABD8

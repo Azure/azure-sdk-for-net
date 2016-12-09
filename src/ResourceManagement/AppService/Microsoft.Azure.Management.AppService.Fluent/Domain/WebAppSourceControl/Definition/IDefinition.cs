@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition
+namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Defin
         /// https://github.com/settings/tokens.
         /// </summary>
         /// <param name="personalAccessToken">The personal access token from GitHub.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IGitHubWithAttach<ParentT> WithGitHubAccessToken(string personalAccessToken);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IGitHubWithAttach<ParentT> WithGitHubAccessToken(string personalAccessToken);
     }
 
     /// <summary>
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Defin
         /// Continuous integration will not be turned on.
         /// </summary>
         /// <param name="url">The url of the Mercurial repository.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IWithBranch<ParentT> WithPublicMercurialRepository(string url);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithBranch<ParentT> WithPublicMercurialRepository(string url);
 
         /// <summary>
         /// Specifies the repository to be a public external repository, either Git or Mercurial.
         /// Continuous integration will not be turned on.
         /// </summary>
         /// <param name="url">The url of the Git repository.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IWithBranch<ParentT> WithPublicGitRepository(string url);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithBranch<ParentT> WithPublicGitRepository(string url);
 
         /// <summary>
         /// Specifies the repository to be a GitHub repository. Continuous integration
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Defin
         /// </summary>
         /// <param name="organization">The user name or organization name the GitHub repository belongs to, e.g. Azure.</param>
         /// <param name="repository">The name of the repository, e.g. azure-sdk-for-java.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository);
 
         /// <summary>
         /// Specifies the repository to be a GitHub repository. Continuous integration
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Defin
         /// must have enough privileges to add a webhook to the repository.
         /// </summary>
         /// <param name="url">The URL pointing to the repository, e.g. https://github.com/Azure/azure-sdk-for-java.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string url);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string url);
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Defin
         /// Specifies the branch in the repository to use.
         /// </summary>
         /// <param name="branch">The branch to use.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IGitHubWithAttach<ParentT> WithBranch(string branch);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IGitHubWithAttach<ParentT> WithBranch(string branch);
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Defin
         /// Specifies the branch in the repository to use.
         /// </summary>
         /// <param name="branch">The branch to use.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.WebAppSourceControl.Definition.IWithAttach<ParentT> WithBranch(string branch);
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IWithAttach<ParentT> WithBranch(string branch);
     }
 
     /// <summary>

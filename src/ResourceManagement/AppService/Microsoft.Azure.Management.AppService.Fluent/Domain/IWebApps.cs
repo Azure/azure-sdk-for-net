@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using WebApp.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     public interface IWebApps  :
         ISupportsCreating<WebApp.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>,
-        ISupportsGettingById<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
+        ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsDeletingByGroup
     {
     }

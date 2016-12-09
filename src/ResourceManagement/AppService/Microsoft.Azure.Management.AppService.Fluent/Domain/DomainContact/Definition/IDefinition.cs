@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
+namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the 2nd line of the address.
         /// </summary>
         /// <param name="addressLine2">The 2nd line of the address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithCity<ParentT> WithAddressLine2(string addressLine2);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithCity<ParentT> WithAddressLine2(string addressLine2);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the city of the address.
         /// </summary>
         /// <param name="city">The city of the address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithStateOrProvince<ParentT> WithCity(string city);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithStateOrProvince<ParentT> WithCity(string city);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the country of the address.
         /// </summary>
         /// <param name="country">The country of the address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithPostalCode<ParentT> WithCountry(CountryISOCode country);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPostalCode<ParentT> WithCountry(CountryISOCode country);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the phone number.
         /// </summary>
         /// <param name="phoneNumber">Phone number.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithPhoneNumber(string phoneNumber);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithPhoneNumber(string phoneNumber);
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the email.
         /// </summary>
         /// <param name="email">Contact's email address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithAddressLine1<ParentT> WithEmail(string email);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAddressLine1<ParentT> WithEmail(string email);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
     /// </summary>
     public interface IWithOrganization<ParentT> 
     {
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithOrganization(string organziation);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithOrganization(string organziation);
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
     /// </summary>
     public interface IWithJobTitle<ParentT> 
     {
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithJobTitle(string jobTitle);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithJobTitle(string jobTitle);
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the first name.
         /// </summary>
         /// <param name="firstName">The first name.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithMiddleName<ParentT> WithFirstName(string firstName);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithMiddleName<ParentT> WithFirstName(string firstName);
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the middle name.
         /// </summary>
         /// <param name="middleName">The middle name.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithLastName<ParentT> WithMiddleName(string middleName);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithLastName<ParentT> WithMiddleName(string middleName);
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
     /// </summary>
     public interface IWithFaxNumber<ParentT> 
     {
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithFaxNumber(string faxNumber);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAttach<ParentT> WithFaxNumber(string faxNumber);
     }
 
     /// <summary>
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the country code of the phone number.
         /// </summary>
         /// <param name="code">The country code.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT> WithPhoneCountryCode(CountryPhoneCode code);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneNumber<ParentT> WithPhoneCountryCode(CountryPhoneCode code);
     }
 
     /// <summary>
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the last name.
         /// </summary>
         /// <param name="lastName">The last name.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithEmail<ParentT> WithLastName(string lastName);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithEmail<ParentT> WithLastName(string lastName);
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the 1st line of the address.
         /// </summary>
         /// <param name="addressLine1">The 1st line of the address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithAddressLine2<ParentT> WithAddressLine1(string addressLine1);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithAddressLine2<ParentT> WithAddressLine1(string addressLine1);
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the postal code or zip code of the address.
         /// </summary>
         /// <param name="postalCode">The postal code of the address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithPhoneCountryCode<ParentT> WithPostalCode(string postalCode);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithPhoneCountryCode<ParentT> WithPostalCode(string postalCode);
     }
 
     /// <summary>
@@ -216,6 +216,6 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition
         /// Specifies the state or province of the address.
         /// </summary>
         /// <param name="stateOrProvince">The state or province of the address.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.DomainContact.Definition.IWithCountry<ParentT> WithStateOrProvince(string stateOrProvince);
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IWithCountry<ParentT> WithStateOrProvince(string stateOrProvince);
     }
 }

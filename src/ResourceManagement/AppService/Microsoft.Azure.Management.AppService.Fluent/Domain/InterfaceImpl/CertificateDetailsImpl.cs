@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 
     internal partial class CertificateDetailsImpl 
     {
-        string Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.RawData
+        string Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.RawData
         {
             get
             {
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.SignatureAlgorithm
+        string Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.SignatureAlgorithm
         {
             get
             {
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.SerialNumber
+        string Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.SerialNumber
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.NotBefore
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.NotBefore
         {
             get
             {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.Issuer
+        string Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.Issuer
         {
             get
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        int Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.Version
+        int Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.Version
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.Subject
+        string Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.Subject
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.NotAfter
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.NotAfter
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails.Thumbprint
+        string Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails.Thumbprint
         {
             get
             {

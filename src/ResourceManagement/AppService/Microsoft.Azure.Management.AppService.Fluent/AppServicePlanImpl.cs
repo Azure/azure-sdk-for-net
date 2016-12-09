@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -15,12 +15,20 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZVBsYW5JbXBs
     internal partial class AppServicePlanImpl  :
-        GroupableResource<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan,Microsoft.Azure.Management.AppService.Fluent.Models.AppServicePlanInner,Microsoft.Azure.Management.Appservice.Fluent.AppServicePlanImpl,Microsoft.Azure.Management.AppService.Fluent.Models.AppServiceManager>,
+        GroupableResource<
+            IAppServicePlan,
+            AppServicePlanInner,
+            AppServicePlanImpl,
+            AppServiceManager,
+            IWithGroup,
+            AppServicePlan.Definition.IWithPricingTier,
+            IWithCreate,
+            IUpdate>,
         IAppServicePlan,
         IDefinition,
         IUpdate
     {
-        private AppServicePlansInner client;
+        private AppServicePlansOperations client;
         ///GENMHASH:DD6D049506665D52592C7FE5BDE38234:6B280B367194B8DBB81238BF9E23FF56
         public AppServicePlanImpl WithPerSiteScaling(bool perSiteScaling)
         {
@@ -87,7 +95,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:F27412D40851995FA8EF630919CB5FD6
-        public async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return client.CreateOrUpdateAsync(resourceGroupName(), name(), Inner)
             //$ .Map(innerToFluentMap(this));
@@ -113,12 +121,10 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:07BF52A3FFAEDB1E45066F5776F5CC29:8A264E667F06CE3E13EBAC780725861E
-        internal  AppServicePlanImpl(string name, AppServicePlanInner innerObject, AppServicePlansInner client, AppServiceManager manager)
+        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, AppServicePlansOperations client, AppServiceManager manager)
+            : base (name, innerObject, manager)
         {
-            //$ super(name, innerObject, manager);
-            //$ this.client = client;
-            //$ }
-
+            this.client = client;
         }
     }
 }

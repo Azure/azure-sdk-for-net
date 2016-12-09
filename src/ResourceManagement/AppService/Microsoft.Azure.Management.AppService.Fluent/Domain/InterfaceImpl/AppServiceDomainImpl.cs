@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>.Refresh()
         {
-            return this.Refresh() as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain;
+            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             return this.WithBillingContact(contact) as AppServiceDomain.Update.IUpdate;
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.AutoRenew
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.AutoRenew
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostName> Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.ManagedHostNames
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostName> Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ManagedHostNames
         {
             get
             {
@@ -118,13 +118,13 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// Verifies the ownership of the domain for a certificate order bound to this domain.
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
-        void Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
+        void Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
  
             this.VerifyDomainOwnership(certificateOrderName, domainVerificationToken);
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.DomainStatus Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.RegistrationStatus
+        Microsoft.Azure.Management.AppService.Fluent.Models.DomainStatus Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.RegistrationStatus
         {
             get
             {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.LastRenewedTime
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.LastRenewedTime
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.ExpirationTime
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ExpirationTime
         {
             get
             {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.CreatedTime
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.CreatedTime
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.RegistrantContact
+        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.RegistrantContact
         {
             get
             {
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.DomainPurchaseConsent Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.Consent
+        Microsoft.Azure.Management.AppService.Fluent.Models.DomainPurchaseConsent Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.Consent
         {
             get
             {
@@ -177,13 +177,13 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
-        async Task Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken)
         {
  
             await this.VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken, cancellationToken);
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.BillingContact
+        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.BillingContact
         {
             get
             {
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.ReadyForDnsRecordManagement
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.ReadyForDnsRecordManagement
         {
             get
             {
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.NameServers
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.NameServers
         {
             get
             {
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.AdminContact
+        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.AdminContact
         {
             get
             {
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.Privacy
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.Privacy
         {
             get
             {
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain.TechContact
+        Microsoft.Azure.Management.AppService.Fluent.Models.Contact Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain.TechContact
         {
             get
             {

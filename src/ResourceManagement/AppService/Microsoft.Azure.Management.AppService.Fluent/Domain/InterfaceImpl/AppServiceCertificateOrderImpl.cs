@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -53,15 +53,15 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             return this.WithWebAppVerification(webApp) as AppServiceCertificateOrder.Definition.IWithKeyVault;
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.SignedCertificate
+        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.SignedCertificate
         {
             get
             {
-                return this.SignedCertificate() as Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails;
+                return this.SignedCertificate() as Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails;
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.AutoRenew
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.AutoRenew
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.CertificateSigningRequest
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.CertificateSigningRequest
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.DomainVerificationToken
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.DomainVerificationToken
         {
             get
             {
@@ -88,13 +88,13 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Verifies the ownership of the domain by providing the Azure purchased domain.
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.VerifyDomainOwnership(IAppServiceDomain domain)
+        void Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.VerifyDomainOwnership(IAppServiceDomain domain)
         {
  
             this.VerifyDomainOwnership(domain);
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.SerialNumber
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.SerialNumber
         {
             get
             {
@@ -102,9 +102,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.GetKeyVaultBinding()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.GetKeyVaultBinding()
         {
-            return this.GetKeyVaultBinding() as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding;
+            return this.GetKeyVaultBinding() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding;
         }
 
         /// <summary>
@@ -112,12 +112,12 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         /// <param name="certificateName">The name of the Key Vault Secret.</param>
         /// <param name="vault">The key vault to store the certificate.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.CreateKeyVaultBinding(string certificateName, IVault vault)
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.CreateKeyVaultBinding(string certificateName, IVault vault)
         {
-            return this.CreateKeyVaultBinding(certificateName, vault) as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding;
+            return this.CreateKeyVaultBinding(certificateName, vault) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding;
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.ExpirationTime
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ExpirationTime
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.CertificateProductType Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.ProductType
+        Microsoft.Azure.Management.AppService.Fluent.Models.CertificateProductType Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ProductType
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        int Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.ValidityInYears
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ValidityInYears
         {
             get
             {
@@ -146,22 +146,22 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         /// <param name="certificateName">The name of the Key Vault Secret.</param>
         /// <param name="vault">The key vault to store the certificate.</param>
-        async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding> Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken)
         {
-            return await this.CreateKeyVaultBindingAsync(certificateName, vault, cancellationToken) as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding;
+            return await this.CreateKeyVaultBindingAsync(certificateName, vault, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding;
         }
 
         /// <summary>
         /// Verifies the ownership of the domain by providing the Azure purchased domain.
         /// </summary>
         /// <param name="domain">The Azure managed domain.</param>
-        async Task Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.VerifyDomainOwnershipAsync(IAppServiceDomain domain, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.VerifyDomainOwnershipAsync(IAppServiceDomain domain, CancellationToken cancellationToken)
         {
  
             await this.VerifyDomainOwnershipAsync(domain, cancellationToken);
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.CertificateOrderStatus Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.Status
+        Microsoft.Azure.Management.AppService.Fluent.Models.CertificateOrderStatus Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Status
         {
             get
             {
@@ -169,23 +169,23 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.Root
+        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Root
         {
             get
             {
-                return this.Root() as Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails;
+                return this.Root() as Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails;
             }
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.Intermediate
+        Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.Intermediate
         {
             get
             {
-                return this.Intermediate() as Microsoft.Azure.Management.Appservice.Fluent.ICertificateDetails;
+                return this.Intermediate() as Microsoft.Azure.Management.AppService.Fluent.ICertificateDetails;
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.DistinguishedName
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.DistinguishedName
         {
             get
             {
@@ -193,12 +193,12 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding> Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.GetKeyVaultBindingAsync(CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.GetKeyVaultBindingAsync(CancellationToken cancellationToken)
         {
-            return await this.GetKeyVaultBindingAsync(cancellationToken) as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding;
+            return await this.GetKeyVaultBindingAsync(cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding;
         }
 
-        int Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.KeySize
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.KeySize
         {
             get
             {
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder.LastCertificateIssuanceTime
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.LastCertificateIssuanceTime
         {
             get
             {
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>.Refresh()
         {
-            return this.Refresh() as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder;
+            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder;
         }
 
         /// <summary>

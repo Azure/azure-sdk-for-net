@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading.Tasks;
     using WebAppBase.Definition;
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             return this.WithBranch(branch) as WebAppSourceControl.Definition.IGitHubWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl.IsManualIntegration
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.IsManualIntegration
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        WebAppSourceControl.RepositoryType.RepositoryType Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl.RepositoryType
+        WebAppSourceControl.RepositoryType.RepositoryType Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl.RepositoryUrl
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryUrl
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl.DeploymentRollbackEnabled
+        bool Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.DeploymentRollbackEnabled
         {
             get
             {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl.Branch
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.Branch
         {
             get
             {

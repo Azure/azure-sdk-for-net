@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVCaW5kaW5nSW1wbA==
     internal partial class HostNameBindingImpl<FluentT,FluentImplT>  :
         IndexableWrapperImpl<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameBindingInner>,
-        ICreatable<Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding>,
+        ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>,
         IHostNameBinding,
         IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQ2VydGlmaWNhdGVEZXRhaWxzSW1wbA==
     internal partial class CertificateDetailsImpl  :
-        IndexableWrapperImpl<Microsoft.Azure.Management.AppService.Fluent.Models.CertificateDetailsInner>,
+        IndexableWrapper<CertificateDetailsInner>,
         ICertificateDetails
     {
         ///GENMHASH:1B172487E6EF67B78787A37894F473FD:8E4007E7DA9D157B87035BF90C065ED0
@@ -80,18 +80,14 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 
         ///GENMHASH:7272D744FF80A0EC280B6D4DB5A4682F:C0C35E00AF4E17F141675A2C05C7067B
         internal  CertificateDetailsImpl(CertificateDetailsInner innerObject)
+            : base (innerObject)
         {
-            //$ super(innerObject);
-            //$ }
-
         }
 
         ///GENMHASH:493B1EDB88EACA3A476D936362A5B14C:6D6F931BE0FE2C8F8921B2EDAE792515
         public int Version()
         {
-            //$ return Inner.Version();
-
-            return null;
+            return (int) Inner.Version;
         }
     }
 }

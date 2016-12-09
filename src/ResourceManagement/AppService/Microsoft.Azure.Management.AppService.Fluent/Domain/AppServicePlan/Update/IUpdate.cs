@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update
+namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update
 {
-    using Microsoft.Azure.Management.Appservice.Fluent;
+    using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
@@ -15,18 +15,18 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update.IUpdate WithPerSiteScaling(bool perSiteScaling);
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithPerSiteScaling(bool perSiteScaling);
     }
 
     /// <summary>
     /// The template for a site update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan>,
+        IAppliable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         IWithCapacity,
         IWithPerSiteScaling,
         IWithPricingTier,
-        IUpdateWithTags<Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update.IUpdate>
+        IUpdateWithTags<Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate>
     {
     }
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update.IUpdate WithPricingTier(AppServicePricingTier pricingTier);
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithPricingTier(AppServicePricingTier pricingTier);
     }
 
     /// <summary>
@@ -51,6 +51,6 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update
         /// Specifies the maximum number of instances running for this app service plan.
         /// </summary>
         /// <param name="capacity">The maximum number of instances.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.AppServicePlan.Update.IUpdate WithCapacity(int capacity);
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithCapacity(int capacity);
     }
 }

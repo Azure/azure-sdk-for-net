@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 
     internal partial class AppServicePlanImpl 
     {
-        int Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan.NumberOfWebApps
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.NumberOfWebApps
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        int Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan.Capacity
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.Capacity
         {
             get
             {
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        int Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan.MaxInstances
+        int Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.MaxInstances
         {
             get
             {
@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.AppServicePricingTier Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan.PricingTier
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePricingTier Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.PricingTier
         {
             get
             {
-                return this.PricingTier() as Microsoft.Azure.Management.Appservice.Fluent.AppServicePricingTier;
+                return this.PricingTier() as Microsoft.Azure.Management.AppService.Fluent.AppServicePricingTier;
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan.PerSiteScaling
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan.PerSiteScaling
         {
             get
             {
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.Refresh()
         {
-            return this.Refresh() as Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan;
+            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
         }
 
         /// <summary>

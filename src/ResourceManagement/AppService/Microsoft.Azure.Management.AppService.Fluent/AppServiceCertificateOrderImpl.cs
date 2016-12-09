@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -18,15 +18,23 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlT3JkZXJJbXBs
     internal partial class AppServiceCertificateOrderImpl  :
-        GroupableResource<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder,Microsoft.Azure.Management.AppService.Fluent.Models.AppServiceCertificateOrderInner,Microsoft.Azure.Management.Appservice.Fluent.AppServiceCertificateOrderImpl,Microsoft.Azure.Management.AppService.Fluent.Models.AppServiceManager>,
+        GroupableResource<
+            IAppServiceCertificateOrder,
+            AppServiceCertificateOrderInner,
+            AppServiceCertificateOrderImpl,
+            AppServiceManager,
+            IBlank,
+            IWithHostName,
+            IWithCreate,
+            IUpdate>,
         IAppServiceCertificateOrder,
         IDefinition,
         IUpdate
     {
-        final AppServiceCertificateOrdersInner client;
+        internal AppServiceCertificateOrdersOperations client;
         private IWebAppBase<object> domainVerifyWebApp;
         private IAppServiceDomain domainVerifyDomain;
-        private Observable<Microsoft.Azure.Management.Fluent.KeyVault.IVault> bindingVault;
+        private Task<Microsoft.Azure.Management.KeyVault.Fluent.IVault> bindingVault;
         ///GENMHASH:614D2D9852F00FD5BFCAF60BA2A659B0:86E327FE34A305973AC1A32ECEC60D57
         public AppServiceCertificateOrderImpl WithDomainVerification(IAppServiceDomain domain)
         {
@@ -73,7 +81,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:88F80234ADBF5F0E8B64015C7A3EF8D0
-        public async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ AppServiceCertificateOrder self = this;
             //$ return client.CreateOrUpdateAsync(resourceGroupName(), name(), Inner)
@@ -163,21 +171,20 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         {
             //$ return domain.VerifyDomainOwnershipAsync(name(), domainVerificationToken());
 
-            return null;
+            return;
         }
 
         ///GENMHASH:89B68C3393E544990D0BC1837B4C4C0E:B1CB960E9688630133BF735EE72C4279
-        internal  AppServiceCertificateOrderImpl(string key, AppServiceCertificateOrderInner innerObject, AppServiceCertificateOrdersInner client, AppServiceManager manager)
+        internal AppServiceCertificateOrderImpl(string key, AppServiceCertificateOrderInner innerObject, AppServiceCertificateOrdersOperations client, AppServiceManager manager)
+            : base(key, innerObject, manager)
         {
-            //$ super(key, innerObject, manager);
-            //$ this.client = client;
-            //$ this.WithRegion("global").WithValidYears(1);
-            //$ }
-
+            this.client = client;
+            this.WithRegion("global");
+            this.WithValidYears(1);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public IAppServiceCertificateOrder Refresh()
+        public override IAppServiceCertificateOrder Refresh()
         {
             //$ this.SetInner(client.Get(resourceGroupName(), name()));
             //$ return this;
@@ -211,7 +218,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:04406413E97C82F19F013C72D1DD2758:39E496E31AE9087192892138F0910259
-        public async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> CreateKeyVaultBindingAsync(string certificateName, IVault vault, CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ AppServiceCertificateInner certInner = new AppServiceCertificateInner();
             //$ certInner.WithLocation(vault.RegionName());
@@ -247,7 +254,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:0CD614E818D4086C936A0BF04B47C550:E31DD88A5AABE0E7EB1AA9BD08BE551A
-        public async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateKeyVaultBinding> GetKeyVaultBindingAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding> GetKeyVaultBindingAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ AppServiceCertificateOrderImpl self = this;
             //$ return client.ListCertificatesAsync(resourceGroupName(), name())
@@ -271,7 +278,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         {
             //$ return Inner.Status();
 
-            return CertificateOrderStatus.PENDINGISSUANCE;
+            return CertificateOrderStatus.Pendingissuance;
         }
 
         ///GENMHASH:BA6FE1E2B7314E708853F2FBB27E3384:14CF3EB6F5E6911BFEE7C598E534E063

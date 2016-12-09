@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         IGroupableResource,
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner>
     {
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IConnectionString> ConnectionStrings { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString> ConnectionStrings { get; }
 
         System.DateTime LastModifiedTime { get; }
 
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         void Stop();
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.PhpVersion PhpVersion { get; }
+        Microsoft.Azure.Management.AppService.Fluent.PhpVersion PhpVersion { get; }
 
         System.Collections.Generic.ISet<string> TrafficManagerHostNames { get; }
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 
         bool AlwaysOn { get; }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.PythonVersion PythonVersion { get; }
+        Microsoft.Azure.Management.AppService.Fluent.PythonVersion PythonVersion { get; }
 
         /// <summary>
         /// Verifies the ownership of the domain for a certificate order by verifying a hostname
@@ -64,19 +64,21 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
         Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken));
 
+        Task CacheAppSettingsAndConnectionStrings(CancellationToken cancellationToken = default(CancellationToken));
+
         Microsoft.Azure.Management.AppService.Fluent.Models.UsageState UsageState { get; }
 
         string TargetSwapSlot { get; }
 
         string GatewaySiteName { get; }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.JavaVersion JavaVersion { get; }
+        Microsoft.Azure.Management.AppService.Fluent.JavaVersion JavaVersion { get; }
 
         string DefaultHostName { get; }
 
         string AppServicePlanId { get; }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.RemoteVisualStudioVersion RemoteDebuggingVersion { get; }
+        Microsoft.Azure.Management.AppService.Fluent.RemoteVisualStudioVersion RemoteDebuggingVersion { get; }
 
         bool RemoteDebuggingEnabled { get; }
 
@@ -96,7 +98,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         void Restart();
 
-        Microsoft.Azure.Management.Appservice.Fluent.IPublishingProfile GetPublishingProfile();
+        Microsoft.Azure.Management.AppService.Fluent.IPublishingProfile GetPublishingProfile();
 
         int ContainerSize { get; }
 
@@ -108,7 +110,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         void ApplySlotConfigurations(string slotName);
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IAppSetting> AppSettings { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IAppSetting> AppSettings { get; }
 
         System.Collections.Generic.ISet<string> HostNames { get; }
 
@@ -118,7 +120,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState> HostNameSslStates { get; }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding> GetHostNameBindings();
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> GetHostNameBindings();
 
         string MicroService { get; }
 
@@ -131,9 +133,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <param name="certificateOrderName">The name of the certificate order.</param>
         void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken);
 
-        Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl GetSourceControl();
+        Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl GetSourceControl();
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.NetFrameworkVersion NetFrameworkVersion { get; }
+        Microsoft.Azure.Management.AppService.Fluent.NetFrameworkVersion NetFrameworkVersion { get; }
 
         /// <summary>
         /// Starts the web app or deployment slot.

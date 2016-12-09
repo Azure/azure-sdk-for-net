@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServiceCertificate.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     public interface IAppServiceCertificates  :
         ISupportsCreating<AppServiceCertificate.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate>,
-        ISupportsGettingById<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
+        ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         ISupportsDeletingByGroup
     {
     }

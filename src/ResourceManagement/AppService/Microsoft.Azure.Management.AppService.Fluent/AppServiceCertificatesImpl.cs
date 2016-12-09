@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -14,7 +14,12 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlc0ltcGw=
     internal partial class AppServiceCertificatesImpl  :
-        GroupableResources<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate,Microsoft.Azure.Management.Appservice.Fluent.AppServiceCertificateImpl,Microsoft.Azure.Management.AppService.Fluent.Models.CertificateInner,Microsoft.Azure.Management.AppService.Fluent.Models.CertificatesInner,Microsoft.Azure.Management.AppService.Fluent.Models.AppServiceManager>,
+        GroupableResources<
+            IAppServiceCertificate,
+            AppServiceCertificateImpl,
+            CertificateInner,
+            CertificatesOperations,
+            AppServiceManager>,
         IAppServiceCertificates
     {
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
@@ -26,15 +31,13 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
-        internal  AppServiceCertificatesImpl(CertificatesInner innerCollection, AppServiceManager manager)
+        internal  AppServiceCertificatesImpl(CertificatesOperations innerCollection, AppServiceManager manager)
+            : base (innerCollection, manager)
         {
-            //$ super(innerCollection, manager);
-            //$ }
-
         }
 
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:437A8ECA353AAE23242BFC82A5066CC3
-        public PagedList<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate> ListByGroup(string resourceGroupName)
+        public PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> ListByGroup(string resourceGroupName)
         {
             //$ return wrapList(innerCollection.ListByResourceGroup(resourceGroupName));
 
@@ -52,7 +55,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             //$ }
             //$ });
 
-            return null;
+            return;
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF

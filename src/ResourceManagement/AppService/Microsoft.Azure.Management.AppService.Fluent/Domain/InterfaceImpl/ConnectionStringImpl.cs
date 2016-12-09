@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
 
     internal partial class ConnectionStringImpl 
     {
-        string Microsoft.Azure.Management.Appservice.Fluent.IConnectionString.Name
+        string Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Name
         {
             get
             {
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringType Microsoft.Azure.Management.Appservice.Fluent.IConnectionString.Type
+        Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringType Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Type
         {
             get
             {
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IConnectionString.Value
+        string Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Value
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IConnectionString.Sticky
+        bool Microsoft.Azure.Management.AppService.Fluent.IConnectionString.Sticky
         {
             get
             {

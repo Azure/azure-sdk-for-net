@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DeploymentSlot.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     /// </summary>
     public interface IDeploymentSlot  :
         IIndependentChildResource,
-        IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IDeploymentSlot>,
+        IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
         IUpdatable<DeploymentSlot.Update.IUpdate>
     {
-        Microsoft.Azure.Management.Appservice.Fluent.IWebApp Parent { get; }
+        Microsoft.Azure.Management.AppService.Fluent.IWebApp Parent { get; }
     }
 }

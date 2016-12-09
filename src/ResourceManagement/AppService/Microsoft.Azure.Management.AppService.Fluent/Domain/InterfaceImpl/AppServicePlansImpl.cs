@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>;
         }
 
         /// <summary>
@@ -45,18 +45,18 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
         }
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
         /// </summary>
         /// <param name="id">The app service plan resource ID.</param>
-        async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan> Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlans.GetByIdAsync(string id, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> Microsoft.Azure.Management.AppService.Fluent.IAppServicePlans.GetByIdAsync(string id, CancellationToken cancellationToken)
         {
-            return await this.GetByIdAsync(id, cancellationToken) as Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan;
+            return await this.GetByIdAsync(id, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan;
         }
 
         /// <summary>

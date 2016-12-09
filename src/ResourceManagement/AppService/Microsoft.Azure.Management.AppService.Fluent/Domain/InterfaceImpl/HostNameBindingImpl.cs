@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             return this.WithDnsRecordType(hostNameDnsRecordType) as HostNameBinding.UpdateDefinition.IWithAttach<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.WebAppName
+        string Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.WebAppName
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.AzureResourceType Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.AzureResourceType
+        Microsoft.Azure.Management.AppService.Fluent.Models.AzureResourceType Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.AzureResourceType
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.CustomHostNameDnsRecordType Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.DnsRecordType
+        Microsoft.Azure.Management.AppService.Fluent.Models.CustomHostNameDnsRecordType Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.DnsRecordType
         {
             get
             {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.HostNameType Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.HostNameType
+        Microsoft.Azure.Management.AppService.Fluent.Models.HostNameType Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.HostNameType
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.DomainId
+        string Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.DomainId
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.HostName
+        string Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.HostName
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding.AzureResourceName
+        string Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding.AzureResourceName
         {
             get
             {
@@ -155,16 +155,16 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Execute the create request.
         /// </summary>
-        Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding>.Create()
+        Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.Create()
         {
-            return this.Create() as Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding;
+            return this.Create() as Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding;
         }
 
         /// <summary>
         /// Puts the request into the queue and allow the HTTP client to execute
         /// it when system resources are available.
         /// </summary>
-        async Task<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IIndexable> Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        async Task<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IIndexable> Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
             return await this.CreateAsync(cancellationToken) as Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IIndexable;
         }

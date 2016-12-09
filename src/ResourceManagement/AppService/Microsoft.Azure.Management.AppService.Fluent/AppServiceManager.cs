@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 restClient.Handlers.ToArray());
             client.SubscriptionId = subscriptionId;
             keyVaultManager = KeyVaultManager.Authenticate(RestClient.Configure()
-                .WithBaseUri(graphEndpoint)
+                .WithBaseUri(restClient.BaseUri)
                 .WithCredentials(restClient.Credentials)
                 .Build(), subscriptionId, tenantId);
             this.tenantId = tenantId;

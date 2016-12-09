@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Java.Io;
     using System.Collections.Generic;
     using System;
 
@@ -17,12 +16,12 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate>.Refresh()
+        Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>.Refresh()
         {
-            return this.Refresh() as Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate;
+            return this.Refresh() as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate;
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.Password
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Password
         {
             get
             {
@@ -30,7 +29,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.PublicKeyHash
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.PublicKeyHash
         {
             get
             {
@@ -38,7 +37,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.SiteName
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.SiteName
         {
             get
             {
@@ -46,7 +45,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.Thumbprint
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Thumbprint
         {
             get
             {
@@ -54,7 +53,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.CertificateBlob
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.CertificateBlob
         {
             get
             {
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        byte Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.PfxBlob
+        byte[] Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.PfxBlob
         {
             get
             {
@@ -70,7 +69,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.HostNames
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.HostNames
         {
             get
             {
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.Issuer
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Issuer
         {
             get
             {
@@ -86,7 +85,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.Valid
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.Valid
         {
             get
             {
@@ -94,7 +93,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.SelfLink
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.SelfLink
         {
             get
             {
@@ -102,7 +101,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.HostingEnvironmentProfile Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.HostingEnvironmentProfile
+        Microsoft.Azure.Management.AppService.Fluent.Models.HostingEnvironmentProfile Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.HostingEnvironmentProfile
         {
             get
             {
@@ -110,7 +109,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.IssueDate
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.IssueDate
         {
             get
             {
@@ -118,7 +117,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.SubjectName
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.SubjectName
         {
             get
             {
@@ -126,7 +125,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.ExpirationDate
+        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.ExpirationDate
         {
             get
             {
@@ -134,7 +133,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate.FriendlyName
+        string Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate.FriendlyName
         {
             get
             {
@@ -173,9 +172,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// Specifies the PFX certificate file to upload.
         /// </summary>
         /// <param name="file">The PFX certificate file.</param>
-        AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFile(File file)
+        AppServiceCertificate.Definition.IWithPfxFilePassword AppServiceCertificate.Definition.IWithCertificate.WithPfxFile(string filePath)
         {
-            return this.WithPfxFile(file) as AppServiceCertificate.Definition.IWithPfxFilePassword;
+            return this.WithPfxFile(filePath) as AppServiceCertificate.Definition.IWithPfxFilePassword;
         }
 
         /// <summary>

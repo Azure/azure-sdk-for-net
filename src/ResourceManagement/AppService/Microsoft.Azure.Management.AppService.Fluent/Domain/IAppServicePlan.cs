@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     public interface IAppServicePlan  :
         IGroupableResource,
         IHasName,
-        IRefreshable<Microsoft.Azure.Management.Appservice.Fluent.IAppServicePlan>,
+        IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         IUpdatable<AppServicePlan.Update.IUpdate>,
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.AppServicePlanInner>
     {
@@ -25,6 +25,6 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
 
         int Capacity { get; }
 
-        Microsoft.Azure.Management.Appservice.Fluent.AppServicePricingTier PricingTier { get; }
+        Microsoft.Azure.Management.AppService.Fluent.AppServicePricingTier PricingTier { get; }
     }
 }

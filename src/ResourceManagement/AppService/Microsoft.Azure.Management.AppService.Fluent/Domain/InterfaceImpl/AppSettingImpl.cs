@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     internal partial class AppSettingImpl 
     {
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppSetting.Key
+        string Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Key
         {
             get
             {
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Appservice.Fluent.IAppSetting.Value
+        string Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Value
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             }
         }
 
-        bool Microsoft.Azure.Management.Appservice.Fluent.IAppSetting.Sticky
+        bool Microsoft.Azure.Management.AppService.Fluent.IAppSetting.Sticky
         {
             get
             {

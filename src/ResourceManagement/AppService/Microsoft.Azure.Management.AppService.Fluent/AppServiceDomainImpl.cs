@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -10,27 +10,36 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using System.Linq;
     using System;
 
     /// <summary>
     /// The implementation for AppServiceDomain.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZURvbWFpbkltcGw=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZURvbWFpbkltcGw=
     internal partial class AppServiceDomainImpl  :
-        GroupableResource<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain,Microsoft.Azure.Management.AppService.Fluent.Models.DomainInner,Microsoft.Azure.Management.Appservice.Fluent.AppServiceDomainImpl,Microsoft.Azure.Management.AppService.Fluent.Models.AppServiceManager>,
+        GroupableResource<
+            IAppServiceDomain,
+            DomainInner,
+            AppServiceDomainImpl,
+            AppServiceManager,
+            IBlank,
+            IWithRegistrantContact,
+            IWithCreate,
+            IUpdate>,
         IAppServiceDomain,
         IDefinition,
         IUpdate
     {
-        private DomainsInner client;
-        private TopLevelDomainsInner topLevelDomainsInner;
-        private IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.HostName> hostNameMap;
+        private DomainsOperations client;
+        private TopLevelDomainsOperations topLevelDomainsInner;
+        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostName> hostNameMap;
         ///GENMHASH:E3A506AB29CB79E19BE35E770B4C876E:E11180BB79B722174FB3D0453FCEA12B
         public DomainStatus RegistrationStatus()
         {
             //$ return Inner.RegistrationStatus();
 
-            return DomainStatus.ACTIVE;
+            return DomainStatus.Active;
         }
 
         ///GENMHASH:CD48C699C847906F9DDB2B020855A2B4:7B32ADCF145314E68A75089E358F8048
@@ -65,7 +74,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:A096A9B6D504D2EF53E4C2B61224B4A4
-        public async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ String[] domainParts = this.Name().Split("\\.");
             //$ String topLevel = domainParts[domainParts.Length - 1];
@@ -128,22 +137,15 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
-        internal  AppServiceDomainImpl(string name, DomainInner innerObject, DomainsInner client, TopLevelDomainsInner topLevelDomainsInner, AppServiceManager manager)
+        internal AppServiceDomainImpl(string name, DomainInner innerObject, DomainsOperations client, TopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
+            : base(name, innerObject, manager)
         {
-            //$ super(name, innerObject, manager);
-            //$ this.client = client;
-            //$ this.topLevelDomainsInner = topLevelDomainsInner;
-            //$ Inner.WithLocation("global");
-            //$ if (Inner.ManagedHostNames() != null) {
-            //$ this.hostNameMap = Maps.UniqueIndex(Inner.ManagedHostNames(), new Function<HostName, String>() {
-            //$ @Override
-            //$ public String apply(HostName input) {
-            //$ return input.Name();
-            //$ }
-            //$ });
-            //$ }
-            //$ }
-
+            this.client = client;
+            this.topLevelDomainsInner = topLevelDomainsInner;
+            Inner.Location = "global";
+            if (Inner.ManagedHostNames != null) {
+                this.hostNameMap = Inner.ManagedHostNames.ToDictionary(h => h.Name);
+            }
         }
 
         ///GENMHASH:B023ACEE2E8E886E8EC94C82F6C93544:19266588ED73C70479B22B9357256AED
@@ -167,7 +169,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             //$ }
             //$ });
 
-            return null;
+            return;
         }
 
         ///GENMHASH:EE3A4FAA12095D4EBD752C6D82325EDA:DD8B0DBE8A8402002F39ECC61A75D5BE

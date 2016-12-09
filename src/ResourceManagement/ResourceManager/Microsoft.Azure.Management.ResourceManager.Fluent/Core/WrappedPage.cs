@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
-    internal class WrappedPage<InnerT, WrappedT> : IPage<WrappedT>
+    public class WrappedPage<InnerT, WrappedT> : IPage<WrappedT>
     {
         private string nextPageLink;
         private List<WrappedT> wrappedPageItems;

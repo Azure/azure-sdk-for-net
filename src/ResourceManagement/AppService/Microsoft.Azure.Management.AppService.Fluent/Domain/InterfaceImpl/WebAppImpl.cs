@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -31,18 +31,18 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Creates a new free app service plan to use. No custom domains or SSL bindings are available in this plan.
         /// </summary>
-        WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.Appservice.Fluent.IWebApp> WebApp.Definition.IWithNewAppServicePlan.WithFreePricingTier()
+        WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebApp.Definition.IWithNewAppServicePlan.WithFreePricingTier()
         {
-            return this.WithFreePricingTier() as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>;
+            return this.WithFreePricingTier() as WebAppBase.Definition.IWithCreate<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
         }
 
         /// <summary>
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="pricingTier">The pricing tier to use.</param>
-        WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.Appservice.Fluent.IWebApp> WebApp.Definition.IWithNewAppServicePlan.WithPricingTier(AppServicePricingTier pricingTier)
+        WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebApp.Definition.IWithNewAppServicePlan.WithPricingTier(AppServicePricingTier pricingTier)
         {
-            return this.WithPricingTier(pricingTier) as WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>;
+            return this.WithPricingTier(pricingTier) as WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// Uses an existing app service plan for the web app.
         /// </summary>
         /// <param name="appServicePlan">The existing app service plan.</param>
-        WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.Appservice.Fluent.IWebApp> WebApp.Definition.IWithAppServicePlan.WithExistingAppServicePlan(IAppServicePlan appServicePlan)
+        WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IWebApp> WebApp.Definition.IWithAppServicePlan.WithExistingAppServicePlan(IAppServicePlan appServicePlan)
         {
-            return this.WithExistingAppServicePlan(appServicePlan) as WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>;
+            return this.WithExistingAppServicePlan(appServicePlan) as WebAppBase.Definition.IWithHostNameBinding<Microsoft.Azure.Management.AppService.Fluent.IWebApp>;
         }
 
         /// <summary>
@@ -81,15 +81,15 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
             return this.WithExistingAppServicePlan(appServicePlan) as WebApp.Update.IUpdate;
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding> Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.GetHostNameBindings()
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.GetHostNameBindings()
         {
-            return this.GetHostNameBindings() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Appservice.Fluent.IHostNameBinding>;
+            return this.GetHostNameBindings() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>;
         }
 
         /// <summary>
         /// Starts the web app or deployment slot.
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.Start()
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.Start()
         {
  
             this.Start();
@@ -100,36 +100,36 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// of the domain is bound to this web app.
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
  
             this.VerifyDomainOwnership(certificateOrderName, domainVerificationToken);
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.IPublishingProfile Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.GetPublishingProfile()
+        Microsoft.Azure.Management.AppService.Fluent.IPublishingProfile Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.GetPublishingProfile()
         {
-            return this.GetPublishingProfile() as Microsoft.Azure.Management.Appservice.Fluent.IPublishingProfile;
+            return this.GetPublishingProfile() as Microsoft.Azure.Management.AppService.Fluent.IPublishingProfile;
         }
 
         /// <summary>
         /// Reset the slot to its original configurations.
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.ResetSlotConfigurations()
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.ResetSlotConfigurations()
         {
  
             this.ResetSlotConfigurations();
         }
 
-        Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.GetSourceControl()
+        Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.GetSourceControl()
         {
-            return this.GetSourceControl() as Microsoft.Azure.Management.Appservice.Fluent.IWebAppSourceControl;
+            return this.GetSourceControl() as Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl;
         }
 
         /// <summary>
         /// Swaps the app running in the current web app / slot with the app
         /// running in the specified slot.
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.Swap(string slotName)
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.Swap(string slotName)
         {
  
             this.Swap(slotName);
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// Apply the slot (or sticky) configurations from the specified slot
         /// to the current one. This is useful for "Swap with Preview".
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.ApplySlotConfigurations(string slotName)
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.ApplySlotConfigurations(string slotName)
         {
  
             this.ApplySlotConfigurations(slotName);
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         /// <param name="certificateOrderName">The name of the certificate order.</param>
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
-        async Task Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken)
         {
  
             await this.VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken, cancellationToken);
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Stops the web app or deployment slot.
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.Stop()
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.Stop()
         {
  
             this.Stop();
@@ -169,13 +169,13 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// <summary>
         /// Restarts the web app or deployment slot.
         /// </summary>
-        void Microsoft.Azure.Management.Appservice.Fluent.IWebAppBase<Microsoft.Azure.Management.Appservice.Fluent.IWebApp>.Restart()
+        void Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>.Restart()
         {
  
             this.Restart();
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.DeploymentSlots Microsoft.Azure.Management.Appservice.Fluent.IWebApp.DeploymentSlots
+        Microsoft.Azure.Management.AppService.Fluent.Models.DeploymentSlots Microsoft.Azure.Management.AppService.Fluent.IWebApp.DeploymentSlots
         {
             get
             {

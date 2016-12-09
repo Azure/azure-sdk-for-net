@@ -3,14 +3,10 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     /// <summary>
-    /// An immutable client-side representation of an app setting on a web app.
+    /// Defines values for PlatformArchitecture.
     /// </summary>
-    public interface IAppSetting 
+    public enum PlatformArchitecture
     {
-        bool Sticky { get; }
-
-        string Value { get; }
-
-        string Key { get; }
+        X86, X64
     }
 }

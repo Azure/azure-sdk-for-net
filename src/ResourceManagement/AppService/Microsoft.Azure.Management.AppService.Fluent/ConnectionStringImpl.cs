@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         {
             //$ return valueTypePair.Type();
 
-            return ConnectionStringType.MY_SQL;
+            return ConnectionStringType.MySql;
         }
     }
 }

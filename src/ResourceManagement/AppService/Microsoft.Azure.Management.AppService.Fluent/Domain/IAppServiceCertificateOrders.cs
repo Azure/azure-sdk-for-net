@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
     public interface IAppServiceCertificateOrders  :
         ISupportsCreating<AppServiceCertificateOrder.Definition.IBlank>,
         ISupportsDeletingById,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder>,
-        ISupportsGettingById<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
+        ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
         ISupportsDeletingByGroup
     {
         /// <summary>
@@ -23,6 +23,6 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificateOrder> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

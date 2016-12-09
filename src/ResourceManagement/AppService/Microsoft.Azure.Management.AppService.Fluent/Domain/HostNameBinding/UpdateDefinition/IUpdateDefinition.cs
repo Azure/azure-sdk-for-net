@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDefinition
+namespace Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.Appservice.Fluent;
+    using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
     /// <summary>
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDef
         /// Specifies the DNS record type.
         /// </summary>
         /// <param name="hostNameDnsRecordType">The DNS record type.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDefinition.IWithAttach<ParentT> WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType);
+        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition.IWithAttach<ParentT> WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType);
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDef
         /// </summary>
         /// <param name="subDomain">The sub-domain name excluding the top level domain, e.g., ".</param>
         /// <",>"www".</",>
-        Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDefinition.IWithHostNameDnsRecordType<ParentT> WithSubDomain(string subDomain);
+        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition.IWithHostNameDnsRecordType<ParentT> WithSubDomain(string subDomain);
     }
 
     /// <summary>
@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDef
         /// Binds to a 3rd party domain.
         /// </summary>
         /// <param name="domain">The 3rd party domain name.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDefinition.IWithSubDomain<ParentT> WithThirdPartyDomain(string domain);
+        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition.IWithSubDomain<ParentT> WithThirdPartyDomain(string domain);
 
         /// <summary>
         /// Binds to a domain purchased from Azure.
         /// </summary>
         /// <param name="domain">The domain purchased from Azure.</param>
-        Microsoft.Azure.Management.Appservice.Fluent.HostNameBinding.UpdateDefinition.IWithSubDomain<ParentT> WithAzureManagedDomain(IAppServiceDomain domain);
+        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition.IWithSubDomain<ParentT> WithAzureManagedDomain(IAppServiceDomain domain);
     }
 
     /// <summary>

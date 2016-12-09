@@ -3,14 +3,10 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     /// <summary>
-    /// An immutable client-side representation of an app setting on a web app.
+    /// The type of a repository.
     /// </summary>
-    public interface IAppSetting 
+    public enum RepositoryType 
     {
-        bool Sticky { get; }
-
-        string Value { get; }
-
-        string Key { get; }
+        Git, Mercurial
     }
 }

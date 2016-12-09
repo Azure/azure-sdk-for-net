@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading.Tasks;
     using AppServiceCertificateOrder.Definition;
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
     {
-        private Observable<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate> newCertificate;
+        private Observable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> newCertificate;
         private IWithKeyVault certificateInDefinition;
         private AppServiceManager manager;
         private FluentImplT parent;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:0B0AB38F6DD8B1FEB79C787CAA88F145:906C0B4A59497294B730FFF3475D49DA
-        internal async Task<Microsoft.Azure.Management.Appservice.Fluent.IAppServiceCertificate> NewCertificateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> NewCertificateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return newCertificate.DoOnNext(new Action1<AppServiceCertificate>() {
             //$ @Override

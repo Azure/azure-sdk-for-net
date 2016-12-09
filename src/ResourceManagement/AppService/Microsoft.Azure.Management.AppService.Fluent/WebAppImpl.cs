@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Appservice.Fluent
+namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.AppService.Fluent;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using WebApp.Definition;
     using WebApp.Update;
@@ -291,7 +292,7 @@ namespace Microsoft.Azure.Management.Appservice.Fluent
         }
 
         ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
-        internal  WebAppImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppsInner client, AppServiceManager manager, WebSiteManagementClientImpl serviceClient)
+        internal  WebAppImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
         {
             //$ super(name, innerObject, configObject, client, manager, serviceClient);
             //$ }
