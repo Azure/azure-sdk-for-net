@@ -22,6 +22,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
 
-        string PrivateIpAddressVersion { get; }
+        IPVersion PrivateIpAddressVersion { get; }
     }
 }
