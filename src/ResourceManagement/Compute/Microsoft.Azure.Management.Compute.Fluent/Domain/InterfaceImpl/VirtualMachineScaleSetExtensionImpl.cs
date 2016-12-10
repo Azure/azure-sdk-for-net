@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <returns>the name of this child object</returns>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
