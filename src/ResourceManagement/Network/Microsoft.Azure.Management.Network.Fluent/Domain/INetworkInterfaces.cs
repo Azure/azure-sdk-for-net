@@ -2,14 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
+    using NetworkInterface.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
+
     /// <summary>
     /// Entry point to network interface management.
     /// </summary>
-    public interface INetworkInterfaces  :
-        ISupportsCreating<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IBlank>,
+    public interface INetworkInterfaces :
+        ISupportsCreating<NetworkInterface.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
