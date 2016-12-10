@@ -44,16 +44,50 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
             return !(lhs == rhs);
         }
 
+        public static ApplicationGatewayProtocol Parse(string value)
+        {
+            if(value == null)
+            {
+                return null;
+            }
+            else if (Http.Equals(value))
+            {
+                return Http;
+            }
+            else if(Https.Equals(value))
+            {
+                return Https;
+            }
+            else
+            {
+                return new ApplicationGatewayProtocol(value);
+            }
+        }
+
+        public bool Equals(string value)
+        {
+            if (value == null)
+            {
+                return null == this.value;
+            }
+            else
+            {
+                return value.ToLower().Equals(this.value.ToLower());
+            }
+        }
+
         public override bool Equals(object obj)
         {
             string value = ToString();
             if (!(obj is ApplicationGatewayProtocol))
             {
                 return false;
-            } else if (obj == this)
+            }
+            else if (obj == this)
             {
                 return true;
             }
+
             ApplicationGatewayProtocol rhs = (ApplicationGatewayProtocol)obj;
             if (value == null)
             {
