@@ -15,30 +15,35 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         /// Adds the specified existing IP address to the backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithIpAddress(string ipAddress);
 
         /// <summary>
         /// Ensures the specified IP address is not associated with this backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutIpAddress(string ipAddress);
 
         /// <summary>
         /// Ensures the specified fully qualified domain name (FQDN) is not associated with this backend.
         /// </summary>
         /// <param name="fqdn">A fully qualified domain name.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutFqdn(string fqdn);
 
         /// <summary>
         /// Ensure the specified address is not associated with this backend.
         /// </summary>
         /// <param name="address">An existing address currently associated with the backend.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutAddress(ApplicationGatewayBackendAddress address);
 
         /// <summary>
         /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
         /// </summary>
         /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithFqdn(string fqdn);
     }
 

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point for network resource usage management API.
     /// </summary>
-    public interface INetworkUsages :
+    public interface INetworkUsages  :
         ISupportsListingByRegion<Microsoft.Azure.Management.Network.Fluent.INetworkUsage>
     {
     }

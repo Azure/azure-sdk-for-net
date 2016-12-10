@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfigur
         /// Specifies an existing subnet the application gateway should be part of and get its private IP address from.
         /// </summary>
         /// <param name="subnet">An existing subnet.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Update.IUpdate WithExistingSubnet(ISubnet subnet);
 
         /// <summary>
@@ -24,6 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfigur
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIpConfiguration.Update.IUpdate WithExistingSubnet(INetwork network, string subnetName);
     }
 

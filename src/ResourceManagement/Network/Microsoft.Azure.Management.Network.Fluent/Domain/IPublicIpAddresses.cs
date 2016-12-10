@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point to public IP address management.
     /// </summary>
-    public interface IPublicIpAddresses :
+    public interface IPublicIpAddresses  :
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsCreating<PublicIpAddress.Definition.IBlank>,
         ISupportsDeletingById,

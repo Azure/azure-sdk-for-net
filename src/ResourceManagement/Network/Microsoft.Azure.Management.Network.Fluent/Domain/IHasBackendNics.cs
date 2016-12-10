@@ -9,6 +9,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IHasBackendNics 
     {
+        /// <summary>
+        /// Gets a map of names of the IP configurations of network interfaces assigned to this backend,
+        /// indexed by their NIC's resource id.
+        /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,string> BackendNicIpConfigurationNames { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation of the LoadBalancer interface.
     /// </summary>
-    public partial class LoadBalancerImpl : GroupableParentResource<
+    internal partial class LoadBalancerImpl : GroupableParentResource<
             ILoadBalancer,
             LoadBalancerInner,
             LoadBalancerImpl,
@@ -794,6 +794,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             return publicIpAddressIds;
+        }
+
+        ///GENMHASH:AF5672F546B4A252E729CBD06FEDA19B:E2981ABD5069A930F56B7E822F9B5AD2
+        public LoadBalancerImpl WithFrontendSubnet(INetwork network, string subnetName)
+        {
+            return this.DefinePrivateFrontend(DEFAULT)
+                .WithExistingSubnet(network, subnetName)
+                .Attach();
+        }
+
+        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:71CD922059C7BFD8A1A0B94B12F892B7
+        public LoadBalancerImpl WithExistingPublicIpAddress(string resourceId)
+        {
+            return WithExistingPublicIpAddress(resourceId, DEFAULT);
         }
     }
 }

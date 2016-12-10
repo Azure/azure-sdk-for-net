@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
     {
         /// <summary>
         /// Associates the request routing rule with an existing frontend listener.
-        /// <p>
         /// Also, note that a given listener can be used by no more than one request routing rule at a time.
         /// </summary>
         /// <param name="name">The name of a listener to reference.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update.IUpdate FromListener(string name);
     }
 
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
         /// Associates the request routing rule with an existing backend on this application gateway.
         /// </summary>
         /// <param name="name">The name of an existing backend.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update.IUpdate ToBackend(string name);
     }
 
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
         /// Associates the specified backend HTTP settings configuration with this request routing rule.
         /// </summary>
         /// <param name="name">The name of a backend HTTP settings configuration.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update.IUpdate ToBackendHttpConfiguration(string name);
     }
 }

@@ -18,10 +18,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasServerNameIndication,
         IHasSubnet
     {
+        /// <summary>
+        /// Gets the number of the frontend port the listener is listening on.
+        /// </summary>
         int FrontendPortNumber { get; }
 
+        /// <summary>
+        /// Gets the frontend IP configuration this listener is associated with.
+        /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend Frontend { get; }
 
+        /// <summary>
+        /// Gets the name of the frontend port the listener is listening on.
+        /// </summary>
         string FrontendPortName { get; }
     }
 }

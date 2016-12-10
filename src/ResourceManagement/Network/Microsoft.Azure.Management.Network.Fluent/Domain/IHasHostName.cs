@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IHasHostName 
     {
+        /// <summary>
+        /// Gets the associated host name.
+        /// </summary>
         string HostName { get; }
     }
 }

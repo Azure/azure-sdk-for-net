@@ -2,555 +2,627 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
+    using System.Threading.Tasks;
+    using NetworkInterface.Definition;
+    using NetworkInterface.Update;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update;
-    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    public partial class NetworkInterfaceImpl 
+
+    internal partial class NetworkInterfaceImpl 
     {
         /// <summary>
         /// Removes a DNS server associated with the network interface.
         /// </summary>
-        /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithDnsServer.WithoutDnsServer(string ipAddress) { 
-            return this.WithoutDnsServer( ipAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="ipAddress">The IP address of the DNS server.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithDnsServer.WithoutDnsServer(string ipAddress)
+        {
+            return this.WithoutDnsServer(ipAddress) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies the IP address of the custom DNS server to associate with the network interface.
-        /// <p>
         /// Note this method's effect is additive, i.e. each time it is used, the new dns server is
         /// added to the network interface.
         /// </summary>
-        /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithDnsServer.WithDnsServer(string ipAddress) { 
-            return this.WithDnsServer( ipAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="ipAddress">The IP address of the DNS server.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithDnsServer.WithDnsServer(string ipAddress)
+        {
+            return this.WithDnsServer(ipAddress) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies to use the default Azure DNS server for the network interface.
-        /// <p>
         /// Using azure DNS server will remove any custom DNS server associated with this network interface.
         /// </summary>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithDnsServer.WithAzureDnsServer() { 
-            return this.WithAzureDnsServer() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithDnsServer.WithAzureDnsServer()
+        {
+            return this.WithAzureDnsServer() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing network security group with the network interface.
         /// </summary>
-        /// <param name="networkSecurityGroup">networkSecurityGroup an existing network security group</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup) { 
-            return this.WithExistingNetworkSecurityGroup( networkSecurityGroup) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="networkSecurityGroup">An existing network security group.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup)
+        {
+            return this.WithExistingNetworkSecurityGroup(networkSecurityGroup) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that remove any network security group associated with the network interface.
         /// </summary>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithNetworkSecurityGroup.WithoutNetworkSecurityGroup() { 
-            return this.WithoutNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithNetworkSecurityGroup.WithoutNetworkSecurityGroup()
+        {
+            return this.WithoutNetworkSecurityGroup() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Create a new network security group to associate with network interface, based on the provided definition.
         /// </summary>
-        /// <param name="creatable">creatable a creatable definition for a new network security group</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> creatable) { 
-            return this.WithNewNetworkSecurityGroup( creatable) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="creatable">A creatable definition for a new network security group.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> creatable)
+        {
+            return this.WithNewNetworkSecurityGroup(creatable) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing network security group with the network interface.
         /// </summary>
-        /// <param name="networkSecurityGroup">networkSecurityGroup an existing network security group</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup) { 
-            return this.WithExistingNetworkSecurityGroup( networkSecurityGroup) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="networkSecurityGroup">An existing network security group.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup)
+        {
+            return this.WithExistingNetworkSecurityGroup(networkSecurityGroup) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Create a new network security group to associate with network interface, based on the provided definition.
         /// </summary>
-        /// <param name="creatable">creatable a creatable definition for a new network security group</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> creatable) { 
-            return this.WithNewNetworkSecurityGroup( creatable) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="creatable">A creatable definition for a new network security group.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> creatable)
+        {
+            return this.WithNewNetworkSecurityGroup(creatable) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Create a new public IP address to associate the network interface's primary IP configuration,
         /// based on the provided definition.
-        /// <p>
         /// if there is public IP associated with the primary IP configuration then that will be removed in
-        /// favour of this
+        /// favour of this.
         /// </summary>
-        /// <param name="creatable">creatable a creatable definition for a new public IP</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable) { 
-            return this.WithNewPrimaryPublicIpAddress( creatable) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="creatable">A creatable definition for a new public IP.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        {
+            return this.WithNewPrimaryPublicIpAddress(creatable) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it
         /// with the network interface's primary IP configuration.
-        /// <p>
         /// the internal name and DNS label for the public IP address will be derived from the network interface name,
-        /// if there is an existing public IP association then that will be removed in favour of this
+        /// if there is an existing public IP association then that will be removed in favour of this.
         /// </summary>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress() { 
-            return this.WithNewPrimaryPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress()
+        {
+            return this.WithNewPrimaryPublicIpAddress() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
         /// and associate it with the network interface's primary IP configuration.
-        /// <p>
         /// the internal name for the public IP address will be derived from the DNS label, if there is an existing
-        /// public IP association then that will be removed in favour of this
+        /// public IP association then that will be removed in favour of this.
         /// </summary>
-        /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel) { 
-            return this.WithNewPrimaryPublicIpAddress( leafDnsLabel) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="leafDnsLabel">The leaf domain label.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        {
+            return this.WithNewPrimaryPublicIpAddress(leafDnsLabel) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that remove any public IP associated with the network interface's primary IP configuration.
         /// </summary>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithoutPrimaryPublicIpAddress() { 
-            return this.WithoutPrimaryPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithoutPrimaryPublicIpAddress()
+        {
+            return this.WithoutPrimaryPublicIpAddress() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the network interface's primary IP configuration.
-        /// if there is an existing public IP association then that will be removed in favour of this
+        /// if there is an existing public IP association then that will be removed in favour of this.
         /// </summary>
-        /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress) { 
-            return this.WithExistingPrimaryPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        {
+            return this.WithExistingPrimaryPublicIpAddress(publicIpAddress) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Create a new public IP address to associate with network interface's primary IP configuration, based on
         /// the provided definition.
         /// </summary>
-        /// <param name="creatable">creatable a creatable definition for a new public IP</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable) { 
-            return this.WithNewPrimaryPublicIpAddress( creatable) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="creatable">A creatable definition for a new public IP.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
+        {
+            return this.WithNewPrimaryPublicIpAddress(creatable) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it
         /// with the network interface's primary IP configuration.
-        /// <p>
-        /// the internal name and DNS label for the public IP address will be derived from the network interface name
+        /// the internal name and DNS label for the public IP address will be derived from the network interface name.
         /// </summary>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress() { 
-            return this.WithNewPrimaryPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress()
+        {
+            return this.WithNewPrimaryPublicIpAddress() as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
         /// and associate it with the network interface's primary IP configuration.
-        /// <p>
-        /// the internal name for the public IP address will be derived from the DNS label
+        /// the internal name for the public IP address will be derived from the DNS label.
         /// </summary>
-        /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel) { 
-            return this.WithNewPrimaryPublicIpAddress( leafDnsLabel) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="leafDnsLabel">The leaf domain label.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        {
+            return this.WithNewPrimaryPublicIpAddress(leafDnsLabel) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Associates an existing public IP address with the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress) { 
-            return this.WithExistingPrimaryPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        {
+            return this.WithExistingPrimaryPublicIpAddress(publicIpAddress) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the specified existing virtual network
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
-        /// <returns>the next stage of network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic() { 
-            return this.WithPrimaryPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic()
+        {
+            return this.WithPrimaryPrivateIpAddressDynamic() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network
         /// subnet to the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="staticPrivateIpAddress">staticPrivateIpAddress the static IP address within the specified subnet to assign to</param>
-        /// <param name="the">the primary IP configuration</param>
-        /// <returns>the next stage of network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress) { 
-            return this.WithPrimaryPrivateIpAddressStatic( staticPrivateIpAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="staticPrivateIpAddress">
+        /// The static IP address within the specified subnet to assign to
+        /// the primary IP configuration.
+        /// </param>
+        /// <return>The next stage of network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        {
+            return this.WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Enables dynamic private IP address allocation within the specified existing virtual network
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
-        /// <returns>the next stage of network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic() { 
-            return this.WithPrimaryPrivateIpAddressDynamic() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <return>The next stage of network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic()
+        {
+            return this.WithPrimaryPrivateIpAddressDynamic() as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network
         /// subnet to the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="staticPrivateIpAddress">staticPrivateIpAddress the static IP address within the specified subnet to assign to</param>
-        /// <param name="the">the network interface</param>
-        /// <returns>the next stage of network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress) { 
-            return this.WithPrimaryPrivateIpAddressStatic( staticPrivateIpAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="staticPrivateIpAddress">
+        /// The static IP address within the specified subnet to assign to
+        /// the network interface.
+        /// </param>
+        /// <return>The next stage of network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        {
+            return this.WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Enable IP forwarding in the network interface.
         /// </summary>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate.WithIpForwarding() { 
-            return this.WithIpForwarding() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithCreate.WithIpForwarding()
+        {
+            return this.WithIpForwarding() as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Specifies the IP address of the custom DNS server to associate with the network interface.
-        /// <p>
         /// Note this method's effect is additive, i.e. each time it is used, the new dns server is
         /// added to the network interface.
         /// </summary>
-        /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate.WithDnsServer(string ipAddress) { 
-            return this.WithDnsServer( ipAddress) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="ipAddress">The IP address of the DNS server.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithCreate.WithDnsServer(string ipAddress)
+        {
+            return this.WithDnsServer(ipAddress) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Specifies the internal DNS name label for the network interface.
         /// </summary>
-        /// <param name="dnsNameLabel">dnsNameLabel the internal DNS name label</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate.WithInternalDnsNameLabel(string dnsNameLabel) { 
-            return this.WithInternalDnsNameLabel( dnsNameLabel) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="dnsNameLabel">The internal DNS name label.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithCreate.WithInternalDnsNameLabel(string dnsNameLabel)
+        {
+            return this.WithInternalDnsNameLabel(dnsNameLabel) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
-        /// Gets the private IP address allocated to this network interface's primary IP configuration.
-        /// <p>
+        /// Gets Gets the private IP address allocated to this network interface's primary IP configuration.
         /// The private IP will be within the virtual network subnet of this network interface.
         /// </summary>
-        /// <returns>the private IP addresses</returns>
+        /// <summary>
+        /// Gets the private IP addresses.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIp
         {
             get
-            { 
-            return this.PrimaryPrivateIp() as string;
+            {
+                return this.PrimaryPrivateIp();
             }
         }
-        /// <returns>the resource ID of the associated virtual machine, or null if none.</returns>
+
+        /// <summary>
+        /// Gets the resource ID of the associated virtual machine, or null if none.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.VirtualMachineId
         {
             get
-            { 
-            return this.VirtualMachineId() as string;
+            {
+                return this.VirtualMachineId();
             }
         }
-        /// <returns>IP addresses of this network interface's DNS servers</returns>
+
+        /// <summary>
+        /// Gets IP addresses of this network interface's DNS servers.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.DnsServers
         {
             get
-            { 
-            return this.DnsServers() as System.Collections.Generic.IList<string>;
+            {
+                return this.DnsServers() as System.Collections.Generic.IList<string>;
             }
         }
+
         /// <summary>
-        /// Gets the fully qualified domain name of this network interface.
-        /// <p>
+        /// Gets Gets the fully qualified domain name of this network interface.
         /// A network interface receives FQDN as a part of assigning it to a virtual machine.
         /// </summary>
-        /// <returns>the qualified domain name</returns>
+        /// <summary>
+        /// Gets the qualified domain name.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.InternalFqdn
         {
             get
-            { 
-            return this.InternalFqdn() as string;
+            {
+                return this.InternalFqdn();
             }
         }
-        /// <returns><tt>true</tt> if IP forwarding is enabled in this network interface</returns>
+
+        /// <summary>
+        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// </summary>
         bool Microsoft.Azure.Management.Network.Fluent.INetworkInterface.IsIpForwardingEnabled
         {
             get
-            { 
-            return this.IsIpForwardingEnabled();
+            {
+                return this.IsIpForwardingEnabled();
             }
         }
-        /// <returns>the MAC Address of the network interface</returns>
+
+        /// <summary>
+        /// Gets the MAC Address of the network interface.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.MacAddress
         {
             get
-            { 
-            return this.MacAddress() as string;
+            {
+                return this.MacAddress();
             }
         }
-        /// <returns>the IP configurations of this network interface, indexed by their names</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.IpConfigurations
+
+        /// <summary>
+        /// Gets the IP configurations of this network interface, indexed by their names.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.IpConfigurations
         {
             get
-            { 
-            return this.IpConfigurations() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration>;
+            {
+                return this.IpConfigurations() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration>;
             }
         }
-        /// <returns>applied DNS servers</returns>
+
+        /// <summary>
+        /// Gets applied DNS servers.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.AppliedDnsServers
         {
             get
-            { 
-            return this.AppliedDnsServers() as System.Collections.Generic.IList<string>;
+            {
+                return this.AppliedDnsServers() as System.Collections.Generic.IList<string>;
             }
         }
-        /// <returns>the primary IP configuration of this network interface</returns>
+
+        /// <summary>
+        /// Gets the primary IP configuration of this network interface.
+        /// </summary>
         Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryIpConfiguration
         {
             get
-            { 
-            return this.PrimaryIpConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration;
+            {
+                return this.PrimaryIpConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration;
             }
         }
+
         /// <summary>
         /// Gets the network security group associated this network interface.
-        /// <p>
         /// This method makes a rest API call to fetch the Network Security Group resource.
         /// </summary>
-        /// <returns>the network security group associated with this network interface.</returns>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.INetworkInterface.GetNetworkSecurityGroup() { 
+        /// <return>The network security group associated with this network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.INetworkInterface.GetNetworkSecurityGroup()
+        {
             return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
         }
 
-        /// <returns>the internal domain name suffix</returns>
+        /// <summary>
+        /// Gets the internal domain name suffix.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.InternalDomainNameSuffix
         {
             get
-            { 
-            return this.InternalDomainNameSuffix() as string;
+            {
+                return this.InternalDomainNameSuffix();
             }
         }
-        /// <returns>the private IP allocation method (Dynamic, Static) of this network interface's</returns>
-        /// <returns>primary IP configuration.</returns>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
+
+        /// <summary>
+        /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
+        /// primary IP configuration.
+        /// </summary>
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
         {
             get
-            { 
-            return this.PrimaryPrivateIpAllocationMethod() as string;
+            {
+                return this.PrimaryPrivateIpAllocationMethod();
             }
         }
-        /// <returns>the Internal DNS name assigned to this network interface</returns>
+
+        /// <summary>
+        /// Gets the Internal DNS name assigned to this network interface.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.InternalDnsNameLabel
         {
             get
-            { 
-            return this.InternalDnsNameLabel() as string;
+            {
+                return this.InternalDnsNameLabel();
             }
         }
-        /// <returns>the network security group resource id or null if there is no network security group</returns>
-        /// <returns>associated with this network interface.</returns>
+
+        /// <summary>
+        /// Gets the network security group resource id or null if there is no network security group
+        /// associated with this network interface.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.NetworkSecurityGroupId
         {
             get
-            { 
-            return this.NetworkSecurityGroupId() as string;
+            {
+                return this.NetworkSecurityGroupId();
             }
         }
+
         /// <summary>
         /// Associates the network interface's primary IP configuration with an inbound NAT rule of an existing load balancer.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
-        /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName) { 
-            return this.WithExistingLoadBalancerInboundNatRule( loadBalancer,  inboundNatRuleName) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        {
+            return this.WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates the network interface's primary IP configuration with a backend of an existing load balancer.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
-        /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithLoadBalancer.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName) { 
-            return this.WithExistingLoadBalancerBackend( loadBalancer,  backendName) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="backendName">The name of an existing backend on that load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithLoadBalancer.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
+        {
+            return this.WithExistingLoadBalancerBackend(loadBalancer, backendName) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Removes all the existing associations with any load balancer backends.
         /// </summary>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithLoadBalancer.WithoutLoadBalancerBackends() { 
-            return this.WithoutLoadBalancerBackends() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithLoadBalancer.WithoutLoadBalancerBackends()
+        {
+            return this.WithoutLoadBalancerBackends() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Removes all the existing associations with any load balancer inbound NAT rules.
         /// </summary>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithLoadBalancer.WithoutLoadBalancerInboundNatRules() { 
-            return this.WithoutLoadBalancerInboundNatRules() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithLoadBalancer.WithoutLoadBalancerInboundNatRules()
+        {
+            return this.WithoutLoadBalancerInboundNatRules() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associates the network interface's primary IP configuration with an inbound NAT rule of an existing load balancer.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
-        /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName) { 
-            return this.WithExistingLoadBalancerInboundNatRule( loadBalancer,  inboundNatRuleName) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
+        /// <return>The next stage of the definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        {
+            return this.WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Associates the network interface's primary IP configuration with a backend of an existing load balancer.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
-        /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithLoadBalancer.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName) { 
-            return this.WithExistingLoadBalancerBackend( loadBalancer,  backendName) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate;
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="backendName">The name of an existing backend on that load balancer.</param>
+        /// <return>The next stage of the definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithLoadBalancer.WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
+        {
+            return this.WithExistingLoadBalancerBackend(loadBalancer, backendName) as NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Starts definition of a secondary IP configuration.
         /// </summary>
-        /// <param name="name">name name for the IP configuration</param>
-        /// <returns>the first stage of a secondary IP configuration definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate> Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithSecondaryIpConfiguration.DefineSecondaryIpConfiguration(string name) { 
-            return this.DefineSecondaryIpConfiguration( name) as Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate>;
+        /// <param name="name">Name for the IP configuration.</param>
+        /// <return>The first stage of a secondary IP configuration definition.</return>
+        NicIpConfiguration.Definition.IBlank<NetworkInterface.Definition.IWithCreate> NetworkInterface.Definition.IWithSecondaryIpConfiguration.DefineSecondaryIpConfiguration(string name)
+        {
+            return this.DefineSecondaryIpConfiguration(name) as NicIpConfiguration.Definition.IBlank<NetworkInterface.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Associate an existing virtual network with the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="network">network an existing virtual network</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork.WithExistingPrimaryNetwork(INetwork network) { 
-            return this.WithExistingPrimaryNetwork( network) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet;
+        /// <param name="network">An existing virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithPrimaryNetworkSubnet NetworkInterface.Definition.IWithPrimaryNetwork.WithExistingPrimaryNetwork(INetwork network)
+        {
+            return this.WithExistingPrimaryNetwork(network) as NetworkInterface.Definition.IWithPrimaryNetworkSubnet;
         }
 
         /// <summary>
         /// Create a new virtual network to associate with the network interface's primary IP configuration,
         /// based on the provided definition.
         /// </summary>
-        /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable) { 
-            return this.WithNewPrimaryNetwork( creatable) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp;
+        /// <param name="creatable">A creatable definition for a new virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
+        {
+            return this.WithNewPrimaryNetwork(creatable) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface's primary IP configuration.
-        /// <p>
         /// The virtual network will be created in the same resource group and region as of network interface,
         /// it will be created with the specified address space and a default subnet covering the entirety of
         /// the network IP address space.
         /// </summary>
-        /// <param name="name">name the name of the new virtual network</param>
-        /// <param name="addressSpace">addressSpace the address space for rhe virtual network</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string name, string addressSpace) { 
-            return this.WithNewPrimaryNetwork( name,  addressSpace) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp;
+        /// <param name="name">The name of the new virtual network.</param>
+        /// <param name="addressSpace">The address space for rhe virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string name, string addressSpace)
+        {
+            return this.WithNewPrimaryNetwork(name, addressSpace) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface's primary IP configuration.
-        /// <p>
         /// The virtual network will be created in the same resource group and region as of network interface,
         /// it will be created with the specified address space and a default subnet covering the entirety of
         /// the network IP address space.
         /// </summary>
-        /// <param name="addressSpace">addressSpace the address space for the virtual network</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string addressSpace) { 
-            return this.WithNewPrimaryNetwork( addressSpace) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp;
+        /// <param name="addressSpace">The address space for the virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork(string addressSpace)
+        {
+            return this.WithNewPrimaryNetwork(addressSpace) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
         /// <summary>
         /// Starts update of an IP configuration.
         /// </summary>
-        /// <param name="name">name name of the IP configuration</param>
-        /// <returns>the first stage of an IP configuration update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithIpConfiguration.UpdateIpConfiguration(string name) { 
-            return this.UpdateIpConfiguration( name) as Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate;
+        /// <param name="name">Name of the IP configuration.</param>
+        /// <return>The first stage of an IP configuration update.</return>
+        NicIpConfiguration.Update.IUpdate NetworkInterface.Update.IWithIpConfiguration.UpdateIpConfiguration(string name)
+        {
+            return this.UpdateIpConfiguration(name) as NicIpConfiguration.Update.IUpdate;
         }
 
         /// <summary>
         /// Starts definition of a secondary IP configuration.
         /// </summary>
-        /// <param name="name">name name for the IP configuration</param>
-        /// <returns>the first stage of a secondary IP configuration definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithIpConfiguration.DefineSecondaryIpConfiguration(string name) { 
-            return this.DefineSecondaryIpConfiguration( name) as Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate>;
+        /// <param name="name">Name for the IP configuration.</param>
+        /// <return>The first stage of a secondary IP configuration definition.</return>
+        NicIpConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate> NetworkInterface.Update.IWithIpConfiguration.DefineSecondaryIpConfiguration(string name)
+        {
+            return this.DefineSecondaryIpConfiguration(name) as NicIpConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate>;
         }
 
         /// <summary>
         /// Associate a subnet with the network interface.
         /// </summary>
-        /// <param name="name">name the subnet name</param>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithPrimaryNetworkSubnet.WithSubnet(string name) { 
-            return this.WithSubnet( name) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryNetworkSubnet.WithSubnet(string name)
+        {
+            return this.WithSubnet(name) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Associate a subnet with the network interface's primary IP configuration.
         /// </summary>
-        /// <param name="name">name the subnet name</param>
-        /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet(string name) { 
-            return this.WithSubnet( name) as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp;
+        /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the network interface definition.</return>
+        NetworkInterface.Definition.IWithPrimaryPrivateIp NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet(string name)
+        {
+            return this.WithSubnet(name) as NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.Network.Fluent.INetworkInterface Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.Refresh() { 
+        /// <return>The refreshed resource.</return>
+        Microsoft.Azure.Management.Network.Fluent.INetworkInterface Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>.Refresh()
+        {
             return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.INetworkInterface;
         }
 
         /// <summary>
         /// Enable IP forwarding in the network interface.
         /// </summary>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithIpForwarding.WithIpForwarding() { 
-            return this.WithIpForwarding() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIpForwarding.WithIpForwarding()
+        {
+            return this.WithIpForwarding() as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
         /// Disable IP forwarding in the network interface.
         /// </summary>
-        /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithIpForwarding.WithoutIpForwarding() { 
-            return this.WithoutIpForwarding() as Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate;
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIpForwarding.WithoutIpForwarding()
+        {
+            return this.WithoutIpForwarding() as NetworkInterface.Update.IUpdate;
         }
-
     }
 }

@@ -4,13 +4,14 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Management.Network.Fluent.Models;
+    using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for Subnet and its create and update interfaces.
     /// </summary>
-    public partial class SubnetImpl  :
+    internal partial class SubnetImpl  :
         ChildResource<SubnetInner, NetworkImpl, INetwork>,
         ISubnet,
         Subnet.Definition.IDefinition<Network.Definition.IWithCreateAndSubnet>,
@@ -33,18 +34,72 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:EC0B50489DBC5780794937134CA94137
-        internal INetworkSecurityGroup GetNetworkSecurityGroup ()
+        ///GENMHASH:A9777D8010E6AF7B603113E49858FE75:0A1C32015C3FE7888D450702542868EA
+        public string NetworkSecurityGroupId()
         {
-            var nsgResource = Inner.NetworkSecurityGroup;
-            return (nsgResource != null) ? Parent.Manager.NetworkSecurityGroups.GetById(nsgResource.Id) : null;
+            return (this.Inner.NetworkSecurityGroup != null) ? this.Inner.NetworkSecurityGroup.Id : null;
         }
 
-        ///GENMHASH:749BD8C1D070A6DAE2D9F29DAE294FAE:54591EF54EDDCC34B41F117015F10C98
-        internal SubnetImpl WithExistingNetworkSecurityGroup (string resourceId)
+        ///GENMHASH:A52B043B03F5F5DD10F6A96CBC569DBC:08C6FC794C26CE7AA9BBF95E8E59293F
+        public string RouteTableId()
         {
-            NetworkSecurityGroupInner reference = new NetworkSecurityGroupInner(id: resourceId);
-            Inner.NetworkSecurityGroup = reference;
+            return (this.Inner.RouteTable != null) ? this.Inner.RouteTable.Id : null;
+        }
+
+        ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:8E698A4D3F26647C89221EE26B291774
+        internal INetworkSecurityGroup GetNetworkSecurityGroup ()
+        {
+            return (this.NetworkSecurityGroupId() != null)
+                ? this.Parent.Manager.NetworkSecurityGroups.GetById(this.RouteTableId())
+                : null;
+        }
+
+        ///GENMHASH:BA4A7979677C1D828E7871F45A6E05CC:E8989A21602F80AB9EDF762AAAC1EAEF
+        public IRouteTable GetRouteTable()
+        {
+            return (this.RouteTableId() != null)
+                ? this.Parent.Manager.RouteTables.GetById(this.RouteTableId())
+                : null;
+        }
+
+        ///GENMHASH:749BD8C1D070A6DAE2D9F29DAE294FAE:9DD0E90F3B1A067185751A1074341EAF
+        internal SubnetImpl WithExistingNetworkSecurityGroup(string resourceId)
+        {
+            // Workaround for REST API's expectation of an object rather than string ID - should be fixed in Swagger specs or REST
+            SubResource reference = new SubResource {
+                Id = resourceId
+            };
+            this.Inner.NetworkSecurityGroup = reference;
+            return this;
+        }
+
+        ///GENMHASH:9BCDEB79AFC04D55B9BC280847723DFC:3BACEC234E558FC90E41F9212B768D2E
+        internal SubnetImpl WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg)
+        {
+            return WithExistingNetworkSecurityGroup(nsg.Id);
+        }
+
+        ///GENMHASH:FCA489D9E7B6963A2EAC736958554ABD:772ECDA870E1C3E00E31EFE045675F09
+        public SubnetImpl WithExistingRouteTable(IRouteTable routeTable)
+        {
+            return this.WithExistingRouteTable(routeTable.Id);
+        }
+
+        ///GENMHASH:E65C5C625AF875FB82198BA44FB9C760:255A6ED505A38F6AAE7A10907F6CCDFC
+        public Subnet.Update.IUpdate WithoutRouteTable()
+        {
+            this.Inner.RouteTable = null;
+            return this;
+        }
+
+        ///GENMHASH:C142A0234F22048E67709B65DD642261:61C2A1A23D6BCA62D6705980C8D1BECE
+        public SubnetImpl WithExistingRouteTable(string resourceId)
+        {
+            SubResource reference = new SubResource
+            {
+                Id = resourceId
+            };
+            this.Inner.RouteTable = reference;
             return this;
         }
 
@@ -59,12 +114,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal NetworkImpl Attach ()
         {
             return Parent.WithSubnet(this);
-        }
-
-        ///GENMHASH:9BCDEB79AFC04D55B9BC280847723DFC:3BACEC234E558FC90E41F9212B768D2E
-        internal SubnetImpl WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg)
-        {
-            return WithExistingNetworkSecurityGroup(nsg.Id);
         }
 
         Network.Update.IUpdate ISettable<Network.Update.IUpdate>.Parent()

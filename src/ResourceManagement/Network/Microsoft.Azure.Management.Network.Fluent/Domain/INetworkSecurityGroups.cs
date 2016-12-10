@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point to network security group management.
     /// </summary>
-    public interface INetworkSecurityGroups :
+    public interface INetworkSecurityGroups  :
         ISupportsCreating<NetworkSecurityGroup.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,

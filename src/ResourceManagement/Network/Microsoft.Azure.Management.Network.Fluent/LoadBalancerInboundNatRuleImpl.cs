@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for IInboundNatRule.
     /// </summary>
-    public partial class LoadBalancerInboundNatRuleImpl  :
+    internal partial class LoadBalancerInboundNatRuleImpl  :
         ChildResource<InboundNatRuleInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatRule,
         LoadBalancerInboundNatRule.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,

@@ -8,12 +8,4 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
-
-    /// <summary>
-    /// Defines values for ApplicationGatewayTier.
-    /// </summary>
-    public static class ApplicationGatewayTier
-    {
-        public const string Standard = "Standard";
-    }
 }

@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         /// Associate a subnet with the network interface IP configuration.
         /// </summary>
         /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the network interface IP configuration update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithSubnet(string name);
     }
 
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         /// </summary>
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="backendName">The name of an existing backend on that load balancer.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
@@ -58,16 +60,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         /// </summary>
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
 
         /// <summary>
         /// Removes all the existing associations with load balancer inbound NAT rules.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithoutLoadBalancerInboundNatRules();
 
         /// <summary>
         /// Removes all the existing associations with load balancer backends.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithoutLoadBalancerBackends();
     }
 
@@ -81,6 +86,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update
         /// Specifies the IP version for the private IP address.
         /// </summary>
         /// <param name="ipVersion">An IP version.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Update.IUpdate WithPrivateIpVersion(string ipVersion);
     }
 }

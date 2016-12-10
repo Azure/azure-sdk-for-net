@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkInterface and its create and update interfaces.
     /// </summary>
-    public partial class NetworkInterfaceImpl :
+    internal partial class NetworkInterfaceImpl :
         GroupableParentResource<INetworkInterface,
                 NetworkInterfaceInner,
                 NetworkInterfaceImpl,
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7553B8041F1BC45ED58133F4644155F7:2044126CDE4657E10D6C6D7C5D923AFF
-        internal string PrimaryPrivateIpAllocationMethod()
+        internal IPAllocationMethod PrimaryPrivateIpAllocationMethod()
         {
             return PrimaryIpConfiguration().PrivateIpAllocationMethod();
         }

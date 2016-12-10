@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for LoadBalancerInboundNatPool.
     /// </summary>
-    public partial class LoadBalancerInboundNatPoolImpl  :
+    internal partial class LoadBalancerInboundNatPoolImpl  :
         ChildResource<InboundNatPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatPool,
         LoadBalancerInboundNatPool.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,

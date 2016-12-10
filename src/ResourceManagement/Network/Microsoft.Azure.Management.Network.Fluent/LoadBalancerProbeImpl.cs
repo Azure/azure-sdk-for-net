@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core.ChildResourceActions;
     using Resource.Fluent;
 
-    public partial class LoadBalancerProbeImpl  :
+    internal partial class LoadBalancerProbeImpl  :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerTcpProbe,
         LoadBalancerTcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,

@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IHasFrontendPort 
     {
+        /// <summary>
+        /// Gets the frontend port number the inbound network traffic is received on.
+        /// </summary>
         int FrontendPort { get; }
     }
 }

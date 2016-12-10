@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal PublicIpAddressImpl WithStaticIp()
         {
 
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.STATIC.ToString();
             return this;
         }
 
         ///GENMHASH:8E7AD9E07B7DB377EA99B37CAD1C93C0:6F94222AD7A6FAA5BDB1F4A8C2336D54
         internal PublicIpAddressImpl WithDynamicIp()
         {
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.DYNAMIC.ToString();
             return this;
         }
 

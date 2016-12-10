@@ -2,39 +2,28 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition
 {
-
-    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+
     /// <summary>
-    /// The stage of an inbound NAT rule definition allowing to specify the transport protocol.
-    /// @param <ParentT> the parent load balancer type
+    /// The stage of an inbound NAT rule definition allowing to specify whether floating IP should be enabled.
     /// </summary>
-    public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,string>
+    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    public interface IWithFloatingIp<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
-    /// <summary>
-    /// The entirety of an inbound NAT rule definition.
-    /// @param <ParentT> the return type of the final {@link DefinitionStages.WithAttach#attach()}
-    /// </summary>
-    public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,
-        IWithFrontendPort<ParentT>,
-        IWithAttach<ParentT>
-    {
-    }
+
     /// <summary>
     /// The final stage of the inbound NAT rule definition.
-    /// <p>
     /// At this stage, any remaining optional settings can be specified, or the inbound NAT rule definition
-    /// can be attached to the parent load balancer definition using {@link WithAttach#attach()}.
-    /// @param <ParentT> the return type of {@link WithAttach#attach()}
+    /// can be attached to the parent load balancer definition using WithAttach.attach().
     /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithBackendPort<ParentT>,
@@ -42,64 +31,76 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
         IWithIdleTimeout<ParentT>
     {
     }
+
+    /// <summary>
+    /// The entirety of an inbound NAT rule definition.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    public interface IUpdateDefinition<ParentT>  :
+        IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<ParentT>,
+        IWithAttach<ParentT>
+    {
+    }
+
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify the backend port.
-    /// @param <ParentT> the parent load balancer type
     /// </summary>
+    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
-    /// <summary>
-    /// The stage of an inbound NAT rule definition allowing to specify the frontend port.
-    /// @param <ParentT> the parent load balancer type
-    /// </summary>
-    public interface IWithFrontendPort<ParentT> 
-    {
-        /// <summary>
-        /// Specifies the frontend port.
-        /// </summary>
-        /// <param name="port">port a port number</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<ParentT> WithFrontendPort(int port);
 
-    }
-    /// <summary>
-    /// The first stage of the inbound NAT rule definition.
-    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
-    /// </summary>
-    public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithProtocol<ParentT>
-    {
-    }
-    /// <summary>
-    /// The stage of an inbound NAT rule definition allowing to specify whether floating IP should be enabled.
-    /// @param <ParentT> the parent load balancer type
-    /// </summary>
-    public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<ParentT>>
-    {
-    }
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify the idle connection timeout for this inbound NAT rule.
-    /// @param <ParentT> the parent load balancer type
     /// </summary>
+    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
     public interface IWithIdleTimeout<ParentT> 
     {
         /// <summary>
         /// Specifies the idle connection timeout in minutes.
         /// </summary>
-        /// <param name="minutes">minutes a number of minutes</param>
-        /// <returns>the next stage of the definition</returns>
+        /// <param name="minutes">A number of minutes.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<ParentT> WithIdleTimeoutInMinutes(int minutes);
-
     }
+
+    /// <summary>
+    /// The stage of an inbound NAT rule definition allowing to specify the frontend port.
+    /// </summary>
+    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    public interface IWithFrontendPort<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+    {
+    }
+
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify a frontend for the rule to apply to.
-    /// @param <ParentT> the parent load balancer type
     /// </summary>
+    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+    {
+    }
+
+    /// <summary>
+    /// The first stage of the inbound NAT rule definition.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    public interface IBlank<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithProtocol<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of an inbound NAT rule definition allowing to specify the transport protocol.
+    /// </summary>
+    /// <typeparam name="Parent">The parent load balancer type.</typeparam>
+    public interface IWithProtocol<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,string>
     {
     }
 }

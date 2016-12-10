@@ -15,10 +15,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasSubnet,
         IHasPublicIpAddress
     {
+        /// <return>The associated subnet.</return>
         Microsoft.Azure.Management.Network.Fluent.ISubnet GetSubnet();
 
+        /// <summary>
+        /// Gets true if the frontend is accessible via a public IP address, else false.
+        /// </summary>
         bool IsPublic { get; }
 
+        /// <summary>
+        /// Gets true is the frontend is accessible via an private IP address.
+        /// </summary>
         bool IsPrivate { get; }
     }
 }

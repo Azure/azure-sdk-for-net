@@ -2,16 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
-
     /// <summary>
     /// An immutable client-side representation of an HTTP load balancing probe.
     /// </summary>
     public interface ILoadBalancerHttpProbe  :
-        IProbe
+        ILoadBalancerProbe
     {
-        /// <returns>the HTTP request path for the HTTP probe to call to check the health status</returns>
+        /// <summary>
+        /// Gets the HTTP request path for the HTTP probe to call to check the health status.
+        /// </summary>
         string RequestPath { get; }
-
     }
 }

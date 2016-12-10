@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IHasPort 
     {
+        /// <summary>
+        /// Gets the port number.
+        /// </summary>
         int Port { get; }
     }
 }

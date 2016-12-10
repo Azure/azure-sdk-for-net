@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IWrapper<Models.ApplicationGatewaySslCertificateInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
     {
+        /// <summary>
+        /// Gets the public data of the certificate.
+        /// </summary>
         string PublicData { get; }
     }
 }

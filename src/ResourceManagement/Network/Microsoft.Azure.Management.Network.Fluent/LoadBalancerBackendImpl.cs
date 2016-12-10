@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Backend.
     /// </summary>
-    public partial class LoadBalancerBackendImpl  :
+    internal partial class LoadBalancerBackendImpl  :
         ChildResource<BackendAddressPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerBackend,
         LoadBalancerBackend.Definition.IDefinition<LoadBalancer.Definition.IWithBackendOrProbe>,

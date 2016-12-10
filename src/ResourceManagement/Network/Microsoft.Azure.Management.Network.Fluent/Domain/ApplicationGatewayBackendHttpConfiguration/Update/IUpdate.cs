@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         /// Specifies the request timeout.
         /// </summary>
         /// <param name="seconds">A number of seconds.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IUpdate WithRequestTimeout(int seconds);
     }
 
@@ -44,11 +45,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         /// <summary>
         /// Disables cookie based affinity.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IUpdate WithoutCookieBasedAffinity();
 
         /// <summary>
         /// Enables cookie based affinity.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IUpdate WithCookieBasedAffinity();
     }
 

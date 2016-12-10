@@ -5,16 +5,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasCookieBasedAffinity.Defin
     /// <summary>
     /// The stage of a definition allowing to enable cookie based affinity.
     /// </summary>
+    /// <typeparam name="Return">The next stage of the definition.</typeparam>
     public interface IWithCookieBasedAffinity<ReturnT> 
     {
         /// <summary>
         /// Disables cookie based affinity.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         ReturnT WithoutCookieBasedAffinity();
 
         /// <summary>
         /// Enables cookie based affinity.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         ReturnT WithCookieBasedAffinity();
     }
 }

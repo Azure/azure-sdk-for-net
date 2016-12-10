@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface IHasServerNameIndication 
     {
+        /// <summary>
+        /// Gets true if server name indication (SNI) is required, else false.
+        /// </summary>
         bool RequiresServerNameIndication { get; }
     }
 }

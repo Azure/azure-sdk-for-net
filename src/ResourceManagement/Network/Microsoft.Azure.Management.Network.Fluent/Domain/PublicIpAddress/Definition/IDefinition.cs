@@ -14,18 +14,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
     {
         /// <summary>
         /// Ensures that no leaf domain label will be used.
-        /// <p>
         /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
+        /// <return>The next stage of the public IP address definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithoutLeafDomainLabel();
 
         /// <summary>
         /// Specifies the leaf domain label to associate with this public IP address.
-        /// <p>
         /// The fully qualified domain name (FQDN)
         /// will be constructed automatically by appending the rest of the domain to this label.
         /// </summary>
         /// <param name="dnsName">The leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
+        /// <return>The next stage of the public IP address definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithLeafDomainLabel(string dnsName);
     }
 
@@ -44,15 +44,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
     {
         /// <summary>
         /// Enables static IP address allocation.
-        /// <p>
         /// Use PublicIpAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
+        /// <return>The next stage of the public IP address definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithStaticIp();
 
         /// <summary>
         /// Enables dynamic IP address allocation.
         /// </summary>
+        /// <return>The next stage of the public IP address definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithDynamicIp();
     }
 
@@ -63,14 +64,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
     {
         /// <summary>
         /// Specifies the reverse FQDN to assign to this public IP address.
-        /// <p>.
         /// </summary>
         /// <param name="reverseFQDN">The reverse FQDN to assign.</param>
+        /// <return>The next stage of the resource definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithReverseFqdn(string reverseFQDN);
 
         /// <summary>
         /// Ensures that no reverse FQDN will be used.
         /// </summary>
+        /// <return>The next stage of the resource definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithoutReverseFqdn();
     }
 
@@ -83,6 +85,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition
         /// Specifies the timeout (in minutes) for an idle connection.
         /// </summary>
         /// <param name="minutes">The length of the time out in minutes.</param>
+        /// <return>The next stage of the resource definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Definition.IWithCreate WithIdleTimeoutInMinutes(int minutes);
     }
 
