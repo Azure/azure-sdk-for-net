@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -10,24 +10,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
-    public partial class RouteTableImpl
+    internal partial class RouteTableImpl 
     {
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
+        /// <return>The refreshed resource.</return>
         Microsoft.Azure.Management.Network.Fluent.IRouteTable Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Network.Fluent.IRouteTable;
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute> Microsoft.Azure.Management.Network.Fluent.IRouteTable.Routes
+        /// <summary>
+        /// Gets the routes of this route table.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IRoute> Microsoft.Azure.Management.Network.Fluent.IRouteTable.Routes
         {
             get
             {
-                return this.Routes() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute>;
+                return this.Routes() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IRoute>;
             }
         }
 
+        /// <return>List of subnets associated with this resource.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet> Microsoft.Azure.Management.Network.Fluent.IHasAssociatedSubnets.ListAssociatedSubnets()
         {
             return this.ListAssociatedSubnets() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ISubnet>;
@@ -35,11 +40,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Creates a non-virtual appliance route.
-        /// <p>
         /// The name is generated automatically.
         /// </summary>
         /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
         /// <param name="nextHop">The next hop type.</param>
+        /// <return>The next stage of the update.</return>
         RouteTable.Update.IUpdate RouteTable.Update.IWithRoute.WithRoute(string destinationAddressPrefix, RouteNextHopType nextHop)
         {
             return this.WithRoute(destinationAddressPrefix, nextHop) as RouteTable.Update.IUpdate;
@@ -50,6 +55,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
         /// <param name="ipAddress">The IP address of the virtual appliance to route the traffic through.</param>
+        /// <return>The next stage of the update.</return>
         RouteTable.Update.IUpdate RouteTable.Update.IWithRoute.WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress)
         {
             return this.WithRouteViaVirtualAppliance(destinationAddressPrefix, ipAddress) as RouteTable.Update.IUpdate;
@@ -59,6 +65,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Removes the specified route from the route table.
         /// </summary>
         /// <param name="name">The name of an existing route on this route table.</param>
+        /// <return>The next stage of the update.</return>
         RouteTable.Update.IUpdate RouteTable.Update.IWithRoute.WithoutRoute(string name)
         {
             return this.WithoutRoute(name) as RouteTable.Update.IUpdate;
@@ -68,6 +75,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Begins the update of an existing route on this route table.
         /// </summary>
         /// <param name="name">The name of an existing route.</param>
+        /// <return>The first stage of the update.</return>
         Route.Update.IUpdate RouteTable.Update.IWithRoute.UpdateRoute(string name)
         {
             return this.UpdateRoute(name) as Route.Update.IUpdate;
@@ -75,10 +83,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// <p>
         /// The definition must be completed with a call to Route.UpdateDefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
+        /// <return>The first stage of the definition.</return>
         Route.UpdateDefinition.IBlank<RouteTable.Update.IUpdate> RouteTable.Update.IWithRoute.DefineRoute(string name)
         {
             return this.DefineRoute(name) as Route.UpdateDefinition.IBlank<RouteTable.Update.IUpdate>;
@@ -86,11 +94,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Creates a non-virtual appliance route.
-        /// <p>
         /// The name is generated automatically.
         /// </summary>
         /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
         /// <param name="nextHop">The next hop type.</param>
+        /// <return>The next stage of the definition.</return>
         RouteTable.Definition.IWithCreate RouteTable.Definition.IWithRoute.WithRoute(string destinationAddressPrefix, RouteNextHopType nextHop)
         {
             return this.WithRoute(destinationAddressPrefix, nextHop) as RouteTable.Definition.IWithCreate;
@@ -101,6 +109,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
         /// <param name="ipAddress">The IP address of the virtual appliance to route the traffic through.</param>
+        /// <return>The next stage of the definition.</return>
         RouteTable.Definition.IWithCreate RouteTable.Definition.IWithRoute.WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress)
         {
             return this.WithRouteViaVirtualAppliance(destinationAddressPrefix, ipAddress) as RouteTable.Definition.IWithCreate;
@@ -108,10 +117,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// <p>
         /// The definition must be completed with a call to Route.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
+        /// <return>The first stage of the definition.</return>
         Route.Definition.IBlank<RouteTable.Definition.IWithCreate> RouteTable.Definition.IWithRoute.DefineRoute(string name)
         {
             return this.DefineRoute(name) as Route.Definition.IBlank<RouteTable.Definition.IWithCreate>;

@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
 
     /// <summary>
     /// The stage allowing to define a new security rule.
-    /// <p>
     /// When the security rule description is complete enough, use Attachable.attach() to attach it to
     /// this network security group.
     /// </summary>
@@ -50,6 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
         /// Starts the definition of a new security rule.
         /// </summary>
         /// <param name="name">The name for the new security rule.</param>
+        /// <return>The first stage of the security rule definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithCreate> DefineRule(string name);
     }
 

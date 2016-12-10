@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// Associate a subnet with the network interface's primary IP configuration.
         /// </summary>
         /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp WithSubnet(string name);
     }
 
@@ -30,6 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// Enables dynamic private IP address allocation within the specified existing virtual network
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
+        /// <return>The next stage of network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithPrimaryPrivateIpAddressDynamic();
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// The static IP address within the specified subnet to assign to
         /// the network interface.
         /// </param>
+        /// <return>The next stage of network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress);
     }
 
@@ -52,12 +55,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// Create a new network security group to associate with network interface, based on the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new network security group.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewNetworkSecurityGroup(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> creatable);
 
         /// <summary>
         /// Associates an existing network security group with the network interface.
         /// </summary>
         /// <param name="networkSecurityGroup">An existing network security group.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup);
     }
 
@@ -70,6 +75,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// Starts definition of a secondary IP configuration.
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
+        /// <return>The first stage of a secondary IP configuration definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate> DefineSecondaryIpConfiguration(string name);
     }
 
@@ -83,6 +89,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// Associate an existing virtual network with the network interface's primary IP configuration.
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet WithExistingPrimaryNetwork(INetwork network);
 
         /// <summary>
@@ -90,27 +97,28 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// based on the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface's primary IP configuration.
-        /// <p>
         /// The virtual network will be created in the same resource group and region as of network interface,
         /// it will be created with the specified address space and a default subnet covering the entirety of
         /// the network IP address space.
         /// </summary>
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp WithNewPrimaryNetwork(string name, string addressSpace);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface's primary IP configuration.
-        /// <p>
         /// The virtual network will be created in the same resource group and region as of network interface,
         /// it will be created with the specified address space and a default subnet covering the entirety of
         /// the network IP address space.
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp WithNewPrimaryNetwork(string addressSpace);
     }
 
@@ -125,29 +133,31 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it
         /// with the network interface's primary IP configuration.
-        /// <p>
         /// the internal name and DNS label for the public IP address will be derived from the network interface name.
         /// </summary>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIpAddress();
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
         /// and associate it with the network interface's primary IP configuration.
-        /// <p>
         /// the internal name for the public IP address will be derived from the DNS label.
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithNewPrimaryPublicIpAddress(string leafDnsLabel);
 
         /// <summary>
         /// Associates an existing public IP address with the network interface's primary IP configuration.
         /// </summary>
         /// <param name="publicIpAddress">An existing public IP address.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress);
     }
 
@@ -189,20 +199,22 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// Specifies the internal DNS name label for the network interface.
         /// </summary>
         /// <param name="dnsNameLabel">The internal DNS name label.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithInternalDnsNameLabel(string dnsNameLabel);
 
         /// <summary>
         /// Specifies the IP address of the custom DNS server to associate with the network interface.
-        /// <p>
         /// Note this method's effect is additive, i.e. each time it is used, the new dns server is
         /// added to the network interface.
         /// </summary>
         /// <param name="ipAddress">The IP address of the DNS server.</param>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithDnsServer(string ipAddress);
 
         /// <summary>
         /// Enable IP forwarding in the network interface.
         /// </summary>
+        /// <return>The next stage of the network interface definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithIpForwarding();
     }
 
@@ -224,6 +236,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// </summary>
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="backendName">The name of an existing backend on that load balancer.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
@@ -231,6 +244,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// </summary>
         /// <param name="loadBalancer">An existing load balancer.</param>
         /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
     }
 }

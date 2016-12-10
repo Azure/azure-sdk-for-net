@@ -20,16 +20,32 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasCookieBasedAffinity,
         IHasServerNameIndication
     {
+        /// <summary>
+        /// Gets the associated backend HTTP settings configuration.
+        /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfiguration BackendHttpConfiguration { get; }
 
+        /// <summary>
+        /// Gets rule type.
+        /// </summary>
         Models.ApplicationGatewayRequestRoutingRuleType RuleType { get; }
 
+        /// <return>The associated frontend HTTP listener.</return>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener Listener();
 
+        /// <summary>
+        /// Gets the frontend protocol.
+        /// </summary>
         Models.ApplicationGatewayProtocol FrontendProtocol { get; }
 
+        /// <summary>
+        /// Gets the associated backend address pool.
+        /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend Backend { get; }
 
+        /// <summary>
+        /// Gets the addresses assigned to the associated backend.
+        /// </summary>
         System.Collections.Generic.IList<Models.ApplicationGatewayBackendAddress> BackendAddresses { get; }
     }
 }

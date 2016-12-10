@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point to virtual network management API in Azure.
     /// </summary>
-    public interface INetworks :
+    public interface INetworks  :
         ISupportsCreating<Network.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetwork>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetwork>,

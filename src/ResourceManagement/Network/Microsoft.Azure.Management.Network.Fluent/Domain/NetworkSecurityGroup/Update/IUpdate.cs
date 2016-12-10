@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
     /// <summary>
     /// The template for an update operation, containing all the settings that
     /// can be modified.
-    /// <p>
     /// Call Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
@@ -30,18 +29,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
         /// Begins the definition of a new security rule to be added to this network security group.
         /// </summary>
         /// <param name="name">The name of the new security rule.</param>
+        /// <return>The first stage of the new security rule definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate> DefineRule(string name);
 
         /// <summary>
         /// Removes an existing security rule.
         /// </summary>
         /// <param name="name">The name of the security rule to remove.</param>
+        /// <return>The next stage of the network security group description.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate WithoutRule(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing security rule of this network security group.
         /// </summary>
         /// <param name="name">The name of an existing security rule.</param>
+        /// <return>The first stage of the security rule update description.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update.IUpdate UpdateRule(string name);
     }
 }

@@ -15,12 +15,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Update
         /// Assigns an existing network security group to this subnet.
         /// </summary>
         /// <param name="resourceId">The resource ID of the network security group.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithExistingNetworkSecurityGroup(string resourceId);
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
         /// <param name="nsg">The network security group to assign.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg);
     }
 
@@ -44,6 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Update
         /// Specifies the IP address space of the subnet, within the address space of the network.
         /// </summary>
         /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
+        /// <return>The next stage.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithAddressPrefix(string cidr);
     }
 
@@ -56,17 +59,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Update
         /// Specifies an existing route table to associate with the subnet.
         /// </summary>
         /// <param name="routeTable">An existing route table to associate.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithExistingRouteTable(IRouteTable routeTable);
 
         /// <summary>
         /// Specifies an existing route table to associate with the subnet.
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing route table.</param>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithExistingRouteTable(string resourceId);
 
         /// <summary>
         /// Removes the association with a route table, if any.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithoutRouteTable();
     }
 }

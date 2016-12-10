@@ -9,19 +9,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An IP configuration in a network interface.
     /// </summary>
-    public interface INicIpConfiguration :
+    public interface INicIpConfiguration  :
         IWrapper<Models.NetworkInterfaceIPConfigurationInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         IHasPrivateIpAddress,
         IHasPublicIpAddress,
         IHasSubnet
     {
+        /// <return>The virtual network associated with this IP configuration.</return>
         Microsoft.Azure.Management.Network.Fluent.INetwork GetNetwork();
 
+        /// <return>The load balancer backends associated with this network interface IP configuration.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListAssociatedLoadBalancerBackends();
 
+        /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
 
-        IPVersion PrivateIpAddressVersion { get; }
+        /// <summary>
+        /// Gets private IP address version.
+        /// </summary>
+        string PrivateIpAddressVersion { get; }
     }
 }

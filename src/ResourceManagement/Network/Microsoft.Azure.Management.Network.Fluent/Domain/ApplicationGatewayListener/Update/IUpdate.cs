@@ -63,18 +63,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
     {
         /// <summary>
         /// Associates the listener with the application gateway's private (internal) frontend.
-        /// <p>
         /// If the private frontend does not exist yet, it will be created under an auto-generated name
         /// and associated with the application gateway's subnet.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithPrivateFrontend();
 
         /// <summary>
         /// Associates the listener with the application gateway's public (Internet-facing) frontend.
-        /// <p>
         /// If the public frontend does not exist yet, it will be created under an auto-generated name
         /// and associated with the application gateway's public IP address.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithPublicFrontend();
     }
 
@@ -86,11 +86,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
         /// <summary>
         /// Specifies that the listener is for the HTTP protocol.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithHttp();
 
         /// <summary>
         /// Specifies that the listener is for the HTTPS protocol.
         /// </summary>
+        /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IWithSslCertificate WithHttps();
     }
 
@@ -103,14 +105,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.U
         /// Enables the listener to listen on the specified existing frontend port.
         /// </summary>
         /// <param name="name">The name of an existing frontend port.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithFrontendPort(string name);
 
         /// <summary>
         /// Enables the listener to listen on the specified frontend port number.
-        /// <p>
         /// If a frontend port for this port number does not yet exist, a new will be created with an auto-generated name.
         /// </summary>
         /// <param name="portNumber">A port number.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Update.IUpdate WithFrontendPort(int portNumber);
     }
 }

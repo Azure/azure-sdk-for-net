@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point to route table management.
     /// </summary>
-    public interface IRouteTables :
+    public interface IRouteTables  :
         ISupportsCreating<RouteTable.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,

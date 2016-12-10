@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point to network interface management.
     /// </summary>
-    public interface INetworkInterfaces :
+    public interface INetworkInterfaces  :
         ISupportsCreating<NetworkInterface.Definition.IBlank>,
         ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,

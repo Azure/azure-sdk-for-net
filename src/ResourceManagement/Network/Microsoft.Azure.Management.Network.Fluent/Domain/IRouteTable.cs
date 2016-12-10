@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -11,13 +11,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Entry point for route table management.
     /// </summary>
-    public interface IRouteTable :
+    public interface IRouteTable  :
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         IWrapper<Models.RouteTableInner>,
         IUpdatable<RouteTable.Update.IUpdate>,
         IHasAssociatedSubnets
     {
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute> Routes { get; }
+        /// <summary>
+        /// Gets the routes of this route table.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IRoute> Routes { get; }
     }
 }

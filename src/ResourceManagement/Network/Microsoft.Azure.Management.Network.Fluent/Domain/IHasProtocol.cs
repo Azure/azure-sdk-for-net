@@ -2,16 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
-
     /// <summary>
     /// An interface representing a model's ability to reference a transport protocol.
-    /// @param <ProtocolT> the protocol type of the value
     /// </summary>
+    /// <typeparam name="Protocol">The protocol type of the value.</typeparam>
     public interface IHasProtocol<ProtocolT> 
     {
-        /// <returns>the protocol</returns>
+        /// <summary>
+        /// Gets the protocol.
+        /// </summary>
         ProtocolT Protocol { get; }
-
     }
 }

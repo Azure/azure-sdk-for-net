@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// <summary>
         /// Specifies that the application gateway should not be Internet-facing.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithoutPublicFrontend();
     }
 
@@ -37,6 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Begins the definition of a request routing rule for this application gateway.
         /// </summary>
         /// <param name="name">A unique name for the request routing rule.</param>
+        /// <return>The first stage of the request routing rule.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> DefineRequestRoutingRule(string name);
     }
 
@@ -56,14 +58,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     {
         /// <summary>
         /// Enables a private (internal) default frontend in the subnet containing the application gateway.
-        /// <p>
         /// A frontend with the name "default" will be created if needed.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithPrivateFrontend();
 
         /// <summary>
         /// Specifies that no private (internal) frontend should be enabled.
         /// </summary>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithoutPrivateFrontend();
     }
 
@@ -91,10 +94,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     {
         /// <summary>
         /// Specifies the size of the application gateway to create within the context of the selected tier.
-        /// <p>
         /// By default, the smallest size is used.
         /// </summary>
         /// <param name="size">An application gateway SKU name.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithSize(ApplicationGatewaySkuName size);
     }
 
@@ -107,23 +110,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     {
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.
-        /// <p>
         /// This will create a new IP configuration, if it does not already exist.
-        /// <p>
         /// Private (internal) frontends, if any have been enabled, will be configured to use this subnet as well.
         /// </summary>
         /// <param name="subnet">An existing subnet.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithExistingSubnet(ISubnet subnet);
 
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.
-        /// <p>
         /// This will create a new IP configuration, if it does not already exist.
-        /// <p>
         /// Private (internal) frontends, if any have been enabled, will be configured to use this subnet as well.
         /// </summary>
         /// <param name="network">The virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithExistingSubnet(INetwork network, string subnetName);
     }
 
@@ -136,6 +137,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Begins the definition of a new application gateway backend to be attached to the gateway.
         /// </summary>
         /// <param name="name">A unique name for the backend.</param>
+        /// <return>The first stage of the backend definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate> DefineBackend(string name);
     }
 
@@ -156,6 +158,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Begins the definition of a new application gateway SSL certificate to be attached to the gateway for use in HTTPS listeners.
         /// </summary>
         /// <param name="name">A unique name for the certificate.</param>
+        /// <return>The first stage of the certificate definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate> DefineSslCertificate(string name);
     }
 
@@ -166,10 +169,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     {
         /// <summary>
         /// Specifies the capacity (number of instances) for the application gateway.
-        /// <p>
         /// By default, 1 instance is used.
         /// </summary>
         /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected applicatiob gateway size.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithInstanceCount(int instanceCount);
     }
 
@@ -182,6 +185,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Begins the definition of a new application gateway listener to be attached to the gateway.
         /// </summary>
         /// <param name="name">A unique name for the listener.</param>
+        /// <return>The first stage of the listener definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate> DefineListener(string name);
     }
 
@@ -216,6 +220,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Begins the definition of a new application gateway backend HTTP configuration to be attached to the gateway.
         /// </summary>
         /// <param name="name">A unique name for the backend HTTP configuration.</param>
+        /// <return>The first stage of the backend HTTP configuration definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate> DefineBackendHttpConfiguration(string name);
     }
 
@@ -251,6 +256,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Creates a frontend port with an auto-generated name and the specified port number, unless one already exists.
         /// </summary>
         /// <param name="portNumber">A port number.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithFrontendPort(int portNumber);
 
         /// <summary>
@@ -258,6 +264,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// </summary>
         /// <param name="portNumber">A port number.</param>
         /// <param name="name">The name to assign to the port.</param>
+        /// <return>The next stage of the definition, or null if a port matching either the name or the number, but not both, already exists.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithFrontendPort(int portNumber, string name);
     }
 }

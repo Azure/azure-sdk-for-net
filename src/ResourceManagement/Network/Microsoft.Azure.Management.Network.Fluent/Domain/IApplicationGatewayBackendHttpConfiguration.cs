@@ -14,8 +14,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasProtocol<Models.ApplicationGatewayProtocol>,
         IHasPort
     {
+        /// <summary>
+        /// Gets true if cookie based affinity (sticky sessions) is enabled, else false.
+        /// </summary>
         bool CookieBasedAffinity { get; }
 
+        /// <summary>
+        /// Gets HTTP request timeout in seconds. Requests will fail if no response is received within the specified time.
+        /// </summary>
         int RequestTimeout { get; }
     }
 }

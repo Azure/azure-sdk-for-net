@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
 {
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
     /// <summary>
     /// The stage of a route table definition allowing to specify the resource group.
     /// </summary>
-    public interface IWithGroup :
+    public interface IWithGroup  :
         Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate>
     {
     }
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
     /// <summary>
     /// The entirety of a route table definition.
     /// </summary>
-    public interface IDefinition :
+    public interface IDefinition  :
         Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IBlank,
         Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithGroup,
         IWithCreate
@@ -30,30 +30,31 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
     /// <summary>
     /// The stage of the route table definition allowing to add routes.
     /// </summary>
-    public interface IWithRoute
+    public interface IWithRoute 
     {
         /// <summary>
         /// Creates a route via a virtual appliance.
         /// </summary>
         /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
         /// <param name="ipAddress">The IP address of the virtual appliance to route the traffic through.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress);
 
         /// <summary>
         /// Begins the definition of a new route to add to the route table.
-        /// <p>
         /// The definition must be completed with a call to Route.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the route.</param>
+        /// <return>The first stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Route.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate> DefineRoute(string name);
 
         /// <summary>
         /// Creates a non-virtual appliance route.
-        /// <p>
         /// The name is generated automatically.
         /// </summary>
         /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
         /// <param name="nextHop">The next hop type.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate WithRoute(string destinationAddressPrefix, RouteNextHopType nextHop);
     }
 
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
     /// the resource to be created (via WithCreate.create()), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
-    public interface IWithCreate :
+    public interface IWithCreate  :
         ICreatable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate>,
         IWithRoute
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
     /// <summary>
     /// The first stage of a route table definition.
     /// </summary>
-    public interface IBlank :
+    public interface IBlank  :
         IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithGroup>
     {
     }

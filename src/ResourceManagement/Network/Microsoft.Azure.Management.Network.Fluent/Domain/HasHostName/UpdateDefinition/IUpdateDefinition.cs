@@ -5,12 +5,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasHostName.UpdateDefinition
     /// <summary>
     /// The stage of a definition allowing to specify a host name.
     /// </summary>
+    /// <typeparam name="Return">The next stage of the definition.</typeparam>
     public interface IWithHostName<ReturnT> 
     {
         /// <summary>
         /// Specifies the host name to reference.
         /// </summary>
         /// <param name="hostName">An existing host name.</param>
+        /// <return>The next stage of the definition.</return>
         ReturnT WithHostName(string hostName);
     }
 }
