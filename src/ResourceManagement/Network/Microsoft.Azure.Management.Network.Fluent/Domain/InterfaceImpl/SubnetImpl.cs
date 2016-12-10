@@ -2,137 +2,217 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
-    using Microsoft.Azure.Management.Network.Fluent.Network.Definition;
+    using Network.Definition;
+    using Network.Update;
+    using Subnet.Definition;
+    using Subnet.Update;
+    using Subnet.UpdateDefinition;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.Subnet.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.Network.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Network.Fluent.Subnet.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    public partial class SubnetImpl 
+
+    internal partial class SubnetImpl
     {
         /// <summary>
-        /// Attaches the child definition to the parent resource update.
+        /// Specifies an existing route table to associate with the subnet.
         /// </summary>
-        /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>.Attach() { 
-            return this.Attach() as Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate;
+        /// <param name="resourceId">The resource ID of an existing route table.</param>
+        Subnet.Update.IUpdate Subnet.Update.IWithRouteTable.WithExistingRouteTable(string resourceId)
+        {
+            return this.WithExistingRouteTable(resourceId) as Subnet.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies an existing route table to associate with the subnet.
+        /// </summary>
+        /// <param name="routeTable">An existing route table to associate.</param>
+        Subnet.Update.IUpdate Subnet.Update.IWithRouteTable.WithExistingRouteTable(IRouteTable routeTable)
+        {
+            return this.WithExistingRouteTable(routeTable) as Subnet.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Removes the association with a route table, if any.
+        /// </summary>
+        Subnet.Update.IUpdate Subnet.Update.IWithRouteTable.WithoutRouteTable()
+        {
+            return this.WithoutRouteTable() as Subnet.Update.IUpdate;
         }
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
-        /// <param name="resourceId">resourceId the resource ID of the network security group</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet> Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithNetworkSecurityGroup<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>.WithExistingNetworkSecurityGroup(string resourceId) { 
-            return this.WithExistingNetworkSecurityGroup( resourceId) as Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>;
+        /// <param name="nsg">The network security group to assign.</param>
+        Subnet.Update.IUpdate Subnet.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg)
+        {
+            return this.WithExistingNetworkSecurityGroup(nsg) as Subnet.Update.IUpdate;
         }
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
-        /// <param name="nsg">nsg the network security group to assign</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet> Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithNetworkSecurityGroup<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>.WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg) { 
-            return this.WithExistingNetworkSecurityGroup( nsg) as Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>;
+        /// <param name="resourceId">The resource ID of the network security group.</param>
+        Subnet.Update.IUpdate Subnet.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(string resourceId)
+        {
+            return this.WithExistingNetworkSecurityGroup(resourceId) as Subnet.Update.IUpdate;
         }
 
-        /// <summary>
-        /// Assigns an existing network security group to this subnet.
-        /// </summary>
-        /// <param name="resourceId">resourceId the resource ID of the network security group</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithNetworkSecurityGroup<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>.WithExistingNetworkSecurityGroup(string resourceId) { 
-            return this.WithExistingNetworkSecurityGroup( resourceId) as Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>;
+        Microsoft.Azure.Management.Network.Fluent.IRouteTable Microsoft.Azure.Management.Network.Fluent.ISubnet.GetRouteTable()
+        {
+            return this.GetRouteTable() as Microsoft.Azure.Management.Network.Fluent.IRouteTable;
         }
 
-        /// <summary>
-        /// Assigns an existing network security group to this subnet.
-        /// </summary>
-        /// <param name="nsg">nsg the network security group to assign</param>
-        /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithNetworkSecurityGroup<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>.WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg) { 
-            return this.WithExistingNetworkSecurityGroup( nsg) as Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>;
-        }
-
-        /// <returns>the network security group associated with this subnet</returns>
-        /// <returns><p></returns>
-        /// <returns>Note that this method will result in a call to Azure each time it is invoked.</returns>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkSecurityGroup() { 
-            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
-        }
-
-        /// <returns>the address space prefix, in CIDR notation, assigned to this subnet</returns>
         string Microsoft.Azure.Management.Network.Fluent.ISubnet.AddressPrefix
         {
             get
-            { 
-            return this.AddressPrefix() as string;
+            {
+                return this.AddressPrefix();
             }
         }
-        /// <summary>
-        /// Specifies the IP address space of the subnet, within the address space of the network.
-        /// </summary>
-        /// <param name="cidr">cidr the IP address space prefix using the CIDR notation</param>
-        /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IWithAddressPrefix.WithAddressPrefix(string cidr) { 
-            return this.WithAddressPrefix( cidr) as Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate;
-        }
 
-        /// <returns>the name of this child object</returns>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.INetwork>.Name
+        string Microsoft.Azure.Management.Network.Fluent.ISubnet.NetworkSecurityGroupId
         {
             get
-            { 
-            return this.Name() as string;
+            {
+                return this.NetworkSecurityGroupId();
             }
         }
-        /// <summary>
-        /// Specifies the IP address space of the subnet, within the address space of the network.
-        /// </summary>
-        /// <param name="cidr">cidr the IP address space prefix using the CIDR notation</param>
-        /// <returns>the next stage of the subnet definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet> Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAddressPrefix<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>.WithAddressPrefix(string cidr) { 
-            return this.WithAddressPrefix( cidr) as Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>;
+
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkSecurityGroup()
+        {
+            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
+        }
+
+        string Microsoft.Azure.Management.Network.Fluent.ISubnet.RouteTableId
+        {
+            get
+            {
+                return this.RouteTableId();
+            }
+        }
+
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        {
+            get
+            {
+                return this.Name();
+            }
         }
 
         /// <summary>
         /// Specifies the IP address space of the subnet, within the address space of the network.
         /// </summary>
-        /// <param name="cidr">cidr the IP address space prefix using the CIDR notation</param>
-        /// <returns>the next stage of the subnet definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate> Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAddressPrefix<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>.WithAddressPrefix(string cidr) { 
-            return this.WithAddressPrefix( cidr) as Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>;
+        /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
+        Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet> Subnet.Definition.IWithAddressPrefix<Network.Definition.IWithCreateAndSubnet>.WithAddressPrefix(string cidr)
+        {
+            return this.WithAddressPrefix(cidr) as Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet>;
+        }
+
+        /// <summary>
+        /// Specifies the IP address space of the subnet, within the address space of the network.
+        /// </summary>
+        /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
+        Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate> Subnet.UpdateDefinition.IWithAddressPrefix<Network.Update.IUpdate>.WithAddressPrefix(string cidr)
+        {
+            return this.WithAddressPrefix(cidr) as Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Attaches the child definition to the parent resource update.
+        /// </summary>
+        Network.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<Network.Update.IUpdate>.Attach()
+        {
+            return this.Attach() as Network.Update.IUpdate;
         }
 
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
-        /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet>.Attach() { 
-            return this.Attach() as Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet;
+        Network.Definition.IWithCreateAndSubnet Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<Network.Definition.IWithCreateAndSubnet>.Attach()
+        {
+            return this.Attach() as Network.Definition.IWithCreateAndSubnet;
+        }
+
+        /// <summary>
+        /// Specifies an existing route table to associate with the subnet.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of an existing route table.</param>
+        Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet> Subnet.Definition.IWithRouteTable<Network.Definition.IWithCreateAndSubnet>.WithExistingRouteTable(string resourceId)
+        {
+            return this.WithExistingRouteTable(resourceId) as Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet>;
+        }
+
+        /// <summary>
+        /// Specifies an existing route table to associate with the subnet.
+        /// </summary>
+        /// <param name="routeTable">An existing route table to associate.</param>
+        Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet> Subnet.Definition.IWithRouteTable<Network.Definition.IWithCreateAndSubnet>.WithExistingRouteTable(IRouteTable routeTable)
+        {
+            return this.WithExistingRouteTable(routeTable) as Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet>;
+        }
+
+        /// <summary>
+        /// Specifies an existing route table to associate with the subnet.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of an existing route table.</param>
+        Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate> Subnet.UpdateDefinition.IWithRouteTable<Network.Update.IUpdate>.WithExistingRouteTable(string resourceId)
+        {
+            return this.WithExistingRouteTable(resourceId) as Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies an existing route table to associate with the subnet.
+        /// </summary>
+        /// <param name="routeTable">An existing route table to associate.</param>
+        Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate> Subnet.UpdateDefinition.IWithRouteTable<Network.Update.IUpdate>.WithExistingRouteTable(IRouteTable routeTable)
+        {
+            return this.WithExistingRouteTable(routeTable) as Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies the IP address space of the subnet, within the address space of the network.
+        /// </summary>
+        /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
+        Subnet.Update.IUpdate Subnet.Update.IWithAddressPrefix.WithAddressPrefix(string cidr)
+        {
+            return this.WithAddressPrefix(cidr) as Subnet.Update.IUpdate;
         }
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
-        /// <param name="resourceId">resourceId the resource ID of the network security group</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(string resourceId) { 
-            return this.WithExistingNetworkSecurityGroup( resourceId) as Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate;
+        /// <param name="nsg">The network security group to assign.</param>
+        Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet> Subnet.Definition.IWithNetworkSecurityGroup<Network.Definition.IWithCreateAndSubnet>.WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg)
+        {
+            return this.WithExistingNetworkSecurityGroup(nsg) as Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet>;
         }
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
-        /// <param name="nsg">nsg the network security group to assign</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg) { 
-            return this.WithExistingNetworkSecurityGroup( nsg) as Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate;
+        /// <param name="resourceId">The resource ID of the network security group.</param>
+        Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet> Subnet.Definition.IWithNetworkSecurityGroup<Network.Definition.IWithCreateAndSubnet>.WithExistingNetworkSecurityGroup(string resourceId)
+        {
+            return this.WithExistingNetworkSecurityGroup(resourceId) as Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet>;
         }
 
+        /// <summary>
+        /// Assigns an existing network security group to this subnet.
+        /// </summary>
+        /// <param name="nsg">The network security group to assign.</param>
+        Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate> Subnet.UpdateDefinition.IWithNetworkSecurityGroup<Network.Update.IUpdate>.WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg)
+        {
+            return this.WithExistingNetworkSecurityGroup(nsg) as Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Assigns an existing network security group to this subnet.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of the network security group.</param>
+        Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate> Subnet.UpdateDefinition.IWithNetworkSecurityGroup<Network.Update.IUpdate>.WithExistingNetworkSecurityGroup(string resourceId)
+        {
+            return this.WithExistingNetworkSecurityGroup(resourceId) as Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate>;
+        }
     }
 }

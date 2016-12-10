@@ -8,6 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
+    using Resource.Fluent;
     using System.Linq;
 
     /// <summary>
@@ -43,8 +44,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
             : base(id)
         {
             AddressPrefix = addressPrefix;
-            NetworkSecurityGroup = networkSecurityGroup;
-            RouteTable = routeTable;
+            NetworkSecurityGroup = new SubResource
+            {
+                Id = networkSecurityGroup.Id
+            };
+            RouteTable = new SubResource
+            {
+                Id = routeTable.Id
+            };
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             Name = name;
@@ -61,13 +68,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.networkSecurityGroup")]
-        public NetworkSecurityGroupInner NetworkSecurityGroup { get; set; }
+        public SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the RouteTable resource
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.routeTable")]
-        public RouteTableInner RouteTable { get; set; }
+        public SubResource RouteTable { get; set; }
 
         /// <summary>
         /// Gets array of references to the network interface IP

@@ -15,11 +15,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Network
     /// </summary>
-    public partial class NetworkImpl :
+    internal partial class NetworkImpl :
         GroupableParentResource<INetwork,
             VirtualNetworkInner,
             NetworkImpl,
-            NetworkManager,
+            INetworkManager,
             Network.Definition.IWithGroup,
             Network.Definition.IWithCreate,
             Network.Definition.IWithCreate,
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             string name,
             VirtualNetworkInner innerModel,
             IVirtualNetworksOperations innerCollection,
-            NetworkManager networkManager) : base(name, innerModel, networkManager)
+            INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
         }

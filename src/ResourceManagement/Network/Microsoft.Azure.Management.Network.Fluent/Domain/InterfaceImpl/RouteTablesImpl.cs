@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Resource.Fluent;
 
-    internal partial class NetworksImpl
+    public partial class RouteTablesImpl
     {
         /// <summary>
         /// Begins a definition for a new resource.
@@ -26,18 +26,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// of the resource definition, as an interface in the "fluent interface" style.
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
-        Network.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<Network.Definition.IBlank>.Define(string name)
+        RouteTable.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<RouteTable.Definition.IBlank>.Define(string name)
         {
-            return this.Define(name) as Network.Definition.IBlank;
+            return this.Define(name) as RouteTable.Definition.IBlank;
         }
 
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetwork> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.INetwork>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IRouteTable> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetwork>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IRouteTable>;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        async Task<Microsoft.Azure.Management.Network.Fluent.INetwork> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.INetwork>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Network.Fluent.IRouteTable> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IRouteTable>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Network.Fluent.INetwork;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Network.Fluent.IRouteTable;
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetwork> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.INetwork>.List()
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IRouteTable> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IRouteTable>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.INetwork>;
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IRouteTable>;
         }
     }
 }

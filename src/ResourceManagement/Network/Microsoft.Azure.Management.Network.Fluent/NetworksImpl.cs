@@ -13,13 +13,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Networks.
     /// </summary>
-    public partial class NetworksImpl  :
+    internal partial class NetworksImpl  :
         GroupableResources<
             INetwork,
             NetworkImpl,
             VirtualNetworkInner,
             IVirtualNetworksOperations,
-            NetworkManager>,
+            INetworkManager>,
         INetworks
     {
         internal  NetworksImpl (NetworkManagementClient networkClient, NetworkManager networkManager)
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         //$TODO: this should return NetworkImpl
-        ///GENMHASH:95C9E8EAF4F740DFFF516E71ABF00C42:EE4D0538FD8C7357C5A80BB8C25A2C3D
+        ///GENMHASH:95C9E8EAF4F740DFFF516E71ABF00C42:E81780AEFA4C9F41FD95A65101672DF8
         override protected INetwork WrapModel (VirtualNetworkInner inner)
         {
             return new NetworkImpl(inner.Name, inner, InnerCollection, Manager);
