@@ -5,10 +5,40 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Resource.Fluent;
     using System.Collections.Generic;
 
     internal static class NetworkManagerExtensions
     {
+        // Internal utility funtion
+        internal static ISubnet GetAssociatedSubnet(this INetworkManager manager, SubResource subnetRef)
+        {
+            if (subnetRef == null)
+            {
+                return null;
+            }
+
+            // TODO: Missing ResourceUtils.ParentResourceIdFromResourceId(subnetRef.Id);
+            // Replace 'ParentResourcePathFromResourceId' with 'ParentResourceIdFromResourceId'
+            var vnetId = ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id);
+            var subnetName = ResourceUtils.NameFromResourceId(subnetRef.Id);
+
+            if (vnetId == null || subnetName == null)
+            {
+                return null;
+            }
+
+            var network = manager.Networks.GetById(vnetId);
+            if (network == null)
+            {
+                return null;
+            }
+
+            ISubnet value = null;
+            network.Subnets.TryGetValue(subnetName, out value);
+            return value;
+        }
+
         /// Internal utility function
         internal static IList<ISubnet> ListAssociatedSubnets(this INetworkManager manager, IList<SubnetInner> subnetRefs)
         {

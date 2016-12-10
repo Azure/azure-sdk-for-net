@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Implementation of Route.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUm91dGVJbXBs
-    public partial class RouteImpl :
+    internal partial class RouteImpl :
         ChildResource<Models.RouteInner, Microsoft.Azure.Management.Network.Fluent.RouteTableImpl, Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         IRoute,
         IDefinition<RouteTable.Definition.IWithCreate>,

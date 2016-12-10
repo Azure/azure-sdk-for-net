@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using System.IO;
+
 namespace Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition
 {
-    using Java.Io;
-
     /// <summary>
     /// The stage of a resource definition allowing to specify the SSL certificate to associate with it.
     /// </summary>
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefi
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition.IWithSslPassword<ReturnT> WithSslCertificateFromPfxFile(File pfxFile);
+        Microsoft.Azure.Management.Network.Fluent.HasSslCertificate.UpdateDefinition.IWithSslPassword<ReturnT> WithSslCertificateFromPfxFile(FileInfo pfxFile);
 
         /// <summary>
         /// Specifies an SSL certificate to associate with this resource.

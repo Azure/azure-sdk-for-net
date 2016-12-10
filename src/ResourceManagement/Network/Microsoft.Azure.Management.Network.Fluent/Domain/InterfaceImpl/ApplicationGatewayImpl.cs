@@ -19,17 +19,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class ApplicationGatewayImpl 
     {
         /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Models.NetworkManager Microsoft.Azure.Management.Resource.Fluent.Core.IHasManager<Models.NetworkManager>.Manager
-        {
-            get
-            {
-                return this.Manager() as Models.NetworkManager;
-            }
-        }
-
-        /// <summary>
         /// Begins the update of an existing backend on this application gateway.
         /// </summary>
         /// <param name="name">The name of the backend.</param>
@@ -256,7 +245,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
         {
             get
             {

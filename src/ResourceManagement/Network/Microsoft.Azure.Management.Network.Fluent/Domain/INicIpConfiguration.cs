@@ -28,6 +28,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
-        string PrivateIpAddressVersion { get; }
+        IPVersion PrivateIpAddressVersion { get; }
     }
 }

@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// its private IP address from.
     /// </summary>
     public interface IWithExistingSubnet  :
-        IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
+        Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Update.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>
     {
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Java.Io;
+    using System.IO;
 
     internal partial class ApplicationGatewayListenerImpl 
     {
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
         /// <return>The next stage of the definition.</return>
-        HasSslCertificate.Update.IWithSslPassword<ApplicationGatewayListener.Update.IUpdate> HasSslCertificate.Update.IWithSslCertificate<ApplicationGatewayListener.Update.IUpdate>.WithSslCertificateFromPfxFile(File pfxFile)
+        HasSslCertificate.Update.IWithSslPassword<ApplicationGatewayListener.Update.IUpdate> HasSslCertificate.Update.IWithSslCertificate<ApplicationGatewayListener.Update.IUpdate>.WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {
             return this.WithSslCertificateFromPfxFile(pfxFile) as HasSslCertificate.Update.IWithSslPassword<ApplicationGatewayListener.Update.IUpdate>;
         }
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
         /// <return>The next stage of the definition.</return>
-        HasSslCertificate.Definition.IWithSslPassword<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>> HasSslCertificate.Definition.IWithSslCertificate<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>>.WithSslCertificateFromPfxFile(File pfxFile)
+        HasSslCertificate.Definition.IWithSslPassword<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>> HasSslCertificate.Definition.IWithSslCertificate<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>>.WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {
             return this.WithSslCertificateFromPfxFile(pfxFile) as HasSslCertificate.Definition.IWithSslPassword<ApplicationGatewayListener.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>>;
         }
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="pfxFile">An existing PFX file.</param>
         /// <return>The next stage of the definition.</return>
-        HasSslCertificate.UpdateDefinition.IWithSslPassword<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>> HasSslCertificate.UpdateDefinition.IWithSslCertificate<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithSslCertificateFromPfxFile(File pfxFile)
+        HasSslCertificate.UpdateDefinition.IWithSslPassword<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>> HasSslCertificate.UpdateDefinition.IWithSslCertificate<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>.WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {
             return this.WithSslCertificateFromPfxFile(pfxFile) as HasSslCertificate.UpdateDefinition.IWithSslPassword<ApplicationGatewayListener.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>>;
         }

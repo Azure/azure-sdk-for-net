@@ -407,7 +407,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
         /// primary IP configuration.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
         {
             get
             {

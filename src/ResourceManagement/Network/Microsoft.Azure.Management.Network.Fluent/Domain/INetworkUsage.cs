@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an Azure compute resource usage info object.
     /// </summary>
     public interface INetworkUsage  :
-        IWrapper<Models.UsageInner>
+        IWrapper<Models.Usage>
     {
         /// <summary>
         /// Gets the unit of measurement.

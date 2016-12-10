@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Java.Io;
+    using System.IO;
 
     internal partial class ApplicationGatewaySslCertificateImpl 
     {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="pfxFile">A file in the PFX format.</param>
         /// <return>The next stage of the definition.</return>
-        ApplicationGatewaySslCertificate.Definition.IWithPassword<ApplicationGateway.Definition.IWithCreate> ApplicationGatewaySslCertificate.Definition.IWithData<ApplicationGateway.Definition.IWithCreate>.WithPfxFromFile(File pfxFile)
+        ApplicationGatewaySslCertificate.Definition.IWithPassword<ApplicationGateway.Definition.IWithCreate> ApplicationGatewaySslCertificate.Definition.IWithData<ApplicationGateway.Definition.IWithCreate>.WithPfxFromFile(FileInfo pfxFile)
         {
             return this.WithPfxFromFile(pfxFile) as ApplicationGatewaySslCertificate.Definition.IWithPassword<ApplicationGateway.Definition.IWithCreate>;
         }

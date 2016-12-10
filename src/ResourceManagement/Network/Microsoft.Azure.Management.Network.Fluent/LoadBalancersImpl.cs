@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for LoadBalancers.
     /// </summary>
-    public partial class LoadBalancersImpl  :
+    internal partial class LoadBalancersImpl  :
         GroupableResources<
             ILoadBalancer,
             LoadBalancerImpl,

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdatable<ApplicationGateway.Update.IUpdate>,
         IHasSubnet,
         IHasPrivateIpAddress,
-        IHasManager<Models.NetworkManager>
+        IHasManager<INetworkManager>
     {
         /// <summary>
         /// Gets frontend IP configurations, indexed by name.

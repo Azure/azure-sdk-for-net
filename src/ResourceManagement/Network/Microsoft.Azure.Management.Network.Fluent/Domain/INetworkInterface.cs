@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
         /// primary IP configuration.
         /// </summary>
-        string PrimaryPrivateIpAllocationMethod { get; }
+        IPAllocationMethod PrimaryPrivateIpAllocationMethod { get; }
 
         /// <summary>
         /// Gets the primary IP configuration of this network interface.

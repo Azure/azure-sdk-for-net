@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Implementation for RouteTable.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUm91dGVUYWJsZUltcGw=
-    public partial class RouteTableImpl :
+    internal partial class RouteTableImpl :
         GroupableParentResource<Microsoft.Azure.Management.Network.Fluent.IRouteTable, 
             Models.RouteTableInner,
             Microsoft.Azure.Management.Network.Fluent.RouteTableImpl,

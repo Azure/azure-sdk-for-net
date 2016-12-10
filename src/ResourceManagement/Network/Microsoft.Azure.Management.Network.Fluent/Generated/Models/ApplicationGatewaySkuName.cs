@@ -8,14 +8,4 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
-
-    /// <summary>
-    /// Defines values for ApplicationGatewaySkuName.
-    /// </summary>
-    public static class ApplicationGatewaySkuName
-    {
-        public const string StandardSmall = "Standard_Small";
-        public const string StandardMedium = "Standard_Medium";
-        public const string StandardLarge = "Standard_Large";
-    }
 }

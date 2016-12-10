@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Java.Io;
+    using System.IO;
 
     /// <summary>
     /// The stage of an SSL certificate definition allowing to specify the password for the private key (PFX) content of the certificate.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertifi
         /// </summary>
         /// <param name="pfxFile">A file in the PFX format.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition.IWithPassword<ParentT> WithPfxFromFile(File pfxFile);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewaySslCertificate.Definition.IWithPassword<ParentT> WithPfxFromFile(FileInfo pfxFile);
 
         /// <summary>
         /// Specifies the contents of the private key in the PFX (PKCS#12) format, not base64-encoded.

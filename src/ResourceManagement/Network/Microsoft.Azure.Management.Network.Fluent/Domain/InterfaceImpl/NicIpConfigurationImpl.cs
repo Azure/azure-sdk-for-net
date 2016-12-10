@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.PrivateIpAddressVersion
+        IPVersion Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.PrivateIpAddressVersion
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.IHasPrivateIpAddress.PrivateIpAllocationMethod
         {
             get
             {
