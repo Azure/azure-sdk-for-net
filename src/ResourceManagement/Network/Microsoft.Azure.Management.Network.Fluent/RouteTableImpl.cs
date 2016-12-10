@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using Resource.Fluent;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for RouteTable.
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Microsoft.Azure.Management.Network.Fluent.RouteTableImpl,
             INetworkManager,
             RouteTable.Definition.IWithGroup,
-            RouteTable.Definition.IWithRoute,
+            RouteTable.Definition.IWithCreate,
             RouteTable.Definition.IWithCreate,
             RouteTable.Update.IUpdate>,
         IRouteTable,
@@ -29,14 +30,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdate
     {
         private IRouteTablesOperations innerCollection;
-
         private IDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute> routes;
-        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        protected async Task<Models.RouteTableInner> CreateInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName(), this.Name(), this.Inner);
 
-            return null;
+        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
+        override protected Task<RouteTableInner> CreateInner()
+        {
+            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:71D5B4DBFB32B4FF553CCD0A78B871EC:16C831421CFC3F51EA84222302D9DFFE
@@ -52,8 +51,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         protected override void BeforeCreating()
         {
             // Reset and update routes
-            this.Inner.Routes = InnersFromWrappers(this.routes.Values);
-
+            this.Inner.Routes = InnersFromWrappers<RouteInner, IRoute>(this.routes.Values);
         }
 
         ///GENMHASH:3B1D4D2EFBD5C45DE94FCFE767ABF5CA:1D7FCAA2D6FAECB86AD425172AFE9F3B
