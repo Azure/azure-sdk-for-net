@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <returns>the private IP allocation method (Dynamic, Static) of this network interface's</returns>
         /// <returns>primary IP configuration.</returns>
-        string PrimaryPrivateIpAllocationMethod { get; }
+        IPAllocationMethod PrimaryPrivateIpAllocationMethod { get; }
 
         /// <returns>the IP configurations of this network interface, indexed by their names</returns>
         System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration> IpConfigurations { get; }

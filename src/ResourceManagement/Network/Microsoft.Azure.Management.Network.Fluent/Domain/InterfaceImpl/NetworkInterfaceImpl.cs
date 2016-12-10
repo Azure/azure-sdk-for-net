@@ -357,11 +357,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
         /// <returns>the private IP allocation method (Dynamic, Static) of this network interface's</returns>
         /// <returns>primary IP configuration.</returns>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
         {
             get
             { 
-            return this.PrimaryPrivateIpAllocationMethod() as string;
+                return this.PrimaryPrivateIpAllocationMethod();
             }
         }
         /// <returns>the Internal DNS name assigned to this network interface</returns>

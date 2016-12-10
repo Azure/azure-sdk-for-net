@@ -54,6 +54,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 : null;
         }
 
+        ///GENMHASH:BA4A7979677C1D828E7871F45A6E05CC:E8989A21602F80AB9EDF762AAAC1EAEF
+        public IRouteTable GetRouteTable()
+        {
+            return (this.RouteTableId() != null)
+                ? this.Parent.Manager.RouteTables.GetById(this.RouteTableId())
+                : null;
+        }
+
         ///GENMHASH:749BD8C1D070A6DAE2D9F29DAE294FAE:9DD0E90F3B1A067185751A1074341EAF
         internal SubnetImpl WithExistingNetworkSecurityGroup(string resourceId)
         {
@@ -75,6 +83,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public SubnetImpl WithExistingRouteTable(IRouteTable routeTable)
         {
             return this.WithExistingRouteTable(routeTable.Id);
+        }
+
+        ///GENMHASH:E65C5C625AF875FB82198BA44FB9C760:255A6ED505A38F6AAE7A10907F6CCDFC
+        public Subnet.Update.IUpdate WithoutRouteTable()
+        {
+            this.Inner.RouteTable = null;
+            return this;
         }
 
         ///GENMHASH:C142A0234F22048E67709B65DD642261:61C2A1A23D6BCA62D6705980C8D1BECE
