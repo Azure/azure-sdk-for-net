@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IHostNameBinding  :
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameBindingInner>,
-        IExternalChildResource<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding,Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<object>>,
+        IExternalChildResource<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding,Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>,
         IResource
     {
         string WebAppName { get; }

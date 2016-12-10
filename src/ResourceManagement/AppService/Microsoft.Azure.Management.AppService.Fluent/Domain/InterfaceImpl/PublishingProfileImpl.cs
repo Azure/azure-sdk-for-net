@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Java.Util.Regex;
-
     internal partial class PublishingProfileImpl 
     {
         string Microsoft.Azure.Management.AppService.Fluent.IPublishingProfile.GitPassword

@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition
 {
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Arm;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// The stage of contact definition allowing 2nd line of address to be set.

@@ -8,9 +8,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of a connection string on a web app.
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQ29ubmVjdGlvblN0cmluZ0ltcGw=
-    internal partial class ConnectionStringImpl  :
-        object,
-        IConnectionString
+    internal partial class ConnectionStringImpl : IConnectionString
     {
         private string name;
         private ConnStringValueTypePair valueTypePair;

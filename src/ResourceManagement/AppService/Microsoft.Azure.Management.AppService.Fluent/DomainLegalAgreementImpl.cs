@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uRG9tYWluTGVnYWxBZ3JlZW1lbnRJbXBs
     internal sealed partial class DomainLegalAgreementImpl  :
-        WrapperImpl<Microsoft.Azure.Management.AppService.Fluent.Models.TldLegalAgreementInner>,
+        Wrapper<Microsoft.Azure.Management.AppService.Fluent.Models.TldLegalAgreement>,
         IDomainLegalAgreement
     {
         ///GENMHASH:572D526CD350879469DD5291DB304490:6693A56144125388FB927D6F7E6E38C5
@@ -30,11 +30,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:BECE963A57EABFCEDD1F16F10621E4B7:BEEF63965B869F3B5972C1D6DFCD1A03
-        internal  DomainLegalAgreementImpl(TldLegalAgreementInner innerModel)
+        internal DomainLegalAgreementImpl(TldLegalAgreement innerModel)
+            : base(innerModel)
         {
-            //$ super(innerModel);
-            //$ }
-
         }
 
         ///GENMHASH:35F1A910CEC8B2516638934A68DAC1FD:218BD212DC7AB883E85D851EB90B38E9

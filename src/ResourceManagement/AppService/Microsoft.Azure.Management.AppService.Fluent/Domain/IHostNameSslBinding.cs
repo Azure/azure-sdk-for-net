@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IHostNameSslBinding  :
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>,
-        IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<object>>
+        IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
     {
         string Thumbprint { get; }
 

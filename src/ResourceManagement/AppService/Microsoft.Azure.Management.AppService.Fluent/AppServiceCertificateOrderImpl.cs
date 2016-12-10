@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IUpdate
     {
         internal AppServiceCertificateOrdersOperations client;
-        private IWebAppBase<object> domainVerifyWebApp;
+        private IWebAppBase domainVerifyWebApp;
         private IAppServiceDomain domainVerifyDomain;
         private Task<Microsoft.Azure.Management.KeyVault.Fluent.IVault> bindingVault;
         ///GENMHASH:614D2D9852F00FD5BFCAF60BA2A659B0:86E327FE34A305973AC1A32ECEC60D57
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:6AABC99EE2CD0FF3E4F20F76A87BFD92:BD8EDAEE21E0A80A3794CA1BF6C8293A
-        public AppServiceCertificateOrderImpl WithWebAppVerification(IWebAppBase<object> webApp)
+        public AppServiceCertificateOrderImpl WithWebAppVerification(IWebAppBase webApp)
         {
             //$ this.domainVerifyWebApp = webApp;
             //$ return this;

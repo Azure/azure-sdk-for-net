@@ -5,7 +5,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using AppServiceDomain.Definition;
     using DomainContact.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Arm;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
 
@@ -127,7 +126,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:A79CB48AB5861773F4793C7D7EF8C441
-        public string Name()
+        public override string Name()
         {
             //$ return firstName() + " " + lastName();
 

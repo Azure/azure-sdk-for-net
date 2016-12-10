@@ -15,23 +15,26 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Rest;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// Implementation for HostNameBinding and its create and update interfaces.
     /// </summary>
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVCaW5kaW5nSW1wbA==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVCaW5kaW5nSW1wbA==
     internal partial class HostNameBindingImpl<FluentT,FluentImplT>  :
-        IndexableWrapperImpl<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameBindingInner>,
+        IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameBindingInner>,
         ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>,
         IHostNameBinding,
-        IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
     {
-        private WebAppsInner client;
+        private WebAppsOperations client;
         private FluentImplT parent;
         private string domainName;
         private string name;
+ 
+
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:A96EEE048AFB7EAC724AC09421CBB824
         public Region Region()
         {
@@ -74,11 +77,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
-        public IWebAppBase<FluentT> Parent()
+        public IWebAppBase Parent
         {
-            //$ return parent;
+            get
+            {
+                //$ return parent;
 
-            return null;
+                return null;
+            }
         }
 
         ///GENMHASH:F256BA36B49E86A329FE6E9053FAA2C2:30BCCB9C5D6F49D3148D3A9D412D6197
@@ -92,7 +98,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:3785204345CF88A369A14E3305BB659F
-        public async Task<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IIndexable> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IHostNameBinding> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ HostNameBinding self = this;
             //$ Func1<HostNameBindingInner, HostNameBinding> mapper = new Func1<HostNameBindingInner, HostNameBinding>() {
@@ -182,11 +188,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             //$ return Inner.AzureResourceType();
 
-            return AzureResourceType.WEBSITE;
+            return Microsoft.Azure.Management.AppService.Fluent.Models.AzureResourceType.Website;
         }
 
         ///GENMHASH:405D133ADB31FC54FCFE6E63CC7CE6DF:528163E8A39CE260ED65B356ABCB872C
-        internal  HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent, WebAppsInner client)
+        internal  HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent, WebAppsOperations client)
+            : base(innerObject)
         {
             //$ super(innerObject);
             //$ this.parent = parent;
@@ -229,7 +236,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             //$ return Inner.HostNameType();
 
-            return HostNameType.VERIFIED;
+            return Microsoft.Azure.Management.AppService.Fluent.Models.HostNameType.Verified;
         }
 
         ///GENMHASH:3C4657168E780E36F1CE2B07D32C5B18:20A09597173832F7AFC3EB433FE6EE44
@@ -245,7 +252,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             //$ return Inner.CustomHostNameDnsRecordType();
 
-            return CustomHostNameDnsRecordType.CNAME;
+            return Microsoft.Azure.Management.AppService.Fluent.Models.CustomHostNameDnsRecordType.CName;
         }
 
         ///GENMHASH:8F156E891E25FA23FCB8AE0E23601BEC:7FF0A8A46536F20F09EC2FE338F3B99E
@@ -292,6 +299,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             //$ return this;
 
             return this;
+        }
+
+        IHostNameBinding IRefreshable<IHostNameBinding>.Refresh()
+        {
+            throw new NotImplementedException();
         }
     }
 }

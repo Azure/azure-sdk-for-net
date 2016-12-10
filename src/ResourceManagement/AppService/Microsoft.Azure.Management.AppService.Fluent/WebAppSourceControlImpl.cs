@@ -18,17 +18,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwU291cmNlQ29udHJvbEltcGw=
-    internal partial class WebAppSourceControlImpl<FluentT,FluentImplT>  :
+    internal partial class WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>  :
         IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner>,
         IWebAppSourceControl,
         WebAppSourceControl.Definition.IDefinition<WebAppBase.Definition.IWithCreate<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
+        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
+        where FluentT : class, IWebAppBase
+        where DefAfterRegionT : class
+        where DefAfterGroupT : class
+        where UpdateT : class, IUpdate<FluentT>
     {
-        private WebAppBaseImpl<FluentT,FluentImplT> parent;
+        private WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent;
         private WebSiteManagementClient serviceClient;
         private string githubAccessToken;
         ///GENMHASH:8560BA43F3FC1809A8347C8CFFC2AB2F:E56B546ECAC80146D9588C9F1C5FB326
-        public WebAppSourceControlImpl<FluentT,FluentImplT> WithPublicMercurialRepository(string url)
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPublicMercurialRepository(string url)
         {
             //$ Inner.WithIsManualIntegration(true).WithIsMercurial(false).WithRepoUrl(url);
             //$ return this;
@@ -37,7 +42,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:489A5D0E881E754C1D9F60FEF7B0689C:E56B546ECAC80146D9588C9F1C5FB326
-        public WebAppSourceControlImpl<FluentT,FluentImplT> WithPublicGitRepository(string url)
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPublicGitRepository(string url)
         {
             //$ Inner.WithIsManualIntegration(true).WithIsMercurial(false).WithRepoUrl(url);
             //$ return this;
@@ -58,42 +63,33 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:F9159053EE75683F7DC604A5FCBB8F04
-        public IWebAppBase<object> Parent
+        public IWebAppBase Parent()
         {
-            get
-            {
-                return (IWebAppBase<object>) parent;
-            }
+            return parent;
         }
 
         ///GENMHASH:DBC91E274023CE112BF5317D36B0BDC3:08D6495FD781CCB57E524CE9B1EDE729
-        internal WebAppSourceControlImpl(SiteSourceControlInner inner, WebAppBaseImpl<FluentT,FluentImplT> parent, WebSiteManagementClient serviceClient)
-            : base(inner)
+        internal WebAppSourceControlImpl(SiteSourceControlInner inner, WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent, WebSiteManagementClient serviceClient)
+            : base (inner)
         {
-            //$ super(inner);
-            //$ this.parent = parent;
-            //$ this.serviceClient = serviceClient;
-            //$ }
-
+            this.parent = parent;
+            this.serviceClient = serviceClient;
         }
 
         ///GENMHASH:A969DD4C3B042B64471282EF52C2AAFC:E8E2064A7FA83CBF5A4805C096AA480A
-        public RepositoryType RepositoryType
+        public RepositoryType RepositoryType()
         {
-            get
-            {
-                //$ if (Inner.IsMercurial() == null) {
-                //$ return null;
-                //$ } else {
-                //$ return Inner.IsMercurial() ? RepositoryType.MERCURIAL : RepositoryType.GIT;
-                //$ }
+            //$ if (Inner.IsMercurial() == null) {
+            //$ return null;
+            //$ } else {
+            //$ return Inner.IsMercurial() ? RepositoryType.MERCURIAL : RepositoryType.GIT;
+            //$ }
 
-                return RepositoryType.Git;
-            }
+            return Microsoft.Azure.Management.AppService.Fluent.RepositoryType.Git;
         }
 
         ///GENMHASH:AF58AEB1DD43D38B7FEDF266F4F40886:63F15AB00FF6315055DD4FFBCA6BE2EC
-        public WebAppSourceControlImpl<FluentT,FluentImplT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository)
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository)
         {
             //$ return withContinuouslyIntegratedGitHubRepository(String.Format("https://github.Com/%s/%s", organization, repository));
 
@@ -101,7 +97,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0C78E8B87A63ADE33197F0E5CE8ADEEB:706F1A261DEEA5DA1355959E128EE429
-        public WebAppSourceControlImpl<FluentT,FluentImplT> WithContinuouslyIntegratedGitHubRepository(string url)
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithContinuouslyIntegratedGitHubRepository(string url)
         {
             //$ Inner.WithRepoUrl(url).WithIsMercurial(false).WithIsManualIntegration(false);
             //$ return this;
@@ -119,29 +115,23 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:0EDBC6F12844C2F2056BFF916F51853B
-        public string Name
+        public string Name()
         {
-            get
-            {
-                //$ return Inner.Name();
+            //$ return Inner.Name();
 
-                return null;
-            }
+            return null;
         }
 
         ///GENMHASH:6CECB92A6E1723D6D85C5FF61B416390:33B07A666FC63EB34DFBDC8EFC5DAE19
-        public string Branch
+        public string Branch()
         {
-            get
-            {
-                //$ return Inner.Branch();
+            //$ return Inner.Branch();
 
-                return null;
-            }
+            return null;
         }
 
         ///GENMHASH:6FF9D187D15743E6B37112ED927543E0:CD51E6CABA14878E3D216EA87F75B1C1
-        public WebAppSourceControlImpl<FluentT,FluentImplT> WithBranch(string branch)
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithBranch(string branch)
         {
             //$ Inner.WithBranch(branch);
             //$ return this;
@@ -150,7 +140,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:5491A63323E88C98233DBEBA408F079E:DE140C96DE9D6AB410A97DC3737C1F8D
-        public WebAppSourceControlImpl<FluentT,FluentImplT> WithGitHubAccessToken(string personalAccessToken)
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithGitHubAccessToken(string personalAccessToken)
         {
             //$ this.githubAccessToken = personalAccessToken;
             //$ return this;
@@ -159,36 +149,27 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:F0154AC08DE1AD091546C5ED9FAAEEFE:B9274408285FE2FE7DD2F983FE0886BD
-        public string RepositoryUrl
+        public string RepositoryUrl()
         {
-            get
-            {
-                //$ return Inner.RepoUrl();
+            //$ return Inner.RepoUrl();
 
-                return null;
-            }
+            return null;
         }
 
         ///GENMHASH:2A9EA38BA2AA82D8543F96DA50B4E478:F4FA256BED6B51B88372DFCB49483171
-        public bool IsManualIntegration
+        public bool IsManualIntegration()
         {
-            get
-            {
-                //$ return Utils.ToPrimitiveBoolean(Inner.IsManualIntegration());
+            //$ return Utils.ToPrimitiveBoolean(Inner.IsManualIntegration());
 
-                return false;
-            }
+            return false;
         }
 
         ///GENMHASH:DC747255ED0989636955C16E2E14FF35:D09C105522DF27F96AFF650A22E6A4CB
-        public bool DeploymentRollbackEnabled
+        public bool DeploymentRollbackEnabled()
         {
-            get
-            {
-                //$ return Utils.ToPrimitiveBoolean(Inner.DeploymentRollbackEnabled());
+            //$ return Utils.ToPrimitiveBoolean(Inner.DeploymentRollbackEnabled());
 
-                return false;
-            }
+            return false;
         }
     }
 }

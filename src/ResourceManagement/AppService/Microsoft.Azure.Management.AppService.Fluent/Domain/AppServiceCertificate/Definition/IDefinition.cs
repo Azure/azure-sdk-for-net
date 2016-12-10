@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificate.Def
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Java.Io;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 

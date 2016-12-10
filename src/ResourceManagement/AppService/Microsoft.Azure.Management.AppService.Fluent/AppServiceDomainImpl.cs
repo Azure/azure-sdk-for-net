@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:24635E3B6AB96D3E6BFB9DA2AF7C6AB5
-        public override AppServiceDomainImpl Refresh()
+        public override IAppServiceDomain Refresh()
         {
             //$ this.SetInner(client.Get(resourceGroupName(), name()));
             //$ return this;

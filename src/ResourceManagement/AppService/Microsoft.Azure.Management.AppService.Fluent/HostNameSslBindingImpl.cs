@@ -13,20 +13,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Java.Io;
+    using System.Threading;
 
     /// <summary>
     /// Implementation for HostNameSslBinding and its create and update interfaces.
     /// </summary>
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVTc2xCaW5kaW5nSW1wbA==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVTc2xCaW5kaW5nSW1wbA==
     internal partial class HostNameSslBindingImpl<FluentT,FluentImplT>  :
-        IndexableWrapperImpl<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>,
+        IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>,
         IHostNameSslBinding,
-        IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
+        HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
     {
-        private Observable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> newCertificate;
+        private Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> newCertificate;
         private IWithKeyVault certificateInDefinition;
         private AppServiceManager manager;
         private FluentImplT parent;
@@ -116,15 +116,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
-        public IWebAppBase<FluentT> Parent()
+        public IWebAppBase Parent
         {
-            //$ return parent;
+            get
+            {
+                //$ return parent;
 
-            return null;
+                return null;
+            }
         }
 
         ///GENMHASH:B8A050E8A75C218A628FE17D20A72D91:BCDDFE46A85ECD6829F8CF639BD96E8F
-        public HostNameSslBindingImpl<FluentT,FluentImplT> WithPfxCertificateToUpload(File pfxFile, string password)
+        public HostNameSslBindingImpl<FluentT,FluentImplT> WithPfxCertificateToUpload(string pfxPath, string password)
         {
             //$ String thumbprint = getCertificateThumbprint(pfxFile.GetPath(), password);
             //$ newCertificate = Utils.RootResource(manager.Certificates().Define(getCertificateUniqueName(thumbprint, parent().Region()))
@@ -139,7 +142,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:040FCD0915B61247DC4493834E39F655:A419F25EF828A0B88F2F3CAA051C4F14
-        internal  HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent, AppServiceManager manager)
+        internal HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent, AppServiceManager manager)
+            : base(inner)
         {
             //$ super(inner);
             //$ this.parent = parent;
@@ -214,7 +218,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             //$ return Inner.SslState();
 
-            return SslState.DISABLED;
+            return Microsoft.Azure.Management.AppService.Fluent.Models.SslState.Disabled;
         }
 
         ///GENMHASH:BF9A77BB8ECC155B188086E8C0D49393:8EBA7D5F00B8349DEF70B3689B6F7595

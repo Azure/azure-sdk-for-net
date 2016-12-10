@@ -12,29 +12,44 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Collections.Generic;
     using System;
     using Resource.Fluent.Core;
+    using Resource.Fluent.Core.Resource.Update;
 
     /// <summary>
     /// The implementation for WebAppBase.
     /// </summary>
     /// <typeparam name="Fluent">The fluent interface of the web app or deployment slot.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwQmFzZUltcGw=
-    internal abstract partial class WebAppBaseImpl<FluentT, FluentImplT>  :
+    internal abstract partial class WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>  :
         GroupableResource<
             FluentT,
             SiteInner,
             FluentImplT,
             AppServiceManager,
-            object,
-            object,
+            DefAfterRegionT,
+            DefAfterGroupT,
             IWithCreate<FluentT>,
-            IUpdate<FluentT>>,
-        IWebAppBase<FluentT>,
+            UpdateT>,
+        IWebAppBase,
         IDefinition<FluentT>,
-        IUpdate<FluentT>,
+        IAppliable<FluentT>,
+        IUpdateWithTags<UpdateT>,
+        WebAppBase.Update.IWithHostNameBinding<FluentT>,
+        WebAppBase.Update.IWithHostNameSslBinding<FluentT>,
+        WebAppBase.Update.IWithClientAffinityEnabled<FluentT>,
+        WebAppBase.Update.IWithClientCertEnabled<FluentT>,
+        WebAppBase.Update.IWithScmSiteAlsoStopped<FluentT>,
+        WebAppBase.Update.IWithSiteEnabled<FluentT>,
+        WebAppBase.Update.IWithSiteConfigs<FluentT>,
+        WebAppBase.Update.IWithAppSettings<FluentT>,
+        WebAppBase.Update.IWithConnectionString<FluentT>,
+        WebAppBase.Update.IWithSourceControl<FluentT>,
         WebAppBase.Definition.IWithWebContainer<FluentT>,
         WebAppBase.Update.IWithWebContainer<FluentT>
-        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT>, FluentT
-        where FluentT : class,IWebAppBase<FluentT>
+        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
+        where FluentT : class,IWebAppBase
+        where DefAfterRegionT : class
+        where DefAfterGroupT : class
+        where UpdateT : class, IUpdate<FluentT>
     {
         WebAppsOperations client;
         WebSiteManagementClient serviceClient;
@@ -54,7 +69,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.Models.ConnStringValueTypePair> connectionStringsToAdd;
         private IList<string> connectionStringsToRemove;
         private IDictionary<string,bool> connectionStringStickiness;
-        private WebAppSourceControlImpl<FluentT,FluentImplT> sourceControl;
+        private WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl;
         private bool sourceControlToDelete;
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
@@ -254,7 +269,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:D99F39EFAEA0FEA27CFADE7E7F5F87A9
-        internal async Task<FluentT> CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ FluentT self = (FluentT) this;
             //$ return Observable.Zip(listAppSettings(), listConnectionStrings(), listSlotConfigurations(), new Func3<StringDictionaryInner, ConnectionStringDictionaryInner, SlotConfigNamesResourceInner, FluentT>() {
@@ -283,7 +298,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             //$ }
             //$ });
 
-            return default(FluentT);
+            return;
         }
 
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:27E486AB74A10242FF421C0798DDC450
@@ -1016,7 +1031,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:D7E5D52A8F2DD57221DA3F2B254FDF7F
-        public WebAppSourceControlImpl<FluentT,FluentImplT> DefineSourceControl()
+        public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSourceControl()
         {
             //$ return new WebAppSourceControlImpl<>(new SiteSourceControlInner(), this, serviceClient);
 
@@ -1109,7 +1124,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0A3B342EB54A6BB9B919686055C77154:D71C3ABF670D7D6382F65A18153CE77F
-        internal WebAppBaseImpl<FluentT,FluentImplT> WithNewHostNameSslBinding(HostNameSslBindingImpl<FluentT,FluentImplT> hostNameSslBinding)
+        internal WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewHostNameSslBinding(HostNameSslBindingImpl<FluentT,FluentImplT> hostNameSslBinding)
         {
             //$ if (hostNameSslBinding.NewCertificate() != null) {
             //$ sslBindingsToCreate.Put(hostNameSslBinding.Name(), hostNameSslBinding);
@@ -1380,7 +1395,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:09C71E4BDBE3FD33C1FF3F0FCC7511B5:61F56A801796D18DC0D97539EC361EFF
-        internal FluentImplT WithSourceControl(WebAppSourceControlImpl<FluentT,FluentImplT> sourceControl)
+        internal FluentImplT WithSourceControl(WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl)
         {
             //$ this.sourceControl = sourceControl;
             //$ return (FluentImplT) this;
@@ -1392,7 +1407,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal abstract Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken));
         public abstract void Stop();
         public abstract Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract Task CacheAppSettingsAndConnectionStrings(CancellationToken cancellationToken = default(CancellationToken));
         public abstract void ResetSlotConfigurations();
         public abstract void Restart();
         public abstract IPublishingProfile GetPublishingProfile();

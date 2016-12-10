@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using System.Text.RegularExpressions;
+
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Java.Util.Regex;
 
     /// <summary>
     /// A credential for publishing to a web app.
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uUHVibGlzaGluZ1Byb2ZpbGVJbXBs
-    internal partial class PublishingProfileImpl  :
-        object,
-        IPublishingProfile
+    internal partial class PublishingProfileImpl : IPublishingProfile
     {
         private string ftpUrl;
         private string gitUrl;
@@ -18,8 +17,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private string gitUsername;
         private string ftpPassword;
         private string gitPassword;
-        private Pattern GIT_REGEX;
-        private Pattern FTP_REGEX;
+        private static readonly Regex gitRegex = new Regex("publishMethod=\"MSDeploy\" publishUrl=\"([^\"]+)\".+userName=\"(\\$[^\"]+)\".+userPWD=\"([^\"]+)\"");
+        private static readonly Regex ftpRegex = new Regex("publishMethod=\"FTP\" publishUrl=\"ftp://([^\"]+).+userName=\"([^\"]+\\\\\\$[^\"]+)\".+userPWD=\"([^\"]+)\"");
         ///GENMHASH:EED906EE02A83607395DD16B6C952CB5:F903566E74A7E102149C01EBDACBA16F
         public string GitPassword()
         {

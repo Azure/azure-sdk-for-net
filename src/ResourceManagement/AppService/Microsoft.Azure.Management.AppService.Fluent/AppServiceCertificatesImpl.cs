@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
-        public async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return innerCollection.DeleteAsync(groupName, name)
             //$ .Map(new Func1<Object, Void>() {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
-        public async Task<IAppServiceCertificate> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IAppServiceCertificate> GetByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return wrapModel(innerCollection.Get(groupName, name));
 
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5AC27B4C4791A2919F43CCB97C0275BA
-        protected AppServiceCertificateImpl WrapModel(string name)
+        protected override AppServiceCertificateImpl WrapModel(string name)
         {
             //$ return new AppServiceCertificateImpl(name, new CertificateInner(), innerCollection, myManager);
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:446794D74A04366F0AA274DF90F28CE3:218BCD2B4CE1C82F271307788818A2EC
-        protected AppServiceCertificateImpl WrapModel(CertificateInner inner)
+        protected override IAppServiceCertificate WrapModel(CertificateInner inner)
         {
             //$ if (inner == null) {
             //$ return null;

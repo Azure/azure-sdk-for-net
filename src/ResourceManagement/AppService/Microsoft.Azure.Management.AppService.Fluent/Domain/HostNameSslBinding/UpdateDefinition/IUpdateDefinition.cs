@@ -5,7 +5,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Update
     using Microsoft.Azure.Management.KeyVault.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Java.Io;
 
     /// <summary>
     /// The first stage of a hostname SSL binding definition.
@@ -73,7 +72,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Update
         /// </summary>
         /// <param name="pfxFile">The PFX certificate file to upload.</param>
         /// <param name="password">The password to the certificate.</param>
-        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition.IWithSslType<ParentT> WithPfxCertificateToUpload(File pfxFile, string password);
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition.IWithSslType<ParentT> WithPfxCertificateToUpload(string pfxPath, string password);
 
         /// <summary>
         /// Places a new App Service certificate order to use for the hostname.

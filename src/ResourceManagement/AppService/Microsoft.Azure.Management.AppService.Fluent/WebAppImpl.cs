@@ -9,17 +9,38 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using WebApp.Definition;
     using WebApp.Update;
     using System.Collections.Generic;
+    using Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent.Core.Resource.Update;
+    using System;
 
     /// <summary>
     /// The implementation for WebApp.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwSW1wbA==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwSW1wbA==
     internal partial class WebAppImpl  :
-        WebAppBaseImpl<Microsoft.Azure.Management.AppService.Fluent.IWebApp,Microsoft.Azure.Management.AppService.Fluent.WebAppImpl>,
+        WebAppBaseImpl<
+            IWebApp,
+            WebAppImpl,
+            WebApp.Definition.IWithNewAppServicePlan,
+            WebApp.Definition.IWithAppServicePlan,
+            WebApp.Update.IUpdate>,
         IWebApp,
         IDefinition,
-        IUpdate,
-        IWithNewAppServicePlan
+        IAppliable<IWebApp>,
+        IUpdateWithTags<IUpdate>,
+        WebAppBase.Update.IWithHostNameBinding<IWebApp>,
+        WebAppBase.Update.IWithHostNameSslBinding<IWebApp>,
+        WebAppBase.Update.IWithClientAffinityEnabled<IWebApp>,
+        WebAppBase.Update.IWithClientCertEnabled<IWebApp>,
+        WebAppBase.Update.IWithScmSiteAlsoStopped<IWebApp>,
+        WebAppBase.Update.IWithSiteEnabled<IWebApp>,
+        WebAppBase.Update.IWithSiteConfigs<IWebApp>,
+        WebAppBase.Update.IWithAppSettings<IWebApp>,
+        WebAppBase.Update.IWithConnectionString<IWebApp>,
+        WebAppBase.Update.IWithSourceControl<IWebApp>,
+        WebApp.Definition.IWithNewAppServicePlan,
+        WebApp.Update.IWithAppServicePlan,
+        WebApp.Update.IWithNewAppServicePlan
     {
         private IDeploymentSlots deploymentSlots;
         private AppServicePlanImpl appServicePlan;

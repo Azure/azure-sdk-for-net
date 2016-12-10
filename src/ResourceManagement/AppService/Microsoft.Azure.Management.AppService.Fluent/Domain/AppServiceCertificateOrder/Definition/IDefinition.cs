@@ -149,6 +149,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// be bound to the hostname for the certificate.
         /// </summary>
         /// <param name="webApp">The web app bound to the hostname.</param>
-        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithKeyVault WithWebAppVerification(IWebAppBase<object> webApp);
+        Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithKeyVault WithWebAppVerification(IWebAppBase webApp);
     }
 }

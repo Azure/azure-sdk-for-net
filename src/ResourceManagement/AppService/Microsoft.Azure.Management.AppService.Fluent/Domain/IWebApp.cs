@@ -10,7 +10,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure Web App.
     /// </summary>
     public interface IWebApp  :
-        IWebAppBase<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
+        IWebAppBase,
+        IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         IUpdatable<WebApp.Update.IUpdate>
     {
         Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlots DeploymentSlots { get; }

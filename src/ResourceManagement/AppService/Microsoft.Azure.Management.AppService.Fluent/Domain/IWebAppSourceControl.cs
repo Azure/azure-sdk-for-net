@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IWebAppSourceControl  :
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner>,
-        IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase<object>>
+        IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
     {
         Microsoft.Azure.Management.AppService.Fluent.RepositoryType RepositoryType { get; }
 

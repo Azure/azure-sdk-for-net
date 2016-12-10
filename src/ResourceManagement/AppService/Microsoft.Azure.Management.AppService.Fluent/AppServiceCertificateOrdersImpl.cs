@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B36EBFDFA77033C03C4B7C1A493B9315:7827EBFF4491A5043A5099AE2A01FBDF
-        protected override AppServiceCertificateOrderImpl WrapModel(AppServiceCertificateOrderInner inner)
+        protected override IAppServiceCertificateOrder WrapModel(AppServiceCertificateOrderInner inner)
         {
             //$ if (inner == null) {
             //$ return null;

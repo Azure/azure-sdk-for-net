@@ -13,9 +13,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// An immutable client-side representation of an Azure Web App or deployment slot.
     /// </summary>
-    public interface IWebAppBase<T>  :
+    public interface IWebAppBase  :
         IHasName,
-        IRefreshable<T>,
         IGroupableResource,
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner>
     {
@@ -64,7 +63,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="domainVerificationToken">The domain verification token for the certificate order.</param>
         Task VerifyDomainOwnershipAsync(string certificateOrderName, string domainVerificationToken, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task CacheAppSettingsAndConnectionStrings(CancellationToken cancellationToken = default(CancellationToken));
+        Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         Microsoft.Azure.Management.AppService.Fluent.Models.UsageState UsageState { get; }
 

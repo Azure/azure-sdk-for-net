@@ -12,7 +12,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
-    internal partial class WebAppSourceControlImpl<FluentT,FluentImplT> 
+    internal partial class WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>
+        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
+        where FluentT : class, IWebAppBase
+        where DefAfterRegionT : class
+        where DefAfterGroupT : class
+        where UpdateT : class, IUpdate<FluentT>
     {
         /// <summary>
         /// Specifies the GitHub personal access token. You can acquire one from
@@ -34,11 +39,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithGitHubAccessToken(personalAccessToken) as WebAppSourceControl.Definition.IGitHubWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string Resource.Fluent.Core.IChildResource<IWebAppBase>.Name
         {
             get
             {
                 return this.Name();
+            }
+        }
+
+        IWebAppBase Resource.Fluent.Core.IChildResource<IWebAppBase>.Parent
+        {
+            get
+            {
+                return this.Parent();
             }
         }
 
@@ -84,7 +97,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.RepositoryType.RepositoryType Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
+        Microsoft.Azure.Management.AppService.Fluent.RepositoryType Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
         {
             get
             {

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithThirdPartyDomain(domain) as HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        public string Name
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
+        public string Id
         {
             get
             {
@@ -164,9 +164,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Puts the request into the queue and allow the HTTP client to execute
         /// it when system resources are available.
         /// </summary>
-        async Task<Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IIndexable> Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        async Task<IHostNameBinding> Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
-            return await this.CreateAsync(cancellationToken) as Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IIndexable;
+            return await this.CreateAsync(cancellationToken);
         }
 
         /// <summary>
@@ -193,11 +193,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Tags
+        public System.Collections.Generic.IDictionary<string,string> Tags
         {
             get
             {
-                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
+                return this.Tags() as System.Collections.Generic.IDictionary<string,string>;
             }
         }
 

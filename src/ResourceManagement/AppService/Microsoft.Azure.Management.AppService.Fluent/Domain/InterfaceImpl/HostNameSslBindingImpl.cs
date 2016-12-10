@@ -13,11 +13,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Java.Io;
 
     internal partial class HostNameSslBindingImpl<FluentT,FluentImplT> 
     {
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
+        string IChildResource<IWebAppBase>.Name
         {
             get
             {
@@ -129,9 +128,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="pfxFile">The PFX certificate file to upload.</param>
         /// <param name="password">The password to the certificate.</param>
-        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithPfxCertificateToUpload(File pfxFile, string password)
+        HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> HostNameSslBinding.Definition.IWithCertificate<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>.WithPfxCertificateToUpload(string pfxPath, string password)
         {
-            return this.WithPfxCertificateToUpload(pfxFile, password) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
+            return this.WithPfxCertificateToUpload(pfxPath, password) as HostNameSslBinding.Definition.IWithSslType<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
         }
 
         /// <summary>
@@ -157,9 +156,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="pfxFile">The PFX certificate file to upload.</param>
         /// <param name="password">The password to the certificate.</param>
-        HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>.WithPfxCertificateToUpload(File pfxFile, string password)
+        HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>> HostNameSslBinding.UpdateDefinition.IWithCertificate<WebAppBase.Update.IUpdate<FluentT>>.WithPfxCertificateToUpload(string pfxPath, string password)
         {
-            return this.WithPfxCertificateToUpload(pfxFile, password) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;
+            return this.WithPfxCertificateToUpload(pfxPath, password) as HostNameSslBinding.UpdateDefinition.IWithSslType<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>

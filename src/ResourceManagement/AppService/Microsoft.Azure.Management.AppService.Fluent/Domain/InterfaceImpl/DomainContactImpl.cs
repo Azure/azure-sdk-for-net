@@ -199,14 +199,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithMiddleName(middleName) as DomainContact.Definition.IWithLastName<AppServiceDomain.Definition.IWithCreate>;
         }
 
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
-        {
-            get
-            {
-                return this.Name();
-            }
-        }
-
         /// <summary>
         /// Specifies the phone number.
         /// </summary>
