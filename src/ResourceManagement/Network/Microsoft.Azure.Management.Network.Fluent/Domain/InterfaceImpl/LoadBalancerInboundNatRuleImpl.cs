@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>,string>.WithProtocol(string protocol)
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>, TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>;
         }
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancerInboundNatRule.Update.IUpdate,string>.WithProtocol(string protocol)
+        LoadBalancerInboundNatRule.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancerInboundNatRule.Update.IUpdate, TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancerInboundNatRule.Update.IUpdate;
         }
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasProtocol.Definition.IWithProtocol<LoadBalancerInboundNatRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,string>.WithProtocol(string protocol)
+        LoadBalancerInboundNatRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasProtocol.Definition.IWithProtocol<LoadBalancerInboundNatRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatRule>, TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancerInboundNatRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }

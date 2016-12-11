@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Models;
 
     /// <summary>
     /// The stage of a load balancing rule update allowing to enable the floating IP functionality.
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
     /// The stage of a load balancing rule update allowing to modify the transport protocol the rule applies to.
     /// </summary>
     public interface IWithProtocol  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate, TransportProtocol>
     {
     }
 

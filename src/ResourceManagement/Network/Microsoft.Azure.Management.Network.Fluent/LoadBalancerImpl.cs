@@ -59,6 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             var response = this.innerCollection.Get(ResourceGroupName, Name);
             SetInner(response);
+            InitializeChildrenFromInner();
             return this;
         }
 
@@ -448,7 +449,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:681EAD9E22B4456AE914816B5A9E04E5:999E5525EF37760D980CB84E6FED7230
-        internal LoadBalancerImpl WithLoadBalancingRule (int frontendPort, string protocol, int backendPort)
+        internal LoadBalancerImpl WithLoadBalancingRule (int frontendPort, TransportProtocol protocol, int backendPort)
         {
             DefineLoadBalancingRule(DEFAULT)
                 .WithFrontendPort(frontendPort)
@@ -462,7 +463,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:A35BE9E6064D3B6774D34DFEA041998E:4BAB91751BCC1B4FF8EBF5F20815D8A8
-        internal LoadBalancerImpl WithLoadBalancingRule (int port, string protocol)
+        internal LoadBalancerImpl WithLoadBalancingRule (int port, TransportProtocol protocol)
         {
             return WithLoadBalancingRule(port, protocol, port);
         }
@@ -493,7 +494,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 ProbeInner inner = new ProbeInner()
                 {
                     Name = name,
-                    Protocol = ProbeProtocol.Tcp
+                    Protocol = ProbeProtocol.Tcp.ToString()
                 };
 
                 return new LoadBalancerProbeImpl(inner, this);
@@ -512,7 +513,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 ProbeInner inner = new ProbeInner()
                 {
                     Name = name,
-                    Protocol = ProbeProtocol.Http,
+                    Protocol = ProbeProtocol.Http.ToString(),
                     Port = 80
                 };
 

@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Models;
 
     /// <summary>
     /// The first stage of the load balancing rule definition.
@@ -147,7 +148,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// </summary>
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>, TransportProtocol>
     {
     }
 }

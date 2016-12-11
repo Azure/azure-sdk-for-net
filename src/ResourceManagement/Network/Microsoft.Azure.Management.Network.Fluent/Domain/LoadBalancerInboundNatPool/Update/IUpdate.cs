@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Models;
 
     /// <summary>
     /// The stage of an inbound NAT pool update allowing to specify the frontend for the inbound NAT rules in the pool to apply to.
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
     /// The stage of an inbound NAT pool update allowing to specify the transport protocol for the pool to apply to.
     /// </summary>
     public interface IWithProtocol  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate, TransportProtocol>
     {
     }
 
