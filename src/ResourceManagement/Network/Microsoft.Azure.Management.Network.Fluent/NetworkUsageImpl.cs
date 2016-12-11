@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
             get
             {
-                return new NetworkUsageUnit(Usage.Unit);
+                return NetworkUsageUnit.Parse(Usage.Unit);
             }
         }
     }
