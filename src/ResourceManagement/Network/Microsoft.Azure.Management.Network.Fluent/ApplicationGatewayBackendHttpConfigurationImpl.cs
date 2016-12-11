@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uQXBwbGljYXRpb25HYXRld2F5QmFja2VuZEh0dHBDb25maWd1cmF0aW9uSW1wbA==
     internal partial class ApplicationGatewayBackendHttpConfigurationImpl :
-        ChildResource<Models.ApplicationGatewayBackendHttpSettingsInner, ApplicationGatewayImpl, IApplicationGateway>,
+        ChildResource<ApplicationGatewayBackendHttpSettingsInner, ApplicationGatewayImpl, IApplicationGateway>,
         IApplicationGatewayBackendHttpConfiguration,
         IDefinition<ApplicationGateway.Definition.IWithCreate>,
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,

@@ -3,7 +3,7 @@
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uU3VibmV0SW1wbA==
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network.Fluent.Models;
+    using Models;
     using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
@@ -37,28 +37,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:A9777D8010E6AF7B603113E49858FE75:0A1C32015C3FE7888D450702542868EA
         public string NetworkSecurityGroupId()
         {
-            return (this.Inner.NetworkSecurityGroup != null) ? this.Inner.NetworkSecurityGroup.Id : null;
+            return (Inner.NetworkSecurityGroup != null) ? Inner.NetworkSecurityGroup.Id : null;
         }
 
         ///GENMHASH:A52B043B03F5F5DD10F6A96CBC569DBC:08C6FC794C26CE7AA9BBF95E8E59293F
         public string RouteTableId()
         {
-            return (this.Inner.RouteTable != null) ? this.Inner.RouteTable.Id : null;
+            return (Inner.RouteTable != null) ? Inner.RouteTable.Id : null;
         }
 
         ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:8E698A4D3F26647C89221EE26B291774
         internal INetworkSecurityGroup GetNetworkSecurityGroup ()
         {
-            return (this.NetworkSecurityGroupId() != null)
-                ? this.Parent.Manager.NetworkSecurityGroups.GetById(this.RouteTableId())
+            return (NetworkSecurityGroupId() != null)
+                ? Parent.Manager.NetworkSecurityGroups.GetById(RouteTableId())
                 : null;
         }
 
         ///GENMHASH:BA4A7979677C1D828E7871F45A6E05CC:E8989A21602F80AB9EDF762AAAC1EAEF
         public IRouteTable GetRouteTable()
         {
-            return (this.RouteTableId() != null)
-                ? this.Parent.Manager.RouteTables.GetById(this.RouteTableId())
+            return (RouteTableId() != null)
+                ? Parent.Manager.RouteTables.GetById(RouteTableId())
                 : null;
         }
 
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             SubResource reference = new SubResource {
                 Id = resourceId
             };
-            this.Inner.NetworkSecurityGroup = reference;
+            Inner.NetworkSecurityGroup = reference;
             return this;
         }
 
@@ -82,13 +82,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:FCA489D9E7B6963A2EAC736958554ABD:772ECDA870E1C3E00E31EFE045675F09
         public SubnetImpl WithExistingRouteTable(IRouteTable routeTable)
         {
-            return this.WithExistingRouteTable(routeTable.Id);
+            return WithExistingRouteTable(routeTable.Id);
         }
 
         ///GENMHASH:E65C5C625AF875FB82198BA44FB9C760:255A6ED505A38F6AAE7A10907F6CCDFC
         public Subnet.Update.IUpdate WithoutRouteTable()
         {
-            this.Inner.RouteTable = null;
+            Inner.RouteTable = null;
             return this;
         }
 
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 Id = resourceId
             };
-            this.Inner.RouteTable = reference;
+            Inner.RouteTable = reference;
             return this;
         }
 

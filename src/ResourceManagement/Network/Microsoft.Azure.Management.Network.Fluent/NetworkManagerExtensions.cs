@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Resource.Fluent.Core;
     using Resource.Fluent;
     using System.Collections.Generic;
 

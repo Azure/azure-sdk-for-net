@@ -6,31 +6,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using RouteTable.Definition;
     using RouteTable.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
     using Resource.Fluent;
-    using System.Threading;
 
     /// <summary>
     /// Implementation for RouteTable.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUm91dGVUYWJsZUltcGw=
     internal partial class RouteTableImpl :
-        GroupableParentResource<Microsoft.Azure.Management.Network.Fluent.IRouteTable, 
-            Models.RouteTableInner,
-            Microsoft.Azure.Management.Network.Fluent.RouteTableImpl,
+        GroupableParentResource<IRouteTable,
+            RouteTableInner,
+            RouteTableImpl,
             INetworkManager,
-            RouteTable.Definition.IWithGroup,
-            RouteTable.Definition.IWithCreate,
-            RouteTable.Definition.IWithCreate,
-            RouteTable.Update.IUpdate>,
+            IWithGroup,
+            IWithCreate,
+            IWithCreate,
+            IUpdate>,
         IRouteTable,
         IDefinition,
         IUpdate
     {
         private IRouteTablesOperations innerCollection;
-        private IDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute> routes;
+        private IDictionary<string, IRoute> routes;
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<RouteTableInner> CreateInner()
@@ -41,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:71D5B4DBFB32B4FF553CCD0A78B871EC:16C831421CFC3F51EA84222302D9DFFE
         public RouteTableImpl WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress)
         {
-            return this.DefineRoute(ResourceNamer.RandomResourceName("route_" + this.Name, 20))
+            return DefineRoute(ResourceNamer.RandomResourceName("route_" + Name, 20))
                 .WithDestinationAddressPrefix(destinationAddressPrefix)
                 .WithNextHopToVirtualAppliance(ipAddress)
                 .Attach();
@@ -51,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         protected override void BeforeCreating()
         {
             // Reset and update routes
-            this.Inner.Routes = InnersFromWrappers<RouteInner, IRoute>(this.routes.Values);
+            Inner.Routes = InnersFromWrappers<RouteInner, IRoute>(routes.Values);
         }
 
         ///GENMHASH:3B1D4D2EFBD5C45DE94FCFE767ABF5CA:1D7FCAA2D6FAECB86AD425172AFE9F3B
@@ -67,12 +65,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:D75982055CC5C26B8FFA947E77CA3625
         protected override void InitializeChildrenFromInner()
         {
-            this.routes = new Dictionary<string, IRoute>();
-            if (this.Inner.Routes != null)
+            routes = new Dictionary<string, IRoute>();
+            if (Inner.Routes != null)
             {
                 foreach (var innerRoutes in this.Inner.Routes)
                 {
-                    this.routes.Add(Inner.Name, new RouteImpl(innerRoutes, this));
+                    routes.Add(Inner.Name, new RouteImpl(innerRoutes, this));
                 }
             }
         }
@@ -92,8 +90,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:3C24CB44825C9FD8973A23CA91FB4FD1
         public override IRouteTable Refresh()
         {
-            RouteTableInner inner = this.innerCollection.Get(this.ResourceGroupName, this.Name);
-            this.SetInner(inner);
+            RouteTableInner inner = innerCollection.Get(ResourceGroupName, Name);
+            SetInner(inner);
             InitializeChildrenFromInner();
             return this;
         }
@@ -101,7 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:8200D5EDD19C5D72B80F6841AD9D0FF0:F58B9D6D280E3F1581C12EFC5360F4C9
         public RouteTableImpl WithRoute(string destinationAddressPrefix, RouteNextHopType nextHop)
         {
-            return this.DefineRoute(ResourceNamer.RandomResourceName("route_" + this.Name, 20))
+            return DefineRoute(ResourceNamer.RandomResourceName("route_" + Name, 20))
                 .WithDestinationAddressPrefix(destinationAddressPrefix)
                 .WithNextHop(nextHop)
                 .Attach();
@@ -110,30 +108,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D8AE7CC0DB930E5BDA50AC123948A402:AF91F09FC589F933217F1041582375CB
         internal RouteTableImpl WithRoute(RouteImpl route)
         {
-            if (!this.routes.ContainsKey(route.Name()))
+            if (!routes.ContainsKey(route.Name()))
             {
-                this.routes.Add(route.Name(), route);
+                routes.Add(route.Name(), route);
             }
             return this;
         }
 
         ///GENMHASH:F9626EDD83A5083970F3624D111D5F9A:7C77591C832F84A949CE9BF6525CCF9B
-        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute> Routes()
+        public IReadOnlyDictionary<string, IRoute> Routes()
         {
-            return this.routes as IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.IRoute>;
+            return routes as IReadOnlyDictionary<string, IRoute>;
         }
 
         ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:062BFEFE0393BE2C1D9F8B1A963FDE23
-        public IList<Microsoft.Azure.Management.Network.Fluent.ISubnet> ListAssociatedSubnets()
+        public IList<ISubnet> ListAssociatedSubnets()
         {
-            return this.Manager.ListAssociatedSubnets(this.Inner.Subnets);
+            return this.Manager.ListAssociatedSubnets(Inner.Subnets);
         }
 
         ///GENMHASH:89F59CCCF3B6B14229530994A0DA5942:19D9729552F6E7123B2248B0E7B19823
         public RouteImpl UpdateRoute(string name)
         {
             IRoute value = null;
-            if (this.routes.TryGetValue(name, out value))
+            if (routes.TryGetValue(name, out value))
             {
                 return (RouteImpl)value;
             }
@@ -143,7 +141,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7E8C2CF692FADDB1CA4FDD208175D2BD:DA4ECB14ABD20F728F32A3B6D3951691
         public IUpdate WithoutRoute(string name)
         {
-            this.routes.Remove(name);
+            routes.Remove(name);
             return this;
         }
     }
