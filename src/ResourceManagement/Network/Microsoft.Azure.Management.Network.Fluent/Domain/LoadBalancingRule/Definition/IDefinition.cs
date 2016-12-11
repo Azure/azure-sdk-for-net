@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
+    using Models;
 
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the load distribution.
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
     /// </summary>
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontend<ParentT>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithFrontend<ParentT>, TransportProtocol>
     {
     }
 

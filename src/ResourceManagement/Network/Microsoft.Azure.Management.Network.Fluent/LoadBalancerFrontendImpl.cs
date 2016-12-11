@@ -28,12 +28,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
-        public ISubnet GetSubnet()
-        {
-            return this.Parent.Manager.GetAssociatedSubnet(this.Inner.Subnet);
-        }
-
         ///GENMHASH:1C444C90348D7064AB23705C542DDF18:B05EFD4EA8C3B19D7640327B8EC0927F
         internal string NetworkId()
         {
@@ -211,6 +205,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             string pipId = PublicIpAddressId();
             return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
+        }
+
+        ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
+        public ISubnet GetSubnet()
+        {
+            return this.Parent.Manager.GetAssociatedSubnet(this.Inner.Subnet);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()

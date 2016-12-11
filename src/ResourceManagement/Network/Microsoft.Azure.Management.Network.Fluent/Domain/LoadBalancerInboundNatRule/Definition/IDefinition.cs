@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.D
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition;
+    using Models;
 
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify the idle connection timeout for this inbound NAT rule.
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.D
     /// </summary>
     /// <typeparam name="Parent">The parent load balancer type.</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule>, TransportProtocol>
     {
     }
 

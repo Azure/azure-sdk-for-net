@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Models;
 
     /// <summary>
     /// The stage of a load balancer definition allowing to create a load balancing rule.
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// <param name="protocol">The protocol to load balance.</param>
         /// <param name="backendPort">The port number on the back end to send load balanced traffic to.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate WithLoadBalancingRule(int frontendPort, string protocol, int backendPort);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort);
 
         /// <summary>
         /// Creates a load balancing rule for the specified port and protocol and default frontend and backend associations.
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// <param name="port">The port number on the front and back end for the network traffic to be load balanced on.</param>
         /// <param name="protocol">The protocol to load balance.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate WithLoadBalancingRule(int port, string protocol);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate WithLoadBalancingRule(int port, TransportProtocol protocol);
     }
 
     /// <summary>

@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     using Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Models;
 
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify whether floating IP should be enabled.
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// </summary>
     /// <typeparam name="Parent">The parent load balancer type.</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>, TransportProtocol>
     {
     }
 }
