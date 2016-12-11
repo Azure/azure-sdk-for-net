@@ -83,6 +83,16 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "..\src\ResourceManagement\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent\Microsoft.Azure.Management.TrafficManager.Fluent.xproj", "{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Cdn.Fluent", "..\src\ResourceManagement\Cdn\Microsoft.Azure.Management.Cdn.Fluent\Microsoft.Azure.Management.Cdn.Fluent.xproj", "{2DC40302-9436-4B65-BCEB-053D9FA936B5}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Redis.Fluent", "..\src\ResourceManagement\RedisCache\Microsoft.Azure.Management.Redis.Fluent\Microsoft.Azure.Management.Redis.Fluent.xproj", "{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Sql.Fluent", "..\src\ResourceManagement\Sql\Microsoft.Azure.Management.Sql.Fluent\Microsoft.Azure.Management.Sql.Fluent.xproj", "{ECB29486-D22F-46B3-BC85-C49CDE693192}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageRedis", "ResourceManagement\RedisCache\ManageRedis\ManageRedis.xproj", "{29DA48F8-08E0-46CE-A0E6-CF590844B30F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RedisCache", "RedisCache", "{38EFDB7C-8E1B-4451-82CD-C1D908EB2BA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +231,22 @@ Global
 		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -256,5 +282,11 @@ Global
 		{A205D895-75AB-44BE-B8FF-707F8ECA775A} = {CC32CE3E-95AA-44D1-AF4E-F8B3AA94D7F8}
 		{561486AD-D35D-4BF2-92CC-0331DD27E99E} = {CC32CE3E-95AA-44D1-AF4E-F8B3AA94D7F8}
 		{82F30B1B-0082-47C9-A9CE-3DCC96052CF1} = {00F1E10B-6DDF-4B0C-A112-05A01C0AB50B}
+		{85B92B95-242F-48A2-899A-1AC42B325396} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
+		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
+		{2DC40302-9436-4B65-BCEB-053D9FA936B5} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
+		{ECB29486-D22F-46B3-BC85-C49CDE693192} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F} = {38EFDB7C-8E1B-4451-82CD-C1D908EB2BA7}
 	EndGlobalSection
 EndGlobal

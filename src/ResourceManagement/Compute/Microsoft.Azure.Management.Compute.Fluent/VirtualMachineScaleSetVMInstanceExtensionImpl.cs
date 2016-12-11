@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Collections.Generic;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Implementation of VirtualMachineScaleSetVMInstanceExtension.
@@ -49,9 +50,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:316D51C271754F67D70A4782C8F17E3A:9790D012FA64E47343F12DB13F0AA212
         public string PublicSettingsAsJsonString()
         {
-            //$ return null;
-
-            return null;
+            if (this.publicSettings == null)
+            {
+                return null;
+            }
+            return JsonConvert.SerializeObject(this.publicSettings);
         }
 
         ///GENMHASH:0016636B1947D033B76D88F9E31C3165:815BF11DE6127502A0AFCB14BE98F20E
