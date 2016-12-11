@@ -417,7 +417,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0F667C94F2289EF36EC5F8C809B0D66D:306E4286FAAC968E4A4EDC3FC553DD22
-        protected ApplicationGatewayFrontendImpl EnsureDefaultPrivateFrontend()
+        internal ApplicationGatewayFrontendImpl EnsureDefaultPrivateFrontend()
         {
             //$ ApplicationGatewayFrontendImpl frontend = (ApplicationGatewayFrontendImpl) defaultPrivateFrontend();
             //$ if (frontend != null) {
@@ -542,7 +542,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:DA0903CF2B09DA8DCF45A148EE669133:309987F9DF4AFE44584BBBA0780FD4DD
-        protected ApplicationGatewayFrontendImpl EnsureDefaultPublicFrontend()
+        internal ApplicationGatewayFrontendImpl EnsureDefaultPublicFrontend()
         {
             //$ ApplicationGatewayFrontendImpl frontend = (ApplicationGatewayFrontendImpl) defaultPublicFrontend();
             //$ if (frontend != null) {
