@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 foreach (var pipFrontendAssociation in creatablePIPKeys)
                 {
-                    IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
+                    IPublicIpAddress pip = (IPublicIpAddress)CreatedResource(pipFrontendAssociation.Key);
                     if (pip != null)
                     {
                         WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
