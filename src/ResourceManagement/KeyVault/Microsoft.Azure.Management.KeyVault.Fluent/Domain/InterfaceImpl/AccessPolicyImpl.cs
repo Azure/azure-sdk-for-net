@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     internal partial class AccessPolicyImpl 
     {
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.Resource.Fluent.Core.IChildResource<IVault>.Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {

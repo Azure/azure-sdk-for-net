@@ -1356,7 +1356,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             string loadBalancerId = loadBalancer.Id;
             IDictionary<string, ILoadBalancerBackend> attachedBackends = new Dictionary<string, ILoadBalancerBackend>();
-            IDictionary<string, ILoadBalancerBackend> lbBackends = loadBalancer.Backends;
+            var lbBackends = loadBalancer.Backends;
             foreach (ILoadBalancerBackend lbBackend in lbBackends.Values)
             {
                 string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
@@ -1376,7 +1376,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             String loadBalancerId = loadBalancer.Id;
             IDictionary<string, ILoadBalancerInboundNatPool> attachedInboundNatPools = new Dictionary<string, ILoadBalancerInboundNatPool>();
-            IDictionary<string, ILoadBalancerInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools;
+            var lbInboundNatPools = loadBalancer.InboundNatPools;
             foreach (ILoadBalancerInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
                 String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
@@ -1396,7 +1396,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             var backends = loadBalancer.Backends.Values;
 
-            string[] backendNames = new string[backends.Count];
+            string[] backendNames = new string[backends.Count()];
             int i = 0;
             foreach (ILoadBalancerBackend backend in backends)
             {
@@ -1409,7 +1409,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     backendNames);
 
             var inboundNatPools = loadBalancer.InboundNatPools.Values;
-            string[] natPoolNames = new string[inboundNatPools.Count];
+            string[] natPoolNames = new string[inboundNatPools.Count()];
             i = 0;
             foreach (ILoadBalancerInboundNatPool inboundNatPool in inboundNatPools)
             {
