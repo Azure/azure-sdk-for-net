@@ -1,69 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
     /// <summary>
     /// Defines values for IPAllocationMethod.
     /// </summary>
-    public class IPAllocationMethod
+    public class IPAllocationMethod : ExpandableStringEnum<IPAllocationMethod>
     {
-    public static readonly IPAllocationMethod STATIC = new IPAllocationMethod("Static");
-    public static readonly IPAllocationMethod DYNAMIC = new IPAllocationMethod("Dynamic");
-
-    private string value;
-
-    public override int GetHashCode()
-    {
-        return this.value.GetHashCode();
+        public static readonly IPAllocationMethod Static = new IPAllocationMethod() { Value = "Static" };
+        public static readonly IPAllocationMethod Dynamic = new IPAllocationMethod() { Value = "Dynamic" };
     }
-
-    public static bool operator ==(IPAllocationMethod lhs, IPAllocationMethod rhs)
-    {
-        if (object.ReferenceEquals(lhs, null))
-        {
-            return object.ReferenceEquals(rhs, null);
-        }
-        return lhs.Equals(rhs);
-    }
-
-    public static bool operator !=(IPAllocationMethod lhs, IPAllocationMethod rhs)
-    {
-        return !(lhs == rhs);
-    }
-
-    public override bool Equals(object obj)
-    {
-        string value = this.ToString();
-        if (!(obj is IPAllocationMethod))
-        {
-            return false;
-        }
-
-        if (object.ReferenceEquals(obj, this))
-        {
-            return true;
-        }
-            IPAllocationMethod rhs = (IPAllocationMethod)obj;
-        if (value == null)
-        {
-            return rhs.value == null;
-        }
-        return value.Equals(rhs.value);
-    }
-
-    public override string ToString()
-    {
-        return this.value;
-    }
-
-    /// <summary>
-    /// Creates IPVersion.
-    /// </summary>
-    /// <param name="value">The value.</param>
-    public IPAllocationMethod(string value)
-    {
-        this.value = value;
-    }
-}
 }

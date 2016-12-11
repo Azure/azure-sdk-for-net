@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0268D4A22C553236F2D086625BC961C0:99F3B859668CAC9A1F4A84E29AE2E9C5
         internal PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
         {
-            this.Inner.IdleTimeoutInMinutes = minutes;
+            Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
@@ -47,28 +47,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal PublicIpAddressImpl WithStaticIp()
         {
 
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.STATIC.ToString();
+            Inner.PublicIPAllocationMethod = IPAllocationMethod.Static.ToString();
             return this;
         }
 
         ///GENMHASH:8E7AD9E07B7DB377EA99B37CAD1C93C0:6F94222AD7A6FAA5BDB1F4A8C2336D54
         internal PublicIpAddressImpl WithDynamicIp()
         {
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.DYNAMIC.ToString();
+            Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
             return this;
         }
 
         ///GENMHASH:4FD71958F542A872CEE597B1CEA332F8:AB2BC7CCCA80EFA2219ABEAE56789805
         internal PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
         {
-            this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
+            Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
         }
 
         ///GENMHASH:D0C9704935325DA53D3E18EA383CD798:3A3B2F00929ADB2E5CB95C1ABC9DB961
         internal PublicIpAddressImpl WithoutLeafDomainLabel()
         {
-            return this.WithLeafDomainLabel(null);
+            return WithLeafDomainLabel(null);
         }
 
         ///GENMHASH:0A9A497E14DD1A2758E52AC9D42D71E4:D54DE8ED5EB6D0455BCE0CD34D01FF08
