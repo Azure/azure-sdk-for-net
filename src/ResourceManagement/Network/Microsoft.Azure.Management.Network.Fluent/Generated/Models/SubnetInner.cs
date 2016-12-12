@@ -44,14 +44,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
             : base(id)
         {
             AddressPrefix = addressPrefix;
-            NetworkSecurityGroup = new SubResource
+            if (networkSecurityGroup != null)
             {
-                Id = networkSecurityGroup.Id
-            };
-            RouteTable = new SubResource
+                NetworkSecurityGroup = new SubResource
+                {
+                    Id = networkSecurityGroup.Id
+                };
+            }
+
+            if (routeTable != null)
             {
-                Id = routeTable.Id
-            };
+                RouteTable = new SubResource
+                {
+                    Id = routeTable.Id
+                };
+            }
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             Name = name;

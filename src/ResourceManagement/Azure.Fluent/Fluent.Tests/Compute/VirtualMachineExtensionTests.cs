@@ -92,7 +92,7 @@ namespace Fluent.Tests.Compute
                         .WithPublisher("Microsoft.OSTCExtensions")
                         .WithType("CustomScriptForLinux")
                         .WithVersion("1.4")
-                        .WithAutoUpgradeMinorVersionEnabled()
+                        .WithMinorVersionAutoUpgrade()
                         .WithPublicSetting("fileUris", fileUris)
                         .WithPublicSetting("commandToExecute", installCommand)
                     .Attach()
