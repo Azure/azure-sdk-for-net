@@ -11,8 +11,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
     using System;
+    using System.Linq;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.Resource.Update;
+    using System.Text.RegularExpressions;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// The implementation for WebAppBase.
@@ -46,7 +49,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         WebAppBase.Definition.IWithWebContainer<FluentT>,
         WebAppBase.Update.IWithWebContainer<FluentT>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
-        where FluentT : class,IWebAppBase
+        where FluentT : class, IWebAppBase
         where DefAfterRegionT : class
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
@@ -77,43 +80,34 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:400B39C84CFE07A8B031B773061CF1BB:54F16B494685A43639288CB0A223084F
         public FluentImplT WithAppSettingStickiness(string key, bool sticky)
         {
-            //$ public FluentImplT withAppSettingStickiness(String key, boolean sticky) {
-            //$ appSettingStickiness.Put(key, sticky);
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            appSettingStickiness[key] = sticky;
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:2EFCE799E63D7CDD5EDE55B1622770C9:936A41F3229D51DDB490CC6CCD933986
         public string RepositorySiteName()
         {
-            //$ return Inner.RepositorySiteName();
-
-            return null;
+            return Inner.RepositorySiteName;
         }
 
         ///GENMHASH:5347BC9AA33E4B7344CEB8188EA1DAA3:B3A0F7D2A1C11139E3140FF2DC919CEB
         public FluentImplT WithoutPython()
         {
-            //$ return withPythonVersion(new PythonVersion(""));
-
-            return default(FluentImplT);
+            return WithPythonVersion(new PythonVersion(""));
         }
 
         ///GENMHASH:B67E95BCEA89D1B6CBB6849249A60D4F:3A1F8EE2D47ED51D598D727D3C3FAA86
         public FluentImplT WithThirdPartyHostnameBinding(string domain, params string[] hostnames)
         {
-            //$ public FluentImplT withThirdPartyHostnameBinding(String domain, String... hostnames) {
-            //$ foreach(var hostname in hostnames)  {
-            //$ defineHostnameBinding()
-            //$ .WithThirdPartyDomain(domain)
-            //$ .WithSubDomain(hostname)
-            //$ .WithDnsRecordType(CustomHostNameDnsRecordType.CNAME)
-            //$ .Attach();
-            //$ }
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            foreach(var hostname in hostnames)
+            {
+                DefineHostnameBinding()
+                    .WithThirdPartyDomain(domain)
+                    .WithSubDomain(hostname)
+                    .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
+                    .Attach();
+            }
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:620993DCE6DF78140D8125DD97478452:27E486AB74A10242FF421C0798DDC450
@@ -122,53 +116,56 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:879627C2DAE69433191E7E3A0197FFCB:97444012B93FEF52369A6C980B714A5A
         private FluentT NormalizeProperties()
         {
-            //$ this.hostNameBindingsToCreate = new HashMap<>();
-            //$ this.hostNameBindingsToDelete = new ArrayList<>();
-            //$ this.appSettingsToAdd = new HashMap<>();
-            //$ this.appSettingsToRemove = new ArrayList<>();
-            //$ this.appSettingStickiness = new HashMap<>();
-            //$ this.connectionStringsToAdd = new HashMap<>();
-            //$ this.connectionStringsToRemove = new ArrayList<>();
-            //$ this.connectionStringStickiness = new HashMap<>();
-            //$ this.sourceControl = null;
-            //$ this.sourceControlToDelete = false;
-            //$ this.sslBindingsToCreate = new HashMap<>();
-            //$ if (Inner.HostNames() != null) {
-            //$ this.hostNamesSet = Sets.NewHashSet(Inner.HostNames());
-            //$ }
-            //$ if (Inner.EnabledHostNames() != null) {
-            //$ this.enabledHostNamesSet = Sets.NewHashSet(Inner.EnabledHostNames());
-            //$ }
-            //$ if (Inner.TrafficManagerHostNames() != null) {
-            //$ this.trafficManagerHostNamesSet = Sets.NewHashSet(Inner.TrafficManagerHostNames());
-            //$ }
-            //$ if (Inner.OutboundIpAddresses() != null) {
-            //$ this.outboundIpAddressesSet = Sets.NewHashSet(Inner.OutboundIpAddresses().Split(",[ ]*"));
-            //$ }
-            //$ this.hostNameSslStateMap = new HashMap<>();
-            //$ if (Inner.HostNameSslStates() != null) {
-            //$ foreach(var hostNameSslState in Inner.HostNameSslStates())  {
-            //$ // Server returns null sometimes, invalid on update, so we set default
-            //$ if (hostNameSslState.SslState() == null) {
-            //$ hostNameSslState.WithSslState(SslState.DISABLED);
-            //$ }
-            //$ hostNameSslStateMap.Put(hostNameSslState.Name(), hostNameSslState);
-            //$ }
-            //$ }
-            //$ return (FluentT) this;
-
-            return default(FluentT);
+            this.hostNameBindingsToCreate = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.HostNameBindingImpl<FluentT, FluentImplT>>();
+            this.hostNameBindingsToDelete = new List<string>();
+            this.appSettingsToAdd = new Dictionary<string, string>();
+            this.appSettingsToRemove = new List<string>();
+            this.appSettingStickiness = new Dictionary<string, bool>();
+            this.connectionStringsToAdd = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.ConnStringValueTypePair>();
+            this.connectionStringsToRemove = new List<string>();
+            this.connectionStringStickiness = new Dictionary<string, bool>();
+            this.sourceControl = null;
+            this.sourceControlToDelete = false;
+            this.sslBindingsToCreate = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.HostNameSslBindingImpl<FluentT, FluentImplT>>();
+            if (Inner.HostNames != null)
+            {
+                this.hostNamesSet = new HashSet<string>(Inner.HostNames);
+            }
+            if (Inner.EnabledHostNames != null)
+            {
+                this.enabledHostNamesSet = new HashSet<string>(Inner.EnabledHostNames);
+            }
+            if (Inner.TrafficManagerHostNames != null)
+            {
+                this.trafficManagerHostNamesSet = new HashSet<string>(Inner.TrafficManagerHostNames);
+            }
+            if (Inner.OutboundIpAddresses != null)
+            {
+                this.outboundIpAddressesSet = new HashSet<string>(Regex.Split(Inner.OutboundIpAddresses, ",[ ]*"));
+            }
+            this.hostNameSslStateMap = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>();
+            if (Inner.HostNameSslStates != null) {
+                foreach(var hostNameSslState in Inner.HostNameSslStates)
+                {
+                    // Server returns null sometimes, invalid on update, so we set default
+                    if (hostNameSslState.SslState == null)
+                    {
+                        hostNameSslState.SslState = SslState.Disabled;
+                    }
+                    hostNameSslStateMap[hostNameSslState.Name] = hostNameSslState;
+                }
+            }
+            return this as FluentT;
         }
 
         ///GENMHASH:5091CF7FBD481F6A80C8200D77B918B5:86CEE108C820B076B77DA76828966EDD
         public string JavaContainerVersion()
         {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ return null;
-            //$ }
-            //$ return Inner.SiteConfig().JavaContainerVersion();
-
-            return null;
+            if (Inner.SiteConfig == null)
+            {
+                return null;
+            }
+            return Inner.SiteConfig.JavaContainerVersion;
         }
 
         ///GENMHASH:807E62B6346803DB90804D0DEBD2FCA6:27E486AB74A10242FF421C0798DDC450
@@ -177,128 +174,128 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:B06FC38A7913CA2F028C97DE025DEED3:0F7ECBEDACE05420A5D0D277D4704257
         public FluentImplT WithStickyConnectionString(string name, string value, ConnectionStringType type)
         {
-            //$ public FluentImplT withStickyConnectionString(String name, String value, ConnectionStringType type) {
-            //$ connectionStringsToAdd.Put(name, new ConnStringValueTypePair().WithValue(value).WithType(type));
-            //$ connectionStringStickiness.Put(name, true);
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            connectionStringsToAdd[name] = new ConnStringValueTypePair()
+            {
+                Value = value,
+                Type = type
+            };
+            connectionStringStickiness[name] = true;
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:0BD0140B6FBB6AA6B83FE90F95878549:855FB47B5269DBB806FE536172AD4F91
         public PythonVersion PythonVersion()
         {
-            //$ if (Inner.SiteConfig() == null || Inner.SiteConfig().PythonVersion() == null) {
-            //$ return PythonVersion.OFF;
-            //$ }
-            //$ return new PythonVersion(Inner.SiteConfig().PythonVersion());
-
-            return null;
+            if (Inner.SiteConfig == null || Inner.SiteConfig.PythonVersion == null)
+            {
+                return Microsoft.Azure.Management.AppService.Fluent.PythonVersion.Off;
+            }
+            return new PythonVersion(Inner.SiteConfig.PythonVersion);
         }
 
         ///GENMHASH:C03B1FAF31FB94362C083BAA7332E4A4:516E9ADDDB1B086B94A185F8CA729E6B
         public FluentImplT WithoutJava()
         {
-            //$ return withJavaVersion(new JavaVersion("")).WithWebContainer(null);
-
-            return default(FluentImplT);
+            return WithJavaVersion(new JavaVersion("")).WithWebContainer(null);
         }
 
         ///GENMHASH:3A0791A760CE20BB60B662E45E1B5A20:AC8556A885DA9E1351FB1A6C074AA07E
         public FluentImplT WithPythonVersion(PythonVersion version)
         {
-            //$ public FluentImplT withPythonVersion(PythonVersion version) {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ Inner.WithSiteConfig(new SiteConfigInner());
-            //$ }
-            //$ Inner.SiteConfig().WithPythonVersion(version.ToString());
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            if (Inner.SiteConfig == null)
+            {
+                Inner.SiteConfig = new SiteConfigInner();
+            }
+            Inner.SiteConfig.PythonVersion = version.ToString();
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:E45783E7B404EC0F4EBC4EE6BA7EF55A:5ECDDE741F87F4634B0FDC94904B2771
         public FluentImplT WithManagedPipelineMode(ManagedPipelineMode managedPipelineMode)
         {
-            //$ public FluentImplT withManagedPipelineMode(ManagedPipelineMode managedPipelineMode) {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ Inner.WithSiteConfig(new SiteConfigInner());
-            //$ }
-            //$ Inner.SiteConfig().WithManagedPipelineMode(managedPipelineMode);
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            if (Inner.SiteConfig == null)
+            {
+                Inner.SiteConfig = new SiteConfigInner();
+            }
+            Inner.SiteConfig.ManagedPipelineMode = managedPipelineMode;
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:75636395FBDB9C1FA7F5231207B98D55
         public override FluentT Refresh()
         {
-            //$ SiteInner inner = getInner().ToBlocking().Single();
-            //$ inner.WithSiteConfig(getConfigInner().ToBlocking().Single());
-            //$ setInner(inner);
-            //$ return this.CacheAppSettingsAndConnectionStrings().ToBlocking().Single();
-
-            return default(FluentT);
+            SiteInner inner = GetInnerAsync().GetAwaiter().GetResult();
+            inner.SiteConfig = GetConfigInnerAsync().GetAwaiter().GetResult();
+            SetInner(inner);
+            CacheAppSettingsAndConnectionStringsAsync().GetAwaiter().GetResult();
+            return this as FluentT;
         }
 
         ///GENMHASH:10422D744EF1F162EBE8C9A9FA95C4F1:730A847F06F615063704F0C5FFF2B639
         public ISet<string> OutboundIpAddresses()
         {
-            //$ return Collections.UnmodifiableSet(outboundIpAddressesSet);
-
-            return null;
+            return outboundIpAddressesSet;
         }
 
         ///GENMHASH:4380B7AB34BB7338E16329242A2DB73A:399A7EDDE163BD102BD7A221C0EF6472
         public bool WebSocketsEnabled()
         {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ return false;
-            //$ }
-            //$ return Utils.ToPrimitiveBoolean(Inner.SiteConfig().WebSocketsEnabled());
-
-            return false;
+            if (Inner.SiteConfig == null || Inner.SiteConfig.WebSocketsEnabled == null)
+            {
+                return false;
+            }
+            return (bool) Inner.SiteConfig.WebSocketsEnabled;
         }
 
         ///GENMHASH:994878BE86A846414AFCBD6D6A774106:76D5065C8B4CBF008709864E3A6AFAA4
         public int ContainerSize()
         {
-            //$ return Inner.ContainerSize();
-
-            return 0;
+            if (Inner.ContainerSize == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return (int) Inner.ContainerSize;
+            }
         }
 
         ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:D99F39EFAEA0FEA27CFADE7E7F5F87A9
         public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ FluentT self = (FluentT) this;
-            //$ return Observable.Zip(listAppSettings(), listConnectionStrings(), listSlotConfigurations(), new Func3<StringDictionaryInner, ConnectionStringDictionaryInner, SlotConfigNamesResourceInner, FluentT>() {
-            //$ @Override
-            //$ public FluentT call( StringDictionaryInner appSettingsInner,  ConnectionStringDictionaryInner connectionStringsInner,  SlotConfigNamesResourceInner slotConfigs) {
-            //$ cachedAppSettings = new HashMap<>();
-            //$ cachedConnectionStrings = new HashMap<>();
-            //$ if (appSettingsInner != null && appSettingsInner.Properties() != null) {
-            //$ cachedAppSettings = Maps.AsMap(appSettingsInner.Properties().KeySet(), new Function<String, AppSetting>() {
-            //$ @Override
-            //$ public AppSetting apply(String input) {
-            //$ return new AppSettingImpl(input, appSettingsInner.Properties().Get(input),
-            //$ slotConfigs.AppSettingNames() != null && slotConfigs.AppSettingNames().Contains(input));
-            //$ }
-            //$ });
-            //$ }
-            //$ if (connectionStringsInner != null && connectionStringsInner.Properties() != null) {
-            //$ cachedConnectionStrings = Maps.AsMap(connectionStringsInner.Properties().KeySet(), new Function<String, ConnectionString>() {
-            //$ @Override
-            //$ public ConnectionString apply(String input) {
-            //$ return new ConnectionStringImpl(input, connectionStringsInner.Properties().Get(input), slotConfigs.ConnectionStringNames().Contains(input));
-            //$ }
-            //$ });
-            //$ }
-            //$ return self;
-            //$ }
-            //$ });
+            Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync();
+            Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync();
+            Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync();
 
-            return;
+            await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask);
+
+            StringDictionaryInner appSettings = appSettingsTask.Result;
+            ConnectionStringDictionaryInner connectionStrings = connectionStringsTask.Result;
+            SlotConfigNamesResourceInner slotConfigs = slotConfigsTask.Result;
+
+            if (appSettings == null || appSettings.Properties == null)
+            {
+                cachedAppSettings = new Dictionary<string, IAppSetting>();
+            }
+            else
+            {
+                cachedAppSettings = appSettings.Properties
+                    .Select(p => (IAppSetting)new AppSettingImpl(p.Key, p.Value,
+                        slotConfigs.AppSettingNames != null && slotConfigs.AppSettingNames.Contains(p.Key)))
+                    .ToDictionary(s => s.Key);
+            }
+
+            if (connectionStrings == null || connectionStrings.Properties == null)
+            {
+                cachedConnectionStrings = new Dictionary<string, IConnectionString>();
+            }
+            else
+            {
+                cachedConnectionStrings = connectionStrings.Properties
+                    .Select(p => (IConnectionString)new ConnectionStringImpl(p.Key, p.Value,
+                        slotConfigs.ConnectionStringNames != null && slotConfigs.ConnectionStringNames.Contains(p.Key)))
+                    .ToDictionary(s => s.Name);
+            }
         }
 
         ///GENMHASH:21FDAEDB996672BE017C01C5DD8758D4:27E486AB74A10242FF421C0798DDC450
@@ -307,82 +304,69 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:5C64261945401D044556FE57A81F8919:9E936C439A1F037DD069CDD0064C2AC0
         public HostNameBindingImpl<FluentT,FluentImplT> DefineHostnameBinding()
         {
-            //$ public HostNameBindingImpl<FluentT, FluentImplT> defineHostnameBinding() {
-            //$ HostNameBindingInner inner = new HostNameBindingInner();
-            //$ inner.WithSiteName(name());
-            //$ inner.WithLocation(regionName());
-            //$ inner.WithAzureResourceType(AzureResourceType.WEBSITE);
-            //$ inner.WithAzureResourceName(name());
-            //$ inner.WithHostNameType(HostNameType.VERIFIED);
-            //$ return new HostNameBindingImpl<>(inner, (FluentImplT) this, client);
-
-            return null;
+            HostNameBindingInner inner = new HostNameBindingInner()
+            {
+                SiteName = Name,
+                Location = RegionName,
+                AzureResourceType = AzureResourceType.Website,
+                AzureResourceName = Name,
+                HostNameType = HostNameType.Verified
+            };
+            return new HostNameBindingImpl<FluentT, FluentImplT>(inner, (FluentImplT) this, client);
         }
 
         ///GENMHASH:C41BC129D11DD290512802D4F95ED197:C6674CAD927602613E222F438F228B47
         public FluentImplT WithDefaultDocument(string document)
         {
-            //$ public FluentImplT withDefaultDocument(String document) {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ Inner.WithSiteConfig(new SiteConfigInner());
-            //$ }
-            //$ if (Inner.SiteConfig().DefaultDocuments() == null) {
-            //$ Inner.SiteConfig().WithDefaultDocuments(new ArrayList<String>());
-            //$ }
-            //$ Inner.SiteConfig().DefaultDocuments().Add(document);
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            if (Inner.SiteConfig == null)
+            {
+                Inner.SiteConfig = new SiteConfigInner();
+            }
+            if (Inner.SiteConfig.DefaultDocuments == null)
+            {
+                Inner.SiteConfig.DefaultDocuments = new List<string>();
+            }
+            Inner.SiteConfig.DefaultDocuments.Add(document);
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:75EA0E50B45903417B864DA9C5D01D1C:9919B071041D059D4D8D308E1FB5E20E
         public FluentImplT WithConnectionStringStickiness(string name, bool stickiness)
         {
-            //$ public FluentImplT withConnectionStringStickiness(String name, boolean stickiness) {
-            //$ connectionStringStickiness.Put(name, stickiness);
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            connectionStringStickiness[name] = stickiness;
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:AC61A00CBD2F6D3CC13EFDD2D085B45C:195DCAB08F9ED1B9468C652A0D922DB9
         public ISet<string> EnabledHostNames()
         {
-            //$ if (enabledHostNamesSet == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableSet(enabledHostNamesSet);
-
-            return null;
+            return enabledHostNamesSet;
         }
 
         ///GENMHASH:28D9C85008A5FA42084A6F7E18E27138:AD25C9D393389A67F8973FC859A1C1D2
         public FluentImplT WithRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion)
         {
-            //$ public FluentImplT withRemoteDebuggingEnabled(RemoteVisualStudioVersion remoteVisualStudioVersion) {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ Inner.WithSiteConfig(new SiteConfigInner());
-            //$ }
-            //$ Inner.SiteConfig().WithRemoteDebuggingEnabled(true);
-            //$ Inner.SiteConfig().WithRemoteDebuggingVersion(remoteVisualStudioVersion.ToString());
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            if (Inner.SiteConfig == null)
+            {
+                Inner.SiteConfig = new SiteConfigInner();
+            }
+            Inner.SiteConfig.RemoteDebuggingEnabled = true;
+            Inner.SiteConfig.RemoteDebuggingVersion = remoteVisualStudioVersion.ToString();
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:7889230A4E9E7272A9D70286DB690D8E:53F488EBDEDD2F8F38BF84028D4A7680
         public FluentImplT WithoutDefaultDocument(string document)
         {
-            //$ public FluentImplT withoutDefaultDocument(String document) {
-            //$ if (Inner.SiteConfig() == null) {
-            //$ Inner.WithSiteConfig(new SiteConfigInner());
-            //$ }
-            //$ if (Inner.SiteConfig().DefaultDocuments() != null) {
-            //$ Inner.SiteConfig().DefaultDocuments().Remove(document);
-            //$ }
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            if (Inner.SiteConfig == null)
+            {
+                Inner.SiteConfig = new SiteConfigInner();
+            }
+            if (Inner.SiteConfig.DefaultDocuments == null)
+            {
+                Inner.SiteConfig.DefaultDocuments.Remove(document);
+            }
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:1BA412F5F81148A7D5CE917E46EAF27A:22A28B1AE554D533D9E4E3634397A615

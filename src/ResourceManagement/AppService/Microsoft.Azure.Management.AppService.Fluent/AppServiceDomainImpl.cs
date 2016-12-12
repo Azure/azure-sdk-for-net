@@ -79,7 +79,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var agreements = await topLevelDomainsInner.ListAgreementsAsync(topLevel);
             var agreementKeys = agreements.Select(x => x.AgreementKey).ToList();
             // Step 2: Create domain
-            var hostIpAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
+            var hostIpAddress = (await Dns.GetHostEntryAsync(Dns.GetHostName()))
+                .AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
 
             Inner.Consent = new DomainPurchaseConsent()
             {
