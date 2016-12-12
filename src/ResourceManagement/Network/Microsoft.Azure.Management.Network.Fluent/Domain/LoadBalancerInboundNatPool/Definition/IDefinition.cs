@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     using Microsoft.Azure.Management.Network.Fluent.HasFrontend.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Models;
 
     /// <summary>
     /// The stage of an inbound NAT pool definition allowing to specify the backend port.
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// </summary>
     /// <typeparam name="Parent">The parent load balancer type.</typeparam>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool>, TransportProtocol>
     {
     }
 

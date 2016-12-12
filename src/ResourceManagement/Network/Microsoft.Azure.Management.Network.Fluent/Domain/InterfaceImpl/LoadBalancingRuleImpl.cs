@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancingRule.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancingRule.Update.IUpdate,string>.WithProtocol(string protocol)
+        LoadBalancingRule.Update.IUpdate HasProtocol.Update.IWithProtocol<LoadBalancingRule.Update.IUpdate, TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancingRule.Update.IUpdate;
         }
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasProtocol.Definition.IWithProtocol<LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,string>.WithProtocol(string protocol)
+        LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> HasProtocol.Definition.IWithProtocol<LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>, TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancingRule.Definition.IWithFrontend<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="protocol">A transport protocol.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>,string>.WithProtocol(string protocol)
+        LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate> HasProtocol.UpdateDefinition.IWithProtocol<LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>, TransportProtocol>.WithProtocol(TransportProtocol protocol)
         {
             return this.WithProtocol(protocol) as LoadBalancingRule.UpdateDefinition.IWithFrontend<LoadBalancer.Update.IUpdate>;
         }
