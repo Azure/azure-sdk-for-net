@@ -3,9 +3,9 @@
 
 namespace Microsoft.Azure.Management.Fluent.Network
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Management.Network.Fluent;
+    using Management.Network.Fluent.Models;
+    using Resource.Fluent.Core;
 
     internal class NetworkUsageImpl : Wrapper<Usage>, INetworkUsage
     {

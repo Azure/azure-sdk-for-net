@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Fluent.Network
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Management.Network.Fluent;
+    using Management.Network.Fluent.Models;
+    using Resource.Fluent.Core;
 
     internal class NetworkUsagesImpl : ReadableWrappers<INetworkUsage, NetworkUsageImpl, Usage>, INetworkUsages
     {
@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
 
         public PagedList<INetworkUsage> ListByRegion(string regionName)
         {
-            var pagedList = new PagedList<Usage>(this.client.Usages.List(regionName), (string nextPageLink) =>
+            var pagedList = new PagedList<Usage>(client.Usages.List(regionName), (string nextPageLink) =>
             {
-                return this.client.Usages.ListNext(nextPageLink);
+                return client.Usages.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
         }

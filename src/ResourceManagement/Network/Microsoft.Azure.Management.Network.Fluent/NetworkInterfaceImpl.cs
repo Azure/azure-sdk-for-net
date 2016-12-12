@@ -7,13 +7,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
 
     using NetworkInterface.Update;
-    using Management.Network.Fluent.Models;
+    using Models;
     using NetworkInterface.Definition;
     using System.Collections.Generic;
     using Resource.Fluent.Core.ResourceActions;
     using Resource.Fluent;
     using Resource.Fluent.Core;
-    using Management.Network;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -48,9 +47,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkInterfacesOperations client,
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-            this.innerCollection = client;
-            this.nicName = name;
-            this.namer = new ResourceNamer(this.nicName);
+            innerCollection = client;
+            nicName = name;
+            namer = new ResourceNamer(nicName);
             InitializeChildrenFromInner();
         }
 
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:BCF4C230F6F0AA0BE6D9C038631B4B67
         public override INetworkInterface Refresh()
         {
-            var response = this.innerCollection.Get(ResourceGroupName, nicName);
+            var response = innerCollection.Get(ResourceGroupName, nicName);
             SetInner(response);
             return this;
         }
@@ -152,38 +151,38 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D0AB91F51DBDFA04880ED371AD9E48EE:42B9E6B3BAA44EA33B4EAF5ED78B85FA
         internal NetworkInterfaceImpl WithoutPrimaryPublicIpAddress()
         {
-            this.PrimaryIpConfiguration().WithoutPublicIpAddress();
+            PrimaryIpConfiguration().WithoutPublicIpAddress();
             return this;
         }
 
         ///GENMHASH:2B7C2F1E86A359473717299AD4D4DCBA:F737496F62EBDB341B8A5449D37F2184
         internal NetworkInterfaceImpl WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
         {
-            this.PrimaryIpConfiguration().WithExistingPublicIpAddress(publicIpAddress);
+            PrimaryIpConfiguration().WithExistingPublicIpAddress(publicIpAddress);
             return this;
         }
 
         ///GENMHASH:022FCEBED3C6606D834C45EAD65C0D6F:AB5111B32426DE6983DC4B6CA0F1EBD7
         internal NetworkInterfaceImpl WithPrimaryPrivateIpAddressDynamic()
         {
-            this.PrimaryIpConfiguration().WithPrivateIpAddressDynamic();
+            PrimaryIpConfiguration().WithPrivateIpAddressDynamic();
             return this;
         }
 
         ///GENMHASH:655D6F837286729FEB47BD78B3EB9A08:282F12C5EC57C36AEED5D73EE80CCA21
         internal NetworkInterfaceImpl WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
-            this.PrimaryIpConfiguration().WithPrivateIpAddressStatic(staticPrivateIpAddress);
+            PrimaryIpConfiguration().WithPrivateIpAddressStatic(staticPrivateIpAddress);
             return this;
         }
 
         ///GENMHASH:57034924A790F6746C59AFD837045739:49734EEA751CB09B1B581F6F3AC76156
         internal NetworkInterfaceImpl WithNewNetworkSecurityGroup(ICreatable<INetworkSecurityGroup> creatable)
         {
-            if (this.creatableNetworkSecurityGroupKey == null)
+            if (creatableNetworkSecurityGroupKey == null)
             {
-                this.creatableNetworkSecurityGroupKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
+                creatableNetworkSecurityGroupKey = creatable.Key;
+                AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             }
 
             return this;
@@ -192,14 +191,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:9BCDEB79AFC04D55B9BC280847723DFC:7E388FA346F0E33887182060FBAF25FB
         internal NetworkInterfaceImpl WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup)
         {
-            this.existingNetworkSecurityGroupToAssociate = networkSecurityGroup;
+            existingNetworkSecurityGroupToAssociate = networkSecurityGroup;
             return this;
         }
 
         ///GENMHASH:31626FBDA69232B7DD9945ADF14E191A:245758B25F0370039EC9345CF6DFAC4C
         internal NetworkInterfaceImpl WithoutNetworkSecurityGroup()
         {
-            this.Inner.NetworkSecurityGroup = null;
+            Inner.NetworkSecurityGroup = null;
             return this;
         }
 
@@ -212,7 +211,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:405FE49F57EE4AB4C0F91D84030D1DDA:29B7D63ED2C33F842B340E1808C46918
         internal NicIpConfigurationImpl UpdateIpConfiguration(string name)
         {
-            return (NicIpConfigurationImpl)this.nicIpConfigurations[name];
+            return (NicIpConfigurationImpl)nicIpConfigurations[name];
         }
 
         ///GENMHASH:54C012D1DF6347D810187D83D172084B:BC7B9CE4DF8F5CF674BD242D689847EB
@@ -355,7 +354,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (networkSecurityGroup == null && NetworkSecurityGroupId() != null)
             {
                 string id = NetworkSecurityGroupId();
-                networkSecurityGroup = base.Manager
+                networkSecurityGroup = Manager
                     .NetworkSecurityGroups
                     .GetByGroup(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
             }

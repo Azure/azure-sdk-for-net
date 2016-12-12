@@ -4,11 +4,10 @@
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5R3JvdXBzSW1wbA==
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network.Fluent.Models;
+    using Models;
     using System.Threading.Tasks;
     using Resource.Fluent.Core;
     using System.Threading;
-    using Management.Network;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroups.

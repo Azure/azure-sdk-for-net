@@ -3,10 +3,7 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network;
     using Resource.Fluent.Core;
-    using Resource.Fluent;
-    using Rest;
     using System;
     using System.Linq;
     using Resource.Fluent.Authentication;

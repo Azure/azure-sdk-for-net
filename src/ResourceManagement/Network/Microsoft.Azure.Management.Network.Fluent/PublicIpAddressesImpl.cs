@@ -4,11 +4,10 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
-    using Management.Network.Fluent.Models;
+    using Models;
     using System.Threading;
     using Resource.Fluent.Core;
     using System.Threading.Tasks;
-    using Management.Network;
 
     /// <summary>
     /// Implementation for PublicIpAddresses.

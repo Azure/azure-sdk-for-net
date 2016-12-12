@@ -5,11 +5,9 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
-    using Management.Network.Fluent.Models;
+    using Models;
     using Resource.Fluent.Core;
-    using Management.Network;
     using System.Threading.Tasks;
-    using Management.Fluent.Network;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroup
@@ -124,7 +122,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:062BFEFE0393BE2C1D9F8B1A963FDE23
         internal IList<ISubnet> ListAssociatedSubnets()
         {
-            return this.Manager.ListAssociatedSubnets(this.Inner.Subnets);
+            return Manager.ListAssociatedSubnets(Inner.Subnets);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:7399EBE775B4308D075A8364EF2A490D
