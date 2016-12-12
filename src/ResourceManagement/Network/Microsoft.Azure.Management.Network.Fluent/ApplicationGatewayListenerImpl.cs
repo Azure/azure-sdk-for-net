@@ -22,152 +22,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayListener.Update.IUpdate
     {
         private ApplicationGatewaySslCertificateImpl sslCert;
-        ///GENMHASH:AFBFDB5617AA4227641C045CF9D86F66:51AAC8329531E69BAAFAC03299414449
-        public ApplicationGatewayListenerImpl WithSslCertificateFromPfxFile(FileInfo pfxFile)
-        {
-            return WithSslCertificateFromPfxFile(pfxFile, null);
-        }
-
-        ///GENMHASH:8ADE3A1B894E5D01B188A0822FC89126:C9DB02E58BCE0380CFA35181A84B25CD
-        private ApplicationGatewayListenerImpl WithSslCertificateFromPfxFile(FileInfo pfxFile, string name)
-        {
-            if (name == null)
-            {
-                name = ResourceNamer.RandomResourceName("cert", 10);
-            }
-            sslCert = Parent.DefineSslCertificate(name)
-                .WithPfxFromFile(pfxFile);
-            return this;
-        }
-
-        ///GENMHASH:382D2BF4EBC04F5E7DF95B5EF5A97146:66502B9267EB235997FE645B0C0A6527
-        public ApplicationGatewayListenerImpl WithSslCertificatePassword(string password)
-        {
-            if (sslCert != null)
-            {
-                sslCert.WithPfxPassword(password).Attach();
-                WithSslCertificate(sslCert.Name());
-                sslCert = null;
-                return this;
-            }
-            else
-            {
-                return null; // Fail fast as this should never happen if the internal logic is correct
-            }
-        }
-
-        ///GENMHASH:A50A011CA652E846C1780DCE98D171DE:1130E1FDC5A612FAE78D6B24DD71D43E
-        public string HostName()
-        {
-            return Inner.HostName;
-        }
-
-        ///GENMHASH:EB912111C9441B9619D3AD0CCFB7E471:B232091121F1BD47EF36242FE879E57E
-        public int FrontendPortNumber()
-        {
-            string name = FrontendPortName();
-            if (name == null)
-            {
-                return 0;
-            }
-            else
-            {
-                int portNumber = 0;
-                return (Parent.FrontendPorts().TryGetValue(name, out portNumber)) ? portNumber : 0;
-            }
-        }
-
-        ///GENMHASH:8214BDBBC03F37877598DD319CF9DA28:6A89D21D1F64E0716C2BB0607B2B985E
-        public ApplicationGatewayListenerImpl WithPublicFrontend()
-        {
-            WithFrontend(Parent.EnsureDefaultPublicFrontend().Name());
-            return this;
-        }
-
-        ///GENMHASH:2EC798C5560EA4F2234EFA1478E59C04:409B6655E16BAB2E8CCE5B4E431083EE
-        private ApplicationGatewayListenerImpl WithFrontend(string name)
-        {
-            var frontendRef = new SubResource()
-            {
-                Id = Parent.FutureResourceId() + "/frontendIPConfigurations/" + name
-            };
-
-            Inner.FrontendIPConfiguration = frontendRef;
-            return this;
-        }
-
-        ///GENMHASH:85408D425EF4341A6D39C75F68ED8A2B:60CB6094D3C3120ABC72B2E26313EF5A
-        public ApplicationGatewayListenerImpl WithServerNameIndication()
-        {
-            Inner.RequireServerNameIndication = true;
-            return this;
-        }
-
-        ///GENMHASH:604F12B361C77B3E3AD5768A73BA6DCF:ABADA5A8E77FDA08CD893ADDC4895F32
-        public ApplicationGatewayListenerImpl WithHttp()
-        {
-            Inner.Protocol = ApplicationGatewayProtocol.Http.ToString();
-            return this;
-        }
-
-        ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
-        public IPublicIpAddress GetPublicIpAddress()
-        {
-            string pipId = PublicIpAddressId();
-            return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
-        }
-
-        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:251CDCA01439FEEC30E23AD50DA1453A
-        public string SubnetName()
-        {
-            var frontend = Frontend();
-            return (frontend != null) ? frontend.SubnetName : null;
-        }
-
-        ///GENMHASH:E40B3F1FA93E71A00314196726D4960B:B71AFF4FEE8DFD54B2E5B5F488E605CC
-        public string FrontendPortName()
-        {
-            return (Inner.FrontendPort != null) ? ResourceUtils.NameFromResourceId(Inner.FrontendPort.Id) : null;
-        }
-
-        ///GENMHASH:D684E7477889A9013C81FAD82F69C54F:BD249A015EF71106387B78281489583A
-        public ApplicationGatewayProtocol Protocol()
-        {
-            return ApplicationGatewayProtocol.Parse(Inner.Protocol);
-        }
-
-        ///GENMHASH:1207E16326E66DA6A51CBA6F0565D088:3F3B707B427A3370160F5D3A76951425
-        public IApplicationGatewaySslCertificate SslCertificate()
-        {
-            var certRef = Inner.SslCertificate;
-            if (certRef == null)
-            {
-                return null;
-            }
-
-            string name = ResourceUtils.NameFromResourceId(certRef.Id);
-            IApplicationGatewaySslCertificate cert = null;
-            return (Parent.SslCertificates().TryGetValue(name, out cert)) ? cert : null;
-        }
 
         ///GENMHASH:FDD79F9F4A54F00F3D88A305BD6E4101:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayListenerImpl(ApplicationGatewayHttpListenerInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
 
-        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:ADFE7EEA0734BA251C7A2C00B4ED3531
-        public string NetworkId()
-        {
-            var frontend = Frontend();
-            return (frontend != null) ? frontend.NetworkId : null;
-        }
-
-        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:0C6B6B4DD8E378E1E80FAA7AD88AD383
-        public ApplicationGatewayImpl Attach()
-        {
-            Parent.WithHttpListener(this);
-            return Parent;
-        }
+        #region Withers
 
         ///GENMHASH:5ACBA6D500464D19A23A5A5A6A184B79:3CAED6F38D63250A1D8283E364506FF5
         public ApplicationGatewayListenerImpl WithHostName(string hostname)
@@ -235,6 +96,77 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithFrontendPort(portName);
         }
 
+        ///GENMHASH:8214BDBBC03F37877598DD319CF9DA28:6A89D21D1F64E0716C2BB0607B2B985E
+        public ApplicationGatewayListenerImpl WithPublicFrontend()
+        {
+            WithFrontend(Parent.EnsureDefaultPublicFrontend().Name());
+            return this;
+        }
+
+        ///GENMHASH:2EC798C5560EA4F2234EFA1478E59C04:409B6655E16BAB2E8CCE5B4E431083EE
+        private ApplicationGatewayListenerImpl WithFrontend(string name)
+        {
+            var frontendRef = new SubResource()
+            {
+                Id = Parent.FutureResourceId() + "/frontendIPConfigurations/" + name
+            };
+
+            Inner.FrontendIPConfiguration = frontendRef;
+            return this;
+        }
+
+        ///GENMHASH:85408D425EF4341A6D39C75F68ED8A2B:60CB6094D3C3120ABC72B2E26313EF5A
+        public ApplicationGatewayListenerImpl WithServerNameIndication()
+        {
+            Inner.RequireServerNameIndication = true;
+            return this;
+        }
+
+        ///GENMHASH:604F12B361C77B3E3AD5768A73BA6DCF:ABADA5A8E77FDA08CD893ADDC4895F32
+        public ApplicationGatewayListenerImpl WithHttp()
+        {
+            Inner.Protocol = ApplicationGatewayProtocol.Http.ToString();
+            return this;
+        }
+
+        ///GENMHASH:AFBFDB5617AA4227641C045CF9D86F66:51AAC8329531E69BAAFAC03299414449
+        public ApplicationGatewayListenerImpl WithSslCertificateFromPfxFile(FileInfo pfxFile)
+        {
+            return WithSslCertificateFromPfxFile(pfxFile, null);
+        }
+
+        ///GENMHASH:8ADE3A1B894E5D01B188A0822FC89126:C9DB02E58BCE0380CFA35181A84B25CD
+        private ApplicationGatewayListenerImpl WithSslCertificateFromPfxFile(FileInfo pfxFile, string name)
+        {
+            if (name == null)
+            {
+                name = ResourceNamer.RandomResourceName("cert", 10);
+            }
+            sslCert = Parent.DefineSslCertificate(name)
+                .WithPfxFromFile(pfxFile);
+            return this;
+        }
+
+        ///GENMHASH:382D2BF4EBC04F5E7DF95B5EF5A97146:66502B9267EB235997FE645B0C0A6527
+        public ApplicationGatewayListenerImpl WithSslCertificatePassword(string password)
+        {
+            if (sslCert != null)
+            {
+                sslCert.WithPfxPassword(password).Attach();
+                WithSslCertificate(sslCert.Name());
+                sslCert = null;
+                return this;
+            }
+            else
+            {
+                return null; // Fail fast as this should never happen if the internal logic is correct
+            }
+        }
+
+        #endregion
+
+        #region Accessors
+
         ///GENMHASH:A80C3FC8655E547C3392C10C546FFF39:F5F48992AF3FBAF8C1BC9C9A59C415FF
         public bool RequiresServerNameIndication()
         {
@@ -272,5 +204,87 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             return Parent;
         }
+
+        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:ADFE7EEA0734BA251C7A2C00B4ED3531
+        public string NetworkId()
+        {
+            var frontend = Frontend();
+            return (frontend != null) ? frontend.NetworkId : null;
+        }
+
+        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:251CDCA01439FEEC30E23AD50DA1453A
+        public string SubnetName()
+        {
+            var frontend = Frontend();
+            return (frontend != null) ? frontend.SubnetName : null;
+        }
+
+        ///GENMHASH:E40B3F1FA93E71A00314196726D4960B:B71AFF4FEE8DFD54B2E5B5F488E605CC
+        public string FrontendPortName()
+        {
+            return (Inner.FrontendPort != null) ? ResourceUtils.NameFromResourceId(Inner.FrontendPort.Id) : null;
+        }
+
+        ///GENMHASH:D684E7477889A9013C81FAD82F69C54F:BD249A015EF71106387B78281489583A
+        public ApplicationGatewayProtocol Protocol()
+        {
+            return ApplicationGatewayProtocol.Parse(Inner.Protocol);
+        }
+
+        ///GENMHASH:1207E16326E66DA6A51CBA6F0565D088:3F3B707B427A3370160F5D3A76951425
+        public IApplicationGatewaySslCertificate SslCertificate()
+        {
+            var certRef = Inner.SslCertificate;
+            if (certRef == null)
+            {
+                return null;
+            }
+
+            string name = ResourceUtils.NameFromResourceId(certRef.Id);
+            IApplicationGatewaySslCertificate cert = null;
+            return (Parent.SslCertificates().TryGetValue(name, out cert)) ? cert : null;
+        }
+
+        ///GENMHASH:A50A011CA652E846C1780DCE98D171DE:1130E1FDC5A612FAE78D6B24DD71D43E
+        public string HostName()
+        {
+            return Inner.HostName;
+        }
+
+        ///GENMHASH:EB912111C9441B9619D3AD0CCFB7E471:B232091121F1BD47EF36242FE879E57E
+        public int FrontendPortNumber()
+        {
+            string name = FrontendPortName();
+            if (name == null)
+            {
+                return 0;
+            }
+            else
+            {
+                int portNumber = 0;
+                return (Parent.FrontendPorts().TryGetValue(name, out portNumber)) ? portNumber : 0;
+            }
+        }
+
+        #endregion
+
+        #region Actions
+
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:0C6B6B4DD8E378E1E80FAA7AD88AD383
+        public ApplicationGatewayImpl Attach()
+        {
+            Parent.WithHttpListener(this);
+            return Parent;
+        }
+
+        ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
+        public IPublicIpAddress GetPublicIpAddress()
+        {
+            string pipId = PublicIpAddressId();
+            return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
+        }
+
+        #endregion
+
     }
 }

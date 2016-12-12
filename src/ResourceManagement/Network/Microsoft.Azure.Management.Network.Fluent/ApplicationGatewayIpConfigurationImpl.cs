@@ -20,15 +20,46 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayIpConfiguration.Update.IUpdate
     {
+        ///GENMHASH:309BFD95E2855ABD94CC4CEB845632F5:C0847EA0CDA78F6D91EFD239C70F0FA7
+        internal ApplicationGatewayIpConfigurationImpl(ApplicationGatewayIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
+        {
+        }
+
+        #region Actions
+
         ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
         public ISubnet GetSubnet()
         {
             return Parent.Manager.GetAssociatedSubnet(Inner.Subnet);
         }
 
-        ///GENMHASH:309BFD95E2855ABD94CC4CEB845632F5:C0847EA0CDA78F6D91EFD239C70F0FA7
-        internal ApplicationGatewayIpConfigurationImpl(ApplicationGatewayIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:4174C1298FBF6ABE50F5AB6DA4F03B10
+        public ApplicationGatewayImpl Attach()
         {
+            return Parent.WithConfig(this);
+        }
+
+        #endregion
+
+        #region Accessors
+
+        ApplicationGateway.Update.IUpdate ISettable<ApplicationGateway.Update.IUpdate>.Parent()
+        {
+            return Parent;
+        }
+
+        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:AF6B5F15AE40A0AA08ADA331F3C75492
+        public string SubnetName()
+        {
+            var subnetRef = Inner.Subnet;
+            if (subnetRef != null)
+            {
+                return ResourceUtils.NameFromResourceId(subnetRef.Id);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
@@ -51,11 +82,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:4174C1298FBF6ABE50F5AB6DA4F03B10
-        public ApplicationGatewayImpl Attach()
-        {
-            return Parent.WithConfig(this);
-        }
+        #endregion
+
+        #region Withers
 
         ///GENMHASH:EE79C3B68C4C6A99234BB004EDCAD67A:7289832C1662E22EA7E068290C483F1B
         public ApplicationGatewayIpConfigurationImpl WithExistingSubnet(ISubnet subnet)
@@ -81,23 +110,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:AF6B5F15AE40A0AA08ADA331F3C75492
-        public string SubnetName()
-        {
-            var subnetRef = Inner.Subnet;
-            if (subnetRef != null)
-            {
-                return ResourceUtils.NameFromResourceId(subnetRef.Id);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        ApplicationGateway.Update.IUpdate ISettable<ApplicationGateway.Update.IUpdate>.Parent()
-        {
-            return Parent;
-        }
+        #endregion
     }
 }

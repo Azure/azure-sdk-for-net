@@ -20,27 +20,35 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayBackend.Update.IUpdate
     {
-        ///GENMHASH:B9D8E0EB1A218491349631635CDA92D3:5685D5C7D202D29D2E15856A5673C8E7
-        public IList<ApplicationGatewayBackendAddress> Addresses()
+        ///GENMHASH:57E12F644F2C3EB367E99CBE582AD951:C0847EA0CDA78F6D91EFD239C70F0FA7
+        internal ApplicationGatewayBackendImpl(ApplicationGatewayBackendAddressPoolInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
-            var addresses = new List<ApplicationGatewayBackendAddress>();
-            if (Inner.BackendAddresses != null) {
-                foreach(var address in Inner.BackendAddresses)  {
-                    addresses.Add(address);
-                }
-            }
-            return addresses;
         }
 
-        ///GENMHASH:CA426728D89DF7B679F3082001CE7DB8:631561FDE1B5174113A31FA550BA7525
-        private IList<ApplicationGatewayBackendAddress> EnsureAddresses()
+        #region Accessors
+
+        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
+        public override string Name()
         {
-            var addresses = Inner.BackendAddresses;
-            if (addresses == null) {
-               addresses = new List<ApplicationGatewayBackendAddress>();
-                Inner.BackendAddresses = addresses;
+            return Inner.Name;
+        }
+
+        ///GENMHASH:1FC649C97657147238976F3B54524F58:B74483DFB822D3E7D17AE4E2E8CAE6E0
+        public IReadOnlyDictionary<string, string> BackendNicIpConfigurationNames()
+        {
+            // This assumes a NIC can only have one IP config associated with the backend of an app gateway,
+            // which is correct at the time of this implementation and seems unlikely to ever change
+            Dictionary<string, string> ipConfigNames = new Dictionary<string, string>();
+            if (Inner.BackendIPConfigurations != null)
+            {
+                foreach (var inner in Inner.BackendIPConfigurations)
+                {
+                    string nicId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id);
+                    string ipConfigName = ResourceUtils.NameFromResourceId(inner.Id);
+                    ipConfigNames.Add(nicId, ipConfigName);
+                }
             }
-            return addresses;
+            return ipConfigNames;
         }
 
         ///GENMHASH:BD4433E096C5BD5A3392F44B28BA9083:B81C8A45BECCD7571A580B4729B2CD0C
@@ -59,27 +67,63 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return false;
         }
 
-        ///GENMHASH:57E12F644F2C3EB367E99CBE582AD951:C0847EA0CDA78F6D91EFD239C70F0FA7
-        internal ApplicationGatewayBackendImpl(ApplicationGatewayBackendAddressPoolInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
+        ///GENMHASH:DA671E788D7745DDD7A0AEE413BB02F2:436637A06A9B4E6B2B3F2BA7F6A702C2
+        public bool ContainsIpAddress(string ipAddress)
         {
-        }
-
-        ///GENMHASH:1FC649C97657147238976F3B54524F58:B74483DFB822D3E7D17AE4E2E8CAE6E0
-        public IReadOnlyDictionary<string, string> BackendNicIpConfigurationNames()
-        {
-            // This assumes a NIC can only have one IP config associated with the backend of an app gateway,
-            // which is correct at the time of this implementation and seems unlikely to ever change
-            Dictionary<string, string> ipConfigNames = new Dictionary<string, string>();
-            if (Inner.BackendIPConfigurations != null)
+            if (ipAddress != null)
             {
-                foreach(var inner in Inner.BackendIPConfigurations)
+                foreach (var address in Inner.BackendAddresses)
                 {
-                    string nicId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id);
-                    string ipConfigName = ResourceUtils.NameFromResourceId(inner.Id);
-                    ipConfigNames.Add(nicId, ipConfigName);
+                    if (ipAddress.ToLower().Equals(address.IpAddress))
+                    {
+                        return true;
+                    }
                 }
             }
-            return ipConfigNames;
+            return false;
+        }
+
+        ApplicationGateway.Update.IUpdate ISettable<ApplicationGateway.Update.IUpdate>.Parent()
+        {
+            return Parent;
+        }
+
+        ///GENMHASH:B9D8E0EB1A218491349631635CDA92D3:5685D5C7D202D29D2E15856A5673C8E7
+        public IList<ApplicationGatewayBackendAddress> Addresses()
+        {
+            var addresses = new List<ApplicationGatewayBackendAddress>();
+            if (Inner.BackendAddresses != null) {
+                foreach(var address in Inner.BackendAddresses)  {
+                    addresses.Add(address);
+                }
+            }
+            return addresses;
+        }
+
+        #endregion
+
+        #region Helpers
+
+        ///GENMHASH:CA426728D89DF7B679F3082001CE7DB8:631561FDE1B5174113A31FA550BA7525
+        private IList<ApplicationGatewayBackendAddress> EnsureAddresses()
+        {
+            var addresses = Inner.BackendAddresses;
+            if (addresses == null) {
+               addresses = new List<ApplicationGatewayBackendAddress>();
+                Inner.BackendAddresses = addresses;
+            }
+            return addresses;
+        }
+
+        #endregion
+
+        #region Withers
+
+        ///GENMHASH:DFE562EDA69B9B5779C74F1A7206D23B:524E74936C9A9591669EB81BA006DE87
+        public ApplicationGatewayBackendImpl WithoutAddress(ApplicationGatewayBackendAddress address)
+        {
+            EnsureAddresses().Remove(address);
+            return this;
         }
 
         ///GENMHASH:040FE6797829F09ECF75BDE559FBA5FC:50D6F54EC4B6D5D39C3D750DD28CAF84
@@ -109,6 +153,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             addresses.Add(address);
+            return this;
+        }
+
+        ///GENMHASH:BE71ABDD6202EC63298CCC3687E0D342:D0BAB29C2066E9B0BAB942D4C9C7CE4C
+        public ApplicationGatewayBackendImpl WithFqdn(string fqdn)
+        {
+            if (fqdn == null)
+            {
+                return this;
+            }
+
+            ApplicationGatewayBackendAddress address = new ApplicationGatewayBackendAddress()
+            {
+                Fqdn = fqdn
+            };
+
+            EnsureAddresses().Add(address);
             return this;
         }
 
@@ -160,62 +221,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
-        public override string Name()
-        {
-            return Inner.Name;
-        }
+        #endregion
 
-        ///GENMHASH:DFE562EDA69B9B5779C74F1A7206D23B:524E74936C9A9591669EB81BA006DE87
-        public ApplicationGatewayBackendImpl WithoutAddress(ApplicationGatewayBackendAddress address)
-        {
-            EnsureAddresses().Remove(address);
-            return this;
-        }
+        #region Actions
 
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:321924EA2E0782F0638FD1917D19DF54
         public ApplicationGatewayImpl Attach()
         {
-            Parent.WithBackend(this);
-            return this.Parent;
+            return Parent.WithBackend(this);
         }
 
-        ///GENMHASH:BE71ABDD6202EC63298CCC3687E0D342:D0BAB29C2066E9B0BAB942D4C9C7CE4C
-        public ApplicationGatewayBackendImpl WithFqdn(string fqdn)
-        {
-            if (fqdn == null)
-            {
-                return this;
-            }
-
-            ApplicationGatewayBackendAddress address = new ApplicationGatewayBackendAddress()
-            {
-                Fqdn = fqdn
-            };
-
-            EnsureAddresses().Add(address);
-            return this;
-        }
-
-        ///GENMHASH:DA671E788D7745DDD7A0AEE413BB02F2:436637A06A9B4E6B2B3F2BA7F6A702C2
-        public bool ContainsIpAddress(string ipAddress)
-        {
-            if (ipAddress != null)
-            {
-                foreach(var address in Inner.BackendAddresses)
-                {
-                    if (ipAddress.ToLower().Equals(address.IpAddress))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        ApplicationGateway.Update.IUpdate ISettable<ApplicationGateway.Update.IUpdate>.Parent()
-        {
-            return Parent;
-        }
+        #endregion
     }
 }

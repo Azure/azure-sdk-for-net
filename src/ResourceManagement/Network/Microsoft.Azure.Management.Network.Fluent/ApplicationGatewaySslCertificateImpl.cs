@@ -21,6 +21,32 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewaySslCertificate.Update.IUpdate
     {
+        ///GENMHASH:10A46E6A29805F84C3DCA9670AF5A0BC:C0847EA0CDA78F6D91EFD239C70F0FA7
+        internal ApplicationGatewaySslCertificateImpl(ApplicationGatewaySslCertificateInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
+        {
+        }
+
+        #region Withers
+
+        ///GENMHASH:F2EE2F07B6724F1FF58043814706A8ED:DB3DCD6CAFDAF739E813082765CD3375
+        public ApplicationGatewaySslCertificateImpl WithPfxFromBytes(params byte[] pfxData)
+        {
+            string encoded = null;
+            if (pfxData != null)
+            {
+                encoded = Convert.ToBase64String(pfxData);
+            }
+            Inner.Data = encoded;
+            return this;
+        }
+
+        ///GENMHASH:079EAB40DB57656F562BDBA357A86C43:8892D33C89EB45AB71456048E4189668
+        public ApplicationGatewaySslCertificateImpl WithPfxPassword(string password)
+        {
+            Inner.Password = password;
+            return this;
+        }
+
         ///GENMHASH:94F90A4A28B1E983315F51729B27DB77:71EBC245EFF014FF21D0CBEC5F53A54C
         public ApplicationGatewaySslCertificateImpl WithPfxFromFile(FileInfo pfxFile)
         {
@@ -39,40 +65,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:10A46E6A29805F84C3DCA9670AF5A0BC:C0847EA0CDA78F6D91EFD239C70F0FA7
-        internal ApplicationGatewaySslCertificateImpl(ApplicationGatewaySslCertificateInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
-        {
-        }
+        #endregion
 
-        ///GENMHASH:F2EE2F07B6724F1FF58043814706A8ED:DB3DCD6CAFDAF739E813082765CD3375
-        public ApplicationGatewaySslCertificateImpl WithPfxFromBytes(params byte[] pfxData)
-        {
-            string encoded = null;
-            if (pfxData != null) {
-                encoded = Convert.ToBase64String(pfxData);
-            }
-            Inner.Data = encoded;
-            return this;
-        }
-
-        ///GENMHASH:079EAB40DB57656F562BDBA357A86C43:8892D33C89EB45AB71456048E4189668
-        public ApplicationGatewaySslCertificateImpl WithPfxPassword(string password)
-        {
-            Inner.Password = password;
-            return this;
-        }
-
-        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
-        public override string Name()
-        {
-            return Inner.Name;
-        }
-
-        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:C900710B9B91094E9DE2F1F22E9BCEA4
-        public ApplicationGatewayImpl Attach()
-        {
-            return Parent.WithSslCertificate(this);
-        }
+        #region Accessors
 
         ///GENMHASH:37B0EAF4E984261F22FBACEF515D705F:19A294AC60BE3434C95A61817A6A6A02
         public string PublicData()
@@ -84,5 +79,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             return Parent;
         }
+
+        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
+        public override string Name()
+        {
+            return Inner.Name;
+        }
+
+        #endregion
+
+        #region Actions
+
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:C900710B9B91094E9DE2F1F22E9BCEA4
+        public ApplicationGatewayImpl Attach()
+        {
+            return Parent.WithSslCertificate(this);
+        }
+
+        #endregion
     }
 }
