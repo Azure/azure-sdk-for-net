@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             await this.client.DeleteAsync(this.Parent.ResourceGroupName,
                 this.Parent.Name,
                 this.EndpointType().LocalName,
-                this.Name());
+                this.Name(),
+                cancellationToken);
         }
 
         ///GENMHASH:91BB0A08404D6D37671F71EB696F7DDA:C7EED8E9DF95CD503E77886E10606183

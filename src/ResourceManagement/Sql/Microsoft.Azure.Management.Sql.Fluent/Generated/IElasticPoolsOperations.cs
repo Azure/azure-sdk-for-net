@@ -205,9 +205,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Returns information about activity on Azure SQL databases inside
         /// of an Azure SQL elastic pool.
         /// </summary>
-        /// <param name='elasticPoolName'>
-        /// The name of the Azure SQL Elastic Pool.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
         /// obtain this value from the Azure Resource Manager API or the
@@ -215,6 +212,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </param>
         /// <param name='serverName'>
         /// The name of the Azure SQL server.
+        /// </param>
+        /// <param name='elasticPoolName'>
+        /// The name of the Azure SQL Elastic Pool.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ElasticPoolDatabaseActivityInner>>> ListDatabaseActivityWithHttpMessagesAsync(string elasticPoolName, string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ElasticPoolDatabaseActivityInner>>> ListDatabaseActivityWithHttpMessagesAsync(string resourceGroupName, string serverName, string elasticPoolName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets information about an Azure SQL database inside of an Azure
         /// SQL elastic pool.

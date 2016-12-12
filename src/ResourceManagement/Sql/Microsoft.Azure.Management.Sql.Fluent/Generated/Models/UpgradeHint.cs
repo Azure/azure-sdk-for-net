@@ -13,15 +13,15 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
     /// <summary>
     /// Represents a Upgrade Hint.
     /// </summary>
-    public partial class UpgradeHintInner : Microsoft.Azure.Management.Resource.Fluent.Resource
+    public partial class UpgradeHint
     {
         /// <summary>
-        /// Initializes a new instance of the UpgradeHintInner class.
+        /// Initializes a new instance of the UpgradeHint class.
         /// </summary>
-        public UpgradeHintInner() { }
+        public UpgradeHint() { }
 
         /// <summary>
-        /// Initializes a new instance of the UpgradeHintInner class.
+        /// Initializes a new instance of the UpgradeHint class.
         /// </summary>
         /// <param
         /// name="targetServiceLevelObjective">TargetServiceLevelObjective
@@ -29,8 +29,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.Models
         /// <param
         /// name="targetServiceLevelObjectiveId">TargetServiceLevelObjectiveId
         /// for upgrade hint.</param>
-        public UpgradeHintInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string targetServiceLevelObjective = default(string), System.Guid? targetServiceLevelObjectiveId = default(System.Guid?))
-            : base(location, id, name, type, tags)
+        public UpgradeHint(string targetServiceLevelObjective = default(string), System.Guid? targetServiceLevelObjectiveId = default(System.Guid?))
         {
             TargetServiceLevelObjective = targetServiceLevelObjective;
             TargetServiceLevelObjectiveId = targetServiceLevelObjectiveId;

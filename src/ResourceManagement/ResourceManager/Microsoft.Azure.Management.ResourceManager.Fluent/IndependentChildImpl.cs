@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public override void SetInner(InnerResourceT inner)
         {
-            SetParentName(inner);
             base.SetInner(inner);
+            SetParentName(inner);
         }
 
         /// <return><tt>true</tt> if currently in define..create mode.</return>

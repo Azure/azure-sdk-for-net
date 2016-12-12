@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Implementation for CdnProfiles.
     /// </summary>
-    public partial class CdnProfilesImpl  :
+    internal partial class CdnProfilesImpl  :
         GroupableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,CdnManager>,
         ICdnProfiles
     {

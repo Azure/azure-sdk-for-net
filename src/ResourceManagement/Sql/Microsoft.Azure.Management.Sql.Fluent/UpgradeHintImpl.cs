@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Implementation for Upgrade hint interface.
     /// </summary>
     internal partial class UpgradeHintImpl :
-        Wrapper<Models.UpgradeHintInner>,
+        Wrapper<Models.UpgradeHint>,
         IUpgradeHint
     {
         public Guid TargetServiceLevelObjectiveId()
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.TargetServiceLevelObjectiveId.GetValueOrDefault();
         }
 
-        internal UpgradeHintImpl(UpgradeHintInner innerObject)
+        internal UpgradeHintImpl(UpgradeHint innerObject)
             : base(innerObject)
         {
         }

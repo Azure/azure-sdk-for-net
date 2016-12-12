@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.firewallRuleCreatableMap.Remove(firewallRuleName);
 
             this.firewallRuleCreatableMap.Add(firewallRuleName,
-                this.firewallRulesImpl.Define(firewallRuleName).WithIpAddressRange(startIpAddress, endIpAddress));
+                this.FirewallRules().Define(firewallRuleName).WithIpAddressRange(startIpAddress, endIpAddress));
             return this;
         }
 
@@ -251,8 +251,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         private async Task CreateOrUpdateFirewallRulesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.firewallRulesImpl.SqlFirewallRules().CreateAsync(this.firewallRuleCreatableMap.Values.Select(firewallRule => firewallRule as ICreatable<ISqlFirewallRule>).ToArray());
-            this.firewallRuleCreatableMap.Clear();
+            if (this.firewallRuleCreatableMap.Any())
+            {
+                var firewallCreatables = this.firewallRuleCreatableMap.Values.Select(firewallRule => firewallRule as ICreatable<ISqlFirewallRule>).ToArray();
+                await this.firewallRulesImpl.SqlFirewallRules().CreateAsync(firewallCreatables);
+                this.firewallRuleCreatableMap.Clear();
+            }
         }
 
         public IServiceObjective GetServiceObjective(string serviceObjectiveName)
@@ -264,15 +268,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         private async Task CreateOrUpdateElasticPoolsAndDatabasesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await this.elasticPoolsImpl.ElasticPools.CreateAsync(
-                this.elasticPoolCreatableMap.Values.Select(
-                    elasticPool => elasticPool as ICreatable<ISqlElasticPool>).ToArray());
-            this.elasticPoolCreatableMap.Clear();
+            if (this.elasticPoolCreatableMap.Any())
+            {
+                await this.elasticPoolsImpl.ElasticPools.CreateAsync(
+                    this.elasticPoolCreatableMap.Values.Select(
+                        elasticPool => elasticPool as ICreatable<ISqlElasticPool>).ToArray());
+                this.elasticPoolCreatableMap.Clear();
+            }
 
-            await this.databasesImpl.Databases.CreateAsync(
-                this.databaseCreatableMap.Values.Select(
-                    database => database as ICreatable<ISqlDatabase>).ToArray());
-            this.databaseCreatableMap.Clear();
+            if (this.databaseCreatableMap.Any())
+            {
+                await this.databasesImpl.Databases.CreateAsync(
+                    this.databaseCreatableMap.Values.Select(
+                        database => database as ICreatable<ISqlDatabase>).ToArray());
+                this.databaseCreatableMap.Clear();
+            }
         }
 
         public SqlServerImpl WithoutElasticPool(string elasticPoolName)

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Implementation for CdnEndpoint.
     /// </summary>
-    public partial class CdnEndpointImpl  :
+    internal partial class CdnEndpointImpl  :
         ExternalChildResource<ICdnEndpoint, EndpointInner, ICdnProfile, CdnProfileImpl>,
         ICdnEndpoint,
         CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Definition.IWithStandardCreate>,

@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         Region Region { get; }
 
         /// <returns>the tags for the resource</returns>
-        IDictionary<string,string> Tags { get; }
-
+        IReadOnlyDictionary<string,string> Tags { get; }
     }
 }

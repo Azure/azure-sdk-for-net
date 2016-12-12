@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for TransparentDataEncryption.
@@ -19,11 +20,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities()
         {
-            Func<TransparentDataEncryptionActivity, ITransparentDataEncryptionActivity> convertor = (transparentDataEncryptionActivity) => new TransparentDataEncryptionActivityImpl(transparentDataEncryptionActivity);
-            return PagedListConverter.Convert(this.databasesInner.ListTransparentDataEncryptionActivity(
+            return this.databasesInner.ListTransparentDataEncryptionActivity(
                 this.ResourceGroupName(),
                 this.SqlServerName(),
-                this.DatabaseName()), convertor);
+                this.DatabaseName()).Select(transparentDataEncryptionActivity => new TransparentDataEncryptionActivityImpl(transparentDataEncryptionActivity));
         }
 
         public string ResourceGroupName()

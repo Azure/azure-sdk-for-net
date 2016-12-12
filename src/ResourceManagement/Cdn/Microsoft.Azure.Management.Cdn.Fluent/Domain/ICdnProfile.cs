@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal used for advanced management tasks.
         /// </summary>
         /// <return>URI used to login to third party web portal.</return>
-        string GenerateSsoUri { get; }
+        string GenerateSsoUri();
 
         /// <summary>
         /// Forcibly pre-loads CDN endpoint content in current profile. Available for Verizon Profiles.

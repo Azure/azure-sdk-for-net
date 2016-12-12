@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         public Region Region()
         {
-            return EnumNameAttribute.FromName<Region>(this.Inner.Location);
+            return Resource.Fluent.Core.Region.Create(this.Inner.Location);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL database's SloUsageMetric.
     /// </summary>
     public interface ISloUsageMetric  :
-        IWrapper<Models.SloUsageMetricInner>
+        IWrapper<Models.SloUsageMetric>
     {
         /// <return>The serviceLevelObjectiveId for SLO usage metric.</return>
         System.Guid ServiceLevelObjectiveId { get; }

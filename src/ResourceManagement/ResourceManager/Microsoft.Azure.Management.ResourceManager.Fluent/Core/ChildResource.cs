@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public abstract string Name();
 
-        string IChildResource<IParentT>.Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string ElasticPoolName { get; }
 
         /// <return>Returns the list of usages (DatabaseMetrics) of the database.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages();
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages();
 
         /// <return>Name of the SQL Server to which this database belongs.</return>
         string SqlServerName { get; }
@@ -40,10 +40,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string Edition { get; }
 
         /// <return>SqlWarehouse instance for more operations.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse CastToWarehouse { get; }
+        Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse CastToWarehouse();
 
         /// <return>Returns the list of all restore points on the database.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints();
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints();
 
         /// <return>The creation date of the Azure SQL Database.</return>
         System.DateTime CreationDate { get; }

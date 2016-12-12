@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using System.Threading;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    public partial class CdnProfilesImpl 
+    internal partial class CdnProfilesImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.

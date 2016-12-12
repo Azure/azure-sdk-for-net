@@ -2,29 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Models;
+
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension image version.
     /// </summary>
-    public interface IVirtualMachineExtensionImageVersion  :
-        IWrapper<Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineExtensionImageInner>
+    public interface IVirtualMachineExtensionImageVersion :
+        IWrapper<Models.VirtualMachineExtensionImageInner>,
+        IHasName
     {
-        /// <returns>the resource ID of the extension image version</returns>
-        string Id { get; }
-
-        /// <returns>the name of the virtual machine extension image version</returns>
-        string Name { get; }
-
-        /// <returns>the region in which virtual machine extension image version is available</returns>
+        /// <return>The region in which virtual machine extension image version is available.</return>
         string RegionName { get; }
 
-        /// <returns>the virtual machine extension image type this version belongs to</returns>
+        /// <return>The resource ID of the extension image version.</return>
+        string Id { get; }
+
+        /// <return>The virtual machine extension image type this version belongs to.</return>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType Type { get; }
 
-        /// <returns>virtual machine extension image this version represents</returns>
+        /// <return>Virtual machine extension image this version represents.</return>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage GetImage();
-
     }
 }

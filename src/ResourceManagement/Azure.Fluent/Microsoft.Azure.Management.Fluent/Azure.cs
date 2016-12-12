@@ -13,7 +13,9 @@ using System.Linq;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
-
+using Microsoft.Azure.Management.Sql.Fluent;
+using Microsoft.Azure.Management.Cdn.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -29,6 +31,9 @@ namespace Microsoft.Azure.Management.Fluent
         private IKeyVaultManager keyVaultManager;
         private ITrafficManager trafficManager;
         private IDnsZoneManager dnsZoneManager;
+        private ISqlManager sqlManager;
+        private ICdnManager cdnManager;
+        private IRedisManager redisManager;
 
         #endregion Service Managers
 
@@ -175,6 +180,29 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public ISqlServers SqlServers
+        {
+            get
+            {
+                return sqlManager.SqlServers;
+            }
+        }
+        public IRedisCaches RedisCaches
+        {
+            get
+            {
+                return redisManager.RedisCaches;
+            }
+        }
+
+        public ICdnProfiles CdnProfiles
+        {
+            get
+            {
+                return cdnManager.Profiles;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -189,6 +217,9 @@ namespace Microsoft.Azure.Management.Fluent
             keyVaultManager = KeyVaultManager.Authenticate(restClient, subscriptionId, tenantId);
             trafficManager = Trafficmanager.Fluent.TrafficManager.Authenticate(restClient, subscriptionId);
             dnsZoneManager = DnsZoneManager.Authenticate(restClient, subscriptionId);
+            sqlManager = SqlManager.Authenticate(restClient, subscriptionId);
+            redisManager = RedisManager.Authenticate(restClient, subscriptionId);
+            cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             SubscriptionId = subscriptionId;
         }
 
@@ -363,5 +394,11 @@ namespace Microsoft.Azure.Management.Fluent
         ITrafficManagerProfiles TrafficManagerProfiles { get; }
 
         IDnsZones DnsZones { get; }
+
+        ISqlServers SqlServers { get; }
+
+        IRedisCaches RedisCaches { get; }
+
+        ICdnProfiles CdnProfiles { get; }
     }
 }

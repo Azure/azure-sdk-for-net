@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Represents an endpoint collection associated with a CDN manager profile.
     /// </summary>
-    public partial class CdnEndpointsImpl  :
+    internal partial class CdnEndpointsImpl  :
         ExternalChildResourcesCached<CdnEndpointImpl,ICdnEndpoint,EndpointInner,ICdnProfile,CdnProfileImpl>
     {
         private IEndpointsOperations client;
@@ -25,14 +25,24 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             foreach(var innerEndpoint in this.client.ListByProfile(
                 this.Parent.ResourceGroupName,
                 this.Parent.Name))
+            {
+                var endpoint = new CdnEndpointImpl(
+                    innerEndpoint.Name,
+                    this.Parent,
+                    innerEndpoint,
+                    this.client,
+                    this.originsClient,
+                    this.customDomainsClient);
+
+                foreach (var customDomain in this.customDomainsClient.ListByEndpoint(
+                    this.Parent.ResourceGroupName, 
+                    this.Parent.Name, 
+                    innerEndpoint.Name))
                 {
-                    childResources.Add(new CdnEndpointImpl(
-                        innerEndpoint.Name,
-                        this.Parent,
-                        innerEndpoint,
-                        this.client,
-                        this.originsClient,
-                        this.customDomainsClient));
+                    endpoint.WithCustomDomain(customDomain.HostName);
+                }
+
+                childResources.Add(endpoint);
             }
             return childResources;
         }
@@ -80,6 +90,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             this.client = client;
             this.originsClient = originsClient;
             this.customDomainsClient = customDomainsClient;
+
+            if (parent.Id != null)
+            {
+                this.CacheCollection();
+            }
         }
 
         private string GenerateUniqueEndpointName(string endpointNamePrefix)

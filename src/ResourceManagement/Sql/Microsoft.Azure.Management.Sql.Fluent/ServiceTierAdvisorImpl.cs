@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             if (sloUsageMetrics == null)
             {
-                Func<SloUsageMetricInner, SloUsageMetricImpl> convertor
+                Func<SloUsageMetric, SloUsageMetricImpl> convertor
                     = (sloUsageMetricInner) => new SloUsageMetricImpl(sloUsageMetricInner);
                 sloUsageMetrics = PagedListConverter.Convert(Inner.ServiceLevelObjectiveUsageMetrics, convertor);
             }
