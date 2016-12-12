@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 Publisher = parts[0],
                 Offer = parts[1],
                 Sku = parts[2],
-                Version = "latest"               
+                Version = "latest"
             };
         }
     }

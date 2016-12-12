@@ -2,42 +2,41 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine image.
     /// </summary>
-    public interface IVirtualMachineImage  :
-        IWrapper<Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineImageInner>
+    public interface IVirtualMachineImage :
+        IWrapper<Models.VirtualMachineImageInner>
     {
-        /// <returns>the region in which virtual machine image is available</returns>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Location { get; }
-
-        /// <returns>the publisher name of the virtual machine image</returns>
-        string PublisherName { get; }
-
-        /// <returns>the name of the virtual machine image offer this image is part of</returns>
+        /// <return>The name of the virtual machine image offer this image is part of.</return>
         string Offer { get; }
 
-        /// <returns>the commercial name of the virtual machine image (SKU)</returns>
+        /// <return>OS disk image in the virtual machine image.</return>
+        Models.OSDiskImage OsDiskImage { get; }
+
+        /// <return>The publisher name of the virtual machine image.</return>
+        string PublisherName { get; }
+
+        /// <return>The region in which virtual machine image is available.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.Region Location { get; }
+
+        /// <return>The commercial name of the virtual machine image (SKU).</return>
         string Sku { get; }
 
-        /// <returns>the version of the virtual machine image</returns>
+        /// <return>The image reference representing the publisher, offer, SKU and version of the virtual machine image.</return>
+        Models.ImageReference ImageReference { get; }
+
+        /// <return>Data disk images in the virtual machine image.</return>
+        System.Collections.Generic.IList<Models.DataDiskImage> DataDiskImages { get; }
+
+        /// <return>The version of the virtual machine image.</return>
         string Version { get; }
 
-        /// <returns>the image reference representing the publisher, offer, SKU and version of the virtual machine image</returns>
-        Microsoft.Azure.Management.Compute.Fluent.Models.ImageReference ImageReference { get; }
-
-        /// <returns>the purchase plan for the virtual machine image</returns>
-        Microsoft.Azure.Management.Compute.Fluent.Models.PurchasePlan Plan { get; }
-
-        /// <returns>OS disk image in the virtual machine image</returns>
-        Microsoft.Azure.Management.Compute.Fluent.Models.OSDiskImage OsDiskImage { get; }
-
-        /// <returns>data disk images in the virtual machine image</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Fluent.Models.DataDiskImage> DataDiskImages { get; }
-
+        /// <return>The purchase plan for the virtual machine image.</return>
+        Models.PurchasePlan Plan { get; }
     }
 }

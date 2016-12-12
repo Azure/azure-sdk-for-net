@@ -2,19 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-
-    using System.Threading;
-    using Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using VirtualMachine.Update;
     using System.Collections.Generic;
-    using Management.Compute.Fluent.Models;
-    using Network.Fluent;
-    using Resource.Fluent.Core;
-    using Storage.Fluent;
     using System.Threading.Tasks;
-    using Resource.Fluent;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using System.Threading;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Newtonsoft.Json;
     using System.Text.RegularExpressions;
-    using Compute.Fluent;
     using System;
 
     /// <summary>
@@ -22,14 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbXBs
     internal partial class VirtualMachineImpl  :
-        GroupableResource<IVirtualMachine,
-            VirtualMachineInner,
-            VirtualMachineImpl,
-            IComputeManager,
-            VirtualMachine.Definition.IWithGroup,
-            VirtualMachine.Definition.IWithNetwork,
-            VirtualMachine.Definition.IWithCreate,
-            VirtualMachine.Update.IUpdate>,
+        GroupableResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Models.VirtualMachineInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl, IComputeManager, VirtualMachine.Definition.IWithGroup, VirtualMachine.Definition.IWithNetwork, VirtualMachine.Definition.IWithCreate, VirtualMachine.Update.IUpdate>,
         IVirtualMachine,
         VirtualMachine.Definition.IDefinition,
         VirtualMachine.Update.IUpdate
@@ -46,17 +42,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IStorageAccount existingStorageAccountToAssociate;
         private IAvailabilitySet existingAvailabilitySetToAssociate;
         private INetworkInterface existingPrimaryNetworkInterfaceToAssociate;
-        private IList<INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
-        private INetworkInterface primaryNetworkInterface;
-        private IPublicIpAddress primaryPublicIpAddress;
+        private IList<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
-        private IList<IVirtualMachineDataDisk> dataDisks;
+        private IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> dataDisks;
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
+        ///GENMHASH:0A331C2401291DF824493E64F2798884:AEA9DF2AAC2CFE9730BD7A00060D84F9
         internal VirtualMachineImpl(string name,
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
@@ -576,7 +571,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:2DC51FEC3C45675856B4AC1D97BECBFD:03CBC8ECAD4A07D8AE9ABC931CB422F4
-        public VirtualMachineImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
+        public VirtualMachineImpl WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableStorageAccountKey == null)
@@ -813,7 +808,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2A7ACF9E7DA59ECB74A3F0607B98CEA8:46FD353C4642C823383ED54BCE79C710
         public INetworkInterface GetPrimaryNetworkInterface()
         {
-            return this.primaryNetworkInterface = this.networkManager.NetworkInterfaces.GetById(this.PrimaryNetworkInterfaceId());
+            return this.networkManager.NetworkInterfaces.GetById(this.PrimaryNetworkInterfaceId());
         }
 
         ///GENMHASH:D3ADA5DC7B5CC9C5BD29AC1110C61014:EC93403D80CE55A8079C6FDA3D5DE566
@@ -1356,8 +1351,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7F6A7E961EA5A11F2B8013E54123A7D0:C1CDD6BC19A1D800E2865E3DC44941E1
         private void ClearCachedRelatedResources()
         {
-            this.primaryNetworkInterface = null;
-            this.primaryPublicIpAddress = null;
             this.virtualMachineInstanceView = null;
         }
     }

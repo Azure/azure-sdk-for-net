@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineExtensionImages virtualMachineExtensionImages;
         private IAvailabilitySets availabilitySets;
         private IVirtualMachineScaleSets virtualMachineScaleSets;
+        private IComputeUsages usages;
         #endregion
 
         #region ctrs
@@ -114,7 +115,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineImages == null)
                 {
-                    virtualMachineImages = new VirtualMachineImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, client.VirtualMachineExtensionImages));
+                    virtualMachineImages = new VirtualMachineImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, 
+                        client.VirtualMachineExtensionImages), client.VirtualMachineImages);
                 }
                 return virtualMachineImages;
             }
@@ -149,11 +151,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (virtualMachineScaleSets == null)
                 {
-                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets, this, 
+                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets,
+                        client.VirtualMachineScaleSetVMs,
+                        this, 
                         this.storageManager,
                         this.networkManager);
                 }
                 return virtualMachineScaleSets;
+            }
+        }
+
+        public IComputeUsages Usages
+        {
+            get
+            {
+                if (usages == null)
+                {
+                    usages = new ComputeUsagesImpl(this.client);
+                }
+                return usages;
             }
         }
         #endregion
@@ -168,5 +184,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         IAvailabilitySets AvailabilitySets { get; }
         IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
+        IComputeUsages Usages { get; }
     }
 }
