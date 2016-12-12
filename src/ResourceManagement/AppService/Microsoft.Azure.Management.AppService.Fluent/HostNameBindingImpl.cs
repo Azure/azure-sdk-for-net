@@ -33,7 +33,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private FluentImplT parent;
         private string domainName;
         private string name;
- 
+
+        string ICreatable<IHostNameBinding>.Name
+        {
+            get
+            {
+                return this.Name();
+            }
+        }
+
+        string IExternalChildResource<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding, Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>.Id
+        {
+            get
+            {
+                return this.Id();
+            }
+        }
 
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:A96EEE048AFB7EAC724AC09421CBB824
         public Region Region()

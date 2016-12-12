@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var webApps = new WrappedPage<SiteInner, IWebApp>(InnerCollection.ListByResourceGroup(resourceGroupName), converter);
             return new PagedList<IWebApp>(webApps, s =>
             {
-                return new WrappedPage(InnerCollection.ListByResourceGroupNext(s), converter);
+                return new WrappedPage<SiteInner, IWebApp>(InnerCollection.ListByResourceGroupNext(s), converter);
             });
         }
 
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private async Task<IWebApp> PopulateModelAsync(SiteInner inner, CancellationToken cancellationToken = default(CancellationToken)) {
             inner.SiteConfig = await InnerCollection.GetConfigurationAsync(inner.ResourceGroup, inner.Name, cancellationToken);
             var webApp = WrapModel(inner);
-            await webApp.CacheAppSettingsAndConnectionStrings();
+            await webApp.CacheAppSettingsAndConnectionStringsAsync();
             return webApp;
         }
 

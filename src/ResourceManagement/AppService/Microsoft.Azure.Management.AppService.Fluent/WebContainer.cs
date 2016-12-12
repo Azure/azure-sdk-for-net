@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="container">the container value</param>
         public WebContainer(string container)
         {
-            this.value = version;
+            this.value = container;
         }
         
         public override string ToString()

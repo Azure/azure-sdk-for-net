@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     internal partial class HostNameSslBindingImpl<FluentT,FluentImplT> 
     {
-        string IChildResource<IWebAppBase>.Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {

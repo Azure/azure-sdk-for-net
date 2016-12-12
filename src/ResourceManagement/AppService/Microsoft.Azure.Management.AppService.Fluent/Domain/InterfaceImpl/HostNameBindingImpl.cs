@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithThirdPartyDomain(domain) as HostNameBinding.UpdateDefinition.IWithSubDomain<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
-        public string Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        public string Id
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
         {
             get
             {
@@ -193,11 +193,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        public System.Collections.Generic.IDictionary<string,string> Tags
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Tags
         {
             get
             {
-                return this.Tags() as System.Collections.Generic.IDictionary<string,string>;
+                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 

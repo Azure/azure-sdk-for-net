@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.WithGitHubAccessToken(personalAccessToken) as WebAppSourceControl.Definition.IGitHubWithAttach<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
-        string Resource.Fluent.Core.IChildResource<IWebAppBase>.Name
+        string Resource.Fluent.Core.IHasName.Name
         {
             get
             {
