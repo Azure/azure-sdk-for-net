@@ -1,0 +1,42 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ContainerRegistry.Tests Class Library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "packOptions": {
+    "summary": "ContainerRegistry.Tests Tests.",
+    "tags": [ "" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net45+win8" ],
+      "dependencies": {
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.7-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.4.0-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.4,4.0.0)",
+    "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+    "Microsoft.Azure.Management.ContainerRegistry": "1.0.0-preview",
+    "Microsoft.Azure.Management.Storage": "[5.0.2-preview,6.0)",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+  }
+}
