@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.LastModifiedTime
+        System.DateTime? Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.LastModifiedTime
         {
             get
             {

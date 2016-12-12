@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IConnectionString> ConnectionStrings { get; }
 
-        System.DateTime LastModifiedTime { get; }
+        System.DateTime? LastModifiedTime { get; }
 
         /// <summary>
         /// Stops the web app or deployment slot.
