@@ -1218,71 +1218,66 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:257D937A0F04955A15D8633AF5E905F3
-        override protected Task<Models.ApplicationGatewayInner> CreateInner()
+        override protected async Task<ApplicationGatewayInner> CreateInner()
         {
-            //$ // Determine if a default public frontend PIP should be created
-            //$ ApplicationGatewayFrontendImpl defaultPublicFrontend = (ApplicationGatewayFrontendImpl) defaultPublicFrontend();
-            //$ Observable<Resource> pipObservable;
-            //$ if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIpAddressId() == null) {
-            //$ // If public frontend requested but no PIP specified, then create a default PIP
-            //$ pipObservable = Utils.<PublicIpAddress>rootResource(ensureDefaultPipDefinition()
-            //$ .CreateAsync()).Map(new Func1<PublicIpAddress, Resource>() {
-            //$ @Override
-            //$ public Resource call(PublicIpAddress publicIpAddress) {
-            //$ defaultPublicFrontend.WithExistingPublicIpAddress(publicIpAddress);
-            //$ return publicIpAddress;
-            //$ }
-            //$ });
-            //$ } else {
-            //$ // If no public frontend requested, skip creating the PIP
-            //$ pipObservable = Observable.Empty();
-            //$ }
-            //$ 
-            //$ // Determine if default VNet should be created
-            //$ ApplicationGatewayIpConfigurationImpl defaultIpConfig = ensureDefaultIpConfig();
-            //$ ApplicationGatewayFrontendImpl defaultPrivateFrontend = (ApplicationGatewayFrontendImpl) defaultPrivateFrontend();
-            //$ Observable<Resource> networkObservable;
-            //$ if (defaultIpConfig.SubnetName() != null) {
-            //$ // If default IP config already has a subnet assigned to it...
-            //$ if (defaultPrivateFrontend != null) {
-            //$ // ...And a private frontend is requested, then use the same vnet for the private frontend
-            //$ useSubnetFromIpConfigForFrontend(defaultIpConfig, defaultPrivateFrontend);
-            //$ }
-            //$ // ...And no need to create a default VNet
-            //$ networkObservable = Observable.Empty(); // ...And don't create another VNet
-            //$ } else {
-            //$ // But if default IP config does not have a subnet specified, then create a default VNet
-            //$ networkObservable = Utils.<Network>rootResource(ensureDefaultNetworkDefinition()
-            //$ .CreateAsync()).Map(new Func1<Network, Resource>() {
-            //$ @Override
-            //$ public Resource call(Network network) {
-            //$ //... and assign the created VNet to the default IP config
-            //$ defaultIpConfig.WithExistingSubnet(network, DEFAULT);
-            //$ if (defaultPrivateFrontend != null) {
-            //$ // If a private frontend is also requested, then use the same VNet for the private frontend as for the IP config
-            //$ /* TODO: Not sure if the assumption of the same subnet for the frontend and the IP config will hold in
-            //$ * the future, but the existing ARM template for App Gateway for some reason uses the same subnet for the
-            //$ * IP config and the private frontend. Also, trying to use different subnets results in server error today saying they
-            //$ * have to be the same. This may need to be revisited in the future however, as this is somewhat inconsistent
-            //$ * with what the documentation says.
-            //$ */
-            //$ useSubnetFromIpConfigForFrontend(defaultIpConfig, defaultPrivateFrontend);
-            //$ }
-            //$ return network;
-            //$ }
-            //$ });
-            //$ }
-            //$ 
-            //$ return Observable.Merge(networkObservable, pipObservable)
-            //$ .DefaultIfEmpty(null)
-            //$ .Last().FlatMap(new Func1<Resource, Observable<ApplicationGatewayInner>>() {
-            //$ @Override
-            //$ public Observable<ApplicationGatewayInner> call(Resource resource) {
-            //$ return innerCollection.CreateOrUpdateAsync(resourceGroupName(), name(), Inner);
-            //$ }
-            //$ });
+            var tasks = new List<Task>();
 
-            return null;
+            // Determine if a default public frontend PIP should be created
+            ApplicationGatewayFrontendImpl defaultPublicFrontend = (ApplicationGatewayFrontendImpl) DefaultPublicFrontend();
+            if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIpAddressId() == null)
+            {
+                // If default public frontend requested but no PIP specified, create one
+                Task pipTask = EnsureDefaultPipDefinition().CreateAsync().ContinueWith(
+                    antecedent => {
+                        var publicIp = antecedent.Result;
+                        // Attach the created PIP when available
+                        defaultPublicFrontend.WithExistingPublicIpAddress(publicIp);
+                     });
+                tasks.Add(pipTask);
+            }
+
+            // Determine if default VNet should be created
+            var defaultIpConfig = EnsureDefaultIpConfig();
+            var defaultPrivateFrontend = (ApplicationGatewayFrontendImpl) DefaultPrivateFrontend();
+            if (defaultIpConfig.SubnetName() != null)
+            {
+                // If default IP config already has a subnet assigned to it...
+                if (defaultPrivateFrontend != null)
+                {
+                    // ...And a private frontend is requested, then use the same vnet for the private frontend
+                    UseSubnetFromIpConfigForFrontend(defaultIpConfig, defaultPrivateFrontend);
+                }
+
+                // ...And no need to create a default VNet
+            }
+            else
+            {
+                // But if default IP config does not have a subnet specified, then create a default VNet
+                Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync().ContinueWith(antecedent =>
+                {
+                    //... and assign the created VNet to the default IP config
+                    var network = antecedent.Result;
+                    defaultIpConfig.WithExistingSubnet(network, DEFAULT);
+                    if (defaultPrivateFrontend != null)
+                    {
+                        // If a private frontend is also requested, then use the same VNet for the private frontend as for the IP config
+                        /* TODO: Not sure if the assumption of the same subnet for the frontend and the IP config will hold in
+                         * the future, but the existing ARM template for App Gateway for some reason uses the same subnet for the
+                         * IP config and the private frontend. Also, trying to use different subnets results in server error today saying they
+                         * have to be the same. This may need to be revisited in the future however, as this is somewhat inconsistent
+                         * with what the documentation says.
+                         */
+                        UseSubnetFromIpConfigForFrontend(defaultIpConfig, defaultPrivateFrontend);
+                    }
+                });
+                tasks.Add(networkTask);
+            }
+
+            var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(antecedent => {
+                return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+            });
+
+            return await appGatewayInnerTask.Result;
         }
 
         ///GENMHASH:7C5A670BDA8BF576E8AFC752CD10A797:A955581589FA3AB5F9E850A8EC96F11A
