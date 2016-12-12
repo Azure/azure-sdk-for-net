@@ -1,19 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    internal partial class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// The implementation for VirtualMachineImage.
+    /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbWFnZUltcGw=
+    internal partial class VirtualMachineImageImpl :
+        IndexableWrapper<Models.VirtualMachineImageInner>,
+        IVirtualMachineImage
     {
-        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
-            : base(inner)
+        private Region location;
+        private ImageReference imageReference;
+        ///GENMHASH:3037DFCA1BCDE07672005B139B094F10:0578F9D5B08EF1856822AB6B7B18110E
+        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version)
+            : base(null)
         {
-            Location = location;
-            ImageReference = new ImageReference
+            this.location = location;
+            this.imageReference = new ImageReference
             {
                 Publisher = publisher,
                 Offer = offer,
@@ -22,72 +30,72 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             };
         }
 
-        public IList<DataDiskImage> DataDiskImages
+        ///GENMHASH:CAB6054620B9FCCB39E850FA6DA1DC9E:D5C70E9798250262CE50A31D1767529C
+        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
+            : base(inner)
         {
-            get
+            this.location = location;
+            this.imageReference = new ImageReference
             {
-                return Inner.DataDiskImages;
-            }
+                Publisher = publisher,
+                Offer = offer,
+                Sku = sku,
+                Version = version
+            };
         }
 
-        public ImageReference ImageReference
+        ///GENMHASH:467A5E1DBEFF6DFFFD3FD21A958498A3:FAFE8BE8CCB0532D78869AAF9E2F5DDF
+        public IList<DataDiskImage> DataDiskImages()
         {
-            get;
-            private set;
+            return Inner.DataDiskImages;
         }
 
-        public Region Location
+        ///GENMHASH:FD3E0F0AD8E30CCC81844784FA2869A4:5B94A718C46B69AD383734512FB0562D
+        public ImageReference ImageReference()
         {
-            get;
-            private set;
+            return this.imageReference;
         }
 
-        public string Offer
+        ///GENMHASH:A85BBC58BA3B783F90EB92B75BD97D51:B0F0BE5FE7AB84929ACF2368E8415A69
+        public Region Location()
         {
-            get
-            {
-                return ImageReference.Offer;
-            }
+            return this.location;
         }
 
-        public OSDiskImage OsDiskImage
+        ///GENMHASH:C45A9968A03993B152B3E8DC4FD3A429:3B4EAE5C3184CFE696A886744083B492
+        public string Offer()
         {
-            get
-            {
-                return Inner.OsDiskImage;
-            }
+            return this.imageReference.Offer;
         }
 
-        public PurchasePlan Plan
+        ///GENMHASH:9E984BEB4133DD0B3AA842B63D7D77AC:6D8F2FF773E3B310A12FB550BBF5501D
+        public OSDiskImage OsDiskImage()
         {
-            get
-            {
-                return Inner.Plan;
-            }
+            return Inner.OsDiskImage;
         }
 
-        public string PublisherName
+        ///GENMHASH:283A7CD491ABC476D6646B943D8641A8:BB7251641858D1CBEADD4ABE2AF921D3
+        public PurchasePlan Plan()
         {
-            get
-            {
-                return ImageReference.Publisher;
-            }
+            return Inner.Plan;
         }
 
-        public string Sku
+        ///GENMHASH:06BBF1077FAA38CC78AFC6E69E23FB58:5D28523A513481A96A35A0B72BDA3B43
+        public string PublisherName()
         {
-            get
-            {
-                return ImageReference.Sku;
-            }
+            return this.imageReference.Publisher;
         }
 
-        public string Version
+        ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:D2CE592B8121C94F66EBE0B912033A17
+        public string Sku()
         {
-            get
-            {
-                return ImageReference.Version;
-            }
+            return this.imageReference.Sku;
+        }
+
+        ///GENMHASH:493B1EDB88EACA3A476D936362A5B14C:CA9319D6738937BD76EDD7EDAA0ECA55
+        public string Version()
+        {
+            return this.imageReference.Version;
         }
     }
 }

@@ -78,11 +78,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             }
         }
 
-        IDictionary<string, string> IResource.Tags
+        IReadOnlyDictionary<string, string> IResource.Tags
         {
             get
             {
-                return Inner.Tags;
+                return Inner.Tags as IReadOnlyDictionary<string, string>;
             }
         }
 

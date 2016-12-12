@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             }
         }
 
-        public IDictionary<string, string> Tags
+        public IReadOnlyDictionary<string, string> Tags
         {
             get
             {
