@@ -185,14 +185,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<LoadBalancerInner> CreateInner()
         {
-            return this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:38719597698E42AABAD5A9917188C155:D9C6887E0B146C62C173F2FC8A940200
         private void InitializeFrontendsFromInner ()
         {
             frontends = new SortedDictionary<string, ILoadBalancerFrontend>();
-            IList<FrontendIPConfigurationInner> frontendsInner = this.Inner.FrontendIPConfigurations;
+            IList<FrontendIPConfigurationInner> frontendsInner = Inner.FrontendIPConfigurations;
             if (frontendsInner != null)
             {
                 foreach (var frontendInner in frontendsInner)
@@ -283,9 +283,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal string FutureResourceId()
         {
             return new StringBuilder()
-                .Append(base.ResourceIdBase)
+                .Append(ResourceIdBase)
                 .Append("/providers/Microsoft.Network/loadBalancers/")
-                .Append(this.Name)
+                .Append(Name)
                 .ToString();
         }
 

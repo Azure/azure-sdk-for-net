@@ -7,6 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Models;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
+    using LoadBalancerBackend.Definition;
+    using LoadBalancerBackend.UpdateDefinition;
+    using LoadBalancerBackend.Update;
 
     /// <summary>
     /// Implementation for Backend.
@@ -14,9 +17,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class LoadBalancerBackendImpl  :
         ChildResource<BackendAddressPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerBackend,
-        LoadBalancerBackend.Definition.IDefinition<LoadBalancer.Definition.IWithBackendOrProbe>,
-        LoadBalancerBackend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        LoadBalancerBackend.Update.IUpdate
+        IDefinition<LoadBalancer.Definition.IWithBackendOrProbe>,
+        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        IUpdate
     {
         internal LoadBalancerBackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
@@ -28,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             // This assumes a NIC can only have one IP config associated with the backend of an LB,
             // which is correct at the time of this implementation and seems unlikely to ever change
             IDictionary<string, string> ipConfigNames = new SortedDictionary<string, string>();
-            if (this.Inner.BackendIPConfigurations != null)
+            if (Inner.BackendIPConfigurations != null)
             {
                 foreach (var inner in Inner.BackendIPConfigurations)
                 {
@@ -46,9 +49,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
             IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
-            if (this.Inner.LoadBalancingRules != null)
+            if (Inner.LoadBalancingRules != null)
             {
-                foreach (var inner in this.Inner.LoadBalancingRules)
+                foreach (var inner in Inner.LoadBalancingRules)
                 {
                     string name = ResourceUtils.NameFromResourceId(inner.Id);
                     ILoadBalancingRule rule;
@@ -65,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public override string Name()
         {
-            return this.Inner.Name;
+            return Inner.Name;
         }
 
         ///GENMHASH:A2968EC81873609D937762599BD3CAF6:F9B61BF42E13154C4C28B7365CB04241

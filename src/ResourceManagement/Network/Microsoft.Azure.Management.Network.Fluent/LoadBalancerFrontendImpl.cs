@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:5647899224D30C7B5E1FDCD2D9AAB1DB:F08EFDCC8A8286B3C9226D19B2EA7889
         internal LoadBalancerFrontendImpl WithExistingSubnet (INetwork network, string subnetName)
         {
-            return this.WithExistingSubnet(network.Id, subnetName);
+            return WithExistingSubnet(network.Id, subnetName);
         }
 
         ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:E6CC43D15A29B0635E7C303E592E8569
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
         public ISubnet GetSubnet()
         {
-            return this.Parent.Manager.GetAssociatedSubnet(this.Inner.Subnet);
+            return Parent.Manager.GetAssociatedSubnet(Inner.Subnet);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()

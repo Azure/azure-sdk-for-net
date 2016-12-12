@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
+    using LoadBalancerInboundNatRule.Definition;
+    using LoadBalancerInboundNatRule.UpdateDefinition;
+    using LoadBalancerInboundNatRule.Update;
 
     /// <summary>
     /// Implementation for IInboundNatRule.
@@ -15,9 +18,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class LoadBalancerInboundNatRuleImpl  :
         ChildResource<InboundNatRuleInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatRule,
-        LoadBalancerInboundNatRule.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
-        LoadBalancerInboundNatRule.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
-        LoadBalancerInboundNatRule.Update.IUpdate
+        IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
+        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        IUpdate
     {
         internal LoadBalancerInboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 
             : base(inner, parent)
@@ -145,7 +148,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             string frontendId = Parent.FutureResourceId() + "/frontendIPConfigurations/" + frontendName;
             SubResource frontendRef = new SubResource(frontendId);
-            this.Inner.FrontendIPConfiguration = frontendRef;
+            Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
