@@ -9,6 +9,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Models;
     using Resource.Fluent.Core.ResourceActions;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
     using WebAppBase.Update;
@@ -56,25 +59,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:B90198DC89E5EAAFA864E1D246D6806C:4AD5178A115C8AF028528ABF531FF276
         private string GetCertificateThumbprint(string pfxPath, string password)
         {
-            // TODO - ans - Implement this.
+            X509Certificate2Collection collection = new X509Certificate2Collection();
+            collection.Import(pfxPath, password, X509KeyStorageFlags.PersistKeySet);
 
-            //$ try {
-            //$ InputStream inStream = new FileInputStream(pfxPath);
-            //$
-            //$ KeyStore ks = KeyStore.GetInstance("PKCS12");
-            //$ ks.Load(inStream, password.ToCharArray());
-            //$
-            //$ String alias = ks.Aliases().NextElement();
-            //$ X509Certificate certificate = (X509Certificate) ks.GetCertificate(alias);
-            //$ inStream.Close();
-            //$ MessageDigest sha = MessageDigest.GetInstance("SHA-1");
-            //$ return BaseEncoding.Base16().Encode(sha.Digest(certificate.GetEncoded()));
-            //$ } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException ex) {
-            //$ throw new RuntimeException(ex);
-            //$ }
-            //$ }
-
-            return null;
+            X509Certificate2 cert = collection.GetEnumerator().Current;
+            return cert.Thumbprint;
         }
 
         ///GENMHASH:0B0AB38F6DD8B1FEB79C787CAA88F145:906C0B4A59497294B730FFF3475D49DA

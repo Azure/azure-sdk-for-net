@@ -261,8 +261,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         IHostNameBinding IRefreshable<IHostNameBinding>.Refresh()
         {
-            // TODO - ans - ??
-            throw new NotImplementedException();
+            if (parent is IWebApp)
+            {
+                SetInner(client.GetHostNameBinding(parent.ResourceGroupName, parent.Name, Name()));
+            }
+            else
+            {
+                SetInner(client.GetHostNameBindingSlot(parent.ResourceGroupName, ((IDeploymentSlot)parent).Parent.Name, parent.Name, Name()));
+            }
+            return this;
         }
     }
 }

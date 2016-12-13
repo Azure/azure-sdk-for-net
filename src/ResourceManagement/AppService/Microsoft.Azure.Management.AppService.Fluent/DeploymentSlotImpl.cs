@@ -128,7 +128,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:F04F63AA4669C2004D2264538A4A983F:129E57D5B1ECCAA65D812C4E28851FCE
         public DeploymentSlotImpl WithBrandNewConfiguration()
         {
-            // TODO - ans - BrandNew or just clean or new.
             Inner.SiteConfig = null;
 
             return this;
