@@ -3,40 +3,58 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine image.
     /// </summary>
-    public interface IVirtualMachineImage :
+    public interface IVirtualMachineImage  :
         IWrapper<Models.VirtualMachineImageInner>
     {
-        /// <return>The name of the virtual machine image offer this image is part of.</return>
+        /// <summary>
+        /// Gets the name of the virtual machine image offer this image is part of.
+        /// </summary>
         string Offer { get; }
 
-        /// <return>OS disk image in the virtual machine image.</return>
+        /// <summary>
+        /// Gets OS disk image in the virtual machine image.
+        /// </summary>
         Models.OSDiskImage OsDiskImage { get; }
 
-        /// <return>The publisher name of the virtual machine image.</return>
+        /// <summary>
+        /// Gets the publisher name of the virtual machine image.
+        /// </summary>
         string PublisherName { get; }
 
-        /// <return>The region in which virtual machine image is available.</return>
+        /// <summary>
+        /// Gets the region in which virtual machine image is available.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Location { get; }
 
-        /// <return>The commercial name of the virtual machine image (SKU).</return>
+        /// <summary>
+        /// Gets the commercial name of the virtual machine image (SKU).
+        /// </summary>
         string Sku { get; }
 
-        /// <return>The image reference representing the publisher, offer, SKU and version of the virtual machine image.</return>
+        /// <summary>
+        /// Gets the image reference representing the publisher, offer, SKU and version of the virtual machine image.
+        /// </summary>
         Models.ImageReference ImageReference { get; }
 
-        /// <return>Data disk images in the virtual machine image.</return>
+        /// <summary>
+        /// Gets data disk images in the virtual machine image.
+        /// </summary>
         System.Collections.Generic.IList<Models.DataDiskImage> DataDiskImages { get; }
 
-        /// <return>The version of the virtual machine image.</return>
+        /// <summary>
+        /// Gets the version of the virtual machine image.
+        /// </summary>
         string Version { get; }
 
-        /// <return>The purchase plan for the virtual machine image.</return>
+        /// <summary>
+        /// Gets the purchase plan for the virtual machine image.
+        /// </summary>
         Models.PurchasePlan Plan { get; }
     }
 }

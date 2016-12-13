@@ -2,33 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
 
     /// <summary>
-    /// The stage of the new data disk configuration allowing to specify location to store the VHD.
+    /// The entirety of a data disk definition as part of a virtual machine update.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
-    public interface IWithStoreAt<ParentT>  :
-        IWithAttach<ParentT>
-    {
-        /// <summary>
-        /// Specifies where the VHD associated with the new blank data disk needs to be stored.
-        /// </summary>
-        /// <param name="storageAccountName">The storage account name.</param>
-        /// <param name="containerName">The name of the container to hold the new VHD file.</param>
-        /// <param name="vhdName">The name for the new VHD file.</param>
-        /// <return>The stage representing optional additional configurations for the data disk.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> StoreAt(string storageAccountName, string containerName, string vhdName);
-    }
-
-    /// <summary>
-    /// The stage allowing to choose configuring new or existing data disk.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
-    public interface IWithDataDisk<ParentT>  :
-        IAttachNewDataDisk<ParentT>,
-        IAttachExistingDataDisk<ParentT>
+    /// <typeparam name="Parent">The return type of the final UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    public interface IUpdateDefinition<ParentT>  :
+        IBlank<ParentT>,
+        IWithAttach<ParentT>,
+        IWithStoreAt<ParentT>
     {
     }
 
@@ -47,8 +31,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Updat
     }
 
     /// <summary>
+    /// The first stage of attaching an existing disk as data disk and configuring it.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    public interface IAttachExistingDataDisk<ParentT> 
+    {
+        /// <summary>
+        /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
+        /// </summary>
+        /// <param name="storageAccountName">The storage account name.</param>
+        /// <param name="containerName">The name of the container holding the VHD file.</param>
+        /// <param name="vhdName">The name for the VHD file.</param>
+        /// <return>The stage representing optional additional settings for the attachable data disk.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> From(string storageAccountName, string containerName, string vhdName);
+    }
+
+    /// <summary>
+    /// The first stage of a  data disk definition.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    public interface IBlank<ParentT>  :
+        IWithDataDisk<ParentT>
+    {
+    }
+
+    /// <summary>
     /// The final stage of the data disk definition.
-    /// <p>
     /// At this stage, any remaining optional settings can be specified, or the data disk definition
     /// can be attached to the parent virtual machine definition using WithAttach.attach().
     /// </summary>
@@ -72,38 +80,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Updat
     }
 
     /// <summary>
-    /// The first stage of attaching an existing disk as data disk and configuring it.
+    /// The stage allowing to choose configuring new or existing data disk.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
-    public interface IAttachExistingDataDisk<ParentT> 
+    public interface IWithDataDisk<ParentT>  :
+        IAttachNewDataDisk<ParentT>,
+        IAttachExistingDataDisk<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the new data disk configuration allowing to specify location to store the VHD.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    public interface IWithStoreAt<ParentT>  :
+        IWithAttach<ParentT>
     {
         /// <summary>
-        /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
+        /// Specifies where the VHD associated with the new blank data disk needs to be stored.
         /// </summary>
         /// <param name="storageAccountName">The storage account name.</param>
-        /// <param name="containerName">The name of the container holding the VHD file.</param>
-        /// <param name="vhdName">The name for the VHD file.</param>
-        /// <return>The stage representing optional additional settings for the attachable data disk.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> From(string storageAccountName, string containerName, string vhdName);
-    }
-
-    /// <summary>
-    /// The entirety of a data disk definition as part of a virtual machine update.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final UpdateDefinitionStages.WithAttach.attach().</typeparam>
-    public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithStoreAt<ParentT>
-    {
-    }
-
-    /// <summary>
-    /// The first stage of a  data disk definition.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
-    public interface IBlank<ParentT>  :
-        IWithDataDisk<ParentT>
-    {
+        /// <param name="containerName">The name of the container to hold the new VHD file.</param>
+        /// <param name="vhdName">The name for the new VHD file.</param>
+        /// <return>The stage representing optional additional configurations for the data disk.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> StoreAt(string storageAccountName, string containerName, string vhdName);
     }
 }

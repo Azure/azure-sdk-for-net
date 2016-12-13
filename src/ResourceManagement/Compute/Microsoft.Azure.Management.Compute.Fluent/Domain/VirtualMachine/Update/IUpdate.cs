@@ -2,15 +2,47 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
 {
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition;
-    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition;
-    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition;
+
+    /// <summary>
+    /// The stage of virtual machine definition allowing to specify additional network interfaces.
+    /// </summary>
+    public interface IWithSecondaryNetworkInterface 
+    {
+        /// <summary>
+        /// Removes a network interface associated with virtual machine.
+        /// </summary>
+        /// <param name="name">The name of the secondary network interface to remove.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutSecondaryNetworkInterface(string name);
+
+        /// <summary>
+        /// Associate an existing network interface with the virtual machine.
+        /// Note this method's effect is additive, i.e. each time it is used, the new secondary
+        /// network interface added to the virtual machine.
+        /// </summary>
+        /// <param name="networkInterface">An existing network interface.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface);
+
+        /// <summary>
+        /// Create a new network interface to associate with the virtual machine, based on the
+        /// provided definition.
+        /// Note this method's effect is additive, i.e. each time it is used, the new secondary
+        /// network interface added to the virtual machine.
+        /// </summary>
+        /// <param name="creatable">A creatable definition for a new network interface.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable);
+    }
 
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify data disk configuration.
@@ -71,71 +103,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     }
 
     /// <summary>
-    /// The stage of the virtual machine definition allowing to specify extensions.
-    /// </summary>
-    public interface IWithExtension 
-    {
-        /// <summary>
-        /// Begins the description of an update of an existing extension of this virtual machine.
-        /// </summary>
-        /// <param name="name">The reference name for the extension.</param>
-        /// <return>The stage representing updatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate UpdateExtension(string name);
-
-        /// <summary>
-        /// Specifies definition of an extension to be attached to the virtual machine.
-        /// </summary>
-        /// <param name="name">The reference name for the extension.</param>
-        /// <return>The stage representing configuration for the extension.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> DefineNewExtension(string name);
-
-        /// <summary>
-        /// Detaches an extension with the given name from the virtual machine.
-        /// </summary>
-        /// <param name="name">The reference name for the extension to be removed/uninstalled.</param>
-        /// <return>The stage representing updatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutExtension(string name);
-    }
-
-    /// <summary>
-    /// The stage of virtual machine definition allowing to specify additional network interfaces.
-    /// </summary>
-    public interface IWithSecondaryNetworkInterface 
-    {
-        /// <summary>
-        /// Removes a network interface associated with virtual machine.
-        /// </summary>
-        /// <param name="name">The name of the secondary network interface to remove.</param>
-        /// <return>The stage representing updatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutSecondaryNetworkInterface(string name);
-
-        /// <summary>
-        /// Associate an existing network interface with the virtual machine.
-        /// 
-        /// Note this method's effect is additive, i.e. each time it is used, the new secondary
-        /// network interface added to the virtual machine.
-        /// </summary>
-        /// <param name="networkInterface">An existing network interface.</param>
-        /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface);
-
-        /// <summary>
-        /// Create a new network interface to associate with the virtual machine, based on the
-        /// provided definition.
-        /// 
-        /// <p>
-        /// Note this method's effect is additive, i.e. each time it is used, the new secondary
-        /// network interface added to the virtual machine.
-        /// </summary>
-        /// <param name="creatable">A creatable definition for a new network interface.</param>
-        /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable);
-    }
-
-    /// <summary>
     /// The template for an update operation, containing all the settings that
     /// can be modified.
-    /// <p>
     /// Call Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
@@ -172,5 +141,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         /// <param name="size">A size from the list of available sizes for the virtual machine.</param>
         /// <return>The stage representing updatable VM definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithSize(VirtualMachineSizeTypes size);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine definition allowing to specify extensions.
+    /// </summary>
+    public interface IWithExtension 
+    {
+        /// <summary>
+        /// Begins the description of an update of an existing extension of this virtual machine.
+        /// </summary>
+        /// <param name="name">The reference name for the extension.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate UpdateExtension(string name);
+
+        /// <summary>
+        /// Specifies definition of an extension to be attached to the virtual machine.
+        /// </summary>
+        /// <param name="name">The reference name for the extension.</param>
+        /// <return>The stage representing configuration for the extension.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> DefineNewExtension(string name);
+
+        /// <summary>
+        /// Detaches an extension with the given name from the virtual machine.
+        /// </summary>
+        /// <param name="name">The reference name for the extension to be removed/uninstalled.</param>
+        /// <return>The stage representing updatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutExtension(string name);
     }
 }

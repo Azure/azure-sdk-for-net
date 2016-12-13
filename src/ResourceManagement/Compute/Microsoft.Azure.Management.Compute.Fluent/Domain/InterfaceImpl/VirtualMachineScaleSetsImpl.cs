@@ -2,24 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent;
-    using System.Threading;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
 
-    internal partial class VirtualMachineScaleSetsImpl
+    internal partial class VirtualMachineScaleSetsImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.
-        /// <p>
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
         /// process in Azure is Creatable.create().
-        /// <p>
         /// Note that the Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
         /// parameters specified. If you do not see Creatable.create() among the available methods, it
@@ -52,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>An immutable representation of the resource.</return>
         async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
         }
 
         /// <summary>
@@ -65,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Start(string groupName, string name)
         {
-
+ 
             this.Start(groupName, name);
         }
 
@@ -79,7 +77,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Reimage(string groupName, string name)
         {
-
+ 
             this.Reimage(groupName, name);
         }
 
@@ -93,7 +91,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.PowerOff(string groupName, string name)
         {
-
+ 
             this.PowerOff(groupName, name);
         }
 
@@ -107,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Deallocate(string groupName, string name)
         {
-
+ 
             this.Deallocate(groupName, name);
         }
 
@@ -121,7 +119,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Restart(string groupName, string name)
         {
-
+ 
             this.Restart(groupName, name);
         }
 
@@ -133,8 +131,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>An observable to the request.</return>
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-
-            await this.DeleteByGroupAsync(groupName, name);
+ 
+            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>

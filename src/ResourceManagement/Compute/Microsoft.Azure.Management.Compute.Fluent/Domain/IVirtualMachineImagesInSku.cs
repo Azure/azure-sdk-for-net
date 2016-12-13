@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Entry point to virtual machine sku images.
     /// </summary>
-    public interface IVirtualMachineImagesInSku :
+    public interface IVirtualMachineImagesInSku  :
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>
     {
     }

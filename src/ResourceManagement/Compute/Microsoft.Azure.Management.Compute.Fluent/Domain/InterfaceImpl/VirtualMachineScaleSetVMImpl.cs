@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Models;
-    using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
 
-    internal partial class VirtualMachineScaleSetVMImpl
+    internal partial class VirtualMachineScaleSetVMImpl 
     {
         /// <summary>
         /// Refreshes the resource to sync with Azure.
@@ -20,34 +20,42 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM;
         }
 
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>The name of the region the resource is in.</return>
+        /// <summary>
+        /// Gets the name of the region the resource is in.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.RegionName
         {
             get
             {
-                return this.RegionName() as string;
+                return this.RegionName();
             }
         }
 
-        /// <return>The tags for the resource.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, string> Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Tags
+        /// <summary>
+        /// Gets the tags for the resource.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Tags
         {
             get
             {
-                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string, string>;
+                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 
-        /// <return>The region the resource is in.</return>
+        /// <summary>
+        /// Gets the region the resource is in.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Region
         {
             get
@@ -56,21 +64,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The type of the resource.</return>
+        /// <summary>
+        /// Gets the type of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IResource.Type
         {
             get
             {
-                return this.Type() as string;
+                return this.Type();
             }
         }
 
-        /// <return>The resource ID string.</return>
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
 
@@ -80,11 +92,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the restart action.</return>
         async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.RestartAsync(CancellationToken cancellationToken)
         {
-
+ 
             await this.RestartAsync(cancellationToken);
         }
 
-        /// <return>True if this is a Windows virtual machine and Vm agent is provisioned, false otherwise.</return>
+        /// <summary>
+        /// Gets true if this is a Windows virtual machine and Vm agent is provisioned, false otherwise.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsWindowsVmAgentProvisioned
         {
             get
@@ -93,12 +107,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>Resource id of primary network interface associated with virtual machine instance.</return>
+        /// <summary>
+        /// Gets resource id of primary network interface associated with virtual machine instance.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PrimaryNetworkInterfaceId
         {
             get
             {
-                return this.PrimaryNetworkInterfaceId() as string;
+                return this.PrimaryNetworkInterfaceId();
             }
         }
 
@@ -107,23 +123,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PowerOff()
         {
-
+ 
             this.PowerOff();
         }
 
-        /// <return>The time zone of the Windows virtual machine.</return>
+        /// <summary>
+        /// Gets the time zone of the Windows virtual machine.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.WindowsTimeZone
         {
             get
             {
-                return this.WindowsTimeZone() as string;
+                return this.WindowsTimeZone();
             }
         }
 
-        /// <return>
-        /// True if the operating system of the virtual machine instance is based on platform image,
+        /// <summary>
+        /// Gets true if the operating system of the virtual machine instance is based on platform image,
         /// false if based on custom image.
-        /// </return>
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsOsBasedOnPlatformImage
         {
             get
@@ -133,11 +151,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the instance view of the virtual machine instance.
-        /// <p>
+        /// Gets Gets the instance view of the virtual machine instance.
         /// To get the latest instance view use VirtualMachineScaleSetVM.refreshInstanceView().
         /// </summary>
-        /// <return>The instance view.</return>
+        /// <summary>
+        /// Gets the instance view.
+        /// </summary>
         Models.VirtualMachineInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.InstanceView
         {
             get
@@ -146,16 +165,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The name of the admin user.</return>
+        /// <summary>
+        /// Gets the name of the admin user.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.AdministratorUserName
         {
             get
             {
-                return this.AdministratorUserName() as string;
+                return this.AdministratorUserName();
             }
         }
 
-        /// <return>Virtual machine instance size.</return>
+        /// <summary>
+        /// Gets virtual machine instance size.
+        /// </summary>
         Models.VirtualMachineSizeTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Size
         {
             get
@@ -164,7 +187,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>True if this is a Windows virtual machine and automatic update is turned on, false otherwise.</return>
+        /// <summary>
+        /// Gets true if this is a Windows virtual machine and automatic update is turned on, false otherwise.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsWindowsAutoUpdateEnabled
         {
             get
@@ -179,10 +204,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the reimage action.</return>
         async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ReimageAsync(CancellationToken cancellationToken)
         {
+ 
             await this.ReimageAsync(cancellationToken);
         }
 
-        /// <return>True if the boot diagnostic is enabled, false otherwise.</return>
+        /// <summary>
+        /// Gets true if the boot diagnostic is enabled, false otherwise.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.BootDiagnosticEnabled
         {
             get
@@ -191,7 +219,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The list of resource id of network interface associated with the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the list of resource id of network interface associated with the virtual machine instance.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.NetworkInterfaceIds
         {
             get
@@ -200,7 +230,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The operating system profile of an virtual machine instance.</return>
+        /// <summary>
+        /// Gets the operating system profile of an virtual machine instance.
+        /// </summary>
         Models.OSProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsProfile
         {
             get
@@ -215,7 +247,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the poweroff action.</return>
         async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PowerOffAsync(CancellationToken cancellationToken)
         {
-
+ 
             await this.PowerOffAsync(cancellationToken);
         }
 
@@ -234,11 +266,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the delete action.</return>
         async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DeleteAsync(CancellationToken cancellationToken)
         {
-
+ 
             await this.DeleteAsync(cancellationToken);
         }
 
-        /// <return>The diagnostics profile of the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the diagnostics profile of the virtual machine instance.
+        /// </summary>
         Models.DiagnosticsProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DiagnosticsProfile
         {
             get
@@ -252,14 +286,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Start()
         {
-
+ 
             this.Start();
         }
 
-        /// <return>
-        /// Reference to the platform image that the virtual machine instance operating system is based on,
+        /// <summary>
+        /// Gets reference to the platform image that the virtual machine instance operating system is based on,
         /// null will be returned if the operating system is based on custom image.
-        /// </return>
+        /// </summary>
         Models.ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PlatformImageReference
         {
             get
@@ -273,7 +307,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Deallocate()
         {
-
+ 
             this.Deallocate();
         }
 
@@ -282,7 +316,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Reimage()
         {
-
+ 
             this.Reimage();
         }
 
@@ -292,14 +326,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the start action.</return>
         async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.StartAsync(CancellationToken cancellationToken)
         {
-
+ 
             await this.StartAsync(cancellationToken);
         }
 
-        /// <return>
-        /// The sku of the virtual machine instance, this will be sku used while creating the parent
+        /// <summary>
+        /// Gets the sku of the virtual machine instance, this will be sku used while creating the parent
         /// virtual machine scale set.
-        /// </return>
+        /// </summary>
         Models.Sku Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Sku
         {
             get
@@ -308,7 +342,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>True if the latest scale set model changes are applied to the virtual machine instance.</return>
+        /// <summary>
+        /// Gets true if the latest scale set model changes are applied to the virtual machine instance.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsLatestScaleSetUpdateApplied
         {
             get
@@ -326,7 +362,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetPlatformImage() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage;
         }
 
-        /// <return>True if this is a Linux virtual machine and password based login is enabled, false otherwise.</return>
+        /// <summary>
+        /// Gets true if this is a Linux virtual machine and password based login is enabled, false otherwise.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsLinuxPasswordAuthenticationEnabled
         {
             get
@@ -335,7 +373,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The operating system type.</return>
+        /// <summary>
+        /// Gets the operating system type.
+        /// </summary>
         Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsType
         {
             get
@@ -349,20 +389,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Delete()
         {
-
+ 
             this.Delete();
         }
 
-        /// <return>The virtual machine instance computer name with prefix VirtualMachineScaleSet.computerNamePrefix().</return>
+        /// <summary>
+        /// Gets the virtual machine instance computer name with prefix VirtualMachineScaleSet.computerNamePrefix().
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ComputerName
         {
             get
             {
-                return this.ComputerName() as string;
+                return this.ComputerName();
             }
         }
 
-        /// <return>The power state of the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the power state of the virtual machine instance.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.PowerState Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PowerState
         {
             get
@@ -371,16 +415,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The resource id of the availability set that this virtual machine instance belongs to.</return>
+        /// <summary>
+        /// Gets the resource id of the availability set that this virtual machine instance belongs to.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.AvailabilitySetId
         {
             get
             {
-                return this.AvailabilitySetId() as string;
+                return this.AvailabilitySetId();
             }
         }
 
-        /// <return>The storage profile of the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the storage profile of the virtual machine instance.
+        /// </summary>
         Models.StorageProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.StorageProfile
         {
             get
@@ -389,12 +437,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The name of the operating system disk.</return>
+        /// <summary>
+        /// Gets the name of the operating system disk.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsDiskName
         {
             get
             {
-                return this.OsDiskName() as string;
+                return this.OsDiskName();
             }
         }
 
@@ -404,11 +454,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the deallocate action.</return>
         async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DeallocateAsync(CancellationToken cancellationToken)
         {
-
+ 
             await this.DeallocateAsync(cancellationToken);
         }
 
-        /// <return>The caching type of the operating system disk.</return>
+        /// <summary>
+        /// Gets the caching type of the operating system disk.
+        /// </summary>
         Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsDiskCachingType
         {
             get
@@ -417,12 +469,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The extensions associated with the virtual machine instance, indexed by name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Extensions
+        /// <summary>
+        /// Gets the extensions associated with the virtual machine instance, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Extensions
         {
             get
             {
-                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension>;
+                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension>;
             }
         }
 
@@ -431,41 +485,47 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Restart()
         {
-
+ 
             this.Restart();
         }
 
-        /// <return>
-        /// Vhd uri of the custom image that the virtual machine instance operating system is based on,
+        /// <summary>
+        /// Gets vhd uri of the custom image that the virtual machine instance operating system is based on,
         /// null will be returned if the operating system is based on platform image.
-        /// </return>
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.CustomImageVhdUri
         {
             get
             {
-                return this.CustomImageVhdUri() as string;
+                return this.CustomImageVhdUri();
             }
         }
 
-        /// <return>Vhd uri to the operating system disk.</return>
+        /// <summary>
+        /// Gets vhd uri to the operating system disk.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsDiskVhdUri
         {
             get
             {
-                return this.OsDiskVhdUri() as string;
+                return this.OsDiskVhdUri();
             }
         }
 
-        /// <return>The instance id assigned to this virtual machine instance.</return>
+        /// <summary>
+        /// Gets the instance id assigned to this virtual machine instance.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.InstanceId
         {
             get
             {
-                return this.InstanceId() as string;
+                return this.InstanceId();
             }
         }
 
-        /// <return>The size of the operating system disk.</return>
+        /// <summary>
+        /// Gets the size of the operating system disk.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsDiskSizeInGB
         {
             get
@@ -474,12 +534,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The uri to the storage account storing boot diagnostics log.</return>
+        /// <summary>
+        /// Gets the uri to the storage account storing boot diagnostics log.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.BootDiagnosticStorageAccountUri
         {
             get
             {
-                return this.BootDiagnosticStorageAccountUri() as string;
+                return this.BootDiagnosticStorageAccountUri();
             }
         }
     }

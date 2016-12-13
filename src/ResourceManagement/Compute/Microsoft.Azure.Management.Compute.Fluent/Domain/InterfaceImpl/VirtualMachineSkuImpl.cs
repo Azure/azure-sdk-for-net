@@ -1,22 +1,26 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    internal partial class VirtualMachineSkuImpl
+    internal partial class VirtualMachineSkuImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>Virtual machine images in the SKU.</return>
+        /// <summary>
+        /// Gets virtual machine images in the SKU.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImagesInSku Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku.Images
         {
             get
@@ -25,7 +29,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The publisher of this virtual machine image offer SKU.</return>
+        /// <summary>
+        /// Gets the publisher of this virtual machine image offer SKU.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku.Publisher
         {
             get
@@ -34,7 +40,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The virtual machine offer name that this SKU belongs to.</return>
+        /// <summary>
+        /// Gets the virtual machine offer name that this SKU belongs to.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku.Offer
         {
             get
@@ -43,7 +51,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The region where this virtual machine image offer SKU is available.</return>
+        /// <summary>
+        /// Gets the region where this virtual machine image offer SKU is available.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSku.Region
         {
             get
