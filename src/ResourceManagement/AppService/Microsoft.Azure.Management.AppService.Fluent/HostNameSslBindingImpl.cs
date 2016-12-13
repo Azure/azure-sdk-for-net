@@ -80,13 +80,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0B0AB38F6DD8B1FEB79C787CAA88F145:906C0B4A59497294B730FFF3475D49DA
         internal Func<Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>> NewCertificateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return () =>
+            if (newCertificate == null)
             {
-                return newCertificate().ContinueWith(cert =>
-                {
-                    WithCertificateThumbprint(cert.Result.Thumbprint);
-                    return cert.Result;
-                });
+                return null;
+            }
+
+            return async () =>
+            {
+                var cert = await newCertificate();
+                WithCertificateThumbprint(cert.Thumbprint);
+                return cert;
             };
         }
 
