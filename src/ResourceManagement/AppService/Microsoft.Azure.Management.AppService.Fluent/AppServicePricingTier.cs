@@ -22,7 +22,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public static readonly AppServicePricingTier PREMIUM_P2 = new AppServicePricingTier("Premium", "P2");
         public static readonly AppServicePricingTier PREMIUM_P3 = new AppServicePricingTier("Premium", "P3");
 
-        private SkuDescription skuDescription;
+        public SkuDescription SkuDescription { get; private set; }
+
+        private AppServicePricingTier()
+        {
+        }
 
         /// <summary>
         /// Creates a custom value for AppServicePricingTier.
@@ -31,7 +35,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="size">the size of the plan</param>
         public AppServicePricingTier(string tier, string size)
         {
-            this.skuDescription = new SkuDescription
+            this.SkuDescription = new SkuDescription
             {
                 Name = size,
                 Tier = tier,
@@ -41,7 +45,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public override string ToString()
         {
-            return skuDescription.Tier + "_" + skuDescription.Size;
+            return SkuDescription.Tier + "_" + SkuDescription.Size;
         }
 
         public override bool Equals(object obj)
@@ -61,7 +65,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public override int GetHashCode()
         {
-            return skuDescription.GetHashCode();
+            return SkuDescription.GetHashCode();
+        }
+
+        public static AppServicePricingTier FromSkuDescription(SkuDescription skuDescription)
+        {
+            return new AppServicePricingTier()
+            {
+                SkuDescription = skuDescription
+            };
         }
     }
 }

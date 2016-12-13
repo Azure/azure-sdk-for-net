@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
     {
-        WebAppsOperations client;
+        internal WebAppsOperations client;
         WebSiteManagementClient serviceClient;
         IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IAppSetting> cachedAppSettings;
         IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IConnectionString> cachedConnectionStrings;

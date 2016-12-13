@@ -136,7 +136,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return null;
             }
         }
-        
+
+        public IKeyVaultManager KeyVaultManager
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 
@@ -147,5 +155,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IAppServiceDomains AppServiceDomains { get; }
         IAppServiceCertificates AppServiceCertificates { get; }
         IAppServiceCertificateOrders AppServiceCertificateOrders { get; }
+        IKeyVaultManager KeyVaultManager { get; }
     }
 }
