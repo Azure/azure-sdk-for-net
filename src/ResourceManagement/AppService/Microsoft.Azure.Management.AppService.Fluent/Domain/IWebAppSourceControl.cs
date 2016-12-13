@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner>,
         IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
     {
-        Microsoft.Azure.Management.AppService.Fluent.RepositoryType RepositoryType { get; }
+        Microsoft.Azure.Management.AppService.Fluent.RepositoryType? RepositoryType { get; }
 
         string Branch { get; }
 

@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        Microsoft.Azure.Management.AppService.Fluent.RepositoryType Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
+        Microsoft.Azure.Management.AppService.Fluent.RepositoryType? Microsoft.Azure.Management.AppService.Fluent.IWebAppSourceControl.RepositoryType
         {
             get
             {
