@@ -1,0 +1,102 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Fluent.Tests.Common;
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Azure.Tests.WebApp
+{
+    public class HostnameSslTests
+    {
+        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("javacsmrg", 20);
+        private static readonly string WEBAPP_NAME = ResourceNamer.RandomResourceName("java-webapp-", 20);
+        private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
+
+        [Fact]
+        public async Task CanBindHostnameAndSsl()
+        {
+            var appServiceManager = TestHelper.CreateAppServiceManager();
+            var domain = appServiceManager.AppServiceDomains.GetByGroup(RG_NAME, "FIX IT");
+            var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup(RG_NAME, "FIX IT");
+
+            // hostname binding
+            appServiceManager.WebApps.Define(WEBAPP_NAME)
+                .WithNewResourceGroup(RG_NAME)
+                .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
+                .WithRegion(Region.US_WEST)
+                .WithPricingTier(AppServicePricingTier.BASIC_B1)
+                // TODO - ans - Should be a method.
+                .DefineHostnameBinding
+                    .WithAzureManagedDomain(domain)
+                    .WithSubDomain(WEBAPP_NAME)
+                    .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
+                    .Attach()
+                .Create();
+
+            var webApp = appServiceManager.WebApps.GetByGroup(RG_NAME, WEBAPP_NAME);
+            Assert.NotNull(webApp);
+
+            var response = await CheckAddress("http://" + WEBAPP_NAME + "." + domain.Name);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(await response.Content.ReadAsStringAsync());
+
+            // hostname binding shortcut
+            webApp.Update()
+                    .WithManagedHostnameBindings(domain, WEBAPP_NAME + "-1", WEBAPP_NAME + "-2")
+                    .Apply();
+            response = await CheckAddress("http://" + WEBAPP_NAME + "-1." + domain.Name);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(await response.Content.ReadAsStringAsync());
+            response = await CheckAddress("http://" + WEBAPP_NAME + "-2." + domain.Name);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(await response.Content.ReadAsStringAsync());
+
+            // SSL binding
+            webApp.Update()
+                    // TODO - ans - Should be a method.
+                    .DefineSslBinding
+                        .ForHostname(WEBAPP_NAME + "." + domain.Name)
+                        .WithExistingAppServiceCertificateOrder(certificateOrder)
+                        .WithSniBasedSsl()
+                        .Attach()
+                    .Apply();
+            response = null;
+            var retryCount = 3;
+            while (response == null && retryCount > 0)
+            {
+                try
+                {
+                    response = await CheckAddress("https://" + WEBAPP_NAME + "." + domain.Name);
+                }
+                catch (Exception)
+                {
+                    retryCount--;
+                    Thread.Sleep(5000);
+                }
+            }
+            if (retryCount == 0)
+            {
+                Assert.True(false);
+            }
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(await response.Content.ReadAsStringAsync());
+        }
+
+        private static async Task<HttpResponseMessage> CheckAddress(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                return await client.GetAsync(url);
+            }
+        }
+    }
+}

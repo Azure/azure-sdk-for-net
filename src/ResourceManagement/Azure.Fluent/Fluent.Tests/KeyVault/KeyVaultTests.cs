@@ -26,7 +26,7 @@ namespace Fluent.Tests.KeyVault
             string vaultName2 = ResourceNamer.RandomResourceName("vault2", 20);
             string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
 
-            IKeyVaultManager manager = this.CreateKeyVaultManager();
+            IKeyVaultManager manager = TestHelper.CreateKeyVaultManager();
 
             try
             {
@@ -97,13 +97,5 @@ namespace Fluent.Tests.KeyVault
             }
         }
 
-        public IKeyVaultManager CreateKeyVaultManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            return KeyVaultManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
-        }
     }
 }
