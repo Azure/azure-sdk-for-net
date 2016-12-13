@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:D684E7477889A9013C81FAD82F69C54F:BD249A015EF71106387B78281489583A
-        internal string Protocol()
+        internal TransportProtocol Protocol()
         {
-            return Inner.Protocol;
+            return TransportProtocol.Parse(Inner.Protocol);
         }
 
         ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:9C4AAC15022FA26F69A7DFD88E20FB97
