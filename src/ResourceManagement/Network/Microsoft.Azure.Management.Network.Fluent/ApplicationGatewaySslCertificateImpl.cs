@@ -51,18 +51,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public ApplicationGatewaySslCertificateImpl WithPfxFromFile(FileInfo pfxFile)
         {
             if (pfxFile == null) {
-                return null;
+                throw new ArgumentNullException();
             }
 
-            try
-            {
-                byte[] content = File.ReadAllBytes(pfxFile.FullName);
-                return (content != null) ? WithPfxFromBytes(content) : null;
-            }
-            catch
-            {
-                return null;
-            }
+            byte[] content = File.ReadAllBytes(pfxFile.FullName);
+            return (content != null) ? WithPfxFromBytes(content) : null;
         }
 
         #endregion

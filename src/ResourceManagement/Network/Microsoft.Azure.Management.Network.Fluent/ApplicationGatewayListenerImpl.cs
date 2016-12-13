@@ -21,8 +21,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayListener.Update.IUpdate
     {
-        private ApplicationGatewaySslCertificateImpl sslCert;
-
         ///GENMHASH:FDD79F9F4A54F00F3D88A305BD6E4101:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayListenerImpl(ApplicationGatewayHttpListenerInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
@@ -56,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             var certRef = new SubResource()
             {
-                Id = this.Parent.FutureResourceId() + "/sslCertificates/" + name
+                Id = Parent.FutureResourceId() + "/sslCertificates/" + name
             };
 
             Inner.SslCertificate = certRef;
@@ -142,25 +140,21 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 name = ResourceNamer.RandomResourceName("cert", 10);
             }
-            sslCert = Parent.DefineSslCertificate(name)
-                .WithPfxFromFile(pfxFile);
-            return this;
+            Parent.DefineSslCertificate(name)
+                .WithPfxFromFile(pfxFile)
+                .Attach();
+            return WithSslCertificate(name);
         }
 
         ///GENMHASH:382D2BF4EBC04F5E7DF95B5EF5A97146:66502B9267EB235997FE645B0C0A6527
         public ApplicationGatewayListenerImpl WithSslCertificatePassword(string password)
         {
+            var sslCert = (ApplicationGatewaySslCertificateImpl) SslCertificate();
             if (sslCert != null)
             {
-                sslCert.WithPfxPassword(password).Attach();
-                WithSslCertificate(sslCert.Name());
-                sslCert = null;
-                return this;
+                sslCert.WithPfxPassword(password);
             }
-            else
-            {
-                return null; // Fail fast as this should never happen if the internal logic is correct
-            }
+            return this;
         }
 
         #endregion

@@ -368,15 +368,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:43D0A80DA689D640320A61D90075ADE8:53F2B2F3AF405296F17DB8BE5C792D5E
         internal ApplicationGatewayImpl WithBackendHttpConfiguration(ApplicationGatewayBackendHttpConfigurationImpl httpConfig)
         {
-            if (httpConfig == null)
+            if (httpConfig != null)
             {
-                return null;
+                backendHttpConfigs[httpConfig.Name()] = httpConfig;
             }
-            else
-            {
-                backendHttpConfigs.Add(httpConfig.Name(), httpConfig);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:6409DA3F27E7CD8F90997F2AD668CE00:41A39172A229BE80EACCBF48C5405C39
@@ -458,15 +454,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C000D62B14DEB58BED734D8C97CBA337:B6A0CA4C00D439D0A62611FFBFCB1D01
         internal ApplicationGatewayImpl WithBackend(ApplicationGatewayBackendImpl backend)
         {
-            if (backend == null)
+            if (backend != null)
             {
-                return null;
+                backends[backend.Name()] = backend;
             }
-            else
-            {
-                backends.Add(backend.Name(), backend);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:52092E76C641F5B4C13B8CD22D11A1C5:4116AC8D08FAEE8EE2AF72A493453127
@@ -598,15 +590,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7B8AA96C3162D1728416030E94CB731F:AFEC509255ABE08FC417203DFF8CF829
         internal ApplicationGatewayImpl WithFrontend(ApplicationGatewayFrontendImpl frontend)
         {
-            if (frontend == null)
+            if (frontend != null)
             {
-                return null;
+                frontends[frontend.Name()] = frontend;
             }
-            else
-            {
-                frontends.Add(frontend.Name(), frontend);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:2CAA0883E5A09AD81DE423447D34059F:5D6EB88CFD9F858A269954D227220035
@@ -875,15 +863,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:FD3BFA79E44BF0C0FD92A0CE7B31B143:4D125EAA0586FE83630989875156AFFD
         internal ApplicationGatewayImpl WithHttpListener(ApplicationGatewayListenerImpl httpListener)
         {
-            if (httpListener == null)
+            if (httpListener != null)
             {
-                return null;
+                listeners[httpListener.Name()] = httpListener;
             }
-            else
-            {
-                listeners.Add(httpListener.Name(), httpListener);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:6A7BE130A21D7CF301EAC3B7AFC03BC7:89DB414F8973677B8ED5DBFA5338F186
@@ -908,15 +892,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:9EE982E7421C1A20C7BB22556011B5DC:6EF4C8270DB03AC45C57FAD9087BD439
         internal ApplicationGatewayImpl WithRequestRoutingRule(ApplicationGatewayRequestRoutingRuleImpl rule)
         {
-            if (rule == null)
+            if (rule != null)
             {
-                return null;
+                rules[rule.Name()] = rule;
             }
-            else
-            {
-                rules.Add(rule.Name(), rule);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:3DBBB35580E0023332C1FB4E78C36EC4:8BC4FF2E70BFA1D6AB1B2664C2AB7FA1
@@ -959,15 +939,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:AA53287F5186B0525C5149BB8A3CC41C:783C00636BC9E9FE9A9092254C16B672
         internal ApplicationGatewayImpl WithSslCertificate(ApplicationGatewaySslCertificateImpl cert)
         {
-            if (cert == null)
+            if (cert != null)
             {
-                return null;
+                sslCerts[cert.Name()] = cert;
             }
-            else
-            {
-                sslCerts.Add(cert.Name(), cert);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:AEECF1FD9CF2F7E0FFAE9F2627E6B3FC:5EF4F345F37B15B88D7920245D112B33
@@ -1004,15 +980,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:80375A07B813FDE5A15028546D4FB694:477643FBA49E84CA226936A812310F65
         internal ApplicationGatewayImpl WithConfig(ApplicationGatewayIpConfigurationImpl config)
         {
-            if (config == null)
+            if (config != null)
             {
-                return null;
+                ipConfigs[config.Name()] = config;
             }
-            else
-            {
-                ipConfigs.Add(config.Name(), config);
-                return this;
-            }
+            return this;
         }
 
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:40A35D1A3A7CCDCE21CBF18A30149CF3
