@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="vault">The key vault to store the certificate.</param>
         Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding CreateKeyVaultBinding(string certificateName, IVault vault);
 
-        System.DateTime ExpirationTime { get; }
+        System.DateTime? ExpirationTime { get; }
 
         /// <summary>
         /// Verifies the ownership of the domain by providing the Azure purchased domain.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name="domain">The Azure managed domain.</param>
         Task VerifyDomainOwnershipAsync(IAppServiceDomain domain, CancellationToken cancellationToken = default(CancellationToken));
 
-        System.DateTime LastCertificateIssuanceTime { get; }
+        System.DateTime? LastCertificateIssuanceTime { get; }
 
         string DistinguishedName { get; }
 

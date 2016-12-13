@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -98,8 +99,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             if (pfxFileUrl != null)
             {
-                // TODO - ans - Fix this.
-                //Inner.PfxBlob = await Utils.DownloadFileAsync(pfxFileUrl, Manager.RestClient().Retrofit());
+                using (var httpClient = new HttpClient())
+                {
+                    Inner.PfxBlob = await httpClient.GetByteArrayAsync(pfxFileUrl);
+                }
             }
             if (certificateOrder != null)
             {
@@ -133,16 +136,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:AC6417B918116F35EBE473B129196305:384E705246D7390325CE35ED8089B693
         public AppServiceCertificateImpl WithPfxFile(string path)
         {
-            try
-            {
-                byte[] fileContent = File.ReadAllBytes(path);
-                return WithPfxByteArray(fileContent);
-            }
-            catch (IOException e)
-            {
-                // TODO - ans - Check new exception's intent. Better to not catch.
-                throw e;
-            }
+            byte[] fileContent = File.ReadAllBytes(path);
+            return WithPfxByteArray(fileContent);
         }
 
         ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E

@@ -62,9 +62,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C70ACBF55B279BA26BBE5F77DDE46E40:9790D012FA64E47343F12DB13F0AA212
         public string SerialNumber()
         {
-            // TODO - ans - Is is missing implementation or implemented this way.
-            // We can remove this function/property all together if this is only settable and not gettable.
-            return null;
+            return Inner.SerialNumber;
         }
 
         ///GENMHASH:EBED0BAEEB9CC9BC93879B3D5FFD0E0C:46D041A38A4369ED8F41B9FE21E6FD13
@@ -113,20 +111,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:11AF5CEDE5EC5110A3D190463E690E16:0B6EB716D0098ABB085A80641A141FD0
         public AppServiceCertificateOrderImpl WithNewKeyVault(string vaultName, Microsoft.Azure.Management.Resource.Fluent.Core.Region region)
         {
-            var createKeyVaultTask = Manager.KeyVaultManager.Vaults.Define(vaultName)
+            this.bindingVault = Manager.KeyVaultManager.Vaults.Define(vaultName)
                 .WithRegion(region)
                 .WithExistingResourceGroup(ResourceGroupName)
                 .DefineAccessPolicy()
-                .ForServicePrincipal("f3c21649-0979-4721-ac85-b0216b2cf413")
-                .AllowSecretPermissions(SecretPermissions.Get, SecretPermissions.Set, SecretPermissions.Delete)
-                .Attach()
+                    .ForServicePrincipal("f3c21649-0979-4721-ac85-b0216b2cf413")
+                    .AllowSecretPermissions(SecretPermissions.Get, SecretPermissions.Set, SecretPermissions.Delete)
+                    .Attach()
                 .DefineAccessPolicy()
-                .ForServicePrincipal("abfa0a7c-a6b6-4736-8310-5855508787cd")
-                .AllowSecretPermissions(SecretPermissions.Get)
-                .Attach()
+                    .ForServicePrincipal("abfa0a7c-a6b6-4736-8310-5855508787cd")
+                    .AllowSecretPermissions(SecretPermissions.Get)
+                    .Attach()
                 .CreateAsync();
-            // TODO - ans - Uncomment and fix.
-            //this.bindingVault = Utils.RootResource(createKeyVaultTask);
             return this;
         }
 
@@ -159,10 +155,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9FDF35464E02B70B2EF312DAD321B8C2:9790D012FA64E47343F12DB13F0AA212
-        public DateTime LastCertificateIssuanceTime()
+        public DateTime? LastCertificateIssuanceTime()
         {
-            // TODO - ans - Check why implementation is missing.
-            return default(DateTime);
+            return Inner.LastCertificateIssuanceTime;
         }
 
         ///GENMHASH:575807260557ED62F7AE130CBDC3F619:847ACFDD52BB5E87BABA56BD49D03F37
@@ -277,10 +272,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4832496C4642B084507B2963F8963228:9790D012FA64E47343F12DB13F0AA212
-        public DateTime ExpirationTime()
+        public DateTime? ExpirationTime()
         {
-            // TODO - ans - Missing implementation
-            return default(DateTime);
+            return Inner.ExpirationTime;
         }
 
         ///GENMHASH:14288EE05A643ED3D2973C5B1849325A:47FC88953B7AB1BEA60CFF5682FEA186

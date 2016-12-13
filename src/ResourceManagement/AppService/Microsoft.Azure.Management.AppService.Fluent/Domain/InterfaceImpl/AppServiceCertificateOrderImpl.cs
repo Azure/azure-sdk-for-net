@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this.CreateKeyVaultBinding(certificateName, vault) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateKeyVaultBinding;
         }
 
-        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ExpirationTime
+        System.DateTime? Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.ExpirationTime
         {
             get
             {
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        System.DateTime Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.LastCertificateIssuanceTime
+        System.DateTime? Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder.LastCertificateIssuanceTime
         {
             get
             {
