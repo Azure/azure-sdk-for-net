@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface ILoadBalancerInboundNatRule  :
         IHasFrontend,
         IHasBackendPort,
-        IHasProtocol<string>,
+        IHasProtocol<TransportProtocol>,
         IHasFloatingIp,
         IHasFrontendPort,
         IWrapper<Models.InboundNatRuleInner>,
