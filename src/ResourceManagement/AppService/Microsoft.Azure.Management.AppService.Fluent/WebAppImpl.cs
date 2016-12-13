@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
-        internal WebAppImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal WebAppImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, configObject, client, manager, serviceClient)
         {
         }

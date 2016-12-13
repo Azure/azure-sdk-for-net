@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IDeploymentSlot,
             DeploymentSlotImpl,
             SiteInner,
-            WebAppsOperations,
+            IWebAppsOperations,
             AppServiceManager>,
         IDeploymentSlots
     {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:DED500AFBAD0A9AF916DAD488509F998:73380F084BCBB7208BE9649B9F292E25
-        internal DeploymentSlotsImpl(WebAppImpl parent, WebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal DeploymentSlotsImpl(WebAppImpl parent, IWebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base(innerCollection, manager)
         {
             this.serviceClient = serviceClient;

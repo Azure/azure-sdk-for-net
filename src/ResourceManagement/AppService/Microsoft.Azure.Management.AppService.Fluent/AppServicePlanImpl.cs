@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDefinition,
         IUpdate
     {
-        private AppServicePlansOperations client;
+        private IAppServicePlansOperations client;
         ///GENMHASH:DD6D049506665D52592C7FE5BDE38234:6B280B367194B8DBB81238BF9E23FF56
         public AppServicePlanImpl WithPerSiteScaling(bool perSiteScaling)
         {
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:07BF52A3FFAEDB1E45066F5776F5CC29:8A264E667F06CE3E13EBAC780725861E
-        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, AppServicePlansOperations client, AppServiceManager manager)
+        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServicePlansOperations client, AppServiceManager manager)
             : base (name, innerObject, manager)
         {
             this.client = client;

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceCertificate,
             AppServiceCertificateImpl,
             CertificateInner,
-            CertificatesOperations,
+            ICertificatesOperations,
             AppServiceManager>,
         IAppServiceCertificates
     {
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
-        internal AppServiceCertificatesImpl(CertificatesOperations InnerCollection, AppServiceManager manager)
+        internal AppServiceCertificatesImpl(ICertificatesOperations InnerCollection, AppServiceManager manager)
             : base(InnerCollection, manager)
         {
         }

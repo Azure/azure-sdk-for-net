@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             object>,
         IAppServiceCertificateKeyVaultBinding
     {
-        private AppServiceCertificateOrdersOperations innerCollection;
+        private IAppServiceCertificateOrdersOperations innerCollection;
         private AppServiceCertificateOrderImpl parent;
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:A3CF7B3DC953F353AAE8083D72F74056

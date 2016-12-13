@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
     {
-        private WebAppsOperations client;
+        private IWebAppsOperations client;
         private FluentImplT parent;
         private string domainName;
         private string name;
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:405D133ADB31FC54FCFE6E63CC7CE6DF:528163E8A39CE260ED65B356ABCB872C
-        internal HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent, WebAppsOperations client)
+        internal HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent, IWebAppsOperations client)
                 : base(innerObject)
         {
             this.parent = parent;

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServicePlan,
             AppServicePlanImpl,
             AppServicePlanInner,
-            AppServicePlansOperations,
+            IAppServicePlansOperations,
             AppServiceManager>,
         IAppServicePlans
     {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:13EDEABEC8823ED4BDC78DA4C9882000:0FCD47CBCD9128C3D4A03458C5796741
-        internal AppServicePlansImpl(AppServicePlansOperations innerCollection, AppServiceManager manager)
+        internal AppServicePlansImpl(IAppServicePlansOperations innerCollection, AppServiceManager manager)
             : base(innerCollection, manager)
         {
         }

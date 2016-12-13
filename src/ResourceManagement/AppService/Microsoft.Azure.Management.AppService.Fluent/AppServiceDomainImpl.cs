@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDefinition,
         IUpdate
     {
-        private DomainsOperations client;
-        private TopLevelDomainsOperations topLevelDomainsInner;
+        private IDomainsOperations client;
+        private ITopLevelDomainsOperations topLevelDomainsInner;
         private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostName> hostNameMap;
 
         ///GENMHASH:E3A506AB29CB79E19BE35E770B4C876E:E11180BB79B722174FB3D0453FCEA12B
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
-        internal AppServiceDomainImpl(string name, DomainInner innerObject, DomainsOperations client, TopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
+        internal AppServiceDomainImpl(string name, DomainInner innerObject, IDomainsOperations client, ITopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
             : base(name, innerObject, manager)
         {
             this.client = client;

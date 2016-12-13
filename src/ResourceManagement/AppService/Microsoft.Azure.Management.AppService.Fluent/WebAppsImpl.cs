@@ -21,10 +21,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uV2ViQXBwc0ltcGw=
     internal partial class WebAppsImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.AppService.Fluent.IWebApp,Microsoft.Azure.Management.AppService.Fluent.WebAppImpl,
-            Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner,
-            Microsoft.Azure.Management.AppService.Fluent.WebAppsOperations,
-            Microsoft.Azure.Management.AppService.Fluent.AppServiceManager>,
+            IWebApp,
+            WebAppImpl,
+            Models.SiteInner,
+            IWebAppsOperations,
+            AppServiceManager>,
         IWebApps
     {
         private WebSiteManagementClient serviceClient;
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9CF36554B675F661BFEE8D1C53C27496:E373401BADB43C440BA3AAFA9214451D
-        internal WebAppsImpl(WebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal WebAppsImpl(IWebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base(innerCollection, manager)
         {
             this.serviceClient = serviceClient;

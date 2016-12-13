@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IAppServiceCertificate,
         IDefinition
     {
-        private CertificatesOperations client;
+        private ICertificatesOperations client;
         private string pfxFileUrl;
         private IAppServiceCertificateOrder certificateOrder;
 
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
-        internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, CertificatesOperations client, AppServiceManager manager)
+        internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, ICertificatesOperations client, AppServiceManager manager)
                     : base(Name, innerObject, manager)
         {
             this.client = client;

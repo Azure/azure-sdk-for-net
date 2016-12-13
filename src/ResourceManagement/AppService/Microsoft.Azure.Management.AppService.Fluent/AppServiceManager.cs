@@ -11,7 +11,6 @@ using Microsoft.Rest;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
-using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.AppService.Fluent
@@ -101,7 +100,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return null;
+                if (appServicePlans == null)
+                {
+                    appServicePlans = new AppServicePlansImpl(
+                        client.AppServicePlans, this);
+                }
+                return appServicePlans;
             }
         }
 
@@ -109,7 +113,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return null;
+                if (webApps == null)
+                {
+                    webApps = new WebAppsImpl(
+                        client.WebApps, this, client);
+                }
+                return webApps;
             }
         }
 
@@ -117,7 +126,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return null;
+                if (appServiceDomains == null)
+                {
+                    appServiceDomains = new AppServiceDomainsImpl(
+                        client.Domains, client.TopLevelDomains, this);
+                }
+                return appServiceDomains;
             }
         }
 
@@ -125,7 +139,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return null;
+                if (appServiceCertificates == null)
+                {
+                    appServiceCertificates = new AppServiceCertificatesImpl(
+                        client.Certificates, this);
+                }
+                return appServiceCertificates;
             }
         }
 
@@ -133,7 +152,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return null;
+                if (appServiceCertificateOrders == null)
+                {
+                    appServiceCertificateOrders = new AppServiceCertificateOrdersImpl(
+                        client.AppServiceCertificateOrders, this);
+                }
+                return appServiceCertificateOrders;
             }
         }
 
@@ -141,7 +165,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             get
             {
-                return null;
+                return keyVaultManager;
             }
         }
 

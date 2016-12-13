@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where UpdateT : class, IUpdate<FluentT>
     {
 
-        protected WebAppsOperations client;
+        protected IWebAppsOperations client;
         protected WebSiteManagementClient serviceClient;
         private IDictionary<string, IAppSetting> cachedAppSettings;
         private IDictionary<string, IConnectionString> cachedConnectionStrings;
@@ -960,7 +960,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
-        internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, manager)
         {
             this.client = client;
