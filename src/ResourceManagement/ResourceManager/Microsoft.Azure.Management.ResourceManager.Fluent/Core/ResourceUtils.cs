@@ -31,5 +31,28 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             return ResourceId.ParseResourceId(id).Parent.Id;
         }
+
+        public static string ConstructResourceId(
+            string subscriptionId,
+            string resourceGroupName,
+            string resourceProviderNamespace,
+            string resourceType,
+            string resourceName,
+            string parentResourcePath)
+        {
+            string prefixedParentPath = parentResourcePath;
+            if (!string.IsNullOrEmpty(parentResourcePath))
+            {
+                prefixedParentPath = "/" + parentResourcePath;
+            }
+            return string.Format(
+                    "/subscriptions/%s/resourcegroups/%s/providers/%s%s/%s/%s",
+                    subscriptionId,
+                    resourceGroupName,
+                    resourceProviderNamespace,
+                    prefixedParentPath,
+                    resourceType,
+                    resourceName);
+        }
     }
 }

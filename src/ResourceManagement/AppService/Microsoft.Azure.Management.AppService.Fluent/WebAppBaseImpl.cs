@@ -54,10 +54,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         where DefAfterGroupT : class
         where UpdateT : class, IUpdate<FluentT>
     {
-        internal WebAppsOperations client;
-        WebSiteManagementClient serviceClient;
-        IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IAppSetting> cachedAppSettings;
-        IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IConnectionString> cachedConnectionStrings;
+
+        protected WebAppsOperations client;
+        protected WebSiteManagementClient serviceClient;
+        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IAppSetting> cachedAppSettings;
+        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IConnectionString> cachedConnectionStrings;
         private ISet<string> hostNamesSet;
         private ISet<string> enabledHostNamesSet;
         private ISet<string> trafficManagerHostNamesSet;
