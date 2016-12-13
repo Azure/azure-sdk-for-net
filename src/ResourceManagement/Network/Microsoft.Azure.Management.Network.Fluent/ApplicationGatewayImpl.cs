@@ -634,7 +634,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public ApplicationGatewayImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
         {
             string name = EnsureDefaultPublicFrontend().Name();
-            creatablePipsByFrontend.Add(name, creatable.Key);
+            creatablePipsByFrontend[name] = creatable.Key;
             AddCreatableDependency(creatable as IResourceCreator<IHasId>);
             return this;
         }
@@ -1011,7 +1011,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var httpConfig = new ApplicationGatewayBackendHttpConfigurationImpl(inner, this);
-                    backendHttpConfigs.Add(inner.Name, httpConfig);
+                    backendHttpConfigs[inner.Name] = httpConfig;
                 }
             }
         }
@@ -1240,7 +1240,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var rule = new ApplicationGatewayRequestRoutingRuleImpl(inner, this);
-                    rules.Add(inner.Name, rule);
+                    rules[inner.Name] = rule;
                 }
             }
         }
@@ -1255,7 +1255,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var frontend = new ApplicationGatewayFrontendImpl(inner, this);
-                    frontends.Add(inner.Name, frontend);
+                    frontends[inner.Name] = frontend;
                 }
             }
         }
@@ -1270,7 +1270,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var backend = new ApplicationGatewayBackendImpl(inner, this);
-                    backends.Add(inner.Name, backend);
+                    backends[inner.Name] = backend;
                 }
             }
         }
@@ -1357,7 +1357,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var cert = new ApplicationGatewaySslCertificateImpl(inner, this);
-                    sslCerts.Add(inner.Name, cert);
+                    sslCerts[inner.Name] = cert;
                 }
             }
         }
@@ -1430,7 +1430,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var config = new ApplicationGatewayIpConfigurationImpl(inner, this);
-                    ipConfigs.Add(inner.Name, config);
+                    ipConfigs[inner.Name] = config;
                 }
             }
         }
@@ -1445,7 +1445,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 foreach (var inner in inners)
                 {
                     var httpListener = new ApplicationGatewayListenerImpl(inner, this);
-                    listeners.Add(inner.Name, httpListener);
+                    listeners[inner.Name] = httpListener;
                 }
             }
         }
