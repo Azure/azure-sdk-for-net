@@ -127,8 +127,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public Task<IDeploymentSlot> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // TODO - ans - Not implemented??
-            throw new NotImplementedException();
+            return GetByParentAsync(parent.ResourceGroupName, parent.Name, name);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public string FtpUsername()
         {
             return ftpUsername;
-        }x
+        }
 
         ///GENMHASH:7F7FC8DC06968B3889A780DE3BDCD874:25B07D16F82F9DBA8A3E9EF1C3B85056
         public string GitUrl()

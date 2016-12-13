@@ -163,9 +163,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public override IPublishingProfile GetPublishingProfile()
         {
             Stream stream = client.ListPublishingProfileXmlWithSecrets(ResourceGroupName, Name);
+            int length = (int)stream.Length;
             MemoryStream memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
-            string xml = Encoding.UTF8.GetString(memoryStream.ToArray());
+            string xml = Encoding.UTF8.GetString(memoryStream.ToArray(), 0, length);
             return new PublishingProfileImpl(xml);
         }
 
@@ -226,7 +227,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var hostNameBindings = new List<IHostNameBinding>();
             foreach(var inner in collectionInner)
             {
-                hostNameBindings.Add(new HostNameBindingImpl<IWebApp, WebAppImpl>(inner, this, client));
+                hostNameBindings.Add(new HostNameBindingImpl<IWebApp, WebAppImpl, WebApp.Definition.IWithNewAppServicePlan, WebApp.Definition.IWithAppServicePlan, IUpdate>(inner, this, client));
             }
             return hostNameBindings.ToDictionary(b => b.Name.Replace(Name + "/", ""));
         }
@@ -276,7 +277,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:FCAC8C2F8D6E12CB6F5D7787A2837016:932BF8229CACF0E669A4DDE8FAEB10D4
         internal override async Task DeleteHostNameBindingAsync(string hostname, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await client.DeleteHostNameBindingAsync(ResourceGroupName, Name, hostname);
+            await client.DeleteHostNameBindingAsync(ResourceGroupName, Name, hostname);
         }
     }
 }

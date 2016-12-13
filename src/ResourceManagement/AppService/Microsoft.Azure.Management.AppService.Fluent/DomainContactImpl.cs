@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:E2556AE34728DF24E72DF3C66A32C04C:E02667C88CE448AD1B7486F41880FAD2
         public string Phone()
         {
-            return Inner.Phone();
+            return Inner.Phone;
         }
 
         ///GENMHASH:5BE3BE3B9D2A467C243AE11550C12648:FAA682AFBE97FA2BE57C6D3557F69E63
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:A79CB48AB5861773F4793C7D7EF8C441
         public override string Name()
         {
-            return firstName + " " + lastName;
+            return FirstName() + " " + LastName();
         }
 
         ///GENMHASH:4B771256FCDA8C3E76180E4C619BD572:8FDF79DE1C72832B4A51E71DB3D083BB

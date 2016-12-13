@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Xml;
@@ -172,17 +174,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public override IPublishingProfile GetPublishingProfile()
         {
             var stream = client.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, parent.Name, Name());
-            try
-            {
-                var xmlReader = XmlReader.Create(stream);
-                // ans - TODO - Test this stream to XML conversion.
-                return new PublishingProfileImpl(xmlReader.ToString());
-            }
-            catch (IOException e)
-            {
-                // ans - TODO - Check if this is right exception
-                throw e;
-            }
+            int length = (int) stream.Length;
+            MemoryStream memoryStream = new MemoryStream();
+            stream.CopyTo(memoryStream);
+            string xml = Encoding.UTF8.GetString(memoryStream.ToArray(), 0, length);
+            return new PublishingProfileImpl(xml);
         }
 
         ///GENMHASH:62F8B201D885123D1E906E306D144662:2DE252A4E4CB1A03D80BB639D9CC1D63
@@ -221,9 +217,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         ///GENMHASH:7165E4A72787EF020E1C59029B4D2D13:47A3B406E5605E5ECAF2C6AD49296A9F
         internal DeploymentSlotImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppImpl parent, WebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
-                    : base(name.Replace(".*/", ""), innerObject, configObject, client, manager, serviceClient)
+                    : base(Regex.Replace(name, ".*/", ""), innerObject, configObject, client, manager, serviceClient)
         {
-            this.name = name.Replace(".*/", "");
+            this.name = Regex.Replace(name, ".*/", "");
             this.parent = parent;
             Inner.ServerFarmId = parent.AppServicePlanId();
         }
@@ -239,13 +235,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             var collectionInner = client.ListHostNameBindingsSlot(ResourceGroupName, parent.Name, Name());
             return collectionInner.ToDictionary(input => input.Name.Replace(Name() + "/", ""),
-                inner => (IHostNameBinding)new HostNameBindingImpl<IHostNameBinding, IWebAppBase>(inner, this, client));
+                inner => (IHostNameBinding)new HostNameBindingImpl<IDeploymentSlot, DeploymentSlotImpl, object, object, IUpdate>(inner, this, client));
         }
 
         ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:391885361D8D6FDB8CD9E96400E16B73
         public override void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
-            // TODO - ans - This should return something like true/false for valid/invalid.
             VerifyDomainOwnership(certificateOrderName, domainVerificationToken);
         }
 
@@ -253,9 +248,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public override IWebAppSourceControl GetSourceControl()
         {
             var siteSourceControlInner = client.GetSourceControlSlot(ResourceGroupName, parent.Name, Name());
-            return null;
-            // TODO - ans - Resolve this.
-            //return new WebAppSourceControlImpl<IWebAppBase, WebAppSourceControlImpl, >(siteSourceControlInner, this, serviceClient);
+            return new WebAppSourceControlImpl<IDeploymentSlot, DeploymentSlotImpl, object, object, IUpdate>(siteSourceControlInner, this, serviceClient);
         }
 
         ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:44153E55F54D6CEBEDD20C31326CBA9E

@@ -12,19 +12,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
+    using WebAppBase.Update;
 
     /// <summary>
     /// Implementation for HostNameBinding and its create and update interfaces.
     /// </summary>
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVCaW5kaW5nSW1wbA==
-    internal partial class HostNameBindingImpl<FluentT, FluentImplT> :
+    internal partial class HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> :
         IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameBindingInner>,
         ICreatable<Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>,
         IHostNameBinding,
         HostNameBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
-        where FluentImplT : IWebAppBase
+        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
+        where FluentT : class, IWebAppBase
+        where DefAfterRegionT : class
+        where DefAfterGroupT : class
+        where UpdateT : class, IUpdate<FluentT>
     {
         private WebAppsOperations client;
         private FluentImplT parent;
@@ -66,7 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:6512D3749B75699084BD4F008D90C101:1006227322BF1ED668B3D3B04C2C1A00
-        public HostNameBindingImpl<FluentT, FluentImplT> WithSubDomain(string subDomain)
+        public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithSubDomain(string subDomain)
         {
             this.name = NormalizeHostNameBindingName(subDomain, domainName);
             return this;
@@ -88,7 +93,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:F256BA36B49E86A329FE6E9053FAA2C2:30BCCB9C5D6F49D3148D3A9D412D6197
-        public HostNameBindingImpl<FluentT, FluentImplT> WithThirdPartyDomain(string domain)
+        public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithThirdPartyDomain(string domain)
         {
             Inner.HostNameType = Models.HostNameType.Verified;
             this.domainName = domain;
@@ -134,7 +139,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:027705B70337BE533ED77421800E496A:3479885A232C974264B5B36BDBB0BC94
-        public HostNameBindingImpl<FluentT, FluentImplT> WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType)
+        public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithDnsRecordType(CustomHostNameDnsRecordType hostNameDnsRecordType)
         {
             var regex = new Regex("([.\\w-]+)\\.([\\w-]+\\.\\w+)");
             var matcher = regex.Match(name);
@@ -209,7 +214,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:8F156E891E25FA23FCB8AE0E23601BEC:7FF0A8A46536F20F09EC2FE338F3B99E
-        public HostNameBindingImpl<FluentT, FluentImplT> WithAzureManagedDomain(IAppServiceDomain domain)
+        public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithAzureManagedDomain(IAppServiceDomain domain)
         {
             Inner.DomainId = domain.Id;
             Inner.HostNameType = Models.HostNameType.Managed;
@@ -240,7 +245,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:E0D0D53840F0C86DC4B91B99218C81C9
-        public HostNameBindingImpl<FluentT, FluentImplT> Refresh()
+        public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> Refresh()
         {
             if (parent is IDeploymentSlot)
             {

@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:11AF5CEDE5EC5110A3D190463E690E16:0B6EB716D0098ABB085A80641A141FD0
-        public AppServiceCertificateOrderImpl WithNewKeyVault(string vaultName, Region region)
+        public AppServiceCertificateOrderImpl WithNewKeyVault(string vaultName, Microsoft.Azure.Management.Resource.Fluent.Core.Region region)
         {
             var createKeyVaultTask = Manager.KeyVaultManager.Vaults.Define(vaultName)
                 .WithRegion(region)
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C9197C0E18635D749174BA53AD8D40F2:B54E9750FAF97459979B2E19172576F0
         public string CertificateSigningRequest()
         {
-            return Inner.Csr();
+            return Inner.Csr;
         }
 
         ///GENMHASH:DEB5B77F8D918439AB769AD1CC0E3B14:B93583F27CCE3FE1FF2B383D935B5560

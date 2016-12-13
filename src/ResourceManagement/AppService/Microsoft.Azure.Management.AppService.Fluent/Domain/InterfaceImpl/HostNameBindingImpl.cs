@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Rest;
     using System.Collections.Generic;
 
-    internal partial class HostNameBindingImpl<FluentT,FluentImplT> 
+    internal partial class HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> 
     {
         /// <summary>
         /// Binds to a domain purchased from Azure.

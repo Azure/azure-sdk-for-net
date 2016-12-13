@@ -27,7 +27,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Microsoft.Azure.Management.AppService.Fluent.AppServiceManager>,
         IWebApps
     {
-        private Func<IEnumerable<SiteInner>, PagedList<IWebApp>> converter;
         private WebSiteManagementClient serviceClient;
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public WebAppImpl Define(string name)
@@ -75,8 +74,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             : base(innerCollection, manager)
         {
             this.serviceClient = serviceClient;
-            
-            // TODO
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:E49716A6377D1B0BC4969F4A89093ED9

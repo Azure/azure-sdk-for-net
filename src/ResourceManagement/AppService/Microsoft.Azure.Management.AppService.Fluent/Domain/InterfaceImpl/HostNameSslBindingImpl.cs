@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
-    internal partial class HostNameSslBindingImpl<FluentT,FluentImplT> 
+    internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> 
     {
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {

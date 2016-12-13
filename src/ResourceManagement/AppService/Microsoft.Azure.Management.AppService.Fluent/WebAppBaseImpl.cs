@@ -57,20 +57,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         protected WebAppsOperations client;
         protected WebSiteManagementClient serviceClient;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IAppSetting> cachedAppSettings;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IConnectionString> cachedConnectionStrings;
+        private IDictionary<string, IAppSetting> cachedAppSettings;
+        private IDictionary<string, IConnectionString> cachedConnectionStrings;
         private ISet<string> hostNamesSet;
         private ISet<string> enabledHostNamesSet;
         private ISet<string> trafficManagerHostNamesSet;
         private ISet<string> outboundIpAddressesSet;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState> hostNameSslStateMap;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.HostNameBindingImpl<FluentT, FluentImplT>> hostNameBindingsToCreate;
+        private IDictionary<string, HostNameSslState> hostNameSslStateMap;
+        private IDictionary<string, HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>> hostNameBindingsToCreate;
         private IList<string> hostNameBindingsToDelete;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.HostNameSslBindingImpl<FluentT, FluentImplT>> sslBindingsToCreate;
+        private IDictionary<string, HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>> sslBindingsToCreate;
         private IDictionary<string, string> appSettingsToAdd;
         private IList<string> appSettingsToRemove;
         private IDictionary<string, bool> appSettingStickiness;
-        private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.ConnStringValueTypePair> connectionStringsToAdd;
+        private IDictionary<string, ConnStringValueTypePair> connectionStringsToAdd;
         private IList<string> connectionStringsToRemove;
         private IDictionary<string, bool> connectionStringStickiness;
         private WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl;
@@ -117,17 +117,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:879627C2DAE69433191E7E3A0197FFCB:97444012B93FEF52369A6C980B714A5A
         private FluentT NormalizeProperties()
         {
-            this.hostNameBindingsToCreate = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.HostNameBindingImpl<FluentT, FluentImplT>>();
+            this.hostNameBindingsToCreate = new Dictionary<string, HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>>();
             this.hostNameBindingsToDelete = new List<string>();
             this.appSettingsToAdd = new Dictionary<string, string>();
             this.appSettingsToRemove = new List<string>();
             this.appSettingStickiness = new Dictionary<string, bool>();
-            this.connectionStringsToAdd = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.ConnStringValueTypePair>();
+            this.connectionStringsToAdd = new Dictionary<string, ConnStringValueTypePair>();
             this.connectionStringsToRemove = new List<string>();
             this.connectionStringStickiness = new Dictionary<string, bool>();
             this.sourceControl = null;
             this.sourceControlToDelete = false;
-            this.sslBindingsToCreate = new Dictionary<string, Microsoft.Azure.Management.AppService.Fluent.HostNameSslBindingImpl<FluentT, FluentImplT>>();
+            this.sslBindingsToCreate = new Dictionary<string, HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>>();
             if (Inner.HostNames != null)
             {
                 this.hostNamesSet = new HashSet<string>(Inner.HostNames);
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> UpdateConnectionStringsAsync(ConnectionStringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:5C64261945401D044556FE57A81F8919:9E936C439A1F037DD069CDD0064C2AC0
-        public HostNameBindingImpl<FluentT, FluentImplT> DefineHostnameBinding()
+        public HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineHostnameBinding()
         {
             HostNameBindingInner inner = new HostNameBindingInner()
             {
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 AzureResourceName = Name,
                 HostNameType = HostNameType.Verified
             };
-            return new HostNameBindingImpl<FluentT, FluentImplT>(inner, (FluentImplT)this, client);
+            return new HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(inner, (FluentImplT)this, client);
         }
 
         ///GENMHASH:C41BC129D11DD290512802D4F95ED197:C6674CAD927602613E222F438F228B47
@@ -793,9 +793,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B2C0373522058958F4115A63609B90C1:C3580B34803FD62C1976A18A7581AA0B
-        public HostNameSslBindingImpl<FluentT,FluentImplT> DefineSslBinding()
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSslBinding()
         {
-            return new HostNameSslBindingImpl<FluentT, FluentImplT>(new HostNameSslState(), (FluentImplT) this, Manager);
+            return new HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(new HostNameSslState(), (FluentImplT) this, Manager);
         }
 
         ///GENMHASH:9C834AC4DD619BA31DBCFAAB13EE9923:914A632A86CAEA343D26353F278D7305
@@ -917,7 +917,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:0A3B342EB54A6BB9B919686055C77154:D71C3ABF670D7D6382F65A18153CE77F
-        internal WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewHostNameSslBinding(HostNameSslBindingImpl<FluentT,FluentImplT> hostNameSslBinding)
+        internal WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewHostNameSslBinding(HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> hostNameSslBinding)
         {
             if (hostNameSslBinding.NewCertificateAsync() != null)
             {
@@ -1113,14 +1113,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:44E1562BA49E879B6BD3110F47EE24D2:56752CC2EF6BC17A058EFBD8726E81AF
-        internal FluentImplT WithHostNameBinding(HostNameBindingImpl<FluentT,FluentImplT> hostNameBinding)
+        internal FluentImplT WithHostNameBinding(HostNameBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> hostNameBinding)
         {
-            //$ this.hostNameBindingsToCreate.Put(
-            //$ hostNameBinding.Name(),
-            //$ hostNameBinding);
-            //$ return (FluentImplT) this;
-
-            return default(FluentImplT);
+            this.hostNameBindingsToCreate[hostNameBinding.Name()] = hostNameBinding;
+            return (FluentImplT) this;
         }
 
         ///GENMHASH:C82AC013C402054BF54C48891EAC7C4E:09A97DDE352A5FE05FF05D87BB65FB03

@@ -9,18 +9,23 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
+    using WebAppBase.Update;
 
     /// <summary>
     /// Implementation for HostNameSslBinding and its create and update interfaces.
     /// </summary>
     /// <typeparam name="Fluent">The fluent interface of the parent web app.</typeparam>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uSG9zdE5hbWVTc2xCaW5kaW5nSW1wbA==
-    internal partial class HostNameSslBindingImpl<FluentT, FluentImplT> :
+    internal partial class HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> :
         IndexableWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>,
         IHostNameSslBinding,
         HostNameSslBinding.Definition.IDefinition<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>,
         IUpdateDefinition<WebAppBase.Update.IUpdate<FluentT>>
-        where FluentImplT : IWebAppBase
+        where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
+        where FluentT : class, IWebAppBase
+        where DefAfterRegionT : class
+        where DefAfterGroupT : class
+        where UpdateT : class, IUpdate<FluentT>
     {
         private Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate> newCertificate;
         private IWithKeyVault certificateInDefinition;
@@ -28,7 +33,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private FluentImplT parent;
 
         ///GENMHASH:A1F44CA6A666B87D4C3A3AF168E6B317:B3CDCCA65868AC18E4EC708E7218B458
-        private HostNameSslBindingImpl<FluentT, FluentImplT> WithCertificateThumbprint(string thumbprint)
+        private HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithCertificateThumbprint(string thumbprint)
         {
             Inner.Thumbprint = thumbprint;
             return this;
@@ -86,7 +91,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:1CBA63C4D54835D9C11EFE4E0444EE09:353CE8610C345C1C601531BF2C13A9A5
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithExistingAppServiceCertificateOrder(IAppServiceCertificateOrder certificateOrder)
         {
             var resourceStream = manager.AppServiceCertificates.Define(GetCertificateUniqueName(certificateOrder.SignedCertificate.Thumbprint, parent.Region))
                 .WithRegion(parent.Region)
@@ -108,7 +113,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:B8A050E8A75C218A628FE17D20A72D91:BCDDFE46A85ECD6829F8CF639BD96E8F
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithPfxCertificateToUpload(string pfxPath, string password)
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPfxCertificateToUpload(string pfxPath, string password)
         {
             var thumbprint = GetCertificateThumbprint(pfxPath, password);
             // TODO - ans - Fix the following, once Utils are done.
@@ -131,7 +136,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:FECDA6325A56C366902AD25EE3271FA5:27D3A54723DD08767C3E53EDE9EA8C5E
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithNewStandardSslCertificateOrder(string certificateOrderName)
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewStandardSslCertificateOrder(string certificateOrderName)
         {
             this.certificateInDefinition = manager.AppServiceCertificateOrders.Define(certificateOrderName)
                 .WithExistingResourceGroup(parent.ResourceGroupName)
@@ -143,7 +148,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:D8FD0D5A66A07D0FFBFEE9F7927105AB:284A8B86661672D728E63DE7FD5744B2
-        public HostNameSslBindingImpl<FluentT, FluentImplT> ForHostname(string hostname)
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> ForHostname(string hostname)
         {
             Inner.Name = hostname;
 
@@ -151,7 +156,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:3ADCAA931B83CC8C43D568C38C044646:28A9D87D2294D65F59DDB8E411F07C49
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithNewKeyVault(string vaultName)
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithNewKeyVault(string vaultName)
         {
             // TODO - ans - Fix this once Utils is done.
             //var appServiceCertificateOrder = Utils.RootResource(certificateInDefinition
@@ -170,10 +175,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:681E8276D911828CC7E8D6E50D6254A2
         public FluentImplT Attach()
         {
-            // TODO - ans - Implement this once WebAppBaseImpl is done.
-            // parent.WithNewHostNameSslBinding(this);
-            // return parent;
-            return default(FluentImplT);
+            parent.WithNewHostNameSslBinding(this);
+            return parent;
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:0EDBC6F12844C2F2056BFF916F51853B
@@ -189,7 +192,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:BF9A77BB8ECC155B188086E8C0D49393:8EBA7D5F00B8349DEF70B3689B6F7595
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithIpBasedSsl()
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithIpBasedSsl()
         {
             Inner.SslState = Models.SslState.IpBasedEnabled;
 
@@ -197,7 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:14288EE05A643ED3D2973C5B1849325A:6B20708315CEB0423077398E0C490AFB
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithExistingKeyVault(IVault vault)
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithExistingKeyVault(IVault vault)
         {
             // TODO - ans - Fix it once Utils is implemented.
             //var appServiceCertificateOrder = Utils.RootResource(certificateInDefinition
@@ -213,7 +216,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:31C074CC0AAF6D6D8A370A17CBC768E0:70994187CA24029C8B5118766FAC122E
-        public HostNameSslBindingImpl<FluentT, FluentImplT> WithSniBasedSsl()
+        public HostNameSslBindingImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithSniBasedSsl()
         {
             Inner.SslState = Models.SslState.SniEnabled;
             return this;
