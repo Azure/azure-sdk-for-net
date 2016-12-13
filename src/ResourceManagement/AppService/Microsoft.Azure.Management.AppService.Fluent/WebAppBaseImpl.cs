@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 bindingTasks.Add(DeleteHostNameBindingAsync(binding, cancellationToken));
             }
-            if (bindingTasks.Count > 0)
+            if (bindingTasks.Any())
             {
                 await Task.WhenAll(bindingTasks);
             }
