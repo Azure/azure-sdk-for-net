@@ -13,11 +13,12 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     public abstract class ExpandableStringEnum<T> where T : ExpandableStringEnum<T>, new()
     {
-        private static Dictionary<string, T> values = null;
+        private static Dictionary<string, T> values;
         internal string value;
 
-        protected ExpandableStringEnum()
+        static ExpandableStringEnum()
         {
+            values = new Dictionary<string, T>();
         }
 
         public string Value
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
                 {
                     values = new Dictionary<string, T>();
                 }
-                values.Add(value.ToLower(), (T)this);
+                values[value.ToLower()] = (T)this;
             }
         }
 
