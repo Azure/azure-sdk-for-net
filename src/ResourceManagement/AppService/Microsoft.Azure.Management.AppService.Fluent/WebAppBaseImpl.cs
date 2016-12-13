@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             foreach (var binding in sslBindingsToCreate.Values)
             {
                 binding.Inner.ToUpdate = true;
-                certTasks.Add(binding.NewCertificateAsync(cancellationToken));
+                certTasks.Add(binding.NewCertificateAsync(cancellationToken)());
                 hostNameSslStateMap[binding.Inner.Name] = binding.Inner;
             }
             site.HostNameSslStates = new List<HostNameSslState>(hostNameSslStateMap.Values);
