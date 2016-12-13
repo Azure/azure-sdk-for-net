@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Soa record sets in a Dns zone.
     /// </summary>
     public interface ISoaRecordSets  :
-        ISupportsListing<ISoaRecordSet>,
-        ISupportsGettingById<ISoaRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet>,
+        ISupportsGettingById<Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet>
     {
     }
 }

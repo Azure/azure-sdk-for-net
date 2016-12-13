@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Aaaa record sets in a Dns zone.
     /// </summary>
     public interface IAaaaRecordSets  :
-        ISupportsListing<IAaaaRecordSet>,
-        ISupportsGettingByName<IAaaaRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSet>
     {
     }
 }

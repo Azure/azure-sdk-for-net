@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface INsRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The name server names of Ns (name server) records in this record set.</return>
+        /// <summary>
+        /// Gets the name server names of Ns (name server) records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<string> NameServers { get; }
     }
 }

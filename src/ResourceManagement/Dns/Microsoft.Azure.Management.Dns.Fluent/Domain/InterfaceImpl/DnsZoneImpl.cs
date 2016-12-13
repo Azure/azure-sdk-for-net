@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using DnsZone.Update;
-    using System.Collections.Generic;
-    using DnsZone.Definition;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent;
     using System.Threading.Tasks;
+    using DnsZone.Definition;
+    using DnsZone.Update;
+    using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
 
     internal partial class DnsZoneImpl 
     {
@@ -16,13 +16,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        IDnsZone Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<IDnsZone>.Refresh()
+        Microsoft.Azure.Management.Dns.Fluent.IDnsZone Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.Refresh()
         {
-            return this.Refresh() as IDnsZone;
+            return this.Refresh() as Microsoft.Azure.Management.Dns.Fluent.IDnsZone;
         }
 
-        /// <return>Name servers assigned for this zone.</return>
-        System.Collections.Generic.IList<string> IDnsZone.NameServers
+        /// <summary>
+        /// Gets name servers assigned for this zone.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NameServers
         {
             get
             {
@@ -30,8 +32,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>The maximum number of record sets that can be created in this zone.</return>
-        long IDnsZone.MaxNumberOfRecordSets
+        /// <summary>
+        /// Gets the maximum number of record sets that can be created in this zone.
+        /// </summary>
+        long Microsoft.Azure.Management.Dns.Fluent.IDnsZone.MaxNumberOfRecordSets
         {
             get
             {
@@ -39,62 +43,76 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing AAAA (IPv6 address) records.</return>
-        IAaaaRecordSets IDnsZone.AaaaRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing AAAA (IPv6 address) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.AaaaRecordSets
         {
             get
             {
-                return this.AaaaRecordSets() as IAaaaRecordSets;
+                return this.AaaaRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSets;
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing A (Ipv4 address) records.</return>
-        IARecordSets IDnsZone.ARecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing A (Ipv4 address) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.IARecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.ARecordSets
         {
             get
             {
-                return this.ARecordSets() as IARecordSets;
+                return this.ARecordSets() as Microsoft.Azure.Management.Dns.Fluent.IARecordSets;
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing Ns (name server) records.</return>
-        INsRecordSets IDnsZone.NsRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing Ns (name server) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.INsRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NsRecordSets
         {
             get
             {
-                return this.NsRecordSets() as INsRecordSets;
+                return this.NsRecordSets() as Microsoft.Azure.Management.Dns.Fluent.INsRecordSets;
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing Srv (service) records.</return>
-        ISrvRecordSets IDnsZone.SrvRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing Srv (service) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.SrvRecordSets
         {
             get
             {
-                return this.SrvRecordSets() as ISrvRecordSets;
+                return this.SrvRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets;
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing CName (canonical name) records.</return>
-        ICnameRecordSets IDnsZone.CnameRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing CName (canonical name) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.CnameRecordSets
         {
             get
             {
-                return this.CnameRecordSets() as ICnameRecordSets;
+                return this.CnameRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSets;
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing Txt (text) records.</return>
-        ITxtRecordSets IDnsZone.TxtRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing Txt (text) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.TxtRecordSets
         {
             get
             {
-                return this.TxtRecordSets() as ITxtRecordSets;
+                return this.TxtRecordSets() as Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSets;
             }
         }
 
-        /// <return>The current number of record sets in this zone.</return>
-        long IDnsZone.NumberOfRecordSets
+        /// <summary>
+        /// Gets the current number of record sets in this zone.
+        /// </summary>
+        long Microsoft.Azure.Management.Dns.Fluent.IDnsZone.NumberOfRecordSets
         {
             get
             {
@@ -102,27 +120,31 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>Entry point to manage record sets in this zone containing Ptr (pointer) records.</return>
-        IPtrRecordSets IDnsZone.PtrRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing Ptr (pointer) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.PtrRecordSets
         {
             get
             {
-                return this.PtrRecordSets() as IPtrRecordSets;
+                return this.PtrRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSets;
             }
         }
 
         /// <return>The record set containing Soa (start of authority) record associated with this Dns zone.</return>
-        ISoaRecordSet IDnsZone.GetSoaRecordSet()
+        Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet Microsoft.Azure.Management.Dns.Fluent.IDnsZone.GetSoaRecordSet()
         {
-            return this.GetSoaRecordSet() as ISoaRecordSet;
+            return this.GetSoaRecordSet() as Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet;
         }
 
-        /// <return>Entry point to manage record sets in this zone containing Mx (mail exchange) records.</return>
-        IMxRecordSets IDnsZone.MxRecordSets
+        /// <summary>
+        /// Gets entry point to manage record sets in this zone containing Mx (mail exchange) records.
+        /// </summary>
+        Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets Microsoft.Azure.Management.Dns.Fluent.IDnsZone.MxRecordSets
         {
             get
             {
-                return this.MxRecordSets() as IMxRecordSets;
+                return this.MxRecordSets() as Microsoft.Azure.Management.Dns.Fluent.IMxRecordSets;
             }
         }
 
@@ -288,9 +310,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Begins the description of an update of the Soa record in this Dns zone.
+        /// Gets Begins the description of an update of the Soa record in this Dns zone.
         /// </summary>
-        /// <return>The stage representing configuration for the Txt record set.</return>
+        /// <summary>
+        /// Gets the stage representing configuration for the Txt record set.
+        /// </summary>
         DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord DnsZone.Update.IWithRecordSet.UpdateSoaRecord()
         {
             return this.UpdateSoaRecord() as DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord;
