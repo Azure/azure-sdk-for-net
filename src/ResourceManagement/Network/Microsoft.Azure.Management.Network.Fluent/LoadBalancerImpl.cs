@@ -240,11 +240,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (Inner.Probes != null) {
                 foreach (var probeInner in Inner.Probes) {
                     var probe = new LoadBalancerProbeImpl(probeInner, this);
-                    if (probeInner.Protocol.Equals(ProbeProtocol.Tcp))
+                    if (ProbeProtocol.Tcp.Equals(probeInner.Protocol))
                     {
                         tcpProbes.Add(probeInner.Name, probe);
                     }
-                    else if (probeInner.Protocol.Equals(ProbeProtocol.Http))
+                    else if (ProbeProtocol.Http.Equals(probeInner.Protocol))
                     {
                         httpProbes.Add(probeInner.Name, probe);
                     }
