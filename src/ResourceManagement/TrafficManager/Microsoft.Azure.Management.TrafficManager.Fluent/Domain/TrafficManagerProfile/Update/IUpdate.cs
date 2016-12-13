@@ -2,48 +2,50 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update
 {
-    using Microsoft.Azure.Management.Trafficmanager.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
-    using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Trafficmanager.Fluent;
     using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateAzureEndpoint;
+    using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition;
     using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint;
     using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint;
 
     /// <summary>
-    /// The stage of the traffic manager profile update allowing to specify the traffic routing method
-    /// for the profile.
+    /// The stage of the traffic manager profile update allowing to specify the endpoint monitoring configuration.
     /// </summary>
-    public interface IWithTrafficRoutingMethod 
+    public interface IWithMonitoringConfiguration 
     {
         /// <summary>
-        /// Specify that end user traffic should be distributed to the endpoints based on the weight assigned
-        /// to the endpoint.
+        /// Specify to use HTTP monitoring for the endpoints that checks for HTTP 200 response from the path '/'
+        /// at regular intervals, using port 80.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithWeightBasedRouting();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithHttpMonitoring();
 
         /// <summary>
-        /// Specify that end user traffic should be routed to the endpoint based on its priority
-        /// i.e. use the endpoint with highest priority and if it is not available fallback to next highest
-        /// priority endpoint.
+        /// Specify the HTTP monitoring for the endpoints that checks for HTTP 200 response from the specified
+        /// path at regular intervals, using the specified port.
         /// </summary>
+        /// <param name="port">The monitoring port.</param>
+        /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithPriorityBasedRouting();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithHttpMonitoring(int port, string path);
 
         /// <summary>
-        /// Specify the traffic routing method for the profile.
+        /// Specify to use HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the path '/'
+        /// at regular intervals, using port 443.
         /// </summary>
-        /// <param name="routingMethod">The traffic routing method for the profile.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithHttpsMonitoring();
 
         /// <summary>
-        /// Specify that end user traffic should be routed based on the geographic location of the endpoint
-        /// close to user.
+        /// Specify the HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the specified
+        /// path at regular intervals, using the specified port.
         /// </summary>
+        /// <param name="port">The monitoring port.</param>
+        /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithPerformanceBasedRouting();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithHttpsMonitoring(int port, string path);
     }
 
     /// <summary>
@@ -56,12 +58,11 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile
         /// </summary>
         /// <param name="ttlInSeconds">DNS TTL in seconds.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithTimeToLive(int ttlInSeconds);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithTimeToLive(int ttlInSeconds);
     }
 
     /// <summary>
     /// The template for an update operation, containing all the settings that can be modified.
-    /// <p>
     /// Call Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile
         IWithEndpoint,
         IWithTtl,
         IWithProfileStatus,
-        IUpdateWithTags<IUpdate>
+        IUpdateWithTags<Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate>
     {
     }
 
@@ -92,21 +93,21 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile
         /// </summary>
         /// <param name="name">The name of the endpoint.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithoutEndpoint(string name);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithoutEndpoint(string name);
 
         /// <summary>
         /// Specifies definition of an nested profile endpoint to be attached to the traffic manager profile.
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.INestedProfileTargetEndpointBlank<IUpdate> DefineNestedTargetEndpoint(string name);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.INestedProfileTargetEndpointBlank<Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate> DefineNestedTargetEndpoint(string name);
 
         /// <summary>
         /// Specifies definition of an external endpoint to be attached to the traffic manager profile.
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IExternalTargetEndpointBlank<IUpdate> DefineExternalTargetEndpoint(string name);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IExternalTargetEndpointBlank<Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate> DefineExternalTargetEndpoint(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing external endpoint in this profile.
@@ -120,7 +121,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IAzureTargetEndpointBlank<IUpdate> DefineAzureTargetEndpoint(string name);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate> DefineAzureTargetEndpoint(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing nested traffic manager profile endpoint
@@ -138,56 +139,52 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile
     {
         /// <summary>
         /// Specify that the profile needs to be disabled.
-        /// <p>
         /// Disabling the profile will disables traffic to all endpoints in the profile.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithProfileStatusDisabled();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithProfileStatusDisabled();
 
         /// <summary>
         /// Specify that the profile needs to be enabled.
-        /// <p>
         /// Enabling the profile will enables traffic to all endpoints in the profile.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithProfileStatusEnabled();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithProfileStatusEnabled();
     }
 
     /// <summary>
-    /// The stage of the traffic manager profile update allowing to specify the endpoint monitoring configuration.
+    /// The stage of the traffic manager profile update allowing to specify the traffic routing method
+    /// for the profile.
     /// </summary>
-    public interface IWithMonitoringConfiguration 
+    public interface IWithTrafficRoutingMethod 
     {
         /// <summary>
-        /// Specify to use HTTP monitoring for the endpoints that checks for HTTP 200 response from the path '/'
-        /// at regular intervals, using port 80.
+        /// Specify that end user traffic should be distributed to the endpoints based on the weight assigned
+        /// to the endpoint.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithHttpMonitoring();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithWeightBasedRouting();
 
         /// <summary>
-        /// Specify the HTTP monitoring for the endpoints that checks for HTTP 200 response from the specified
-        /// path at regular intervals, using the specified port.
+        /// Specify that end user traffic should be routed to the endpoint based on its priority
+        /// i.e. use the endpoint with highest priority and if it is not available fallback to next highest
+        /// priority endpoint.
         /// </summary>
-        /// <param name="port">The monitoring port.</param>
-        /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithHttpMonitoring(int port, string path);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithPriorityBasedRouting();
 
         /// <summary>
-        /// Specify to use HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the path '/'
-        /// at regular intervals, using port 443.
+        /// Specify the traffic routing method for the profile.
         /// </summary>
+        /// <param name="routingMethod">The traffic routing method for the profile.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithHttpsMonitoring();
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod);
 
         /// <summary>
-        /// Specify the HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the specified
-        /// path at regular intervals, using the specified port.
+        /// Specify that end user traffic should be routed based on the geographic location of the endpoint
+        /// close to user.
         /// </summary>
-        /// <param name="port">The monitoring port.</param>
-        /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        IUpdate WithHttpsMonitoring(int port, string path);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Update.IUpdate WithPerformanceBasedRouting();
     }
 }

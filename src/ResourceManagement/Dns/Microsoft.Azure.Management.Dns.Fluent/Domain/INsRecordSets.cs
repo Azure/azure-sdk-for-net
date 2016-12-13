@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Ns record sets in a Dns zone.
     /// </summary>
     public interface INsRecordSets  :
-        ISupportsListing<INsRecordSet>,
-        ISupportsGettingByName<INsRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.INsRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.INsRecordSet>
     {
     }
 }

@@ -3,17 +3,19 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
-    using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using AvailabilitySet.Definition;
     using System.Threading.Tasks;
+    using AvailabilitySet.Definition;
     using AvailabilitySet.Update;
-    using System.Collections.Generic;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
 
-    internal partial class AvailabilitySetImpl
+    internal partial class AvailabilitySetImpl 
     {
-        /// <return>The fault domain count of this availability set.</return>
+        /// <summary>
+        /// Gets the fault domain count of this availability set.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.FaultDomainCount
         {
             get
@@ -22,7 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The statuses of the existing virtual machines in the availability set.</return>
+        /// <summary>
+        /// Gets the statuses of the existing virtual machines in the availability set.
+        /// </summary>
         System.Collections.Generic.IList<Models.InstanceViewStatus> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.Statuses
         {
             get
@@ -31,7 +35,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The resource IDs of the virtual machines in the availability set.</return>
+        /// <summary>
+        /// Gets the resource IDs of the virtual machines in the availability set.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.VirtualMachineIds
         {
             get
@@ -40,7 +46,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The update domain count of this availability set.</return>
+        /// <summary>
+        /// Gets the update domain count of this availability set.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.UpdateDomainCount
         {
             get

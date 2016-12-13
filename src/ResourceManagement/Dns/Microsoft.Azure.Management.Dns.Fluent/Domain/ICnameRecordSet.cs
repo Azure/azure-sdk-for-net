@@ -8,7 +8,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface ICnameRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The canonical name (without a terminating dot) of CName record in this record set.</return>
+        /// <summary>
+        /// Gets the canonical name (without a terminating dot) of CName record in this record set.
+        /// </summary>
         string CanonicalName { get; }
     }
 }

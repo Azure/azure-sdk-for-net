@@ -2,19 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using VirtualMachineDataDisk.UpdateDefinition;
-    using VirtualMachine.Update;
-    using System.Collections.Generic;
-    using VirtualMachineDataDisk.Definition;
-    using Microsoft.Azure.Management.Storage.Fluent;
     using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using VirtualMachineDataDisk.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using VirtualMachine.Definition;
+    using VirtualMachine.Update;
+    using VirtualMachineDataDisk.Definition;
+    using VirtualMachineDataDisk.Update;
+    using VirtualMachineDataDisk.UpdateDefinition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using System.Collections.Generic;
 
-    internal partial class DataDiskImpl
+    internal partial class DataDiskImpl 
     {
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
@@ -40,25 +40,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.From(storageAccountName, containerName, vhdName) as VirtualMachineDataDisk.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate>;
         }
 
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>Uri to the virtual hard disk backing this data disk.</return>
+        /// <summary>
+        /// Gets uri to the virtual hard disk backing this data disk.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.VhdUri
         {
             get
             {
-                return this.VhdUri() as string;
+                return this.VhdUri();
             }
         }
 
-        /// <return>The logical unit number assigned to this data disk.</return>
+        /// <summary>
+        /// Gets the logical unit number assigned to this data disk.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Lun
         {
             get
@@ -67,7 +73,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The creation method used while creating this disk.</return>
+        /// <summary>
+        /// Gets the creation method used while creating this disk.
+        /// </summary>
         Models.DiskCreateOptionTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CreationMethod
         {
             get
@@ -77,11 +85,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the disk caching type.
-        /// <p>
+        /// Gets Gets the disk caching type.
         /// possible values are: 'None', 'ReadOnly', 'ReadWrite'.
         /// </summary>
-        /// <return>The caching type.</return>
+        /// <summary>
+        /// Gets the caching type.
+        /// </summary>
         Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CachingType
         {
             get
@@ -90,7 +99,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The size of this data disk in GB.</return>
+        /// <summary>
+        /// Gets the size of this data disk in GB.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Size
         {
             get
@@ -100,16 +111,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Uri to the source virtual hard disk user image from which this disk was created.
-        /// <p>
+        /// Gets Uri to the source virtual hard disk user image from which this disk was created.
         /// null will be returned if this disk is not based on an image.
         /// </summary>
-        /// <return>The uri of the source vhd image.</return>
+        /// <summary>
+        /// Gets the uri of the source vhd image.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.SourceImageUri
         {
             get
             {
-                return this.SourceImageUri() as string;
+                return this.SourceImageUri();
             }
         }
 

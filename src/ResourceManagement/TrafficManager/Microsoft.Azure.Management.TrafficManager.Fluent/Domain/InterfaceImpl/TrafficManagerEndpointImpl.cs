@@ -2,19 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 {
-    using TrafficManagerEndpoint.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Threading.Tasks;
-    using TrafficManagerProfile.Update;
-    using TrafficManagerEndpoint.UpdateDefinition;
-    using TrafficManagerEndpoint.Definition;
     using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using TrafficManagerEndpoint.UpdateNestedProfileEndpoint;
-    using TrafficManagerEndpoint.UpdateExternalEndpoint;
-    using TrafficManagerProfile.Definition;
+    using TrafficManagerEndpoint.Definition;
     using TrafficManagerEndpoint.UpdateAzureEndpoint;
+    using TrafficManagerEndpoint.UpdateDefinition;
+    using TrafficManagerEndpoint.UpdateExternalEndpoint;
+    using TrafficManagerEndpoint.UpdateNestedProfileEndpoint;
+    using TrafficManagerEndpoint.Update;
+    using TrafficManagerProfile.Definition;
+    using TrafficManagerProfile.Update;
 
     internal partial class TrafficManagerEndpointImpl 
     {
@@ -113,7 +113,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 
         /// <summary>
         /// Specifies the resource ID of an Azure resource.
-        /// <p>
         /// supported Azure resources are cloud service, web app or public ip.
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
@@ -269,7 +268,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 
         /// <summary>
         /// Specifies the resource ID of an Azure resource.
-        /// <p>
         /// supported Azure resources are cloud service, web app or public ip.
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
@@ -281,7 +279,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 
         /// <summary>
         /// Specifies the resource ID of an Azure resource.
-        /// <p>
         /// supported Azure resources are cloud service, web app or public ip.
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
@@ -322,11 +319,11 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this.ToProfile(nestedProfile) as TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
         }
 
-        /// <return>
-        /// The priority of the endpoint which is used when traffic manager profile is configured with
+        /// <summary>
+        /// Gets the priority of the endpoint which is used when traffic manager profile is configured with
         /// Priority traffic-routing method.
-        /// </return>
-        int ITrafficManagerEndpoint.RoutingPriority
+        /// </summary>
+        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.RoutingPriority
         {
             get
             {
@@ -334,8 +331,10 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             }
         }
 
-        /// <return>The endpoint type.</return>
-        EndpointType ITrafficManagerEndpoint.EndpointType
+        /// <summary>
+        /// Gets the endpoint type.
+        /// </summary>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointType Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.EndpointType
         {
             get
             {
@@ -343,20 +342,22 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             }
         }
 
-        /// <return>The monitor status of the endpoint.</return>
-        EndpointMonitorStatus ITrafficManagerEndpoint.MonitorStatus
+        /// <summary>
+        /// Gets the monitor status of the endpoint.
+        /// </summary>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointMonitorStatus Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.MonitorStatus
         {
             get
             {
-                return this.MonitorStatus() as EndpointMonitorStatus;
+                return this.MonitorStatus() as Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointMonitorStatus;
             }
         }
 
-        /// <return>
-        /// The weight of the endpoint which is used when traffic manager profile is configured with
+        /// <summary>
+        /// Gets the weight of the endpoint which is used when traffic manager profile is configured with
         /// Weighted traffic-routing method.
-        /// </return>
-        int ITrafficManagerEndpoint.RoutingWeight
+        /// </summary>
+        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.RoutingWeight
         {
             get
             {
@@ -364,8 +365,10 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             }
         }
 
-        /// <return>True if the endpoint is enabled, false otherwise.</return>
-        bool ITrafficManagerEndpoint.IsEnabled
+        /// <summary>
+        /// Gets true if the endpoint is enabled, false otherwise.
+        /// </summary>
+        bool Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.IsEnabled
         {
             get
             {

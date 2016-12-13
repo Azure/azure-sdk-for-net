@@ -11,7 +11,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface ITxtRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The Txt records in this record set.</return>
+        /// <summary>
+        /// Gets the Txt records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<TxtRecord> Records { get; }
     }
 }

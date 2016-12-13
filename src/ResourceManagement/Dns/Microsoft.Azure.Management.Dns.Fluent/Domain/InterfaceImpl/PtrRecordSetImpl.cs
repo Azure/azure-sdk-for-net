@@ -6,8 +6,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 
     internal partial class PtrRecordSetImpl 
     {
-        /// <return>The target domain names of Ptr records in this record set.</return>
-        System.Collections.Generic.IList<string> IPtrRecordSet.TargetDomainNames
+        /// <summary>
+        /// Gets the target domain names of Ptr records in this record set.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSet.TargetDomainNames
         {
             get
             {

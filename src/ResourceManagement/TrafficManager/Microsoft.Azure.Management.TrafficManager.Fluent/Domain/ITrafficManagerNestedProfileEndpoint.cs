@@ -10,13 +10,19 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     public interface ITrafficManagerNestedProfileEndpoint  :
         ITrafficManagerEndpoint
     {
-        /// <return>The location of the traffic that the endpoint handles.</return>
+        /// <summary>
+        /// Gets the location of the traffic that the endpoint handles.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region SourceTrafficLocation { get; }
 
-        /// <return>The number of child endpoints to be online to consider nested profile as healthy.</return>
+        /// <summary>
+        /// Gets the number of child endpoints to be online to consider nested profile as healthy.
+        /// </summary>
         int MinimumChildEndpointCount { get; }
 
-        /// <return>The nested traffic manager profile resource id.</return>
+        /// <summary>
+        /// Gets the nested traffic manager profile resource id.
+        /// </summary>
         string NestedProfileId { get; }
     }
 }

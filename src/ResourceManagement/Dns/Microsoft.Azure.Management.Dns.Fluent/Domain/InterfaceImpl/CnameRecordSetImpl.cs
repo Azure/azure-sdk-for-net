@@ -4,12 +4,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 {
     internal partial class CnameRecordSetImpl 
     {
-        /// <return>The canonical name (without a terminating dot) of CName record in this record set.</return>
-        string ICnameRecordSet.CanonicalName
+        /// <summary>
+        /// Gets the canonical name (without a terminating dot) of CName record in this record set.
+        /// </summary>
+        string Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet.CanonicalName
         {
             get
             {
-                return this.CanonicalName() as string;
+                return this.CanonicalName();
             }
         }
     }

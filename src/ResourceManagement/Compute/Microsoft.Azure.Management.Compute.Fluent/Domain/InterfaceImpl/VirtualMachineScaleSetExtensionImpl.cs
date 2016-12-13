@@ -2,25 +2,27 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using VirtualMachineScaleSetExtension.UpdateDefinition;
-    using VirtualMachineScaleSetExtension.Update;
-    using VirtualMachineScaleSetExtension.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using Models;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using VirtualMachineScaleSet.Definition;
     using VirtualMachineScaleSet.Update;
+    using VirtualMachineScaleSetExtension.Definition;
+    using VirtualMachineScaleSetExtension.Update;
+    using VirtualMachineScaleSetExtension.UpdateDefinition;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using System.Collections.Generic;
 
-    internal partial class VirtualMachineScaleSetExtensionImpl
+    internal partial class VirtualMachineScaleSetExtensionImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
@@ -64,64 +66,76 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.WithPublisher(extensionImagePublisherName) as VirtualMachineScaleSetExtension.UpdateDefinition.IWithType<VirtualMachineScaleSet.Update.IWithApply>;
         }
 
-        /// <return>The public settings of the virtual machine scale set extension as key value pairs.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.PublicSettings
+        /// <summary>
+        /// Gets the public settings of the virtual machine scale set extension as key value pairs.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.PublicSettings
         {
             get
             {
-                return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string, object>;
+                return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string,object>;
             }
         }
 
-        /// <return>The version name of the virtual machine scale set extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the version name of the virtual machine scale set extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.VersionName
         {
             get
             {
-                return this.VersionName() as string;
+                return this.VersionName();
             }
         }
 
-        /// <return>The type name of the virtual machine scale set extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the type name of the virtual machine scale set extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.TypeName
         {
             get
             {
-                return this.TypeName() as string;
+                return this.TypeName();
             }
         }
 
-        /// <return>The provisioning state of this virtual machine scale set extension.</return>
+        /// <summary>
+        /// Gets the provisioning state of this virtual machine scale set extension.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.ProvisioningState
         {
             get
             {
-                return this.ProvisioningState() as string;
+                return this.ProvisioningState();
             }
         }
 
-        /// <return>The publisher name of the virtual machine scale set extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the publisher name of the virtual machine scale set extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.PublisherName
         {
             get
             {
-                return this.PublisherName() as string;
+                return this.PublisherName();
             }
         }
 
-        /// <return>The public settings of the virtual machine extension as a JSON string.</return>
+        /// <summary>
+        /// Gets the public settings of the virtual machine extension as a JSON string.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.PublicSettingsAsJsonString
         {
             get
             {
-                return this.PublicSettingsAsJsonString() as string;
+                return this.PublicSettingsAsJsonString();
             }
         }
 
-        /// <return>
-        /// True if this extension is configured to upgrade automatically when a new minor version of
+        /// <summary>
+        /// Gets true if this extension is configured to upgrade automatically when a new minor version of
         /// the extension image that this extension based on is published.
-        /// </return>
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension.AutoUpgradeMinorVersionEnabled
         {
             get
@@ -238,7 +252,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The public settings.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSetExtension.Update.IUpdate VirtualMachineScaleSetExtension.Update.IWithSettings.WithPublicSettings(IDictionary<string, object> settings)
+        VirtualMachineScaleSetExtension.Update.IUpdate VirtualMachineScaleSetExtension.Update.IWithSettings.WithPublicSettings(IDictionary<string,object> settings)
         {
             return this.WithPublicSettings(settings) as VirtualMachineScaleSetExtension.Update.IUpdate;
         }
@@ -248,7 +262,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The private settings.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSetExtension.Update.IUpdate VirtualMachineScaleSetExtension.Update.IWithSettings.WithProtectedSettings(IDictionary<string, object> settings)
+        VirtualMachineScaleSetExtension.Update.IUpdate VirtualMachineScaleSetExtension.Update.IWithSettings.WithProtectedSettings(IDictionary<string,object> settings)
         {
             return this.WithProtectedSettings(settings) as VirtualMachineScaleSetExtension.Update.IUpdate;
         }
@@ -289,7 +303,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The public settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSetExtension.Definition.IWithAttach<VirtualMachineScaleSet.Definition.IWithCreate> VirtualMachineScaleSetExtension.Definition.IWithSettings<VirtualMachineScaleSet.Definition.IWithCreate>.WithPublicSettings(IDictionary<string, object> settings)
+        VirtualMachineScaleSetExtension.Definition.IWithAttach<VirtualMachineScaleSet.Definition.IWithCreate> VirtualMachineScaleSetExtension.Definition.IWithSettings<VirtualMachineScaleSet.Definition.IWithCreate>.WithPublicSettings(IDictionary<string,object> settings)
         {
             return this.WithPublicSettings(settings) as VirtualMachineScaleSetExtension.Definition.IWithAttach<VirtualMachineScaleSet.Definition.IWithCreate>;
         }
@@ -299,7 +313,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The private settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSetExtension.Definition.IWithAttach<VirtualMachineScaleSet.Definition.IWithCreate> VirtualMachineScaleSetExtension.Definition.IWithSettings<VirtualMachineScaleSet.Definition.IWithCreate>.WithProtectedSettings(IDictionary<string, object> settings)
+        VirtualMachineScaleSetExtension.Definition.IWithAttach<VirtualMachineScaleSet.Definition.IWithCreate> VirtualMachineScaleSetExtension.Definition.IWithSettings<VirtualMachineScaleSet.Definition.IWithCreate>.WithProtectedSettings(IDictionary<string,object> settings)
         {
             return this.WithProtectedSettings(settings) as VirtualMachineScaleSetExtension.Definition.IWithAttach<VirtualMachineScaleSet.Definition.IWithCreate>;
         }
@@ -331,7 +345,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The public settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSetExtension.UpdateDefinition.IWithSettings<VirtualMachineScaleSet.Update.IWithApply>.WithPublicSettings(IDictionary<string, object> settings)
+        VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSetExtension.UpdateDefinition.IWithSettings<VirtualMachineScaleSet.Update.IWithApply>.WithPublicSettings(IDictionary<string,object> settings)
         {
             return this.WithPublicSettings(settings) as VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<VirtualMachineScaleSet.Update.IWithApply>;
         }
@@ -341,7 +355,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The private settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSetExtension.UpdateDefinition.IWithSettings<VirtualMachineScaleSet.Update.IWithApply>.WithProtectedSettings(IDictionary<string, object> settings)
+        VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSetExtension.UpdateDefinition.IWithSettings<VirtualMachineScaleSet.Update.IWithApply>.WithProtectedSettings(IDictionary<string,object> settings)
         {
             return this.WithProtectedSettings(settings) as VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<VirtualMachineScaleSet.Update.IWithApply>;
         }

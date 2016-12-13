@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine extension.
     /// An extension associated with a virtual machine will be created from a VirtualMachineExtensionImage.
     /// </summary>
-    public interface IVirtualMachineExtension :
+    public interface IVirtualMachineExtension  :
         IVirtualMachineExtensionBase,
-        IExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
+        IExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {
     }
 }

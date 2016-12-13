@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IPtrRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The target domain names of Ptr records in this record set.</return>
+        /// <summary>
+        /// Gets the target domain names of Ptr records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<string> TargetDomainNames { get; }
     }
 }

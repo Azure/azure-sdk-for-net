@@ -2,27 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update
 {
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using System.Collections.Generic;
 
     /// <summary>
-    /// The stage of the virtual machine extension update allowing to enable or disable auto upgrade of the
-    /// extension when when a new minor version of virtual machine extension image gets published.
+    /// The entirety of virtual machine extension update as a part of parent virtual machine update.
     /// </summary>
-    public interface IWithAutoUpgradeMinorVersion 
+    public interface IUpdate  :
+        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>,
+        IWithAutoUpgradeMinorVersion,
+        IWithSettings,
+        IWithTags
     {
-        /// <summary>
-        /// Enables auto upgrade of the extension.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithMinorVersionAutoUpgrade();
-
-        /// <summary>
-        /// Enables auto upgrade of the extension.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithoutMinorVersionAutoUpgrade();
     }
 
     /// <summary>
@@ -62,6 +54,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
     }
 
     /// <summary>
+    /// The stage of the virtual machine extension update allowing to enable or disable auto upgrade of the
+    /// extension when when a new minor version of virtual machine extension image gets published.
+    /// </summary>
+    public interface IWithAutoUpgradeMinorVersion 
+    {
+        /// <summary>
+        /// Enables auto upgrade of the extension.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithMinorVersionAutoUpgrade();
+
+        /// <summary>
+        /// Enables auto upgrade of the extension.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithoutMinorVersionAutoUpgrade();
+    }
+
+    /// <summary>
     /// The stage of the virtual machine extension update allowing to add or update tags.
     /// </summary>
     public interface IWithTags 
@@ -87,16 +98,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
         /// <param name="key">The key of the tag to remove.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate WithoutTag(string key);
-    }
-
-    /// <summary>
-    /// The entirety of virtual machine extension update as a part of parent virtual machine update.
-    /// </summary>
-    public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>,
-        IWithAutoUpgradeMinorVersion,
-        IWithSettings,
-        IWithTags
-    {
     }
 }

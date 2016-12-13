@@ -6,8 +6,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 
     internal partial class NsRecordSetImpl 
     {
-        /// <return>The name server names of Ns (name server) records in this record set.</return>
-        System.Collections.Generic.IList<string> INsRecordSet.NameServers
+        /// <summary>
+        /// Gets the name server names of Ns (name server) records in this record set.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.INsRecordSet.NameServers
         {
             get
             {

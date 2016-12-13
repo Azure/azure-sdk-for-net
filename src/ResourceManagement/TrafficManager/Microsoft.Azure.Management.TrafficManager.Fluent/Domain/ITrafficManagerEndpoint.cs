@@ -9,28 +9,34 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// An immutable client-side representation of an Azure traffic manager profile endpoint.
     /// </summary>
     public interface ITrafficManagerEndpoint  :
-        IExternalChildResource<ITrafficManagerEndpoint,ITrafficManagerProfile>,
+        IExternalChildResource<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>,
         IWrapper<EndpointInner>
     {
-        /// <return>
-        /// The priority of the endpoint which is used when traffic manager profile is configured with
+        /// <summary>
+        /// Gets the priority of the endpoint which is used when traffic manager profile is configured with
         /// Priority traffic-routing method.
-        /// </return>
+        /// </summary>
         int RoutingPriority { get; }
 
-        /// <return>The endpoint type.</return>
-        EndpointType EndpointType { get; }
+        /// <summary>
+        /// Gets the endpoint type.
+        /// </summary>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointType EndpointType { get; }
 
-        /// <return>True if the endpoint is enabled, false otherwise.</return>
+        /// <summary>
+        /// Gets true if the endpoint is enabled, false otherwise.
+        /// </summary>
         bool IsEnabled { get; }
 
-        /// <return>
-        /// The weight of the endpoint which is used when traffic manager profile is configured with
+        /// <summary>
+        /// Gets the weight of the endpoint which is used when traffic manager profile is configured with
         /// Weighted traffic-routing method.
-        /// </return>
+        /// </summary>
         int RoutingWeight { get; }
 
-        /// <return>The monitor status of the endpoint.</return>
-        EndpointMonitorStatus MonitorStatus { get; }
+        /// <summary>
+        /// Gets the monitor status of the endpoint.
+        /// </summary>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointMonitorStatus MonitorStatus { get; }
     }
 }

@@ -2,25 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using VirtualMachine.Definition;
     using Models;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
-    using VirtualMachine.Definition;
-    using System.Threading;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
 
-    internal partial class VirtualMachinesImpl
+    internal partial class VirtualMachinesImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.
-        /// <p>
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
         /// process in Azure is Creatable.create().
-        /// <p>
         /// Note that the Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
         /// parameters specified. If you do not see Creatable.create() among the available methods, it
@@ -53,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>An immutable representation of the resource.</return>
         async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine;
         }
 
         /// <summary>
@@ -64,8 +62,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>An observable to the request.</return>
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
-
-            await this.DeleteByGroupAsync(groupName, name);
+ 
+            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">The virtual machine name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Start(string groupName, string name)
         {
-
+ 
             this.Start(groupName, name);
         }
 
@@ -95,7 +93,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">The virtual machine name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.PowerOff(string groupName, string name)
         {
-
+ 
             this.PowerOff(groupName, name);
         }
 
@@ -106,7 +104,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">The virtual machine name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Generalize(string groupName, string name)
         {
-
+ 
             this.Generalize(groupName, name);
         }
 
@@ -117,7 +115,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">The virtual machine name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Redeploy(string groupName, string name)
         {
-
+ 
             this.Redeploy(groupName, name);
         }
 
@@ -133,7 +131,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The template as JSON string.</return>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Capture(string groupName, string name, string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            return this.Capture(groupName, name, containerName, vhdPrefix, overwriteVhd) as string;
+            return this.Capture(groupName, name, containerName, vhdPrefix, overwriteVhd);
         }
 
         /// <summary>
@@ -143,7 +141,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">The virtual machine name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Deallocate(string groupName, string name)
         {
-
+ 
             this.Deallocate(groupName, name);
         }
 
@@ -154,11 +152,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="name">The virtual machine name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Restart(string groupName, string name)
         {
-
+ 
             this.Restart(groupName, name);
         }
 
-        /// <return>Available virtual machine sizes.</return>
+        /// <summary>
+        /// Gets available virtual machine sizes.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSizes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Sizes
         {
             get

@@ -6,8 +6,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 
     internal partial class ARecordSetImpl 
     {
-        /// <return>The Ipv4 addresses of A records in this record set.</return>
-        System.Collections.Generic.IList<string> IARecordSet.Ipv4Addresses
+        /// <summary>
+        /// Gets the Ipv4 addresses of A records in this record set.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.IARecordSet.Ipv4Addresses
         {
             get
             {

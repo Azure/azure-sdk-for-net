@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Txt record sets in a Dns zone.
     /// </summary>
     public interface ITxtRecordSets  :
-        ISupportsListing<ITxtRecordSet>,
-        ISupportsGettingByName<ITxtRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ITxtRecordSet>
     {
     }
 }

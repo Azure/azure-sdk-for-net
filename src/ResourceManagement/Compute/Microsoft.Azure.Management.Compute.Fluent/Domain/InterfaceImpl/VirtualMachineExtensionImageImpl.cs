@@ -1,31 +1,37 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    internal partial class VirtualMachineExtensionImageImpl
+    internal partial class VirtualMachineExtensionImageImpl 
     {
-        /// <return>The region in which virtual machine extension image is available.</return>
+        /// <summary>
+        /// Gets the region in which virtual machine extension image is available.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.RegionName
         {
             get
             {
-                return this.RegionName() as string;
+                return this.RegionName();
             }
         }
 
-        /// <return>The schema defined by publisher, where extension consumers should provide settings in a matching schema.</return>
+        /// <summary>
+        /// Gets the schema defined by publisher, where extension consumers should provide settings in a matching schema.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.HandlerSchema
         {
             get
             {
-                return this.HandlerSchema() as string;
+                return this.HandlerSchema();
             }
         }
 
-        /// <return>The operating system this virtual machine extension image supports.</return>
+        /// <summary>
+        /// Gets the operating system this virtual machine extension image supports.
+        /// </summary>
         Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.OsType
         {
             get
@@ -34,25 +40,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The resource ID of the extension image.</return>
+        /// <summary>
+        /// Gets the resource ID of the extension image.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
 
-        /// <return>The name of the virtual machine extension image version this image represents.</return>
+        /// <summary>
+        /// Gets the name of the virtual machine extension image version this image represents.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.VersionName
         {
             get
             {
-                return this.VersionName() as string;
+                return this.VersionName();
             }
         }
 
-        /// <return>True if the handler can support multiple extensions.</return>
+        /// <summary>
+        /// Gets true if the handler can support multiple extensions.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.SupportsMultipleExtensions
         {
             get
@@ -61,7 +73,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The virtual machine extension image version this image belongs to.</return>
+        /// <summary>
+        /// Gets the virtual machine extension image version this image belongs to.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.Version
         {
             get
@@ -70,16 +84,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The name of the publisher of the virtual machine extension image.</return>
+        /// <summary>
+        /// Gets the name of the publisher of the virtual machine extension image.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.PublisherName
         {
             get
             {
-                return this.PublisherName() as string;
+                return this.PublisherName();
             }
         }
 
-        /// <return>True if the extension can be used with virtual machine scale sets, false otherwise.</return>
+        /// <summary>
+        /// Gets true if the extension can be used with virtual machine scale sets, false otherwise.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.SupportsVirtualMachineScaleSets
         {
             get
@@ -88,16 +106,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The name of the virtual machine extension image type this image belongs to.</return>
+        /// <summary>
+        /// Gets the name of the virtual machine extension image type this image belongs to.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.TypeName
         {
             get
             {
-                return this.TypeName() as string;
+                return this.TypeName();
             }
         }
 
-        /// <return>The type of role this virtual machine extension image supports.</return>
+        /// <summary>
+        /// Gets the type of role this virtual machine extension image supports.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.ComputeRoles Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage.ComputeRole
         {
             get

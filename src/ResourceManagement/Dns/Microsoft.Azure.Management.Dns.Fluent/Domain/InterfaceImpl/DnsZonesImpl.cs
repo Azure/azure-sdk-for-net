@@ -2,21 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using System.Threading.Tasks;
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Resource.Fluent;
 
     internal partial class DnsZonesImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.
-        /// <p>
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
         /// process in Azure is Creatable.create().
-        /// <p>
         /// Note that the Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
         /// parameters specified. If you do not see Creatable.create() among the available methods, it
@@ -36,9 +34,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<IDnsZone> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<IDnsZone>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<IDnsZone>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>;
         }
 
         /// <summary>
@@ -47,9 +45,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<IDnsZone> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<IDnsZone>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        async Task<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name) as IDnsZone;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Dns.Fluent.IDnsZone;
         }
 
         /// <summary>
@@ -58,19 +56,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>An observable to the request.</return>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
  
-            this.DeleteByGroupAsync(groupName, name);
+            await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<IDnsZone> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<IDnsZone>.List()
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<IDnsZone>;
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>;
         }
     }
 }

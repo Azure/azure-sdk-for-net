@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// The com.microsoft.azure.management.trafficmanager.TrafficManagerProfiles.checkDnsNameAvailability action result.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkNoZWNrUHJvZmlsZURuc05hbWVBdmFpbGFiaWxpdHlSZXN1bHQ=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkNoZWNrUHJvZmlsZURuc05hbWVBdmFpbGFiaWxpdHlSZXN1bHQ=
     public partial class CheckProfileDnsNameAvailabilityResult 
     {
         private TrafficManagerNameAvailabilityInner inner;

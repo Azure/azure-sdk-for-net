@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     /// <summary>
     /// Entry point to virtual machine management API.
     /// </summary>
-    public interface IVirtualMachines :
+    public interface IVirtualMachines  :
         ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
@@ -18,7 +18,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {
-        /// <return>Available virtual machine sizes.</return>
+        /// <summary>
+        /// Gets available virtual machine sizes.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSizes Sizes { get; }
 
         /// <summary>

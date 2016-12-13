@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Cname record sets in a Dns zone.
     /// </summary>
     public interface ICnameRecordSets  :
-        ISupportsListing<ICnameRecordSet>,
-        ISupportsGettingByName<ICnameRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>
     {
     }
 }

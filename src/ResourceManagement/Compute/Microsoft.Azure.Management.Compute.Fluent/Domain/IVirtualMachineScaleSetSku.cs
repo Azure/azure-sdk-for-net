@@ -2,21 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Models;
 
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
     /// <summary>
     /// A type representing a SKU available for virtual machines in a scale set.
     /// </summary>
     public interface IVirtualMachineScaleSetSku 
     {
-        /// <returns>the type of resource the SKU applies to</returns>
-        string ResourceType { get; }
-
-        /// <returns>the SKU type</returns>
+        /// <summary>
+        /// Gets the SKU type.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetSkuTypes SkuType { get; }
 
-        /// <returns>available scaling information</returns>
-        Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineScaleSetSkuCapacity Capacity { get; }
+        /// <summary>
+        /// Gets the type of resource the SKU applies to.
+        /// </summary>
+        string ResourceType { get; }
 
+        /// <summary>
+        /// Gets available scaling information.
+        /// </summary>
+        Models.VirtualMachineScaleSetSkuCapacity Capacity { get; }
     }
 }
