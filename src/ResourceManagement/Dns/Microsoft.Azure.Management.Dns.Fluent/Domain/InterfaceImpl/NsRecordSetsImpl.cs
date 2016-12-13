@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<INsRecordSet> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<INsRecordSet>.List()
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.INsRecordSet> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.INsRecordSet>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<INsRecordSet>;
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.INsRecordSet>;
         }
 
         /// <summary>
@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        INsRecordSet Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByName<INsRecordSet>.GetByName(string name)
+        Microsoft.Azure.Management.Dns.Fluent.INsRecordSet Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.INsRecordSet>.GetByName(string name)
         {
-            return this.GetByName(name) as INsRecordSet;
+            return this.GetByName(name) as Microsoft.Azure.Management.Dns.Fluent.INsRecordSet;
         }
     }
 }

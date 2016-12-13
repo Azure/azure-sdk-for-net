@@ -11,7 +11,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IMxRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The Mx records in this record set.</return>
+        /// <summary>
+        /// Gets the Mx records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<MxRecord> Records { get; }
     }
 }

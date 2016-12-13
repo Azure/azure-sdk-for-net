@@ -6,8 +6,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 
     internal partial class AaaaRecordSetImpl 
     {
-        /// <return>The IPv6 addresses of Aaaa records in this record set.</return>
-        System.Collections.Generic.IList<string> IAaaaRecordSet.Ipv6Addresses
+        /// <summary>
+        /// Gets the IPv6 addresses of Aaaa records in this record set.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Dns.Fluent.IAaaaRecordSet.Ipv6Addresses
         {
             get
             {

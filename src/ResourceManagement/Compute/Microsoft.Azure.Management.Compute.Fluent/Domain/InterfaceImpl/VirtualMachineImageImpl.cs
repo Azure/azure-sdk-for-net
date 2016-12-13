@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -6,9 +6,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Collections.Generic;
 
-    internal partial class VirtualMachineImageImpl
+    internal partial class VirtualMachineImageImpl 
     {
-        /// <return>OS disk image in the virtual machine image.</return>
+        /// <summary>
+        /// Gets OS disk image in the virtual machine image.
+        /// </summary>
         Models.OSDiskImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.OsDiskImage
         {
             get
@@ -17,34 +19,42 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The version of the virtual machine image.</return>
+        /// <summary>
+        /// Gets the version of the virtual machine image.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Version
         {
             get
             {
-                return this.Version() as string;
+                return this.Version();
             }
         }
 
-        /// <return>The publisher name of the virtual machine image.</return>
+        /// <summary>
+        /// Gets the publisher name of the virtual machine image.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.PublisherName
         {
             get
             {
-                return this.PublisherName() as string;
+                return this.PublisherName();
             }
         }
 
-        /// <return>The commercial name of the virtual machine image (SKU).</return>
+        /// <summary>
+        /// Gets the commercial name of the virtual machine image (SKU).
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Sku
         {
             get
             {
-                return this.Sku() as string;
+                return this.Sku();
             }
         }
 
-        /// <return>The purchase plan for the virtual machine image.</return>
+        /// <summary>
+        /// Gets the purchase plan for the virtual machine image.
+        /// </summary>
         Models.PurchasePlan Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Plan
         {
             get
@@ -53,7 +63,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>Data disk images in the virtual machine image.</return>
+        /// <summary>
+        /// Gets data disk images in the virtual machine image.
+        /// </summary>
         System.Collections.Generic.IList<Models.DataDiskImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.DataDiskImages
         {
             get
@@ -62,16 +74,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The name of the virtual machine image offer this image is part of.</return>
+        /// <summary>
+        /// Gets the name of the virtual machine image offer this image is part of.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Offer
         {
             get
             {
-                return this.Offer() as string;
+                return this.Offer();
             }
         }
 
-        /// <return>The region in which virtual machine image is available.</return>
+        /// <summary>
+        /// Gets the region in which virtual machine image is available.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Location
         {
             get
@@ -80,7 +96,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The image reference representing the publisher, offer, SKU and version of the virtual machine image.</return>
+        /// <summary>
+        /// Gets the image reference representing the publisher, offer, SKU and version of the virtual machine image.
+        /// </summary>
         Models.ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.ImageReference
         {
             get

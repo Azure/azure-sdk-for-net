@@ -10,10 +10,14 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     public interface ITrafficManagerExternalEndpoint  :
         ITrafficManagerEndpoint
     {
-        /// <return>The location of the traffic that the endpoint handles.</return>
+        /// <summary>
+        /// Gets the location of the traffic that the endpoint handles.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region SourceTrafficLocation { get; }
 
-        /// <return>The fully qualified DNS name of the external endpoint.</return>
+        /// <summary>
+        /// Gets the fully qualified DNS name of the external endpoint.
+        /// </summary>
         string Fqdn { get; }
     }
 }

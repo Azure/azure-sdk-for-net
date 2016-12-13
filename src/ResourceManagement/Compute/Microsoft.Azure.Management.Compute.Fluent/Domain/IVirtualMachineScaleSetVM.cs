@@ -1,36 +1,42 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Threading.Tasks;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using System.Threading;
+    using System.Collections.Generic;
 
     /// <summary>
     /// An immutable client-side representation of a virtual machine instance in an Azure virtual machine scale set.
     /// </summary>
-    public interface IVirtualMachineScaleSetVM :
+    public interface IVirtualMachineScaleSetVM  :
         IResource,
         IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>,
         IWrapper<Models.VirtualMachineScaleSetVMInner>
     {
-        /// <return>The time zone of the Windows virtual machine.</return>
+        /// <summary>
+        /// Gets the time zone of the Windows virtual machine.
+        /// </summary>
         string WindowsTimeZone { get; }
 
-        /// <return>True if the latest scale set model changes are applied to the virtual machine instance.</return>
+        /// <summary>
+        /// Gets true if the latest scale set model changes are applied to the virtual machine instance.
+        /// </summary>
         bool IsLatestScaleSetUpdateApplied { get; }
 
-        /// <return>
-        /// Vhd uri of the custom image that the virtual machine instance operating system is based on,
+        /// <summary>
+        /// Gets vhd uri of the custom image that the virtual machine instance operating system is based on,
         /// null will be returned if the operating system is based on platform image.
-        /// </return>
+        /// </summary>
         string CustomImageVhdUri { get; }
 
-        /// <return>True if the boot diagnostic is enabled, false otherwise.</return>
+        /// <summary>
+        /// Gets true if the boot diagnostic is enabled, false otherwise.
+        /// </summary>
         bool BootDiagnosticEnabled { get; }
 
         /// <summary>
@@ -66,13 +72,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Delete();
 
-        /// <return>The size of the operating system disk.</return>
+        /// <summary>
+        /// Gets the size of the operating system disk.
+        /// </summary>
         int OsDiskSizeInGB { get; }
 
-        /// <return>The uri to the storage account storing boot diagnostics log.</return>
+        /// <summary>
+        /// Gets the uri to the storage account storing boot diagnostics log.
+        /// </summary>
         string BootDiagnosticStorageAccountUri { get; }
 
-        /// <return>True if this is a Windows virtual machine and Vm agent is provisioned, false otherwise.</return>
+        /// <summary>
+        /// Gets true if this is a Windows virtual machine and Vm agent is provisioned, false otherwise.
+        /// </summary>
         bool IsWindowsVmAgentProvisioned { get; }
 
         /// <summary>
@@ -81,53 +93,70 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Reimage();
 
         /// <summary>
-        /// Gets the instance view of the virtual machine instance.
-        /// <p>
+        /// Gets Gets the instance view of the virtual machine instance.
         /// To get the latest instance view use VirtualMachineScaleSetVM.refreshInstanceView().
         /// </summary>
-        /// <return>The instance view.</return>
+        /// <summary>
+        /// Gets the instance view.
+        /// </summary>
         Models.VirtualMachineInstanceView InstanceView { get; }
 
-        /// <return>The instance id assigned to this virtual machine instance.</return>
+        /// <summary>
+        /// Gets the instance id assigned to this virtual machine instance.
+        /// </summary>
         string InstanceId { get; }
 
-        /// <return>The power state of the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the power state of the virtual machine instance.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.PowerState PowerState { get; }
 
-        /// <return>
-        /// True if the operating system of the virtual machine instance is based on platform image,
+        /// <summary>
+        /// Gets true if the operating system of the virtual machine instance is based on platform image,
         /// false if based on custom image.
-        /// </return>
+        /// </summary>
         bool IsOsBasedOnPlatformImage { get; }
 
-        /// <return>The virtual machine instance computer name with prefix VirtualMachineScaleSet.computerNamePrefix().</return>
+        /// <summary>
+        /// Gets the virtual machine instance computer name with prefix VirtualMachineScaleSet.computerNamePrefix().
+        /// </summary>
         string ComputerName { get; }
 
-        /// <return>The name of the operating system disk.</return>
+        /// <summary>
+        /// Gets the name of the operating system disk.
+        /// </summary>
         string OsDiskName { get; }
 
-        /// <return>The caching type of the operating system disk.</return>
+        /// <summary>
+        /// Gets the caching type of the operating system disk.
+        /// </summary>
         Models.CachingTypes OsDiskCachingType { get; }
 
-        /// <return>The operating system type.</return>
+        /// <summary>
+        /// Gets the operating system type.
+        /// </summary>
         Models.OperatingSystemTypes OsType { get; }
 
-        /// <return>
-        /// Reference to the platform image that the virtual machine instance operating system is based on,
+        /// <summary>
+        /// Gets reference to the platform image that the virtual machine instance operating system is based on,
         /// null will be returned if the operating system is based on custom image.
-        /// </return>
+        /// </summary>
         Models.ImageReference PlatformImageReference { get; }
 
-        /// <return>The diagnostics profile of the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the diagnostics profile of the virtual machine instance.
+        /// </summary>
         Models.DiagnosticsProfile DiagnosticsProfile { get; }
 
-        /// <return>
-        /// The sku of the virtual machine instance, this will be sku used while creating the parent
+        /// <summary>
+        /// Gets the sku of the virtual machine instance, this will be sku used while creating the parent
         /// virtual machine scale set.
-        /// </return>
+        /// </summary>
         Models.Sku Sku { get; }
 
-        /// <return>The list of resource id of network interface associated with the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the list of resource id of network interface associated with the virtual machine instance.
+        /// </summary>
         System.Collections.Generic.IList<string> NetworkInterfaceIds { get; }
 
         /// <summary>
@@ -136,7 +165,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the poweroff action.</return>
         Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <return>The name of the admin user.</return>
+        /// <summary>
+        /// Gets the name of the admin user.
+        /// </summary>
         string AdministratorUserName { get; }
 
         /// <summary>
@@ -155,7 +186,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Start();
 
-        /// <return>True if this is a Windows virtual machine and automatic update is turned on, false otherwise.</return>
+        /// <summary>
+        /// Gets true if this is a Windows virtual machine and automatic update is turned on, false otherwise.
+        /// </summary>
         bool IsWindowsAutoUpdateEnabled { get; }
 
         /// <summary>
@@ -170,25 +203,39 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the start action.</return>
         Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <return>The extensions associated with the virtual machine instance, indexed by name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension> Extensions { get; }
+        /// <summary>
+        /// Gets the extensions associated with the virtual machine instance, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension> Extensions { get; }
 
-        /// <return>Virtual machine instance size.</return>
+        /// <summary>
+        /// Gets virtual machine instance size.
+        /// </summary>
         Models.VirtualMachineSizeTypes Size { get; }
 
-        /// <return>The storage profile of the virtual machine instance.</return>
+        /// <summary>
+        /// Gets the storage profile of the virtual machine instance.
+        /// </summary>
         Models.StorageProfile StorageProfile { get; }
 
-        /// <return>True if this is a Linux virtual machine and password based login is enabled, false otherwise.</return>
+        /// <summary>
+        /// Gets true if this is a Linux virtual machine and password based login is enabled, false otherwise.
+        /// </summary>
         bool IsLinuxPasswordAuthenticationEnabled { get; }
 
-        /// <return>Vhd uri to the operating system disk.</return>
+        /// <summary>
+        /// Gets vhd uri to the operating system disk.
+        /// </summary>
         string OsDiskVhdUri { get; }
 
-        /// <return>Resource id of primary network interface associated with virtual machine instance.</return>
+        /// <summary>
+        /// Gets resource id of primary network interface associated with virtual machine instance.
+        /// </summary>
         string PrimaryNetworkInterfaceId { get; }
 
-        /// <return>The resource id of the availability set that this virtual machine instance belongs to.</return>
+        /// <summary>
+        /// Gets the resource id of the availability set that this virtual machine instance belongs to.
+        /// </summary>
         string AvailabilitySetId { get; }
 
         /// <summary>
@@ -197,7 +244,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The observable to the deallocate action.</return>
         Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <return>The operating system profile of an virtual machine instance.</return>
+        /// <summary>
+        /// Gets the operating system profile of an virtual machine instance.
+        /// </summary>
         Models.OSProfile OsProfile { get; }
     }
 }

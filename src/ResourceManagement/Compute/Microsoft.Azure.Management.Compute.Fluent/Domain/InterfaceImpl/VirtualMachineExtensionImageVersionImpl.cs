@@ -1,18 +1,20 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    internal partial class VirtualMachineExtensionImageVersionImpl
+    internal partial class VirtualMachineExtensionImageVersionImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
@@ -22,7 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetImage() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage;
         }
 
-        /// <return>The virtual machine extension image type this version belongs to.</return>
+        /// <summary>
+        /// Gets the virtual machine extension image type this version belongs to.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion.Type
         {
             get
@@ -31,21 +35,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The region in which virtual machine extension image version is available.</return>
+        /// <summary>
+        /// Gets the region in which virtual machine extension image version is available.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion.RegionName
         {
             get
             {
-                return this.RegionName() as string;
+                return this.RegionName();
             }
         }
 
-        /// <return>The resource ID of the extension image version.</return>
+        /// <summary>
+        /// Gets the resource ID of the extension image version.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
     }

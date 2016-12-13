@@ -2,21 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
-    using Microsoft.Azure.Management.Storage.Fluent;
+    using VirtualMachineScaleSet.Definition;
     using VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using VirtualMachineScaleSet.Definition;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using System.Threading.Tasks;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Threading;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using System.Collections.Generic;
 
-    internal partial class VirtualMachineScaleSetImpl
+    internal partial class VirtualMachineScaleSetImpl 
     {
         /// <summary>
         /// Specifies the name prefix to use for auto-generating the names for the virtual machines in the scale set.
@@ -126,7 +126,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the SSH public key.
-        /// <p>
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">An SSH public key in the PEM format.</param>
@@ -233,7 +232,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
         /// scale set.
-        /// <p>
         /// This will replace the current internet-facing load balancer associated with the virtual machines in the
         /// scale set (if any).
         /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
@@ -248,7 +246,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the SSH public key.
-        /// <p>
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">The SSH public key in PEM format.</param>
@@ -478,7 +475,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the WinRM listener.
-        /// <p>
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
         /// <param name="listener">A WinRm listener.</param>
@@ -546,12 +542,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.WithCapacity(capacity) as VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        /// <return>The extensions attached to the virtual machines in the scale set.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Extensions
+        /// <summary>
+        /// Gets the extensions attached to the virtual machines in the scale set.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Extensions
         {
             get
             {
-                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension>;
+                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension>;
             }
         }
 
@@ -565,19 +563,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetPrimaryInternetFacingLoadBalancer() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancer;
         }
 
-        /// <return>The name of the OS disk of virtual machines in the scale set.</return>
+        /// <summary>
+        /// Gets the name of the OS disk of virtual machines in the scale set.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OsDiskName
         {
             get
             {
-                return this.OsDiskName() as string;
+                return this.OsDiskName();
             }
         }
 
         /// <return>
         /// The virtual network associated with the primary network interfaces of the virtual machines
         /// in the scale set.
-        /// <p>
         /// A primary internal load balancer associated with the primary network interfaces of the scale set
         /// virtual machine will be also belong to this network
         /// </p>.
@@ -596,11 +595,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Reimage()
         {
-
+ 
             this.Reimage();
         }
 
-        /// <return>The operating system disk caching type.</return>
+        /// <summary>
+        /// Gets the operating system disk caching type.
+        /// </summary>
         Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OsDiskCachingType
         {
             get
@@ -609,7 +610,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The URL to storage containers that store the VHDs of the virtual machines in the scale set.</return>
+        /// <summary>
+        /// Gets the URL to storage containers that store the VHDs of the virtual machines in the scale set.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.VhdContainers
         {
             get
@@ -626,7 +629,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Start()
         {
-
+ 
             this.Start();
         }
 
@@ -641,7 +644,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.ListAvailableSkus() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku>;
         }
 
-        /// <return>The operating system of the virtual machines in the scale set.</return>
+        /// <summary>
+        /// Gets the operating system of the virtual machines in the scale set.
+        /// </summary>
         Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OsType
         {
             get
@@ -658,7 +663,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Deallocate()
         {
-
+ 
             this.Deallocate();
         }
 
@@ -667,9 +672,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// of the virtual machines in the scale set.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends()
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends()
         {
-            return this.ListPrimaryInternetFacingLoadBalancerBackends() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
+            return this.ListPrimaryInternetFacingLoadBalancerBackends() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
         /// <return>
@@ -682,7 +687,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetPrimaryInternalLoadBalancer() as Microsoft.Azure.Management.Network.Fluent.ILoadBalancer;
         }
 
-        /// <return>True if over provision is enabled for the virtual machines, false otherwise.</return>
+        /// <summary>
+        /// Gets true if over provision is enabled for the virtual machines, false otherwise.
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.OverProvisionEnabled
         {
             get
@@ -699,7 +706,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PowerOff()
         {
-
+ 
             this.PowerOff();
         }
 
@@ -708,12 +715,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// of the virtual machines in the scale set.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends()
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends()
         {
-            return this.ListPrimaryInternalLoadBalancerBackends() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
+            return this.ListPrimaryInternalLoadBalancerBackends() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
-        /// <return>The SKU of the virtual machines in the scale set.</return>
+        /// <summary>
+        /// Gets the SKU of the virtual machines in the scale set.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetSkuTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Sku
         {
             get
@@ -722,7 +731,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>Entry point to manage virtual machine instances in the scale set.</return>
+        /// <summary>
+        /// Gets entry point to manage virtual machine instances in the scale set.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMs Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.VirtualMachines
         {
             get
@@ -731,7 +742,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The upgradeModel.</return>
+        /// <summary>
+        /// Gets the upgradeModel.
+        /// </summary>
         Models.UpgradeMode Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.UpgradeModel
         {
             get
@@ -748,20 +761,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Restart()
         {
-
+ 
             this.Restart();
         }
 
-        /// <return>The name prefix of the virtual machines in the scale set.</return>
+        /// <summary>
+        /// Gets the name prefix of the virtual machines in the scale set.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ComputerNamePrefix
         {
             get
             {
-                return this.ComputerNamePrefix() as string;
+                return this.ComputerNamePrefix();
             }
         }
 
-        /// <return>The storage profile.</return>
+        /// <summary>
+        /// Gets the storage profile.
+        /// </summary>
         Models.VirtualMachineScaleSetStorageProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.StorageProfile
         {
             get
@@ -771,10 +788,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>
-        /// The list of IDs of the public IP addresses associated with the primary Internet-facing load balancer
+        /// Gets the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer
         /// of the scale set.
         /// </return>
-        /// <throws>IOException the IO exception.</throws>
+        /// <summary>
+        /// Gets IOException the IO exception.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PrimaryPublicIpAddressIds
         {
             get
@@ -788,12 +807,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// of the virtual machines in the scale set, if any.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools()
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools()
         {
-            return this.ListPrimaryInternalLoadBalancerInboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
+            return this.ListPrimaryInternalLoadBalancerInboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
         }
 
-        /// <return>The network profile.</return>
+        /// <summary>
+        /// Gets the network profile.
+        /// </summary>
         Models.VirtualMachineScaleSetNetworkProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.NetworkProfile
         {
             get
@@ -802,7 +823,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The number of virtual machine instances in the scale set.</return>
+        /// <summary>
+        /// Gets the number of virtual machine instances in the scale set.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Capacity
         {
             get
@@ -816,9 +839,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// of the virtual machines in the scale set.
         /// </return>
         /// <throws>IOException the IO exception.</throws>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools()
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools()
         {
-            return this.ListPrimaryInternetFacingLoadBalancerInboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
+            return this.ListPrimaryInternetFacingLoadBalancerInboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
         }
 
         /// <summary>
@@ -835,7 +858,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the load balancer to be used as the internal load balancer for the virtual machines in the
         /// scale set.
-        /// <p>
         /// This will replace the current internal load balancer associated with the virtual machines in the
         /// scale set (if any).
         /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
@@ -852,10 +874,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies the internal load balancer whose backends and/or NAT pools can be assigned to the primary network
         /// interface of the virtual machines in the scale set.
-        /// <p>
         /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
         /// network interface of the virtual machines in the scale set, unless subset of them is selected in the next stages.
-        /// <p>.
         /// </summary>
         /// <param name="loadBalancer">An existing internal load balancer.</param>
         /// <return>The next stage of the definition.</return>
@@ -906,10 +926,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies an Internet-facing load balancer whose backends and/or NAT pools can be assigned to the primary
         /// network interfaces of the virtual machines in the scale set.
-        /// <p>
         /// By default, all the backends and inbound NAT pools of the load balancer will be associated with the primary
         /// network interface of the scale set virtual machines.
-        /// <p>.
         /// </summary>
         /// <param name="loadBalancer">An existing Internet-facing load balancer.</param>
         /// <return>The next stage of the definition.</return>
@@ -951,7 +969,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
-        /// <p>
         /// This removes the association between primary network interface configuration and all the backends and
         /// inbound NAT pools in the load balancer.
         /// </summary>
@@ -963,7 +980,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Removes the association between the internal load balancer and the primary network interface configuration.
-        /// <p>
         /// This removes the association between primary network interface configuration and all the backends and
         /// inbound NAT pools in the load balancer.
         /// </summary>

@@ -1,22 +1,26 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    internal partial class VirtualMachineOfferImpl
+    internal partial class VirtualMachineOfferImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>Virtual machine image SKUs available in this offer.</return>
+        /// <summary>
+        /// Gets virtual machine image SKUs available in this offer.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSkus Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer.Skus
         {
             get
@@ -25,7 +29,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The publisher of this virtual machine image offer.</return>
+        /// <summary>
+        /// Gets the publisher of this virtual machine image offer.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer.Publisher
         {
             get
@@ -34,7 +40,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The region where this virtual machine image offer is available.</return>
+        /// <summary>
+        /// Gets the region where this virtual machine image offer is available.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer.Region
         {
             get

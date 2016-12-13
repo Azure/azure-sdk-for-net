@@ -7,22 +7,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// A type representing virtual machine size available for a subscription in a region.
     /// </summary>
-    public interface IVirtualMachineSize :
+    public interface IVirtualMachineSize  :
         IHasName
     {
-        /// <return>The OS disk size allowed by the VM size.</return>
+        /// <summary>
+        /// Gets the OS disk size allowed by the VM size.
+        /// </summary>
         int OsDiskSizeInMB { get; }
 
-        /// <return>The resource disk size allowed by the VM size.</return>
+        /// <summary>
+        /// Gets the resource disk size allowed by the VM size.
+        /// </summary>
         int ResourceDiskSizeInMB { get; }
 
-        /// <return>The maximum number of data disks allowed by a VM size.</return>
+        /// <summary>
+        /// Gets the maximum number of data disks allowed by a VM size.
+        /// </summary>
         int MaxDataDiskCount { get; }
 
-        /// <return>The memory size supported by the VM size.</return>
+        /// <summary>
+        /// Gets the memory size supported by the VM size.
+        /// </summary>
         int MemoryInMB { get; }
 
-        /// <return>The number of cores supported by the VM size.</return>
+        /// <summary>
+        /// Gets the number of cores supported by the VM size.
+        /// </summary>
         int NumberOfCores { get; }
     }
 }

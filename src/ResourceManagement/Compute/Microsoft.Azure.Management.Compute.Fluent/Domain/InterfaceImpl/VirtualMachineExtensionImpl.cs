@@ -2,20 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using VirtualMachineExtension.UpdateDefinition;
-    using System.Collections.Generic;
-    using VirtualMachineExtension.Definition;
-    using Models;
     using System.Threading;
-    using VirtualMachineExtension.Update;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     using VirtualMachine.Definition;
     using VirtualMachine.Update;
+    using VirtualMachineExtension.Definition;
+    using VirtualMachineExtension.Update;
+    using VirtualMachineExtension.UpdateDefinition;
+    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using System.Collections.Generic;
 
-    internal partial class VirtualMachineExtensionImpl
+    internal partial class VirtualMachineExtensionImpl 
     {
         /// <summary>
         /// Adds a tag to the virtual machine extension.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="tags">A Map of tags.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate> VirtualMachineExtension.Definition.IWithTags<VirtualMachine.Definition.IWithCreate>.WithTags(IDictionary<string, string> tags)
+        VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate> VirtualMachineExtension.Definition.IWithTags<VirtualMachine.Definition.IWithCreate>.WithTags(IDictionary<string,string> tags)
         {
             return this.WithTags(tags) as VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate>;
         }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="tags">A Map of tags.</param>
         /// <return>The next stage of the resource definition.</return>
-        VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithTags<VirtualMachine.Update.IUpdate>.WithTags(IDictionary<string, string> tags)
+        VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithTags<VirtualMachine.Update.IUpdate>.WithTags(IDictionary<string,string> tags)
         {
             return this.WithTags(tags) as VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate>;
         }
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The public settings.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineExtension.Update.IUpdate VirtualMachineExtension.Update.IWithSettings.WithPublicSettings(IDictionary<string, object> settings)
+        VirtualMachineExtension.Update.IUpdate VirtualMachineExtension.Update.IWithSettings.WithPublicSettings(IDictionary<string,object> settings)
         {
             return this.WithPublicSettings(settings) as VirtualMachineExtension.Update.IUpdate;
         }
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The private settings.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineExtension.Update.IUpdate VirtualMachineExtension.Update.IWithSettings.WithProtectedSettings(IDictionary<string, object> settings)
+        VirtualMachineExtension.Update.IUpdate VirtualMachineExtension.Update.IWithSettings.WithProtectedSettings(IDictionary<string,object> settings)
         {
             return this.WithProtectedSettings(settings) as VirtualMachineExtension.Update.IUpdate;
         }
@@ -244,34 +244,42 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Attach() as VirtualMachine.Update.IUpdate;
         }
 
-        /// <return>The public settings of the virtual machine extension as key value pairs.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettings
+        /// <summary>
+        /// Gets the public settings of the virtual machine extension as key value pairs.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettings
         {
             get
             {
-                return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string, object>;
+                return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string,object>;
             }
         }
 
-        /// <return>The version name of the virtual machine extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the version name of the virtual machine extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.VersionName
         {
             get
             {
-                return this.VersionName() as string;
+                return this.VersionName();
             }
         }
 
-        /// <return>The type name of the virtual machine extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the type name of the virtual machine extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.TypeName
         {
             get
             {
-                return this.TypeName() as string;
+                return this.TypeName();
             }
         }
 
-        /// <return>The instance view of the virtual machine extension.</return>
+        /// <summary>
+        /// Gets the instance view of the virtual machine extension.
+        /// </summary>
         Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.InstanceView
         {
             get
@@ -280,46 +288,54 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The provisioning state of the virtual machine extension.</return>
+        /// <summary>
+        /// Gets the provisioning state of the virtual machine extension.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.ProvisioningState
         {
             get
             {
-                return this.ProvisioningState() as string;
+                return this.ProvisioningState();
             }
         }
 
-        /// <return>The tags for this virtual machine extension.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
+        /// <summary>
+        /// Gets the tags for this virtual machine extension.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
         {
             get
             {
-                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string, string>;
+                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 
-        /// <return>The publisher name of the virtual machine extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the publisher name of the virtual machine extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublisherName
         {
             get
             {
-                return this.PublisherName() as string;
+                return this.PublisherName();
             }
         }
 
-        /// <return>The public settings of the virtual machine extension as a JSON string.</return>
+        /// <summary>
+        /// Gets the public settings of the virtual machine extension as a JSON string.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettingsAsJsonString
         {
             get
             {
-                return this.PublicSettingsAsJsonString() as string;
+                return this.PublicSettingsAsJsonString();
             }
         }
 
-        /// <return>
-        /// True if this extension is configured to upgrade automatically when a new minor version of the
+        /// <summary>
+        /// Gets true if this extension is configured to upgrade automatically when a new minor version of the
         /// extension image that this extension based on is published.
-        /// </return>
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.AutoUpgradeMinorVersionEnabled
         {
             get
@@ -363,7 +379,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="tags">A Map of tags.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineExtension.Update.IUpdate VirtualMachineExtension.Update.IWithTags.WithTags(IDictionary<string, string> tags)
+        VirtualMachineExtension.Update.IUpdate VirtualMachineExtension.Update.IWithTags.WithTags(IDictionary<string,string> tags)
         {
             return this.WithTags(tags) as VirtualMachineExtension.Update.IUpdate;
         }
@@ -373,7 +389,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The public settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate> VirtualMachineExtension.Definition.IWithSettings<VirtualMachine.Definition.IWithCreate>.WithPublicSettings(IDictionary<string, object> settings)
+        VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate> VirtualMachineExtension.Definition.IWithSettings<VirtualMachine.Definition.IWithCreate>.WithPublicSettings(IDictionary<string,object> settings)
         {
             return this.WithPublicSettings(settings) as VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate>;
         }
@@ -383,7 +399,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The private settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate> VirtualMachineExtension.Definition.IWithSettings<VirtualMachine.Definition.IWithCreate>.WithProtectedSettings(IDictionary<string, object> settings)
+        VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate> VirtualMachineExtension.Definition.IWithSettings<VirtualMachine.Definition.IWithCreate>.WithProtectedSettings(IDictionary<string,object> settings)
         {
             return this.WithProtectedSettings(settings) as VirtualMachineExtension.Definition.IWithAttach<VirtualMachine.Definition.IWithCreate>;
         }
@@ -415,7 +431,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The public settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithSettings<VirtualMachine.Update.IUpdate>.WithPublicSettings(IDictionary<string, object> settings)
+        VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithSettings<VirtualMachine.Update.IUpdate>.WithPublicSettings(IDictionary<string,object> settings)
         {
             return this.WithPublicSettings(settings) as VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate>;
         }
@@ -425,7 +441,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="settings">The private settings.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithSettings<VirtualMachine.Update.IUpdate>.WithProtectedSettings(IDictionary<string, object> settings)
+        VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate> VirtualMachineExtension.UpdateDefinition.IWithSettings<VirtualMachine.Update.IUpdate>.WithProtectedSettings(IDictionary<string,object> settings)
         {
             return this.WithProtectedSettings(settings) as VirtualMachineExtension.UpdateDefinition.IWithAttach<VirtualMachine.Update.IUpdate>;
         }

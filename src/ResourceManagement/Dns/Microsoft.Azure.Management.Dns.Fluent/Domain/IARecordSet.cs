@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IARecordSet  :
         IDnsRecordSet
     {
-        /// <return>The Ipv4 addresses of A records in this record set.</return>
+        /// <summary>
+        /// Gets the Ipv4 addresses of A records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<string> Ipv4Addresses { get; }
     }
 }

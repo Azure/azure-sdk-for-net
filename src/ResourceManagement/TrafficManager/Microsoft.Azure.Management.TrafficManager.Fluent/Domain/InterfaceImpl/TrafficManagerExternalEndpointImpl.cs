@@ -6,21 +6,25 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 
     internal partial class TrafficManagerExternalEndpointImpl 
     {
-        /// <return>The fully qualified DNS name of the external endpoint.</return>
-        string ITrafficManagerExternalEndpoint.Fqdn
+        /// <summary>
+        /// Gets the fully qualified DNS name of the external endpoint.
+        /// </summary>
+        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerExternalEndpoint.Fqdn
         {
             get
             {
-                return this.Fqdn() as string;
+                return this.Fqdn();
             }
         }
 
-        /// <return>The location of the traffic that the endpoint handles.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region ITrafficManagerExternalEndpoint.SourceTrafficLocation
+        /// <summary>
+        /// Gets the location of the traffic that the endpoint handles.
+        /// </summary>
+        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerExternalEndpoint.SourceTrafficLocation
         {
             get
             {
-                return this.SourceTrafficLocation();
+                return this.SourceTrafficLocation() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
             }
         }
     }

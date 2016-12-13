@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Mx record sets in a Dns zone.
     /// </summary>
     public interface IMxRecordSets  :
-        ISupportsListing<IMxRecordSet>,
-        ISupportsGettingByName<IMxRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IMxRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IMxRecordSet>
     {
     }
 }

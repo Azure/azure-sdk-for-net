@@ -10,16 +10,22 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// An immutable client-side representation of a record set in Azure Dns Zone.
     /// </summary>
     public interface IDnsRecordSet  :
-        IExternalChildResource<IDnsRecordSet,IDnsZone>,
+        IExternalChildResource<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet,Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         IWrapper<RecordSetInner>
     {
-        /// <return>TTL of the records in this record set.</return>
+        /// <summary>
+        /// Gets TTL of the records in this record set.
+        /// </summary>
         long TimeToLive { get; }
 
-        /// <return>The metadata associated with this record set.</return>
+        /// <summary>
+        /// Gets the metadata associated with this record set.
+        /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,string> Metadata { get; }
 
-        /// <return>The type of records in this record set.</return>
+        /// <summary>
+        /// Gets the type of records in this record set.
+        /// </summary>
         RecordType RecordType { get; }
     }
 }

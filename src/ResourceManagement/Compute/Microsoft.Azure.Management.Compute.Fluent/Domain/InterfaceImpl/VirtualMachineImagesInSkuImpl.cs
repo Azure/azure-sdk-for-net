@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    internal partial class VirtualMachineImagesInSkuImpl
+    internal partial class VirtualMachineImagesInSkuImpl 
     {
         /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.

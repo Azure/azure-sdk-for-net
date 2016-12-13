@@ -8,10 +8,14 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     public interface ITrafficManagerAzureEndpoint  :
         ITrafficManagerEndpoint
     {
-        /// <return>The resource id of the target Azure resource.</return>
+        /// <summary>
+        /// Gets the resource id of the target Azure resource.
+        /// </summary>
         string TargetAzureResourceId { get; }
 
-        /// <return>The type of the target Azure resource.</return>
-        TargetAzureResourceType TargetResourceType { get; }
+        /// <summary>
+        /// Gets the type of the target Azure resource.
+        /// </summary>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TargetAzureResourceType TargetResourceType { get; }
     }
 }

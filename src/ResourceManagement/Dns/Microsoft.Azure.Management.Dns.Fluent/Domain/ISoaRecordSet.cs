@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface ISoaRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The Soa record in this record set.</return>
+        /// <summary>
+        /// Gets the Soa record in this record set.
+        /// </summary>
         SoaRecord Record { get; }
     }
 }
