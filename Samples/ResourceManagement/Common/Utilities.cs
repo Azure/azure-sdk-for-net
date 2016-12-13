@@ -12,6 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Management.Redis.Fluent;
+using Microsoft.Azure.Management.Sql.Fluent;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -604,6 +605,108 @@ namespace Microsoft.Azure.Management.Samples.Common
         private static string FormatCollection(IEnumerable<string> collection)
         {
             return string.Join(", ", collection);
+        }
+
+        public static void Print(ISqlServer sqlServer)
+        {
+            var builder = new StringBuilder().Append("Sql Server: ").Append(sqlServer.Id)
+                    .Append("Name: ").Append(sqlServer.Name)
+                    .Append("\n\tResource group: ").Append(sqlServer.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(sqlServer.Region)
+                    .Append("\n\tSqlServer version: ").Append(sqlServer.Version)
+                    .Append("\n\tFully qualified name for Sql Server: ").Append(sqlServer.FullyQualifiedDomainName);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(ISqlDatabase database)
+        {
+            var builder = new StringBuilder().Append("Sql Database: ").Append(database.Id)
+                    .Append("Name: ").Append(database.Name)
+                    .Append("\n\tResource group: ").Append(database.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(database.Region)
+                    .Append("\n\tSqlServer Name: ").Append(database.SqlServerName)
+                    .Append("\n\tEdition of SQL database: ").Append(database.Edition)
+                    .Append("\n\tCollation of SQL database: ").Append(database.Collation)
+                    .Append("\n\tCreation date of SQL database: ").Append(database.CreationDate)
+                    .Append("\n\tIs data warehouse: ").Append(database.IsDataWarehouse)
+                    .Append("\n\tCurrent service objective of SQL database: ").Append(database.ServiceLevelObjective)
+                    .Append("\n\tId of current service objective of SQL database: ").Append(database.CurrentServiceObjectiveId)
+                    .Append("\n\tMax size bytes of SQL database: ").Append(database.MaxSizeBytes)
+                    .Append("\n\tDefault secondary location of SQL database: ").Append(database.DefaultSecondaryLocation);
+
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(ISqlFirewallRule firewallRule)
+        {
+            var builder = new StringBuilder().Append("Sql firewall rule: ").Append(firewallRule.Id)
+                    .Append("Name: ").Append(firewallRule.Name)
+                    .Append("\n\tResource group: ").Append(firewallRule.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(firewallRule.Region)
+                    .Append("\n\tSqlServer Name: ").Append(firewallRule.SqlServerName)
+                    .Append("\n\tStart IP Address of the firewall rule: ").Append(firewallRule.StartIpAddress)
+                    .Append("\n\tEnd IP Address of the firewall rule: ").Append(firewallRule.EndIpAddress);
+
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(ISqlElasticPool elasticPool)
+        {
+            var builder = new StringBuilder().Append("Sql elastic pool: ").Append(elasticPool.Id)
+                    .Append("Name: ").Append(elasticPool.Name)
+                    .Append("\n\tResource group: ").Append(elasticPool.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(elasticPool.Region)
+                    .Append("\n\tSqlServer Name: ").Append(elasticPool.SqlServerName)
+                    .Append("\n\tEdition of elastic pool: ").Append(elasticPool.Edition)
+                    .Append("\n\tTotal number of DTUs in the elastic pool: ").Append(elasticPool.Dtu)
+                    .Append("\n\tMaximum DTUs a database can get in elastic pool: ").Append(elasticPool.DatabaseDtuMax)
+                    .Append("\n\tMinimum DTUs a database is guaranteed in elastic pool: ").Append(elasticPool.DatabaseDtuMin)
+                    .Append("\n\tCreation date for the elastic pool: ").Append(elasticPool.CreationDate)
+                    .Append("\n\tState of the elastic pool: ").Append(elasticPool.State)
+                    .Append("\n\tStorage capacity in MBs for the elastic pool: ").Append(elasticPool.StorageMB);
+
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IElasticPoolActivity elasticPoolActivity)
+        {
+            var builder = new StringBuilder().Append("Sql elastic pool activity: ").Append(elasticPoolActivity.Id)
+                    .Append("Name: ").Append(elasticPoolActivity.Name)
+                    .Append("\n\tResource group: ").Append(elasticPoolActivity.ResourceGroupName)
+                    .Append("\n\tState: ").Append(elasticPoolActivity.State)
+                    .Append("\n\tElastic pool name: ").Append(elasticPoolActivity.ElasticPoolName)
+                    .Append("\n\tStart time of activity: ").Append(elasticPoolActivity.StartTime)
+                    .Append("\n\tEnd time of activity: ").Append(elasticPoolActivity.EndTime)
+                    .Append("\n\tError code of activity: ").Append(elasticPoolActivity.ErrorCode)
+                    .Append("\n\tError message of activity: ").Append(elasticPoolActivity.ErrorMessage)
+                    .Append("\n\tError severity of activity: ").Append(elasticPoolActivity.ErrorSeverity)
+                    .Append("\n\tOperation: ").Append(elasticPoolActivity.Operation)
+                    .Append("\n\tCompleted percentage of activity: ").Append(elasticPoolActivity.PercentComplete)
+                    .Append("\n\tRequested DTU max limit in activity: ").Append(elasticPoolActivity.RequestedDatabaseDtuMax)
+                    .Append("\n\tRequested DTU min limit in activity: ").Append(elasticPoolActivity.RequestedDatabaseDtuMin)
+                    .Append("\n\tRequested DTU limit in activity: ").Append(elasticPoolActivity.RequestedDtu);
+
+            Console.WriteLine(builder.ToString());
+
+        }
+
+        public static void Print(IElasticPoolDatabaseActivity databaseActivity)
+        {
+            var builder = new StringBuilder().Append("Sql elastic pool database activity: ").Append(databaseActivity.Id)
+                    .Append("Name: ").Append(databaseActivity.Name)
+                    .Append("\n\tResource group: ").Append(databaseActivity.ResourceGroupName)
+                    .Append("\n\tSQL Server Name: ").Append(databaseActivity.ServerName)
+                    .Append("\n\tDatabase name name: ").Append(databaseActivity.DatabaseName)
+                    .Append("\n\tCurrent elastic pool name of the database: ").Append(databaseActivity.CurrentElasticPoolName)
+                    .Append("\n\tState: ").Append(databaseActivity.State)
+                    .Append("\n\tStart time of activity: ").Append(databaseActivity.StartTime)
+                    .Append("\n\tEnd time of activity: ").Append(databaseActivity.EndTime)
+                    .Append("\n\tCompleted percentage: ").Append(databaseActivity.PercentComplete)
+                    .Append("\n\tError code of activity: ").Append(databaseActivity.ErrorCode)
+                    .Append("\n\tError message of activity: ").Append(databaseActivity.ErrorMessage)
+                    .Append("\n\tError severity of activity: ").Append(databaseActivity.ErrorSeverity);
+
+            Console.WriteLine(builder.ToString());
         }
     }
 }

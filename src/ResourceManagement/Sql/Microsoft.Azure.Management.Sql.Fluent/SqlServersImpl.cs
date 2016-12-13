@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Implementation for SqlServers and its parent interfaces.
     /// </summary>
     internal partial class SqlServersImpl :
-        GroupableResources<ISqlServer, SqlServerImpl, ServerInner, IServersOperations, SqlManager>,
+        GroupableResources<ISqlServer, SqlServerImpl, ServerInner, IServersOperations, ISqlManager>,
         ISqlServers
     {
         private IElasticPoolsOperations elasticPoolsInner;

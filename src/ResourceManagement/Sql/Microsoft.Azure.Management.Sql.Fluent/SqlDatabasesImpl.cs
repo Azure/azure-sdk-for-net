@@ -18,12 +18,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Implementation for SQLDatabases and its parent interfaces.
     /// </summary>
     internal partial class SqlDatabasesImpl :
-        IndependentChildResourcesImpl<ISqlDatabase, SqlDatabaseImpl, DatabaseInner, IDatabasesOperations, SqlManager>,
+        IndependentChildResourcesImpl<ISqlDatabase, SqlDatabaseImpl, DatabaseInner, IDatabasesOperations, ISqlManager>,
         ISqlDatabaseCreatable,
         ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
         ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
     {
-        internal SqlDatabasesImpl(IDatabasesOperations innerCollection, SqlManager manager)
+        internal SqlDatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager)
             : base(innerCollection, manager)
         {
         }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Implementation for SQLElasticPools and its parent interfaces.
     /// </summary>
     internal partial class SqlElasticPoolsImpl :
-        IndependentChildResourcesImpl<ISqlElasticPool, SqlElasticPoolImpl, ElasticPoolInner, IElasticPoolsOperations, SqlManager>,
+        IndependentChildResourcesImpl<ISqlElasticPool, SqlElasticPoolImpl, ElasticPoolInner, IElasticPoolsOperations, ISqlManager>,
         ISqlElasticPoolsCreatable,
         ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
         ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private IDatabasesOperations databasesInner;
         private DatabasesImpl databasesImpl;
 
-        internal SqlElasticPoolsImpl(IElasticPoolsOperations innerCollection, SqlManager manager, IDatabasesOperations databasesInner, DatabasesImpl databasesImpl)
+        internal SqlElasticPoolsImpl(IElasticPoolsOperations innerCollection, ISqlManager manager, IDatabasesOperations databasesInner, DatabasesImpl databasesImpl)
             : base(innerCollection, manager)
         {
             this.databasesInner = databasesInner;

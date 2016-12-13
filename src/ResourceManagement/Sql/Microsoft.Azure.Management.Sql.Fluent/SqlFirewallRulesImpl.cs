@@ -17,13 +17,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Implementation for SQLElasticPools and its parent interfaces.
     /// </summary>
     internal partial class SqlFirewallRulesImpl :
-        IndependentChildrenImpl<ISqlFirewallRule, SqlFirewallRuleImpl, ServerFirewallRuleInner, IServersOperations, SqlManager>,
+        IndependentChildrenImpl<ISqlFirewallRule, SqlFirewallRuleImpl, ServerFirewallRuleInner, IServersOperations, ISqlManager>,
         ISqlFirewallRules,
         ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         ISqlFirewallRulesCreatable
     {
-        internal SqlFirewallRulesImpl(IServersOperations innerCollection, SqlManager manager)
+        internal SqlFirewallRulesImpl(IServersOperations innerCollection, ISqlManager manager)
             : base(innerCollection, manager)
         {
         }

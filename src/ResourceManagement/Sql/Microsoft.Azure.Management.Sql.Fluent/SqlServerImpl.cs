@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             ISqlServer,
             ServerInner,
             SqlServerImpl,
-            SqlManager,
+            ISqlManager,
             SqlServer.Definition.IWithGroup,
             SqlServer.Definition.IWithAdministratorLogin,
             SqlServer.Definition.IWithCreate,
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private IList<string> databasesToDelete;
 
         internal SqlServerImpl(string name, ServerInner innerObject, IServersOperations innerCollection,
-            SqlManager manager, IElasticPoolsOperations elasticPoolsInner, IDatabasesOperations databasesInner,
+            ISqlManager manager, IElasticPoolsOperations elasticPoolsInner, IDatabasesOperations databasesInner,
             IRecommendedElasticPoolsOperations recommendedElasticPoolsInner)
             : base(name, innerObject, manager)
         {
