@@ -33,10 +33,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C332A900315E8149F8047F02D419C9DC:7655A447C81D4846C50195D4FED8EB4A
         public PagedList<Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement> ListAgreements(string topLevelExtension)
         {
-            var innerPagedList = new PagedList<TldLegalAgreement>(topLevelDomainsInner.ListAgreements(topLevelExtension), nextLink =>
-            {
-                return topLevelDomainsInner.ListAgreementsNext(nextLink);
-            });
+            var innerPagedList = new PagedList<TldLegalAgreement>(topLevelDomainsInner.ListAgreements(topLevelExtension),
+                nextLink => topLevelDomainsInner.ListAgreementsNext(nextLink));
 
             return PagedListConverter.Convert<TldLegalAgreement, IDomainLegalAgreement>(innerPagedList, inner =>
             {
