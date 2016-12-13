@@ -4,6 +4,11 @@
     <id>Microsoft.Azure.Management.HDInsight.Job</id>
     <title>Microsoft Azure HDInsight Job Management Library</title>
     <releaseNotes><![CDATA[
+2.0.5
+
+  * Added support for running queries with large size.
+  * Fixed network timeout error which occurs intermittently when HDinsight service is loaded.
+  
 2.0.4
 
   * Added support for new environments. 
