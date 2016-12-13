@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static IEnumerable<Usage> List(this IUsageOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IUsageOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
