@@ -6,8 +6,10 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 
     internal partial class TrafficManagerNestedProfileEndpointImpl 
     {
-        /// <return>The number of child endpoints to be online to consider nested profile as healthy.</return>
-        int ITrafficManagerNestedProfileEndpoint.MinimumChildEndpointCount
+        /// <summary>
+        /// Gets the number of child endpoints to be online to consider nested profile as healthy.
+        /// </summary>
+        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint.MinimumChildEndpointCount
         {
             get
             {
@@ -15,21 +17,25 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             }
         }
 
-        /// <return>The nested traffic manager profile resource id.</return>
-        string ITrafficManagerNestedProfileEndpoint.NestedProfileId
+        /// <summary>
+        /// Gets the nested traffic manager profile resource id.
+        /// </summary>
+        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint.NestedProfileId
         {
             get
             {
-                return this.NestedProfileId() as string;
+                return this.NestedProfileId();
             }
         }
 
-        /// <return>The location of the traffic that the endpoint handles.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region ITrafficManagerNestedProfileEndpoint.SourceTrafficLocation
+        /// <summary>
+        /// Gets the location of the traffic that the endpoint handles.
+        /// </summary>
+        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint.SourceTrafficLocation
         {
             get
             {
-                return this.SourceTrafficLocation();
+                return this.SourceTrafficLocation() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
             }
         }
     }

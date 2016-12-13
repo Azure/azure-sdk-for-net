@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
 
     /// <summary>
     /// The final stage of the traffic manager profile endpoint definition.
-    /// <p>
     /// At this stage, any remaining optional settings can be specified, or the traffic manager profile endpoint
     /// definition can be attached to the parent traffic manager profile definition using TrafficManagerEndpoint.DefinitionStages.WithAttach.attach().
     /// </summary>
@@ -22,33 +21,38 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
     }
 
     /// <summary>
-    /// The stage of the traffic manager endpoint definition allowing to disable the endpoint.
+    /// The entirety of a traffic manager profile endpoint definition as a part of parent definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithTrafficDisabled<ParentT> 
+    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
+    public interface IDefinition<ParentT>  :
+        IAzureTargetEndpointBlank<ParentT>,
+        IExternalTargetEndpointBlank<ParentT>,
+        INestedProfileTargetEndpointBlank<ParentT>,
+        IWithAzureResource<ParentT>,
+        IWithFqdn<ParentT>,
+        IWithSourceTrafficRegion<ParentT>,
+        IWithSourceTrafficRegionThenThreshold<ParentT>,
+        IWithEndpointThreshold<ParentT>,
+        IWithAttach<ParentT>
     {
-        /// <summary>
-        /// Specifies that this endpoint should be excluded from receiving traffic.
-        /// </summary>
-        /// <return>The next stage of the endpoint definition.</return>
-        IWithAttach<ParentT> WithTrafficDisabled();
     }
 
     /// <summary>
-    /// The stage of the traffic manager profile Azure endpoint definition allowing to specify the ID
-    /// of the target Azure resource.
+    /// The first stage of a traffic manager profile external endpoint definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of UpdateDefinitionStages.WithAttach.attach().</typeparam>
-    public interface IWithAzureResource<ParentT> 
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IExternalTargetEndpointBlank<ParentT>  :
+        IWithFqdn<ParentT>
     {
-        /// <summary>
-        /// Specifies the resource ID of an Azure resource.
-        /// <p>
-        /// supported Azure resources are cloud service, web app or public ip.
-        /// </summary>
-        /// <param name="resourceId">The Azure resource id.</param>
-        /// <return>The next stage of the definition.</return>
-        IWithAttach<ParentT> ToResourceId(string resourceId);
+    }
+
+    /// <summary>
+    /// The first stage of a traffic manager profile nested profile endpoint definition.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface INestedProfileTargetEndpointBlank<ParentT>  :
+        IWithNestedProfile<ParentT>
+    {
     }
 
     /// <summary>
@@ -72,7 +76,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="priority">The endpoint priority.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        IWithAttach<ParentT> WithRoutingPriority(int priority);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithRoutingPriority(int priority);
     }
 
     /// <summary>
@@ -87,65 +91,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="weight">The endpoint weight.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        IWithAttach<ParentT> WithRoutingWeight(int weight);
-    }
-
-    /// <summary>
-    /// The first stage of a traffic manager profile external endpoint definition.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IExternalTargetEndpointBlank<ParentT>  :
-        IWithFqdn<ParentT>
-    {
-    }
-
-    /// <summary>
-    /// The entirety of a traffic manager profile endpoint definition as a part of parent definition.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
-    public interface IDefinition<ParentT>  :
-        IAzureTargetEndpointBlank<ParentT>,
-        IExternalTargetEndpointBlank<ParentT>,
-        INestedProfileTargetEndpointBlank<ParentT>,
-        IWithAzureResource<ParentT>,
-        IWithFqdn<ParentT>,
-        IWithSourceTrafficRegion<ParentT>,
-        IWithSourceTrafficRegionThenThreshold<ParentT>,
-        IWithEndpointThreshold<ParentT>,
-        IWithAttach<ParentT>
-    {
-    }
-
-    /// <summary>
-    /// The stage of the traffic manager endpoint definition allowing to specify the location of the nested
-    /// profile endpoint.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithSourceTrafficRegionThenThreshold<ParentT> 
-    {
-        /// <summary>
-        /// Specifies the location of the endpoint that will be used when the parent profile is configured with
-        /// Performance routing method TrafficRoutingMethod.PERFORMANCE.
-        /// </summary>
-        /// <param name="region">The location.</param>
-        /// <return>The next stage of the endpoint definition.</return>
-        IWithEndpointThreshold<ParentT> FromRegion(Region region);
-    }
-
-    /// <summary>
-    /// The stage of the nested traffic manager profile endpoint definition allowing to specify the minimum
-    /// endpoints to be online in the nested profile to consider it as not degraded.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithEndpointThreshold<ParentT>  :
-        IWithAttach<ParentT>
-    {
-        /// <summary>
-        /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
-        /// </summary>
-        /// <param name="count">The number of endpoints.</param>
-        /// <return>The next stage of the endpoint definition.</return>
-        IWithAttach<ParentT> WithMinimumEndpointsToEnableTraffic(int count);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithRoutingWeight(int weight);
     }
 
     /// <summary>
@@ -161,7 +107,36 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        IWithAttach<ParentT> FromRegion(Region region);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> FromRegion(Region region);
+    }
+
+    /// <summary>
+    /// The stage of the traffic manager endpoint definition allowing to disable the endpoint.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IWithTrafficDisabled<ParentT> 
+    {
+        /// <summary>
+        /// Specifies that this endpoint should be excluded from receiving traffic.
+        /// </summary>
+        /// <return>The next stage of the endpoint definition.</return>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithTrafficDisabled();
+    }
+
+    /// <summary>
+    /// The stage of the traffic manager endpoint definition allowing to specify the location of the nested
+    /// profile endpoint.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IWithSourceTrafficRegionThenThreshold<ParentT> 
+    {
+        /// <summary>
+        /// Specifies the location of the endpoint that will be used when the parent profile is configured with
+        /// Performance routing method TrafficRoutingMethod.PERFORMANCE.
+        /// </summary>
+        /// <param name="region">The location.</param>
+        /// <return>The next stage of the endpoint definition.</return>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<ParentT> FromRegion(Region region);
     }
 
     /// <summary>
@@ -175,16 +150,39 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="profile">The nested traffic manager profile.</param>
         /// <return>The next stage of the definition.</return>
-        IWithSourceTrafficRegionThenThreshold<ParentT> ToProfile(ITrafficManagerProfile profile);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<ParentT> ToProfile(ITrafficManagerProfile profile);
     }
 
     /// <summary>
-    /// The first stage of a traffic manager profile nested profile endpoint definition.
+    /// The stage of the nested traffic manager profile endpoint definition allowing to specify the minimum
+    /// endpoints to be online in the nested profile to consider it as not degraded.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface INestedProfileTargetEndpointBlank<ParentT>  :
-        IWithNestedProfile<ParentT>
+    public interface IWithEndpointThreshold<ParentT>  :
+        IWithAttach<ParentT>
     {
+        /// <summary>
+        /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
+        /// </summary>
+        /// <param name="count">The number of endpoints.</param>
+        /// <return>The next stage of the endpoint definition.</return>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithMinimumEndpointsToEnableTraffic(int count);
+    }
+
+    /// <summary>
+    /// The stage of the traffic manager profile Azure endpoint definition allowing to specify the ID
+    /// of the target Azure resource.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    public interface IWithAzureResource<ParentT> 
+    {
+        /// <summary>
+        /// Specifies the resource ID of an Azure resource.
+        /// supported Azure resources are cloud service, web app or public ip.
+        /// </summary>
+        /// <param name="resourceId">The Azure resource id.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> ToResourceId(string resourceId);
     }
 
     /// <summary>
@@ -199,6 +197,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        IWithSourceTrafficRegion<ParentT> ToFqdn(string externalFqdn);
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<ParentT> ToFqdn(string externalFqdn);
     }
 }
