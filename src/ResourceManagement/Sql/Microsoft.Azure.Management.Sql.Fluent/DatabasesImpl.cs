@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             await this.databases.DeleteByParentAsync(this.resourceGroupName, this.sqlServerName, databaseName, cancellationToken);
         }
 
-        internal DatabasesImpl(IDatabasesOperations innerCollection, SqlManager manager, string resourceGroupName, string sqlServerName, Region region)
+        internal DatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager, string resourceGroupName, string sqlServerName, Region region)
         {
             this.resourceGroupName = resourceGroupName;
             this.sqlServerName = sqlServerName;

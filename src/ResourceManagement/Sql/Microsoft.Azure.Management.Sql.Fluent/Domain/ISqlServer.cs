@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         IUpdatable<SqlServer.Update.IUpdate>,
-        IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>,
+        IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>,
         IWrapper<Models.ServerInner>
     {
         /// <return>The administrator login user name for the SQL Server.</return>
