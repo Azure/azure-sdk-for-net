@@ -49,7 +49,7 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithRegion(LoadBalancerHelper.REGION)
                         .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
                         // Frontend (default)
-                        .WithExistingSubnet(network, "subnet1")
+                        .WithFrontendSubnet(network, "subnet1")
                         // Backend (default)
                         .WithExistingVirtualMachines(existingVMs.ToArray())
                         .DefineBackend("foo")

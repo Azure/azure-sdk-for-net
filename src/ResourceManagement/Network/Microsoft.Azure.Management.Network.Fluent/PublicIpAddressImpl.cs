@@ -3,17 +3,16 @@
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzSW1wbA==
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network.Fluent.Models;
+    using Models;
     using System.Threading;
     using System.Threading.Tasks;
     using Resource.Fluent;
-    using Management.Network;
     using Resource.Fluent.Core;
 
     /// <summary>
     /// Implementation for PublicIpAddress.
     /// </summary>
-    public partial class PublicIpAddressImpl :
+    internal partial class PublicIpAddressImpl :
         GroupableResource<IPublicIpAddress,
             PublicIPAddressInner,
             PublicIpAddressImpl,
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0268D4A22C553236F2D086625BC961C0:99F3B859668CAC9A1F4A84E29AE2E9C5
         internal PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
         {
-            this.Inner.IdleTimeoutInMinutes = minutes;
+            Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
@@ -47,34 +46,34 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal PublicIpAddressImpl WithStaticIp()
         {
 
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
+            Inner.PublicIPAllocationMethod = IPAllocationMethod.Static.ToString();
             return this;
         }
 
         ///GENMHASH:8E7AD9E07B7DB377EA99B37CAD1C93C0:6F94222AD7A6FAA5BDB1F4A8C2336D54
         internal PublicIpAddressImpl WithDynamicIp()
         {
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
+            Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
             return this;
         }
 
         ///GENMHASH:4FD71958F542A872CEE597B1CEA332F8:AB2BC7CCCA80EFA2219ABEAE56789805
         internal PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
         {
-            this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
+            Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
         }
 
         ///GENMHASH:D0C9704935325DA53D3E18EA383CD798:3A3B2F00929ADB2E5CB95C1ABC9DB961
         internal PublicIpAddressImpl WithoutLeafDomainLabel()
         {
-            return this.WithLeafDomainLabel(null);
+            return WithLeafDomainLabel(null);
         }
 
         ///GENMHASH:0A9A497E14DD1A2758E52AC9D42D71E4:D54DE8ED5EB6D0455BCE0CD34D01FF08
         internal PublicIpAddressImpl WithReverseFqdn(string reverseFqdn)
         {
-            this.Inner.DnsSettings.ReverseFqdn = reverseFqdn.ToLower();
+            Inner.DnsSettings.ReverseFqdn = reverseFqdn.ToLower();
             return this;
         }
 
@@ -129,18 +128,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:98A779206BCFA2972058346E46E12590
         override public async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            PublicIPAddressDnsSettings dnsSettings = this.Inner.DnsSettings;
+            PublicIPAddressDnsSettings dnsSettings = Inner.DnsSettings;
             if (dnsSettings != null)
             {
                 if (string.IsNullOrWhiteSpace(dnsSettings.DomainNameLabel)
                    && string.IsNullOrWhiteSpace(dnsSettings.Fqdn)
                    && string.IsNullOrWhiteSpace(dnsSettings.ReverseFqdn))
                 {
-                    this.Inner.DnsSettings = null;
+                    Inner.DnsSettings = null;
                 }
             }
 
-            SetInner(await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner));
+            SetInner(await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner));
             return this;
         }
 
@@ -148,14 +147,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private bool EqualsResourceType(string resourceType)
         {
 
-            IPConfigurationInner ipConfig = this.Inner.IpConfiguration;
+            IPConfigurationInner ipConfig = Inner.IpConfiguration;
             if (ipConfig == null || resourceType == null)
             {
                 return false;
             }
             else
             {
-                string refId = this.Inner.IpConfiguration.Id;
+                string refId = Inner.IpConfiguration.Id;
                 string resourceType2 = ResourceUtils.ResourceTypeFromResourceId(refId);
                 return resourceType.Equals(resourceType2, System.StringComparison.OrdinalIgnoreCase);
             }
@@ -170,12 +169,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:3D00D26E72F1900D476D1ACE8411DAF6:AE59E633CCAEB90CB357B5CFDA9A8D39
         internal ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend()
         {
-
-            if (this.HasAssignedLoadBalancer() == true)
+            if (HasAssignedLoadBalancer() == true)
             {
-                string refId = this.Inner.IpConfiguration.Id;
+                string refId = Inner.IpConfiguration.Id;
                 string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(refId);
-                ILoadBalancer lb = this.Manager.LoadBalancers.GetById(loadBalancerId);
+                ILoadBalancer lb = Manager.LoadBalancers.GetById(loadBalancerId);
                 string frontendName = ResourceUtils.NameFromResourceId(refId);
                 return (ILoadBalancerPublicFrontend)lb.Frontends[frontendName];
             }
@@ -188,8 +186,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:46083B525E2D28949C602FA14CD8C6BB
         public override IPublicIpAddress Refresh()
         {
-            var response = client.Get(this.ResourceGroupName,
-                this.Inner.Name);
+            var response = client.Get(ResourceGroupName, Inner.Name);
             SetInner(response);
             return this;
         }
@@ -200,15 +197,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return EqualsResourceType("ipConfigurations");
         }
 
-        ///GENMHASH:1DE7D105C62AE4172B59AD39FB7ED47D:6B7C3DA604C932816415E3C9F99B8AFB
+        ///GENMHASH:1DE7D105C62AE4172B59AD39FB7ED47D:71FB3A052B839706E2B1CB9C30A82790
         internal INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
         {
-
             if (HasAssignedNetworkInterface())
             {
                 string refId = Inner.IpConfiguration.Id;
                 string parentId = ResourceUtils.ParentResourcePathFromResourceId(refId);
-                INetworkInterface nic = this.Manager.NetworkInterfaces.GetById(parentId);
+                INetworkInterface nic = Manager.NetworkInterfaces.GetById(parentId);
                 string childName = ResourceUtils.NameFromResourceId(refId);
                 return nic.IpConfigurations[childName];
             }

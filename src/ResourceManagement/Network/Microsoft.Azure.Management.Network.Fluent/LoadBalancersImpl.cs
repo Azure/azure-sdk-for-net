@@ -7,14 +7,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
-    using Management.Network.Fluent.Models;
-    using Resource.Fluent.Core.CollectionActions;
-    using Management.Network;
+    using Models;
 
     /// <summary>
     /// Implementation for LoadBalancers.
     /// </summary>
-    public partial class LoadBalancersImpl  :
+    internal partial class LoadBalancersImpl  :
         GroupableResources<
             ILoadBalancer,
             LoadBalancerImpl,

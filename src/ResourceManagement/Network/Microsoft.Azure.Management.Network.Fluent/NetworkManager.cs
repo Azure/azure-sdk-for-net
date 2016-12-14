@@ -3,10 +3,7 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network;
     using Resource.Fluent.Core;
-    using Resource.Fluent;
-    using Rest;
     using System;
     using System.Linq;
     using Resource.Fluent.Authentication;
@@ -19,6 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private NetworkSecurityGroupsImpl networkSecurityGroups;
         private NetworksImpl networks;
         private LoadBalancersImpl loadBalancers;
+        private IRouteTables routeTables;
 
         private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
@@ -168,6 +166,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 return loadBalancers;
             }
         }
+
+        /// <summary>
+        /// return entry point to route table management
+        /// </summary>
+        public IRouteTables RouteTables
+        {
+            get
+            {
+                if (routeTables == null)
+                {
+                    routeTables = new RouteTablesImpl(networkManagementClient, this);
+                }
+
+                return routeTables;
+            }
+        }
     }
 
     public interface INetworkManager : IManagerBase
@@ -196,5 +210,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// return entry point to load balancer management
         /// </summary>
         ILoadBalancers LoadBalancers { get; }
+
+        /// <summary>
+        /// return entry point to route table management
+        /// </summary>
+        IRouteTables RouteTables { get; }
     }
 }

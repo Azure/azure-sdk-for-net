@@ -5,14 +5,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
     using Resource.Fluent.Core.ChildResourceActions;
-    using Management.Network.Fluent.Models;
+    using Models;
     using Resource.Fluent.Core;
-    using System;
 
     /// <summary>
     /// Implementation for PublicFrontend.
     /// </summary>
-    public partial class LoadBalancerFrontendImpl  :
+    internal partial class LoadBalancerFrontendImpl  :
         ChildResource<FrontendIPConfigurationInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerFrontend,
         ILoadBalancerPrivateFrontend,
@@ -24,15 +23,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancerPublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerPublicFrontend.Update.IUpdate
     {
-        //$TODO: For some reason the converter doesn't implement this on the auto-gen'd interface implementations so putting it here for the time being
-        string IHasPrivateIpAddress.PrivateIpAllocationMethod
-        {
-            get
-            {
-                return PrivateIpAllocationMethod();
-            }
-        }
-
         internal LoadBalancerFrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
             : base(inner, parent)
         {
@@ -59,9 +49,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:925E8594616C741FD699EF2269B3D731
-        internal string PrivateIpAllocationMethod()
+        internal IPAllocationMethod PrivateIpAllocationMethod()
         {
-            return Inner.PrivateIPAllocationMethod;
+            return IPAllocationMethod.Parse(Inner.PrivateIPAllocationMethod);
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
@@ -143,7 +133,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:5647899224D30C7B5E1FDCD2D9AAB1DB:F08EFDCC8A8286B3C9226D19B2EA7889
         internal LoadBalancerFrontendImpl WithExistingSubnet (INetwork network, string subnetName)
         {
-            return this.WithExistingSubnet(network.Id, subnetName);
+            return WithExistingSubnet(network.Id, subnetName);
         }
 
         ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:E6CC43D15A29B0635E7C303E592E8569
@@ -186,7 +176,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal LoadBalancerFrontendImpl WithPrivateIpAddressDynamic ()
         {
             Inner.PrivateIPAddress = null;
-            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
 
             // Ensure no conflicting public and private settings
             Inner.PublicIPAddress = null;
@@ -197,7 +187,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal LoadBalancerFrontendImpl WithPrivateIpAddressStatic (string ipAddress)
         {
             Inner.PrivateIPAddress = ipAddress;
-            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static.ToString();
 
             // Ensure no conflicting public and private settings
             Inner.PublicIPAddress = null;
@@ -215,6 +205,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             string pipId = PublicIpAddressId();
             return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
+        }
+
+        ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
+        public ISubnet GetSubnet()
+        {
+            return Parent.Manager.GetAssociatedSubnet(Inner.Subnet);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()

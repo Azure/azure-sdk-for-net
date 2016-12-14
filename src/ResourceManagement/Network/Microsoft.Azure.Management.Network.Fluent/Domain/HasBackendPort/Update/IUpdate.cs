@@ -2,20 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Update
 {
-
-
     /// <summary>
     /// The stage of an update allowing to modify the backend port.
-    /// @param <ReturnT> the next stage of the update
     /// </summary>
+    /// <typeparam name="Return">The next stage of the update.</typeparam>
     public interface IWithBackendPort<ReturnT> 
     {
         /// <summary>
         /// Specifies the backend port.
         /// </summary>
-        /// <param name="port">port a port number</param>
-        /// <returns>the next stage of the update</returns>
+        /// <param name="port">A port number.</param>
+        /// <return>The next stage of the update.</return>
         ReturnT WithBackendPort(int port);
-
     }
 }

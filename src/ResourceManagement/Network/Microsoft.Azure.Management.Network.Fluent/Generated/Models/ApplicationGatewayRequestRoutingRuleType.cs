@@ -8,13 +8,4 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
-
-    /// <summary>
-    /// Defines values for ApplicationGatewayRequestRoutingRuleType.
-    /// </summary>
-    public static class ApplicationGatewayRequestRoutingRuleType
-    {
-        public const string Basic = "Basic";
-        public const string PathBasedRouting = "PathBasedRouting";
-    }
 }

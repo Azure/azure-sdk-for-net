@@ -111,7 +111,7 @@ namespace Azure.Tests.Network.LoadBalancer
             // Verify rules
             Assert.True(lb.LoadBalancingRules.ContainsKey("rule1"));
             Assert.True(!lb.LoadBalancingRules.ContainsKey("default"));
-            Assert.True(lb.LoadBalancingRules.Values.Count == 1);
+            Assert.True(lb.LoadBalancingRules.Values.Count() == 1);
             var rule = lb.LoadBalancingRules["rule1"];
             Assert.True(rule.Backend.Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
             Assert.True(rule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));

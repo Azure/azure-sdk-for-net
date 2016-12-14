@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             }
             string minRandomString = random.Next(0, 100000).ToString("D5");
 
-            if (maxLen <= (prefix.Length + randName.Length + minRandomnessLength))
+            if (maxLen < (prefix.Length + randName.Length + minRandomnessLength))
             {
                 var str1 = prefix + minRandomString;
                 return str1 + RandomString((maxLen - str1.Length) / 2);

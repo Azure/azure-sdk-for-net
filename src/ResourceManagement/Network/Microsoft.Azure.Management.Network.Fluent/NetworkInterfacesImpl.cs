@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkInterfaces.
     /// </summary>
-    public partial class NetworkInterfacesImpl :
+    internal partial class NetworkInterfacesImpl :
         GroupableResources<
             INetworkInterface,
             NetworkInterfaceImpl,

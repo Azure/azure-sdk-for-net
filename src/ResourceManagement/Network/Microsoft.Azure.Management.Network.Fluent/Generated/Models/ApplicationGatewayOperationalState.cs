@@ -8,15 +8,4 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
-
-    /// <summary>
-    /// Defines values for ApplicationGatewayOperationalState.
-    /// </summary>
-    public static class ApplicationGatewayOperationalState
-    {
-        public const string Stopped = "Stopped";
-        public const string Starting = "Starting";
-        public const string Running = "Running";
-        public const string Stopping = "Stopping";
-    }
 }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkSecurityRule and its create and update interfaces.
     /// </summary>
-    public partial class NetworkSecurityRuleImpl  :
+    internal partial class NetworkSecurityRuleImpl  :
         ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
         NetworkSecurityRule.Definition.IDefinition<NetworkSecurityGroup.Definition.IWithCreate>,
