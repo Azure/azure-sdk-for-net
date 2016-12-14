@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// Specify the billing contact.
         /// </summary>
         /// <param name="contact">The billing contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithBillingContact(Contact contact);
     }
 
@@ -31,11 +32,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// admin, billing, and tech.
         /// </summary>
         /// <param name="contact">The registrant contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithRegistrantContact(Contact contact);
 
         /// <summary>
         /// Starts the definition of a new domain contact.
         /// </summary>
+        /// <return>The first stage of the domain contact definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate> DefineRegistrantContact();
     }
 
@@ -50,6 +53,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// available publicly.
         /// </summary>
         /// <param name="domainPrivacy">True if domain privacy is turned on.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithDomainPrivacyEnabled(bool domainPrivacy);
     }
 
@@ -84,6 +88,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// about to expire.
         /// </summary>
         /// <param name="autoRenew">True if the domain should be automatically renewed.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithAutoRenewEnabled(bool autoRenew);
     }
 
@@ -112,6 +117,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// Specify the tech contact.
         /// </summary>
         /// <param name="contact">The tech contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithTechContact(Contact contact);
     }
 
@@ -124,6 +130,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// Specify the admin contact.
         /// </summary>
         /// <param name="contact">The admin contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate WithAdminContact(Contact contact);
     }
 }

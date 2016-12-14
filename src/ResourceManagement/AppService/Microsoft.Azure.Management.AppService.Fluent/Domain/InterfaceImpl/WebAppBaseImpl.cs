@@ -623,12 +623,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Starts the definition of a new host name binding.
         /// </summary>
-        HostNameBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithHostNameBinding<FluentT>.DefineHostnameBinding
+        HostNameBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithHostNameBinding<FluentT>.DefineHostnameBinding()
         {
-            get
-            {
-                return this.DefineHostnameBinding() as HostNameBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
-            }
+            return this.DefineHostnameBinding() as HostNameBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>

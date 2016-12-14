@@ -2,20 +2,29 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>
     /// A Host name - SSL certificate binding definition.
     /// </summary>
     public interface IHostNameSslBinding  :
-        IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.HostNameSslState>,
+        IWrapper<Models.HostNameSslState>,
         IChildResource<Microsoft.Azure.Management.AppService.Fluent.IWebAppBase>
     {
+        /// <summary>
+        /// Gets the SSL cert thumbprint.
+        /// </summary>
         string Thumbprint { get; }
 
+        /// <summary>
+        /// Gets the virtual IP address assigned to the host name if IP based SSL is enabled.
+        /// </summary>
         string VirtualIP { get; }
 
-        Microsoft.Azure.Management.AppService.Fluent.Models.SslState SslState { get; }
+        /// <summary>
+        /// Gets the SSL type.
+        /// </summary>
+        Models.SslState SslState { get; }
     }
 }

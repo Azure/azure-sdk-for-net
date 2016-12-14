@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update
         /// about to expire.
         /// </summary>
         /// <param name="autoRenew">True if the domain should be automatically renewed.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate WithAutoRenewEnabled(bool autoRenew);
     }
 
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update
         /// Specify the billing contact.
         /// </summary>
         /// <param name="contact">The billing contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate WithBillingContact(Contact contact);
     }
 
@@ -55,6 +57,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update
         /// Specify the admin contact.
         /// </summary>
         /// <param name="contact">The admin contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate WithAdminContact(Contact contact);
     }
 
@@ -69,6 +72,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update
         /// available publicly.
         /// </summary>
         /// <param name="domainPrivacy">True if domain privacy is turned on.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate WithDomainPrivacyEnabled(bool domainPrivacy);
     }
 
@@ -81,6 +85,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update
         /// Specify the tech contact.
         /// </summary>
         /// <param name="contact">The tech contact.</param>
+        /// <return>The next stage of domain definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Update.IUpdate WithTechContact(Contact contact);
     }
 }

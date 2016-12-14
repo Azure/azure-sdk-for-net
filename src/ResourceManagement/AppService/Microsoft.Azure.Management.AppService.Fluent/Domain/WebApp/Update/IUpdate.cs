@@ -14,11 +14,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebApp.Update
         /// Creates a new app service plan to use.
         /// </summary>
         /// <param name="pricingTier">The pricing tier to use.</param>
+        /// <return>The next stage of the web app update.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Update.IUpdate WithPricingTier(AppServicePricingTier pricingTier);
 
         /// <summary>
         /// Creates a new free app service plan to use. No custom domains or SSL bindings are available in this plan.
         /// </summary>
+        /// <return>The next stage of the web app update.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Update.IUpdate WithFreePricingTier();
     }
 
@@ -41,12 +43,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebApp.Update
         /// Creates a new app service plan to use.
         /// </summary>
         /// <return>The next stage of the web app update.</return>
+        /// <param name="name">The name of the app service plan.</param>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Update.IWithNewAppServicePlan WithNewAppServicePlan(string name);
 
         /// <summary>
         /// Uses an existing app service plan for the web app.
         /// </summary>
         /// <param name="appServicePlan">The existing app service plan.</param>
+        /// <return>The next stage of the web app update.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebApp.Update.IUpdate WithExistingAppServicePlan(IAppServicePlan appServicePlan);
     }
 }

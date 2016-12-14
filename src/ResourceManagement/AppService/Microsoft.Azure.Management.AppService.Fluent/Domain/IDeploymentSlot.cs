@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
         IUpdatable<DeploymentSlot.Update.IUpdate>
     {
+        /// <summary>
+        /// Gets the web app containing this deployment slot.
+        /// </summary>
         Microsoft.Azure.Management.AppService.Fluent.IWebApp Parent { get; }
     }
 }

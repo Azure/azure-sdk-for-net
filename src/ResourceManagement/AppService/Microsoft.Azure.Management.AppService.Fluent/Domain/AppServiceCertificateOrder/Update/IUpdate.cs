@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// Specifies if the certificate should be auto-renewed.
         /// </summary>
         /// <param name="enabled">True if the certificate order should be auto-renewed.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Update.IUpdate WithAutoRenew(bool enabled);
     }
 

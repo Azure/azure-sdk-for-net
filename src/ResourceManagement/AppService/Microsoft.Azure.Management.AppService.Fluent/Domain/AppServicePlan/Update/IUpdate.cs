@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update
         /// Specifies whether per-site scaling will be turned on.
         /// </summary>
         /// <param name="perSiteScaling">If each site can be scaled individually.</param>
+        /// <return>The next stage of the app service plan update.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithPerSiteScaling(bool perSiteScaling);
     }
 
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update
         /// Specifies the pricing tier for the app service plan.
         /// </summary>
         /// <param name="pricingTier">The pricing tier enum.</param>
+        /// <return>The next stage of the app service plan update.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithPricingTier(AppServicePricingTier pricingTier);
     }
 
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update
         /// Specifies the maximum number of instances running for this app service plan.
         /// </summary>
         /// <param name="capacity">The maximum number of instances.</param>
+        /// <return>The next stage of an app service plan update.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update.IUpdate WithCapacity(int capacity);
     }
 }

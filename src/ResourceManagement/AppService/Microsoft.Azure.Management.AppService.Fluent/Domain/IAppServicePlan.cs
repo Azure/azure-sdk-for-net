@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServicePlan.Update;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
@@ -15,16 +15,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IHasName,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         IUpdatable<AppServicePlan.Update.IUpdate>,
-        IWrapper<Microsoft.Azure.Management.AppService.Fluent.Models.AppServicePlanInner>
+        IWrapper<Models.AppServicePlanInner>
     {
+        /// <summary>
+        /// Gets if apps assigned to this App Service Plan can be scaled independently.
+        /// </summary>
         bool PerSiteScaling { get; }
 
+        /// <summary>
+        /// Gets number of web apps assigned to this App Service Plan.
+        /// </summary>
         int NumberOfWebApps { get; }
 
+        /// <summary>
+        /// Gets maximum number of instances that can be assigned.
+        /// </summary>
         int MaxInstances { get; }
 
+        /// <summary>
+        /// Gets maximum number of instances that can be assigned.
+        /// </summary>
         int Capacity { get; }
 
+        /// <summary>
+        /// Gets the pricing tier information of the App Service Plan.
+        /// </summary>
         Microsoft.Azure.Management.AppService.Fluent.AppServicePricingTier PricingTier { get; }
     }
 }

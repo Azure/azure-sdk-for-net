@@ -109,29 +109,29 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:C7E55DE6EB5DCE4FD47A68B8B1B62F02
         public override async Task<IDeploymentSlot> GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            SiteInner siteInner = innerCollection.GetSlot(resourceGroup, parentName, name);
+            SiteInner siteInner = await innerCollection.GetSlotAsync(resourceGroup, parentName, name);
             if (siteInner == null)
             {
                 return null;
             }
-            siteInner.SiteConfig = innerCollection.GetConfigurationSlot(resourceGroup, parentName, name);
+            siteInner.SiteConfig = await innerCollection.GetConfigurationSlotAsync(resourceGroup, parentName, name, cancellationToken);
 
             var result = WrapModel(siteInner);
-            result.CacheAppSettingsAndConnectionStringsAsync().Wait();
+            await ((DeploymentSlotImpl)result).CacheAppSettingsAndConnectionStringsAsync();
 
             return result;
         }
 
-        public Task<IDeploymentSlot> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IDeploymentSlot> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return GetByParentAsync(parent.ResourceGroupName, parent.Name, name);
+            return await GetByParentAsync(parent.ResourceGroupName, parent.Name, name);
         }
 
         private async Task<IDeploymentSlot> PopulateModelAsync(SiteInner inner, IWebApp parent, CancellationToken cancellationToken = default(CancellationToken))
         {
             inner.SiteConfig = await innerCollection.GetConfigurationSlotAsync(inner.ResourceGroup, parent.Name, Regex.Replace(inner.Name, ".*/", ""), cancellationToken);
             var slot = WrapModel(inner);
-            await slot.CacheAppSettingsAndConnectionStringsAsync();
+            await ((DeploymentSlotImpl)slot).CacheAppSettingsAndConnectionStringsAsync();
             return slot;
         }
     }

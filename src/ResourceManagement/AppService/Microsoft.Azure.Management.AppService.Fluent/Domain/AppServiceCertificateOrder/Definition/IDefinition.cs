@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// <summary>
         /// Specifies the hostname the certificate binds to.
         /// </summary>
-        /// <param name="hostName">The bare host name, without "www". Use *. prefix if it's a wild card certificate.</param>
+        /// <param name="hostName">The bare host name, without "www". Use . prefix if it's a wild card certificate.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCertificateSku WithHostName(string hostName);
     }
 
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// Specifies the valid years of the certificate.
         /// </summary>
         /// <param name="years">Minimum 1 year, and maximum 3 years.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate WithValidYears(int years);
     }
 
@@ -76,6 +78,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// Specifies the SKU of the certificate to be wildcard. It will provide
         /// SSL support to any sub-domain under the hostname.
         /// </summary>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithDomainVerification WithWildcardSku();
 
         /// <summary>
@@ -83,6 +86,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// SSL support to the hostname, and www.hostname. Wildcard type will provide
         /// SSL support to any sub-domain under the hostname.
         /// </summary>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithDomainVerificationFromWebApp WithStandardSku();
     }
 
@@ -95,6 +99,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// Specifies if the certificate should be auto-renewed.
         /// </summary>
         /// <param name="enabled">True if the certificate order should be auto-renewed.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate WithAutoRenew(bool enabled);
     }
 
@@ -107,6 +112,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// Specifies the Azure managed domain to verify the ownership of the domain.
         /// </summary>
         /// <param name="domain">The Azure managed domain.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithKeyVault WithDomainVerification(IAppServiceDomain domain);
     }
 
@@ -117,17 +123,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     {
         /// <summary>
         /// Creates a new key vault to store the certificate private key.
-        /// 
         /// DO NOT use this method if you are logged in from an identity without access
         /// to the Active Directory Graph.
         /// </summary>
         /// <param name="vaultName">The name of the new key vault.</param>
         /// <param name="region">The region to create the vault.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate WithNewKeyVault(string vaultName, Region region);
 
         /// <summary>
         /// Specifies an existing key vault to store the certificate private key.
-        /// 
         /// The vault MUST allow 2 service principals to read/write secrets:
         /// f3c21649-0979-4721-ac85-b0216b2cf413 and abfa0a7c-a6b6-4736-8310-5855508787cd.
         /// If they don't have access, an attempt will be made to grant access. If you are
@@ -135,6 +140,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// attempt will fail.
         /// </summary>
         /// <param name="vault">The vault to store the private key.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithCreate WithExistingKeyVault(IVault vault);
     }
 
@@ -149,6 +155,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
         /// be bound to the hostname for the certificate.
         /// </summary>
         /// <param name="webApp">The web app bound to the hostname.</param>
+        /// <return>The next stage of the app service certificate definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithKeyVault WithWebAppVerification(IWebAppBase webApp);
     }
 }

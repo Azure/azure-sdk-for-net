@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// List the agreements for purchasing a domain with a specific top level extension.
         /// </summary>
         /// <param name="topLevelExtension">The top level extension of the domain, e.g., "com", "net", "org".</param>
+        /// <return>The list of agreements required for the purchase.</return>
         Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.AppService.Fluent.IDomainLegalAgreement> ListAgreements(string topLevelExtension);
     }
 }

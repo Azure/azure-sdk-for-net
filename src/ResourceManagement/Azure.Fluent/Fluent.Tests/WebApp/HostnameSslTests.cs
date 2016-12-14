@@ -52,7 +52,7 @@ namespace Azure.Tests.WebApp
             webApp.Update()
                     .WithManagedHostnameBindings(domain, WEBAPP_NAME + "-1", WEBAPP_NAME + "-2")
                     .Apply();
-            var response = await CheckAddress("http://" + WEBAPP_NAME + "-1." + domain.Name);
+            response = await CheckAddress("http://" + WEBAPP_NAME + "-1." + domain.Name);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(await response.Content.ReadAsStringAsync());
             response = await CheckAddress("http://" + WEBAPP_NAME + "-2." + domain.Name);
@@ -68,7 +68,7 @@ namespace Azure.Tests.WebApp
                         .WithSniBasedSsl()
                         .Attach()
                     .Apply();
-            HttpResponseMessage response = null;
+            response = null;
             var retryCount = 3;
             while (response == null && retryCount > 0)
             {

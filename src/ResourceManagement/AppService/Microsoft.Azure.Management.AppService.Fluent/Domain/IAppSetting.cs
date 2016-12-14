@@ -7,10 +7,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IAppSetting 
     {
+        /// <summary>
+        /// Gets if the setting sticks to the slot during a swap.
+        /// </summary>
         bool Sticky { get; }
 
+        /// <summary>
+        /// Gets the value of the setting.
+        /// </summary>
         string Value { get; }
 
+        /// <summary>
+        /// Gets the key of the setting.
+        /// </summary>
         string Key { get; }
     }
 }

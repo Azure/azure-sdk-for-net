@@ -6,10 +6,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
 
     /// <summary>
     /// The final stage of the web app source control definition.
-    /// <p>
     /// At this stage, any remaining optional settings can be specified, or the web app source control definition
     /// can be attached to the parent web app update using WithAttach.attach().
     /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>
     {
@@ -18,18 +18,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
     /// <summary>
     /// A web app source control definition allowing branch to be specified.
     /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithGitHubBranch<ParentT> 
     {
         /// <summary>
         /// Specifies the branch in the repository to use.
         /// </summary>
         /// <param name="branch">The branch to use.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IGitHubWithAttach<ParentT> WithBranch(string branch);
     }
 
     /// <summary>
     /// A web app source control definition allowing repository type to be specified.
     /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithRepositoryType<ParentT> 
     {
         /// <summary>
@@ -37,6 +40,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
         /// Continuous integration will not be turned on.
         /// </summary>
         /// <param name="url">The url of the Mercurial repository.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IWithBranch<ParentT> WithPublicMercurialRepository(string url);
 
         /// <summary>
@@ -44,6 +48,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
         /// Continuous integration will not be turned on.
         /// </summary>
         /// <param name="url">The url of the Git repository.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IWithBranch<ParentT> WithPublicGitRepository(string url);
 
         /// <summary>
@@ -54,6 +59,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
         /// </summary>
         /// <param name="organization">The user name or organization name the GitHub repository belongs to, e.g. Azure.</param>
         /// <param name="repository">The name of the repository, e.g. azure-sdk-for-java.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository);
 
         /// <summary>
@@ -63,12 +69,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
         /// must have enough privileges to add a webhook to the repository.
         /// </summary>
         /// <param name="url">The URL pointing to the repository, e.g. https://github.com/Azure/azure-sdk-for-java.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IWithGitHubBranch<ParentT> WithContinuouslyIntegratedGitHubRepository(string url);
     }
 
     /// <summary>
     /// A web app source control definition allowing GitHub access token to be specified.
     /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithGitHubAccessToken<ParentT> 
     {
         /// <summary>
@@ -76,12 +84,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
         /// https://github.com/settings/tokens.
         /// </summary>
         /// <param name="personalAccessToken">The personal access token from GitHub.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IGitHubWithAttach<ParentT> WithGitHubAccessToken(string personalAccessToken);
     }
 
     /// <summary>
     /// The entirety of a web app source control definition as part of a web app update.
     /// </summary>
+    /// <typeparam name="Parent">The return type of the final UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
@@ -95,21 +105,23 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
     /// <summary>
     /// A web app source control definition allowing branch to be specified.
     /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
     public interface IWithBranch<ParentT> 
     {
         /// <summary>
         /// Specifies the branch in the repository to use.
         /// </summary>
         /// <param name="branch">The branch to use.</param>
+        /// <return>The next stage of the web app source control definition.</return>
         Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IWithAttach<ParentT> WithBranch(string branch);
     }
 
     /// <summary>
     /// The final stage of the web app source control definition that binds to a GitHub account.
-    /// <p>
     /// At this stage, any remaining optional settings can be specified, or the web app source control definition
     /// can be attached to the parent web app update using WithAttach.attach().
     /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
     public interface IGitHubWithAttach<ParentT>  :
         IWithAttach<ParentT>,
         IWithGitHubAccessToken<ParentT>
@@ -119,6 +131,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Updat
     /// <summary>
     /// The first stage of a web app source control definition as part of an update of a web app.
     /// </summary>
+    /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
     public interface IBlank<ParentT>  :
         IWithRepositoryType<ParentT>
     {
