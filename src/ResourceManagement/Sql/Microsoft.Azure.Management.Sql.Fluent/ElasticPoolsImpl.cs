@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private Region region;
 
         internal ElasticPoolsImpl(IElasticPoolsOperations innerCollection,
-            SqlManager manager,
+            ISqlManager manager,
             IDatabasesOperations databasesInner,
             DatabasesImpl databasesImpl,
             string resourceGroupName,

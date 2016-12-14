@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             BatchAccountImpl,
             BatchAccountInner,
             IBatchAccountOperations,
-            BatchManager>,
+            IBatchManager>,
         IBatchAccounts
     {
         private IStorageManager storageManager;
