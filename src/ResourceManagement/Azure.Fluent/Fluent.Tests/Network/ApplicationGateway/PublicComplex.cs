@@ -7,7 +7,6 @@ using Microsoft.Azure.Management.Network.Fluent.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Xunit;
 
 namespace Azure.Tests.Network.ApplicationGateway
@@ -18,7 +17,6 @@ namespace Azure.Tests.Network.ApplicationGateway
     public class PublicComplex : TestTemplate<IApplicationGateway, IApplicationGateways>
     {
         private List<IPublicIpAddress> testPips;
-        private INetwork network;
 
         public PublicComplex(IPublicIpAddresses pips)
         {
@@ -32,79 +30,69 @@ namespace Azure.Tests.Network.ApplicationGateway
 
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
-            //Thread creationThread = new Thread(() =>
-            //{
-            //    Thread.CurrentThread.IsBackground = true;
-            //    // Create an application gateway
-                try
-                {
-                    resources.Define(ApplicationGatewayHelper.APP_GATEWAY_NAME)
-                        .WithRegion(ApplicationGatewayHelper.REGION)
-                        .WithExistingResourceGroup(ApplicationGatewayHelper.GROUP_NAME)
+            // Create an application gateway
+            try
+            {
+                resources.Define(ApplicationGatewayHelper.APP_GATEWAY_NAME)
+                    .WithRegion(ApplicationGatewayHelper.REGION)
+                    .WithExistingResourceGroup(ApplicationGatewayHelper.GROUP_NAME)
 
-                        // Request routing rules
-                        .DefineRequestRoutingRule("rule80")
-                            .FromPublicFrontend()
-                            .FromFrontendHttpPort(80)
-                            .ToBackendHttpPort(8080)
-                            .ToBackendFqdn("www.microsoft.com")
-                            .ToBackendFqdn("www.example.com")
-                            .ToBackendIpAddress("11.1.1.1")
-                            .ToBackendIpAddress("11.1.1.2")
-                            .WithCookieBasedAffinity()
-                            .Attach()
-                        .DefineRequestRoutingRule("rule443")
-                            .FromPublicFrontend()
-                            .FromFrontendHttpsPort(443)
-                            .WithSslCertificateFromPfxFile(new FileInfo("c:\\automation\\myTest.pfx"))
-                            .WithSslCertificatePassword("Abc123")
-                            .ToBackendHttpConfiguration("config1")
-                            .ToBackend("backend1")
-                            .Attach()
-                        .DefineRequestRoutingRule("rule9000")
-                            .FromListener("listener1")
-                            .ToBackendHttpConfiguration("config1")
-                            .ToBackend("backend1")
-                            .Attach()
+                    // Request routing rules
+                    .DefineRequestRoutingRule("rule80")
+                        .FromPublicFrontend()
+                        .FromFrontendHttpPort(80)
+                        .ToBackendHttpPort(8080)
+                        .ToBackendFqdn("www.microsoft.com")
+                        .ToBackendFqdn("www.example.com")
+                        .ToBackendIpAddress("11.1.1.1")
+                        .ToBackendIpAddress("11.1.1.2")
+                        .WithCookieBasedAffinity()
+                        .Attach()
+                    .DefineRequestRoutingRule("rule443")
+                        .FromPublicFrontend()
+                        .FromFrontendHttpsPort(443)
+                        .WithSslCertificateFromPfxFile(new FileInfo("c:\\automation\\myTest.pfx"))
+                        .WithSslCertificatePassword("Abc123")
+                        .ToBackendHttpConfiguration("config1")
+                        .ToBackend("backend1")
+                        .Attach()
+                    .DefineRequestRoutingRule("rule9000")
+                        .FromListener("listener1")
+                        .ToBackendHttpConfiguration("config1")
+                        .ToBackend("backend1")
+                        .Attach()
 
-                        // Additional/explicit backend HTTP setting configs
-                        .DefineBackendHttpConfiguration("config1")
-                            .WithPort(8081)
-                            .WithRequestTimeout(45)
-                            .Attach()
+                    // Additional/explicit backend HTTP setting configs
+                    .DefineBackendHttpConfiguration("config1")
+                        .WithPort(8081)
+                        .WithRequestTimeout(45)
+                        .Attach()
 
-                        // Additional/explicit backends
-                        .DefineBackend("backend1")
-                            .WithIpAddress("11.1.1.1")
-                            .WithIpAddress("11.1.1.2")
-                            .Attach()
+                    // Additional/explicit backends
+                    .DefineBackend("backend1")
+                        .WithIpAddress("11.1.1.1")
+                        .WithIpAddress("11.1.1.2")
+                        .Attach()
 
-                        // Additional/explicit frontend listeners
-                        .DefineListener("listener1")
-                            .WithPublicFrontend()
-                            .WithFrontendPort(9000)
-                            .WithHttps()
-                            .WithSslCertificateFromPfxFile(new FileInfo("c:\\automation\\myTest2.pfx"))
-                            .WithSslCertificatePassword("Abc123")
-                            .WithServerNameIndication()
-                            .WithHostName("www.fabricam.com")
-                            .Attach()
+                    // Additional/explicit frontend listeners
+                    .DefineListener("listener1")
+                        .WithPublicFrontend()
+                        .WithFrontendPort(9000)
+                        .WithHttps()
+                        .WithSslCertificateFromPfxFile(new FileInfo("c:\\automation\\myTest2.pfx"))
+                        .WithSslCertificatePassword("Abc123")
+                        .WithServerNameIndication()
+                        .WithHostName("www.fabricam.com")
+                        .Attach()
 
-                        .WithExistingPublicIpAddress(testPips[0])
-                        .WithSize(ApplicationGatewaySkuName.StandardMedium)
-                        .WithInstanceCount(2)
-                        .Create();
-                }
-                catch
-                {
-                }
-            //});
-
-            // Start creating in a separate thread...
-            // creationThread.Start();
-
-            // ...But don't wait till the end - not needed for the test, 30 sec should be enough
-            // Thread.Sleep(30 * 1000);
+                    .WithExistingPublicIpAddress(testPips[0])
+                    .WithSize(ApplicationGatewaySkuName.StandardMedium)
+                    .WithInstanceCount(2)
+                    .Create();
+            }
+            catch
+            {
+            }
 
             // Get the resource as created so far
             string resourceId = ApplicationGatewayHelper.CreateResourceId(resources.Manager.SubscriptionId);
@@ -196,8 +184,6 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.True(rule.BackendHttpConfiguration.Name == "config1");
             Assert.True(rule.Backend != null);
             Assert.True(rule.Backend.Name == "backend1");
-
-            // creationThread.Join();
 
             return appGateway;
         }

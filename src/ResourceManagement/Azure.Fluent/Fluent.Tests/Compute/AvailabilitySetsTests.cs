@@ -52,7 +52,7 @@ namespace Fluent.Tests.Compute
                 // Delete
                 computeManager.AvailabilitySets.DeleteById(availabilitySet.Id);
             }
-            catch (Exception ex)
+            catch
             {
                 //
             }

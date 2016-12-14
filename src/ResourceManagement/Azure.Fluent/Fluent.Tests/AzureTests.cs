@@ -57,7 +57,7 @@ namespace Azure.Tests
                 .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void TestAppGatewaysPublicComplex()
         {
             new Network.ApplicationGateway.PublicComplex(azure.PublicIpAddresses)

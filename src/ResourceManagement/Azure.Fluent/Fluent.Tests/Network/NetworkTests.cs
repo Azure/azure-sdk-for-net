@@ -86,7 +86,7 @@ namespace Fluent.Tests.Network
                 {
                     nsg = subnet.GetNetworkSecurityGroup();
                 }
-                catch (Exception e)
+                catch
                 {
                     nsg = null;
                 }

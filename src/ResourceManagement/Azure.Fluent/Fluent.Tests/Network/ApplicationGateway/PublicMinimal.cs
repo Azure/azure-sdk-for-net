@@ -15,7 +15,6 @@ namespace Azure.Tests.Network.ApplicationGateway
     public class PublicMinimal : TestTemplate<IApplicationGateway, IApplicationGateways>
     {
         private INetworks networks;
-        private INetwork network;
 
         public PublicMinimal(INetworks networks)
         {

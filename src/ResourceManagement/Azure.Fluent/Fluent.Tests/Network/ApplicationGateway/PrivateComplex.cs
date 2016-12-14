@@ -19,7 +19,6 @@ namespace Azure.Tests.Network.ApplicationGateway
     {
         private INetworks networks;
         private List<IPublicIpAddress> testPips;
-        private INetwork network;
 
         public PrivateComplex(INetworks networks, IPublicIpAddresses pips)
         {
@@ -107,7 +106,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .WithSize(ApplicationGatewaySkuName.StandardMedium)
                         .WithInstanceCount(2)
                         .Create();
-                } catch (IOException e) {
+                } catch {
                 }
 
             });

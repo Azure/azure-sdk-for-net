@@ -608,7 +608,7 @@ namespace Azure.Tests.Sql
                 elasticPool.GetDatabase("does_not_exist");
                 Assert.NotNull(null);
             }
-            catch (Exception ex)
+            catch
             {
             }
 
