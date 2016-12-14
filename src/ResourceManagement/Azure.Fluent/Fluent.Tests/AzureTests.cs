@@ -33,6 +33,23 @@ namespace Azure.Tests
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void TestAppGatewaysPrivateMinimal()
+        {
+            new Network.ApplicationGateway.PrivateMinimal(
+                azure.Networks)
+                .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+        }
+
+        [Fact]
+        public void TestAppGatewaysPublicMinimal()
+        {
+            new Network.ApplicationGateway.PublicMinimal(
+                azure.Networks)
+                .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+        }
+
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void TestLoadBalancersNatRules()
         {
             new Network.LoadBalancer.InternetWithNatRule(
@@ -43,7 +60,7 @@ namespace Azure.Tests
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void testLoadBalancersNatPools()
+        public void TestLoadBalancersNatPools()
         {
             new Network.LoadBalancer.InternetWithNatPool(
                     azure.PublicIpAddresses,
@@ -53,7 +70,7 @@ namespace Azure.Tests
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void testLoadBalancersInternetMinimum()
+        public void TestLoadBalancersInternetMinimum()
         {
             new Network.LoadBalancer.InternetMinimal(
                     azure.PublicIpAddresses,
@@ -63,7 +80,7 @@ namespace Azure.Tests
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void testLoadBalancersInternalMinimum()
+        public void TestLoadBalancersInternalMinimum()
         {
             new Network.LoadBalancer.InternalMinimal(
                     azure.VirtualMachines,
