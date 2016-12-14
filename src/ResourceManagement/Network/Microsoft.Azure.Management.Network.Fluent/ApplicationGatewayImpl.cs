@@ -999,6 +999,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             InitializeSslCertificatesFromInner();
             defaultPrivateFrontend = null;
             defaultPublicFrontend = null;
+            creatablePipsByFrontend = new Dictionary<string, string>();
         }
 
         ///GENMHASH:3EB46226E14C9B9CCFF912B0282CE5C1:05D1016177B6A6A6C2D59D08E19394C9

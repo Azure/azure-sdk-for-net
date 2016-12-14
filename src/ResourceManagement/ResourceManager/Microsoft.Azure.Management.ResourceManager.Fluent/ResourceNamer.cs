@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
          * @param maxLen the max length for the random generated name
          * @return the random name
          */
-        public string RandomName(String prefix, int maxLen)
+        public string RandomName(string prefix, int maxLen)
         {
             prefix = prefix.ToLower();
             int minRandomnessLength = 5;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                 return RandomString(maxLen);
             }
 
-            if (maxLen <= prefix.Length + minRandomnessLength)
+            if (maxLen < prefix.Length + minRandomnessLength)
             {
                 return RandomString(maxLen);
             }

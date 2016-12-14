@@ -6,11 +6,7 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Azure.Tests.Common
 {
@@ -105,10 +101,10 @@ namespace Azure.Tests.Common
             // Verify creation
             this.resource = CreateResource(collection);
             TestHelper.WriteLine("\n------------\nAfter creation:\n");
-            Print(this.resource);
+            Print(resource);
 
             // Verify listing
-            Assert.True(VerifyListing() - initialCount == 1);
+            VerifyListing();
 
             // Verify getting
             this.resource = VerifyGetting();

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Models.ApplicationGatewayRequestRoutingRuleType RuleType { get; }
 
         /// <return>The associated frontend HTTP listener.</return>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener Listener();
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener Listener { get; }
 
         /// <summary>
         /// Gets the frontend protocol.
