@@ -10,22 +10,32 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// An immutable client-side representation of an Azure CDN endpoint.
     /// </summary>
     public interface ICdnEndpoint  :
-        IExternalChildResource<ICdnEndpoint,ICdnProfile>,
-        IWrapper<EndpointInner>
+        IExternalChildResource<Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint,Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        IWrapper<Microsoft.Azure.Management.Cdn.Fluent.Models.EndpointInner>
     {
-        /// <return>Endpoint host name.</return>
+        /// <summary>
+        /// Gets endpoint host name.
+        /// </summary>
         string HostName { get; }
 
-        /// <return>Origin host name.</return>
+        /// <summary>
+        /// Gets origin host name.
+        /// </summary>
         string OriginHostName { get; }
 
-        /// <return>Origin path.</return>
+        /// <summary>
+        /// Gets origin path.
+        /// </summary>
         string OriginPath { get; }
 
-        /// <return>Http port value.</return>
+        /// <summary>
+        /// Gets http port value.
+        /// </summary>
         int HttpPort { get; }
 
-        /// <return>True if Http traffic is allowed, otherwise false.</return>
+        /// <summary>
+        /// Gets true if Http traffic is allowed, otherwise false.
+        /// </summary>
         bool IsHttpAllowed { get; }
 
         /// <summary>
@@ -33,16 +43,24 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         void Start();
 
-        /// <return>True if content compression is enabled, otherwise false.</return>
+        /// <summary>
+        /// Gets true if content compression is enabled, otherwise false.
+        /// </summary>
         bool IsCompressionEnabled { get; }
 
-        /// <return>Query string caching behavior.</return>
-        QueryStringCachingBehavior QueryStringCachingBehavior { get; }
+        /// <summary>
+        /// Gets query string caching behavior.
+        /// </summary>
+        Microsoft.Azure.Management.Cdn.Fluent.Models.QueryStringCachingBehavior QueryStringCachingBehavior { get; }
 
-        /// <return>Endpoint provisioning state.</return>
+        /// <summary>
+        /// Gets endpoint provisioning state.
+        /// </summary>
         string ProvisioningState { get; }
 
-        /// <return>Https port value.</return>
+        /// <summary>
+        /// Gets https port value.
+        /// </summary>
         int HttpsPort { get; }
 
         /// <summary>
@@ -51,16 +69,20 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
         void PurgeContent(IList<string> contentPaths);
 
-        /// <return>List of content types to be compressed.</return>
-        IList<string> ContentTypesToCompress { get; }
+        /// <summary>
+        /// Gets list of content types to be compressed.
+        /// </summary>
+        System.Collections.Generic.IList<string> ContentTypesToCompress { get; }
 
         /// <summary>
         /// Stops current running CDN endpoint.
         /// </summary>
         void Stop();
 
-        /// <return>List of custom domains associated with current endpoint.</return>
-        IReadOnlyCollection<string> CustomDomains { get; }
+        /// <summary>
+        /// Gets list of custom domains associated with current endpoint.
+        /// </summary>
+        System.Collections.Generic.IList<string> CustomDomains { get; }
 
         /// <summary>
         /// Forcibly pre-loads current CDN endpoint content. Available for Verizon Profiles.
@@ -68,26 +90,36 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
         void LoadContent(IList<string> contentPaths);
 
-        /// <return>Origin host header.</return>
+        /// <summary>
+        /// Gets origin host header.
+        /// </summary>
         string OriginHostHeader { get; }
 
-        /// <return>True if Https traffic is allowed, otherwise false.</return>
+        /// <summary>
+        /// Gets true if Https traffic is allowed, otherwise false.
+        /// </summary>
         bool IsHttpsAllowed { get; }
 
-        /// <return>Optimization type value.</return>
+        /// <summary>
+        /// Gets optimization type value.
+        /// </summary>
         string OptimizationType { get; }
 
-        /// <return>Endpoint state.</return>
+        /// <summary>
+        /// Gets endpoint state.
+        /// </summary>
         string ResourceState { get; }
 
-        /// <return>List of Geo filters.</return>
-        System.Collections.Generic.IList<GeoFilter> GeoFilters { get; }
+        /// <summary>
+        /// Gets list of Geo filters.
+        /// </summary>
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> GeoFilters { get; }
 
         /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint.
         /// </summary>
         /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
         /// <return>The CustomDomainValidationResult object if successful.</return>
-        CustomDomainValidationResult ValidateCustomDomain(string hostName);
+        Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult ValidateCustomDomain(string hostName);
     }
 }

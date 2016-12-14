@@ -92,7 +92,7 @@ namespace Azure.Tests.Redis
                 Assert.Equal(redisCache.ProvisioningState, redisCacheGet.ProvisioningState);
 
                 // Get Keys
-                var redisKeys = redisCache.Keys();
+                var redisKeys = redisCache.Keys;
                 Assert.NotNull(redisKeys);
                 Assert.NotNull(redisKeys.PrimaryKey);
                 Assert.NotNull(redisKeys.SecondaryKey);
@@ -161,15 +161,15 @@ namespace Azure.Tests.Redis
                 premiumCache.ForceReboot(RebootType.AllNodes);
 
                 // Patch Schedule
-                var patchSchedule = premiumCache.GetPatchSchedules();
-                Assert.Equal(2, patchSchedule.Count);
+                var patchSchedule = premiumCache.ListPatchSchedules();
+                Assert.Equal(2, patchSchedule.Count());
 
                 premiumCache.DeletePatchSchedule();
 
                 patchSchedule = redisManager.RedisCaches
                                             .GetById(premiumCache.Id)
                                             .AsPremium()
-                                            .GetPatchSchedules();
+                                            .ListPatchSchedules();
                 Assert.Null(patchSchedule);
 
                 // currently throws because SAS url of the container should be provided as

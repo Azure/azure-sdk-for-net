@@ -12,26 +12,26 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public interface ICdnProfiles  :
         ISupportsCreating<CdnProfile.Definition.IBlank>,
-        ISupportsListing<ICdnProfile>,
-        ISupportsListingByGroup<ICdnProfile>,
-        ISupportsGettingByGroup<ICdnProfile>,
-        ISupportsGettingById<ICdnProfile>,
+        ISupportsListing<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        ISupportsGettingById<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<ICdnProfile>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>
     {
         /// <summary>
         /// Checks the availability of a endpoint name without creating the CDN endpoint.
         /// </summary>
         /// <param name="name">The endpoint resource name to validate.</param>
         /// <return>The CheckNameAvailabilityResult object if successful.</return>
-        CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
+        Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
 
         /// <summary>
         /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <return>List of available CDN REST operations.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Operation> ListOperations();
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations();
 
         /// <summary>
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal.
