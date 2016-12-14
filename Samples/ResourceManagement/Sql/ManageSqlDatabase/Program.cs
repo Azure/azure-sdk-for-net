@@ -23,7 +23,7 @@ namespace ManageSqlDatabase
     public class Program
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string rgName = Utilities.CreateRandomName("rgRSDSI");
 
         public static void Main(string[] args)
         {
