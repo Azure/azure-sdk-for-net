@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         /// <summary>
         /// Starts a definition of an SSL binding.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineSslBinding { get; }
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineSslBinding();
     }
 
     /// <summary>

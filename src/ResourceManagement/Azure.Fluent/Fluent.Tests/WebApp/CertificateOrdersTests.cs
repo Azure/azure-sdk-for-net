@@ -9,8 +9,8 @@ namespace Azure.Tests.WebApp
 {
     public class CertificateOrdersTests
     {
-        private static string RG_NAME = "javacsmrg319";
-        private static string CERTIFICATE_NAME = "graphwildcert319";
+        private static string RG_NAME = "javacsmrg9b9912262";
+        private static string CERTIFICATE_NAME = "graphdmcert7720";
 
         [Fact]
         public void CanCRUDCertificateOrder()
@@ -21,9 +21,9 @@ namespace Azure.Tests.WebApp
             var certificateOrder = appServiceManager.AppServiceCertificateOrders
                 .Define(CERTIFICATE_NAME)
                 .WithExistingResourceGroup(RG_NAME)
-                .WithHostName("*.Graph-webapp-319.Com")
-                .WithWildcardSku()
-                .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup(RG_NAME, "graph-webapp-319.Com"))
+                .WithHostName("graph-dm7720.com")
+                .WithStandardSku()
+                .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com"))
                 .WithNewKeyVault("graphvault", Region.US_WEST)
                 .WithValidYears(1)
                 .Create();

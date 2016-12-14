@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal IAppServiceCertificateOrdersOperations client;
         private IWebAppBase domainVerifyWebApp;
         private IAppServiceDomain domainVerifyDomain;
-        private Task<Microsoft.Azure.Management.KeyVault.Fluent.IVault> bindingVault;
+        private Func<Task<Microsoft.Azure.Management.KeyVault.Fluent.IVault>> bindingVault;
 
         ///GENMHASH:614D2D9852F00FD5BFCAF60BA2A659B0:86E327FE34A305973AC1A32ECEC60D57
         public AppServiceCertificateOrderImpl WithDomainVerification(IAppServiceDomain domain)
@@ -79,11 +79,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Task verifyDomainOwnerShip = null;
             if (domainVerifyWebApp != null)
             {
-                verifyDomainOwnerShip = domainVerifyWebApp.VerifyDomainOwnershipAsync(Name, DomainVerificationToken());
+                verifyDomainOwnerShip = domainVerifyWebApp.VerifyDomainOwnershipAsync(Name, certificateOrder.DomainVerificationToken);
             }
             else if (domainVerifyDomain != null)
             {
-                verifyDomainOwnerShip = domainVerifyDomain.VerifyDomainOwnershipAsync(Name, DomainVerificationToken());
+                verifyDomainOwnerShip = domainVerifyDomain.VerifyDomainOwnershipAsync(Name, certificateOrder.DomainVerificationToken);
             }
             else
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 $"Please specify a non-null web app or domain to verify the domain ownership for hostname {DistinguishedName()}");
             }
             await verifyDomainOwnerShip;
-            var appServiceCertificateKeyVaultBinding = await CreateKeyVaultBindingAsync(Name, await bindingVault);
+            var appServiceCertificateKeyVaultBinding = await CreateKeyVaultBindingAsync(Name, await bindingVault());
 
             return this;
         }
@@ -111,18 +111,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:11AF5CEDE5EC5110A3D190463E690E16:0B6EB716D0098ABB085A80641A141FD0
         public AppServiceCertificateOrderImpl WithNewKeyVault(string vaultName, Microsoft.Azure.Management.Resource.Fluent.Core.Region region)
         {
-            this.bindingVault = Manager.KeyVaultManager.Vaults.Define(vaultName)
-                .WithRegion(region)
-                .WithExistingResourceGroup(ResourceGroupName)
-                .DefineAccessPolicy()
-                    .ForServicePrincipal("f3c21649-0979-4721-ac85-b0216b2cf413")
-                    .AllowSecretPermissions(SecretPermissions.Get, SecretPermissions.Set, SecretPermissions.Delete)
-                    .Attach()
-                .DefineAccessPolicy()
-                    .ForServicePrincipal("abfa0a7c-a6b6-4736-8310-5855508787cd")
-                    .AllowSecretPermissions(SecretPermissions.Get)
-                    .Attach()
-                .CreateAsync();
+            this.bindingVault = async() =>
+                await Manager.KeyVaultManager.Vaults.Define(vaultName)
+                    .WithRegion(region)
+                    .WithExistingResourceGroup(ResourceGroupName)
+                    .DefineAccessPolicy()
+                        .ForServicePrincipal("f3c21649-0979-4721-ac85-b0216b2cf413")
+                        .AllowSecretPermissions(SecretPermissions.Get, SecretPermissions.Set, SecretPermissions.Delete)
+                        .Attach()
+                    .DefineAccessPolicy()
+                        .ForServicePrincipal("abfa0a7c-a6b6-4736-8310-5855508787cd")
+                        .AllowSecretPermissions(SecretPermissions.Get)
+                        .Attach()
+                    .CreateAsync();
             return this;
         }
 
@@ -206,12 +207,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var appServiceCertificateInnerPage = await client.ListCertificatesAsync(ResourceGroupName, Name);
 
             // There can only be one binding associated with an order
-            if (!appServiceCertificateInnerPage.Any())
+            if (appServiceCertificateInnerPage == null || !appServiceCertificateInnerPage.Any())
             {
-                return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInnerPage.FirstOrDefault(), this);
+                return null;
             }
 
-            return null;
+            return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInnerPage.FirstOrDefault(), this);
         }
 
         ///GENMHASH:06F61EC9451A16F634AEB221D51F2F8C:10914683BF9EB7C5E03A949613F97A5D

@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         /// <summary>
         /// Starts the definition of a new host name binding.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> DefineHostnameBinding { get; }
+        Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> DefineHostnameBinding();
     }
 
     /// <summary>
@@ -304,6 +304,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         /// <summary>
         /// Starts a definition of an SSL binding.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> DefineSslBinding { get; }
+        Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> DefineSslBinding();
     }
 }

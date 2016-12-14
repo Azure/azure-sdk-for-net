@@ -25,8 +25,8 @@ namespace Azure.Tests.WebApp
         public async Task CanBindHostnameAndSsl()
         {
             var appServiceManager = TestHelper.CreateAppServiceManager();
-            var domain = appServiceManager.AppServiceDomains.GetByGroup(RG_NAME, "FIX IT");
-            var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup(RG_NAME, "FIX IT");
+            var domain = appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph -dm7720");
+            var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup("javacsmrg9b9912262", "graphdmcert7720");
 
             // hostname binding
             appServiceManager.WebApps.Define(WEBAPP_NAME)
@@ -34,8 +34,7 @@ namespace Azure.Tests.WebApp
                 .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
                 .WithRegion(Region.US_WEST)
                 .WithPricingTier(AppServicePricingTier.BASIC_B1)
-                // TODO - ans - Should be a method.
-                .DefineHostnameBinding
+                .DefineHostnameBinding()
                     .WithAzureManagedDomain(domain)
                     .WithSubDomain(WEBAPP_NAME)
                     .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
@@ -63,7 +62,7 @@ namespace Azure.Tests.WebApp
             // SSL binding
             webApp.Update()
                     // TODO - ans - Should be a method.
-                    .DefineSslBinding
+                    .DefineSslBinding()
                         .ForHostname(WEBAPP_NAME + "." + domain.Name)
                         .WithExistingAppServiceCertificateOrder(certificateOrder)
                         .WithSniBasedSsl()

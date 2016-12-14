@@ -142,9 +142,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             DomainOwnershipIdentifierInner identifierInner = new DomainOwnershipIdentifierInner()
             {
+                Location = "global",
                 OwnershipId = domainVerificationToken
             };
-            identifierInner.Location = "global";
             await client.CreateOrUpdateOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner);
         }
 

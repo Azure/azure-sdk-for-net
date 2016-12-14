@@ -425,37 +425,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
 
             // Submit hostname bindings
-            var bindingTasks = new List<Task>();
             foreach (var binding in hostNameBindingsToCreate.Values)
             {
-                bindingTasks.Add(binding.CreateAsync(cancellationToken));
+                await binding.CreateAsync(cancellationToken);
             }
             foreach (string binding in hostNameBindingsToDelete)
             {
-                bindingTasks.Add(DeleteHostNameBindingAsync(binding, cancellationToken));
-            }
-            if (bindingTasks.Any())
-            {
-                await Task.WhenAll(bindingTasks);
+                await DeleteHostNameBindingAsync(binding, cancellationToken);
             }
 
             // Refresh after hostname bindings
             site = await GetInnerAsync();
 
             // Submit SSL bindings
-            var certTasks = new List<Task<IAppServiceCertificate>>();
+            var certTasks = new List<IAppServiceCertificate>();
             foreach (var binding in sslBindingsToCreate.Values)
             {
                 binding.Inner.ToUpdate = true;
-                certTasks.Add(binding.NewCertificateAsync(cancellationToken)());
+                certTasks.Add(await binding.NewCertificateAsync(cancellationToken)());
                 hostNameSslStateMap[binding.Inner.Name] = binding.Inner;
             }
             site.HostNameSslStates = new List<HostNameSslState>(hostNameSslStateMap.Values);
             if (certTasks.Count > 0)
             {
-                await Task.WhenAll(certTasks);
+                site = await CreateOrUpdateInnerAsync(site, cancellationToken);
             }
-            site = await CreateOrUpdateInnerAsync(site, cancellationToken);
 
             // Submit site config
             if (Inner.SiteConfig != null)

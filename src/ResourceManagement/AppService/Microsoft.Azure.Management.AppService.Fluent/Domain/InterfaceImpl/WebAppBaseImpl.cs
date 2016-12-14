@@ -585,23 +585,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Starts a definition of an SSL binding.
         /// </summary>
-        HostNameSslBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithHostNameSslBinding<FluentT>.DefineSslBinding
+        HostNameSslBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithHostNameSslBinding<FluentT>.DefineSslBinding()
         {
-            get
-            {
-                return this.DefineSslBinding() as HostNameSslBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
-            }
+            return this.DefineSslBinding() as HostNameSslBinding.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>
         /// Starts a definition of an SSL binding.
         /// </summary>
-        HostNameSslBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> WebAppBase.Definition.IWithHostNameSslBinding<FluentT>.DefineSslBinding
+        HostNameSslBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> WebAppBase.Definition.IWithHostNameSslBinding<FluentT>.DefineSslBinding()
         {
-            get
-            {
-                return this.DefineSslBinding() as HostNameSslBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
-            }
+            return this.DefineSslBinding() as HostNameSslBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
         }
 
         /// <summary>
@@ -671,12 +665,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Starts the definition of a new host name binding.
         /// </summary>
-        HostNameBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> WebAppBase.Definition.IWithHostNameBinding<FluentT>.DefineHostnameBinding
+        HostNameBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>> WebAppBase.Definition.IWithHostNameBinding<FluentT>.DefineHostnameBinding()
         {
-            get
-            {
-                return this.DefineHostnameBinding() as HostNameBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
-            }
+            return this.DefineHostnameBinding() as HostNameBinding.Definition.IBlank<WebAppBase.Definition.IWithHostNameSslBinding<FluentT>>;
         }
 
         /// <summary>
