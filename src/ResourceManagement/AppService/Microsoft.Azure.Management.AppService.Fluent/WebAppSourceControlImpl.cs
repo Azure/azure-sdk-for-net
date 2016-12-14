@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:AF58AEB1DD43D38B7FEDF266F4F40886:63F15AB00FF6315055DD4FFBCA6BE2EC
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithContinuouslyIntegratedGitHubRepository(string organization, string repository)
         {
-            return WithContinuouslyIntegratedGitHubRepository(string.Format("https://github.Com/%s/%s", organization, repository));
+            return WithContinuouslyIntegratedGitHubRepository(string.Format("https://github.Com/{0}/{1}", organization, repository));
         }
 
         ///GENMHASH:0C78E8B87A63ADE33197F0E5CE8ADEEB:706F1A261DEEA5DA1355959E128EE429

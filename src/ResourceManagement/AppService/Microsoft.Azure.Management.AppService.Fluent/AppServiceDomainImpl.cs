@@ -74,19 +74,22 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:A096A9B6D504D2EF53E4C2B61224B4A4
         public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            string[] domainParts = this.Name.Split(new[] { "\\." }, StringSplitOptions.RemoveEmptyEntries);
+            string[] domainParts = this.Name.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
             string topLevel = domainParts[domainParts.Length - 1];
             // Step 1: Consent to agreements
             var agreements = await topLevelDomainsInner.ListAgreementsAsync(topLevel);
             var agreementKeys = agreements.Select(x => x.AgreementKey).ToList();
             // Step 2: Create domain
-            //var hostIpAddress = (await Dns.GetHostEntryAsync(Dns.GetHostName()))
-            //    .AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync("http://azure.com");
+                var request = response.RequestMessage;
+            }
 
             Inner.Consent = new DomainPurchaseConsent()
             {
                 AgreedAt = new DateTime(),
-                AgreedBy = "127.0.0.1",// hostIpAddress.ToString(),
+                AgreedBy = "127.0.0.1",
                 AgreementKeys = agreementKeys
             };
 

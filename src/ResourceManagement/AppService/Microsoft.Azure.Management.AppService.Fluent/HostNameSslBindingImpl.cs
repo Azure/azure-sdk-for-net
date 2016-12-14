@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:7AF6E6BC1C5E421D399FD118151312D5:0A554F8B4AFC72FB22898249230C6EEE
         private string GetCertificateUniqueName(string thumbprint, Region region)
         {
-            return string.Format("%s##%s#", thumbprint, region.Name);
+            return string.Format("{0}##{1}#", thumbprint, region.Name);
         }
 
         ///GENMHASH:B90198DC89E5EAAFA864E1D246D6806C:4AD5178A115C8AF028528ABF531FF276

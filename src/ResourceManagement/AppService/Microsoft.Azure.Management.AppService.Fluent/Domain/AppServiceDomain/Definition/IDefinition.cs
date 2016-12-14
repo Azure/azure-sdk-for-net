@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
         /// <summary>
         /// Starts the definition of a new domain contact.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate> DefineRegistrantContact { get; }
+        Microsoft.Azure.Management.AppService.Fluent.DomainContact.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithCreate> DefineRegistrantContact();
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definiti
     /// The first stage of the domain definition.
     /// </summary>
     public interface IBlank  :
-        IWithGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithRegistrantContact>
+        IWithExistingResourceGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceDomain.Definition.IWithRegistrantContact>
     {
     }
 

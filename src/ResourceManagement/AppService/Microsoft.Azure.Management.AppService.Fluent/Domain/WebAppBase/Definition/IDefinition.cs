@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition
         /// <summary>
         /// Starts the definition of a new source control.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineSourceControl { get; }
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition.IWithCreate<FluentT>> DefineSourceControl();
     }
 
     /// <summary>

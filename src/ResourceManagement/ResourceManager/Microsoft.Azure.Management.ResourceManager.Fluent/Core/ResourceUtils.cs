@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
                 prefixedParentPath = "/" + parentResourcePath;
             }
             return string.Format(
-                    "/subscriptions/%s/resourcegroups/%s/providers/%s%s/%s/%s",
+                    "/subscriptions/{0}/resourcegroups/{1}/providers/{2}{3}/{4}/{5}",
                     subscriptionId,
                     resourceGroupName,
                     resourceProviderNamespace,

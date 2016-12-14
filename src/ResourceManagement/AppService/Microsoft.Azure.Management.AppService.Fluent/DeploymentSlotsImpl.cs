@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System;
+    using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -52,22 +53,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             this.parent = parent;
         }
 
-        ///GENMHASH:CB94B6BC21E29A62E4013B4505C36CAB:9CA7B3DBB8B4F2B7418ED7A9EBEDD4BE
-        protected PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot> WrapList(PagedList<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> pagedList)
-        {
-            return PagedListConverter.Convert<SiteInner, IDeploymentSlot>(pagedList, siteInner =>
-            {
-                siteInner.SiteConfig = innerCollection.GetConfiguration(siteInner.ResourceGroup, siteInner.Name);
-                var deploymentSlot = WrapModel(siteInner);
-                deploymentSlot.CacheAppSettingsAndConnectionStringsAsync().Wait();
-                return deploymentSlot;
-            });
-        }
-
         ///GENMHASH:21EB605E5FAA6C13D208A1A4CE8C136D:1381FA42DE6ECBD284AA54F76A65CC41
         public override async Task<PagedList<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>> ListByParentAsync(string resourceGroupName, string parentName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return WrapList(new PagedList<SiteInner>(await innerCollection.ListSlotsAsync(resourceGroupName, parentName, cancellationToken), innerCollection.ListSlotsNext));
+            Func<SiteInner, IDeploymentSlot> converter = inner =>
+            {
+                return PopulateModelAsync(inner, parent).GetAwaiter().GetResult();
+            };
+            var slots = new WrappedPage<SiteInner, IDeploymentSlot>(await innerCollection.ListSlotsAsync(resourceGroupName, parentName), converter);
+            return new PagedList<IDeploymentSlot>(slots, s =>
+            {
+                return new WrappedPage<SiteInner, IDeploymentSlot>(innerCollection.ListSlotsNext(s), converter);
+            });
         }
 
         ///GENMHASH:971272FEE209B8A9A552B92179C1F926:09CA495AE0F4F57BBBBDFC250874B0D4
@@ -128,6 +125,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public Task<IDeploymentSlot> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return GetByParentAsync(parent.ResourceGroupName, parent.Name, name);
+        }
+
+        private async Task<IDeploymentSlot> PopulateModelAsync(SiteInner inner, IWebApp parent, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            inner.SiteConfig = await innerCollection.GetConfigurationSlotAsync(inner.ResourceGroup, parent.Name, Regex.Replace(inner.Name, ".*/", ""), cancellationToken);
+            var slot = WrapModel(inner);
+            await slot.CacheAppSettingsAndConnectionStringsAsync();
+            return slot;
         }
     }
 }

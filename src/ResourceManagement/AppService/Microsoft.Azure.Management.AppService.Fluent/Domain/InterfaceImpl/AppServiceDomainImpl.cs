@@ -254,12 +254,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Starts the definition of a new domain contact.
         /// </summary>
-        DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate> AppServiceDomain.Definition.IWithRegistrantContact.DefineRegistrantContact
+        DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate> AppServiceDomain.Definition.IWithRegistrantContact.DefineRegistrantContact()
         {
-            get
-            {
-                return this.DefineRegistrantContact() as DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate>;
-            }
+            return this.DefineRegistrantContact() as DomainContact.Definition.IBlank<AppServiceDomain.Definition.IWithCreate>;
         }
 
         /// <summary>

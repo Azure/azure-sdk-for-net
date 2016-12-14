@@ -27,21 +27,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             DeploymentSlotImpl,
             object,
             object,
-            DeploymentSlot.Update.IUpdate>,
+            IUpdate>,
         IDeploymentSlot,
         IDefinition,
-        IAppliable<IDeploymentSlot>,
-        IUpdateWithTags<IUpdate>,
-        WebAppBase.Update.IWithHostNameBinding<IDeploymentSlot>,
-        WebAppBase.Update.IWithHostNameSslBinding<IDeploymentSlot>,
-        WebAppBase.Update.IWithClientAffinityEnabled<IDeploymentSlot>,
-        WebAppBase.Update.IWithClientCertEnabled<IDeploymentSlot>,
-        WebAppBase.Update.IWithScmSiteAlsoStopped<IDeploymentSlot>,
-        WebAppBase.Update.IWithSiteEnabled<IDeploymentSlot>,
-        WebAppBase.Update.IWithSiteConfigs<IDeploymentSlot>,
-        WebAppBase.Update.IWithAppSettings<IDeploymentSlot>,
-        WebAppBase.Update.IWithConnectionString<IDeploymentSlot>,
-        WebAppBase.Update.IWithSourceControl<IDeploymentSlot>
+        IUpdate
     {
         private WebAppImpl parent;
         private string name;

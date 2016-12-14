@@ -17,6 +17,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Resource.Fluent.Models;
     using System.IO;
     using System.Text;
+    using Resource.Fluent;
+    using WebAppBase.Update;
 
     /// <summary>
     /// The implementation for WebApp.
@@ -31,18 +33,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             WebApp.Update.IUpdate>,
         IWebApp,
         IDefinition,
-        IAppliable<IWebApp>,
-        IUpdateWithTags<IUpdate>,
-        WebAppBase.Update.IWithHostNameBinding<IWebApp>,
-        WebAppBase.Update.IWithHostNameSslBinding<IWebApp>,
-        WebAppBase.Update.IWithClientAffinityEnabled<IWebApp>,
-        WebAppBase.Update.IWithClientCertEnabled<IWebApp>,
-        WebAppBase.Update.IWithScmSiteAlsoStopped<IWebApp>,
-        WebAppBase.Update.IWithSiteEnabled<IWebApp>,
-        WebAppBase.Update.IWithSiteConfigs<IWebApp>,
-        WebAppBase.Update.IWithAppSettings<IWebApp>,
-        WebAppBase.Update.IWithConnectionString<IWebApp>,
-        WebAppBase.Update.IWithSourceControl<IWebApp>,
+        WebApp.Update.IUpdate,
         WebApp.Definition.IWithNewAppServicePlan,
         WebApp.Update.IWithAppServicePlan,
         WebApp.Update.IWithNewAppServicePlan
@@ -143,7 +134,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             if (newGroup != null && IsInCreateMode)
             {
                 appServicePlan.WithNewResourceGroup(ResourceGroupName);
-                ((Wrapper<ResourceGroupInner>) newGroup).Inner.Location = RegionName;
+                ((IndexableRefreshableWrapper<IResourceGroup, ResourceGroupInner>) newGroup).Inner.Location = RegionName;
             }
             else
             {
@@ -215,8 +206,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             Inner.ServerFarmId = appServicePlan.Id;
             if (newGroup != null && IsInCreateMode) {
-                ((Wrapper<ResourceGroupInner>) newGroup).Inner.Location = appServicePlan.RegionName;
+                ((IndexableRefreshableWrapper<IResourceGroup,ResourceGroupInner>) newGroup).Inner.Location = appServicePlan.RegionName;
             }
+            this.WithRegion(appServicePlan.RegionName);
             return this;
         }
 

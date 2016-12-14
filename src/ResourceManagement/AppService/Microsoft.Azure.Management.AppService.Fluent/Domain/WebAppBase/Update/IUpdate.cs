@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update
         /// <summary>
         /// Starts the definition of a new source control.
         /// </summary>
-        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineSourceControl { get; }
+        Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition.IBlank<Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update.IUpdate<FluentT>> DefineSourceControl();
 
         /// <summary>
         /// Removes source control for deployment from the web app.

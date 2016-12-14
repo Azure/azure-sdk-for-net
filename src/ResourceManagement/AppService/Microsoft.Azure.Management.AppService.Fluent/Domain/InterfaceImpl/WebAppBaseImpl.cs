@@ -34,12 +34,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Starts the definition of a new source control.
         /// </summary>
-        WebAppSourceControl.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithSourceControl<FluentT>.DefineSourceControl
+        WebAppSourceControl.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>> WebAppBase.Update.IWithSourceControl<FluentT>.DefineSourceControl()
         {
-            get
-            {
-                return this.DefineSourceControl() as WebAppSourceControl.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
-            }
+            return this.DefineSourceControl() as WebAppSourceControl.UpdateDefinition.IBlank<WebAppBase.Update.IUpdate<FluentT>>;
         }
 
         /// <summary>
@@ -53,12 +50,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Starts the definition of a new source control.
         /// </summary>
-        WebAppSourceControl.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>> WebAppBase.Definition.IWithSourceControl<FluentT>.DefineSourceControl
+        WebAppSourceControl.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>> WebAppBase.Definition.IWithSourceControl<FluentT>.DefineSourceControl()
         {
-            get
-            {
-                return this.DefineSourceControl() as WebAppSourceControl.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>>;
-            }
+            return this.DefineSourceControl() as WebAppSourceControl.Definition.IBlank<WebAppBase.Definition.IWithCreate<FluentT>>;
         }
 
         /// <summary>

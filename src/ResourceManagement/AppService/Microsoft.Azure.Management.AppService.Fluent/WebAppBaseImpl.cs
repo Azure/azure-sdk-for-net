@@ -34,18 +34,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             UpdateT>,
         IWebAppBase,
         IDefinition<FluentT>,
-        IAppliable<FluentT>,
-        IUpdateWithTags<UpdateT>,
-        WebAppBase.Update.IWithHostNameBinding<FluentT>,
-        WebAppBase.Update.IWithHostNameSslBinding<FluentT>,
-        WebAppBase.Update.IWithClientAffinityEnabled<FluentT>,
-        WebAppBase.Update.IWithClientCertEnabled<FluentT>,
-        WebAppBase.Update.IWithScmSiteAlsoStopped<FluentT>,
-        WebAppBase.Update.IWithSiteEnabled<FluentT>,
-        WebAppBase.Update.IWithSiteConfigs<FluentT>,
-        WebAppBase.Update.IWithAppSettings<FluentT>,
-        WebAppBase.Update.IWithConnectionString<FluentT>,
-        WebAppBase.Update.IWithSourceControl<FluentT>,
+        IUpdate<FluentT>,
         WebAppBase.Definition.IWithWebContainer<FluentT>,
         WebAppBase.Update.IWithWebContainer<FluentT>
         where FluentImplT : WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>, FluentT
@@ -1162,5 +1151,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public abstract IWebAppSourceControl GetSourceControl();
         public abstract void Start();
         public abstract void Swap(string slotName);
+
+        IUpdate<FluentT> IUpdateWithTags<IUpdate<FluentT>>.WithTags(IDictionary<string, string> tags)
+        {
+            return WithTags(tags);
+        }
+
+        IUpdate<FluentT> IUpdateWithTags<IUpdate<FluentT>>.WithTag(string key, string value)
+        {
+            return WithTag(key, value);
+        }
+
+        IUpdate<FluentT> IUpdateWithTags<IUpdate<FluentT>>.WithoutTag(string key)
+        {
+            return WithoutTag(key);
+        }
     }
 }

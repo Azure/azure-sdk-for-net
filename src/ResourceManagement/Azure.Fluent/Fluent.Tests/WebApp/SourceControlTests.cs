@@ -30,14 +30,14 @@ namespace Azure.Tests.WebApp
                 .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
                 .WithRegion(Region.US_WEST)
                 .WithPricingTier(AppServicePricingTier.STANDARD_S1)
-                .DefineSourceControl
+                .DefineSourceControl()
                     .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test")
                     .WithBranch("master")
                     .Attach()
                 .Create();
             Assert.NotNull(webApp);
             var response = await CheckAddress("http://" + WEBAPP_NAME + "." + "azurewebsites.Net");
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
 
             var body = await response.Content.ReadAsStringAsync();
             Assert.NotNull(body);
