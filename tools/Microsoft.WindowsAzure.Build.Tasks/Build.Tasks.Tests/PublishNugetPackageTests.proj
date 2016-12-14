@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="RunPublishTest" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask TaskName="DebugTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+	<PropertyGroup>		
+		<LibrarySourceFolder Condition="'$(PublishTestProjects)' == 'true'">$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks.Tests\TestPublishProjects</LibrarySourceFolder>
+		<LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
+		<FxTargetList>portable;net40;net45</FxTargetList>
+		<NuGetPublishingSource>$(USERPROFILE)\nugetPublish</NuGetPublishingSource>
+		<NuGetKey>1234</NuGetKey>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<!-- <LibrariesToBuild Remove="@(LibrariesToBuild)"/> -->
+		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" Condition=" '$(Scope)' != 'All' Or '$(Scope)' == '' " />
+		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'All' Or '$(Scope)' == '' " />		
+		<LibraryFxTargetList Include="$(FxTargetList)" />
+		<AutoRestLibraryFxTargetList Include="portable;net45" />	
+	</ItemGroup>
+<!--
+	<Import Project="$(LibrarySourceFolder)\MultiProjectMultiSln\CSProjTestPublish\CSProjTestPublish.nuget.proj" />
+	-->
+	<Target Name="OnePackageInit">
+	<!-- Use Case: You have to provide scope here, the way msbuild builds it's build graph for imports
+		and the way we have authored our DynamicNuSpec targets
+		msbuild build.proj /p:PublishTestProjects=true /t:Publish_OnePackage /p:Scope=MultiProjectMultiSln
+	-->
+		<Message Text="Executing 'OnePackageInit'" />
+		<PropertyGroup>
+		  <Scope>MultiProjectMultiSln</Scope>
+		  <PackageName>CSProjTestPublish</PackageName>
+		</PropertyGroup>
+		<ItemGroup>
+			<LibrariesToBuild Remove="@(LibrariesToBuild)" Condition=" '@(LibrariesToBuild)' != '' " />
+			<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" />
+		</ItemGroup>
+		<Message Text="Scope: '$(Scope)', PackageName: '$(PackageName)'"/>
+		<Error Text="No Project found to be built." Condition=" '@(LibrariesToBuild)' == '' " />
+	</Target>
+
+	<Target Name="MultiPackageInit">
+		<Message Text="Executing 'MultiPackageInit'" />
+		<PropertyGroup>
+		  <Scope>MultiProjectSingleSln</Scope>
+		  <PackageName>Sdk RP1_MgmtPlane RP2_SDK.Test</PackageName>
+		</PropertyGroup>
+		<ItemGroup>
+			<LibrariesToBuild Remove="@(LibrariesToBuild)" Condition=" '@(LibrariesToBuild)' != '' " />
+			<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" />
+		</ItemGroup>
+		<Error Text="No Project found to be built." Condition=" '@(LibrariesToBuild)' == '' " />
+	</Target>
+
+	<Target Name="Publish_MultiplePackage" DependsOnTargets="MultiPackageInit;TestInit;CommonSteps">
+		<Message Text="'Publish_MutiplePackage' completed"/>
+	</Target>
+
+	<Target Name="Publish_OnePackage" DependsOnTargets="OnePackageInit;TestInit;CommonSteps">
+		<Message Text="'Publish_OnePackage' succeeded" Condition="Exists('$(NuGetPublishingSource)\CSProjTestPublish.0.0.1.nupkg')" />
+		<Error Text="'Publish_OnePackage' failed" Condition="!Exists('$(NuGetPublishingSource)\CSProjTestPublish.0.0.1.nupkg')" />
+	</Target>
+
+	<Target Name="CommonSteps" DependsOnTargets="prepareforautorestlibraries;BuildTestPackages;Package;Publish" />
+	
+	<Target Name="TestInit" >
+		<Message Text="Trying to Create directory $(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
+		<MakeDir Directories="$(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
+		<Message Text="Test Publishing directory detected $(NuGetPublishingSource)" Condition="Exists($(NuGetPublishingSource))" />
+		<Error Text="Directory creation failed for '$(NuGetPublishingSource)'" Condition="!Exists($(NuGetPublishingSource))" />
+	</Target>
+	
+	<Target  Name="BuildTestPackages">
+		<Message Text="Non-NetCore Test Packages Libs to be built:  @(Non_NetCore_AutoRestLibraries)" />
+		<MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"             
+				 Targets="Build" />
+
+		<Message Text="NetCore Test Packages Libs to be built:  @(Non_NetCore_AutoRestLibraries)" />
+		<Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
+		<Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" '%(NetCore_AutoRestLibraries.Library)'!= '' "/>
+
+		<Message Text="Building packages completed. Publishing not done" />
+  </Target>
+</Project>

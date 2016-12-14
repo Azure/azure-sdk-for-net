@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using System.Linq;
 
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
@@ -27,6 +28,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         [Required]
         public string AutoRestMark { get; set; }
+
+        /// <summary>
+        /// Name of packages that needs to be published. Currently for ease of user, it will be space delimited list of NetCore projects
+        /// Non-NetCore projects cannot be published more than one package due to MSBuild limitation as well as our existing architecture of nuget.proj files
+        /// Plus once we are very limited set of non-netCore projects, so the effort is not worth. Worse case, each job to publish 1 package at a time
+        /// E.g. /p:PackageName="PackageName1 PackageName2" string can be passed to publish PacakgeName1 and PackageName2
+        /// </summary>
+        public string NugetPackagesToPublish { get; set; }
 
         [Output]
         public ITaskItem[] Non_NetCore_AutoRestLibraries { get; private set; }
@@ -43,6 +52,18 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             var netCoreAutoRestLibraries = new List<ITaskItem>();
             var netCoreLibraryTestOnes = new List<ITaskItem>();
             var others =  new List<ITaskItem>();
+            
+            List<string> nPkgsList = null;
+
+            if (NugetPackagesToPublish != null)
+            {
+                NugetPackagesToPublish = NugetPackagesToPublish.Trim();
+
+                if (!string.IsNullOrEmpty(NugetPackagesToPublish))
+                {   
+                    nPkgsList = NugetPackagesToPublish.Split(' ').ToList<string>();
+                }
+            }
             foreach (ITaskItem solution in AllLibraries)
             {
                 bool isAutoRestLibrary = false;
@@ -58,8 +79,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         break;
                     }
                 }
+
                 if (isAutoRestLibrary)
-                {
+                {   
                     string[] nugetProjects = Directory.GetFiles(libFolder, "*.nuget.proj", SearchOption.AllDirectories);
                     if (nugetProjects.Length > 1)
                     {
@@ -70,7 +92,20 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         solution.SetMetadata("NugetProj", nugetProjects[0]);
                         solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));
                     }
-                    nonNetCoreAutoRestLibraries.Add(solution);
+
+                    if (nPkgsList != null)
+                    {
+                        //We need to filter out projects from the final output to build and publish limited set of projects
+                        string projectDirPath = Path.GetDirectoryName(nugetProjects[0]);
+                        string projectDirName = Path.GetFileName(projectDirPath);
+                        string match = nPkgsList.Find((pn) => pn.Equals(projectDirName, System.StringComparison.OrdinalIgnoreCase));
+                        if (!string.IsNullOrEmpty(match))
+                            nonNetCoreAutoRestLibraries.Add(solution);
+                    }
+                    else
+                    {
+                        nonNetCoreAutoRestLibraries.Add(solution);
+                    }
                 }
                 else
                 {
@@ -82,15 +117,26 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                         foreach (var file in netCoreProjectJsonFiles)
                         {
-                            string dir = Path.GetDirectoryName(file);
-                            if (dir.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
-                                dir.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase))
+                            string dirPath = Path.GetDirectoryName(file);
+                            string dirName = Path.GetFileName(dirPath);
+                            if (dirPath.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
+                                dirPath.EndsWith(".tests", System.StringComparison.OrdinalIgnoreCase))
                             {
-                                testDirectories.Add(dir);
+                                testDirectories.Add(dirPath);
                             }
                             else
                             {
-                                libDirectories.Add(dir);
+                                if (nPkgsList != null)
+                                {
+                                    //We need to filter out projects from the final output to build and publish limited set of projects
+                                    string match = nPkgsList.Find((pn) => pn.Equals(dirName, System.StringComparison.OrdinalIgnoreCase));
+                                    if (!string.IsNullOrEmpty(match))
+                                        libDirectories.Add(dirPath);
+                                }
+                                else
+                                {
+                                    libDirectories.Add(dirPath);
+                                }
                             }
                         }
 

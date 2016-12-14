@@ -61,9 +61,10 @@
     <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
     <ZipExeFolder>$(LibraryToolsFolder)\7-Zip</ZipExeFolder>
     <ZipExe>$(ZipExeFolder)\7z.exe</ZipExe>
+	<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
     <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
@@ -72,10 +73,8 @@
     <ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj" />
   </ItemGroup>
   
-  <PropertyGroup>
-    <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
-  </PropertyGroup>
-
+  <Import Condition="$(PublishTestProjects) == 'true'" Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks.Tests\PublishNugetPackageTests.proj" />
+  
   <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
@@ -122,7 +121,7 @@
   <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
 
   <Target Name="PrepareForAutoRestLibraries">
-    <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
+    <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects" NugetPackagesToPublish="$(PackageName)">
       <Output TaskParameter="Non_NetCore_AutoRestLibraries" ItemName="Non_NetCore_AutoRestLibraries" />
       <Output TaskParameter="NetCore_AutoRestLibraries" ItemName="NetCore_AutoRestLibraries" />
     </FilterOutAutoRestLibraries>
@@ -131,8 +130,13 @@
     
     <!--Do not build old libraries except Authentication, which Azure PowerShell still uses-->
     <ItemGroup>
-      <NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"
+	<NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"	  
                             Condition=" '$(Scope)' == 'all' or '$(Scope)' == 'Authentication' " />
+    <!--
+		<NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"
+                            Condition=" ('$(Scope)' == 'all' or '$(Scope)' == 'Authentication') and Exists('$(LibrarySourceFolder)\Authentication\Authentication.sln')" />
+	-->
+		
     </ItemGroup>
     <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />
      
@@ -140,7 +144,6 @@
     <Exec
       Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
       Condition="!Exists('$(ZipExe)')" />
-    
   </Target>
   
   <Target Name="Build" DependsOnTargets="BuildClientRuntime;BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
