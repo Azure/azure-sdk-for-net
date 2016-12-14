@@ -5,11 +5,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
     using System.Collections.Generic;
+    using Messaging.Amqp;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
 
-    class AmqpExceptionHelper
+    static class AmqpExceptionHelper
     {
         static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>()
         {
@@ -53,6 +54,21 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return AmqpErrorCode.InternalError;
+        }
+
+        public static AmqpResponseStatusCode GetResponseStatusCode(this AmqpMessage responseMessage)
+        {
+            AmqpResponseStatusCode responseStatusCode = AmqpResponseStatusCode.Unused;
+            if (responseMessage != null)
+            {
+                object statusCodeValue = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusCode] ?? responseMessage.ApplicationProperties.Map[AmqpClientConstants.ResponseStatusCode];
+                if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
+                {
+                    responseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
+                }
+            }
+
+            return responseStatusCode;
         }
 
         public static Exception ToMessagingContract(Error error, bool connectionError = false)

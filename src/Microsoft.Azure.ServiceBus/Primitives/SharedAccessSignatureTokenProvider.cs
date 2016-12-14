@@ -77,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus
         protected override Task<SecurityToken> OnGetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {
             string tokenString = this.BuildSignature(appliesTo);
-            var securityToken = new SharedAccessSignatureToken(tokenString);
+            SharedAccessSignatureToken securityToken = new SharedAccessSignatureToken(tokenString);
             return Task.FromResult<SecurityToken>(securityToken);
         }
 
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.ServiceBus
 
             static string Sign(string requestString, byte[] encodedSharedAccessKey)
             {
-                using (var hmac = new HMACSHA256(encodedSharedAccessKey))
+                using (HMACSHA256 hmac = new HMACSHA256(encodedSharedAccessKey))
                 {
                     return Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(requestString)));
                 }

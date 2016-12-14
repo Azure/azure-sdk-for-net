@@ -19,15 +19,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        public class When_BrokeredMessage_message_is_given_a_null_id_generator
-        {
-            [Fact]
-            public void Should_throw_an_exception()
-            {
-                Assert.Throws<ArgumentNullException>(() => BrokeredMessage.SetMessageIdGenerator(null));
-            }
-        }
-
         public class When_BrokeredMessage_id_generator_throws
         {
             [Fact]
@@ -42,6 +33,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 var exception = Assert.Throws<InvalidOperationException>(() => new BrokeredMessage());
                 Assert.Equal(exceptionToThrow, exception.InnerException);
+
+                BrokeredMessage.SetMessageIdGenerator(null);
             }
         }
 
@@ -58,6 +51,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 Assert.Equal("id-1", message1.MessageId);
                 Assert.Equal("id-2", message2.MessageId);
+
+                BrokeredMessage.SetMessageIdGenerator(null);
             }
         }
     }

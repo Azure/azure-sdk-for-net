@@ -59,7 +59,10 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                this.messageId = messageIdGeneratorFunc();
+                if (messageIdGeneratorFunc != null)
+                {
+                    this.messageId = messageIdGeneratorFunc();
+                }
             }
             catch (Exception ex)
             {
@@ -919,11 +922,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="ArgumentNullException">Thrown if invoked with null.</exception>
         public static void SetMessageIdGenerator(Func<string> messageIdGenerator)
         {
-            if (messageIdGenerator == null)
-            {
-                throw new ArgumentNullException(nameof(messageIdGenerator));
-            }
-            messageIdGeneratorFunc = messageIdGenerator;
+           messageIdGeneratorFunc = messageIdGenerator;
         }
 
         /// <summary>Deserializes the brokered message body into an object of the specified type by using the
@@ -1010,9 +1009,9 @@ namespace Microsoft.Azure.ServiceBus
             return this.Receiver.AbandonAsync(new[] { this.LockToken });
         }
 
-        // Summary:
-        //     Asynchronously completes the receive operation of a message and indicates that
-        //     the message should be marked as processed and deleted.
+        /// <summary>Asynchronously completes the receive operation of a message and
+        /// indicates that the message should be marked as processed and deleted.</summary>
+        /// <returns>The asynchronous result of the operation.</returns>
         public Task CompleteAsync()
         {
             this.ThrowIfDisposed();
@@ -1021,8 +1020,8 @@ namespace Microsoft.Azure.ServiceBus
             return this.Receiver.CompleteAsync(new[] { this.LockToken });
         }
 
-        // Summary:
-        //     Asynchronously moves the message to the dead letter queue.
+        /// <summary>Asynchronously moves the message to the dead letter queue.</summary>
+        /// <returns>The asynchronous result of the operation.</returns>
         public Task DeadLetterAsync()
         {
             this.ThrowIfDisposed();
@@ -1031,14 +1030,24 @@ namespace Microsoft.Azure.ServiceBus
             return this.Receiver.DeadLetterAsync(new[] { this.LockToken });
         }
 
-        // Summary:
-        //     Asynchronously indicates that the receiver wants to defer the processing for this message.
+        /// <summary>Asynchronously indicates that the receiver wants to defer the processing for this message.</summary>
+        /// <returns>The asynchronous result of the operation.</returns>
         public Task DeferAsync()
         {
             this.ThrowIfDisposed();
             this.ThrowIfNotLocked();
 
             return this.Receiver.DeferAsync(new[] { this.LockToken });
+        }
+
+        /// <summary>Specifies the time period within which the host renews its lock on a message.</summary>
+        /// <returns>The host that is being locked.</returns>
+        public Task RenewLockAsync()
+        {
+            this.ThrowIfDisposed();
+            this.ThrowIfNotLocked();
+
+            return this.InternalRenewLockAsync(this.LockToken);
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
@@ -1237,6 +1246,11 @@ namespace Microsoft.Azure.ServiceBus
         static Type GetObjectType(object value)
         {
             return (value == null) ? typeof(object) : value.GetType();
+        }
+
+        async Task InternalRenewLockAsync(Guid lockToken)
+        {
+            this.LockedUntilUtc = await this.Receiver.RenewLockAsync(this.LockToken).ConfigureAwait(false);
         }
 
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting

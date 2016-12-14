@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             else
             {
-                var dataList = new List<Data>();
+                List<Data> dataList = new List<Data>();
                 foreach (BrokeredMessage brokeredMessage in brokeredMessages)
                 {
                     AmqpMessage amqpMessageItem = AmqpMessageConverter.ClientGetMessage(brokeredMessage);
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     dataList.Add(new Data() { Value = value });
                 }
 
-                var firstBrokeredMessage = brokeredMessages.First();
+                BrokeredMessage firstBrokeredMessage = brokeredMessages.First();
 
                 amqpMessage = AmqpMessage.Create(dataList);
                 amqpMessage.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             amqpObject = null;
             if (netObject == null)
             {
-                return false;
+                return true;
             }
 
             switch (SerializationUtilities.GetTypeId(netObject))
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             netObject = null;
             if (amqpObject == null)
             {
-                return false;
+                return true;
             }
 
             switch (SerializationUtilities.GetTypeId(amqpObject))

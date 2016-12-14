@@ -4,6 +4,7 @@
 
   "buildOptions": {
     "warningsAsErrors": true,
+    "keyFile": "keyfile.snk",
     "additionalArguments": [ "/ruleset:./../../build/StyleCop.Analyzers.ruleset", "/additionalfile:./../../build/stylecop.json" ]
   },
 

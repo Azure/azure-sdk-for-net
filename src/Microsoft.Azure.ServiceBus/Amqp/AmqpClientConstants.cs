@@ -11,6 +11,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     {
         // AMQP Management Operation
         public const string ManagementAddress = "$management";
+        public const string EntityTypeManagement = "entity-mgmt";
         public const string EntityNameKey = "name";
         public const string PartitionNameKey = "partition";
         public const string ManagementOperationKey = "operation";
@@ -62,5 +63,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static readonly AmqpSymbol EntityAlreadyExistsError = AmqpConstants.Vendor + ":entity-already-exists";
         public static readonly AmqpSymbol RelayNotFoundError = AmqpConstants.Vendor + ":relay-not-found";
         public static readonly AmqpSymbol MessageNotFoundError = AmqpConstants.Vendor + ":message-not-found";
+        public static readonly AmqpSymbol LockedUntilUtc = AmqpConstants.Vendor + ":locked-until-utc";
     }
 }

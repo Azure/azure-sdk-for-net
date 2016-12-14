@@ -60,6 +60,15 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to No session-id was specified for a session receiver..
+        /// </summary>
+        public static string AmqpFieldSessionId {
+            get {
+                return ResourceManager.GetString("AmqpFieldSessionId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The received message (delivery-id:{0}, size:{1} bytes) exceeds the limit ({2} bytes) currently allowed on the link..
         /// </summary>
         public static string AmqpMessageSizeExceeded {

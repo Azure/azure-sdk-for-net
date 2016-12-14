@@ -7,10 +7,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.ServiceBus.Primitives;
 
-    sealed class AmqpQueueClient : QueueClient
+    public class AmqpSubscriptionClient : SubscriptionClient
     {
-        public AmqpQueueClient(ServiceBusConnection servicebusConnection, string entityPath, ReceiveMode mode)
-            : base(servicebusConnection, entityPath, mode)
+        public AmqpSubscriptionClient(ServiceBusConnection servicebusConnection, string topicPath, string subscriptionName, ReceiveMode mode)
+            : base(servicebusConnection, topicPath, subscriptionName, mode)
         {
             this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(this.ServiceBusConnection.SasKeyName, this.ServiceBusConnection.SasKey);
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, this.ServiceBusConnection.OperationTimeout);
@@ -20,19 +20,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         TokenProvider TokenProvider { get; }
 
-        protected override MessageSender OnCreateMessageSender()
-        {
-            return new AmqpMessageSender(this.QueueName, MessagingEntityType.Queue, this.ServiceBusConnection, this.CbsTokenProvider);
-        }
-
         protected override MessageReceiver OnCreateMessageReceiver()
         {
-            return new AmqpMessageReceiver(this.QueueName, MessagingEntityType.Queue, this.Mode, this.ServiceBusConnection.PrefetchCount, this.ServiceBusConnection, this.CbsTokenProvider);
+            return new AmqpMessageReceiver(this.SubscriptionPath, MessagingEntityType.Subscriber, this.Mode, this.ServiceBusConnection.PrefetchCount, this.ServiceBusConnection, this.CbsTokenProvider);
         }
 
         protected override async Task<MessageSession> OnAcceptMessageSessionAsync(string sessionId)
         {
-            AmqpMessageReceiver receiver = new AmqpMessageReceiver(this.QueueName, MessagingEntityType.Queue, this.Mode, this.ServiceBusConnection.PrefetchCount, this.ServiceBusConnection, this.CbsTokenProvider, sessionId, true);
+            AmqpMessageReceiver receiver = new AmqpMessageReceiver(this.SubscriptionPath, MessagingEntityType.Subscriber, this.Mode, this.ServiceBusConnection.PrefetchCount, this.ServiceBusConnection, this.CbsTokenProvider, sessionId, true);
             try
             {
                 await receiver.GetSessionReceiverLinkAsync().ConfigureAwait(false);

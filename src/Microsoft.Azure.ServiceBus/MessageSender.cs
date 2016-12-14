@@ -3,19 +3,30 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    abstract class MessageSender : ClientEntity
+    public abstract class MessageSender : ClientEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.ReadabilityRules",
             "SA1126:PrefixCallsCorrectly",
             Justification = "This is not a method call, but a type.")]
-        protected MessageSender()
+        protected MessageSender(TimeSpan operationTimeout)
             : base(nameof(MessageSender) + StringUtility.GetRandomString())
         {
+            this.OperationTimeout = operationTimeout;
+        }
+
+        internal TimeSpan OperationTimeout { get; }
+
+        protected MessagingEntityType EntityType { get; set; }
+
+        public Task SendAsync(BrokeredMessage brokeredMessage)
+        {
+            return this.SendAsync(new BrokeredMessage[] { brokeredMessage });
         }
 
         public Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)

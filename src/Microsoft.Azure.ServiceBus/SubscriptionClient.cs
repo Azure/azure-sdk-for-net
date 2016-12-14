@@ -8,24 +8,23 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Primitives;
 
-    /// <summary>
-    /// Anchor class - all Queue client operations start here.
-    /// See <see cref="QueueClient.Create(string)"/>
-    /// </summary>
-    public abstract class QueueClient : ClientEntity
+    public abstract class SubscriptionClient : ClientEntity
     {
-        MessageSender innerSender;
         MessageReceiver innerReceiver;
 
-        protected QueueClient(ServiceBusConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode)
-            : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({entityPath})")
+        protected SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string name, ReceiveMode receiveMode)
+            : base($"{nameof(SubscriptionClient)}{ClientEntity.GetNextId()}({name})")
         {
             this.ServiceBusConnection = serviceBusConnection;
-            this.QueueName = entityPath;
+            this.TopicPath = topicPath;
+            this.Name = name;
+            this.SubscriptionPath = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.Name);
             this.Mode = receiveMode;
         }
 
-        public string QueueName { get; }
+        public string TopicPath { get; private set; }
+
+        public string Name { get; }
 
         public ReceiveMode Mode { get; private set; }
 
@@ -42,24 +41,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal MessageSender InnerSender
-        {
-            get
-            {
-                if (this.innerSender == null)
-                {
-                    lock (this.ThisLock)
-                    {
-                        if (this.innerSender == null)
-                        {
-                            this.innerSender = this.CreateMessageSender();
-                        }
-                    }
-                }
-
-                return this.innerSender;
-            }
-        }
+        internal string SubscriptionPath { get; private set; }
 
         internal MessageReceiver InnerReceiver
         {
@@ -84,85 +66,60 @@ namespace Microsoft.Azure.ServiceBus
 
         protected ServiceBusConnection ServiceBusConnection { get; }
 
-        public static QueueClient CreateFromConnectionString(string entityConnectionString)
+        public static SubscriptionClient CreateFromConnectionString(string topicEntityConnectionString, string subscriptionName)
         {
-            return CreateFromConnectionString(entityConnectionString, ReceiveMode.PeekLock);
+            return CreateFromConnectionString(topicEntityConnectionString, subscriptionName, ReceiveMode.PeekLock);
         }
 
-        public static QueueClient CreateFromConnectionString(string entityConnectionString, ReceiveMode mode)
+        public static SubscriptionClient CreateFromConnectionString(string topicEntityConnectionString, string subscriptionName, ReceiveMode mode)
         {
-            if (string.IsNullOrWhiteSpace(entityConnectionString))
+            if (string.IsNullOrWhiteSpace(topicEntityConnectionString))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(entityConnectionString));
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(topicEntityConnectionString));
             }
 
-            ServiceBusEntityConnection entityConnection = new ServiceBusEntityConnection(entityConnectionString);
-            return entityConnection.CreateQueueClient(entityConnection.EntityPath, mode);
+            ServiceBusEntityConnection topicConnection = new ServiceBusEntityConnection(topicEntityConnectionString);
+            return topicConnection.CreateSubscriptionClient(topicConnection.EntityPath, subscriptionName, mode);
         }
 
-        public static QueueClient Create(ServiceBusNamespaceConnection namespaceConnection, string entityPath)
+        public static SubscriptionClient Create(ServiceBusNamespaceConnection namespaceConnection, string topicPath, string subscriptionName)
         {
-            return QueueClient.Create(namespaceConnection, entityPath, ReceiveMode.PeekLock);
+            return SubscriptionClient.Create(namespaceConnection, topicPath, subscriptionName, ReceiveMode.PeekLock);
         }
 
-        public static QueueClient Create(ServiceBusNamespaceConnection namespaceConnection, string entityPath, ReceiveMode mode)
+        public static SubscriptionClient Create(ServiceBusNamespaceConnection namespaceConnection, string topicPath, string subscriptionName, ReceiveMode mode)
         {
             if (namespaceConnection == null)
             {
                 throw Fx.Exception.Argument(nameof(namespaceConnection), "Namespace Connection is null. Create a connection using the NamespaceConnection class");
             }
 
-            if (string.IsNullOrWhiteSpace(entityPath))
+            if (string.IsNullOrWhiteSpace(topicPath))
             {
-                throw Fx.Exception.Argument(nameof(namespaceConnection), "Entity Path is null");
+                throw Fx.Exception.Argument(nameof(namespaceConnection), "Topic Path is null");
             }
 
-            return namespaceConnection.CreateQueueClient(entityPath, mode);
+            return namespaceConnection.CreateSubscriptionClient(topicPath, subscriptionName, mode);
         }
 
-        public static QueueClient Create(ServiceBusEntityConnection entityConnection)
+        public static SubscriptionClient Create(ServiceBusEntityConnection topicConnection, string subscriptionName)
         {
-            return QueueClient.Create(entityConnection, ReceiveMode.PeekLock);
+            return SubscriptionClient.Create(topicConnection, subscriptionName, ReceiveMode.PeekLock);
         }
 
-        public static QueueClient Create(ServiceBusEntityConnection entityConnection, ReceiveMode mode)
+        public static SubscriptionClient Create(ServiceBusEntityConnection topicConnection, string subscriptionName, ReceiveMode mode)
         {
-            if (entityConnection == null)
+            if (topicConnection == null)
             {
-                throw Fx.Exception.Argument(nameof(entityConnection), "Namespace Connection is null. Create a connection using the NamespaceConnection class");
+                throw Fx.Exception.Argument(nameof(topicConnection), "Namespace Connection is null. Create a connection using the NamespaceConnection class");
             }
 
-            return entityConnection.CreateQueueClient(entityConnection.EntityPath, mode);
+            return topicConnection.CreateSubscriptionClient(topicConnection.EntityPath, subscriptionName, mode);
         }
 
         public sealed override async Task CloseAsync()
         {
-            await this.InnerReceiver.CloseAsync().ConfigureAwait(false);
             await this.OnCloseAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Send <see cref="BrokeredMessage"/> to Queue.
-        /// <see cref="SendAsync(BrokeredMessage)"/> sends the <see cref="BrokeredMessage"/> to a Service Gateway, which in-turn will forward the BrokeredMessage to the queue.
-        /// </summary>
-        /// <param name="brokeredMessage">the <see cref="BrokeredMessage"/> to be sent.</param>
-        /// <returns>A Task that completes when the send operations is done.</returns>
-        public Task SendAsync(BrokeredMessage brokeredMessage)
-        {
-            return this.SendAsync(new BrokeredMessage[] { brokeredMessage });
-        }
-
-        public async Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
-        {
-            try
-            {
-                await this.InnerSender.SendAsync(brokeredMessages).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Send Exception
-                throw;
-            }
         }
 
         public async Task<BrokeredMessage> ReceiveAsync()
@@ -319,17 +276,10 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        protected MessageSender CreateMessageSender()
-        {
-            return this.OnCreateMessageSender();
-        }
-
         protected MessageReceiver CreateMessageReceiver()
         {
             return this.OnCreateMessageReceiver();
         }
-
-        protected abstract MessageSender OnCreateMessageSender();
 
         protected abstract MessageReceiver OnCreateMessageReceiver();
 

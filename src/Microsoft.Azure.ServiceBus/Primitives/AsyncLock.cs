@@ -27,7 +27,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task<LockRelease> LockAsync(CancellationToken cancellationToken)
         {
-            var waitTask = this.asyncSemaphore.WaitAsync(cancellationToken);
+            Task waitTask = this.asyncSemaphore.WaitAsync(cancellationToken);
             if (waitTask.IsCompleted)
             {
                 // Avoid an allocation in the non-contention case.
