@@ -40,7 +40,7 @@ namespace Azure.Tests
                 .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void TestAppGatewaysPublicMinimal()
         {
             new Network.ApplicationGateway.PublicMinimal(
@@ -48,6 +48,21 @@ namespace Azure.Tests
                 .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
         }
 
+        [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void TestAppGatewaysPrivateComplex()
+        {
+            new Network.ApplicationGateway.PrivateComplex(
+                azure.Networks,
+                azure.PublicIpAddresses)
+                .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+        }
+
+        [Fact]
+        public void TestAppGatewaysPublicComplex()
+        {
+            new Network.ApplicationGateway.PublicComplex(azure.PublicIpAddresses)
+                .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+        }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void TestLoadBalancersNatRules()

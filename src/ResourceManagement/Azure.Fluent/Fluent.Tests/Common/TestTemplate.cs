@@ -104,7 +104,7 @@ namespace Azure.Tests.Common
             Print(resource);
 
             // Verify listing
-            Assert.True(VerifyListing() - initialCount == 1);
+            VerifyListing();
 
             // Verify getting
             this.resource = VerifyGetting();

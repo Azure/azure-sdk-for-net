@@ -2,10 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Tests.Common;
-using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
-using System;
 using System.IO;
 using Xunit;
 
@@ -18,19 +16,10 @@ namespace Azure.Tests.Network.ApplicationGateway
     {
         private INetworks networks;
         private INetwork network;
-        private static string APP_GATEWAY_NAME = "ag" + ApplicationGatewayHelper.TEST_ID;
 
         public PrivateMinimal(INetworks networks)
         {
             this.networks = networks;
-        }
-
-        static string CreateResourceId(String subscriptionId)
-        {
-            return ApplicationGatewayHelper.ID_TEMPLATE
-                    .Replace("${subId}", subscriptionId)
-                    .Replace("${rgName}", ApplicationGatewayHelper.GROUP_NAME)
-                    .Replace("${resourceName}", APP_GATEWAY_NAME);
         }
 
         public override void Print(IApplicationGateway resource)
@@ -40,16 +29,9 @@ namespace Azure.Tests.Network.ApplicationGateway
 
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
-            /*
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                Console.WriteLine("Hello, world");
-            }).Start();
-        */
 
             // Create an app gateway
-            resources.Define(APP_GATEWAY_NAME)
+            resources.Define(ApplicationGatewayHelper.APP_GATEWAY_NAME)
                 .WithRegion(ApplicationGatewayHelper.REGION)
                 .WithNewResourceGroup(ApplicationGatewayHelper.GROUP_NAME)
 
@@ -64,7 +46,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                 .Create();
 
             // Get the resource as created so far
-            string resourceId = CreateResourceId(resources.Manager.SubscriptionId);
+            string resourceId = ApplicationGatewayHelper.CreateResourceId(resources.Manager.SubscriptionId);
             var appGateway = resources.GetById(resourceId);
             Assert.True(appGateway != null);
             Assert.True(ApplicationGatewayTier.Standard == appGateway.Tier);

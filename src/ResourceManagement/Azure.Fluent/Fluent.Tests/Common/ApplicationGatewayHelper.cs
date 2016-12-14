@@ -26,6 +26,14 @@ namespace Azure.Tests.Common
                 "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest3"
         };
 
+        public static string CreateResourceId(string subscriptionId)
+        {
+            return ID_TEMPLATE
+                    .Replace("${subId}", subscriptionId)
+                    .Replace("${rgName}", GROUP_NAME)
+                    .Replace("${resourceName}", APP_GATEWAY_NAME);
+        }
+
         // Create VNet for the LB
         public static IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
@@ -34,8 +42,7 @@ namespace Azure.Tests.Common
             {
                 creatablePips.Add(pips.Define(PIP_NAMES[i])
                                   .WithRegion(REGION)
-                                  .WithNewResourceGroup(GROUP_NAME)
-                                  .WithLeafDomainLabel(PIP_NAMES[i]));
+                                  .WithNewResourceGroup(GROUP_NAME));
             }
 
             return pips.Create(creatablePips.ToArray());
