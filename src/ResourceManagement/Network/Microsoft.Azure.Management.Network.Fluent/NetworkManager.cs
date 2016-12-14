@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IApplicationGateways ApplicationGateways { get;  }
 
         /// <summary>
-        /// return entry point to route table management
+        /// Entry point to route table management
         /// </summary>
         IRouteTables RouteTables { get; }
     }
