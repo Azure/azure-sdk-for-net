@@ -8,7 +8,6 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Rest;
 using System.Linq;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
@@ -113,6 +112,14 @@ namespace Microsoft.Azure.Management.Fluent
             get
             {
                 return networkManager.LoadBalancers;
+            }
+        }
+
+        public IApplicationGateways ApplicationGateways
+        {
+            get
+            {
+                return networkManager.ApplicationGateways;
             }
         }
 
@@ -378,6 +385,8 @@ namespace Microsoft.Azure.Management.Fluent
         INetworkInterfaces NetworkInterfaces { get; }
 
         ILoadBalancers LoadBalancers { get; }
+
+        IApplicationGateways ApplicationGateways { get; }
 
         IDeployments Deployments { get; }
 
