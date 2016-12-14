@@ -24,11 +24,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The Microsoft Azure Network management API provides a RESTful set of
-    /// web services that interact with Microsoft Azure Networks service to
-    /// manage your network resources. The API has entities that capture the
-    /// relationship between an end user and the Microsoft Azure Networks
-    /// service.
+    /// Composite Swagger for Network Client
     /// </summary>
     public partial class NetworkManagementClient : ServiceClient<NetworkManagementClient>, INetworkManagementClient, IAzureClient
     {
@@ -58,11 +54,6 @@ namespace Microsoft.Azure.Management.Network
         /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client API version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -127,21 +118,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
-
-        /// <summary>
-        /// Gets the IRouteTablesOperations.
-        /// </summary>
-        public virtual IRouteTablesOperations RouteTables { get; private set; }
-
-        /// <summary>
-        /// Gets the IRoutesOperations.
-        /// </summary>
-        public virtual IRoutesOperations Routes { get; private set; }
-
-        /// <summary>
         /// Gets the ISecurityRulesOperations.
         /// </summary>
         public virtual ISecurityRulesOperations SecurityRules { get; private set; }
@@ -175,6 +151,21 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualNetworksOperations.
         /// </summary>
         public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the IRouteTablesOperations.
+        /// </summary>
+        public virtual IRouteTablesOperations RouteTables { get; private set; }
+
+        /// <summary>
+        /// Gets the IRoutesOperations.
+        /// </summary>
+        public virtual IRoutesOperations Routes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -386,9 +377,6 @@ namespace Microsoft.Azure.Management.Network
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             NetworkInterfaces = new NetworkInterfacesOperations(this);
             NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
-            PublicIPAddresses = new PublicIPAddressesOperations(this);
-            RouteTables = new RouteTablesOperations(this);
-            Routes = new RoutesOperations(this);
             SecurityRules = new SecurityRulesOperations(this);
             Subnets = new SubnetsOperations(this);
             VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
@@ -396,8 +384,10 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworks = new VirtualNetworksOperations(this);
+            RouteTables = new RouteTablesOperations(this);
+            Routes = new RoutesOperations(this);
+            PublicIPAddresses = new PublicIPAddressesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2016-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -468,14 +458,11 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
             if (SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            string apiVersion = "2016-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -485,6 +472,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("domainNameLabel", domainNameLabel);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckDnsNameAvailability", tracingParameters);
             }
@@ -498,9 +486,9 @@ namespace Microsoft.Azure.Management.Network
             {
                 _queryParameters.Add(string.Format("domainNameLabel={0}", System.Uri.EscapeDataString(domainNameLabel)));
             }
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

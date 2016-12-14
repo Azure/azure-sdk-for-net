@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteServiceProvider> List(this IExpressRouteServiceProvidersOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteServiceProvidersOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteServiceProvider> ListNext(this IExpressRouteServiceProvidersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteServiceProvidersOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

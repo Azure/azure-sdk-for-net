@@ -20,11 +20,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The Microsoft Azure Network management API provides a RESTful set of
-    /// web services that interact with Microsoft Azure Networks service to
-    /// manage your network resources. The API has entities that capture the
-    /// relationship between an end user and the Microsoft Azure Networks
-    /// service.
+    /// Composite Swagger for Network Client
     /// </summary>
     public partial interface INetworkManagementClient : System.IDisposable
     {
@@ -54,11 +50,6 @@ namespace Microsoft.Azure.Management.Network
         /// every service call.
         /// </summary>
         string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client API version.
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -124,21 +115,6 @@ namespace Microsoft.Azure.Management.Network
         INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
 
         /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        IPublicIPAddressesOperations PublicIPAddresses { get; }
-
-        /// <summary>
-        /// Gets the IRouteTablesOperations.
-        /// </summary>
-        IRouteTablesOperations RouteTables { get; }
-
-        /// <summary>
-        /// Gets the IRoutesOperations.
-        /// </summary>
-        IRoutesOperations Routes { get; }
-
-        /// <summary>
         /// Gets the ISecurityRulesOperations.
         /// </summary>
         ISecurityRulesOperations SecurityRules { get; }
@@ -172,6 +148,21 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVirtualNetworksOperations.
         /// </summary>
         IVirtualNetworksOperations VirtualNetworks { get; }
+
+        /// <summary>
+        /// Gets the IRouteTablesOperations.
+        /// </summary>
+        IRouteTablesOperations RouteTables { get; }
+
+        /// <summary>
+        /// Gets the IRoutesOperations.
+        /// </summary>
+        IRoutesOperations Routes { get; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        IPublicIPAddressesOperations PublicIPAddresses { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available

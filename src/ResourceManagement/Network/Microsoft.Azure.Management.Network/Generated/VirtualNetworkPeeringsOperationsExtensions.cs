@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName)
             {
-                Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).DeleteAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetworkPeering Get(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).GetAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetworkPeering CreateOrUpdate(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetworkPeering> List(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).ListAsync(resourceGroupName, virtualNetworkName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName)
             {
-                Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).BeginDeleteAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetworkPeering BeginCreateOrUpdate(this IVirtualNetworkPeeringsOperations operations, string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetworkPeering> ListNext(this IVirtualNetworkPeeringsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkPeeringsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

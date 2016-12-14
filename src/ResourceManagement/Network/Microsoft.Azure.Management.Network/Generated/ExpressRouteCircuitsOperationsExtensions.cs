@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).DeleteAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuit Get(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).GetAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuit CreateOrUpdate(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, ExpressRouteCircuit parameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitsArpTableListResult ListArpTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListArpTableAsync(resourceGroupName, circuitName, peeringName, devicePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListArpTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitsRoutesTableListResult ListRoutesTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListRoutesTableAsync(resourceGroupName, circuitName, peeringName, devicePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListRoutesTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitsRoutesTableSummaryListResult ListRoutesTableSummary(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListRoutesTableSummaryAsync(resourceGroupName, circuitName, peeringName, devicePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListRoutesTableSummaryAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitStats GetStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).GetStatsAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetStatsAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitStats GetPeeringStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).GetPeeringStatsAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetPeeringStatsAsync(resourceGroupName, circuitName, peeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuit> List(this IExpressRouteCircuitsOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuit> ListAll(this IExpressRouteCircuitsOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -511,7 +511,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuit BeginCreateOrUpdate(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, ExpressRouteCircuit parameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, circuitName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitsArpTableListResult BeginListArpTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).BeginListArpTableAsync(resourceGroupName, circuitName, peeringName, devicePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginListArpTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -616,7 +616,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitsRoutesTableListResult BeginListRoutesTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).BeginListRoutesTableAsync(resourceGroupName, circuitName, peeringName, devicePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginListRoutesTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -670,7 +670,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitsRoutesTableSummaryListResult BeginListRoutesTableSummary(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).BeginListRoutesTableSummaryAsync(resourceGroupName, circuitName, peeringName, devicePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginListRoutesTableSummaryAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -714,7 +714,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuit> ListNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -748,7 +748,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuit> ListAllNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

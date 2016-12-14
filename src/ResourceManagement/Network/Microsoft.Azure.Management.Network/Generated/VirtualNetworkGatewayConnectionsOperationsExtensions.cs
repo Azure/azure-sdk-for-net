@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetworkGatewayConnection CreateOrUpdate(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).CreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetworkGatewayConnection Get(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).GetAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, virtualNetworkGatewayConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
             {
-                Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).DeleteAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, virtualNetworkGatewayConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ConnectionSharedKey SetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).SetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.SetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ConnectionSharedKey GetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).GetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetworkGatewayConnection> List(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ConnectionResetSharedKey ResetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).ResetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ResetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetworkGatewayConnection BeginCreateOrUpdate(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
             {
-                Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginDeleteAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, virtualNetworkGatewayConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ConnectionSharedKey BeginSetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginSetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginSetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -498,7 +498,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ConnectionResetSharedKey BeginResetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginResetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginResetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetworkGatewayConnection> ListNext(this IVirtualNetworkGatewayConnectionsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

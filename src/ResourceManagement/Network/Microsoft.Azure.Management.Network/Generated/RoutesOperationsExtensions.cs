@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName)
             {
-                Task.Factory.StartNew(s => ((IRoutesOperations)s).DeleteAsync(resourceGroupName, routeTableName, routeName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, routeTableName, routeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static Route Get(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).GetAsync(resourceGroupName, routeTableName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, routeTableName, routeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static Route CreateOrUpdate(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, Route routeParameters)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).CreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<Route> List(this IRoutesOperations operations, string resourceGroupName, string routeTableName)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).ListAsync(resourceGroupName, routeTableName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, routeTableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName)
             {
-                Task.Factory.StartNew(s => ((IRoutesOperations)s).BeginDeleteAsync(resourceGroupName, routeTableName, routeName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, routeTableName, routeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static Route BeginCreateOrUpdate(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, Route routeParameters)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<Route> ListNext(this IRoutesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

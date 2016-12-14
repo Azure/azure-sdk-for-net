@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
-                Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).DeleteAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static NetworkInterface Get(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).GetAsync(resourceGroupName, networkInterfaceName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, networkInterfaceName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static NetworkInterface CreateOrUpdate(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, NetworkInterface parameters)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).CreateOrUpdateAsync(resourceGroupName, networkInterfaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, networkInterfaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListVirtualMachineScaleSetVMNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListVirtualMachineScaleSetNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static NetworkInterface GetVirtualMachineScaleSetNetworkInterface(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListAll(this INetworkInterfacesOperations operations)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> List(this INetworkInterfacesOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static EffectiveRouteListResult GetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).GetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static EffectiveNetworkSecurityGroupListResult ListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
-                Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginDeleteAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static NetworkInterface BeginCreateOrUpdate(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, NetworkInterface parameters)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, networkInterfaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, networkInterfaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -535,7 +535,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static EffectiveRouteListResult BeginGetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginGetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginGetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -575,7 +575,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static EffectiveNetworkSecurityGroupListResult BeginListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListVirtualMachineScaleSetVMNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListVirtualMachineScaleSetVMNetworkInterfacesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListVirtualMachineScaleSetVMNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListVirtualMachineScaleSetNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListVirtualMachineScaleSetNetworkInterfacesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListVirtualMachineScaleSetNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -682,7 +682,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListAllNext(this INetworkInterfacesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -716,7 +716,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<NetworkInterface> ListNext(this INetworkInterfacesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
