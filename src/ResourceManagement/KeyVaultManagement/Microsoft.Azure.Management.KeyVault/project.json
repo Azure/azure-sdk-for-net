@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-preview",
+  "version": "2.0.1-preview",
   "title": "Microsoft Azure Key Vault Management",
   "description": "Provides key vault management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
