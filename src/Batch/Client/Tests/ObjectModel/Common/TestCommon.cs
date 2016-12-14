@@ -54,9 +54,11 @@
 
             public const string StorageAccountResourceGroupEnvironmentSettingName = "MABOM_StorageAccountResourceGroupName";
 
+            // Required only for Microsoft pre-production test environments
             public const string BatchTRPCertificateThumbprintEnvironmentSettingName = "MABOM_BatchTRPCertificateThumbprint";
 
             //Should be a string like so: header1=value1;header2=value2;...
+            // Required only for Microsoft pre-production test environments
             public const string BatchTRPExtraHeadersEnvironmentSettingName = "MABOM_BatchTRPExtraHeaders";
 
             public readonly string BatchSubscription = GetEnvironmentVariableOrThrow(BatchSubscriptionEnivronmentSettingName);
@@ -79,7 +81,7 @@
 
             public readonly string StorageAccountResourceGroup = GetEnvironmentVariableOrThrow(StorageAccountResourceGroupEnvironmentSettingName);
 
-            public readonly string BatchTRPCertificateThumbprint = GetEnvironmentVariableOrThrow(BatchTRPCertificateThumbprintEnvironmentSettingName);
+            public readonly Func<string> BatchTRPCertificateThumbprint = () => GetEnvironmentVariableOrThrow(BatchTRPCertificateThumbprintEnvironmentSettingName);
 
             public readonly IReadOnlyDictionary<string, string> BatchTRPExtraHeaders = ParseHeaderEnvironmentVariable(BatchTRPExtraHeadersEnvironmentSettingName);
 
@@ -176,7 +178,7 @@
                 certificate2 = certificates.Cast<X509Certificate2>().FirstOrDefault(
                     c => String.Equals(
                         c.Thumbprint,
-                        Configuration.BatchTRPCertificateThumbprint, 
+                        Configuration.BatchTRPCertificateThumbprint(), 
                         StringComparison.OrdinalIgnoreCase));
 
                 if (certificate2 == null)

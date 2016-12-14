@@ -418,14 +418,14 @@ namespace Storage.Tests
                 StorageAccountKey key1 = keys.Keys.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key1"));
                 Assert.NotNull(key1);
-                Assert.Equal(KeyPermission.FULL, key1.Permissions);
+                Assert.Equal(KeyPermission.Full, key1.Permissions);
                 Assert.NotNull(key1.Value);
 
                 // Validate Key2
                 StorageAccountKey key2 = keys.Keys.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
                 Assert.NotNull(key2);
-                Assert.Equal(KeyPermission.FULL, key2.Permissions);
+                Assert.Equal(KeyPermission.Full, key2.Permissions);
                 Assert.NotNull(key2.Value);
             }
         }
@@ -782,8 +782,8 @@ namespace Storage.Tests
                     Permissions = "rdwlacup",
                     IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
-                    SharedAccessStartTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime(),
-                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                    SharedAccessStartTime = DateTime.UtcNow,
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                     KeyToSign = "key1"
                 };
                 var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
@@ -798,11 +798,8 @@ namespace Storage.Tests
 
                 //Assert.Equal(accountSasParameters.SharedAccessStartTime, resultCredentials.SharedAccessStartTime);
 
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Year, resultCredentials.SharedAccessExpiryTime.Year);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Month, resultCredentials.SharedAccessExpiryTime.Month);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Date, resultCredentials.SharedAccessExpiryTime.Date);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Hour, resultCredentials.SharedAccessExpiryTime.Hour);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Second, resultCredentials.SharedAccessExpiryTime.Second);
+                Assert.NotNull(accountSasParameters.SharedAccessStartTime);
+                Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
             }
         }
 
@@ -829,7 +826,7 @@ namespace Storage.Tests
                     Services = "b",
                     ResourceTypes = "sco",
                     Permissions = "rl",
-                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                 };
 
                 var result = storageMgmtClient.StorageAccounts.ListAccountSAS(rgname, accountName, accountSasParameters);
@@ -840,11 +837,7 @@ namespace Storage.Tests
                 Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
                 Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
 
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Year, resultCredentials.SharedAccessExpiryTime.Year);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Month, resultCredentials.SharedAccessExpiryTime.Month);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Date, resultCredentials.SharedAccessExpiryTime.Date);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Hour, resultCredentials.SharedAccessExpiryTime.Hour);
-                Assert.Equal(accountSasParameters.SharedAccessExpiryTime.Second, resultCredentials.SharedAccessExpiryTime.Second);
+                Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
             }
         }
 
@@ -909,8 +902,8 @@ namespace Storage.Tests
                     Permissions = "rdwlacup",
                     IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
-                    SharedAccessStartTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime(),
-                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                    SharedAccessStartTime = DateTime.UtcNow,
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                     KeyToSign = "key1"
                 };
                 var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
@@ -923,17 +916,7 @@ namespace Storage.Tests
                 Assert.Equal(serviceSasParameters.Protocols, resultCredentials.Protocols);
 
                 Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
-                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Year, resultCredentials.SharedAccessStartTime.Value.Year);
-                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Month, resultCredentials.SharedAccessStartTime.Value.Month);
-                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Date, resultCredentials.SharedAccessStartTime.Value.Date);
-                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Hour, resultCredentials.SharedAccessStartTime.Value.Hour);
-                Assert.Equal(serviceSasParameters.SharedAccessStartTime.Value.Second, resultCredentials.SharedAccessStartTime.Value.Second);
-
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Year, resultCredentials.SharedAccessExpiryTime.Value.Year);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Month, resultCredentials.SharedAccessExpiryTime.Value.Month);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Date, resultCredentials.SharedAccessExpiryTime.Value.Date);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Hour, resultCredentials.SharedAccessExpiryTime.Value.Hour);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Second, resultCredentials.SharedAccessExpiryTime.Value.Second);
+                Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
             }
         }
 
@@ -960,7 +943,7 @@ namespace Storage.Tests
                     CanonicalizedResource = "/blob/" + accountName + "/music",
                     Resource = "c",
                     Permissions = "rl",
-                    SharedAccessExpiryTime = DateTime.Parse("2016-11-22T09:35:05.1641085Z").ToUniversalTime().AddHours(1),
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                 };
 
                 var result = storageMgmtClient.StorageAccounts.ListServiceSAS(rgname, accountName, serviceSasParameters);
@@ -970,11 +953,7 @@ namespace Storage.Tests
                 Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
                 Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
                 
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Year, resultCredentials.SharedAccessExpiryTime.Value.Year);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Month, resultCredentials.SharedAccessExpiryTime.Value.Month);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Date, resultCredentials.SharedAccessExpiryTime.Value.Date);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Hour, resultCredentials.SharedAccessExpiryTime.Value.Hour);
-                Assert.Equal(serviceSasParameters.SharedAccessExpiryTime.Value.Second, resultCredentials.SharedAccessExpiryTime.Value.Second);
+                Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
             }
         }
 
