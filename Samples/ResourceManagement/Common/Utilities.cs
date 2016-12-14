@@ -543,8 +543,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                      .Append("\tSKU Name: ").AppendLine(redisCache.Sku.Name)
                      .Append("\tSKU Family: ").AppendLine(redisCache.Sku.Family)
                      .Append("\tHost name: ").AppendLine(redisCache.HostName)
-                     .Append("\tSSL port: ").AppendLine(redisCache.SslPort?.ToString())
-                     .Append("\tNon-SSL port (6379) enabled: ").AppendLine(redisCache.NonSslPort?.ToString());
+                     .Append("\tSSL port: ").AppendLine(redisCache.SslPort.ToString())
+                     .Append("\tNon-SSL port (6379) enabled: ").AppendLine(redisCache.NonSslPort.ToString());
             if (redisCache.RedisConfiguration != null && redisCache.RedisConfiguration.Count > 0)
             {
                 redisInfo.AppendLine("\tRedis Configuration:");
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             if (redisCache.IsPremium)
             {
                 var premium = redisCache.AsPremium();
-                var scheduleEntries = premium.GetPatchSchedules();
+                var scheduleEntries = premium.ListPatchSchedules();
                 if (scheduleEntries != null && scheduleEntries.Any())
                 {
                     redisInfo.AppendLine("\tRedis Patch Schedule:");
