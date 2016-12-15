@@ -607,7 +607,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             return string.Join(", ", collection);
         }
 
-        public static void Print(ISqlServer sqlServer)
+        public static void PrintSqlServer(ISqlServer sqlServer)
         {
             var builder = new StringBuilder().Append("Sql Server: ").Append(sqlServer.Id)
                     .Append("Name: ").Append(sqlServer.Name)
@@ -618,7 +618,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(ISqlDatabase database)
+        public static void PrintDatabase(ISqlDatabase database)
         {
             var builder = new StringBuilder().Append("Sql Database: ").Append(database.Id)
                     .Append("Name: ").Append(database.Name)
@@ -637,7 +637,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(ISqlFirewallRule firewallRule)
+        public static void PrintFirewallRule(ISqlFirewallRule firewallRule)
         {
             var builder = new StringBuilder().Append("Sql firewall rule: ").Append(firewallRule.Id)
                     .Append("Name: ").Append(firewallRule.Name)
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(ISqlElasticPool elasticPool)
+        public static void PrintElasticPool(ISqlElasticPool elasticPool)
         {
             var builder = new StringBuilder().Append("Sql elastic pool: ").Append(elasticPool.Id)
                     .Append("Name: ").Append(elasticPool.Name)
@@ -668,7 +668,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(IElasticPoolActivity elasticPoolActivity)
+        public static void PrintElasticPoolActivity(IElasticPoolActivity elasticPoolActivity)
         {
             var builder = new StringBuilder().Append("Sql elastic pool activity: ").Append(elasticPoolActivity.Id)
                     .Append("Name: ").Append(elasticPoolActivity.Name)
@@ -690,7 +690,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         }
 
-        public static void Print(IElasticPoolDatabaseActivity databaseActivity)
+        public static void PrintDatabaseActivity(IElasticPoolDatabaseActivity databaseActivity)
         {
             var builder = new StringBuilder().Append("Sql elastic pool database activity: ").Append(databaseActivity.Id)
                     .Append("Name: ").Append(databaseActivity.Name)

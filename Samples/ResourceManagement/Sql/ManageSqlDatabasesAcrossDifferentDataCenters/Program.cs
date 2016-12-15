@@ -33,6 +33,14 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
         private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string administratorLogin = "sqladmin3423";
+        private static readonly string administratorPassword = "myS3cureP@ssword";
+        private static readonly string slaveSqlServer1Name = "slave1sql";
+        private static readonly string slaveSqlServer2Name = "slave2sql";
+        private static readonly string databaseName = "mydatabase";
+        private static readonly string networkNamePrefix = "network";
+        private static readonly string virtualMachineNamePrefix = "samplevm";
+
         public static void Main(string[] args)
         {
             try
@@ -59,59 +67,62 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     var masterSqlServer = azure.SqlServers.Define(sqlServerName)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
-                            .WithAdministratorLogin("adminlogin123")
-                            .WithAdministratorPassword("loepop77ejk~13@@")
+                            .WithAdministratorLogin(administratorLogin)
+                            .WithAdministratorPassword(administratorPassword)
                             .Create();
 
-                    Utilities.Print(masterSqlServer);
+                    Utilities.PrintSqlServer(masterSqlServer);
 
                     // ============================================================
                     // Create a Database in master SQL server created above.
                     Console.WriteLine("Creating a database");
 
-                    var masterDatabase = masterSqlServer.Databases.Define("mydatabase")
+                    var masterDatabase = masterSqlServer.Databases.Define(databaseName)
                             .WithoutElasticPool()
                             .WithoutSourceDatabaseId()
                             .WithEdition(DatabaseEditions.Basic)
                             .Create();
-                    Utilities.Print(masterDatabase);
+                    Utilities.PrintDatabase(masterDatabase);
 
                     // Create secondary databases for the master database
                     var sqlServerInSecondaryLocation = azure.SqlServers
-                            .Define(Utilities.CreateRandomName("slave1sql"))
+                            .Define(Utilities.CreateRandomName(slaveSqlServer1Name))
                             .WithRegion(masterDatabase.DefaultSecondaryLocation)
                             .WithExistingResourceGroup(rgName)
-                            .WithAdministratorLogin("adminlogin123")
-                            .WithAdministratorPassword("loepop77ejk~13@@")
+                            .WithAdministratorLogin(administratorLogin)
+                            .WithAdministratorPassword(administratorPassword)
                             .Create();
-                    Utilities.Print(sqlServerInSecondaryLocation);
+                    Utilities.PrintSqlServer(sqlServerInSecondaryLocation);
 
-                    var secondaryDatabase = sqlServerInSecondaryLocation.Databases.Define("mydatabase")
+                    Console.WriteLine("Creating database in slave SQL Server.");
+                    var secondaryDatabase = sqlServerInSecondaryLocation.Databases.Define(databaseName)
                             .WithoutElasticPool()
                             .WithSourceDatabase(masterDatabase)
                             .WithMode(CreateMode.OnlineSecondary)
                             .Create();
-                    Utilities.Print(secondaryDatabase);
+                    Utilities.PrintDatabase(secondaryDatabase);
 
                     var sqlServerInEurope = azure.SqlServers
-                            .Define(Utilities.CreateRandomName("slave2sql"))
+                            .Define(Utilities.CreateRandomName(slaveSqlServer2Name))
                             .WithRegion(Region.EUROPE_WEST)
                             .WithExistingResourceGroup(rgName)
-                            .WithAdministratorLogin("adminlogin123")
-                            .WithAdministratorPassword("loepop77ejk~13@@")
+                            .WithAdministratorLogin(administratorLogin)
+                            .WithAdministratorPassword(administratorPassword)
                             .Create();
-                    Utilities.Print(sqlServerInEurope);
+                    Utilities.PrintSqlServer(sqlServerInEurope);
 
-                    var secondaryDatabaseInEurope = sqlServerInEurope.Databases.Define("mydatabase")
+                    Console.WriteLine("Creating database in second slave SQL Server.");
+                    var secondaryDatabaseInEurope = sqlServerInEurope.Databases.Define(databaseName)
                             .WithoutElasticPool()
                             .WithSourceDatabase(masterDatabase)
                             .WithMode(CreateMode.OnlineSecondary)
                             .Create();
-                    Utilities.Print(secondaryDatabaseInEurope);
+                    Utilities.PrintDatabase(secondaryDatabaseInEurope);
 
                     // ============================================================
                     // Create Virtual Networks in different regions
                     var regions = new List<Region>();
+
                     regions.Add(Region.ASIA_SOUTHEAST);
                     regions.Add(Region.US_CENTRAL);
                     regions.Add(Region.US_EAST);
@@ -120,9 +131,11 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                     var creatableNetworks = new List<ICreatable<INetwork>>();
 
+                    Console.WriteLine("Creating virtual networks in different regions.");
+
                     foreach (Region region in  regions)
                     {
-                        creatableNetworks.Add(azure.Networks.Define(Utilities.CreateRandomName("network"))
+                        creatableNetworks.Add(azure.Networks.Define(Utilities.CreateRandomName(networkNamePrefix))
                                 .WithRegion(region)
                                 .WithExistingResourceGroup(rgName));
                     }
@@ -134,7 +147,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                     foreach (var network in networks)
                     {
-                        var vmName = Utilities.CreateRandomName("samplevm");
+                        var vmName = Utilities.CreateRandomName(virtualMachineNamePrefix);
                         var publicIpAddressCreatable = azure.PublicIpAddresses
                                 .Define(vmName)
                                 .WithRegion(network.Region)
@@ -148,8 +161,8 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                                 .WithPrimaryPrivateIpAddressDynamic()
                                 .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
                                 .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                                .WithAdminUsername("admind234")
-                                .WithAdminPassword("loepop77ejk~13@@~2")
+                                .WithAdminUsername(administratorLogin)
+                                .WithAdminPassword(administratorPassword)
                                 .WithSize(VirtualMachineSizeTypes.StandardD3V2));
                     }
                     var ipAddresses = new Dictionary<string, string>();
@@ -181,7 +194,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                         var firewallRules = sqlServer.FirewallRules.List();
                         foreach (var firewallRule in  firewallRules)
                         {
-                            Utilities.Print(firewallRule);
+                            Utilities.PrintFirewallRule(firewallRule);
                         }
                     }
 
