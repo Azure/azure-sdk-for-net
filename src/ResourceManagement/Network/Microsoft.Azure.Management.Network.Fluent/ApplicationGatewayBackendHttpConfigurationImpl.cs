@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             if (Inner.CookieBasedAffinity != null)
             {
-                return Inner.CookieBasedAffinity.ToLower().Equals(ApplicationGatewayCookieBasedAffinity.Enabled.ToString().ToLower());
+                return Inner.CookieBasedAffinity.ToLower().Equals(ApplicationGatewayCookieBasedAffinity.Enabled.ToLower());
             }
             else
             {
@@ -103,14 +103,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:1AB1FD137FCAFECBC19E784B21600422:6BB24B56EA50DCC3F395622096E46000
         public ApplicationGatewayBackendHttpConfigurationImpl WithoutCookieBasedAffinity()
         {
-            Inner.CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled.ToString();
+            Inner.CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled;
             return this;
         }
 
         ///GENMHASH:389A52ADE2A3CD0EC1D4345823ED3438:F757DEFCD2347931069D56892B798728
         public ApplicationGatewayBackendHttpConfigurationImpl WithCookieBasedAffinity()
         {
-            Inner.CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled.ToString();
+            Inner.CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled;
             return this;
         }
 
