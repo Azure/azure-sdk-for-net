@@ -24,7 +24,7 @@ namespace ManageWebAppSlots
     public class Program
     {
         private static readonly string RG_NAME = ResourceNamer.RandomResourceName("rg1NEMV_", 24);
-        private static readonly string SUFFIX = ".Azurewebsites.Net";
+        private static readonly string SUFFIX = ".azurewebsites.net";
         private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
         private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
         private static readonly string app3Name = ResourceNamer.RandomResourceName("webapp3-", 20);
@@ -48,6 +48,10 @@ namespace ManageWebAppSlots
                 Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
                 try
                 {
+                    azure.ResourceGroups.Define(RG_NAME)
+                        .WithRegion(Region.US_WEST)
+                        .Create();
+
                     //============================================================
                     // Create 3 web apps with 3 new app service plans in different regions
 
@@ -114,14 +118,14 @@ namespace ManageWebAppSlots
 
             var app = azure.WebApps
                     .Define(appName)
-                    .WithNewResourceGroup(RG_NAME)
+                    .WithExistingResourceGroup(RG_NAME)
                     .WithNewAppServicePlan(planName)
                     .WithRegion(region)
                     .WithPricingTier(AppServicePricingTier.STANDARD_S1)
                     .WithJavaVersion(JavaVersion.Java_8_Newest)
                     .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
                     .DefineSourceControl()
-                        .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test.Git")
+                        .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test.git")
                         .WithBranch("master")
                         .Attach()
                     .Create();
@@ -157,7 +161,7 @@ namespace ManageWebAppSlots
 
             slot.Update()
                     .DefineSourceControl()
-                    .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test.Git")
+                    .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test.git")
                     .WithBranch("staging")
                     .Attach()
                     .Apply();
