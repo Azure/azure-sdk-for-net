@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using CoreFtp;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
@@ -8,10 +9,12 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ManageWebAppSourceControl
 {
@@ -26,7 +29,7 @@ namespace ManageWebAppSourceControl
 
     public class Program
     {
-        private static readonly string suffix = ".Azurewebsites.Net";
+        private static readonly string suffix = ".azurewebsites.net";
         private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
         private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
         private static readonly string app3Name = ResourceNamer.RandomResourceName("webapp3-", 20);
@@ -79,7 +82,7 @@ namespace ManageWebAppSourceControl
 
                     Console.WriteLine("Deploying helloworld.War to " + app1Name + " through FTP...");
 
-                    //UploadFileToFtp(app1.GetPublishingProfile(), "helloworld.War", File.Read("/helloworld.War"));
+                    UploadFileToFtp(app1.GetPublishingProfile(), "helloworld.war", "Asset/helloworld.war").GetAwaiter().GetResult();
 
                     Console.WriteLine("Deployment helloworld.War to web app " + app1.Name + " completed");
                     Utilities.Print(app1);
@@ -114,18 +117,21 @@ namespace ManageWebAppSourceControl
                     Console.WriteLine("Deploying a local Tomcat source to " + app2Name + " through Git...");
 
                     var profile = app2.GetPublishingProfile();
-                    //var git = Git
-                    //        .Init()
-                    //        .SetDirectory(new File(ManageWebAppSourceControl.Class.GetResource("/azure-samples-appservice-helloworld/").GetPath()))
-                    //                .Call();
-                    //git.Add().AddFilepattern(".").Call();
-                    //git.Commit().SetMessage("Initial commit").Call();
-                    //var command = git.Push();
-                    //command.SetRemote(profile.GitUrl());
-                    //command.SetCredentialsProvider(new UsernamePasswordCredentialsProvider(profile.GitUsername(), profile.GitPassword()));
-                    //command.SetRefSpecs(new RefSpec("master:master"));
-                    //command.SetForce(true);
-                    //command.Call();
+                    string gitCommand = "git";
+                    string gitInitArgument = @"init";
+                    string gitAddArgument = @"add -A";
+                    string gitCommitArgument = @"commit -am ""Initial commit"" ";
+                    string gitPushArgument = @"push " + string.Format("https://{0}:{1}@{2}", profile.GitUsername, profile.GitPassword, profile.GitUrl) + " master:master -f";
+
+                    ProcessStartInfo info = new ProcessStartInfo(gitCommand, gitInitArgument);
+                    info.WorkingDirectory = "Asset/azure-samples-appservice-helloworld";
+                    Process.Start(info).WaitForExit();
+                    info.Arguments = gitAddArgument;
+                    Process.Start(info).WaitForExit();
+                    info.Arguments = gitCommitArgument;
+                    Process.Start(info).WaitForExit();
+                    info.Arguments = gitPushArgument;
+                    Process.Start(info).WaitForExit();
 
                     Console.WriteLine("Deployment to web app " + app2.Name + " completed");
                     Utilities.Print(app2);
@@ -146,7 +152,7 @@ namespace ManageWebAppSourceControl
                             .WithNewResourceGroup(rgName)
                             .WithExistingAppServicePlan(plan)
                             .DefineSourceControl()
-                                .WithPublicGitRepository("https://github.Com/Azure-Samples/app-service-web-dotnet-get-started")
+                                .WithPublicGitRepository("https://github.com/Azure-Samples/app-service-web-dotnet-get-started")
                                 .WithBranch("master")
                                 .Attach()
                             .Create();
@@ -223,19 +229,28 @@ namespace ManageWebAppSourceControl
             }
         }
 
-        //private static void UploadFileToFtp(IPublishingProfile profile, string fileName, InputStream file)
-        //{
-        //    var ftpClient = new FTPClient();
-        //    var ftpUrlSegments = profile.FtpUrl().Split("/", 2);
-        //    var server = ftpUrlSegments[0];
-        //    var path = "./site/wwwroot/webapps";
+        public static async Task UploadFileToFtp(IPublishingProfile profile, string fileName, string filePath)
+        {
+            string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
 
-        //    ftpClient.Connect(server);
-        //    ftpClient.Login(profile.FtpUsername(), profile.FtpPassword());
-        //    ftpClient.SetFileType(FTP.BINARY_FILE_TYPE);
-        //    ftpClient.ChangeWorkingDirectory(path);
-        //    ftpClient.StoreFile(fileName, file);
-        //    ftpClient.Disconnect();
-        //}
+            using (var ftpClient = new FtpClient(new FtpClientConfiguration
+            {
+                Host = host,
+                Username = profile.FtpUsername,
+                Password = profile.FtpPassword
+            }))
+            {
+                var fileinfo = new FileInfo(filePath);
+                await ftpClient.LoginAsync();
+                await ftpClient.ChangeWorkingDirectoryAsync("./site/wwwroot/webapps");
+
+                using (var writeStream = await ftpClient.OpenFileWriteStreamAsync(fileName))
+                {
+                    var fileReadStream = fileinfo.OpenRead();
+                    await fileReadStream.CopyToAsync(writeStream);
+                }
+            }
+
+        }
     }
 }

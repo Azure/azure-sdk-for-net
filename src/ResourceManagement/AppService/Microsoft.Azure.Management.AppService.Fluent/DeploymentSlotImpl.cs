@@ -161,11 +161,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:3F0152723C985A22C1032733AB942C96:0F92CEDBB6FBA622A8EB7A1971ABB63D
         public override IPublishingProfile GetPublishingProfile()
         {
-            var stream = client.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, parent.Name, Name());
-            int length = (int) stream.Length;
-            MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
-            string xml = Encoding.UTF8.GetString(memoryStream.ToArray(), 0, length);
+            Stream stream = client.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, Parent().Name, Name());
+            StreamReader reader = new StreamReader(stream);
+            string xml = reader.ReadToEnd();
             return new PublishingProfileImpl(xml);
         }
 

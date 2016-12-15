@@ -7,6 +7,7 @@
     	"ResourceManagement/KeyVault",
     	"ResourceManagement/Network",
     	"ResourceManagement/ResourceManager",
-    	"ResourceManagement/Storage"
+      "ResourceManagement/Storage",
+      "../src/ResourceManagement/AppService"
     ]
 }

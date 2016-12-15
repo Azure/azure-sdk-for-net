@@ -6,6 +6,7 @@
 
   "dependencies": {
     "Common": "1.0.0-*",
+    "CoreFTP": "1.2.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0"
