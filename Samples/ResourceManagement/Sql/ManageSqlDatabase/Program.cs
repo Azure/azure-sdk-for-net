@@ -24,6 +24,12 @@ namespace ManageSqlDatabase
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
         private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string administratorLogin = "sqladmin3423";
+        private static readonly string administratorPassword = "myS3cureP@ssword";
+        private static readonly string firewallRuleIpAddress = "10.0.0.1";
+        private static readonly string firewallRuleStartIpAddress = "10.2.0.1";
+        private static readonly string firewallRuleEndIpAddress = "10.2.0.10";
+        private static readonly string databaseName = "mydatabase";
 
         public static void Main(string[] args)
         {
@@ -50,24 +56,24 @@ namespace ManageSqlDatabase
                     var sqlServer = azure.SqlServers.Define(sqlServerName)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
-                            .WithAdministratorLogin("adminlogin123")
-                            .WithAdministratorPassword("myS3cureP@ssword")
-                            .WithNewFirewallRule("10.0.0.1")
-                            .WithNewFirewallRule("10.2.0.1", "10.2.0.10")
+                            .WithAdministratorLogin(administratorLogin)
+                            .WithAdministratorPassword(administratorPassword)
+                            .WithNewFirewallRule(firewallRuleIpAddress)
+                            .WithNewFirewallRule(firewallRuleStartIpAddress, firewallRuleEndIpAddress)
                             .Create();
 
-                    Utilities.Print(sqlServer);
+                    Utilities.PrintSqlServer(sqlServer);
 
                     // ============================================================
                     // Create a Database in SQL server created above.
                     Console.WriteLine("Creating a database");
 
-                    var database = sqlServer.Databases.Define("myNewDatabase")
+                    var database = sqlServer.Databases.Define(databaseName)
                             .WithoutElasticPool()
                             .WithoutSourceDatabaseId()
                             .WithEdition(DatabaseEditions.Basic)
                             .Create();
-                    Utilities.Print(database);
+                    Utilities.PrintDatabase(database);
 
                     // ============================================================
                     // Update the edition of database.
@@ -76,15 +82,17 @@ namespace ManageSqlDatabase
                             .WithEdition(DatabaseEditions.Premium)
                             .WithServiceObjective(ServiceObjectiveName.P3)
                             .Apply();
-                    Utilities.Print(database);
+                    Utilities.PrintDatabase(database);
 
                     // ============================================================
                     // List and delete all firewall rules.
+                    Console.WriteLine("Listing all firewall rules");
+
                     var firewallRules = sqlServer.FirewallRules.List();
                     foreach (var firewallRule in firewallRules)
                     {
                         // Print information of the firewall rule.
-                        Utilities.Print(firewallRule);
+                        Utilities.PrintFirewallRule(firewallRule);
 
                         // Delete the firewall rule.
                         Console.WriteLine("Deleting a firewall rule");
@@ -98,7 +106,7 @@ namespace ManageSqlDatabase
                             .WithIpAddress("10.10.10.10")
                             .Create();
 
-                    Utilities.Print(newFirewallRule);
+                    Utilities.PrintFirewallRule(newFirewallRule);
 
                     // Delete the database.
                     Console.WriteLine("Deleting a database");
