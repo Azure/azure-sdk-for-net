@@ -32,7 +32,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
     public class Program
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string rgName = Utilities.CreateRandomName("rgRSSDRE");
         public static void Main(string[] args)
         {
             try
@@ -112,11 +112,11 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     // ============================================================
                     // Create Virtual Networks in different regions
                     var regions = new List<Region>();
-                    regions.Add(Region.ASIA_SOUTHEAST);
-                    regions.Add(Region.US_CENTRAL);
                     regions.Add(Region.US_EAST);
-                    regions.Add(Region.US_EAST2);
+                    regions.Add(Region.US_WEST);
                     regions.Add(Region.EUROPE_NORTH);
+                    regions.Add(Region.ASIA_SOUTHEAST);
+                    regions.Add(Region.JAPAN_EAST);
 
                     var creatableNetworks = new List<ICreatable<INetwork>>();
 

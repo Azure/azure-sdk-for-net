@@ -24,7 +24,7 @@ namespace ManageSqlFirewallRules
     public class Program
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string rgName = Utilities.CreateRandomName("rgRSSDFW");
 
         public static void Main(string[] args)
         {
