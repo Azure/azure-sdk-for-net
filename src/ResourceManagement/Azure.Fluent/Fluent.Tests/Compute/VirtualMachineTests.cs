@@ -14,6 +14,9 @@ using Microsoft.Azure.Management.Fluent;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.Network.Fluent;
+using System.Threading;
+using Renci.SshNet;
+using System.Text;
 
 namespace Fluent.Tests.Compute
 {
@@ -181,6 +184,151 @@ namespace Fluent.Tests.Compute
             {
                 azure.ResourceGroups.DeleteByName(resourceGroupName);
             }
+        }
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void CanCreateVirtualMachineWithCustomData()
+        {
+            var vmName = ResourceNamer.RandomResourceName("vm", 10);
+            var username = "testuser";
+            var password = "12NewPA$$w0rd!";
+            var publicIpDnsLabel = ResourceNamer.RandomResourceName("abc", 16);
+            var region = Region.US_EAST;
+            var cloudInitEncodedString = Convert.ToBase64String(Encoding.ASCII.GetBytes("#cloud-config\r\npackages:\r\n - pwgen"));
+
+            var azure = TestHelper.CreateRollupClient();
+
+            var publicIpAddress = azure.PublicIpAddresses.Define(publicIpDnsLabel)
+                .WithRegion(region)
+                .WithNewResourceGroup()
+                .WithLeafDomainLabel(publicIpDnsLabel)
+                .Create();
+
+            var virtualMachine = azure.VirtualMachines.Define(vmName)
+                .WithRegion(region)
+                .WithExistingResourceGroup(publicIpAddress.ResourceGroupName)
+                .WithNewPrimaryNetwork("10.0.0.0/28")
+                .WithPrimaryPrivateIpAddressDynamic()
+                .WithExistingPrimaryPublicIpAddress(publicIpAddress)
+                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                .WithRootUsername(username)
+                .WithRootPassword(password)
+                .WithCustomData(cloudInitEncodedString)
+                .Create();
+
+            publicIpAddress.Refresh();
+            Assert.True(publicIpAddress.HasAssignedNetworkInterface);
+
+            ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
+                new AuthenticationMethod[] {
+                    new PasswordAuthenticationMethod(username, password)
+                });
+            using (var sshClient = new SshClient(connectionInfo))
+            {
+                sshClient.Connect();
+                var commandToExecute = "pwgen;";
+                using (var command = sshClient.CreateCommand(commandToExecute))
+                {
+                    var commandOutput = command.Execute();
+                    Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
+                }
+                sshClient.Disconnect();
+            }
+        }
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void CanSShConnectToVirtualMachine()
+        {
+            var rgName = ResourceNamer.RandomResourceName("rg", 10);
+            var vmName = ResourceNamer.RandomResourceName("vm", 10);
+            var username = "testuser";
+            var password = "12NewPA$$w0rd!";
+            var publicIpDnsLabel = ResourceNamer.RandomResourceName("abc", 16);
+            var region = Region.US_EAST;
+
+            var azure = TestHelper.CreateRollupClient();
+            try
+            {
+                var virtualMachine = azure.VirtualMachines.Define(vmName)
+                    .WithRegion(region)
+                    .WithNewResourceGroup(rgName)
+                    .WithNewPrimaryNetwork("10.0.0.0/28")
+                    .WithPrimaryPrivateIpAddressDynamic()
+                    .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                    .WithRootUsername(username)
+                    .WithRootPassword(password)
+                    .Create();
+
+                var publicIpAddress = virtualMachine.GetPrimaryPublicIpAddress();
+
+                ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
+                    new AuthenticationMethod[] {
+                    new PasswordAuthenticationMethod(username, password)
+                    });
+                using (var sshClient = new SshClient(connectionInfo))
+                {
+                    try
+                    {
+                        sshClient.Connect();
+                        sshClient.Disconnect();
+                    }
+                    catch (Exception exception)
+                    {
+                        Assert.False(true, $"Ssh connection failure to {publicIpAddress.Fqdn}, {exception.Message}");
+                    }
+                }
+            }
+            finally
+            {
+                try
+                {
+                    azure.ResourceGroups.DeleteByName(rgName);
+                }
+                catch
+                { }
+            }
+        }
+
+        private string TrySsh(ConnectionInfo connectionInfo, string commandToExecute, TimeSpan backoffTime, int retryCount)
+        {
+            string commandOutput = null;
+            while (retryCount > 0)
+            {
+                Thread.Sleep(backoffTime);
+                using (var sshClient = new SshClient(connectionInfo))
+                {
+                    try
+                    {
+                        sshClient.Connect();
+                        if (commandToExecute != null)
+                        {
+                            using (var command = sshClient.CreateCommand(commandToExecute))
+                            {
+                                commandOutput = command.Execute();
+                            }
+                        }
+                        break;
+                    }
+                    catch (Exception exception)
+                    {
+                        retryCount--;
+                        if (retryCount == 0)
+                        {
+                            throw exception;
+                        }
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            sshClient.Disconnect();
+                        }
+                        catch { }
+                    }
+                }
+            }
+            return commandOutput;
         }
     }
 }

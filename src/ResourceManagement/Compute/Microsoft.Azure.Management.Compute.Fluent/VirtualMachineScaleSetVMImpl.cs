@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public bool IsLinuxPasswordAuthenticationEnabled()
         {
             if (this.Inner.OsProfile.LinuxConfiguration != null) {
-                return this.Inner.OsProfile.LinuxConfiguration.DisablePasswordAuthentication ?? false;
+                return !this.Inner.OsProfile.LinuxConfiguration.DisablePasswordAuthentication ?? false;
             }
             return false;
         }
