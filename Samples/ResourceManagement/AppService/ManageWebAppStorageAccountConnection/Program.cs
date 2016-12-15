@@ -30,7 +30,7 @@ namespace ManageWebAppStorageAccountConnection
 
     public class Program
     {
-        private static readonly string suffix = ".Azurewebsites.Net";
+        private static readonly string suffix = ".azurewebsites.net";
         private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
         private static readonly string app1Url = app1Name + suffix;
         private static readonly string storageName = ResourceNamer.RandomResourceName("jsdkstore", 20);
@@ -69,7 +69,7 @@ namespace ManageWebAppStorageAccountConnection
 
                     var accountKey = storageAccount.GetKeys().FirstOrDefault().Value;
 
-                    string connectionString = String.Format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s",
+                    string connectionString = String.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}",
                             storageAccount.Name, accountKey);
 
                     Console.WriteLine("Created storage account " + storageAccount.Name);
@@ -80,8 +80,8 @@ namespace ManageWebAppStorageAccountConnection
                     Console.WriteLine("Uploading 2 blobs to container " + containerName + "...");
 
                     var container = SetUpStorageAccount(connectionString, containerName).GetAwaiter().GetResult();
-                    UploadFileToContainer(container, "helloworld.war", "Assets/helloworld.war").GetAwaiter().GetResult();
-                    UploadFileToContainer(container, "install_apache.sh", "Assets/install_apache.Sh").GetAwaiter().GetResult();
+                    UploadFileToContainer(container, "helloworld.war", "Asset/helloworld.war").GetAwaiter().GetResult();
+                    UploadFileToContainer(container, "install_apache.sh", "Asset/install_apache.Sh").GetAwaiter().GetResult();
 
                     Console.WriteLine("Uploaded 2 blobs to container " + container.Name);
 
@@ -95,7 +95,7 @@ namespace ManageWebAppStorageAccountConnection
                             .WithExistingResourceGroup(rgName)
                             .WithNewAppServicePlan(planName)
                             .WithRegion(Region.US_WEST)
-                            .WithPricingTier(AppServicePricingTier.STANDARD_S1)
+                            .WithPricingTier(AppServicePricingTier.Standard_S1)
                             .WithJavaVersion(JavaVersion.Java_8_Newest)
                             .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
                             .WithConnectionString("storage.ConnectionString", connectionString, ConnectionStringType.Custom)
@@ -111,7 +111,7 @@ namespace ManageWebAppStorageAccountConnection
 
                     Console.WriteLine("Deploying azure-samples-blob-traverser.war to " + app1Name + " through FTP...");
 
-                    UploadFileToFtp(app1.GetPublishingProfile(), "azure-samples-blob-traverser.war", "Assets/azure-samples-blob-traverser.war").GetAwaiter().GetResult();
+                    UploadFileToFtp(app1.GetPublishingProfile(), "azure-samples-blob-traverser.war", "Asset/azure-samples-blob-traverser.war").GetAwaiter().GetResult();
 
                     Console.WriteLine("Deployment azure-samples-blob-traverser.war to web app " + app1.Name + " completed");
                     Utilities.Print(app1);

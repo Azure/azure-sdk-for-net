@@ -10,17 +10,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public partial class AppServicePricingTier
     {
-        public static readonly AppServicePricingTier FREE_F1 = new AppServicePricingTier("Free", "F1");
-        public static readonly AppServicePricingTier SHARED_D1 = new AppServicePricingTier("Shared", "D1");
-        public static readonly AppServicePricingTier BASIC_B1 = new AppServicePricingTier("Basic", "B1");
-        public static readonly AppServicePricingTier BASIC_B2 = new AppServicePricingTier("Basic", "B2");
-        public static readonly AppServicePricingTier BASIC_B3 = new AppServicePricingTier("Basic", "B3");
-        public static readonly AppServicePricingTier STANDARD_S1 = new AppServicePricingTier("Standard", "S1");
-        public static readonly AppServicePricingTier STANDARD_S2 = new AppServicePricingTier("Standard", "S2");
-        public static readonly AppServicePricingTier STANDARD_S3 = new AppServicePricingTier("Standard", "S3");
-        public static readonly AppServicePricingTier PREMIUM_P1 = new AppServicePricingTier("Premium", "P1");
-        public static readonly AppServicePricingTier PREMIUM_P2 = new AppServicePricingTier("Premium", "P2");
-        public static readonly AppServicePricingTier PREMIUM_P3 = new AppServicePricingTier("Premium", "P3");
+        public static readonly AppServicePricingTier Free_F1 = new AppServicePricingTier("Free", "F1");
+        public static readonly AppServicePricingTier Shared_D1 = new AppServicePricingTier("Shared", "D1");
+        public static readonly AppServicePricingTier Basic_B1 = new AppServicePricingTier("Basic", "B1");
+        public static readonly AppServicePricingTier Basic_B2 = new AppServicePricingTier("Basic", "B2");
+        public static readonly AppServicePricingTier Basic_B3 = new AppServicePricingTier("Basic", "B3");
+        public static readonly AppServicePricingTier Standard_S1 = new AppServicePricingTier("Standard", "S1");
+        public static readonly AppServicePricingTier Standard_S2 = new AppServicePricingTier("Standard", "S2");
+        public static readonly AppServicePricingTier Standard_S3 = new AppServicePricingTier("Standard", "S3");
+        public static readonly AppServicePricingTier Premium_P1 = new AppServicePricingTier("Premium", "P1");
+        public static readonly AppServicePricingTier Premium_P2 = new AppServicePricingTier("Premium", "P2");
+        public static readonly AppServicePricingTier Premium_P3 = new AppServicePricingTier("Premium", "P3");
 
         public SkuDescription SkuDescription { get; private set; }
 

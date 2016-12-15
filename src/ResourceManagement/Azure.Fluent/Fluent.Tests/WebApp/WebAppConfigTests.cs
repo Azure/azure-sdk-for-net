@@ -26,7 +26,7 @@ namespace Azure.Tests.WebApp
                 .WithNewResourceGroup(RG_NAME)
                 .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
                 .WithRegion(Region.US_WEST)
-                .WithPricingTier(AppServicePricingTier.BASIC_B1)
+                .WithPricingTier(AppServicePricingTier.Basic_B1)
                 .WithNetFrameworkVersion(NetFrameworkVersion.V3_0)
                 .Create();
 

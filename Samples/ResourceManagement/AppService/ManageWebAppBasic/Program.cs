@@ -58,7 +58,7 @@ namespace ManageWebAppBasic
                             .WithNewResourceGroup(rg1Name)
                             .WithNewAppServicePlan(planName)
                             .WithRegion(Region.US_WEST)
-                            .WithPricingTier(AppServicePricingTier.STANDARD_S1)
+                            .WithPricingTier(AppServicePricingTier.Standard_S1)
                             .Create();
 
                     Console.WriteLine("Created web app " + app1.Name);

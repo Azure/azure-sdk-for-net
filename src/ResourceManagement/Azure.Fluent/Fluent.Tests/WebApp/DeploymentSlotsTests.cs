@@ -29,7 +29,7 @@ namespace Azure.Tests.WebApp
                 .WithNewResourceGroup(RG_NAME)
                 .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
                 .WithRegion(Region.US_WEST)
-                .WithPricingTier(AppServicePricingTier.STANDARD_S2)
+                .WithPricingTier(AppServicePricingTier.Standard_S2)
                 .WithAppSetting("appkey", "appvalue")
                 .WithStickyAppSetting("stickykey", "stickyvalue")
                 .WithConnectionString("connectionName", "connectionValue", ConnectionStringType.Custom)

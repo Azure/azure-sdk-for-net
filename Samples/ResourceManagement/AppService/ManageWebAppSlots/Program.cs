@@ -121,7 +121,7 @@ namespace ManageWebAppSlots
                     .WithExistingResourceGroup(RG_NAME)
                     .WithNewAppServicePlan(planName)
                     .WithRegion(region)
-                    .WithPricingTier(AppServicePricingTier.STANDARD_S1)
+                    .WithPricingTier(AppServicePricingTier.Standard_S1)
                     .WithJavaVersion(JavaVersion.Java_8_Newest)
                     .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
                     .DefineSourceControl()

@@ -29,7 +29,7 @@ namespace Azure.Tests.WebApp
                 .WithNewResourceGroup(RG_NAME)
                 .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
                 .WithRegion(Region.US_WEST)
-                .WithPricingTier(AppServicePricingTier.STANDARD_S1)
+                .WithPricingTier(AppServicePricingTier.Standard_S1)
                 .DefineSourceControl()
                     .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test")
                     .WithBranch("master")
