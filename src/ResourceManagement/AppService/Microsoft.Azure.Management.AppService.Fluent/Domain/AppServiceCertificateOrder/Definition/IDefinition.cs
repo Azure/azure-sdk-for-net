@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrde
     /// An app service certificate order definition allowing resource group to be set.
     /// </summary>
     public interface IBlank  :
-        IWithGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithHostName>
+        IWithExistingResourceGroup<Microsoft.Azure.Management.AppService.Fluent.AppServiceCertificateOrder.Definition.IWithHostName>
     {
     }
 
