@@ -113,16 +113,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
 
         /// <summary>
-        /// Gets the INetworkSecurityGroupsOperations.
-        /// </summary>
-        public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the ISecurityRulesOperations.
-        /// </summary>
-        public virtual ISecurityRulesOperations SecurityRules { get; private set; }
-
-        /// <summary>
         /// Gets the ISubnetsOperations.
         /// </summary>
         public virtual ISubnetsOperations Subnets { get; private set; }
@@ -166,6 +156,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IPublicIPAddressesOperations.
         /// </summary>
         public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityGroupsOperations.
+        /// </summary>
+        public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityRulesOperations.
+        /// </summary>
+        public virtual ISecurityRulesOperations SecurityRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -376,8 +376,6 @@ namespace Microsoft.Azure.Management.Network
             LoadBalancers = new LoadBalancersOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             NetworkInterfaces = new NetworkInterfacesOperations(this);
-            NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
-            SecurityRules = new SecurityRulesOperations(this);
             Subnets = new SubnetsOperations(this);
             VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
             Usages = new UsagesOperations(this);
@@ -387,6 +385,8 @@ namespace Microsoft.Azure.Management.Network
             RouteTables = new RouteTablesOperations(this);
             Routes = new RoutesOperations(this);
             PublicIPAddresses = new PublicIPAddressesOperations(this);
+            NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
+            SecurityRules = new SecurityRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

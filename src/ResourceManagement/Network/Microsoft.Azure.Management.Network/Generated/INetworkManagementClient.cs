@@ -110,16 +110,6 @@ namespace Microsoft.Azure.Management.Network
         INetworkInterfacesOperations NetworkInterfaces { get; }
 
         /// <summary>
-        /// Gets the INetworkSecurityGroupsOperations.
-        /// </summary>
-        INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
-
-        /// <summary>
-        /// Gets the ISecurityRulesOperations.
-        /// </summary>
-        ISecurityRulesOperations SecurityRules { get; }
-
-        /// <summary>
         /// Gets the ISubnetsOperations.
         /// </summary>
         ISubnetsOperations Subnets { get; }
@@ -163,6 +153,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IPublicIPAddressesOperations.
         /// </summary>
         IPublicIPAddressesOperations PublicIPAddresses { get; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityGroupsOperations.
+        /// </summary>
+        INetworkSecurityGroupsOperations NetworkSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the ISecurityRulesOperations.
+        /// </summary>
+        ISecurityRulesOperations SecurityRules { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.net zone is available
