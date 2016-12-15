@@ -172,6 +172,39 @@ namespace Fluent.Tests.Compute
             Assert.NotNull(virtualMachineScaleSet.GetPrimaryInternalLoadBalancer());
             Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends().Count() == 2);
             Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools().Count() == 2);
+            CheckInstances(virtualMachineScaleSet);
+        }
+
+        private void CheckInstances(IVirtualMachineScaleSet vmScaleSet)
+        {
+            var virtualMachineScaleSetVMs = vmScaleSet.VirtualMachines;
+            var virtualMachines = virtualMachineScaleSetVMs.List();
+            Assert.Equal(virtualMachines.Count(), vmScaleSet.Capacity);
+            foreach (var vm in virtualMachines)
+            {
+                Assert.NotNull(vm.Size);
+                Assert.Equal(vm.OsType, OperatingSystemTypes.Linux);
+                Assert.NotNull(vm.ComputerName.StartsWith(vmScaleSet.ComputerNamePrefix));
+                Assert.True(vm.IsLinuxPasswordAuthenticationEnabled);
+                Assert.True(vm.IsOsBasedOnPlatformImage);
+                Assert.Null(vm.CustomImageVhdUri);
+                Assert.False(vm.IsWindowsAutoUpdateEnabled);
+                Assert.False(vm.IsWindowsVmAgentProvisioned);
+                Assert.True(vm.AdministratorUserName.Equals("jvuser", StringComparison.OrdinalIgnoreCase));
+                var vmImage = vm.GetPlatformImage();
+                Assert.NotNull(vmImage);
+                Assert.Equal(vm.Extensions.Count(), vmScaleSet.Extensions.Count);
+                Assert.NotNull(vm.PowerState);
+                vm.RefreshInstanceView();
+            }
+            // Check actions
+            var virtualMachineScaleSetVM = virtualMachines.FirstOrDefault();
+            Assert.NotNull(virtualMachineScaleSetVM);
+            virtualMachineScaleSetVM.Restart();
+            virtualMachineScaleSetVM.PowerOff();
+            virtualMachineScaleSetVM.RefreshInstanceView();
+            Assert.Equal(virtualMachineScaleSetVM.PowerState, PowerState.STOPPED);
+            virtualMachineScaleSetVM.Start();
         }
 
 
