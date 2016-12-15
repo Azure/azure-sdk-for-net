@@ -6,6 +6,8 @@
 
   "dependencies": {
     "Common": "1.0.0-*",
+    "CoreFTP": "1.2.0",
+    "WindowsAzure.Storage": "7.2.1",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0"
@@ -14,7 +16,10 @@
 
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": "dnxcore50"
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ]
     }
   }
 }

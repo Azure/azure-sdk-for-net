@@ -11,13 +11,12 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
 using System.Linq;
 using Microsoft.Azure.Management.AppService.Fluent.Models;
+using System.Threading.Tasks;
+using CoreFtp;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace ManageWebAppStorageAccountConnection
 {
@@ -80,11 +79,11 @@ namespace ManageWebAppStorageAccountConnection
 
                     Console.WriteLine("Uploading 2 blobs to container " + containerName + "...");
 
-                    //var container = SetUpStorageAccount(connectionString, containerName);
-                    //UploadFileToContainer(container, "helloworld.War", ManageWebAppStorageAccountConnection.Class.GetResource("/helloworld.War").GetPath());
-                    //UploadFileToContainer(container, "install_apache.Sh", ManageWebAppStorageAccountConnection.Class.GetResource("/install_apache.Sh").GetPath());
+                    var container = SetUpStorageAccount(connectionString, containerName).GetAwaiter().GetResult();
+                    UploadFileToContainer(container, "helloworld.war", "Assets/helloworld.war").GetAwaiter().GetResult();
+                    UploadFileToContainer(container, "install_apache.sh", "Assets/install_apache.Sh").GetAwaiter().GetResult();
 
-                    //Console.WriteLine("Uploaded 2 blobs to container " + container.GetName());
+                    Console.WriteLine("Uploaded 2 blobs to container " + container.Name);
 
                     //============================================================
                     // Create a web app with a new app service plan
@@ -110,11 +109,11 @@ namespace ManageWebAppStorageAccountConnection
                     // Deploy a web app that connects to the storage account
                     // Source code: https://github.Com/jianghaolu/azure-samples-blob-explorer
 
-                    Console.WriteLine("Deploying azure-samples-blob-traverser.War to " + app1Name + " through FTP...");
+                    Console.WriteLine("Deploying azure-samples-blob-traverser.war to " + app1Name + " through FTP...");
 
-                    //UploadFileToFtp(app1.GetPublishingProfile(), "azure-samples-blob-traverser.War", ManageWebAppStorageAccountConnection.Class.GetResourceAsStream("/azure-samples-blob-traverser.War"));
+                    UploadFileToFtp(app1.GetPublishingProfile(), "azure-samples-blob-traverser.war", "Assets/azure-samples-blob-traverser.war").GetAwaiter().GetResult();
 
-                    Console.WriteLine("Deployment azure-samples-blob-traverser.War to web app " + app1.Name + " completed");
+                    Console.WriteLine("Deployment azure-samples-blob-traverser.war to web app " + app1.Name + " completed");
                     Utilities.Print(app1);
 
                     // warm up
@@ -160,65 +159,78 @@ namespace ManageWebAppStorageAccountConnection
             }
         }
 
-        //private static void UploadFileToFtp(IPublishingProfile profile, string fileName, InputStream file)
-        //{
-            //var ftpClient = new FTPClient();
-            //var ftpUrlSegments = profile.FtpUrl().Split("/", 2);
-            //var server = ftpUrlSegments[0];
-            //var path = "./site/wwwroot/webapps";
-            //ftpClient.Connect(server);
-            //ftpClient.Login(profile.FtpUsername(), profile.FtpPassword());
-            //ftpClient.SetFileType(FTP.BINARY_FILE_TYPE);
-            //ftpClient.ChangeWorkingDirectory(path);
-            //ftpClient.StoreFile(fileName, file);
-            //ftpClient.Disconnect();
-        //}
+        public static async Task UploadFileToFtp(IPublishingProfile profile, string fileName, string filePath)
+        {
+            string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
 
-        //private static CloudBlobContainer SetUpStorageAccount(string connectionString, string containerName)
-        //{
-            //try
-            //{
-            //    var account = CloudStorageAccount.Parse(connectionString);
-            //    // Create a blob service client
-            //    var blobClient = account.CreateCloudBlobClient();
-            //    var container = blobClient.GetContainerReference(containerName);
-            //    container.CreateIfNotExists();
-            //    var containerPermissions = new BlobContainerPermissions();
-            //    // Include public access in the permissions object
-            //    containerPermissions.SetPublicAccess(BlobContainerPublicAccessType.CONTAINER);
-            //    // Set the permissions on the container
-            //    container.UploadPermissions(containerPermissions);
-            //    return container;
-            //}
-            //catch (StorageException)
-            //{
-            //}
-            //catch (URISyntaxException)
-            //{
-            //}
-            //catch (InvalidKeyException e)
-            //{
-            //    throw new RuntimeException(e);
-            //}
-        //}
+            using (var ftpClient = new FtpClient(new FtpClientConfiguration
+            {
+                Host = host,
+                Username = profile.FtpUsername,
+                Password = profile.FtpPassword
+            }))
+            {
+                var fileinfo = new FileInfo(filePath);
+                await ftpClient.LoginAsync();
+                await ftpClient.ChangeWorkingDirectoryAsync("./site/wwwroot/webapps");
 
-        //private static void UploadFileToContainer(CloudBlobContainer container, string fileName, string filePath)
-        //{
-            //try
-            //{
-            //    var blob = container.GetBlockBlobReference(fileName);
-            //    blob.UploadFromFile(filePath);
-            //}
-            //catch (StorageException)
-            //{
-            //}
-            //catch (URISyntaxException)
-            //{
-            //}
-            //catch (IOException e)
-            //{
-            //    throw new RuntimeException(e);
-            //}
-        //}
+                using (var writeStream = await ftpClient.OpenFileWriteStreamAsync(fileName))
+                {
+                    var fileReadStream = fileinfo.OpenRead();
+                    await fileReadStream.CopyToAsync(writeStream);
+                }
+            }
+
+        }
+
+        private static async Task<CloudBlobContainer> SetUpStorageAccount(string connectionString, string containerName)
+        {
+            var storageAccount = CreateStorageAccountFromConnectionString(connectionString);
+
+            // Create a blob client for interacting with the blob service.
+            var blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Create a container for organizing blobs within the storage account.
+            Console.WriteLine("1. Creating Container");
+            var container = blobClient.GetContainerReference(containerName);
+            await container.CreateIfNotExistsAsync();
+
+            var containerPermissions = new BlobContainerPermissions();
+            // Include public access in the permissions object
+            containerPermissions.PublicAccess = BlobContainerPublicAccessType.Container;
+            // Set the permissions on the container
+            await container.SetPermissionsAsync(containerPermissions);
+            return container;
+        }
+
+        private static async Task UploadFileToContainer(CloudBlobContainer container, string fileName, string filePath)
+        {
+            var blob = container.GetBlockBlobReference(fileName);
+            await blob.UploadFromFileAsync(filePath);
+        }
+
+        private static CloudStorageAccount CreateStorageAccountFromConnectionString(string storageConnectionString)
+        {
+            CloudStorageAccount storageAccount;
+            try
+            {
+                storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
+                Console.ReadLine();
+                throw;
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
+                Console.ReadLine();
+                throw;
+            }
+
+            return storageAccount;
+        }
+
     }
 }
