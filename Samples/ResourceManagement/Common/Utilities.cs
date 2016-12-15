@@ -1,17 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using Microsoft.Azure.Management.Redis.Fluent;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -536,7 +538,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintRedisCache(IRedisCache redisCache)
         {
-            StringBuilder redisInfo = new StringBuilder();
+            var redisInfo = new StringBuilder();
             redisInfo.Append("Redis Cache Name: ").AppendLine(redisCache.Name)
                      .Append("\tResource group: ").AppendLine(redisCache.ResourceGroupName)
                      .Append("\tRegion: ").AppendLine(redisCache.Region.ToString())
@@ -576,12 +578,153 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintRedisAccessKeys(IRedisAccessKeys redisAccessKeys)
         {
-            StringBuilder redisKeys = new StringBuilder();
+            var redisKeys = new StringBuilder();
             redisKeys.AppendLine("Redis Access Keys: ")
                      .Append("\tPrimary Key: '").Append(redisAccessKeys.PrimaryKey).AppendLine("', ")
                      .Append("\tSecondary Key: '").Append(redisAccessKeys.SecondaryKey).AppendLine("', ");
 
             Console.WriteLine(redisKeys.ToString());
+        }
+
+        public static void Print(IAppServiceDomain resource)
+        {
+            var builder = new StringBuilder().Append("Domain: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tCreated time: ").Append(resource.CreatedTime)
+                    .Append("\n\tExpiration time: ").Append(resource.ExpirationTime)
+                    .Append("\n\tContact: ");
+            var contact = resource.RegistrantContact;
+            if (contact == null)
+            {
+                builder = builder.Append("Private");
+            }
+            else
+            {
+                builder = builder.Append("\n\t\tName: ").Append(contact.NameFirst + " " + contact.NameLast);
+            }
+            builder = builder.Append("\n\tName servers: ");
+            foreach (String nameServer in resource.NameServers)
+            {
+                builder = builder.Append("\n\t\t" + nameServer);
+            }
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IAppServiceCertificateOrder resource)
+        {
+            var builder = new StringBuilder().Append("App service certificate order: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tDistinguished name: ").Append(resource.DistinguishedName)
+                    .Append("\n\tProduct type: ").Append(resource.ProductType)
+                    .Append("\n\tValid years: ").Append(resource.ValidityInYears)
+                    .Append("\n\tStatus: ").Append(resource.Status)
+                    .Append("\n\tIssuance time: ").Append(resource.LastCertificateIssuanceTime)
+                    .Append("\n\tSigned certificate: ").Append(resource.SignedCertificate == null ? null : resource.SignedCertificate.Thumbprint);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IAppServicePlan resource)
+        {
+            var builder = new StringBuilder().Append("App service certificate order: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tPricing tier: ").Append(resource.PricingTier);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IWebAppBase resource)
+        {
+            var builder = new StringBuilder().Append("Web app: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tState: ").Append(resource.State)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tDefault hostname: ").Append(resource.DefaultHostName)
+                    .Append("\n\tApp service plan: ").Append(resource.AppServicePlanId)
+                    .Append("\n\tHost name bindings: ");
+            foreach (var binding in resource.GetHostNameBindings().Values)
+            {
+                builder = builder.Append("\n\t\t" + binding.ToString());
+            }
+            builder = builder.Append("\n\tSSL bindings: ");
+            foreach (var binding in resource.HostNameSslStates.Values)
+            {
+                builder = builder.Append("\n\t\t" + binding.Name + ": " + binding.SslState);
+                if (binding.SslState != null && binding.SslState != SslState.Disabled)
+                {
+                    builder = builder.Append(" - " + binding.Thumbprint);
+                }
+            }
+            builder = builder.Append("\n\tApp settings: ");
+            foreach (var setting in resource.AppSettings.Values)
+            {
+                builder = builder.Append("\n\t\t" + setting.Key + ": " + setting.Value + (setting.Sticky ? " - slot setting" : ""));
+            }
+            builder = builder.Append("\n\tConnection strings: ");
+            foreach (var conn in resource.ConnectionStrings.Values)
+            {
+                builder = builder.Append("\n\t\t" + conn.Name + ": " + conn.Value + " - " + conn.Type + (conn.Sticky ? " - slot setting" : ""));
+            }
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void CreateCertificate(string certPath, string pfxPath,
+                                     string alias, string password, string cnName)
+        {
+            //var validityInDays = "3650";
+            //var keyAlg = "RSA";
+            //var sigAlg = "SHA1withRSA";
+            //var keySize = "2048";
+            //var storeType = "pkcs12";
+            //var command = "keytool";
+            //var jdkPath = System.GetProperty("java.Home");
+            //if (jdkPath != null && !jdkPath.IsEmpty())
+            //{
+            //    jdkPath = jdkPath.Concat("\\bin");
+            //}
+            //if (new File(jdkPath).IsDirectory())
+            //{
+            //    command = String.Format("%s%s%s", jdkPath, File.Separator, command);
+            //}
+
+            //// Create Pfx file
+            //var commandArgs = {command, "-genkey", "-alias", alias,
+            //    "-keystore", pfxPath, "-storepass", password, "-validity",
+            //    validityInDays, "-keyalg", keyAlg, "-sigalg", sigAlg, "-keysize", keySize,
+            //    "-storetype", storeType, "-dname", "CN=" + cnName, "-ext", "EKU=1.3.6.1.5.5.7.3.1"};
+            //Utilities.CmdInvocation(commandArgs, false);
+
+            //// Create cer file i.E. extract public key from pfx
+            //var pfxvar = new File(pfxPath);
+            //if (pfxFile.Exists())
+            //{
+            //    var certCommandArgs = {command, "-export", "-alias", alias,
+            //        "-storetype", storeType, "-keystore", pfxPath,
+            //        "-storepass", password, "-rfc", "-file", certPath};
+            //    // output of keytool export command is going to error stream
+            //    // although command is
+            //    // executed successfully, hence ignoring error stream in this case
+            //    Utilities.CmdInvocation(certCommandArgs, true);
+
+            //    // Check if file got created or not
+            //    var cervar = new File(pfxPath);
+            //    if (!cerFile.Exists())
+            //    {
+            //        throw new IOException(
+            //                "Error occurred while creating certificate"
+            //                        + StringUtilities.Join(" ", certCommandArgs));
+            //    }
+            //}
+            //else
+            //{
+            //    throw new IOException("Error occurred while creating certificates"
+            //            + StringUtilities.Join(" ", commandArgs));
+            //}
         }
 
         private static string FormatDictionary(IReadOnlyDictionary<string, string> dictionary)
