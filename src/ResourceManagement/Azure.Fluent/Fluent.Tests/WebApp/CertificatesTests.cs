@@ -13,7 +13,7 @@ namespace Azure.Tests.WebApp
         private static readonly string RG_NAME = "javacsmrg319";
         private static readonly string CERTIFICATE_NAME = "javagoodcert319";
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRDCertificate()
         {
             var keyVaultManager = TestHelper.CreateKeyVaultManager();

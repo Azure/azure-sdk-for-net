@@ -12,7 +12,7 @@ namespace Azure.Tests.WebApp
         private static readonly string RG_NAME = "javacsmrg9b9912262";
         private static readonly string DOMAIN_NAME = "graph-dm7720.com";
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDDomain()
         {
             var appServiceManager = TestHelper.CreateAppServiceManager();

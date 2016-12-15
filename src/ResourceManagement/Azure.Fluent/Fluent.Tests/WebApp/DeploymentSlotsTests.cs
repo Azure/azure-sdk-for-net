@@ -19,8 +19,7 @@ namespace Azure.Tests.WebApp
         private static readonly string SLOT_NAME_3 = ResourceNamer.RandomResourceName("java-slot-", 20);
         private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
 
-        [Fact]
-
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDSwapSlots()
         {
             var appServiceManager = TestHelper.CreateAppServiceManager();

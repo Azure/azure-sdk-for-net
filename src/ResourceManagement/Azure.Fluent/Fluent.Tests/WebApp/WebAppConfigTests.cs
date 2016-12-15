@@ -16,7 +16,7 @@ namespace Azure.Tests.WebApp
         private static readonly string WEBAPP_NAME = ResourceNamer.RandomResourceName("java-webapp-", 20);
         private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDWebAppConfig()
         {
             var appServiceManager = TestHelper.CreateAppServiceManager();

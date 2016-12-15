@@ -21,7 +21,7 @@ namespace Azure.Tests.WebApp
         private static readonly string WEBAPP_NAME = ResourceNamer.RandomResourceName("java-webapp-", 20);
         private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public async Task CanBindHostnameAndSsl()
         {
             var appServiceManager = TestHelper.CreateAppServiceManager();
@@ -61,7 +61,6 @@ namespace Azure.Tests.WebApp
 
             // SSL binding
             webApp.Update()
-                    // TODO - ans - Should be a method.
                     .DefineSslBinding()
                         .ForHostname(WEBAPP_NAME + "." + domain.Name)
                         .WithExistingAppServiceCertificateOrder(certificateOrder)

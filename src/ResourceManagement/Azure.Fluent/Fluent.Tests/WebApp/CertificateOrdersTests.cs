@@ -12,7 +12,7 @@ namespace Azure.Tests.WebApp
         private static string RG_NAME = "javacsmrg9b9912262";
         private static string CERTIFICATE_NAME = "graphdmcert7720";
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDCertificateOrder()
         {
             var appServiceManager = TestHelper.CreateAppServiceManager();
