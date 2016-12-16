@@ -381,7 +381,7 @@ function New-SelfSignedCertificateEx {
 	$Request.InstallResponse($AllowUntrustedCertificate,$endCert,$Base64,"")
 	switch ($PSCmdlet.ParameterSetName) {
 		'__file' {
-//[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
+#[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
 			$PFXString = $Request.CreatePFX([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)),
 				$PFXExportEEOnly,
 				$Base64
