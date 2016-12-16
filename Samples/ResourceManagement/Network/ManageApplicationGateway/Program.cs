@@ -77,8 +77,8 @@ namespace ManageApplicationGateway
 
         private static List<Region> regions = new List<Region>(){ Region.US_EAST, Region.UK_WEST };
         private static List<string> addressSpaces = new List<string>(){ "172.16.0.0/16", "172.17.0.0/16" };
-        private static string[][] publicIpCreatableKeys = new string[backendPools][];
-        private static string[][] ipAddresses = new string[backendPools][];
+        private static string[,] publicIpCreatableKeys = new string[backendPools, vmCountInAPool];
+        private static string[,] ipAddresses = new string[backendPools,vmCountInAPool];
         public static void Main(string[] args)
         {
             try
@@ -118,7 +118,7 @@ namespace ManageApplicationGateway
                     var publicIpAddress = azure.PublicIpAddresses.Define(pipName)
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
-                            .Create();
+                            .Create().Refresh();
 
                     Console.WriteLine("Created a public IP address");
 
@@ -159,17 +159,17 @@ namespace ManageApplicationGateway
                             //=============================================================
                             // Create 1 public IP address creatable
                             var publicIpAddressCreatable = azure.PublicIpAddresses
-                                    .Define(string.Format("%s-%d", linuxVMNamePrefix, j))
+                                    .Define(string.Format("{0}-{1}", linuxVMNamePrefix, j))
                                     .WithRegion(regions[i])
                                     .WithExistingResourceGroup(resourceGroup)
-                                    .WithLeafDomainLabel(string.Format("%s-%d", linuxVMNamePrefix, j));
+                                    .WithLeafDomainLabel(string.Format("{0}-{1}", linuxVMNamePrefix, j));
 
-                            publicIpCreatableKeys[i][j] = publicIpAddressCreatable.Key;
+                            publicIpCreatableKeys[i,j] = publicIpAddressCreatable.Key;
 
                             //=============================================================
                             // Create 1 virtual machine creatable
                             var virtualMachineCreatable = azure.VirtualMachines
-                                    .Define(string.Format("%s-%d", linuxVMNamePrefix, j))
+                                    .Define(string.Format("{0}-{1}", linuxVMNamePrefix, j))
                                     .WithRegion(regions[i])
                                     .WithExistingResourceGroup(resourceGroup)
                                     .WithNewPrimaryNetwork(networkCreatable)
@@ -214,15 +214,15 @@ namespace ManageApplicationGateway
                         for (var j = 0; j < vmCountInAPool; j++)
                         {
                             var pip = (IPublicIpAddress)virtualMachines
-                                    .CreatedRelatedResource(publicIpCreatableKeys[i][j]);
+                                    .CreatedRelatedResource(publicIpCreatableKeys[i,j]);
                             pip.Refresh();
-                            ipAddresses[i][j] = pip.IpAddress;
+                            ipAddresses[i,j] = pip.IpAddress;
                             Console.WriteLine("[backend pool ="
                                + i
                                + "][vm = "
                                + j
                                + "] = "
-                               + ipAddresses[i][j]);
+                               + ipAddresses[i,j]);
                         }
 
                         Console.WriteLine("======");
@@ -244,10 +244,10 @@ namespace ManageApplicationGateway
                                 .FromPublicFrontend()
                                 .FromFrontendHttpPort(80)
                                 .ToBackendHttpPort(8080)
-                                .ToBackendIpAddress(ipAddresses[0][0])
-                                .ToBackendIpAddress(ipAddresses[0][1])
-                                .ToBackendIpAddress(ipAddresses[0][2])
-                                .ToBackendIpAddress(ipAddresses[0][3])
+                                .ToBackendIpAddress(ipAddresses[0,0])
+                                .ToBackendIpAddress(ipAddresses[0,1])
+                                .ToBackendIpAddress(ipAddresses[0,2])
+                                .ToBackendIpAddress(ipAddresses[0,3])
                                 .Attach()
                             // Request routing rule for HTTPS from public 443 to public 8080
                             .DefineRequestRoutingRule("HTTPs-443-to-8080")
@@ -256,10 +256,10 @@ namespace ManageApplicationGateway
                                 .WithSslCertificateFromPfxFile(new FileInfo(sslCertificatePfxPath))
                                 .WithSslCertificatePassword("Abc123")
                                 .ToBackendHttpPort(8080)
-                                .ToBackendIpAddress(ipAddresses[1][0])
-                                .ToBackendIpAddress(ipAddresses[1][1])
-                                .ToBackendIpAddress(ipAddresses[1][2])
-                                .ToBackendIpAddress(ipAddresses[1][3])
+                                .ToBackendIpAddress(ipAddresses[1,0])
+                                .ToBackendIpAddress(ipAddresses[1,1])
+                                .ToBackendIpAddress(ipAddresses[1,2])
+                                .ToBackendIpAddress(ipAddresses[1,3])
                                 .Attach()
                             .WithExistingPublicIpAddress(publicIpAddress)
                             .Create();
@@ -287,10 +287,10 @@ namespace ManageApplicationGateway
                                 .WithSslCertificateFromPfxFile(new FileInfo(sslCertificatePfxPath2))
                                 .WithSslCertificatePassword("Abc123")
                                 .ToBackendHttpPort(8080)
-                                .ToBackendIpAddress(ipAddresses[0][0])
-                                .ToBackendIpAddress(ipAddresses[0][1])
-                                .ToBackendIpAddress(ipAddresses[0][2])
-                                .ToBackendIpAddress(ipAddresses[0][3])
+                                .ToBackendIpAddress(ipAddresses[0,0])
+                                .ToBackendIpAddress(ipAddresses[0,1])
+                                .ToBackendIpAddress(ipAddresses[0,2])
+                                .ToBackendIpAddress(ipAddresses[0,3])
                                 .WithHostName("www.contoso.com")
                                 .WithCookieBasedAffinity()
                                 .Attach()
