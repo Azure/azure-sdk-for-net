@@ -34,7 +34,7 @@ namespace ManageWebAppWithDomainSsl
         private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
         private static readonly string planName = ResourceNamer.RandomResourceName("jplan_", 15);
         private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMV_", 24);
-        private static readonly string domainName = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".Com";
+        private static readonly string domainName = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".com";
         private static readonly string certPassword = "StrongPass!12";
 
         public static void Main(string[] args)

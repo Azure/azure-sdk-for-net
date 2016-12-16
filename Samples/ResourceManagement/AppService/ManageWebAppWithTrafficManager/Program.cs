@@ -39,7 +39,7 @@ namespace ManageWebAppWithTrafficManager
         private static readonly string plan1Name = ResourceNamer.RandomResourceName("jplan1_", 15);
         private static readonly string plan2Name = ResourceNamer.RandomResourceName("jplan2_", 15);
         private static readonly string plan3Name = ResourceNamer.RandomResourceName("jplan3_", 15);
-        private static readonly string domainName = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".Com";
+        private static readonly string domainName = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".com";
         private static readonly string tmName = ResourceNamer.RandomResourceName("jsdktm-", 20);
 
         public static void Main(string[] args)
