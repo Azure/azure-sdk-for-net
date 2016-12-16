@@ -12,14 +12,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
-#if !PORTABLE
+#if !PORTABLE && !DNXCORE50
     using System.Security.Permissions;
 #endif
 
     /// <summary>
     /// Exception thrown for an invalid response with Error information.
     /// </summary>
-#if !PORTABLE
+#if !PORTABLE && !DNXCORE50
     [Serializable]
 #endif
     public class ErrorException : RestException
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         {
         }
 
-#if !PORTABLE
+#if !PORTABLE && !DNXCORE50
         /// <summary>
         /// Initializes a new instance of the ErrorException class.
         /// </summary>

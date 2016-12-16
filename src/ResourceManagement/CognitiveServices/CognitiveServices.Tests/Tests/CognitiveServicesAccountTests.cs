@@ -68,6 +68,39 @@ namespace CognitiveServices.Tests
         }
 
         [Fact]
+        public void CognitiveServicsAccountCreateAllApisTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Academic, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingAutosuggest, SkuName.S1, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingSearch, SkuName.S1, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingSpeech, SkuName.S0, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingSpellCheck, SkuName.S1, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.ComputerVision, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.ContentModerator, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Emotion, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Face, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.LUIS, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Recommendations, SkuName.S1, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.SpeakerRecognition, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Speech, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.SpeechTranslation, SkuName.S1, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.TextAnalytics, SkuName.S1, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.TextTranslation, SkuName.S1, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.WebLM, SkuName.S0, "westus");
+            }
+        }
+
+        [Fact]
         public void CognitiveServicesAccountDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -355,6 +388,46 @@ namespace CognitiveServices.Tests
                 CognitiveServicesManagementTestUtilities.ValidateExpectedException(
                     () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, parameters),
                     "LocationNotAvailableForResourceType");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesCreateAccountErrorTest2()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                var accountName = TestUtilities.GenerateName("csa");
+                var nonExistApiPara = new CognitiveServicesAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.F0 },
+                    Kind = "NonExistAPI",
+                    Location = CognitiveServicesManagementTestUtilities.DefaultLocation,
+                    Properties = new object(),
+                };
+
+                var nonExistSkuPara = new CognitiveServicesAccountCreateParameters
+                {
+                    Sku = new Sku { Name = "N0" },
+                    Kind = Kind.Academic,
+                    Location = CognitiveServicesManagementTestUtilities.DefaultLocation,
+                    Properties = new object(),
+                };
+                
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, nonExistApiPara),
+                    "InvalidApiSetId");
+
+                CognitiveServicesManagementTestUtilities.ValidateExpectedException(
+                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, nonExistSkuPara),
+                    "InvalidSkuId");
             }
         }
 

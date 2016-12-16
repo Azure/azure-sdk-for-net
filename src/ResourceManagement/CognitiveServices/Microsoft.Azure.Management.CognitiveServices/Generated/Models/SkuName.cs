@@ -15,20 +15,18 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// <summary>
     /// Defines values for SkuName.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuName
+    public static class SkuName
     {
-        [EnumMember(Value = "F0")]
-        F0,
-        [EnumMember(Value = "S0")]
-        S0,
-        [EnumMember(Value = "S1")]
-        S1,
-        [EnumMember(Value = "S2")]
-        S2,
-        [EnumMember(Value = "S3")]
-        S3,
-        [EnumMember(Value = "S4")]
-        S4
+        public const string F0 = "F0";
+        public const string P0 = "P0";
+        public const string P1 = "P1";
+        public const string P2 = "P2";
+        public const string S0 = "S0";
+        public const string S1 = "S1";
+        public const string S2 = "S2";
+        public const string S3 = "S3";
+        public const string S4 = "S4";
+        public const string S5 = "S5";
+        public const string S6 = "S6";
     }
 }

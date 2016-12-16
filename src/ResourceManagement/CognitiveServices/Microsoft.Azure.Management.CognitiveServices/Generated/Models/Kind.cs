@@ -15,24 +15,24 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// <summary>
     /// Defines values for Kind.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Kind
+    public static class Kind
     {
-        [EnumMember(Value = "ComputerVision")]
-        ComputerVision,
-        [EnumMember(Value = "Emotion")]
-        Emotion,
-        [EnumMember(Value = "Face")]
-        Face,
-        [EnumMember(Value = "LUIS")]
-        LUIS,
-        [EnumMember(Value = "Recommendations")]
-        Recommendations,
-        [EnumMember(Value = "Speech")]
-        Speech,
-        [EnumMember(Value = "TextAnalytics")]
-        TextAnalytics,
-        [EnumMember(Value = "WebLM")]
-        WebLM
+        public const string Academic = "Academic";
+        public const string BingAutosuggest = "Bing.Autosuggest";
+        public const string BingSearch = "Bing.Search";
+        public const string BingSpeech = "Bing.Speech";
+        public const string BingSpellCheck = "Bing.SpellCheck";
+        public const string ComputerVision = "ComputerVision";
+        public const string ContentModerator = "ContentModerator";
+        public const string Emotion = "Emotion";
+        public const string Face = "Face";
+        public const string LUIS = "LUIS";
+        public const string Recommendations = "Recommendations";
+        public const string SpeakerRecognition = "SpeakerRecognition";
+        public const string Speech = "Speech";
+        public const string SpeechTranslation = "SpeechTranslation";
+        public const string TextAnalytics = "TextAnalytics";
+        public const string TextTranslation = "TextTranslation";
+        public const string WebLM = "WebLM";
     }
 }

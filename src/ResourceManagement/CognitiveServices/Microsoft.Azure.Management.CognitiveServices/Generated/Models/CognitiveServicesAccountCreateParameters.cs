@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Initializes a new instance of the
         /// CognitiveServicesAccountCreateParameters class.
         /// </summary>
-        public CognitiveServicesAccountCreateParameters(Sku sku, Kind kind, string location, object properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public CognitiveServicesAccountCreateParameters(Sku sku, string kind, string location, object properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Kind = kind;
@@ -47,11 +47,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Required. Indicates the type of cognitive service account.
-        /// Possible values include: 'ComputerVision', 'Emotion', 'Face',
-        /// 'LUIS', 'Recommendations', 'Speech', 'TextAnalytics', 'WebLM'
+        /// Possible values include: 'Academic', 'Bing.Autosuggest',
+        /// 'Bing.Search', 'Bing.Speech', 'Bing.SpellCheck',
+        /// 'ComputerVision', 'ContentModerator', 'Emotion', 'Face', 'LUIS',
+        /// 'Recommendations', 'SpeakerRecognition', 'Speech',
+        /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation', 'WebLM'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public Kind Kind { get; set; }
+        public string Kind { get; set; }
 
         /// <summary>
         /// Required. Gets or sets the location of the resource. This will be
@@ -87,6 +90,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (Kind == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Kind");
             }
             if (Location == null)
             {

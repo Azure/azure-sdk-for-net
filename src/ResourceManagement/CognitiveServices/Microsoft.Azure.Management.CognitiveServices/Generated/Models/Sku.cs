@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(SkuName name, SkuTier? tier = default(SkuTier?))
+        public Sku(string name, SkuTier? tier = default(SkuTier?))
         {
             Name = name;
             Tier = tier;
@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets the sku name. Required for account creation, optional
-        /// for update. Possible values include: 'F0', 'S0', 'S1', 'S2',
-        /// 'S3', 'S4'
+        /// for update. Possible values include: 'F0', 'P0', 'P1', 'P2',
+        /// 'S0', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the sku tier. This is based on the SKU name. Possible values
@@ -55,6 +55,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
         }
     }
 }
