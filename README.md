@@ -2,12 +2,12 @@
 
 #Azure Management Libraries for .NET
 
-This README is based on the latest released preview version (1.0.0-beta3). If you are looking for other releases, see [More Information](#more-information)
+This README is based on the latest released preview version (1.0.0-beta4). If you are looking for other releases, see [More Information](#more-information)
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
 
-> **1.0.0-beta3** is a developer preview that supports major parts of Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch. The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and tweaking the API over the next few months.
+> **1.0.0-beta4** is a developer preview that supports major parts of Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch. The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and tweaking the API over the next few months.
 
 **Azure Authentication**
 
@@ -187,11 +187,11 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 # Download
 
 
-**1.0.0-beta3**
+**1.0.0-beta4**
 
-1.0.0-beta3 release builds are available on NuGet:
+1.0.0-beta4 release builds are available on NuGet:
 
-Azure Management Library                              | Package name                              | Stable (`1.0.0-beta3` release)
+Azure Management Library                              | Package name                              | Stable (`1.0.0-beta4` release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
 Azure Management Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
 Batch | `Microsoft.Azure.Management.Batch.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Batch.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Batch.Fluent/)
