@@ -129,6 +129,7 @@ function New-SelfSignedCertificateEx {
 .Example
 	New-SelfsignedCertificateEx -Subject "CN=www.domain.com" -EKU "Server Authentication", "Client authentication" `
 	-KeyUsage "KeyEcipherment, DigitalSignature" -SAN "sub.domain.com","www.domain.com","192.168.1.1" `
+//[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
 	-AllowSMIME -Path C:\test\ssl.pfx -Password (ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force) -Exportable `
 	-StoreLocation "LocalMachine"
 	
