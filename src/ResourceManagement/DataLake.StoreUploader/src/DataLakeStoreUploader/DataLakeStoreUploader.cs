@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private readonly CancellationToken _token;
         private int _previousDefaultConnectionLimit;
         private bool isDirectory = false;
+        private readonly string _invocationId;
+        private readonly bool _shouldTrace;
 
         #endregion
 
@@ -74,8 +76,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             UploadParameters uploadParameters,
             IFrontEndAdapter frontEnd,
             IProgress<UploadProgress> progressTracker = null,
-            IProgress<UploadFolderProgress> folderProgressTracker = null,
-            LogLevel logLevel = LogLevel.None) :
+            IProgress<UploadFolderProgress> folderProgressTracker = null) :
             this(uploadParameters, frontEnd, CancellationToken.None, progressTracker, folderProgressTracker)
         {
             
@@ -94,11 +95,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             IFrontEndAdapter frontEnd,
             CancellationToken token,
             IProgress<UploadProgress> progressTracker = null,
-            IProgress<UploadFolderProgress> folderProgressTracker = null,
-            LogLevel logLevel = LogLevel.None)
+            IProgress<UploadFolderProgress> folderProgressTracker = null)
         {
+            _shouldTrace = ServiceClientTracing.IsEnabled;
+
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+            }
+
             this.Parameters = uploadParameters;
-            Logger.LogLevel = logLevel;
             _frontEnd = frontEnd;
             
             //we need to override the default .NET value for max connections to a host to our number of threads, if necessary (otherwise we won't achieve the parallelism we want)
@@ -138,9 +144,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         public void Execute()
         {
-            var previousTracingValue = ServiceClientTracing.IsEnabled;
-            ServiceClientTracing.IsEnabled = true;
-            ServiceClientTracing.AddTracingInterceptor(Logger.SdkTracingInterceptor);
             try
             {
                 // check if we are uploading a file or a directory
@@ -358,7 +361,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                         if (exceptions.Count > 0)
                         {
-                            throw new AggregateException(exceptions);
+                            var ex = new AggregateException(exceptions);
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Error(_invocationId, ex);
+                            }
+
+                            throw ex;
                         }
 
                         metadata.DeleteFile();
@@ -393,10 +402,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                         if (!ex.InnerExceptions.OfType<OperationCanceledException>().Any())
                         {
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Error(_invocationId, ex);
+                            }
+
                             throw;
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         try
                         {
@@ -404,6 +418,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             metadata.Save();
                         }
                         catch { } // saving the metadata is a best effort, we will not fail out for this reason and we want to ensure the root exception is preserved.
+                        if (_shouldTrace)
+                        {
+                            ServiceClientTracing.Error(_invocationId, ex);
+                        }
+
                         throw;
                     }
                 }
@@ -415,8 +434,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             finally
             {
                 //revert back the default .NET value for max connections to a host to whatever it was before
-                ServiceClientTracing.IsEnabled = previousTracingValue;
-                ServiceClientTracing.RemoveTracingInterceptor(Logger.SdkTracingInterceptor);
                 ServicePointManager.DefaultConnectionLimit = _previousDefaultConnectionLimit;
             }
         }
@@ -436,32 +453,74 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if ((!this.Parameters.IsDownload && !File.Exists(this.Parameters.InputFilePath) && !Directory.Exists(this.Parameters.InputFilePath)) || (this.Parameters.IsDownload && !_frontEnd.StreamExists(this.Parameters.InputFilePath)))
             {
-                throw new FileNotFoundException(string.Format("Could not find {0} input file or folder", this.Parameters.IsDownload ? " Data Lake stream" : "local"), this.Parameters.InputFilePath);
+                var ex = new FileNotFoundException(string.Format("Could not find {0} input file or folder", this.Parameters.IsDownload ? " Data Lake stream" : "local"), this.Parameters.InputFilePath);
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (string.IsNullOrWhiteSpace(this.Parameters.TargetStreamPath))
             {
-                throw new ArgumentNullException("TargetStreamPath", "Null or empty Target Stream Path");
+                var ex = new ArgumentNullException("TargetStreamPath", "Null or empty Target Stream Path");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (this.Parameters.TargetStreamPath.EndsWith("/"))
             {
-                throw new ArgumentException("Invalid TargetStreamPath, a stream path should not end with /");
+                var ex = new ArgumentException("Invalid TargetStreamPath, a stream path should not end with /");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (string.IsNullOrWhiteSpace(this.Parameters.AccountName))
             {
-                throw new ArgumentNullException("AccountName", "Null or empty Account Name");
+                var ex = new ArgumentNullException("AccountName", "Null or empty Account Name");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (this.Parameters.PerFileThreadCount < 1 || this.Parameters.PerFileThreadCount > MaxAllowedThreads)
             {
-                throw new ArgumentOutOfRangeException(string.Format("FileThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
+                var ex = new ArgumentOutOfRangeException(string.Format("FileThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (this.Parameters.ConcurrentFileCount < 1 || this.Parameters.ConcurrentFileCount > MaxAllowedThreads)
             {
-                throw new ArgumentOutOfRangeException(string.Format("FolderThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
+                var ex = new ArgumentOutOfRangeException(string.Format("FolderThreadCount must be at least 1 and at most {0}", MaxAllowedThreads), "ThreadCount");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             // if the input is a directory, set it
@@ -566,19 +625,29 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         _token.ThrowIfCancellationRequested();
                         if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
                         {
-                            throw new UploadFailedException(
+                            var ex = new UploadFailedException(
                                 string.Format(
                                     "Cannot validate metadata for stream: {0} in order to resume due to the following exception retrieving file information: {1}",
                                     metadata.TargetStreamPath,
                                     e));
+
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Error(_invocationId, ex);
+                            }
+
+                            throw ex;
                         }
 
                         var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
-                        Logger.LogError("ValidateMetadataForResume - folder upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
-                            metadata.TargetStreamPath,
-                            retryCount,
-                            e,
-                            waitTime);
+                        if (_shouldTrace)
+                        {
+                            ServiceClientTracing.Information("ValidateMetadataForResume - folder upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                                metadata.TargetStreamPath,
+                                retryCount,
+                                e,
+                                waitTime);
+                        }
                     }
                 }
 
@@ -588,17 +657,31 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             //verify that the target stream does not already exist and hasn't completed (in case we don't want to overwrite)
             if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
             {
-                throw new InvalidOperationException(string.Format("Stream at path: {0} already exists. Please set overwrite to true to overwrite streams that exist.", metadata.TargetStreamPath));
+                var ex = new InvalidOperationException(string.Format("Stream at path: {0} already exists. Please set overwrite to true to overwrite streams that exist.", metadata.TargetStreamPath));
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             //make sure we don't upload part of the file as binary, while the rest is non-binary (that's just asking for trouble)
             if (this.Parameters.IsBinary != metadata.IsBinary)
             {
-                throw new InvalidOperationException(
+                var ex = new InvalidOperationException(
                     string.Format(
                         "Existing metadata was created for a {0}binary file while the current parameters requested a {1}binary upload.", 
                         metadata.IsBinary ? string.Empty : "non-", 
                         this.Parameters.IsBinary ? string.Empty : "non-"));
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             //see what files(segments) already exist - update metadata accordingly (only for segments that are missing from server; if it's on the server but not in metadata, reupload)
@@ -636,19 +719,29 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             _token.ThrowIfCancellationRequested();
                             if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
                             {
-                                throw new UploadFailedException(
+                                var ex = new UploadFailedException(
                                     string.Format(
                                         "Cannot validate metadata for stream: {0} in order to resume due to the following exception retrieving file information: {1}",
                                         metadata.TargetStreamPath,
                                         e));
+
+                                if (_shouldTrace)
+                                {
+                                    ServiceClientTracing.Error(_invocationId, ex);
+                                }
+
+                                throw ex;
                             }
 
                             var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
-                            Logger.LogError("ValidateMetadataForResume - file upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
-                                metadata.TargetStreamPath,
-                                retryCount,
-                                e,
-                                waitTime);
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Information("ValidateMetadataForResume - file upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                                    metadata.TargetStreamPath,
+                                    retryCount,
+                                    e,
+                                    waitTime);
+                            }
                         }
                     }
                 }
@@ -678,7 +771,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             //verify that the target stream does not already exist (in case we don't want to overwrite)
             if (!this.Parameters.IsOverwrite && _frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
             {
-                throw new InvalidOperationException(string.Format("Target Stream: {0} already exists", metadata.TargetStreamPath));
+                var ex = new InvalidOperationException(string.Format("Target Stream: {0} already exists", metadata.TargetStreamPath));
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
         }
 
@@ -693,19 +793,40 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 if (!metadata.TargetStreamPath.Trim().Contains(this.Parameters.TargetStreamPath.Trim()))
                 {
-                    throw new InvalidOperationException(string.Format("Metadata points to a different target stream folder in path: {0} than the input parameters: {1}", metadata.TargetStreamPath, this.Parameters.TargetStreamPath));
+                    var ex = new InvalidOperationException(string.Format("Metadata points to a different target stream folder in path: {0} than the input parameters: {1}", metadata.TargetStreamPath, this.Parameters.TargetStreamPath));
+
+                    if (_shouldTrace)
+                    {
+                        ServiceClientTracing.Error(_invocationId, ex);
+                    }
+
+                    throw ex;
                 }
             }
             else
             {
                 if (metadata.TargetStreamPath.Trim() != this.Parameters.TargetStreamPath.Trim())
                 {
-                    throw new InvalidOperationException("Metadata points to a different target stream than the input parameters");
+                    var ex = new InvalidOperationException("Metadata points to a different target stream than the input parameters");
+
+                    if (_shouldTrace)
+                    {
+                        ServiceClientTracing.Error(_invocationId, ex);
+                    }
+
+                    throw ex;
                 }
 
                 if (!this.Parameters.InputFilePath.Equals(metadata.InputFilePath, StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new InvalidOperationException("The metadata refers to different file than the one requested");
+                    var ex = new InvalidOperationException("The metadata refers to different file than the one requested");
+
+                    if (_shouldTrace)
+                    {
+                        ServiceClientTracing.Error(_invocationId, ex);
+                    }
+
+                    throw ex;
                 }
             }
 
@@ -713,12 +834,26 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // is covered in a separate check.
             if (!metadata.IsDownload && !_frontEnd.StreamExists(metadata.InputFilePath, !metadata.IsDownload))
             {
-                throw new InvalidOperationException("The metadata refers to a file that does not exist");
+                var ex = new InvalidOperationException("The metadata refers to a file that does not exist");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (!metadata.IsDownload && metadata.FileLength != _frontEnd.GetStreamLength(metadata.InputFilePath, !metadata.IsDownload))
             {
-                throw new InvalidOperationException("The metadata's file information differs from the actual file");
+                var ex = new InvalidOperationException("The metadata's file information differs from the actual file");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
         }
 
@@ -773,7 +908,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             if(exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                var ex = new AggregateException(exceptions);
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             metadata.Save();
@@ -817,7 +959,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             if(exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                var ex = new AggregateException(exceptions);
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
         }
 
@@ -829,18 +978,39 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (metadata.TargetStreamFolderPath.Trim() != this.Parameters.TargetStreamPath.Trim())
             {
-                throw new InvalidOperationException(string.Format("Metadata points to a different target stream folder: {0} than the input parameters: {1}", metadata.TargetStreamFolderPath, this.Parameters.TargetStreamPath));
+                var ex = new InvalidOperationException(string.Format("Metadata points to a different target stream folder: {0} than the input parameters: {1}", metadata.TargetStreamFolderPath, this.Parameters.TargetStreamPath));
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             //verify that it matches against source folder (size, name)
             if (!this.Parameters.InputFilePath.Equals(metadata.InputFolderPath, StringComparison.OrdinalIgnoreCase))
             {
-                throw new InvalidOperationException("The metadata refers to different folder than the one requested");
+                var ex = new InvalidOperationException("The metadata refers to different folder than the one requested");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             if (!_frontEnd.StreamExists(metadata.InputFolderPath, !this.Parameters.IsDownload))
             {
-                throw new InvalidOperationException("The metadata refers to a folder that does not exist");
+                var ex = new InvalidOperationException("The metadata refers to a folder that does not exist");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
 
@@ -865,7 +1035,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
             if (metadata.TotalFileBytes != totalBytes)
             {
-                throw new InvalidOperationException("The metadata's total size information for all files in the directory differs from the actual directory information!");
+                var ex = new InvalidOperationException("The metadata's total size information for all files in the directory differs from the actual directory information!");
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             var exceptions = new ConcurrentQueue<Exception>();
@@ -888,7 +1065,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 // validate the file exists and the size is correct
                                 if (!fileAndSizePairs.ContainsKey(toValidate.InputFilePath) || fileAndSizePairs[toValidate.InputFilePath] != toValidate.FileLength)
                                 {
-                                    throw new InvalidOperationException("The metadata refers to a file that does not exist or the file size does not match");
+                                    var ex = new InvalidOperationException("The metadata refers to a file that does not exist or the file size does not match");
+
+                                    if (_shouldTrace)
+                                    {
+                                        ServiceClientTracing.Error(_invocationId, ex);
+                                    }
+
+                                    throw ex;
                                 }
                             }
                         }
@@ -910,7 +1094,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             if(exceptions.Count > 0)
             {
-                throw new AggregateException(exceptions);
+                var ex = new AggregateException(exceptions);
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
         }
 
@@ -973,7 +1164,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (!_frontEnd.StreamExists(metadata.InputFilePath))
             {
-                throw new FileNotFoundException("Unable to locate remote file", metadata.InputFilePath);
+                var ex = new FileNotFoundException("Unable to locate remote file", metadata.InputFilePath);
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             try
@@ -1117,7 +1315,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
                 else
                 {
-                    throw new InvalidOperationException(string.Format("Target Stream: {0} already exists", metadata.TargetStreamPath));
+                    var ex = new InvalidOperationException(string.Format("Target Stream: {0} already exists", metadata.TargetStreamPath));
+
+                    if (_shouldTrace)
+                    {
+                        ServiceClientTracing.Error(_invocationId, ex);
+                    }
+
+                    throw ex;
                 }
             }
 
@@ -1148,24 +1353,41 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             _token.ThrowIfCancellationRequested();
                             if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
                             {
-                                throw new UploadFailedException(
+                                var ex = new UploadFailedException(
                                     string.Format(
                                         "Cannot perform 'Finalization' operation due to the following exception retrieving file information: {0}",
                                         e));
+
+                                if (_shouldTrace)
+                                {
+                                    ServiceClientTracing.Error(_invocationId, ex);
+                                }
+
+                                throw ex;
                             }
 
                             var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
-                            Logger.LogError("ConcatenateSegments: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
-                                metadata.TargetStreamPath,
-                                retryCount,
-                                e,
-                                waitTime);
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Information("ConcatenateSegments: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                                    metadata.TargetStreamPath,
+                                    retryCount,
+                                    e,
+                                    waitTime);
+                            }
                         }
                     }
 
                     if (remoteLength != metadata.FileLength)
                     {
-                        throw new UploadFailedException(string.Format("Cannot perform 'Finalization' operation because in progress file {0} has an incorrect length (expected {1}, actual {2}).", inputPaths[0], metadata.FileLength, remoteLength));
+                        var ex = new UploadFailedException(string.Format("Cannot perform 'Finalization' operation because in progress file {0} has an incorrect length (expected {1}, actual {2}).", inputPaths[0], metadata.FileLength, remoteLength));
+
+                        if (_shouldTrace)
+                        {
+                            ServiceClientTracing.Error(_invocationId, ex);
+                        }
+
+                        throw ex;
                     }
                 }
                 catch (Exception ex)
@@ -1183,7 +1405,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     {
                         if (metadata.Segments[i].Status != SegmentUploadStatus.Complete)
                         {
-                            throw new UploadFailedException("Cannot perform 'Concatenate' operation because not all streams are fully uploaded.");
+                            var ex = new UploadFailedException("Cannot perform 'Concatenate' operation because not all streams are fully uploaded.");
+
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Error(_invocationId, ex);
+                            }
+
+                            throw ex;
                         }
 
                         inputPaths[i] = metadata.Segments[i].Path;
@@ -1198,7 +1427,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             if (exceptions.Count > 0)
             {
-                throw new AggregateException("At least one concatenate test failed", exceptions.ToArray());
+                var ex = new AggregateException("At least one concatenate test failed", exceptions.ToArray());
+
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+
+                throw ex;
             }
 
             //issue the command

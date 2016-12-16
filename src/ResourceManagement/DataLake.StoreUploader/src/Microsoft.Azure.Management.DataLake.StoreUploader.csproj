@@ -35,9 +35,7 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="DataLakeStoreUploader\DataLakeStoreFrontEndAdapter.cs" />
-    <Compile Include="DataLakeStoreUploader\Logger.cs" />
     <Compile Include="DataLakeStoreUploader\DataLakeStoreUploader.cs" />
-    <Compile Include="DataLakeStoreUploader\DataLakeStoreTracingInterceptor.cs" />
     <Compile Include="DataLakeStoreUploader\IFrontEndAdapter.cs" />
     <Compile Include="DataLakeStoreUploader\InvalidMetadataException.cs" />
     <Compile Include="DataLakeStoreUploader\MultipleSegmentDownloader.cs" />
