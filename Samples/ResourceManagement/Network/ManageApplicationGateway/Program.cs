@@ -70,8 +70,8 @@ namespace ManageApplicationGateway
         private static readonly string pipName = ResourceNamer.RandomResourceName("pip" + "-", 18);
         private static readonly string userName = "tirekicker";
         private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-        private static readonly string sslCertificatePfxPath = "c:\\automation\\myTest.pfx";
-        private static readonly string sslCertificatePfxPath2 = "c:\\automation\\myTest2.pfx";
+        private static readonly string sslCertificatePfxPath = "myTest._pfx"; // Relative to project root directory by default
+        private static readonly string sslCertificatePfxPath2 = "myTest2._pfx"; // Relative to project root directory by default
         private const int backendPools = 2;
         private const int vmCountInAPool = 4;
 
