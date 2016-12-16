@@ -13,24 +13,28 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public interface ICdnProfile  :
         IGroupableResource,
-        IRefreshable<ICdnProfile>,
-        IWrapper<ProfileInner>,
+        IRefreshable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        IWrapper<Microsoft.Azure.Management.Cdn.Fluent.Models.ProfileInner>,
         IUpdatable<CdnProfile.Update.IUpdate>
     {
-        /// <return>Endpoints in the CDN manager profile, indexed by the name.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,ICdnEndpoint> Endpoints { get; }
+        /// <summary>
+        /// Gets endpoints in the CDN manager profile, indexed by the name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint> Endpoints { get; }
 
         /// <summary>
         /// Checks the availability of a endpoint name without creating the CDN endpoint.
         /// </summary>
         /// <param name="name">The endpoint resource name to validate.</param>
         /// <return>The CheckNameAvailabilityResult object if successful.</return>
-        CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
+        Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
 
         /// <summary>
-        /// Checks if current instance of CDN profile Sku is Premium Verizon.
+        /// Gets Checks if current instance of CDN profile Sku is Premium Verizon.
         /// </summary>
-        /// <return>True if current instance of CDN Profile Sku is of Premium Verizon, false otherwise.</return>
+        /// <summary>
+        /// Gets true if current instance of CDN Profile Sku is of Premium Verizon, false otherwise.
+        /// </summary>
         bool IsPremiumVerizon { get; }
 
         /// <summary>
@@ -46,7 +50,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
         void LoadEndpointContent(string endpointName, IList<string> contentPaths);
 
-        /// <return>CDN profile state.</return>
+        /// <summary>
+        /// Gets CDN profile state.
+        /// </summary>
         string ResourceState { get; }
 
         /// <summary>
@@ -55,10 +61,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
         /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
         /// <return>CustomDomainValidationResult object if successful.</return>
-        CustomDomainValidationResult ValidateEndpointCustomDomain(string endpointName, string hostName);
+        Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult ValidateEndpointCustomDomain(string endpointName, string hostName);
 
-        /// <return>Sku.</return>
-        Sku Sku { get; }
+        /// <summary>
+        /// Gets Sku.
+        /// </summary>
+        Microsoft.Azure.Management.Cdn.Fluent.Models.Sku Sku { get; }
 
         /// <summary>
         /// Starts stopped CDN endpoint in current profile.

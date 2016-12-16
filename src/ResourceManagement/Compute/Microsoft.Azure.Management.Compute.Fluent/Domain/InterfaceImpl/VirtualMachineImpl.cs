@@ -2,22 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using VirtualMachine.Definition;
-    using Microsoft.Azure.Management.Storage.Fluent;
-    using VirtualMachine.Update;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using VirtualMachine.Definition;
+    using VirtualMachine.Update;
+    using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using System.Collections.Generic;
 
-    internal partial class VirtualMachineImpl
+    internal partial class VirtualMachineImpl 
     {
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
@@ -135,31 +135,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.UpdateDataDisk(name) as VirtualMachineDataDisk.Update.IUpdate;
         }
 
-        /// <return>The extensions attached to the Azure Virtual Machine.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Extensions
+        /// <summary>
+        /// Gets the extensions attached to the Azure Virtual Machine.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Extensions
         {
             get
             {
-                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
+                return this.Extensions() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
             }
         }
 
         /// <summary>
-        /// Returns id to the availability set this virtual machine associated with.
-        /// <p>
+        /// Gets Returns id to the availability set this virtual machine associated with.
         /// Having a set of virtual machines in an availability set ensures that during maintenance
         /// event at least one virtual machine will be available.
         /// </summary>
-        /// <return>The availabilitySet reference id.</return>
+        /// <summary>
+        /// Gets the availabilitySet reference id.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.AvailabilitySetId
         {
             get
             {
-                return this.AvailabilitySetId() as string;
+                return this.AvailabilitySetId();
             }
         }
 
-        /// <return>The operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'.</return>
+        /// <summary>
+        /// Gets the operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'.
+        /// </summary>
         Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.OsDiskCachingType
         {
             get
@@ -173,11 +178,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Start()
         {
-
+ 
             this.Start();
         }
 
-        /// <return>The plan value.</return>
+        /// <summary>
+        /// Gets the plan value.
+        /// </summary>
         Models.Plan Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Plan
         {
             get
@@ -186,12 +193,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The virtual machine unique id.</return>
+        /// <summary>
+        /// Gets the virtual machine unique id.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.VmId
         {
             get
             {
-                return this.VmId() as string;
+                return this.VmId();
             }
         }
 
@@ -204,7 +213,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.AvailableSizes() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
         }
 
-        /// <return>The operating system of this virtual machine.</return>
+        /// <summary>
+        /// Gets the operating system of this virtual machine.
+        /// </summary>
         Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.OsType
         {
             get
@@ -215,16 +226,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Shuts down the Virtual Machine and releases the compute resources.
-        /// <p>
         /// You are not billed for the compute resources that this Virtual Machine uses.
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Deallocate()
         {
-
+ 
             this.Deallocate();
         }
 
-        /// <return>The virtual machine size.</return>
+        /// <summary>
+        /// Gets the virtual machine size.
+        /// </summary>
         Models.VirtualMachineSizeTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Size
         {
             get
@@ -235,18 +247,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Power off (stop) the virtual machine.
-        /// <p>
         /// You will be billed for the compute resources that this Virtual Machine uses.
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.PowerOff()
         {
-
+ 
             this.PowerOff();
         }
 
         /// <summary>
         /// Refreshes the virtual machine instance view to sync with Azure.
-        /// <p>
         /// this will caches the instance view which can be later retrieved using VirtualMachine.instanceView().
         /// </summary>
         /// <return>The refreshed instance view.</return>
@@ -255,25 +265,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.RefreshInstanceView() as Models.VirtualMachineInstanceView;
         }
 
-        /// <return>The provisioningState value.</return>
+        /// <summary>
+        /// Gets the provisioningState value.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ProvisioningState
         {
             get
             {
-                return this.ProvisioningState() as string;
+                return this.ProvisioningState();
             }
         }
 
-        /// <return>The uri to the vhd file backing this virtual machine's operating system disk.</return>
+        /// <summary>
+        /// Gets the uri to the vhd file backing this virtual machine's operating system disk.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.OsDiskVhdUri
         {
             get
             {
-                return this.OsDiskVhdUri() as string;
+                return this.OsDiskVhdUri();
             }
         }
 
-        /// <return>The power state of the virtual machine.</return>
+        /// <summary>
+        /// Gets the power state of the virtual machine.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.PowerState Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.PowerState
         {
             get
@@ -284,7 +300,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.
-        /// <p>
         /// note that this method makes a rest API call to fetch the resource.
         /// </summary>
         /// <return>The public IP of the primary network interface.</return>
@@ -293,19 +308,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetPrimaryPublicIpAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress;
         }
 
-        /// <return>Name of this virtual machine.</return>
+        /// <summary>
+        /// Gets name of this virtual machine.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ComputerName
         {
             get
             {
-                return this.ComputerName() as string;
+                return this.ComputerName();
             }
         }
 
         /// <summary>
-        /// Gets the operating system profile of an Azure virtual machine.
+        /// Gets Gets the operating system profile of an Azure virtual machine.
         /// </summary>
-        /// <return>The osProfile value.</return>
+        /// <summary>
+        /// Gets the osProfile value.
+        /// </summary>
         Models.OSProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.OsProfile
         {
             get
@@ -320,17 +339,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Restart()
         {
-
+ 
             this.Restart();
         }
 
         /// <summary>
-        /// Returns the diagnostics profile of an Azure virtual machine.
-        /// <p>
+        /// Gets Returns the diagnostics profile of an Azure virtual machine.
         /// Enabling diagnostic features in a virtual machine enable you to easily diagnose and recover
         /// virtual machine from boot failures.
         /// </summary>
-        /// <return>The diagnosticsProfile value.</return>
+        /// <summary>
+        /// Gets the diagnosticsProfile value.
+        /// </summary>
         Models.DiagnosticsProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.DiagnosticsProfile
         {
             get
@@ -344,7 +364,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Redeploy()
         {
-
+ 
             this.Redeploy();
         }
 
@@ -358,24 +378,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The template as json string.</return>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Capture(string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            return this.Capture(containerName, vhdPrefix, overwriteVhd) as string;
+            return this.Capture(containerName, vhdPrefix, overwriteVhd);
         }
 
-        /// <return>The licenseType value.</return>
+        /// <summary>
+        /// Gets the licenseType value.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.LicenseType
         {
             get
             {
-                return this.LicenseType() as string;
+                return this.LicenseType();
             }
         }
 
         /// <summary>
-        /// Get the virtual machine instance view.
-        /// <p>
+        /// Gets Get the virtual machine instance view.
         /// this method returns the cached instance view, to refresh the cache call VirtualMachine.refreshInstanceView().
         /// </summary>
-        /// <return>The virtual machine instance view.</return>
+        /// <summary>
+        /// Gets the virtual machine instance view.
+        /// </summary>
         Models.VirtualMachineInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.InstanceView
         {
             get
@@ -385,13 +408,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Returns the storage profile of an Azure virtual machine.
-        /// <p>
+        /// Gets Returns the storage profile of an Azure virtual machine.
         /// The storage profile contains information such as the details of the VM image or user image
         /// from which this virtual machine is created, the Azure storage account where the operating system
         /// disk is stored, details of the data disk attached to the virtual machine.
         /// </summary>
-        /// <return>The storageProfile value.</return>
+        /// <summary>
+        /// Gets the storageProfile value.
+        /// </summary>
         Models.StorageProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.StorageProfile
         {
             get
@@ -405,11 +429,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Generalize()
         {
-
+ 
             this.Generalize();
         }
 
-        /// <return>The size of the operating system disk in GB.</return>
+        /// <summary>
+        /// Gets the size of the operating system disk in GB.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.OsDiskSize
         {
             get
@@ -418,7 +444,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The list of data disks attached to this virtual machine.</return>
+        /// <summary>
+        /// Gets the list of data disks attached to this virtual machine.
+        /// </summary>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.DataDisks
         {
             get
@@ -430,7 +458,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The resource ID of the public IP address associated with this virtual machine's primary network interface.</return>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GetPrimaryPublicIpAddressId()
         {
-            return this.GetPrimaryPublicIpAddressId() as string;
+            return this.GetPrimaryPublicIpAddressId();
         }
 
         /// <summary>
@@ -445,7 +473,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Associate an existing network interface with the virtual machine.
-        /// 
         /// Note this method's effect is additive, i.e. each time it is used, the new secondary
         /// network interface added to the virtual machine.
         /// </summary>
@@ -459,8 +486,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Create a new network interface to associate with the virtual machine, based on the
         /// provided definition.
-        /// 
-        /// <p>
         /// Note this method's effect is additive, i.e. each time it is used, the new secondary
         /// network interface added to the virtual machine.
         /// </summary>
@@ -483,7 +508,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Associate an existing network interface with the virtual machine.
-        /// 
         /// Note this method's effect is additive, i.e. each time it is used, the new secondary
         /// network interface added to the virtual machine.
         /// </summary>
@@ -497,8 +521,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Create a new network interface to associate with the virtual machine, based on the
         /// provided definition.
-        /// 
-        /// <p>
         /// Note this method's effect is additive, i.e. each time it is used, the new secondary
         /// network interface added to the virtual machine.
         /// </summary>
@@ -518,18 +540,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine;
         }
 
-        /// <return>The resource id of the primary network interface associated with this resource.</return>
+        /// <summary>
+        /// Gets the resource id of the primary network interface associated with this resource.
+        /// </summary>
         string Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces.PrimaryNetworkInterfaceId
         {
             get
             {
-                return this.PrimaryNetworkInterfaceId() as string;
+                return this.PrimaryNetworkInterfaceId();
             }
         }
 
         /// <summary>
         /// Gets the primary network interface.
-        /// <p>
         /// Note that this method can result in a call to the cloud to fetch the network interface information.
         /// </summary>
         /// <return>The primary network interface associated with this resource.</return>
@@ -538,7 +561,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetPrimaryNetworkInterface() as Microsoft.Azure.Management.Network.Fluent.INetworkInterface;
         }
 
-        /// <return>The list of resource IDs of the network interfaces associated with this resource.</return>
+        /// <summary>
+        /// Gets the list of resource IDs of the network interfaces associated with this resource.
+        /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces.NetworkInterfaceIds
         {
             get
@@ -570,7 +595,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
         /// and associate it with the virtual machine's primary network interface.
-        /// <p>
         /// the internal name for the public IP address will be derived from the DNS label.
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
@@ -592,7 +616,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the SSH public key.
-        /// <p>
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">The SSH public key in PEM format.</param>
@@ -615,7 +638,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Creates a new virtual network to associate with the virtual machine's primary network interface.
-        /// <p>
         /// the virtual network will be created in the same resource group and region as of virtual machine, it will be
         /// created with the specified address space and a default subnet covering the entirety of the network IP address space.
         /// </summary>
@@ -639,7 +661,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies definition of a not-yet-created storage account definition
         /// to put the VM's OS and data disk VHDs in.
-        /// <p>
         /// Only the OS disk based on marketplace image will be stored in the new storage account.
         /// An OS disk based on user image will be stored in the same storage account as user image.
         /// </summary>
@@ -652,7 +673,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the name of a new storage account to put the VM's OS and data disk VHD in.
-        /// <p>
         /// Only the OS disk based on marketplace image will be stored in the new storage account,
         /// an OS disk based on user image will be stored in the same storage account as user image.
         /// </summary>
@@ -665,7 +685,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies an existing StorageAccount storage account to put the VM's OS and data disk VHD in.
-        /// <p>
         /// An OS disk based on marketplace or user image (generalized image) will be stored in this
         /// storage account.
         /// </summary>
@@ -738,7 +757,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the SSH public key.
-        /// <p>
         /// Each call to this method adds the given public key to the list of VM's public keys.
         /// </summary>
         /// <param name="publicKey">The SSH public key in PEM format.</param>
@@ -938,7 +956,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the WINRM listener.
-        /// <p>
         /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
         /// </summary>
         /// <param name="listener">The WinRmListener.</param>
@@ -1081,7 +1098,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies an existing AvailabilitySet availability set to to associate the virtual machine with.
-        /// <p>
         /// Adding virtual machines running your application to an availability set ensures that during
         /// maintenance event at least one virtual machine will be available.
         /// </summary>
@@ -1095,7 +1111,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Specifies definition of a not-yet-created availability set definition
         /// to associate the virtual machine with.
-        /// <p>
         /// Adding virtual machines running your application to an availability set ensures that during
         /// maintenance event at least one virtual machine will be available.
         /// </summary>
@@ -1108,7 +1123,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Specifies the name of a new availability set to associate the virtual machine with.
-        /// <p>
         /// Adding virtual machines running your application to an availability set ensures that during
         /// maintenance event at least one virtual machine will be available.
         /// </summary>

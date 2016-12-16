@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             IBatchAccount,
             BatchAccountInner,
             BatchAccountImpl,
-            BatchManager,
+            IBatchManager,
             BatchAccount.Definition.IWithGroup,
             BatchAccount.Definition.IWithCreateAndApplication,
             BatchAccount.Definition.IWithCreate,
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         internal BatchAccountImpl(string name,
                 BatchAccountInner innerObject,
                 IBatchAccountOperations innerCollection,
-                BatchManager manager,
+                IBatchManager manager,
                 IApplicationOperations applicationsClient,
                 IApplicationPackageOperations applicationPackagesClient,
                 IStorageManager storageManager)

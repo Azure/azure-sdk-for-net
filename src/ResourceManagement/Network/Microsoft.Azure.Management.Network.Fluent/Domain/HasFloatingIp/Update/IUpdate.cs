@@ -2,32 +2,29 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.Update
 {
-
-
     /// <summary>
-    /// The stage of a definition allowing to control floating IP support.
-    /// @param <ReturnT> the next stage of the definition
+    /// The stage of an update allowing to control floating IP support.
     /// </summary>
+    /// <typeparam name="Return">The next stage of the definition.</typeparam>
     public interface IWithFloatingIp<ReturnT> 
     {
         /// <summary>
-        /// Enables floating IP support.
-        /// </summary>
-        /// <returns>the next stage of the definition</returns>
-        ReturnT WithFloatingIpEnabled();
-
-        /// <summary>
         /// Disables floating IP support.
         /// </summary>
-        /// <returns>the next stage of the definition</returns>
+        /// <return>The next stage of the definition.</return>
         ReturnT WithFloatingIpDisabled();
+
+        /// <summary>
+        /// Enables floating IP support.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        ReturnT WithFloatingIpEnabled();
 
         /// <summary>
         /// Sets the floating IP enablement.
         /// </summary>
-        /// <param name="enabled">enabled true if floating IP should be enabled</param>
-        /// <returns>the next stage of the definition</returns>
+        /// <param name="enabled">True if floating IP should be enabled.</param>
+        /// <return>The next stage of the definition.</return>
         ReturnT WithFloatingIp(bool enabled);
-
     }
 }

@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Entry point to virtual machine sizes API.
     /// </summary>
-    public interface IVirtualMachineSizes :
+    public interface IVirtualMachineSizes  :
         ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>
     {
     }

@@ -4,21 +4,25 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 {
     internal partial class TrafficManagerAzureEndpointImpl 
     {
-        /// <return>The type of the target Azure resource.</return>
-        TargetAzureResourceType ITrafficManagerAzureEndpoint.TargetResourceType
+        /// <summary>
+        /// Gets the type of the target Azure resource.
+        /// </summary>
+        Microsoft.Azure.Management.Trafficmanager.Fluent.TargetAzureResourceType Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerAzureEndpoint.TargetResourceType
         {
             get
             {
-                return this.TargetResourceType() as TargetAzureResourceType;
+                return this.TargetResourceType() as Microsoft.Azure.Management.Trafficmanager.Fluent.TargetAzureResourceType;
             }
         }
 
-        /// <return>The resource id of the target Azure resource.</return>
-        string ITrafficManagerAzureEndpoint.TargetAzureResourceId
+        /// <summary>
+        /// Gets the resource id of the target Azure resource.
+        /// </summary>
+        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerAzureEndpoint.TargetAzureResourceId
         {
             get
             {
-                return this.TargetAzureResourceId() as string;
+                return this.TargetAzureResourceId();
             }
         }
     }

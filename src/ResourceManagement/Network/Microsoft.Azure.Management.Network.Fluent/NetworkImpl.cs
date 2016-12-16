@@ -6,20 +6,19 @@
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya0ltcGw=
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network.Fluent.Models;
+    using Models;
     using System.Collections.Generic;
     using Resource.Fluent.Core;
-    using Management.Network.Fluent;
     using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for Network
     /// </summary>
-    public partial class NetworkImpl :
+    internal partial class NetworkImpl :
         GroupableParentResource<INetwork,
             VirtualNetworkInner,
             NetworkImpl,
-            NetworkManager,
+            INetworkManager,
             Network.Definition.IWithGroup,
             Network.Definition.IWithCreate,
             Network.Definition.IWithCreate,
@@ -34,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             string name,
             VirtualNetworkInner innerModel,
             IVirtualNetworksOperations innerCollection,
-            NetworkManager networkManager) : base(name, innerModel, networkManager)
+            INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
         }

@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
 
     internal partial class CnameRecordSetsImpl 
     {
@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<ICnameRecordSet> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<ICnameRecordSet>.List()
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<ICnameRecordSet>;
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>;
         }
 
         /// <summary>
@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        ICnameRecordSet Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByName<ICnameRecordSet>.GetByName(string name)
+        Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet>.GetByName(string name)
         {
-            return this.GetByName(name) as ICnameRecordSet;
+            return this.GetByName(name) as Microsoft.Azure.Management.Dns.Fluent.ICnameRecordSet;
         }
     }
 }

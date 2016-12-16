@@ -6,8 +6,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 {
     internal partial class SoaRecordSetImpl 
     {
-        /// <return>The Soa record in this record set.</return>
-        SoaRecord ISoaRecordSet.Record
+        /// <summary>
+        /// Gets the Soa record in this record set.
+        /// </summary>
+        SoaRecord Microsoft.Azure.Management.Dns.Fluent.ISoaRecordSet.Record
         {
             get
             {

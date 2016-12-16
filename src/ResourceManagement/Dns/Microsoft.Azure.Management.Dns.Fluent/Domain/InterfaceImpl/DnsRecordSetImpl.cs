@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using DnsRecordSet.Definition;
+    using DnsRecordSet.UpdateCombined;
+    using DnsRecordSet.UpdateDefinition;
     using DnsRecordSet.Update;
     using DnsZone.Definition;
-    using System.Threading;
-    using DnsRecordSet.UpdateDefinition;
-    using DnsRecordSet.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using DnsZone.Update;
-    using DnsRecordSet.UpdateCombined;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
-    using System.Threading.Tasks;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using System.Collections.Generic;
     using Models;
 
     internal abstract partial class DnsRecordSetImpl 
@@ -408,8 +408,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.WithMetadata(key, value) as DnsRecordSet.Definition.IWithAttach<DnsZone.Definition.IWithCreate>;
         }
 
-        /// <return>The metadata associated with this record set.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> IDnsRecordSet.Metadata
+        /// <summary>
+        /// Gets the metadata associated with this record set.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.Metadata
         {
             get
             {
@@ -417,8 +419,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>TTL of the records in this record set.</return>
-        long IDnsRecordSet.TimeToLive
+        /// <summary>
+        /// Gets TTL of the records in this record set.
+        /// </summary>
+        long Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.TimeToLive
         {
             get
             {
@@ -426,8 +430,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        /// <return>The type of records in this record set.</return>
-        RecordType IDnsRecordSet.RecordType
+        /// <summary>
+        /// Gets the type of records in this record set.
+        /// </summary>
+        RecordType Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.RecordType
         {
             get
             {

@@ -1,44 +1,50 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using System.Collections.Generic;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Collections.Generic;
 
-    internal partial class VirtualMachineScaleSetVMInstanceExtensionImpl
+    internal partial class VirtualMachineScaleSetVMInstanceExtensionImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>The version name of the virtual machine extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the version name of the virtual machine extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.VersionName
         {
             get
             {
-                return this.VersionName() as string;
+                return this.VersionName();
             }
         }
 
-        /// <return>The provisioning state of the virtual machine extension.</return>
+        /// <summary>
+        /// Gets the provisioning state of the virtual machine extension.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.ProvisioningState
         {
             get
             {
-                return this.ProvisioningState() as string;
+                return this.ProvisioningState();
             }
         }
 
-        /// <return>
-        /// True if this extension is configured to upgrade automatically when a new minor version of the
+        /// <summary>
+        /// Gets true if this extension is configured to upgrade automatically when a new minor version of the
         /// extension image that this extension based on is published.
-        /// </return>
+        /// </summary>
         bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.AutoUpgradeMinorVersionEnabled
         {
             get
@@ -47,7 +53,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The instance view of the virtual machine extension.</return>
+        /// <summary>
+        /// Gets the instance view of the virtual machine extension.
+        /// </summary>
         Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.InstanceView
         {
             get
@@ -56,48 +64,58 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The public settings of the virtual machine extension as a JSON string.</return>
+        /// <summary>
+        /// Gets the public settings of the virtual machine extension as a JSON string.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettingsAsJsonString
         {
             get
             {
-                return this.PublicSettingsAsJsonString() as string;
+                return this.PublicSettingsAsJsonString();
             }
         }
 
-        /// <return>The publisher name of the virtual machine extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the publisher name of the virtual machine extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublisherName
         {
             get
             {
-                return this.PublisherName() as string;
+                return this.PublisherName();
             }
         }
 
-        /// <return>The type name of the virtual machine extension image this extension is created from.</return>
+        /// <summary>
+        /// Gets the type name of the virtual machine extension image this extension is created from.
+        /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.TypeName
         {
             get
             {
-                return this.TypeName() as string;
+                return this.TypeName();
             }
         }
 
-        /// <return>The tags for this virtual machine extension.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
+        /// <summary>
+        /// Gets the tags for this virtual machine extension.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
         {
             get
             {
-                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string, string>;
+                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
 
-        /// <return>The public settings of the virtual machine extension as key value pairs.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string, object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettings
+        /// <summary>
+        /// Gets the public settings of the virtual machine extension as key value pairs.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettings
         {
             get
             {
-                return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string, object>;
+                return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string,object>;
             }
         }
     }

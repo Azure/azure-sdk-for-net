@@ -11,7 +11,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface ISrvRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The Srv records in this record set.</return>
+        /// <summary>
+        /// Gets the Srv records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<SrvRecord> Records { get; }
     }
 }

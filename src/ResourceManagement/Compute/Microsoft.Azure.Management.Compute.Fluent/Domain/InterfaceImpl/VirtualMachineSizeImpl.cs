@@ -1,22 +1,26 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-    internal partial class VirtualMachineSizeImpl
+    internal partial class VirtualMachineSizeImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>The number of cores supported by the VM size.</return>
+        /// <summary>
+        /// Gets the number of cores supported by the VM size.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.NumberOfCores
         {
             get
@@ -25,7 +29,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The maximum number of data disks allowed by a VM size.</return>
+        /// <summary>
+        /// Gets the maximum number of data disks allowed by a VM size.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.MaxDataDiskCount
         {
             get
@@ -34,7 +40,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The OS disk size allowed by the VM size.</return>
+        /// <summary>
+        /// Gets the OS disk size allowed by the VM size.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.OsDiskSizeInMB
         {
             get
@@ -43,7 +51,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The resource disk size allowed by the VM size.</return>
+        /// <summary>
+        /// Gets the resource disk size allowed by the VM size.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.ResourceDiskSizeInMB
         {
             get
@@ -52,7 +62,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The memory size supported by the VM size.</return>
+        /// <summary>
+        /// Gets the memory size supported by the VM size.
+        /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.MemoryInMB
         {
             get

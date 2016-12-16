@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 
     internal partial class CdnEndpointImpl 
     {
-        IUpdate CdnEndpoint.UpdateDefinition.IAttachablePremium<CdnProfile.Update.IUpdate>.Attach()
+        CdnProfile.Update.IUpdate CdnEndpoint.UpdateDefinition.IAttachablePremium<CdnProfile.Update.IUpdate>.Attach()
         {
-            return this.Attach();
+            return this.Attach() as CdnProfile.Update.IUpdate;
         }
 
-        IWithPremiumVerizonCreate CdnEndpoint.Definition.IAttachablePremium<IWithPremiumVerizonCreate>.Attach()
+        CdnProfile.Definition.IWithPremiumVerizonCreate CdnEndpoint.Definition.IAttachablePremium<CdnProfile.Definition.IWithPremiumVerizonCreate>.Attach()
         {
-            return this.Attach();
+            return this.Attach() as CdnProfile.Definition.IWithPremiumVerizonCreate;
         }
 
         /// <summary>
@@ -76,72 +76,93 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly purges current CDN endpoint content.
         /// </summary>
         /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
-        void ICdnEndpoint.PurgeContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContent(IList<string> contentPaths)
         {
  
             this.PurgeContent(contentPaths);
         }
 
-        /// <return>Endpoint host name.</return>
-        string ICdnEndpoint.HostName
+        /// <summary>
+        /// Gets endpoint host name.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.HostName
         {
             get
             {
-                return this.HostName;
+                return this.HostName();
             }
         }
 
-        /// <return>Http port value.</return>
-        int ICdnEndpoint.HttpPort
+        /// <summary>
+        /// Gets http port value.
+        /// </summary>
+        int Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.HttpPort
         {
             get
             {
-                return this.HttpPort;
+                return this.HttpPort();
             }
         }
 
         /// <summary>
         /// Stops current running CDN endpoint.
         /// </summary>
-        void ICdnEndpoint.Stop()
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.Stop()
         {
  
             this.Stop();
         }
 
-        /// <return>True if Http traffic is allowed, otherwise false.</return>
-        bool ICdnEndpoint.IsHttpAllowed
+        /// <summary>
+        /// Gets true if Http traffic is allowed, otherwise false.
+        /// </summary>
+        bool Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.IsHttpAllowed
         {
             get
             {
-                return this.IsHttpAllowed;
+                return this.IsHttpAllowed();
             }
         }
 
-        /// <return>List of Geo filters.</return>
-        System.Collections.Generic.IList<GeoFilter> ICdnEndpoint.GeoFilters
+        /// <summary>
+        /// Gets list of Geo filters.
+        /// </summary>
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.GeoFilters
         {
             get
             {
-                return this.GeoFilters;
+                return this.GeoFilters() as System.Collections.Generic.IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter>;
             }
         }
 
         /// <summary>
         /// Starts current stopped CDN endpoint.
         /// </summary>
-        void ICdnEndpoint.Start()
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.Start()
         {
  
             this.Start();
         }
-        
-        /// <return>Endpoint provisioning state.</return>
-        string ICdnEndpoint.ProvisioningState
+
+        /// <summary>
+        /// Gets endpoint state.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ResourceState
         {
             get
             {
-                return this.ProvisioningState;
+                return this.ResourceState();
+            }
+        }
+
+        /// <summary>
+        /// Gets endpoint provisioning state.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ProvisioningState
+        {
+            get
+            {
+                return this.ProvisioningState();
             }
         }
 
@@ -149,90 +170,108 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly pre-loads current CDN endpoint content. Available for Verizon Profiles.
         /// </summary>
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
-        void ICdnEndpoint.LoadContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContent(IList<string> contentPaths)
         {
  
             this.LoadContent(contentPaths);
         }
 
-        /// <return>True if Https traffic is allowed, otherwise false.</return>
-        bool ICdnEndpoint.IsHttpsAllowed
+        /// <summary>
+        /// Gets true if Https traffic is allowed, otherwise false.
+        /// </summary>
+        bool Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.IsHttpsAllowed
         {
             get
             {
-                return this.IsHttpsAllowed;
+                return this.IsHttpsAllowed();
             }
         }
 
-        /// <return>Https port value.</return>
-        int ICdnEndpoint.HttpsPort
+        /// <summary>
+        /// Gets https port value.
+        /// </summary>
+        int Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.HttpsPort
         {
             get
             {
-                return this.HttpsPort;
+                return this.HttpsPort();
             }
         }
 
-        /// <return>List of content types to be compressed.</return>
-        System.Collections.Generic.IList<string> ICdnEndpoint.ContentTypesToCompress
+        /// <summary>
+        /// Gets list of content types to be compressed.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ContentTypesToCompress
         {
             get
             {
-                return this.ContentTypesToCompress;
+                return this.ContentTypesToCompress() as System.Collections.Generic.IList<string>;
             }
         }
 
-        /// <return>True if content compression is enabled, otherwise false.</return>
-        bool ICdnEndpoint.IsCompressionEnabled
+        /// <summary>
+        /// Gets true if content compression is enabled, otherwise false.
+        /// </summary>
+        bool Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.IsCompressionEnabled
         {
             get
             {
-                return this.IsCompressionEnabled;
+                return this.IsCompressionEnabled();
             }
         }
 
-        /// <return>List of custom domains associated with current endpoint.</return>
-        IReadOnlyCollection<string> ICdnEndpoint.CustomDomains
+        /// <summary>
+        /// Gets list of custom domains associated with current endpoint.
+        /// </summary>
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.CustomDomains
         {
             get
             {
-                return this.CustomDomains;
+                return this.CustomDomains() as System.Collections.Generic.IList<string>;
             }
         }
 
-        /// <return>Origin host name.</return>
-        string ICdnEndpoint.OriginHostName
+        /// <summary>
+        /// Gets origin host name.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.OriginHostName
         {
             get
             {
-                return this.OriginHostName;
+                return this.OriginHostName();
             }
         }
 
-        /// <return>Origin path.</return>
-        string ICdnEndpoint.OriginPath
+        /// <summary>
+        /// Gets origin path.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.OriginPath
         {
             get
             {
-                return this.OriginPath;
+                return this.OriginPath();
             }
         }
 
-        /// <return>Origin host header.</return>
-        string ICdnEndpoint.OriginHostHeader
+        /// <summary>
+        /// Gets origin host header.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.OriginHostHeader
         {
             get
             {
-                return this.OriginHostHeader;
+                return this.OriginHostHeader();
             }
         }
 
-        /// <return>Query string caching behavior.</return>
-        QueryStringCachingBehavior ICdnEndpoint.QueryStringCachingBehavior
+        /// <summary>
+        /// Gets query string caching behavior.
+        /// </summary>
+        Microsoft.Azure.Management.Cdn.Fluent.Models.QueryStringCachingBehavior Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.QueryStringCachingBehavior
         {
             get
             {
-                return this.QueryStringCachingBehavior;
+                return this.QueryStringCachingBehavior();
             }
         }
 
@@ -241,17 +280,19 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="hostName">The host name of the custom domain. Must be a domain name.</param>
         /// <return>The CustomDomainValidationResult object if successful.</return>
-        CustomDomainValidationResult ICdnEndpoint.ValidateCustomDomain(string hostName)
+        Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ValidateCustomDomain(string hostName)
         {
-            return this.ValidateCustomDomain(hostName) as CustomDomainValidationResult;
+            return this.ValidateCustomDomain(hostName) as Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult;
         }
 
-        /// <return>Optimization type value.</return>
-        string ICdnEndpoint.OptimizationType
+        /// <summary>
+        /// Gets optimization type value.
+        /// </summary>
+        string Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.OptimizationType
         {
             get
             {
-                return this.OptimizationType;
+                return this.OptimizationType();
             }
         }
 
@@ -280,7 +321,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilters(IList<GeoFilter> geoFilters)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -394,19 +435,19 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="action">The action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<CountryISOCode> countryCodes)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
 
-        IUpdate CdnEndpoint.UpdateDefinition.IAttachableStandard<IUpdate>.Attach()
+        CdnProfile.Update.IUpdate CdnEndpoint.UpdateDefinition.IAttachableStandard<CdnProfile.Update.IUpdate>.Attach()
         {
-            return this.Attach();
+            return this.Attach() as CdnProfile.Update.IUpdate;
         }
 
-        IWithStandardCreate CdnEndpoint.Definition.IAttachableStandard<IWithStandardCreate>.Attach()
+        CdnProfile.Definition.IWithStandardCreate CdnEndpoint.Definition.IAttachableStandard<CdnProfile.Definition.IWithStandardCreate>.Attach()
         {
-            return this.Attach();
+            return this.Attach() as CdnProfile.Definition.IWithStandardCreate;
         }
 
         /// <summary>
@@ -465,7 +506,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilters(IList<GeoFilter> geoFilters)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -607,7 +648,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="action">The action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilter(string relativePath, GeoFilterActions action, IList<CountryISOCode> countryCodes)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -888,7 +929,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilters(IList<GeoFilter> geoFilters)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -1002,7 +1043,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="action">The action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<CountryISOCode> countryCodes)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.Resource.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }

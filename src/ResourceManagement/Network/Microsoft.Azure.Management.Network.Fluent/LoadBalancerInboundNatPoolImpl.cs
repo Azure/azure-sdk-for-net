@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for LoadBalancerInboundNatPool.
     /// </summary>
-    public partial class LoadBalancerInboundNatPoolImpl  :
+    internal partial class LoadBalancerInboundNatPoolImpl  :
         ChildResource<InboundNatPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatPool,
         LoadBalancerInboundNatPool.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:D684E7477889A9013C81FAD82F69C54F:BD249A015EF71106387B78281489583A
-        internal string Protocol()
+        internal TransportProtocol Protocol()
         {
-            return Inner.Protocol;
+            return TransportProtocol.Parse(Inner.Protocol);
         }
 
         ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:9C4AAC15022FA26F69A7DFD88E20FB97
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:475A4755B19EB893208FCC08E7664C5B:8E47A7551FAA8958BCB5314D0E665506
-        internal LoadBalancerInboundNatPoolImpl WithProtocol (string protocol)
+        internal LoadBalancerInboundNatPoolImpl WithProtocol (TransportProtocol protocol)
         {
-            Inner.Protocol = protocol;
+            Inner.Protocol = protocol.ToString();
             return this;
         }
 

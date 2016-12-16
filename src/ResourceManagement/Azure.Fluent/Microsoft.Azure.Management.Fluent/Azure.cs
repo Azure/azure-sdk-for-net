@@ -2,22 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Batch.Fluent;
+using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Dns.Fluent;
+using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Rest;
-using System.Linq;
-using Microsoft.Azure.Management.KeyVault.Fluent;
-using Microsoft.Azure.Management.Trafficmanager.Fluent;
-using Microsoft.Azure.Management.Dns.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
-using Microsoft.Azure.Management.Cdn.Fluent;
-using Microsoft.Azure.Management.Redis.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent;
+using System.Linq;
+using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent;
-using System;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -119,6 +117,14 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IApplicationGateways ApplicationGateways
+        {
+            get
+            {
+                return networkManager.ApplicationGateways;
+            }
+        }
+
         public IDeployments Deployments
         {
             get
@@ -158,7 +164,7 @@ namespace Microsoft.Azure.Management.Fluent
                 return batchManager.BatchAccounts;
             }
         }
-                
+
         public IVaults Vaults
         {
             get
@@ -190,6 +196,7 @@ namespace Microsoft.Azure.Management.Fluent
                 return sqlManager.SqlServers;
             }
         }
+
         public IRedisCaches RedisCaches
         {
             get
@@ -260,7 +267,6 @@ namespace Microsoft.Azure.Management.Fluent
                     .Build(), azureCredentials.TenantId);
             authenticated.SetDefaultSubscription(azureCredentials.DefaultSubscriptionId);
             return authenticated;
-
         }
 
         public static IAuthenticated Authenticate(string authFile)
@@ -398,6 +404,8 @@ namespace Microsoft.Azure.Management.Fluent
         INetworkInterfaces NetworkInterfaces { get; }
 
         ILoadBalancers LoadBalancers { get; }
+
+        IApplicationGateways ApplicationGateways { get; }
 
         IDeployments Deployments { get; }
 

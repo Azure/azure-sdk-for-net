@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Ptr record sets in a Dns zone.
     /// </summary>
     public interface IPtrRecordSets  :
-        ISupportsListing<IPtrRecordSet>,
-        ISupportsGettingByName<IPtrRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IPtrRecordSet>
     {
     }
 }

@@ -108,6 +108,15 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithDomainSsl", "ResourceManagement\AppService\ManageWebAppWithDomainSsl\ManageWebAppWithDomainSsl.xproj", "{32FE889E-6EF4-4B4C-B802-B696683ADF32}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithTrafficManager", "ResourceManagement\AppService\ManageWebAppWithTrafficManager\ManageWebAppWithTrafficManager.xproj", "{B87A21AD-952A-48E6-B388-6BC5ACFCB08D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{8150418E-7C52-4CF8-9EA7-7FADD5654270}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageSqlDatabase", "ResourceManagement\Sql\ManageSqlDatabase\ManageSqlDatabase.xproj", "{35BF6EB1-0A9A-457E-9567-3370A31F367D}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageSqlDatabaseInElasticPool", "ResourceManagement\Sql\ManageSqlDatabaseInElasticPool\ManageSqlDatabaseInElasticPool.xproj", "{3F36E0FA-415F-4BBB-9409-8BD0354495A9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageSqlDatabasesAcrossDifferentDataCenters", "ResourceManagement\Sql\ManageSqlDatabasesAcrossDifferentDataCenters\ManageSqlDatabasesAcrossDifferentDataCenters.xproj", "{3699C956-3B77-4939-BBF0-E22F5E0E066D}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageSqlFirewallRules", "ResourceManagement\Sql\ManageSqlFirewallRules\ManageSqlFirewallRules.xproj", "{207DF5C0-BCCD-4308-A6C6-532F2EBFF631}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -291,6 +300,22 @@ Global
 		{B87A21AD-952A-48E6-B388-6BC5ACFCB08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B87A21AD-952A-48E6-B388-6BC5ACFCB08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B87A21AD-952A-48E6-B388-6BC5ACFCB08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35BF6EB1-0A9A-457E-9567-3370A31F367D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BF6EB1-0A9A-457E-9567-3370A31F367D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BF6EB1-0A9A-457E-9567-3370A31F367D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BF6EB1-0A9A-457E-9567-3370A31F367D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F36E0FA-415F-4BBB-9409-8BD0354495A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F36E0FA-415F-4BBB-9409-8BD0354495A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F36E0FA-415F-4BBB-9409-8BD0354495A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F36E0FA-415F-4BBB-9409-8BD0354495A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3699C956-3B77-4939-BBF0-E22F5E0E066D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3699C956-3B77-4939-BBF0-E22F5E0E066D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3699C956-3B77-4939-BBF0-E22F5E0E066D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3699C956-3B77-4939-BBF0-E22F5E0E066D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{207DF5C0-BCCD-4308-A6C6-532F2EBFF631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{207DF5C0-BCCD-4308-A6C6-532F2EBFF631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{207DF5C0-BCCD-4308-A6C6-532F2EBFF631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{207DF5C0-BCCD-4308-A6C6-532F2EBFF631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -339,5 +364,9 @@ Global
 		{E286E59A-685A-47B2-ABF8-3502275CBD79} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{32FE889E-6EF4-4B4C-B802-B696683ADF32} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{B87A21AD-952A-48E6-B388-6BC5ACFCB08D} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{35BF6EB1-0A9A-457E-9567-3370A31F367D} = {8150418E-7C52-4CF8-9EA7-7FADD5654270}
+		{3F36E0FA-415F-4BBB-9409-8BD0354495A9} = {8150418E-7C52-4CF8-9EA7-7FADD5654270}
+		{3699C956-3B77-4939-BBF0-E22F5E0E066D} = {8150418E-7C52-4CF8-9EA7-7FADD5654270}
+		{207DF5C0-BCCD-4308-A6C6-532F2EBFF631} = {8150418E-7C52-4CF8-9EA7-7FADD5654270}
 	EndGlobalSection
 EndGlobal

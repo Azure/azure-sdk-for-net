@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update
 {
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
 
     /// <summary>
     /// The stage of the virtual machine data disk update allowing to set the disk size.
@@ -33,6 +33,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Updat
     }
 
     /// <summary>
+    /// The entirety of a data disk update as part of a virtual machine update.
+    /// </summary>
+    public interface IUpdate  :
+        IWithDiskSize,
+        IWithDiskLun,
+        IWithDiskCaching,
+        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>
+    {
+    }
+
+    /// <summary>
     /// The stage of the virtual machine data disk update allowing to set the disk caching type.
     /// </summary>
     public interface IWithDiskCaching 
@@ -43,16 +54,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Updat
         /// <param name="cachingType">The disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'.</param>
         /// <return>The next stage of data disk update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate WithCaching(CachingTypes cachingType);
-    }
-
-    /// <summary>
-    /// The entirety of a data disk update as part of a virtual machine update.
-    /// </summary>
-    public interface IUpdate  :
-        IWithDiskSize,
-        IWithDiskLun,
-        IWithDiskCaching,
-        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>
-    {
     }
 }

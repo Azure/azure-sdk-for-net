@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IAaaaRecordSet  :
         IDnsRecordSet
     {
-        /// <return>The IPv6 addresses of Aaaa records in this record set.</return>
+        /// <summary>
+        /// Gets the IPv6 addresses of Aaaa records in this record set.
+        /// </summary>
         System.Collections.Generic.IList<string> Ipv6Addresses { get; }
     }
 }

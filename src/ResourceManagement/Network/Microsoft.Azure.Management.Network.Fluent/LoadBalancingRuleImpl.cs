@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core.ChildResourceActions;
     using Rest.Azure;
 
-    public partial class LoadBalancingRuleImpl  :
+    internal partial class LoadBalancingRuleImpl  :
         ChildResource<LoadBalancingRuleInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancingRule,
         LoadBalancingRule.Definition.IDefinition<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:7C8DB8F49BE9ADE0ACDDE918992D9275:6F4F6D22CFFEC9A948037CC8D6D8F853
-        internal IProbe Probe()
+        internal ILoadBalancerProbe Probe()
         {
             var probeRef = Inner.Probe;
             if (probeRef == null)
@@ -144,9 +144,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:475A4755B19EB893208FCC08E7664C5B:8E47A7551FAA8958BCB5314D0E665506
-        internal LoadBalancingRuleImpl WithProtocol (string protocol)
+        internal LoadBalancingRuleImpl WithProtocol (TransportProtocol protocol)
         {
-            Inner.Protocol = protocol;
+            Inner.Protocol = protocol.ToString();
             return this;
         }
 

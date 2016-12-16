@@ -11,28 +11,23 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
     /// <summary>
-    /// A Redis Cache update allowing non SSL port to be enabled or disabled.
-    /// </summary>
-    public interface IWithNonSslPort 
-    {
-        /// <summary>
-        /// Enables non-ssl Redis server port (6379).
-        /// </summary>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithNonSslPort ();
-
-        /// <summary>
-        /// Disables non-ssl Redis server port (6379).
-        /// </summary>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithoutNonSslPort ();
-
-    }
-    /// <summary>
     /// A Redis Cache update allowing Redis configuration to be modified.
     /// </summary>
     public interface IWithRedisConfiguration 
     {
+        /// <summary>
+        /// Cleans all the configuration settings being set on Redis Cache.
+        /// </summary>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithoutRedisConfiguration();
+
+        /// <summary>
+        /// Removes specified Redis Cache configuration setting.
+        /// </summary>
+        /// <param name="key">Redis configuration name.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithoutRedisConfiguration(string key);
+
         /// <summary>
         /// All Redis Settings. Few possible keys:
         /// rdb-backup-enabled, rdb-storage-connection-string, rdb-backup-frequency, maxmemory-delta, maxmemory-policy,
@@ -40,9 +35,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         /// list-max-ziplist-value, hash-max-ziplist-entries, hash-max-ziplist-value, set -max-intset-entries,
         /// zset-max-ziplist-entries, zset-max-ziplist-value etc.
         /// </summary>
-        /// <param name="redisConfiguration">redisConfiguration configuration of Redis Cache as a map indexed by configuration name</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithRedisConfiguration (IDictionary<string,string> redisConfiguration);
+        /// <param name="redisConfiguration">Configuration of Redis Cache as a map indexed by configuration name.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithRedisConfiguration(IDictionary<string,string> redisConfiguration);
 
         /// <summary>
         /// Specifies Redis Setting.
@@ -51,31 +46,18 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         /// list-max-ziplist-value, hash-max-ziplist-entries, hash-max-ziplist-value, set -max-intset-entries,
         /// zset-max-ziplist-entries, zset-max-ziplist-value etc.
         /// </summary>
-        /// <param name="key">key   Redis configuration name.</param>
-        /// <param name="value">value Redis configuration value.</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithRedisConfiguration (string key, string value);
-
-        /// <summary>
-        /// Cleans all the configuration settings being set on Redis Cache.
-        /// </summary>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithoutRedisConfiguration ();
-
-        /// <summary>
-        /// Removes specified Redis Cache configuration setting.
-        /// </summary>
-        /// <param name="key">key Redis configuration name.</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithoutRedisConfiguration (string key);
-
+        /// <param name="key">Redis configuration name.</param>
+        /// <param name="value">Redis configuration value.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithRedisConfiguration(string key, string value);
     }
+
     /// <summary>
     /// The template for a Redis Cache update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<IRedisCache>,
-        IUpdateWithTags<IUpdate>,
+        IAppliable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
+        IUpdateWithTags<Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate>,
         IWithSku,
         IWithNonSslPort,
         IWithRedisConfiguration
@@ -83,94 +65,111 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         /// <summary>
         /// Assigns the specified subnet to this instance of Redis Cache.
         /// </summary>
-        /// <param name="networkResource">networkResource instance of Network object.</param>
-        /// <param name="subnetName">subnetName the name of the subnet.</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithSubnet (IGroupableResource networkResource, string subnetName);
+        /// <param name="networkResource">Instance of Network object.</param>
+        /// <param name="subnetName">The name of the subnet.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithSubnet(IGroupableResource networkResource, string subnetName);
 
         /// <summary>
         /// Sets Redis Cache static IP. Required when deploying a Redis Cache inside an existing Azure Virtual Network.
         /// </summary>
-        /// <param name="staticIP">staticIP the staticIP value to set.</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithStaticIP (string staticIP);
+        /// <param name="staticIP">The staticIP value to set.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithStaticIP(string staticIP);
 
         /// <summary>
         /// The number of shards to be created on a Premium Cluster Cache.
         /// </summary>
-        /// <param name="shardCount">shardCount the shard count value to set.</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithShardCount (int shardCount);
+        /// <param name="shardCount">The shard count value to set.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithShardCount(int shardCount);
 
         /// <summary>
         /// Patch schedule on a Premium Cluster Cache.
         /// </summary>
-        /// <param name="dayOfWeek">dayOfWeek day of week when cache can be patched.</param>
-        /// <param name="startHourUtc">startHourUtc start hour after which cache patching can start.</param>
-        /// <returns>the next stage of Redis Cache with Premium SKU definition.</returns>
-        IUpdate WithPatchSchedule (DayOfWeek dayOfWeek, int startHourUtc);
+        /// <param name="dayOfWeek">Day of week when cache can be patched.</param>
+        /// <param name="startHourUtc">Start hour after which cache patching can start.</param>
+        /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPatchSchedule(DayOfWeek dayOfWeek, int startHourUtc);
 
         /// <summary>
         /// The number of shards to be created on a Premium Cluster Cache.
         /// </summary>
-        /// <param name="dayOfWeek">dayOfWeek day of week when cache can be patched.</param>
-        /// <param name="startHourUtc">startHourUtc start hour after which cache patching can start.</param>
-        /// <param name="maintenanceWindow">maintenanceWindow ISO8601 timespan specifying how much time cache patching can take.</param>
-        /// <returns>the next stage of Redis Cache with Premium SKU definition.</returns>
-        IUpdate WithPatchSchedule (DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow);
+        /// <param name="dayOfWeek">Day of week when cache can be patched.</param>
+        /// <param name="startHourUtc">Start hour after which cache patching can start.</param>
+        /// <param name="maintenanceWindow">ISO8601 timespan specifying how much time cache patching can take.</param>
+        /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPatchSchedule(DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow);
 
         /// <summary>
         /// Patch schedule on a Premium Cluster Cache.
         /// </summary>
-        /// <param name="scheduleEntry">scheduleEntry Patch schedule entry for Premium Redis Cache.</param>
-        /// <returns>the next stage of Redis Cache with Premium SKU definition.</returns>
-        IUpdate WithPatchSchedule (ScheduleEntry scheduleEntry);
+        /// <param name="scheduleEntry">Patch schedule entry for Premium Redis Cache.</param>
+        /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPatchSchedule(ScheduleEntry scheduleEntry);
 
         /// <summary>
         /// Patch schedule on a Premium Cluster Cache.
         /// </summary>
-        /// <param name="scheduleEntry">scheduleEntry List of patch schedule entries for Premium Redis Cache.</param>
-        /// <returns>the next stage of Redis Cache with Premium SKU definition.</returns>
-        IUpdate WithPatchSchedule (IList<ScheduleEntry> scheduleEntry);
-
+        /// <param name="scheduleEntry">List of patch schedule entries for Premium Redis Cache.</param>
+        /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPatchSchedule(IList<Microsoft.Azure.Management.Redis.Fluent.Models.ScheduleEntry> scheduleEntry);
     }
+
+    /// <summary>
+    /// A Redis Cache update allowing non SSL port to be enabled or disabled.
+    /// </summary>
+    public interface IWithNonSslPort 
+    {
+        /// <summary>
+        /// Enables non-ssl Redis server port (6379).
+        /// </summary>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithNonSslPort();
+
+        /// <summary>
+        /// Disables non-ssl Redis server port (6379).
+        /// </summary>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithoutNonSslPort();
+    }
+
     /// <summary>
     /// A Redis Cache update stage allowing to change the parameters.
     /// </summary>
     public interface IWithSku 
     {
         /// <summary>
-        /// Updates Redis Cache to Basic sku with new capacity.
-        /// </summary>
-        /// <param name="capacity">capacity specifies what size of Redis Cache to update to for Basic sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithBasicSku (int capacity);
-
-        /// <summary>
-        /// Updates Redis Cache to Standard sku.
-        /// </summary>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithStandardSku ();
-
-        /// <summary>
-        /// Updates Redis Cache to Standard sku with new capacity.
-        /// </summary>
-        /// <param name="capacity">capacity specifies what size of Redis Cache to update to for Standard sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithStandardSku (int capacity);
-
-        /// <summary>
         /// Updates Redis Cache to Premium sku.
         /// </summary>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithPremiumSku ();
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPremiumSku();
 
         /// <summary>
         /// Updates Redis Cache to Premium sku with new capacity.
         /// </summary>
-        /// <param name="capacity">capacity specifies what size of Redis Cache to update to for Premium sku with P family (1, 2, 3, 4).</param>
-        /// <returns>the next stage of Redis Cache update.</returns>
-        IUpdate WithPremiumSku (int capacity);
+        /// <param name="capacity">Specifies what size of Redis Cache to update to for Premium sku with P family (1, 2, 3, 4).</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPremiumSku(int capacity);
 
+        /// <summary>
+        /// Updates Redis Cache to Basic sku with new capacity.
+        /// </summary>
+        /// <param name="capacity">Specifies what size of Redis Cache to update to for Basic sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithBasicSku(int capacity);
+
+        /// <summary>
+        /// Updates Redis Cache to Standard sku.
+        /// </summary>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithStandardSku();
+
+        /// <summary>
+        /// Updates Redis Cache to Standard sku with new capacity.
+        /// </summary>
+        /// <param name="capacity">Specifies what size of Redis Cache to update to for Standard sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithStandardSku(int capacity);
     }
 }

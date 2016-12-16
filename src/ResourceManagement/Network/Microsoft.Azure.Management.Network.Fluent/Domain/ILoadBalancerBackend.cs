@@ -2,24 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
-    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Collections.Generic;
+
     /// <summary>
-    /// An immutable client-side representation of an load balancer's backend address pool.
+    /// An immutable client-side representation of a load balancer backend address pool.
     /// </summary>
     public interface ILoadBalancerBackend  :
-        IWrapper<Microsoft.Azure.Management.Network.Fluent.Models.BackendAddressPoolInner>,
+        IWrapper<Models.BackendAddressPoolInner>,
         IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        IHasLoadBalancingRules
+        IHasLoadBalancingRules,
+        IHasBackendNics
     {
-        /// <returns>a map of names of the IP configurations of network interfaces assigned to this backend,</returns>
-        /// <returns>indexed by their NIC's resource id</returns>
-        System.Collections.Generic.IDictionary<string,string> BackendNicIpConfigurationNames { get; }
-
-        /// <returns>a list of the resource IDs of the virtual machines associated with this backend</returns>
+        /// <return>A list of the resource IDs of the virtual machines associated with this backend.</return>
         System.Collections.Generic.ISet<string> GetVirtualMachineIds();
-
     }
 }

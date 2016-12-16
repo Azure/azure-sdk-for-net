@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation of the LoadBalancer interface.
     /// </summary>
-    public partial class LoadBalancerImpl : GroupableParentResource<
+    internal partial class LoadBalancerImpl : GroupableParentResource<
             ILoadBalancer,
             LoadBalancerInner,
             LoadBalancerImpl,
@@ -59,6 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             var response = this.innerCollection.Get(ResourceGroupName, Name);
             SetInner(response);
+            InitializeChildrenFromInner();
             return this;
         }
 
@@ -81,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 foreach (var pipFrontendAssociation in creatablePIPKeys)
                 {
-                    IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
+                    IPublicIpAddress pip = (IPublicIpAddress)CreatedResource(pipFrontendAssociation.Key);
                     if (pip != null)
                     {
                         WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
@@ -184,14 +185,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<LoadBalancerInner> CreateInner()
         {
-            return this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
 
         ///GENMHASH:38719597698E42AABAD5A9917188C155:D9C6887E0B146C62C173F2FC8A940200
         private void InitializeFrontendsFromInner ()
         {
             frontends = new SortedDictionary<string, ILoadBalancerFrontend>();
-            IList<FrontendIPConfigurationInner> frontendsInner = this.Inner.FrontendIPConfigurations;
+            IList<FrontendIPConfigurationInner> frontendsInner = Inner.FrontendIPConfigurations;
             if (frontendsInner != null)
             {
                 foreach (var frontendInner in frontendsInner)
@@ -239,11 +240,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (Inner.Probes != null) {
                 foreach (var probeInner in Inner.Probes) {
                     var probe = new LoadBalancerProbeImpl(probeInner, this);
-                    if (probeInner.Protocol.Equals(ProbeProtocol.Tcp))
+                    if (ProbeProtocol.Tcp.Equals(probeInner.Protocol))
                     {
                         tcpProbes.Add(probeInner.Name, probe);
                     }
-                    else if (probeInner.Protocol.Equals(ProbeProtocol.Http))
+                    else if (ProbeProtocol.Http.Equals(probeInner.Protocol))
                     {
                         httpProbes.Add(probeInner.Name, probe);
                     }
@@ -282,9 +283,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal string FutureResourceId()
         {
             return new StringBuilder()
-                .Append(base.ResourceIdBase)
+                .Append(ResourceIdBase)
                 .Append("/providers/Microsoft.Network/loadBalancers/")
-                .Append(this.Name)
+                .Append(Name)
                 .ToString();
         }
 
@@ -305,11 +306,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             if (probe == null)
                 return this;
-            else if (probe.Protocol().Equals(ProbeProtocol.Http))
+            else if (ProbeProtocol.Http.Equals(probe.Protocol()))
             {
                 httpProbes[probe.Name()] = probe;
             }
-            else if (probe.Protocol().Equals(ProbeProtocol.Tcp))
+            else if (ProbeProtocol.Tcp.Equals(probe.Protocol()))
             {
                 tcpProbes[probe.Name()] = probe;
             }
@@ -448,7 +449,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:681EAD9E22B4456AE914816B5A9E04E5:999E5525EF37760D980CB84E6FED7230
-        internal LoadBalancerImpl WithLoadBalancingRule (int frontendPort, string protocol, int backendPort)
+        internal LoadBalancerImpl WithLoadBalancingRule (int frontendPort, TransportProtocol protocol, int backendPort)
         {
             DefineLoadBalancingRule(DEFAULT)
                 .WithFrontendPort(frontendPort)
@@ -462,7 +463,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:A35BE9E6064D3B6774D34DFEA041998E:4BAB91751BCC1B4FF8EBF5F20815D8A8
-        internal LoadBalancerImpl WithLoadBalancingRule (int port, string protocol)
+        internal LoadBalancerImpl WithLoadBalancingRule (int port, TransportProtocol protocol)
         {
             return WithLoadBalancingRule(port, protocol, port);
         }
@@ -493,7 +494,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 ProbeInner inner = new ProbeInner()
                 {
                     Name = name,
-                    Protocol = ProbeProtocol.Tcp
+                    Protocol = ProbeProtocol.Tcp.ToString()
                 };
 
                 return new LoadBalancerProbeImpl(inner, this);
@@ -512,7 +513,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 ProbeInner inner = new ProbeInner()
                 {
                     Name = name,
-                    Protocol = ProbeProtocol.Http,
+                    Protocol = ProbeProtocol.Http.ToString(),
                     Port = 80
                 };
 
@@ -794,6 +795,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             return publicIpAddressIds;
+        }
+
+        ///GENMHASH:AF5672F546B4A252E729CBD06FEDA19B:E2981ABD5069A930F56B7E822F9B5AD2
+        public LoadBalancerImpl WithFrontendSubnet(INetwork network, string subnetName)
+        {
+            return this.DefinePrivateFrontend(DEFAULT)
+                .WithExistingSubnet(network, subnetName)
+                .Attach();
+        }
+
+        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:71CD922059C7BFD8A1A0B94B12F892B7
+        public LoadBalancerImpl WithExistingPublicIpAddress(string resourceId)
+        {
+            return WithExistingPublicIpAddress(resourceId, DEFAULT);
         }
     }
 }

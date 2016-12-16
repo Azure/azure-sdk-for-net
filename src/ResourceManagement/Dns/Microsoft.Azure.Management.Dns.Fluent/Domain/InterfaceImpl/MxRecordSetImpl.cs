@@ -7,8 +7,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 
     internal partial class MxRecordSetImpl 
     {
-        /// <return>The Mx records in this record set.</return>
-        System.Collections.Generic.IList<MxRecord> IMxRecordSet.Records
+        /// <summary>
+        /// Gets the Mx records in this record set.
+        /// </summary>
+        System.Collections.Generic.IList<MxRecord> Microsoft.Azure.Management.Dns.Fluent.IMxRecordSet.Records
         {
             get
             {

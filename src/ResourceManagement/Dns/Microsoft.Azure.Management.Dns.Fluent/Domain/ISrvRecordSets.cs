@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Entry point to Srv record sets in a Dns zone.
     /// </summary>
     public interface ISrvRecordSets  :
-        ISupportsListing<ISrvRecordSet>,
-        ISupportsGettingByName<ISrvRecordSet>
+        ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>,
+        ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet>
     {
     }
 }

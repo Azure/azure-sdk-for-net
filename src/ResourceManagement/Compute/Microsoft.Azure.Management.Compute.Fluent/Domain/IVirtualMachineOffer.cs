@@ -7,16 +7,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Represents a virtual machine image offer.
     /// </summary>
-    public interface IVirtualMachineOffer :
+    public interface IVirtualMachineOffer  :
         IHasName
     {
-        /// <return>Virtual machine image SKUs available in this offer.</return>
+        /// <summary>
+        /// Gets virtual machine image SKUs available in this offer.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSkus Skus { get; }
 
-        /// <return>The publisher of this virtual machine image offer.</return>
+        /// <summary>
+        /// Gets the publisher of this virtual machine image offer.
+        /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Publisher { get; }
 
-        /// <return>The region where this virtual machine image offer is available.</return>
+        /// <summary>
+        /// Gets the region where this virtual machine image offer is available.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Region { get; }
     }
 }

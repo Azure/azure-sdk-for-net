@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Update
     /// The set of configurations that can be updated for all endpoint irrespective of their type.
     /// </summary>
     public interface IUpdate  :
-        ISettable<CdnProfile.Update.IUpdate>
+        ISettable<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Update.IUpdate>
     {
     }
 }

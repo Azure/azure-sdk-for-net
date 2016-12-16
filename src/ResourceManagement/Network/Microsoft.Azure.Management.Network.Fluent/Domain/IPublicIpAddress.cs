@@ -2,52 +2,69 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-
-    using Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Update;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using PublicIpAddress.Update;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+
     /// <summary>
     /// Public IP address.
     /// </summary>
     public interface IPublicIpAddress  :
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
-        IWrapper<Microsoft.Azure.Management.Network.Fluent.Models.PublicIPAddressInner>,
-        IUpdatable<Microsoft.Azure.Management.Network.Fluent.PublicIpAddress.Update.IUpdate>
+        IWrapper<Models.PublicIPAddressInner>,
+        IUpdatable<PublicIpAddress.Update.IUpdate>
     {
-        /// <returns>the IP version of the public IP address</returns>
-        string Version { get; }
-
-        /// <returns>the assigned IP address</returns>
-        string IpAddress { get; }
-
-        /// <returns>the assigned leaf domain label</returns>
-        string LeafDomainLabel { get; }
-
-        /// <returns>the assigned FQDN (fully qualified domain name)</returns>
-        string Fqdn { get; }
-
-        /// <returns>the assigned reverse FQDN, if any</returns>
+        /// <summary>
+        /// Gets the assigned reverse FQDN, if any.
+        /// </summary>
         string ReverseFqdn { get; }
 
-        /// <returns>the IP address allocation method (Static/Dynamic)</returns>
-        string IpAllocationMethod { get; }
+        /// <summary>
+        /// Gets the assigned FQDN (fully qualified domain name).
+        /// </summary>
+        string Fqdn { get; }
 
-        /// <returns>the idle connection timeout setting (in minutes)</returns>
-        int IdleTimeoutInMinutes { get; }
-
-        /// <returns>the load balancer public frontend that this public IP address is assigned to</returns>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend();
-
-        /// <returns>true if this public IP address is assigned to a load balancer</returns>
-        bool HasAssignedLoadBalancer { get; }
-
-        /// <returns>the network interface IP configuration that this public IP address is assigned to</returns>
-        Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration();
-
-        /// <returns>true if this public IP address is assigned to a network interface</returns>
+        /// <summary>
+        /// Gets true if this public IP address is assigned to a network interface.
+        /// </summary>
         bool HasAssignedNetworkInterface { get; }
 
+        /// <summary>
+        /// Gets the assigned IP address.
+        /// </summary>
+        string IpAddress { get; }
+
+        /// <summary>
+        /// Gets the IP address allocation method (Static/Dynamic).
+        /// </summary>
+        string IpAllocationMethod { get; }
+
+        /// <summary>
+        /// Gets the idle connection timeout setting (in minutes).
+        /// </summary>
+        int IdleTimeoutInMinutes { get; }
+
+        /// <summary>
+        /// Gets the assigned leaf domain label.
+        /// </summary>
+        string LeafDomainLabel { get; }
+
+        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
+        Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration();
+
+        /// <return>The load balancer public frontend that this public IP address is assigned to.</return>
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend();
+
+        /// <summary>
+        /// Gets the IP version of the public IP address.
+        /// </summary>
+        string Version { get; }
+
+        /// <summary>
+        /// Gets true if this public IP address is assigned to a load balancer.
+        /// </summary>
+        bool HasAssignedLoadBalancer { get; }
     }
 }
