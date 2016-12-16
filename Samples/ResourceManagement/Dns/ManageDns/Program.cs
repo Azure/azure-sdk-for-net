@@ -94,7 +94,7 @@ namespace ManageDns
                             .WithExistingResourceGroup(rgName)
                             .WithNewAppServicePlan(appServicePlanName)
                             .WithRegion(Region.US_EAST2)
-                            .WithPricingTier(AppServicePricingTier.BASIC_B1)
+                            .WithPricingTier(AppServicePricingTier.Basic_B1)
                             .DefineSourceControl()
                                 .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
                                 .WithBranch("master")
@@ -111,7 +111,7 @@ namespace ManageDns
 
                     Console.WriteLine("Updating DNS zone by adding a CName record...");
                     rootDnsZone = rootDnsZone.Update()
-                            .WithCnameRecordSet("www", webApp.defaultHostName())
+                            .WithCnameRecordSet("www", webApp.DefaultHostName)
                             .Apply();
                     Console.WriteLine("DNS zone updated");
                     Utilities.Print(rootDnsZone);
@@ -128,7 +128,7 @@ namespace ManageDns
                             .DefineHostnameBinding()
                                 .WithThirdPartyDomain(customDomainName)
                                 .WithSubDomain("www")
-                                .WithDnsRecordType(CustomHostNameDnsRecordType.CNAME)
+                                .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
                                 .Attach()
                             .Apply();
                     Console.WriteLine("Web app updated");

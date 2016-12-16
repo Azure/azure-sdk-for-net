@@ -79,7 +79,7 @@ namespace ManageTrafficManager
                     // Purchase a domain (will be canceled for a full refund)
 
                     Console.WriteLine("Purchasing a domain " + domainName + "...");
-                    var domain = azure.AppServices.Domains.Define(domainName)
+                    var domain = azure.AppServices.AppServiceDomains.Define(domainName)
                             .WithExistingResourceGroup(rgName)
                             .DefineRegistrantContact()
                                 .WithFirstName("Jon")
@@ -96,7 +96,7 @@ namespace ManageTrafficManager
                             .WithDomainPrivacyEnabled(true)
                             .WithAutoRenewEnabled(false)
                             .Create();
-                    Console.WriteLine("Purchased domain " + domain.name());
+                    Console.WriteLine("Purchased domain " + domain.Name);
                     Utilities.Print(domain);
 
                     //============================================================
@@ -120,7 +120,7 @@ namespace ManageTrafficManager
                                 .Define(planName)
                                 .WithRegion(region)
                                 .WithExistingResourceGroup(rgName)
-                                .WithPricingTier(AppServicePricingTier.BASIC_B1)
+                                .WithPricingTier(AppServicePricingTier.Basic_B1)
                                 .Create();
                         Console.WriteLine("Created app service plan " + planName);
                         Utilities.Print(appServicePlan);
@@ -135,7 +135,7 @@ namespace ManageTrafficManager
                     foreach (var appServicePlan in appServicePlans)
                     {
                         var webAppName = webAppNamePrefix + id;
-                        Console.WriteLine("Creating a web app " + webAppName + " using the plan " + appServicePlan.name() + "...");
+                        Console.WriteLine("Creating a web app " + webAppName + " using the plan " + appServicePlan.Name + "...");
                         var webApp = azure.WebApps.Define(webAppName)
                                 .WithExistingResourceGroup(rgName)
                                 .WithExistingAppServicePlan(appServicePlan)
