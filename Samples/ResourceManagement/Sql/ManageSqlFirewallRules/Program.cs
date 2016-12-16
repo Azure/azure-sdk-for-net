@@ -24,7 +24,16 @@ namespace ManageSqlFirewallRules
     public class Program
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string rgName = Utilities.CreateRandomName("rgRSSDFW");
+        private static readonly string administratorLogin = "sqladmin3423";
+        private static readonly string administratorPassword = "myS3cureP@ssword";
+        private static readonly string firewallRuleIpAddress = "10.0.0.1";
+        private static readonly string firewallRuleStartIpAddress = "10.2.0.1";
+        private static readonly string firewallRuleEndIpAddress = "10.2.0.10";
+        private static readonly string myFirewallName = "myFirewallRule";
+        private static readonly string myFirewallRuleIpAddress = "10.10.10.10";
+        private static readonly string otherFirewallRuleStartIpAddress = "121.12.12.1";
+        private static readonly string otherFirewallRuleEndIpAddress = "121.12.12.10";
 
         public static void Main(string[] args)
         {
@@ -47,25 +56,28 @@ namespace ManageSqlFirewallRules
                 {
                     // ============================================================
                     // Create a SQL Server, with 2 firewall rules.
+                    Console.WriteLine("Create a SQL server with 2 firewall rules adding a single IP Address and a range of IP Addresses");
 
                     var sqlServer = azure.SqlServers.Define(sqlServerName)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
-                            .WithAdministratorLogin("adminlogin123")
-                            .WithAdministratorPassword("loepop77ejk~13@@")
-                            .WithNewFirewallRule("10.0.0.1")
-                            .WithNewFirewallRule("10.2.0.1", "10.2.0.10")
+                            .WithAdministratorLogin(administratorLogin)
+                            .WithAdministratorPassword(administratorPassword)
+                            .WithNewFirewallRule(firewallRuleIpAddress)
+                            .WithNewFirewallRule(firewallRuleStartIpAddress, firewallRuleEndIpAddress)
                             .Create();
 
-                    Utilities.Print(sqlServer);
+                    Utilities.PrintSqlServer(sqlServer);
 
                     // ============================================================
                     // List and delete all firewall rules.
+                    Console.WriteLine("Listing all firewall rules in SQL Server.");
+
                     var firewallRules = sqlServer.FirewallRules.List();
                     foreach (var firewallRule in firewallRules)
                     {
                         // Print information of the firewall rule.
-                        Utilities.Print(firewallRule);
+                        Utilities.PrintFirewallRule(firewallRule);
 
                         // Delete the firewall rule.
                         Console.WriteLine("Deleting a firewall rule");
@@ -74,25 +86,27 @@ namespace ManageSqlFirewallRules
 
                     // ============================================================
                     // Add new firewall rules.
-                    Console.WriteLine("Creating a firewall rule for SQL Server");
-                    var newFirewallRule = sqlServer.FirewallRules.Define("myFirewallRule")
-                            .WithIpAddress("10.10.10.10")
+                    Console.WriteLine("Creating a firewall rule in existing SQL Server");
+                    var newFirewallRule = sqlServer.FirewallRules.Define(myFirewallName)
+                            .WithIpAddress(myFirewallRuleIpAddress)
                             .Create();
 
-                    Utilities.Print(newFirewallRule);
+                    Utilities.PrintFirewallRule(newFirewallRule);
+                    Console.WriteLine("Get a particular firewall rule in SQL Server");
 
-                    newFirewallRule = sqlServer.FirewallRules.Get("myFirewallRule");
-                    Utilities.Print(newFirewallRule);
+                    newFirewallRule = sqlServer.FirewallRules.Get(myFirewallName);
+                    Utilities.PrintFirewallRule(newFirewallRule);
 
+                    Console.WriteLine("Deleting and adding new firewall rules as part of SQL Server update.");
                     sqlServer.Update()
-                            .WithoutFirewallRule("myFirewallRule")
-                            .WithNewFirewallRule("121.12.12.1", "121.12.12.10")
+                            .WithoutFirewallRule(myFirewallName)
+                            .WithNewFirewallRule(otherFirewallRuleStartIpAddress, otherFirewallRuleEndIpAddress)
                             .Apply();
 
                     foreach (var sqlFirewallRule in sqlServer.FirewallRules.List())
                     {
                         // Print information of the firewall rule.
-                        Utilities.Print(sqlFirewallRule);
+                        Utilities.PrintFirewallRule(sqlFirewallRule);
                     }
 
                     // Delete the SQL Server.
