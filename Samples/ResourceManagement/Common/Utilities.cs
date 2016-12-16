@@ -1,17 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
-using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
@@ -539,7 +542,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintRedisCache(IRedisCache redisCache)
         {
-            StringBuilder redisInfo = new StringBuilder();
+            var redisInfo = new StringBuilder();
             redisInfo.Append("Redis Cache Name: ").AppendLine(redisCache.Name)
                      .Append("\tResource group: ").AppendLine(redisCache.ResourceGroupName)
                      .Append("\tRegion: ").AppendLine(redisCache.Region.ToString())
@@ -579,12 +582,99 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintRedisAccessKeys(IRedisAccessKeys redisAccessKeys)
         {
-            StringBuilder redisKeys = new StringBuilder();
+            var redisKeys = new StringBuilder();
             redisKeys.AppendLine("Redis Access Keys: ")
                      .Append("\tPrimary Key: '").Append(redisAccessKeys.PrimaryKey).AppendLine("', ")
                      .Append("\tSecondary Key: '").Append(redisAccessKeys.SecondaryKey).AppendLine("', ");
 
             Console.WriteLine(redisKeys.ToString());
+        }
+
+        public static void Print(IAppServiceDomain resource)
+        {
+            var builder = new StringBuilder().Append("Domain: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tCreated time: ").Append(resource.CreatedTime)
+                    .Append("\n\tExpiration time: ").Append(resource.ExpirationTime)
+                    .Append("\n\tContact: ");
+            var contact = resource.RegistrantContact;
+            if (contact == null)
+            {
+                builder = builder.Append("Private");
+            }
+            else
+            {
+                builder = builder.Append("\n\t\tName: ").Append(contact.NameFirst + " " + contact.NameLast);
+            }
+            builder = builder.Append("\n\tName servers: ");
+            foreach (String nameServer in resource.NameServers)
+            {
+                builder = builder.Append("\n\t\t" + nameServer);
+            }
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IAppServiceCertificateOrder resource)
+        {
+            var builder = new StringBuilder().Append("App service certificate order: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tDistinguished name: ").Append(resource.DistinguishedName)
+                    .Append("\n\tProduct type: ").Append(resource.ProductType)
+                    .Append("\n\tValid years: ").Append(resource.ValidityInYears)
+                    .Append("\n\tStatus: ").Append(resource.Status)
+                    .Append("\n\tIssuance time: ").Append(resource.LastCertificateIssuanceTime)
+                    .Append("\n\tSigned certificate: ").Append(resource.SignedCertificate == null ? null : resource.SignedCertificate.Thumbprint);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IAppServicePlan resource)
+        {
+            var builder = new StringBuilder().Append("App service certificate order: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tPricing tier: ").Append(resource.PricingTier);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IWebAppBase resource)
+        {
+            var builder = new StringBuilder().Append("Web app: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tState: ").Append(resource.State)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tDefault hostname: ").Append(resource.DefaultHostName)
+                    .Append("\n\tApp service plan: ").Append(resource.AppServicePlanId)
+                    .Append("\n\tHost name bindings: ");
+            foreach (var binding in resource.GetHostNameBindings().Values)
+            {
+                builder = builder.Append("\n\t\t" + binding.ToString());
+            }
+            builder = builder.Append("\n\tSSL bindings: ");
+            foreach (var binding in resource.HostNameSslStates.Values)
+            {
+                builder = builder.Append("\n\t\t" + binding.Name + ": " + binding.SslState);
+                if (binding.SslState != null && binding.SslState != SslState.Disabled)
+                {
+                    builder = builder.Append(" - " + binding.Thumbprint);
+                }
+            }
+            builder = builder.Append("\n\tApp settings: ");
+            foreach (var setting in resource.AppSettings.Values)
+            {
+                builder = builder.Append("\n\t\t" + setting.Key + ": " + setting.Value + (setting.Sticky ? " - slot setting" : ""));
+            }
+            builder = builder.Append("\n\tConnection strings: ");
+            foreach (var conn in resource.ConnectionStrings.Values)
+            {
+                builder = builder.Append("\n\t\t" + conn.Name + ": " + conn.Value + " - " + conn.Type + (conn.Sticky ? " - slot setting" : ""));
+            }
+            Console.WriteLine(builder.ToString());
         }
 
         private static string FormatDictionary(IReadOnlyDictionary<string, string> dictionary)

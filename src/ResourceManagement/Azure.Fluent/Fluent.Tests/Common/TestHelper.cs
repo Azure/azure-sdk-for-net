@@ -11,6 +11,8 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 using Xunit.Abstractions;
 using Microsoft.Azure.Management.Sql.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.KeyVault.Fluent;
 
 namespace Fluent.Tests.Common
 {
@@ -93,6 +95,25 @@ namespace Fluent.Tests.Common
                     .Build();
             
             return SqlManager.Authenticate(restClient, credentials.DefaultSubscriptionId);
+        }
+
+        public static IAppServiceManager CreateAppServiceManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+            return AppServiceManager
+                .Configure()
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+        }
+
+
+        public static IKeyVaultManager CreateKeyVaultManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
+            return KeyVaultManager
+                .Configure()
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }
 }

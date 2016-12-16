@@ -11,5 +11,6 @@
   	"../Dns",
     "../Sql",
   	"../Cdn",
-  	"../RedisCache" ]
+    "../RedisCache",
+    "../AppService" ]
 }
