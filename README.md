@@ -121,7 +121,7 @@ var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
 
 #Sample Code
 
-You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch … 
+You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps), Key Vault, Redis, CDN and Batch … 
 
 <table>
   <tr>
@@ -135,6 +135,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-availability-sets"> Manage availability set</li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-images">List virtual machine images</li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-using-vm-extensions">Manage virtual machines using VM extensions</li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-create-virtual-machines-from-generalized-image-or-specialized-vhd">Create virtual machines from generalized image or specialized VHD</li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-extension-images">List virtual machine extension images</li>
 </ul>
 </td>
@@ -144,6 +145,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
     <td><ul style="list-style-type:circle">
 <li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-in-parallel">Create multiple virtual machines in parallel</li>
 <li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-with-network-in-parallel">Create multiple virtual machines with network in parallel</li>
+<li><a href="http://github.com/azure-samples/compute-dotnet-create-virtual-machines-across-regions-in-parallel">Create multiple virtual machines across regions in parallel</li>
 </ul></td>
   </tr>
   <tr>
@@ -159,7 +161,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 </ul></td>
   </tr>
   <tr>
-    <td>Network</td>
+    <td>Networking</td>
     <td><ul style="list-style-type:circle">
 
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-virtual-network">Manage virtual network</a></li>
@@ -171,6 +173,58 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 </ul>
 </td>
   </tr>
+
+  <tr>
+    <td>Networking - DNS</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/dns-dotnet-host-and-manage-your-domains">Hosting and managing domains</a></li>
+</ul></td>
+  </tr>
+
+  <tr>
+    <td>Traffic Manager</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/traffic-manager-dotnet-manage-traffic-manage-profiles">Manage traffic manager profiles</a></li>
+</ul></td>
+  </tr>
+
+  <tr>
+    <td>Application Gateway</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/application-gateway-dotnet-manage-simple-application-gateways">Manage application gateways</a></li>
+<li><a href="https://github.com/Azure-Samples/application-gateway-dotnet-manage-application-gateways">Manage application gateways with backend pools</a></li>
+</ul></td>
+  </tr>
+
+  <tr>
+    <td>SQL Database</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-db">Manage SQL databases</a></li>
+<li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-sql-dbs-in-elastic-pool">Manage SQL databases in elastic pools</a></li>
+<li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-sql-dbs-in-elastic-pool">Manage firewalls for SQL databases</a></li>
+<li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-sql-databases-across-regions">Manage SQL databases across regions</a></li>
+</ul></td>
+  </tr>
+  <tr>
+    <td>Redis Cache</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/redis-dotnet-manage-cache">Manage Redis Cache</a></li>
+</ul></td>
+</tr>
+
+  <tr>
+    <td>App Service - Web Apps</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps">Manage Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-with-custom-domains">Manage Web apps with custom domains</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps">Configure deployment sources for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-staging-and-production-slots-for-web-apps">Manage staging and production slots for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-scale-web-apps">Scale Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-storage-connections-for-web-apps">Manage storage connections for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-data-connections-for-web-apps">Manage data connections (such as SQL database and Redis cache) for Web apps</a></li>
+</ul></td>
+  </tr>
+
   <tr>
     <td>Resource Groups</td>
     <td><ul style="list-style-type:circle">
@@ -187,12 +241,21 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 </ul></td>
   </tr>
   <tr>
+    <td>CDN</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/cdn-dotnet-manage-cdn ">Manage CDNs</a></li>
+</ul></td>
+  </tr>
+  <tr>
     <td>Batch</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/batch-dotnet-manage-batch-accounts">Manage batch accounts</a></li>
 </ul></td>
   </tr>
 </table>
+
+
+
 
 # Download
 
