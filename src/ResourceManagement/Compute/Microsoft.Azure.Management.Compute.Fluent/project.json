@@ -23,8 +23,7 @@
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
     "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
     "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta3, 2.0)",
-    "System.Linq.Queryable": "4.0.1"
+    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta3, 2.0)"
   },
 
   "frameworks": {
@@ -39,13 +38,15 @@
         "System.Diagnostics.Tools": "4.0.1",
         "System.Net.Http": "4.1.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Threading.Tasks": "4.0.11"
+        "System.Threading.Tasks": "4.0.11",
+        "System.Linq.Queryable": "4.0.1"
       }
     },
     "netstandard1.1": {
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1"
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Linq.Queryable": "4.0.1"
       }
     }
   }

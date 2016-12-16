@@ -3,10 +3,13 @@
     	"../src/ResourceManagement/Azure.Fluent", 
     	"ResourceManagement",
     	"ResourceManagement/Batch",
-    	"ResourceManagement/Compute",
+        "ResourceManagement/Cdn",
+        "ResourceManagement/Compute",
     	"ResourceManagement/KeyVault",
     	"ResourceManagement/Network",
-    	"ResourceManagement/ResourceManager",
+        "ResourceManagement/RedisCache",
+        "ResourceManagement/ResourceManager",
+        "ResourceManagement/Sql",
     	"ResourceManagement/Storage"
     ]
 }
