@@ -122,7 +122,7 @@ var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
 
 You can create a application gateway instance by using another `define() … create()` method chain.
 
-```chsarp
+```csharp
 var applicationGateway = azure.ApplicationGateways().Define("myFirstAppGateway")
     .WithRegion(Region.US_EAST)
     .WithExistingResourceGroup(resourceGroup)
