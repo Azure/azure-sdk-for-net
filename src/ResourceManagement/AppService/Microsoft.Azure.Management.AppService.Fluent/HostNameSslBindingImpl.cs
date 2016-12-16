@@ -62,8 +62,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             X509Certificate2Collection collection = new X509Certificate2Collection();
             collection.Import(pfxPath, password, X509KeyStorageFlags.PersistKeySet);
 
-            X509Certificate2 cert = collection.GetEnumerator().Current;
-            return cert.Thumbprint;
+            foreach (var cert in collection)
+            {
+                return cert.Thumbprint;
+            }
+            throw new KeyNotFoundException("Private key not found in the pfx file");
         }
 
         ///GENMHASH:0B0AB38F6DD8B1FEB79C787CAA88F145:906C0B4A59497294B730FFF3475D49DA

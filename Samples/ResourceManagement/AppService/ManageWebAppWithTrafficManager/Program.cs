@@ -92,13 +92,11 @@ namespace ManageWebAppWithTrafficManager
                     //============================================================
                     // Create a self-singed SSL certificate
 
-                    var pfxPath = "Assets/" + app2Name + "." + domainName + ".pfx";
-                    var pvkPath = "Assets/" + app2Name + "." + domainName + ".pvk";
-                    var cerPath = "Assets/" + app2Name + "." + domainName + ".cer";
+                    pfxPath = domainName + ".pfx";
 
                     Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
 
-                    CreateCertificate(domainName, cerPath, pvkPath, pfxPath, CERT_PASSWORD);
+                    CreateCertificate(domainName, pfxPath, CERT_PASSWORD);
 
                     //============================================================
                     // Create 3 app service plans in 3 regions
@@ -263,7 +261,7 @@ namespace ManageWebAppWithTrafficManager
                     .WithManagedHostnameBindings(domain, name)
                     .DefineSslBinding()
                         .ForHostname(name + "." + domain.Name)
-                        .WithPfxCertificateToUpload(pfxPath, CERT_PASSWORD)
+                        .WithPfxCertificateToUpload("Asset/" + pfxPath, CERT_PASSWORD)
                         .WithSniBasedSsl()
                         .Attach()
                     .DefineSourceControl()
@@ -273,14 +271,12 @@ namespace ManageWebAppWithTrafficManager
                     .Create();
         }
 
-        private static void CreateCertificate(string domainName, string cerPath, string pvkPath, string pfxPath, string password)
+        private static void CreateCertificate(string domainName, string pfxPath, string password)
         {
-            string shortName = domainName.Split('.').First();
-            string makecertArgs = string.Format(@"-n ""CN=*.{0},O=Microsoft,OU=Azure,C=US,S=WA,L=Redmond"" -r -pe -a sha256 -len 2048 -cy authority -sv {1} {2} -eku 1.3.6.1.5.5.7.3.1", domainName, pvkPath, cerPath);
-            Process.Start("makecert", makecertArgs).WaitForExit();
-            Console.Write("Please provide a password for your pfx file: ");
-            string pvk2pfxArgs = string.Format("-pvk {0} -spc {1} -pfx {2} -po {3}", pvkPath, cerPath, pfxPath, password);
-            Process.Start("pvk2pfx", pvk2pfxArgs).WaitForExit();
+            string args = string.Format(@".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""", pfxPath, password, domainName);
+            ProcessStartInfo info = new ProcessStartInfo("powershell", args);
+            info.WorkingDirectory = "Asset";
+            Process.Start(info).WaitForExit();
         }
     }
 }
