@@ -9,6 +9,8 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using System;
+using System.Linq;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 
@@ -72,7 +74,7 @@ namespace ManageWebAppWithTrafficManager
                             .DefineRegistrantContact()
                                 .WithFirstName("Jon")
                                 .WithLastName("Doe")
-                                .WithEmail("jondoe@contoso.Com")
+                                .WithEmail("jondoe@contoso.com")
                                 .WithAddressLine1("123 4th Ave")
                                 .WithCity("Redmond")
                                 .WithStateOrProvince("WA")
@@ -90,12 +92,13 @@ namespace ManageWebAppWithTrafficManager
                     //============================================================
                     // Create a self-singed SSL certificate
 
-                    pfxPath = ManageWebAppWithTrafficManager.Class.GetResource("/").GetPath() + app2Name + "." + domainName + ".Pfx";
-                    var cerPath = ManageWebAppWithTrafficManager.Class.GetResource("/").GetPath() + app2Name + "." + domainName + ".Cer";
+                    var pfxPath = "Assets/" + app2Name + "." + domainName + ".pfx";
+                    var pvkPath = "Assets/" + app2Name + "." + domainName + ".pvk";
+                    var cerPath = "Assets/" + app2Name + "." + domainName + ".cer";
 
                     Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
 
-                    Utilities.CreateCertificate(cerPath, pfxPath, domainName, CERT_PASSWORD, "*." + domainName);
+                    CreateCertificate(domainName, cerPath, pvkPath, pfxPath, CERT_PASSWORD);
 
                     //============================================================
                     // Create 3 app service plans in 3 regions
@@ -258,9 +261,9 @@ namespace ManageWebAppWithTrafficManager
                     .WithExistingResourceGroup(RG_NAME)
                     .WithExistingAppServicePlan(plan)
                     .WithManagedHostnameBindings(domain, name)
-                    .DefineSslBinding
+                    .DefineSslBinding()
                         .ForHostname(name + "." + domain.Name)
-                        .WithPfxCertificateToUpload(new File(pfxPath), CERT_PASSWORD)
+                        .WithPfxCertificateToUpload(pfxPath, CERT_PASSWORD)
                         .WithSniBasedSsl()
                         .Attach()
                     .DefineSourceControl()
@@ -268,6 +271,16 @@ namespace ManageWebAppWithTrafficManager
                         .WithBranch("master")
                         .Attach()
                     .Create();
+        }
+
+        private static void CreateCertificate(string domainName, string cerPath, string pvkPath, string pfxPath, string password)
+        {
+            string shortName = domainName.Split('.').First();
+            string makecertArgs = string.Format(@"-n ""CN=*.{0},O=Microsoft,OU=Azure,C=US,S=WA,L=Redmond"" -r -pe -a sha256 -len 2048 -cy authority -sv {1} {2} -eku 1.3.6.1.5.5.7.3.1", domainName, pvkPath, cerPath);
+            Process.Start("makecert", makecertArgs).WaitForExit();
+            Console.Write("Please provide a password for your pfx file: ");
+            string pvk2pfxArgs = string.Format("-pvk {0} -spc {1} -pfx {2} -po {3}", pvkPath, cerPath, pfxPath, password);
+            Process.Start("pvk2pfx", pvk2pfxArgs).WaitForExit();
         }
     }
 }

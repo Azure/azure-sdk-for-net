@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -671,60 +672,6 @@ namespace Microsoft.Azure.Management.Samples.Common
                 builder = builder.Append("\n\t\t" + conn.Name + ": " + conn.Value + " - " + conn.Type + (conn.Sticky ? " - slot setting" : ""));
             }
             Console.WriteLine(builder.ToString());
-        }
-
-        public static void CreateCertificate(string certPath, string pfxPath,
-                                     string alias, string password, string cnName)
-        {
-            //var validityInDays = "3650";
-            //var keyAlg = "RSA";
-            //var sigAlg = "SHA1withRSA";
-            //var keySize = "2048";
-            //var storeType = "pkcs12";
-            //var command = "keytool";
-            //var jdkPath = System.GetProperty("java.Home");
-            //if (jdkPath != null && !jdkPath.IsEmpty())
-            //{
-            //    jdkPath = jdkPath.Concat("\\bin");
-            //}
-            //if (new File(jdkPath).IsDirectory())
-            //{
-            //    command = String.Format("%s%s%s", jdkPath, File.Separator, command);
-            //}
-
-            //// Create Pfx file
-            //var commandArgs = {command, "-genkey", "-alias", alias,
-            //    "-keystore", pfxPath, "-storepass", password, "-validity",
-            //    validityInDays, "-keyalg", keyAlg, "-sigalg", sigAlg, "-keysize", keySize,
-            //    "-storetype", storeType, "-dname", "CN=" + cnName, "-ext", "EKU=1.3.6.1.5.5.7.3.1"};
-            //Utilities.CmdInvocation(commandArgs, false);
-
-            //// Create cer file i.E. extract public key from pfx
-            //var pfxvar = new File(pfxPath);
-            //if (pfxFile.Exists())
-            //{
-            //    var certCommandArgs = {command, "-export", "-alias", alias,
-            //        "-storetype", storeType, "-keystore", pfxPath,
-            //        "-storepass", password, "-rfc", "-file", certPath};
-            //    // output of keytool export command is going to error stream
-            //    // although command is
-            //    // executed successfully, hence ignoring error stream in this case
-            //    Utilities.CmdInvocation(certCommandArgs, true);
-
-            //    // Check if file got created or not
-            //    var cervar = new File(pfxPath);
-            //    if (!cerFile.Exists())
-            //    {
-            //        throw new IOException(
-            //                "Error occurred while creating certificate"
-            //                        + StringUtilities.Join(" ", certCommandArgs));
-            //    }
-            //}
-            //else
-            //{
-            //    throw new IOException("Error occurred while creating certificates"
-            //            + StringUtilities.Join(" ", commandArgs));
-            //}
         }
 
         private static string FormatDictionary(IReadOnlyDictionary<string, string> dictionary)

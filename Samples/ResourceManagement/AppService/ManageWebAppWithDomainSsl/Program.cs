@@ -9,6 +9,8 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
+using System.Linq;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 
@@ -52,6 +54,16 @@ namespace ManageWebAppWithDomainSsl
                 Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
                 try
                 {
+
+                    var pfxPath = "Assets/" + app2Name + "." + domainName + ".pfx";
+                    var pvkPath = "Assets/" + app2Name + "." + domainName + ".pvk";
+                    var cerPath = "Assets/" + app2Name + "." + domainName + ".cer";
+
+                    Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
+
+                    CreateCertificate(domainName, cerPath, pvkPath, pfxPath, certPassword);
+
+                    Console.WriteLine("Created self-signed certificate " + pfxPath);
                     //============================================================
                     // Create a web app with a new app service plan
 
@@ -92,7 +104,7 @@ namespace ManageWebAppWithDomainSsl
                             .DefineRegistrantContact()
                                 .WithFirstName("Jon")
                                 .WithLastName("Doe")
-                                .WithEmail("jondoe@contoso.Com")
+                                .WithEmail("jondoe@contoso.com")
                                 .WithAddressLine1("123 4th Ave")
                                 .WithCity("Redmond")
                                 .WithStateOrProvince("WA")
@@ -113,7 +125,7 @@ namespace ManageWebAppWithDomainSsl
                     Console.WriteLine("Binding http://" + app1Name + "." + domainName + " to web app " + app1Name + "...");
 
                     app1 = app1.Update()
-                            .DefineHostnameBinding
+                            .DefineHostnameBinding()
                                 .WithAzureManagedDomain(domain)
                                 .WithSubDomain(app1Name)
                                 .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
@@ -129,15 +141,6 @@ namespace ManageWebAppWithDomainSsl
                     //============================================================
                     // Create a self-singed SSL certificate
 
-                    var pfxPath = ManageWebAppWithDomainSsl.Class.GetResource("/").GetPath() + app2Name + "." + domainName + ".Pfx";
-                    var cerPath = ManageWebAppWithDomainSsl.Class.GetResource("/").GetPath() + app2Name + "." + domainName + ".Cer";
-
-                    Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
-
-                    Utilities.CreateCertificate(cerPath, pfxPath, domainName, certPassword, "*." + domainName);
-
-                    Console.WriteLine("Created self-signed certificate " + pfxPath);
-
                     //============================================================
                     // Bind domain to web app 2 and turn on wild card SSL for both
 
@@ -145,9 +148,9 @@ namespace ManageWebAppWithDomainSsl
 
                     app1 = app1.Update()
                                     .WithManagedHostnameBindings(domain, app1Name)
-                                    .DefineSslBinding
+                                    .DefineSslBinding()
                                         .ForHostname(app1Name + "." + domainName)
-                                        .WithPfxCertificateToUpload(new File(pfxPath), certPassword)
+                                        .WithPfxCertificateToUpload(pfxPath, certPassword)
                                         .WithSniBasedSsl()
                                         .Attach()
                                     .Apply();
@@ -161,7 +164,7 @@ namespace ManageWebAppWithDomainSsl
                                     .WithManagedHostnameBindings(domain, app2Name)
                                     .DefineSslBinding()
                                         .ForHostname(app2Name + "." + domainName)
-                                        .WithPfxCertificateToUpload(new File(pfxPath), certPassword)
+                                        .WithPfxCertificateToUpload(pfxPath, certPassword)
                                         .WithSniBasedSsl()
                                         .Attach()
                                     .Apply();
@@ -203,6 +206,20 @@ namespace ManageWebAppWithDomainSsl
             {
                 return client.GetAsync(url).Result;
             }
+        }
+
+        private static void CreateCertificate(string domainName, string cerPath, string pvkPath, string pfxPath, string password)
+        {
+            string shortName = domainName.Split('.').First();
+            string makecertArgs = string.Format(@"-n ""CN=*.{0},O=Microsoft,OU=Azure,C=US,S=WA,L=Redmond"" -r -pe -a sha256 -len 2048 -cy authority -sv {1} {2} -eku 1.3.6.1.5.5.7.3.1", domainName, pvkPath, cerPath);
+            ProcessStartInfo info = new ProcessStartInfo("makecert", makecertArgs);
+            info.UseShellExecute = true;
+            Process.Start(info).WaitForExit();
+            Console.Write("Please provide a password for your pfx file: ");
+            string pvk2pfxArgs = string.Format("-pvk {0} -spc {1} -pfx {2} -po {3}", pvkPath, cerPath, pfxPath, password);
+            info = new ProcessStartInfo("pvk2pfx", pvk2pfxArgs);
+            info.UseShellExecute = true;
+            Process.Start(info).WaitForExit();
         }
     }
 }
