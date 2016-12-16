@@ -233,7 +233,7 @@ namespace ManageApplicationGateway
                     // Create an application gateway
 
                     Console.WriteLine("================= CREATE ======================");
-                    Console.WriteLine("Creating an application gateway");
+                    Console.WriteLine("Creating an application gateway... (this can take about 20 min)");
                     t = Stopwatch.StartNew();
 
                     var applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
