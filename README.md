@@ -123,21 +123,21 @@ var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
 You can create a application gateway instance by using another `define() … create()` method chain.
 
 ```chsarp
-var applicationGateway = azure.applicationGateways().define("myFirstAppGateway")
-    .withRegion(Region.US_EAST)
-    .withExistingResourceGroup(resourceGroup)
+var applicationGateway = azure.ApplicationGateways().Define("myFirstAppGateway")
+    .WithRegion(Region.US_EAST)
+    .WithExistingResourceGroup(resourceGroup)
     // Request routing rule for HTTP from public 80 to public 8080
-    .defineRequestRoutingRule("HTTP-80-to-8080")
-        .fromPublicFrontend()
-        .fromFrontendHttpPort(80)
-        .toBackendHttpPort(8080)
-        .toBackendIpAddress("11.1.1.1")
-        .toBackendIpAddress("11.1.1.2")
-        .toBackendIpAddress("11.1.1.3")
-        .toBackendIpAddress("11.1.1.4")
-        .attach()
-    .withExistingPublicIpAddress(publicIpAddress)
-    .create();
+    .DefineRequestRoutingRule("HTTP-80-to-8080")
+        .FromPublicFrontend()
+        .FromFrontendHttpPort(80)
+        .ToBackendHttpPort(8080)
+        .ToBackendIpAddress("11.1.1.1")
+        .ToBackendIpAddress("11.1.1.2")
+        .ToBackendIpAddress("11.1.1.3")
+        .ToBackendIpAddress("11.1.1.4")
+        .Attach()
+    .WithExistingPublicIpAddress(publicIpAddress)
+    .Create();
 ```
 
 **Create a Web App**
@@ -145,13 +145,13 @@ var applicationGateway = azure.applicationGateways().define("myFirstAppGateway")
 You can create a Web App instance by using another `define() … create()` method chain.
 
 ```csharp
-var webApp = azure.webApps()
-    .define(appName)
-    .withNewResourceGroup(rgName)
-    .withNewAppServicePlan(planName)
-    .withRegion(Region.US_WEST)
-    .withPricingTier(AppServicePricingTier.STANDARD_S1)
-    .create();
+var webApp = azure.WebApps()
+    .Define(appName)
+    .WithNewResourceGroup(rgName)
+    .WithNewAppServicePlan(planName)
+    .WithRegion(Region.US_WEST)
+    .WithPricingTier(AppServicePricingTier.STANDARD_S1)
+    .Create();
 ```
 
 **Create a SQL Database**
