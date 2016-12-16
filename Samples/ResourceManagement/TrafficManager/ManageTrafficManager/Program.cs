@@ -11,6 +11,12 @@ using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Definition;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent.Models;
+using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
 
 namespace ManageTrafficManager
 {
@@ -72,84 +78,83 @@ namespace ManageTrafficManager
                     // ============================================================
                     // Purchase a domain (will be canceled for a full refund)
 
-                    //Console.WriteLine("Purchasing a domain " + domainName + "...");
-                    //var domain = azure.AppServices.Domains.Define(domainName)
-                    //        .WithExistingResourceGroup(rgName)
-                    //        .DefineRegistrantContact()
-                    //            .WithFirstName("Jon")
-                    //            .WithLastName("Doe")
-                    //            .WithEmail("jondoe@contoso.com")
-                    //            .WithAddressLine1("123 4th Ave")
-                    //            .WithCity("Redmond")
-                    //            .WithStateOrProvince("WA")
-                    //            .WithCountry(CountryISOCode.UNITED_STATES)
-                    //            .WithPostalCode("98052")
-                    //            .WithPhoneCountryCode(CountryPhoneCode.UNITED_STATES)
-                    //            .WithPhoneNumber("4258828080")
-                    //        .Attach()
-                    //        .WithDomainPrivacyEnabled(true)
-                    //        .WithAutoRenewEnabled(false)
-                    //        .Create();
-                    //Console.WriteLine("Purchased domain " + domain.name());
-                    //Utilities.Print(domain);
+                    Console.WriteLine("Purchasing a domain " + domainName + "...");
+                    var domain = azure.AppServices.Domains.Define(domainName)
+                            .WithExistingResourceGroup(rgName)
+                            .DefineRegistrantContact()
+                                .WithFirstName("Jon")
+                                .WithLastName("Doe")
+                                .WithEmail("jondoe@contoso.com")
+                                .WithAddressLine1("123 4th Ave")
+                                .WithCity("Redmond")
+                                .WithStateOrProvince("WA")
+                                .WithCountry(CountryISOCode.UNITED_STATES)
+                                .WithPostalCode("98052")
+                                .WithPhoneCountryCode(CountryPhoneCode.UNITED_STATES)
+                                .WithPhoneNumber("4258828080")
+                            .Attach()
+                            .WithDomainPrivacyEnabled(true)
+                            .WithAutoRenewEnabled(false)
+                            .Create();
+                    Console.WriteLine("Purchased domain " + domain.name());
+                    Utilities.Print(domain);
 
                     //============================================================
                     // Create a self-singed SSL certificate
 
-                    //var pfxPath = "";
-                    //var cerPath = "";
-
-                    //Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
-                    //Utilities.CreateCertificate(cerPath, pfxPath, domainName, certPassword, "*." + domainName);
+                    var pfxPath = domainName + ".pfx";
+                    Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
+                    CreateCertificate(domainName, pfxPath, certPassword);
+                    Console.WriteLine("Created self-signed certificate " + pfxPath);
 
                     //============================================================
                     // Creates app service in 5 different region
 
-                    //var appServicePlans = new List<IAppServicePlan>();
-                    //int id = 0;
-                    //foreach (var region in regions)
-                    //{
-                    //    var planName = appServicePlanNamePrefix + id;
-                    //    Console.WriteLine("Creating an app service plan " + planName + " in region " + region + "...");
-                    //    var appServicePlan = azure.AppServices.AppServicePlans
-                    //            .Define(planName)
-                    //            .WithRegion(region)
-                    //            .WithExistingResourceGroup(rgName)
-                    //            .WithPricingTier(AppServicePricingTier.BASIC_B1)
-                    //            .Create();
-                    //    Console.WriteLine("Created app service plan " + planName);
-                    //    Utilities.Print(appServicePlan);
-                    //    appServicePlans.Add(appServicePlan);
-                    //    id++;
-                    //}
+                    var appServicePlans = new List<IAppServicePlan>();
+                    int id = 0;
+                    foreach (var region in regions)
+                    {
+                        var planName = appServicePlanNamePrefix + id;
+                        Console.WriteLine("Creating an app service plan " + planName + " in region " + region + "...");
+                        var appServicePlan = azure.AppServices.AppServicePlans
+                                .Define(planName)
+                                .WithRegion(region)
+                                .WithExistingResourceGroup(rgName)
+                                .WithPricingTier(AppServicePricingTier.BASIC_B1)
+                                .Create();
+                        Console.WriteLine("Created app service plan " + planName);
+                        Utilities.Print(appServicePlan);
+                        appServicePlans.Add(appServicePlan);
+                        id++;
+                    }
 
                     //============================================================
                     // Creates websites using previously created plan
-                    //var webApps = new List<IWebApp>();
-                    //id = 0;
-                    //foreach (var appServicePlan in appServicePlans)
-                    //{
-                    //    var webAppName = webAppNamePrefix + id;
-                    //    Console.WriteLine("Creating a web app " + webAppName + " using the plan " + appServicePlan.name() + "...");
-                    //    var webApp = azure.WebApps.Define(webAppName)
-                    //            .WithExistingResourceGroup(rgName)
-                    //            .WithExistingAppServicePlan(appServicePlan)
-                    //            .WithManagedHostnameBindings(domain, webAppName)
-                    //            .DefineSslBinding()
-                    //            .ForHostname(webAppName + "." + domain.Name)
-                    //            .WithPfxCertificateToUpload(new File(pfxPath), certPassword)
-                    //            .WithSniBasedSsl()
-                    //            .Attach()
-                    //            .DefineSourceControl()
-                    //                .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
-                    //                .WithBranch("master")
-                    //                .Attach()
-                    //            .Create();
-                    //    Console.WriteLine("Created web app " + webAppName);
-                    //    Utilities.Print(webApp);
-                    //    webApps.Add(webApp);
-                    //    id++;
-                    //}
+                    var webApps = new List<IWebApp>();
+                    id = 0;
+                    foreach (var appServicePlan in appServicePlans)
+                    {
+                        var webAppName = webAppNamePrefix + id;
+                        Console.WriteLine("Creating a web app " + webAppName + " using the plan " + appServicePlan.name() + "...");
+                        var webApp = azure.WebApps.Define(webAppName)
+                                .WithExistingResourceGroup(rgName)
+                                .WithExistingAppServicePlan(appServicePlan)
+                                .WithManagedHostnameBindings(domain, webAppName)
+                                .DefineSslBinding()
+                                .ForHostname(webAppName + "." + domain.Name)
+                                .WithPfxCertificateToUpload("Asset/" + pfxPath, certPassword)
+                                .WithSniBasedSsl()
+                                .Attach()
+                                .DefineSourceControl()
+                                    .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
+                                    .WithBranch("master")
+                                    .Attach()
+                                .Create();
+                        Console.WriteLine("Created web app " + webAppName);
+                        Utilities.Print(webApp);
+                        webApps.Add(webApp);
+                        id++;
+                    }
                     //============================================================
                     // Creates a traffic manager profile
 
@@ -160,15 +165,15 @@ namespace ManageTrafficManager
                             .WithLeafDomainLabel(tmName)
                             .WithPriorityBasedRouting();
                     ICreatable<ITrafficManagerProfile> tmCreatable = null;
-                    //int priority = 1;
-                    //foreach(var webApp in webApps)
-                    //{
-                    //    tmCreatable = tmDefinition.DefineAzureTargetEndpoint("endpoint-" + priority)
-                    //            .ToResourceId(webApp.Id)
-                    //            .WithRoutingPriority(priority)
-                    //            .Attach();
-                    //    priority++;
-                    //}
+                    int priority = 1;
+                    foreach (var webApp in webApps)
+                    {
+                        tmCreatable = tmDefinition.DefineAzureTargetEndpoint("endpoint-" + priority)
+                                .ToResourceId(webApp.Id)
+                                .WithRoutingPriority(priority)
+                                .Attach();
+                        priority++;
+                    }
 
                     var trafficManagerProfile = tmCreatable.Create();
                     Console.WriteLine("Created traffic manager " + trafficManagerProfile.Name);
@@ -254,6 +259,14 @@ namespace ManageTrafficManager
             {
                 Console.WriteLine(e);
             }
+        }
+
+        private static void CreateCertificate(string domainName, string pfxPath, string password)
+        {
+            string args = string.Format(@".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""", pfxPath, password, domainName);
+            ProcessStartInfo info = new ProcessStartInfo("powershell", args);
+            info.WorkingDirectory = "Asset";
+            Process.Start(info).WaitForExit();
         }
     }
 }

@@ -11,6 +11,11 @@ using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Linq;
 using System.Threading;
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent.Models;
+using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
 
 namespace ManageDns
 {
@@ -85,18 +90,18 @@ namespace ManageDns
                     // Creates a web App
 
                     Console.WriteLine("Creating Web App " + webAppName + "...");
-                    //var webApp = azure.WebApps.Define(webAppName)
-                    //        .WithExistingResourceGroup(rgName)
-                    //        .WithNewAppServicePlan(appServicePlanName)
-                    //        .WithRegion(Region.US_EAST2)
-                    //        .WithPricingTier(AppServicePricingTier.BASIC_B1)
-                    //        .DefineSourceControl()
-                    //            .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
-                    //            .WithBranch("master")
-                    //            .Attach()
-                    //        .Create();
-                    //Console.WriteLine("Created web app " + webAppName);
-                    //Utilities.Print(webApp);
+                    var webApp = azure.WebApps.Define(webAppName)
+                            .WithExistingResourceGroup(rgName)
+                            .WithNewAppServicePlan(appServicePlanName)
+                            .WithRegion(Region.US_EAST2)
+                            .WithPricingTier(AppServicePricingTier.BASIC_B1)
+                            .DefineSourceControl()
+                                .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
+                                .WithBranch("master")
+                                .Attach()
+                            .Create();
+                    Console.WriteLine("Created web app " + webAppName);
+                    Utilities.Print(webApp);
 
                     //============================================================
                     // Creates a CName record and bind it with the web app
@@ -105,10 +110,10 @@ namespace ManageDns
                     // alias for www.[customDomainName]
 
                     Console.WriteLine("Updating DNS zone by adding a CName record...");
-                    //rootDnsZone = rootDnsZone.Update()
-                    //        .WithCnameRecordSet("www", webApp.defaultHostName())
-                    //        .Apply();
-                    //Console.WriteLine("DNS zone updated");
+                    rootDnsZone = rootDnsZone.Update()
+                            .WithCnameRecordSet("www", webApp.defaultHostName())
+                            .Apply();
+                    Console.WriteLine("DNS zone updated");
                     Utilities.Print(rootDnsZone);
 
                     // Waiting for a minute for DNS CName entry to propagate
@@ -118,16 +123,16 @@ namespace ManageDns
                     // Step 2: Adds a web app host name binding for www.[customDomainName]
                     //         This binding action will fail if the CName record propagation is not yet completed
 
-                    //Console.WriteLine("Updating Web app with host name binding...");
-                    //webApp.Update()
-                    //        .DefineHostnameBinding()
-                    //            .WithThirdPartyDomain(customDomainName)
-                    //            .WithSubDomain("www")
-                    //            .WithDnsRecordType(CustomHostNameDnsRecordType.CNAME)
-                    //            .Attach()
-                    //        .Apply();
-                    //Console.WriteLine("Web app updated");
-                    //Utilities.Print(webApp);
+                    Console.WriteLine("Updating Web app with host name binding...");
+                    webApp.Update()
+                            .DefineHostnameBinding()
+                                .WithThirdPartyDomain(customDomainName)
+                                .WithSubDomain("www")
+                                .WithDnsRecordType(CustomHostNameDnsRecordType.CNAME)
+                                .Attach()
+                            .Apply();
+                    Console.WriteLine("Web app updated");
+                    Utilities.Print(webApp);
 
 
 
