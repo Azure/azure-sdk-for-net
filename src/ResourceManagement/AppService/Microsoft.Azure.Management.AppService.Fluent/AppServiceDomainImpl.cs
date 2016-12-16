@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IDomainsOperations client;
         private ITopLevelDomainsOperations topLevelDomainsInner;
         private IDictionary<string, Microsoft.Azure.Management.AppService.Fluent.Models.HostName> hostNameMap;
+        private string clientIp = "127.0.0.1";
 
         ///GENMHASH:E3A506AB29CB79E19BE35E770B4C876E:E11180BB79B722174FB3D0453FCEA12B
         public DomainStatus RegistrationStatus()
@@ -89,7 +90,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             Inner.Consent = new DomainPurchaseConsent()
             {
                 AgreedAt = new DateTime(),
-                AgreedBy = "127.0.0.1",
+                AgreedBy = clientIp,
                 AgreementKeys = agreementKeys
             };
 
@@ -240,6 +241,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public DomainContactImpl DefineRegistrantContact()
         {
             return new DomainContactImpl(new Contact(), this);
+        }
+
+        public IWithCreate WithClientIpAddress(string ipAddress)
+        {
+            clientIp = ipAddress;
+            return this; 
         }
     }
 }
