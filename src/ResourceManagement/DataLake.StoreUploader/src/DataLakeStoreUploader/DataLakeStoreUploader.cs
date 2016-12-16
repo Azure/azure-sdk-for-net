@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+using Microsoft.Rest;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -52,6 +53,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         #endregion
 
+        internal static string LogFilePath { get; set; }
+
         /// <summary>
         ///  An event that is registered to progress tracking to ensure that, in the event of an unexpected upload failure,
         ///  progress is properly updated.
@@ -67,7 +70,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="frontEnd">A pointer to the FrontEnd interface to use for the upload.</param>
         /// <param name="progressTracker">(Optional) A tracker that reports progress on the upload.</param>
         /// <param name="folderProgressTracker">(Optional) The folder progress tracker.</param>
-        public DataLakeStoreUploader(UploadParameters uploadParameters, IFrontEndAdapter frontEnd, IProgress<UploadProgress> progressTracker = null, IProgress<UploadFolderProgress> folderProgressTracker = null) :
+        public DataLakeStoreUploader(
+            UploadParameters uploadParameters,
+            IFrontEndAdapter frontEnd,
+            IProgress<UploadProgress> progressTracker = null,
+            IProgress<UploadFolderProgress> folderProgressTracker = null,
+            LogLevel logLevel = LogLevel.None) :
             this(uploadParameters, frontEnd, CancellationToken.None, progressTracker, folderProgressTracker)
         {
             
@@ -81,9 +89,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="token">The token.</param>
         /// <param name="progressTracker">(Optional) A tracker that reports progress on the upload.</param>
         /// <param name="folderProgressTracker">(Optional) The folder progress tracker.</param>
-        public DataLakeStoreUploader(UploadParameters uploadParameters, IFrontEndAdapter frontEnd, CancellationToken token, IProgress<UploadProgress> progressTracker = null, IProgress<UploadFolderProgress> folderProgressTracker = null)
+        public DataLakeStoreUploader(
+            UploadParameters uploadParameters,
+            IFrontEndAdapter frontEnd,
+            CancellationToken token,
+            IProgress<UploadProgress> progressTracker = null,
+            IProgress<UploadFolderProgress> folderProgressTracker = null,
+            LogLevel logLevel = LogLevel.None)
         {
             this.Parameters = uploadParameters;
+            Logger.LogLevel = logLevel;
             _frontEnd = frontEnd;
             
             //we need to override the default .NET value for max connections to a host to our number of threads, if necessary (otherwise we won't achieve the parallelism we want)
@@ -123,6 +138,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         public void Execute()
         {
+            var previousTracingValue = ServiceClientTracing.IsEnabled;
+            ServiceClientTracing.IsEnabled = true;
+            ServiceClientTracing.AddTracingInterceptor(Logger.SdkTracingInterceptor);
             try
             {
                 // check if we are uploading a file or a directory
@@ -397,6 +415,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             finally
             {
                 //revert back the default .NET value for max connections to a host to whatever it was before
+                ServiceClientTracing.IsEnabled = previousTracingValue;
+                ServiceClientTracing.RemoveTracingInterceptor(Logger.SdkTracingInterceptor);
                 ServicePointManager.DefaultConnectionLimit = _previousDefaultConnectionLimit;
             }
         }
@@ -553,7 +573,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                     e));
                         }
 
-                        SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                        var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                        Logger.LogError("ValidateMetadataForResume - folder upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                            metadata.TargetStreamPath,
+                            retryCount,
+                            e,
+                            waitTime);
                     }
                 }
 
@@ -618,7 +643,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                         e));
                             }
 
-                            SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                            var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                            Logger.LogError("ValidateMetadataForResume - file upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                                metadata.TargetStreamPath,
+                                retryCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -1124,7 +1154,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                         e));
                             }
 
-                            SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                            var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                            Logger.LogError("ConcatenateSegments: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                                metadata.TargetStreamPath,
+                                retryCount,
+                                e,
+                                waitTime);
                         }
                     }
 

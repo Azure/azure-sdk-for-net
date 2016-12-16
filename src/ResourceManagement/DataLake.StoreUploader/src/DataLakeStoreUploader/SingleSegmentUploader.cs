@@ -146,15 +146,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path, _metadata.IsDownload);
                     break;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     _token.ThrowIfCancellationRequested();
                     if (retryCount >= MaxBufferUploadAttemptCount)
                     {
-                        throw;
+                        throw e;
                     }
 
-                    WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
+                    var waitTime= WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
+                    Logger.LogError("VerifyUploadedStream: GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                        _segmentMetadata.Path,
+                        retryCount,
+                        e,
+                        waitTime);
                 }
             }
 
@@ -293,7 +298,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             }
                             else
                             {
-                                WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                
+                                var waitTime= WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                Logger.LogError("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                    targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                    _segmentMetadata.Path,
+                                    attemptCount,
+                                    e,
+                                    waitTime);
                             }
                         }
                     }
@@ -307,7 +319,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
                         else
                         {
-                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            Logger.LogError("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                _segmentMetadata.Path,
+                                attemptCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -330,7 +348,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
                         else
                         {
-                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            Logger.LogError("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                _segmentMetadata.Path,
+                                attemptCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -344,7 +368,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     }
                     else
                     {
-                        WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                        var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                        Logger.LogError("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                            targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                            _segmentMetadata.Path,
+                            attemptCount,
+                            ex,
+                            waitTime);
                     }
                 }
             }
@@ -388,13 +418,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Waits for retry.
         /// </summary>
         /// <param name="attemptCount">The attempt count.</param>
-        internal static void WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
+        internal static int WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             if (!useBackOffRetryStrategy)
             {
                 //no need to wait
-                return;
+                return -1;
             }
 
             int intervalMs = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount)) * 1000;
@@ -403,6 +433,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             var randomMS = new Random();
             intervalMs += randomMS.Next((int)Math.Ceiling(intervalMs * .1));
             Thread.Sleep(TimeSpan.FromMilliseconds(intervalMs));
+            return intervalMs;
         }
 
         /// <summary>

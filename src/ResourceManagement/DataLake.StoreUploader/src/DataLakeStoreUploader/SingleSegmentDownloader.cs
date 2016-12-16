@@ -127,15 +127,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path, _metadata.IsDownload);
                     break;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     _token.ThrowIfCancellationRequested();
                     if (retryCount >= MaxBufferDownloadAttemptCount)
                     {
-                        throw;
+                        throw e;
                     }
 
-                    WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
+                    var waitTime = WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
+                    Logger.LogError("VerifyDownloadedStream: GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                         _segmentMetadata.Path,
+                         retryCount,
+                         e,
+                         waitTime);
                 }
             }
 
@@ -233,7 +238,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                     throw new UploadFailedException(string.Format("Failed to retrieve the requested data after {0} attempts for file {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", MaxBufferDownloadAttemptCount, _segmentMetadata.Path));
                                 }
 
-                                WaitForRetry(partialDataAttempts, this.UseBackOffRetryStrategy, _token);
+                                var waitTime = WaitForRetry(partialDataAttempts, this.UseBackOffRetryStrategy, _token);
+                                Logger.LogError("DownloadSegmentContents: ReadStream at path:{0} returned: {1} bytes. Expected: {2} bytes. Attempt: {3}. Wait time in ms before retry: {4}",
+                                    _metadata.InputFilePath,
+                                    lengthReturned,
+                                    lengthToDownload,
+                                    partialDataAttempts,
+                                    waitTime);
                             }
                             else
                             {
@@ -258,7 +269,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             }
                             else
                             {
-                                WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                Logger.LogError("DownloadSegmentContents: ReadStream at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                                    _metadata.InputFilePath,
+                                    attemptCount,
+                                    ex,
+                                    waitTime);
 
                                 // forcibly put the stream back to where it should be based on where we think we are in the download.
                                 outputStream.Seek(curOffset, SeekOrigin.Begin);
@@ -279,13 +295,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Waits for retry.
         /// </summary>
         /// <param name="attemptCount">The attempt count.</param>
-        internal static void WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
+        internal static int WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             if (!useBackOffRetryStrategy)
             {
                 //no need to wait
-                return;
+                return -1;
             }
 
             int intervalMs = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount)) * 1000;
@@ -294,6 +310,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             var randomMS = new Random();
             intervalMs += randomMS.Next((int)Math.Ceiling(intervalMs * .1));
             Thread.Sleep(TimeSpan.FromMilliseconds(intervalMs));
+            return intervalMs;
         }
 
         /// <summary>

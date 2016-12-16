@@ -24,6 +24,7 @@ using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
@@ -87,6 +88,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
         public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
             {
                 var task = _client.FileSystem.CreateAsync(_accountName, streamPath, toAppend, overwrite: overwrite, cancellationToken: _token);
@@ -98,6 +101,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                 task.GetAwaiter().GetResult();
             }
+            stopWatch.Stop();
+            Logger.LogInformation("Op:CREATE,Path:{0},Overwrite:{1},TimeMs:{2}", streamPath, overwrite, stopWatch.ElapsedMilliseconds);
         }
 
         /// <summary>
@@ -122,6 +127,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
             else
             {
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
                 var task = _client.FileSystem.DeleteAsync(_accountName, streamPath, recurse, cancellationToken: _token);
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
@@ -129,6 +136,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
 
                 task.GetAwaiter().GetResult();
+                stopWatch.Stop();
+                Logger.LogInformation("Op:DELETE,Path:{0},recurse:{1},TimeMs:{2}", streamPath, recurse, stopWatch.ElapsedMilliseconds);
             }
         }
 
@@ -142,6 +151,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
         public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
                 var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, offset, cancellationToken: _token);
@@ -153,12 +164,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                 task.GetAwaiter().GetResult();
             }
+            stopWatch.Stop();
+            Logger.LogInformation("Op:APPEND,Path:{0},offset:{1},TimeMs:{2}", streamPath, offset, stopWatch.ElapsedMilliseconds);
         }
 
         public Stream ReadStream(string streamPath, long offset, long length, bool isDownload = false)
         {
             if (isDownload)
             {
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
                 var task = _client.FileSystem.OpenWithHttpMessagesAsync(_accountName, streamPath, length, offset, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
@@ -166,7 +181,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds. TraceId: {1}", PerRequestTimeoutMs, task.Result.RequestId));
                 }
 
-                return task.GetAwaiter().GetResult().Body;
+                Stream toReturn = task.GetAwaiter().GetResult().Body;
+                stopWatch.Stop();
+                Logger.LogInformation("Op:READ,Path:{0},offset:{1},length:{2},TimeMs:{3}", streamPath, offset, length, stopWatch.ElapsedMilliseconds);
+                return toReturn;
             }
             else
             {
@@ -200,6 +218,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
             else
             {
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
                 try
                 {
                     var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
@@ -233,6 +253,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                     throw;
                 }
+                finally
+                {
+                    stopWatch.Stop();
+                    Logger.LogInformation("Op:GETFILESTATUS,Path:{0},TestStream,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
+                }
 
                 return true;
             }
@@ -255,6 +280,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
             else
             {
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
                 var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
@@ -265,6 +292,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
 
                 var fileInfoResponse = task.Result;
+                stopWatch.Stop();
+                Logger.LogInformation("Op:GETFILESTATUS,Path:{0},GetLength,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
                 return (long)fileInfoResponse.FileStatus.Length;
             }
         }
@@ -280,6 +309,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <exception cref="System.Threading.Tasks.TaskCanceledException"></exception>
         public bool IsDirectory(string streamPath)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
 
             if (!task.Wait(PerRequestTimeoutMs))
@@ -290,6 +321,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
 
             var fileInfoResponse = task.Result;
+            stopWatch.Stop();
+            Logger.LogInformation("Op:GETFILESTATUS,Path:{0},IsDirectory,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
             return fileInfoResponse.FileStatus.Type.GetValueOrDefault() == FileType.DIRECTORY;
         }
 
@@ -349,6 +382,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 // in the request body.
                 var paths = "sources=" + string.Join(",", inputStreamPaths);
 
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
                 // For the current implementation, we require UTF8 encoding.
                 using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(paths)))
                 {
@@ -362,6 +397,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     }
 
                     task.GetAwaiter().GetResult();
+                    stopWatch.Stop();
+                    Logger.LogInformation("Op:MSCONCAT,Path:{0},NumberOfStreams:{1},TimeMs:{2}", targetStreamPath, inputStreamPaths.Length, stopWatch.ElapsedMilliseconds);
                 }
             }
         }
