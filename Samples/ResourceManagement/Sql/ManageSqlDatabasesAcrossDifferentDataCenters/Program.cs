@@ -14,7 +14,6 @@ using Microsoft.Azure.Management.Sql.Fluent.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManageSqlDatabasesAcrossDifferentDataCenters
 {
@@ -32,7 +31,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
     public class Program
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string rgName = Utilities.CreateRandomName("rgRSSDRE");
         private static readonly string administratorLogin = "sqladmin3423";
         private static readonly string administratorPassword = "myS3cureP@ssword";
         private static readonly string slaveSqlServer1Name = "slave1sql";
@@ -60,7 +59,6 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                 try
                 {
-
                     // ============================================================
                     // Create a SQL Server, with 2 firewall rules.
 
@@ -123,17 +121,17 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     // Create Virtual Networks in different regions
                     var regions = new List<Region>();
 
-                    regions.Add(Region.ASIA_SOUTHEAST);
-                    regions.Add(Region.US_CENTRAL);
                     regions.Add(Region.US_EAST);
-                    regions.Add(Region.US_EAST2);
+                    regions.Add(Region.US_WEST);
                     regions.Add(Region.EUROPE_NORTH);
+                    regions.Add(Region.ASIA_SOUTHEAST);
+                    regions.Add(Region.JAPAN_EAST);
 
                     var creatableNetworks = new List<ICreatable<INetwork>>();
 
                     Console.WriteLine("Creating virtual networks in different regions.");
 
-                    foreach (Region region in  regions)
+                    foreach (Region region in regions)
                     {
                         creatableNetworks.Add(azure.Networks.Define(Utilities.CreateRandomName(networkNamePrefix))
                                 .WithRegion(region)
@@ -179,7 +177,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     sqlServers.Add(sqlServerInEurope);
                     sqlServers.Add(masterSqlServer);
 
-                    foreach (var sqlServer in  sqlServers)
+                    foreach (var sqlServer in sqlServers)
                     {
                         foreach (var ipAddress in ipAddresses)
                         {
@@ -187,12 +185,12 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                         }
                     }
 
-                    foreach (var sqlServer in  sqlServers)
+                    foreach (var sqlServer in sqlServers)
                     {
                         Console.WriteLine("Print firewall rules in Sql Server in " + sqlServer.RegionName);
 
                         var firewallRules = sqlServer.FirewallRules.List();
-                        foreach (var firewallRule in  firewallRules)
+                        foreach (var firewallRule in firewallRules)
                         {
                             Utilities.PrintFirewallRule(firewallRule);
                         }
@@ -200,11 +198,10 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                     // Delete the SQL Server.
                     Console.WriteLine("Deleting all Sql Servers");
-                    foreach (var sqlServer in  sqlServers)
+                    foreach (var sqlServer in sqlServers)
                     {
                         azure.SqlServers.DeleteById(sqlServer.Id);
                     }
-
                 }
                 catch (Exception f)
                 {

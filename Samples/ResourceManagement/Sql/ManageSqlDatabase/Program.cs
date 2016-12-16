@@ -23,7 +23,7 @@ namespace ManageSqlDatabase
     public class Program
     {
         private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string rgName = Utilities.CreateRandomName("rgRSDSI");
         private static readonly string administratorLogin = "sqladmin3423";
         private static readonly string administratorPassword = "myS3cureP@ssword";
         private static readonly string firewallRuleIpAddress = "10.0.0.1";
