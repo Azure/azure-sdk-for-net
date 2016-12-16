@@ -187,19 +187,25 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 # Download
 
 
-**1.0.0-beta3**
+**1.0.0-beta4**
 
-1.0.0-beta3 release builds are available on NuGet:
+1.0.0-beta4 release builds are available on NuGet:
 
-Azure Management Library                              | Package name                              | Stable (`1.0.0-beta3` release)
+Azure Management Library                              | Package name                              | Stable (`1.0.0-beta4` release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
 Azure Management Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
+App Service | `Microsoft.Azure.Management.AppService.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/)
 Batch | `Microsoft.Azure.Management.Batch.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Batch.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Batch.Fluent/)
+Cdn | `Microsoft.Azure.Management.Cdn.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Cdn.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Cdn.Fluent/)
 Virtual Machines & Virtual Machine Scale Sets | `Microsoft.Azure.Management.Compute.Fluent`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Compute.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute.Fluent/)
+Dns | `Microsoft.Azure.Management.Dns.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Dns.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Dns.Fluent/)
 Key Vault |`Microsoft.Azure.Management.KeyVault.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.KeyVault.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.KeyVault.Fluent/)
 Network  |`Microsoft.Azure.Management.Network.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Network.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Network.Fluent/)
+Redis Cache  |`Microsoft.Azure.Management.Redis.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Redis.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Redis.Fluent/)
 Resource Manager  |`Microsoft.Azure.Management.ResourceManager.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ResourceManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ResourceManager.Fluent/)
+Sql  |`Microsoft.Azure.Management.Sql.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Sql.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Sql.Fluent/)
 Storage  |`Microsoft.Azure.Management.Storage.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Storage.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage.Fluent/)
+Traffic Manager  |`Microsoft.Azure.Management.TrafficManager.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.TrafficManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.TrafficManager.Fluent/)
 
 #Pre-requisites
 
