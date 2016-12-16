@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public T GetById(string id)
         {
-            return GetByIdAsync(id).Result;
+            return GetByIdAsync(id).GetAwaiter().GetResult();
         }
 
         public async Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public T GetByParent(string resourceGroup, string parentName, string name)
         {
-            return GetByParentAsync(resourceGroup, parentName, name).Result;
+            return GetByParentAsync(resourceGroup, parentName, name).GetAwaiter().GetResult();
         }
 
         public async Task<T> GetByParentAsync(IGroupableResource parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public PagedList<T> ListByParent(string resourceGroupName, string parentName)
         {
-            return ListByParentAsync(resourceGroupName, parentName).Result;
+            return ListByParentAsync(resourceGroupName, parentName).GetAwaiter().GetResult();
         }
 
         public async Task<PagedList<T>> ListByParentAsync(IGroupableResource parentResource, CancellationToken cancellationToken = default(CancellationToken))
