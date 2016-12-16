@@ -118,6 +118,50 @@ var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
 	.Create();
 ```
 
+**Create an Application Gateway**
+
+You can create a application gateway instance by using another `define() … create()` method chain.
+
+```chsarp
+var applicationGateway = azure.applicationGateways().define("myFirstAppGateway")
+    .withRegion(Region.US_EAST)
+    .withExistingResourceGroup(resourceGroup)
+    // Request routing rule for HTTP from public 80 to public 8080
+    .defineRequestRoutingRule("HTTP-80-to-8080")
+        .fromPublicFrontend()
+        .fromFrontendHttpPort(80)
+        .toBackendHttpPort(8080)
+        .toBackendIpAddress("11.1.1.1")
+        .toBackendIpAddress("11.1.1.2")
+        .toBackendIpAddress("11.1.1.3")
+        .toBackendIpAddress("11.1.1.4")
+        .attach()
+    .withExistingPublicIpAddress(publicIpAddress)
+    .create();
+```
+
+**Create a Web App**
+
+You can create a Web App instance by using another `define() … create()` method chain.
+
+```csharp
+var webApp = azure.webApps()
+    .define(appName)
+    .withNewResourceGroup(rgName)
+    .withNewAppServicePlan(planName)
+    .withRegion(Region.US_WEST)
+    .withPricingTier(AppServicePricingTier.STANDARD_S1)
+    .create();
+```
+
+**Create a SQL Database**
+
+You can create a SQL database instance by using another `define() … create()` method chain.
+
+```csharp
+
+```
+
 
 #Sample Code
 
@@ -285,9 +329,9 @@ Traffic Manager  |`Microsoft.Azure.Management.TrafficManager.Fluent`  | [![NuGet
 - [.NET Core](https://www.microsoft.com/net/core) 
 - Azure Service Principal - see [how to create authentication info](./AUTH.md).
 
-
 # Help
 
+If you are migrating your code to 1.0.0-beta4, you can use these notes for [preparing your code for 1.0.0-beta4 from 1.0.0-beta3](./notes/prepare-for-1.0.0-beta4.md).
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
