@@ -4,13 +4,33 @@ Steps to migrate code that uses Azure Management Libraries for NET from beta 3 t
 
 > If this note missed any breaking changes, please open a pull request.
 
-# Change Method and Property Names #
+# Change Property and Method Names #
 
 <table>
   <tr>
     <th>From</th>
     <th>To</th>
     <th>Ref</th>
+  </tr>
+    <tr>
+    <td><code>LoadBalancer.Frontend</code></td>
+    <td><code>LoadBalancer.LoadBalancerFrontend</code></td>
+  </tr>
+  <tr>
+    <td><code>LoadBalancer.Probe</code></td>
+    <td><code>LoadBalancer.LoadBalancerProbe</code></td>
+  </tr>
+  <tr>
+    <td><code>LoadBalancer.TcpProbe</code></td>
+    <td><code>LoadBalancer.LoadBalancerTcpProbe</code></td>
+  </tr>
+  <tr>
+    <td><code>LoadBalancer.HttpProbe</code></td>
+    <td><code>LoadBalancer.LoadBalancerHttpProbe</code></td>
+  </tr>
+  <tr>
+    <td><code>LoadBalancer.Backend</code></td>
+    <td><code>LoadBalancer.LoadBalancerBackend</code></td>
   </tr>
     <tr>
     <td><code>VirtualMachine.DisableVmAgent()</code></td>
@@ -65,28 +85,8 @@ Steps to migrate code that uses Azure Management Libraries for NET from beta 3 t
     </td>
   </tr>
   <tr>
-    <td><code>LoadBalancer.Frontend</code></td>
-    <td><code>LoadBalancer.LoadBalancerFrontend</code></td>
-  </tr>
-  <tr>
-    <td><code>LoadBalancer.Probe</code></td>
-    <td><code>LoadBalancer.LoadBalancerProbe</code></td>
-  </tr>
-  <tr>
-    <td><code>LoadBalancer.TcpProbe</code></td>
-    <td><code>LoadBalancer.LoadBalancerTcpProbe</code></td>
-  </tr>
-  <tr>
-    <td><code>LoadBalancer.HttpProbe</code></td>
-    <td><code>LoadBalancer.LoadBalancerHttpProbe</code></td>
-  </tr>
-  <tr>
-    <td><code>LoadBalancer.Backend</code></td>
-    <td><code>LoadBalancer.LoadBalancerBackend</code></td>
-  </tr>
-  <tr>
-    <td><code>LoadBalancer.withExistingSubnet()</code></td>
-    <td><code>LoadBalancer.withFrontendSubnet()</code></td>
+    <td><code>LoadBalancer.WithExistingSubnet()</code></td>
+    <td><code>LoadBalancer.WithFrontendSubnet()</code></td>
   </tr>
 
   <tr>
