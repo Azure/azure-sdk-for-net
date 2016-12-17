@@ -874,5 +874,101 @@ namespace Cdn.Tests.ScenarioTests
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
             }
         }
+
+        [Fact]
+        public void EndpointCheckUsageTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create clients
+                var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
+                var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
+
+                // Create resource group
+                var resourceGroupName = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create a standard cdn profile
+                string profileName = TestUtilities.GenerateName("profile");
+                Profile createParameters = new Profile
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.StandardAkamai },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        }
+                };
+
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
+
+                //Create an endpoint under this profile
+                string endpointName = TestUtilities.GenerateName("endpoint");
+                var endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    }
+                };
+
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+
+                // Check usage should return one with current value being zero
+                var endpointLevelUsage = cdnMgmtClient.Endpoints.ListResourceUsage(resourceGroupName, profileName, endpointName);
+                Assert.Equal(2, endpointLevelUsage.Count());
+
+                var defaultEndpointLevelGeoFilterUsage = endpointLevelUsage.First(u => u.ResourceType.Equals("geofilter"));
+                Assert.Equal(25, defaultEndpointLevelGeoFilterUsage.Limit);
+                Assert.Equal(0, defaultEndpointLevelGeoFilterUsage.CurrentValue);
+
+                //Update endpoint to have geo filters
+                var endpointUpdateParameters = new EndpointUpdateParameters
+                {
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>
+                            {
+                                "AU"
+                            }
+                        },
+                        new GeoFilter {
+                            RelativePath = "/mycars",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>
+                            {
+                                "AU"
+                            }
+                        }
+                    }
+                };
+
+                endpoint = cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+
+                // Check usage again
+                endpointLevelUsage = cdnMgmtClient.Endpoints.ListResourceUsage(resourceGroupName, profileName, endpointName);
+                Assert.Equal(2, endpointLevelUsage.Count());
+
+                var endpointLevelGeoFilterUsage = endpointLevelUsage.First(u => u.ResourceType.Equals("geofilter"));
+                Assert.Equal(25, endpointLevelGeoFilterUsage.Limit);
+                Assert.Equal(2, endpointLevelGeoFilterUsage.CurrentValue);
+
+                // Delete resource group
+                CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
     }
 }
