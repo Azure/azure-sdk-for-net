@@ -220,8 +220,7 @@ namespace ManageSqlDatabaseInElasticPool
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (Exception e)
-                    {
+                    catch                    {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }
                 }
