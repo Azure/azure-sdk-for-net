@@ -8,12 +8,12 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkVuZHBvaW50TW9uaXRvclN0YXR1cw==
     public partial class EndpointMonitorStatus 
     {
-        public static readonly EndpointMonitorStatus INACTIVE = new EndpointMonitorStatus("Inactive");
-        public static readonly EndpointMonitorStatus DISABLED = new EndpointMonitorStatus("Disabled");
-        public static readonly EndpointMonitorStatus ONLINE = new EndpointMonitorStatus("Online");
-        public static readonly EndpointMonitorStatus DEGRADED = new EndpointMonitorStatus("Degraded");
-        public static readonly EndpointMonitorStatus CHECKING_ENDPOINT = new EndpointMonitorStatus("CheckingEndpoint");
-        public static readonly EndpointMonitorStatus STOPPED = new EndpointMonitorStatus("Stopped");
+        public static readonly EndpointMonitorStatus Inactive = new EndpointMonitorStatus("Inactive");
+        public static readonly EndpointMonitorStatus Disabled = new EndpointMonitorStatus("Disabled");
+        public static readonly EndpointMonitorStatus Online = new EndpointMonitorStatus("Online");
+        public static readonly EndpointMonitorStatus Degraded = new EndpointMonitorStatus("Degraded");
+        public static readonly EndpointMonitorStatus CheckingEndpoint = new EndpointMonitorStatus("CheckingEndpoint");
+        public static readonly EndpointMonitorStatus Stopped = new EndpointMonitorStatus("Stopped");
 
         private string value;
         ///GENMHASH:0A2A1204F2A167AF288B2FBF2A490437:7E40CAD8AD46FC64A58AAA73BDA0A301
