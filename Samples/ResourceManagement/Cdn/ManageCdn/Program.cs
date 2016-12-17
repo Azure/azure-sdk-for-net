@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
+using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
@@ -13,6 +14,7 @@ using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ManageRedis
@@ -30,11 +32,8 @@ namespace ManageRedis
          * - Create CDN profile using Standard Verizon SKU with endpoints in each region of Web apps.
          * - Load some content (referenced by Web Apps) to the CDN endpoints.
          */
-
-        private static OkHttpClient httpClient;
         private static readonly string RG_NAME = ResourceNamer.RandomResourceName("rgCDN_", 24);
         private static readonly string SUFFIX = ".azurewebsites.net";
-        private static Azure azure;
 
         public static void Main(string[] args)
         {
@@ -71,22 +70,22 @@ namespace ManageRedis
                     }
 
                     // 2 in US
-                    CreateWebApp(appNames[0], Region.US_WEST);
-                    CreateWebApp(appNames[1], Region.US_EAST);
+                    CreateWebApp(azure, appNames[0], Region.US_WEST);
+                    CreateWebApp(azure, appNames[1], Region.US_EAST);
 
                     // 2 in EU
-                    CreateWebApp(appNames[2], Region.EUROPE_WEST);
-                    CreateWebApp(appNames[3], Region.EUROPE_NORTH);
+                    CreateWebApp(azure, appNames[2], Region.EUROPE_WEST);
+                    CreateWebApp(azure, appNames[3], Region.EUROPE_NORTH);
 
                     // 2 in Southeast
-                    CreateWebApp(appNames[4], Region.ASIA_SOUTHEAST);
-                    CreateWebApp(appNames[5], Region.AUSTRALIA_SOUTHEAST);
+                    CreateWebApp(azure, appNames[4], Region.ASIA_SOUTHEAST);
+                    CreateWebApp(azure, appNames[5], Region.AUSTRALIA_SOUTHEAST);
 
                     // 1 in Brazil
-                    CreateWebApp(appNames[6], Region.BRAZIL_SOUTH);
+                    CreateWebApp(azure, appNames[6], Region.BRAZIL_SOUTH);
 
                     // 1 in Japan
-                    CreateWebApp(appNames[7], Region.JAPAN_WEST);
+                    CreateWebApp(azure, appNames[7], Region.JAPAN_WEST);
                     // =======================================================================================
                     // Create CDN profile using Standard Verizon SKU with endpoints in each region of Web apps.
                     Console.WriteLine("Creating a CDN Profile");
@@ -152,51 +151,41 @@ namespace ManageRedis
             }
         }
 
-        private static WebApp CreateWebApp(String appName, Region region)
+        private static IWebApp CreateWebApp(IAzure azure, string appName, Region region)
         {
-            final String planName = ResourceNamer.randomResourceName("jplan_", 15);
-            final String appUrl = appName + SUFFIX;
+            var planName = ResourceNamer.RandomResourceName("jplan_", 15);
+            var appUrl = appName + SUFFIX;
 
-            System.out.println("Creating web app " + appName + " with master branch...");
+            Console.WriteLine("Creating web app " + appName + " with master branch...");
 
-            WebApp app = azure.webApps()
-                    .define(appName)
-                    .withExistingResourceGroup(RG_NAME)
-                    .withNewAppServicePlan(planName)
-                    .withRegion(region)
-                    .withPricingTier(AppServicePricingTier.STANDARD_S1)
-                    .withJavaVersion(JavaVersion.JAVA_8_NEWEST)
-                    .withWebContainer(WebContainer.TOMCAT_8_0_NEWEST)
-                    .defineSourceControl()
-                        .withPublicGitRepository("https://github.com/jianghaolu/azure-site-test.git")
-                        .withBranch("master")
-                        .attach()
-                    .create();
+            var app = azure.WebApps
+                    .Define(appName)
+                    .WithExistingResourceGroup(RG_NAME)
+                    .WithNewAppServicePlan(planName)
+                    .WithRegion(region)
+                    .WithPricingTier(AppServicePricingTier.Standard_S1)
+                    .WithJavaVersion(JavaVersion.Java_8_Newest)
+                    .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                    .DefineSourceControl()
+                        .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test.git")
+                        .WithBranch("master")
+                        .Attach()
+                    .Create();
 
-            System.out.println("Created web app " + app.name());
-            Utils.print(app);
+            Console.WriteLine("Created web app " + app.Name);
+            Utilities.Print(app);
 
-            System.out.println("CURLing " + appUrl + "...");
-            System.out.println(curl("http://" + appUrl));
+            Console.WriteLine("CURLing " + appUrl + "...");
+            Console.WriteLine(CheckAddress("http://" + appUrl));
             return app;
         }
 
-        private static string Curl(String url)
+        private static HttpResponseMessage CheckAddress(string url)
         {
-            Request request = new Request.Builder().url(url).get().build();
-            try
+            using (var client = new HttpClient())
             {
-                return httpClient.newCall(request).execute().body().string();
+                return client.GetAsync(url).Result;
             }
-            catch (IOException e)
-            {
-                return null;
-            }
-        }
-
-        static Program()
-        {
-            httpClient = new OkHttpClient.Builder().readTimeout(1, TimeUnit.MINUTES).build();
         }
     }
 }
