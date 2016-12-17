@@ -6,11 +6,13 @@
       "ResourceManagement/Batch",
       "ResourceManagement/Cdn",
       "ResourceManagement/Compute",
+      "ResourceManagement/Dns",
       "ResourceManagement/KeyVault",
       "ResourceManagement/Network",
       "ResourceManagement/RedisCache",
       "ResourceManagement/ResourceManager",
+      "ResourceManagement/Sql",
       "ResourceManagement/Storage",
-      "ResourceManagement/Sql"
+      "ResourceManagement/TrafficManager"
     ]
 }
