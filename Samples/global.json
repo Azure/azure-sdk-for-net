@@ -1,15 +1,16 @@
 {
     "projects": [ 
-    	"../src/ResourceManagement/Azure.Fluent", 
-    	"ResourceManagement",
-    	"ResourceManagement/Batch",
-        "ResourceManagement/Cdn",
-        "ResourceManagement/Compute",
-    	"ResourceManagement/KeyVault",
-    	"ResourceManagement/Network",
-        "ResourceManagement/RedisCache",
-        "ResourceManagement/ResourceManager",
-        "ResourceManagement/Sql",
-    	"ResourceManagement/Storage"
+      "../src/ResourceManagement/Azure.Fluent", 
+      "ResourceManagement",
+      "ResourceManagement/AppService",
+      "ResourceManagement/Batch",
+      "ResourceManagement/Cdn",
+      "ResourceManagement/Compute",
+      "ResourceManagement/KeyVault",
+      "ResourceManagement/Network",
+      "ResourceManagement/RedisCache",
+      "ResourceManagement/ResourceManager",
+      "ResourceManagement/Storage",
+      "ResourceManagement/Sql"
     ]
 }

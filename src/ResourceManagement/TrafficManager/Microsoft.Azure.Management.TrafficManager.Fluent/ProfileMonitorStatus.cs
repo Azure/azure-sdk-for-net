@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlByb2ZpbGVNb25pdG9yU3RhdHVz
     public partial class ProfileMonitorStatus 
     {
-        public static readonly ProfileMonitorStatus INACTIVE = new ProfileMonitorStatus("Inactive");
-        public static readonly ProfileMonitorStatus DISABLED = new ProfileMonitorStatus("Disabled");
-        public static readonly ProfileMonitorStatus ONLINE = new ProfileMonitorStatus("Online");
-        public static readonly ProfileMonitorStatus DEGRADED = new ProfileMonitorStatus("Degraded");
-        public static readonly ProfileMonitorStatus CHECKING_ENDPOINT = new ProfileMonitorStatus("CheckingEndpoint");
+        public static readonly ProfileMonitorStatus Inactive = new ProfileMonitorStatus("Inactive");
+        public static readonly ProfileMonitorStatus Disabled = new ProfileMonitorStatus("Disabled");
+        public static readonly ProfileMonitorStatus Online = new ProfileMonitorStatus("Online");
+        public static readonly ProfileMonitorStatus Degraded = new ProfileMonitorStatus("Degraded");
+        public static readonly ProfileMonitorStatus CheckingEndpoint = new ProfileMonitorStatus("CheckingEndpoint");
 
         private string value;
         ///GENMHASH:0A2A1204F2A167AF288B2FBF2A490437:7E40CAD8AD46FC64A58AAA73BDA0A301

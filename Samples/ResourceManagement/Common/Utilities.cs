@@ -1,18 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.AppService.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
-using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
+using Microsoft.Azure.Management.Trafficmanager.Fluent;
+using Microsoft.Azure.Management.Dns.Fluent;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -537,7 +542,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintRedisCache(IRedisCache redisCache)
         {
-            StringBuilder redisInfo = new StringBuilder();
+            var redisInfo = new StringBuilder();
             redisInfo.Append("Redis Cache Name: ").AppendLine(redisCache.Name)
                      .Append("\tResource group: ").AppendLine(redisCache.ResourceGroupName)
                      .Append("\tRegion: ").AppendLine(redisCache.Region.ToString())
@@ -577,12 +582,99 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintRedisAccessKeys(IRedisAccessKeys redisAccessKeys)
         {
-            StringBuilder redisKeys = new StringBuilder();
+            var redisKeys = new StringBuilder();
             redisKeys.AppendLine("Redis Access Keys: ")
                      .Append("\tPrimary Key: '").Append(redisAccessKeys.PrimaryKey).AppendLine("', ")
                      .Append("\tSecondary Key: '").Append(redisAccessKeys.SecondaryKey).AppendLine("', ");
 
             Console.WriteLine(redisKeys.ToString());
+        }
+
+        public static void Print(IAppServiceDomain resource)
+        {
+            var builder = new StringBuilder().Append("Domain: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tCreated time: ").Append(resource.CreatedTime)
+                    .Append("\n\tExpiration time: ").Append(resource.ExpirationTime)
+                    .Append("\n\tContact: ");
+            var contact = resource.RegistrantContact;
+            if (contact == null)
+            {
+                builder = builder.Append("Private");
+            }
+            else
+            {
+                builder = builder.Append("\n\t\tName: ").Append(contact.NameFirst + " " + contact.NameLast);
+            }
+            builder = builder.Append("\n\tName servers: ");
+            foreach (String nameServer in resource.NameServers)
+            {
+                builder = builder.Append("\n\t\t" + nameServer);
+            }
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IAppServiceCertificateOrder resource)
+        {
+            var builder = new StringBuilder().Append("App service certificate order: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tDistinguished name: ").Append(resource.DistinguishedName)
+                    .Append("\n\tProduct type: ").Append(resource.ProductType)
+                    .Append("\n\tValid years: ").Append(resource.ValidityInYears)
+                    .Append("\n\tStatus: ").Append(resource.Status)
+                    .Append("\n\tIssuance time: ").Append(resource.LastCertificateIssuanceTime)
+                    .Append("\n\tSigned certificate: ").Append(resource.SignedCertificate == null ? null : resource.SignedCertificate.Thumbprint);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IAppServicePlan resource)
+        {
+            var builder = new StringBuilder().Append("App service certificate order: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tPricing tier: ").Append(resource.PricingTier);
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IWebAppBase resource)
+        {
+            var builder = new StringBuilder().Append("Web app: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tState: ").Append(resource.State)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tDefault hostname: ").Append(resource.DefaultHostName)
+                    .Append("\n\tApp service plan: ").Append(resource.AppServicePlanId)
+                    .Append("\n\tHost name bindings: ");
+            foreach (var binding in resource.GetHostNameBindings().Values)
+            {
+                builder = builder.Append("\n\t\t" + binding.ToString());
+            }
+            builder = builder.Append("\n\tSSL bindings: ");
+            foreach (var binding in resource.HostNameSslStates.Values)
+            {
+                builder = builder.Append("\n\t\t" + binding.Name + ": " + binding.SslState);
+                if (binding.SslState != null && binding.SslState != SslState.Disabled)
+                {
+                    builder = builder.Append(" - " + binding.Thumbprint);
+                }
+            }
+            builder = builder.Append("\n\tApp settings: ");
+            foreach (var setting in resource.AppSettings.Values)
+            {
+                builder = builder.Append("\n\t\t" + setting.Key + ": " + setting.Value + (setting.Sticky ? " - slot setting" : ""));
+            }
+            builder = builder.Append("\n\tConnection strings: ");
+            foreach (var conn in resource.ConnectionStrings.Values)
+            {
+                builder = builder.Append("\n\t\t" + conn.Name + ": " + conn.Value + " - " + conn.Type + (conn.Sticky ? " - slot setting" : ""));
+            }
+            Console.WriteLine(builder.ToString());
         }
 
         private static string FormatDictionary(IReadOnlyDictionary<string, string> dictionary)
@@ -607,7 +699,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             return string.Join(", ", collection);
         }
 
-        public static void Print(ISqlServer sqlServer)
+        public static void PrintSqlServer(ISqlServer sqlServer)
         {
             var builder = new StringBuilder().Append("Sql Server: ").Append(sqlServer.Id)
                     .Append("Name: ").Append(sqlServer.Name)
@@ -618,7 +710,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(ISqlDatabase database)
+        public static void PrintDatabase(ISqlDatabase database)
         {
             var builder = new StringBuilder().Append("Sql Database: ").Append(database.Id)
                     .Append("Name: ").Append(database.Name)
@@ -637,7 +729,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(ISqlFirewallRule firewallRule)
+        public static void PrintFirewallRule(ISqlFirewallRule firewallRule)
         {
             var builder = new StringBuilder().Append("Sql firewall rule: ").Append(firewallRule.Id)
                     .Append("Name: ").Append(firewallRule.Name)
@@ -650,7 +742,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(ISqlElasticPool elasticPool)
+        public static void PrintElasticPool(ISqlElasticPool elasticPool)
         {
             var builder = new StringBuilder().Append("Sql elastic pool: ").Append(elasticPool.Id)
                     .Append("Name: ").Append(elasticPool.Name)
@@ -668,7 +760,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(builder.ToString());
         }
 
-        public static void Print(IElasticPoolActivity elasticPoolActivity)
+        public static void PrintElasticPoolActivity(IElasticPoolActivity elasticPoolActivity)
         {
             var builder = new StringBuilder().Append("Sql elastic pool activity: ").Append(elasticPoolActivity.Id)
                     .Append("Name: ").Append(elasticPoolActivity.Name)
@@ -690,7 +782,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         }
 
-        public static void Print(IElasticPoolDatabaseActivity databaseActivity)
+        public static void PrintDatabaseActivity(IElasticPoolDatabaseActivity databaseActivity)
         {
             var builder = new StringBuilder().Append("Sql elastic pool database activity: ").Append(databaseActivity.Id)
                     .Append("Name: ").Append(databaseActivity.Name)
@@ -706,6 +798,230 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tError message of activity: ").Append(databaseActivity.ErrorMessage)
                     .Append("\n\tError severity of activity: ").Append(databaseActivity.ErrorSeverity);
 
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(ITrafficManagerProfile profile)
+        {
+            var builder = new StringBuilder();
+            builder.Append("Traffic Manager Profile: ").Append(profile.Id)
+                    .Append("\n\tName: ").Append(profile.Name)
+                    .Append("\n\tResource group: ").Append(profile.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(profile.RegionName)
+                    .Append("\n\tTags: ").Append(profile.Tags)
+                    .Append("\n\tDNSLabel: ").Append(profile.DnsLabel)
+                    .Append("\n\tFQDN: ").Append(profile.Fqdn)
+                    .Append("\n\tTTL: ").Append(profile.TimeToLive)
+                    .Append("\n\tEnabled: ").Append(profile.IsEnabled)
+                    .Append("\n\tRoutingMethod: ").Append(profile.TrafficRoutingMethod)
+                    .Append("\n\tMonitor status: ").Append(profile.MonitorStatus)
+                    .Append("\n\tMonitoring port: ").Append(profile.MonitoringPort)
+                    .Append("\n\tMonitoring path: ").Append(profile.MonitoringPath);
+
+            var azureEndpoints = profile.AzureEndpoints;
+            if (!azureEndpoints.Any())
+            {
+                builder.Append("\n\tAzure endpoints:");
+                var idx = 1;
+                foreach (var endpoint in azureEndpoints.Values)
+                {
+                    builder.Append("\n\t\tAzure endpoint: #").Append(idx++)
+                            .Append("\n\t\t\tId: ").Append(endpoint.Id)
+                            .Append("\n\t\t\tType: ").Append(endpoint.EndpointType)
+                            .Append("\n\t\t\tTarget resourceId: ").Append(endpoint.TargetAzureResourceId)
+                            .Append("\n\t\t\tTarget resourceType: ").Append(endpoint.TargetResourceType)
+                            .Append("\n\t\t\tMonitor status: ").Append(endpoint.MonitorStatus)
+                            .Append("\n\t\t\tEnabled: ").Append(endpoint.IsEnabled)
+                            .Append("\n\t\t\tRouting priority: ").Append(endpoint.RoutingPriority)
+                            .Append("\n\t\t\tRouting weight: ").Append(endpoint.RoutingWeight);
+                }
+            }
+
+            var externalEndpoints = profile.ExternalEndpoints;
+            if (!externalEndpoints.Any())
+            {
+                builder.Append("\n\tExternal endpoints:");
+                var idx = 1;
+                foreach (var endpoint in externalEndpoints.Values)
+                {
+                    builder.Append("\n\t\tExternal endpoint: #").Append(idx++)
+                            .Append("\n\t\t\tId: ").Append(endpoint.Id)
+                            .Append("\n\t\t\tType: ").Append(endpoint.EndpointType)
+                            .Append("\n\t\t\tFQDN: ").Append(endpoint.Fqdn)
+                            .Append("\n\t\t\tSource Traffic Location: ").Append(endpoint.SourceTrafficLocation)
+                            .Append("\n\t\t\tMonitor status: ").Append(endpoint.MonitorStatus)
+                            .Append("\n\t\t\tEnabled: ").Append(endpoint.IsEnabled)
+                            .Append("\n\t\t\tRouting priority: ").Append(endpoint.RoutingPriority)
+                            .Append("\n\t\t\tRouting weight: ").Append(endpoint.RoutingWeight);
+                }
+            }
+
+            var nestedProfileEndpoints = profile.NestedProfileEndpoints;
+            if (!nestedProfileEndpoints.Any())
+            {
+                builder.Append("\n\tNested profile endpoints:");
+                var idx = 1;
+                foreach (var endpoint in nestedProfileEndpoints.Values)
+                {
+                    builder.Append("\n\t\tNested profile endpoint: #").Append(idx++)
+                            .Append("\n\t\t\tId: ").Append(endpoint.Id)
+                            .Append("\n\t\t\tType: ").Append(endpoint.EndpointType)
+                            .Append("\n\t\t\tNested profileId: ").Append(endpoint.NestedProfileId)
+                            .Append("\n\t\t\tMinimum child threshold: ").Append(endpoint.MinimumChildEndpointCount)
+                            .Append("\n\t\t\tSource Traffic Location: ").Append(endpoint.SourceTrafficLocation)
+                            .Append("\n\t\t\tMonitor status: ").Append(endpoint.MonitorStatus)
+                            .Append("\n\t\t\tEnabled: ").Append(endpoint.IsEnabled)
+                            .Append("\n\t\t\tRouting priority: ").Append(endpoint.RoutingPriority)
+                            .Append("\n\t\t\tRouting weight: ").Append(endpoint.RoutingWeight);
+                }
+            }
+            Console.WriteLine(builder.ToString());
+        }
+
+        public static void Print(IDnsZone dnsZone)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("Dns Zone: ").Append(dnsZone.Id)
+                    .Append("\n\tName (Top level domain): ").Append(dnsZone.Name)
+                    .Append("\n\tResource group: ").Append(dnsZone.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(dnsZone.RegionName)
+                    .Append("\n\tTags: ").Append(dnsZone.Tags)
+                    .Append("\n\tName servers:");
+            foreach (var nameServer in dnsZone.NameServers)
+            {
+                builder.Append("\n\t\t").Append(nameServer);
+            }
+            var soaRecordSet = dnsZone.GetSoaRecordSet();
+            var soaRecord = soaRecordSet.Record;
+            builder.Append("\n\tSOA Record:")
+                    .Append("\n\t\tHost:").Append(soaRecord.Host)
+                    .Append("\n\t\tEmail:").Append(soaRecord.Email)
+                    .Append("\n\t\tExpire time (seconds):").Append(soaRecord.ExpireTime)
+                    .Append("\n\t\tRefresh time (seconds):").Append(soaRecord.RefreshTime)
+                    .Append("\n\t\tRetry time (seconds):").Append(soaRecord.RetryTime)
+                    .Append("\n\t\tNegative response cache ttl (seconds):").Append(soaRecord.MinimumTtl)
+                    .Append("\n\t\tTtl (seconds):").Append(soaRecordSet.TimeToLive);
+
+            var aRecordSets = dnsZone.ARecordSets.List();
+            builder.Append("\n\tA Record sets:");
+            foreach (var aRecordSet in aRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(aRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(aRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(aRecordSet.TimeToLive)
+                        .Append("\n\t\tIp v4 addresses: ");
+                foreach (var ipAddress in aRecordSet.Ipv4Addresses)
+                {
+                    builder.Append("\n\t\t\t").Append(ipAddress);
+                }
+            }
+
+            var aaaaRecordSets = dnsZone.AaaaRecordSets.List();
+            builder.Append("\n\tAAAA Record sets:");
+            foreach (var aaaaRecordSet in aaaaRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(aaaaRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(aaaaRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(aaaaRecordSet.TimeToLive)
+                        .Append("\n\t\tIp v6 addresses: ");
+                foreach (var ipAddress in aaaaRecordSet.Ipv6Addresses)
+                {
+                    builder.Append("\n\t\t\t").Append(ipAddress);
+                }
+            }
+
+            var cnameRecordSets = dnsZone.CnameRecordSets.List();
+            builder.Append("\n\tCNAME Record sets:");
+            foreach (var cnameRecordSet in cnameRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(cnameRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(cnameRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(cnameRecordSet.TimeToLive)
+                        .Append("\n\t\tCanonical name: ").Append(cnameRecordSet.CanonicalName);
+            }
+
+            var mxRecordSets = dnsZone.MxRecordSets.List();
+            builder.Append("\n\tMX Record sets:");
+            foreach (var mxRecordSet in mxRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(mxRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(mxRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(mxRecordSet.TimeToLive)
+                        .Append("\n\t\tRecords: ");
+                foreach (var mxRecord in mxRecordSet.Records)
+                {
+                    builder.Append("\n\t\t\tExchange server, Preference: ")
+                            .Append(mxRecord.Exchange)
+                            .Append(" ")
+                            .Append(mxRecord.Preference);
+                }
+            }
+
+            var nsRecordSets = dnsZone.NsRecordSets.List();
+            builder.Append("\n\tNS Record sets:");
+            foreach (var nsRecordSet in nsRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(nsRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(nsRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(nsRecordSet.TimeToLive)
+                        .Append("\n\t\tName servers: ");
+                foreach (var nameServer in nsRecordSet.NameServers)
+                {
+                    builder.Append("\n\t\t\t").Append(nameServer);
+                }
+            }
+
+            var ptrRecordSets = dnsZone.PtrRecordSets.List();
+            builder.Append("\n\tPTR Record sets:");
+            foreach (var ptrRecordSet in ptrRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(ptrRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(ptrRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(ptrRecordSet.TimeToLive)
+                        .Append("\n\t\tTarget domain names: ");
+                foreach (var domainNames in ptrRecordSet.TargetDomainNames)
+                {
+                    builder.Append("\n\t\t\t").Append(domainNames);
+                }
+            }
+
+            var srvRecordSets = dnsZone.SrvRecordSets.List();
+            builder.Append("\n\tSRV Record sets:");
+            foreach (var srvRecordSet in srvRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(srvRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(srvRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(srvRecordSet.TimeToLive)
+                        .Append("\n\t\tRecords: ");
+                foreach (var srvRecord in srvRecordSet.Records)
+                {
+                    builder.Append("\n\t\t\tTarget, Port, Priority, Weight: ")
+                            .Append(srvRecord.Target)
+                            .Append(", ")
+                            .Append(srvRecord.Port)
+                            .Append(", ")
+                            .Append(srvRecord.Priority)
+                            .Append(", ")
+                            .Append(srvRecord.Weight);
+                }
+            }
+
+            var txtRecordSets = dnsZone.TxtRecordSets.List();
+            builder.Append("\n\tTXT Record sets:");
+            foreach (var txtRecordSet in txtRecordSets)
+            {
+                builder.Append("\n\t\tId: ").Append(txtRecordSet.Id)
+                        .Append("\n\t\tName: ").Append(txtRecordSet.Name)
+                        .Append("\n\t\tTtl (seconds): ").Append(txtRecordSet.TimeToLive)
+                        .Append("\n\t\tRecords: ");
+                foreach (var txtRecord in txtRecordSet.Records)
+                {
+                    if (txtRecord.Value.Count() > 0)
+                    {
+                        builder.Append("\n\t\t\tValue: ").Append(txtRecord.Value.FirstOrDefault());
+                    }
+                }
+            }
             Console.WriteLine(builder.ToString());
         }
     }
