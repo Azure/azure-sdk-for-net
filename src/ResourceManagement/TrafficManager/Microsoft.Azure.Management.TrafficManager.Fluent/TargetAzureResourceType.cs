@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlRhcmdldEF6dXJlUmVzb3VyY2VUeXBl
     public partial class TargetAzureResourceType 
     {
-        public static readonly TargetAzureResourceType PUBLICIP = new TargetAzureResourceType("Microsoft.Network", "publicIPAddresses");
-        public static readonly TargetAzureResourceType WEBAPP = new TargetAzureResourceType("Microsoft.Web", "sites");
-        public static readonly TargetAzureResourceType CLOUDSERVICE = new TargetAzureResourceType("Microsoft.ClassicCompute", "domainNames");
+        public static readonly TargetAzureResourceType PublicIP = new TargetAzureResourceType("Microsoft.Network", "publicIPAddresses");
+        public static readonly TargetAzureResourceType WebApp = new TargetAzureResourceType("Microsoft.Web", "sites");
+        public static readonly TargetAzureResourceType CloudService = new TargetAzureResourceType("Microsoft.ClassicCompute", "domainNames");
 
         private string value;
         /// <summary>

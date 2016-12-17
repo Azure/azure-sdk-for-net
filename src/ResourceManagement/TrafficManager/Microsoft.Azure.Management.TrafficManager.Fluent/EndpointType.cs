@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// </summary>
     public partial class EndpointType
     {
-        public static readonly EndpointType AZURE = new EndpointType("Microsoft.Network/trafficManagerProfiles/azureEndpoints");
-        public static readonly EndpointType EXTERNAL = new EndpointType("Microsoft.Network/trafficManagerProfiles/externalEndpoints");
-        public static readonly EndpointType NESTED_PROFILE = new EndpointType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints");
+        public static readonly EndpointType Azure = new EndpointType("Microsoft.Network/trafficManagerProfiles/azureEndpoints");
+        public static readonly EndpointType External = new EndpointType("Microsoft.Network/trafficManagerProfiles/externalEndpoints");
+        public static readonly EndpointType NestedProfile = new EndpointType("Microsoft.Network/trafficManagerProfiles/nestedEndpoints");
 
         private string value;
 

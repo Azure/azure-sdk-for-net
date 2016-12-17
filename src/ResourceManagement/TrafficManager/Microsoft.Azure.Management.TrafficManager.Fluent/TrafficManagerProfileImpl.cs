@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:C6A6B547BAC20098D634B85B4700816E:68BB0F621666DC65A06B08FC37AF8535
         public TrafficManagerProfileImpl WithWeightBasedRouting()
         {
-            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod.WEIGHTED);
+            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod.Weighted);
             return this;
         }
 
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:C69FFBA25D969C2C45775433EBFD49EA:01BC02A541C8C945111AEC0AF9DB6FF1
         public TrafficManagerProfileImpl WithPriorityBasedRouting()
         {
-            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod.PRIORITY);
+            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod.Priority);
             return this;
         }
 
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:4AF52DA6D7309E03BCF9F21C532F19E0:DEF2407DA0E866749EF9CC5952427470
         public TrafficManagerProfileImpl WithPerformanceBasedRouting()
         {
-            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod.PERFORMANCE);
+            this.WithTrafficRoutingMethod(Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod.Performance);
             return this;
         }
 

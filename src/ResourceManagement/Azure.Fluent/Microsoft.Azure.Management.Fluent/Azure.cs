@@ -15,6 +15,7 @@ using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using System.Linq;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
+using Microsoft.Azure.Management.AppService.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -33,6 +34,7 @@ namespace Microsoft.Azure.Management.Fluent
         private ISqlManager sqlManager;
         private ICdnManager cdnManager;
         private IRedisManager redisManager;
+        private IAppServiceManager appServiceManager;
 
         #endregion Service Managers
 
@@ -211,6 +213,22 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IWebApps WebApps
+        {
+            get
+            {
+                return appServiceManager.WebApps;
+            }
+        }
+
+        public IAppServiceManager AppServices
+        {
+            get
+            {
+                return appServiceManager;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -228,6 +246,7 @@ namespace Microsoft.Azure.Management.Fluent
             sqlManager = SqlManager.Authenticate(restClient, subscriptionId);
             redisManager = RedisManager.Authenticate(restClient, subscriptionId);
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
+            appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
             SubscriptionId = subscriptionId;
         }
 
@@ -409,5 +428,9 @@ namespace Microsoft.Azure.Management.Fluent
         IRedisCaches RedisCaches { get; }
 
         ICdnProfiles CdnProfiles { get; }
+
+        IWebApps WebApps { get; }
+
+        IAppServiceManager AppServices { get; }
     }
 }
