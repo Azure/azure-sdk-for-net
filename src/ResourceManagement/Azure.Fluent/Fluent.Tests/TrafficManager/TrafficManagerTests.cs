@@ -131,7 +131,7 @@ namespace Azure.Tests.TrafficManager
                 int c = 0;
                 foreach (var endpoint in profile.ExternalEndpoints.Values)
                 {
-                    Assert.Equal(EndpointType.EXTERNAL, endpoint.EndpointType);
+                    Assert.Equal(EndpointType.External, endpoint.EndpointType);
                     if (endpoint.Name.Equals(externalEndpointName21, StringComparison.OrdinalIgnoreCase))
                     {
                         Assert.Equal(1, endpoint.RoutingPriority);
@@ -154,13 +154,13 @@ namespace Azure.Tests.TrafficManager
                 c = 0;
                 foreach (var endpoint in profile.AzureEndpoints.Values)
                 {
-                    Assert.Equal(EndpointType.AZURE, endpoint.EndpointType);
+                    Assert.Equal(EndpointType.Azure, endpoint.EndpointType);
                     if (endpoint.Name.Equals(azureEndpointName, StringComparison.OrdinalIgnoreCase))
                     {
                         Assert.Equal(3, endpoint.RoutingPriority);
                         Assert.NotNull(endpoint.MonitorStatus);
                         Assert.Equal(publicIpAddress.Id, endpoint.TargetAzureResourceId);
-                        Assert.Equal(TargetAzureResourceType.PUBLICIP, endpoint.TargetResourceType);
+                        Assert.Equal(TargetAzureResourceType.PublicIP, endpoint.TargetResourceType);
                         c++;
                     }
                 }
@@ -169,7 +169,7 @@ namespace Azure.Tests.TrafficManager
                 c = 0;
                 foreach (var endpoint in profile.NestedProfileEndpoints.Values)
                 {
-                    Assert.Equal(EndpointType.NESTED_PROFILE, endpoint.EndpointType);
+                    Assert.Equal(EndpointType.NestedProfile, endpoint.EndpointType);
                     if (endpoint.Name.Equals(nestedProfileEndpointName, StringComparison.OrdinalIgnoreCase))
                     {
                         Assert.Equal(4, endpoint.RoutingPriority);
@@ -213,7 +213,7 @@ namespace Azure.Tests.TrafficManager
                 c = 0;
                 foreach (var endpoint in profile.ExternalEndpoints.Values)
                 {
-                    Assert.Equal(endpoint.EndpointType, EndpointType.EXTERNAL);
+                    Assert.Equal(endpoint.EndpointType, EndpointType.External);
                     if (endpoint.Name.Equals(externalEndpointName22, StringComparison.OrdinalIgnoreCase))
                     {
                         Assert.Equal(2, endpoint.RoutingPriority);
@@ -240,12 +240,12 @@ namespace Azure.Tests.TrafficManager
                 c = 0;
                 foreach (var endpoint in profile.AzureEndpoints.Values)
                 {
-                    Assert.Equal(endpoint.EndpointType, EndpointType.AZURE);
+                    Assert.Equal(endpoint.EndpointType, EndpointType.Azure);
                     if (endpoint.Name.Equals(azureEndpointName))
                     {
                         Assert.Equal(5, endpoint.RoutingPriority);
                         Assert.Equal(2, endpoint.RoutingWeight);
-                        Assert.Equal(TargetAzureResourceType.PUBLICIP, endpoint.TargetResourceType);
+                        Assert.Equal(TargetAzureResourceType.PublicIP, endpoint.TargetResourceType);
                         c++;
                     }
                 }

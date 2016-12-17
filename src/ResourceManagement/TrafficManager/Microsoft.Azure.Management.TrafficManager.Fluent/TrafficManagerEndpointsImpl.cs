@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             Dictionary<string, ITrafficManagerNestedProfileEndpoint> result = new Dictionary<string, ITrafficManagerNestedProfileEndpoint>();
             foreach (var entry in this.Collection) {
                 TrafficManagerEndpointImpl endpoint = entry.Value;
-                if (endpoint.EndpointType() == EndpointType.NESTED_PROFILE) {
+                if (endpoint.EndpointType() == EndpointType.NestedProfile) {
                     ITrafficManagerNestedProfileEndpoint nestedProfileEndpoint = new TrafficManagerNestedProfileEndpointImpl(entry.Key,
                         this.Parent,
                         endpoint.Inner,
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             foreach (var entry in this.Collection)
             {
                 TrafficManagerEndpointImpl endpoint = entry.Value;
-                if (endpoint.EndpointType() == EndpointType.EXTERNAL)
+                if (endpoint.EndpointType() == EndpointType.External)
                 {
                     ITrafficManagerExternalEndpoint externalEndpoint = new TrafficManagerExternalEndpointImpl(entry.Key,
                         this.Parent,
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             foreach (var entry in this.Collection)
             {
                 TrafficManagerEndpointImpl endpoint = entry.Value;
-                if (endpoint.EndpointType() == EndpointType.AZURE)
+                if (endpoint.EndpointType() == EndpointType.Azure)
                 {
                     ITrafficManagerAzureEndpoint azureEndpoint = new TrafficManagerAzureEndpointImpl(entry.Key,
                         this.Parent,
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public TrafficManagerEndpointImpl UpdateExternalEndpoint(string name)
         {
             TrafficManagerEndpointImpl endpoint = base.PrepareUpdate(name);
-            if (endpoint.EndpointType() != EndpointType.EXTERNAL) {
+            if (endpoint.EndpointType() != EndpointType.External) {
                 throw new ArgumentException($"An external endpoint with name {name} not found in the profile");
             }
             return endpoint;
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public TrafficManagerEndpointImpl DefineNestedProfileTargetEndpoint(string name)
         {
             TrafficManagerEndpointImpl endpoint = base.PrepareDefine(name);
-            endpoint.Inner.Type = EndpointType.NESTED_PROFILE.ToString();
+            endpoint.Inner.Type = EndpointType.NestedProfile.ToString();
             return endpoint;
         }
 
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public TrafficManagerEndpointImpl DefineExteralTargetEndpoint(string name)
         {
             TrafficManagerEndpointImpl endpoint = base.PrepareDefine(name);
-            endpoint.Inner.Type = EndpointType.EXTERNAL.ToString();
+            endpoint.Inner.Type = EndpointType.External.ToString();
             return endpoint;
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public TrafficManagerEndpointImpl UpdateAzureEndpoint(string name)
         {
             TrafficManagerEndpointImpl endpoint = base.PrepareUpdate(name);
-            if (endpoint.EndpointType() != EndpointType.AZURE) {
+            if (endpoint.EndpointType() != EndpointType.Azure) {
                 throw new ArgumentException($"An azure endpoint with name { name } not found in the profile");
             }
             return endpoint;
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public TrafficManagerEndpointImpl DefineAzureTargetEndpoint(string name)
         {
             TrafficManagerEndpointImpl endpoint = base.PrepareDefine(name);
-            endpoint.Inner.Type = EndpointType.AZURE.ToString();
+            endpoint.Inner.Type = EndpointType.Azure.ToString();
             return endpoint;
         }
 
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public TrafficManagerEndpointImpl UpdateNestedProfileEndpoint(string name)
         {
             TrafficManagerEndpointImpl endpoint = base.PrepareUpdate(name);
-            if (endpoint.EndpointType() != EndpointType.NESTED_PROFILE) {
+            if (endpoint.EndpointType() != EndpointType.NestedProfile) {
                 throw new ArgumentException($"A nested profile endpoint with name { name } not found in the profile");
             }
             return endpoint;

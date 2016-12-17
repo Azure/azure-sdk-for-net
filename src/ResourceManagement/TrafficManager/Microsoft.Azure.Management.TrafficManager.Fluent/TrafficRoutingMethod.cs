@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// </summary>
     public partial class TrafficRoutingMethod 
     {
-        public static readonly TrafficRoutingMethod PERFORMANCE = new TrafficRoutingMethod("Performance");
-        public static readonly TrafficRoutingMethod WEIGHTED = new TrafficRoutingMethod("Weighted");
-        public static readonly TrafficRoutingMethod PRIORITY = new TrafficRoutingMethod("Priority");
+        public static readonly TrafficRoutingMethod Performance = new TrafficRoutingMethod("Performance");
+        public static readonly TrafficRoutingMethod Weighted = new TrafficRoutingMethod("Weighted");
+        public static readonly TrafficRoutingMethod Priority = new TrafficRoutingMethod("Priority");
 
         private string value;
 

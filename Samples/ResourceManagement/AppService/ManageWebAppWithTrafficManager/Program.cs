@@ -165,7 +165,7 @@ namespace ManageWebAppWithTrafficManager
                             .Define(tmName)
                             .WithExistingResourceGroup(RG_NAME)
                             .WithLeafDomainLabel(tmName)
-                            .WithTrafficRoutingMethod(TrafficRoutingMethod.WEIGHTED)
+                            .WithTrafficRoutingMethod(TrafficRoutingMethod.Weighted)
                             .DefineAzureTargetEndpoint("endpoint1")
                                 .ToResourceId(app1.Id)
                                 .Attach()
