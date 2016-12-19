@@ -156,12 +156,28 @@ var webApp = azure.WebApps()
 
 **Create a SQL Database**
 
-You can create a SQL database instance by using another `define() … create()` method chain.
+You can create a SQL server instance by using another `define() … create()` method chain.
 
 ```csharp
-
+var sqlServer = azure.SqlServers.Define(sqlServerName)
+    .WithRegion(Region.US_EAST)
+    .WithNewResourceGroup(rgName)
+    .WithAdministratorLogin(administratorLogin)
+    .WithAdministratorPassword(administratorPassword)
+    .WithNewFirewallRule(firewallRuleIpAddress)
+    .WithNewFirewallRule(firewallRuleStartIpAddress, firewallRuleEndIpAddress)
+    .Create();
 ```
 
+Then, you can create a SQL database instance by using another `define() … create()` method chain.
+
+```csharp
+var database = sqlServer.Databases.Define(databaseName)
+    .WithoutElasticPool()
+    .WithoutSourceDatabaseId()
+    .WithEdition(DatabaseEditions.Basic)
+    .Create();
+```
 
 #Sample Code
 
