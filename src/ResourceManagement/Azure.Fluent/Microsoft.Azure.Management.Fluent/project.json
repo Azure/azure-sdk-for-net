@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta3",
+  "version": "1.0.0-beta4",
   "title": "Microsoft Azure Management Client Library",
   "description": "Provides management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
@@ -20,18 +20,18 @@
   },
 
   "dependencies": {
-    "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Dns.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Sql.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.TrafficManager.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta3, 2.0)"
+    "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Dns.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Sql.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.TrafficManager.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta4, 2.0)"
   },
 
   "frameworks": {
