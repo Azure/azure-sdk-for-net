@@ -143,7 +143,7 @@ namespace CognitiveServices.Tests.Helpers
             return accountName;
         }
 
-        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.Recommendations)
+        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.Recommendations, string location = null)
         {
             // Create account with only required params
             var accountName = TestUtilities.GenerateName("csa");
@@ -151,32 +151,12 @@ namespace CognitiveServices.Tests.Helpers
             {
                 Sku = new Sku { Name = skuName },
                 Kind = accountType,
-                Location = CognitiveServicesManagementTestUtilities.DefaultLocation,
+                Location = location ?? DefaultLocation,
                 Properties = new object(),
             };
             var account = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgName, accountName, parameters);
-            CognitiveServicesManagementTestUtilities.VerifyAccountProperties(account, false, accountType, skuName);
-            Assert.Equal(skuName, account.Sku.Name);
-            Assert.Equal(accountType.ToString(), account.Kind);
+            VerifyAccountProperties(account, false, accountType, skuName, location ?? DefaultLocation);
 
-            return account;
-        }
-
-        public static CognitiveServicesAccount CreateAndValidateAccountWithKindSkuLocation(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string accountType, string skuName, string location)
-        {
-
-            // Create account with only required params
-            var accountName = TestUtilities.GenerateName("csa");
-            var parameters = new CognitiveServicesAccountCreateParameters
-            {
-                Sku = new Sku { Name = skuName },
-                Kind = accountType,
-                Location = location,
-                Properties = new object(),
-            };
-
-            var account = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgName, accountName, parameters);
-            VerifyAccountProperties(account, false, accountType, skuName, location);
             return account;
         }
 

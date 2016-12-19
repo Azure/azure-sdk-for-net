@@ -80,23 +80,23 @@ namespace CognitiveServices.Tests
                 // Create resource group
                 var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Academic, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingAutosuggest, SkuName.S1, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingSearch, SkuName.S1, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingSpeech, SkuName.S0, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.BingSpellCheck, SkuName.S1, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.ComputerVision, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.ContentModerator, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Emotion, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Face, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.LUIS, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Recommendations, SkuName.S1, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.SpeakerRecognition, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.Speech, SkuName.S0, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.SpeechTranslation, SkuName.S1, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.TextAnalytics, SkuName.S1, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.TextTranslation, SkuName.S1, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithKindSkuLocation(cognitiveServicesMgmtClient, rgname, Kind.WebLM, SkuName.S0, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Academic, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.BingAutosuggest, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.BingSearch, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.BingSpeech, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.BingSpellCheck, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.ComputerVision, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.ContentModerator, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Emotion, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Face, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.LUIS, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.Recommendations,  "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.SpeakerRecognition, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Speech, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.SpeechTranslation, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.TextAnalytics, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.TextTranslation, "global");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.WebLM, "westus");
             }
         }
 
