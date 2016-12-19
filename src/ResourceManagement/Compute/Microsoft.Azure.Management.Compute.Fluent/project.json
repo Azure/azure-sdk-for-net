@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta3",
+  "version": "1.0.0-beta4",
   "title": "Microsoft Azure Compute Management Library",
   "description": "Provides virtual machine, virtual machine extensions and availability set management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
@@ -20,10 +20,10 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta3, 2.0)",
-    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta3, 2.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.4, 4.0)",
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta4, 2.0)",
+    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta4, 2.0)"
   },
 
   "frameworks": {
