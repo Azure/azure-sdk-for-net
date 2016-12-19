@@ -5,7 +5,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Threading.Tasks;
-    using Primitives;
     using Xunit;
 
     public class BrokeredMessageTests
