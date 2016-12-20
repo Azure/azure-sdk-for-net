@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="Inner">The wrapper inner type.</typeparam>
     /// <typeparam name="InnerCollection">The inner type of the collection object.</typeparam>
     /// <typeparam name="Manager">The manager type for this resource provider type.</typeparam>
-    public abstract partial class IndependentChildResourcesImpl<T,ImplT,InnerT,InnerCollectionT,ManagerT>  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRSZXNvdXJjZXNJbXBs
+    public abstract partial class IndependentChildResourcesImpl<T, ImplT, InnerT, InnerCollectionT, ManagerT> :
         IndependentChildrenImpl<T,ImplT,InnerT, InnerCollectionT, ManagerT>
         where T : class, IHasId
         where ImplT : T
