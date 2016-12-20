@@ -58,7 +58,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <return>An observable to the request.</return>
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
- 
             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 

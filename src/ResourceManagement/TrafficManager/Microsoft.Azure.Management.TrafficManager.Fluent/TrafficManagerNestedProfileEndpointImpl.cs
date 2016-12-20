@@ -20,12 +20,11 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return Region.Create(Inner.EndpointLocation);
         }
 
-        ///GENMHASH:ED2AE24D8510FB354BA31316B335750F:2682BD2661D3A018D6E09706819D354F
         internal  TrafficManagerNestedProfileEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner, client)
         {
         }
 
-        ///GENMHASH:AE37BAC5F19AB659638F1E713178B1BD:5FA4034CCC6BEA402A8572B453BEA4BD
+        ///GENMHASH:AE37BAC5F19AB659638F1E713178B1BD:973D938738DE9E8778E1E82F3F5CC564
         public int MinimumChildEndpointCount()
         {
             if (Inner.MinChildEndpoints == null) {

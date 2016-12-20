@@ -72,7 +72,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this;
         }
 
-        ///GENMHASH:C5CC2EE74F2176AA6473857322F7C248:4D37314EF7F75B745F5D65EF257C1402
         internal  TrafficManagerProfileImpl(string name, ProfileInner innerModel, IProfilesOperations innerCollection, IEndpointsOperations endpointsClient, TrafficManager trafficManager) : base(name, innerModel, trafficManager)
         {
             this.innerCollection = innerCollection;
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             this.endpoints = new TrafficManagerEndpointsImpl(endpointsClient, this);
         }
 
-        ///GENMHASH:2C0DB6B1F104247169DC6BCC9246747C:C42780CE5123C9BBEB2CF23A6FF797BC
+        ///GENMHASH:2C0DB6B1F104247169DC6BCC9246747C:D88E948223FB86124BBB6F6774621201
         public int TimeToLive()
         {
             return (int) this.Inner.DnsConfig.Ttl.Value;
@@ -160,7 +159,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this.Inner.DnsConfig.Fqdn;
         }
 
-        ///GENMHASH:CBED4DBEF4FE611072BC440D90324271:52DD6FE5AE51E9AC63DAF5C14B4F46E6
+        ///GENMHASH:CBED4DBEF4FE611072BC440D90324271:80930CC778C5ED77B07A0B587D7C5950
         public int MonitoringPort()
         {
             return (int) this.Inner.MonitorConfig.Port.Value;

@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this;
         }
 
-        ///GENMHASH:7E4D6CD4225C7C45A2617BA279790518:E401EF0E4FF685DAE73EF65EC2D974A0
+        ///GENMHASH:7E4D6CD4225C7C45A2617BA279790518:CDE1537547721862503F9A0FA1A322D4
         public int RoutingPriority()
         {
             return (int) this.Inner.Priority.Value;
@@ -64,13 +64,12 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this;
         }
 
-        ///GENMHASH:2521373455D66779FDC191E5AF5A324E:A74628459133C1690F2A62C7C482A9A9
         internal  TrafficManagerEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner)
         {
             this.client = client;
         }
 
-        ///GENMHASH:3A31ACD3BD909199AC20F8F3E3739FBC:08D39119EFC0D43565C615E7190EDA65
+        ///GENMHASH:3A31ACD3BD909199AC20F8F3E3739FBC:74F3955C06F9B8A4E58621607D351E22
         public int RoutingWeight()
         {
             return (int) this.Inner.Weight.Value;

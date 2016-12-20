@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return Inner.Target;
         }
 
-        ///GENMHASH:3D7D84BE9718103D55B181E59FCB60F7:2682BD2661D3A018D6E09706819D354F
         internal  TrafficManagerExternalEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner, client)
         {
         }

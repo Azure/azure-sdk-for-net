@@ -129,7 +129,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// </summary>
         /// <param name="client">The client to perform REST calls on endpoints.</param>
         /// <param name="parent">The parent traffic manager profile of the endpoints.</param>
-        ///GENMHASH:4D0E5B9E7FAF82899EC6E6B3762A42CE:86647EE6A7C92249B46A6C7B4A2F9A64
         internal  TrafficManagerEndpointsImpl(IEndpointsOperations client, TrafficManagerProfileImpl parent) : base(parent, "Endpoint")
         {
             this.client = client;
