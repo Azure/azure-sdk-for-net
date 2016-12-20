@@ -1,6 +1,11 @@
-﻿namespace Microsoft.Azure.ServiceBus.UnitTests.API
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace Microsoft.Azure.ServiceBus.UnitTests.API
 {
     using System;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using ApprovalTests;
     using Xunit;
@@ -24,7 +29,16 @@
         {           
             var assembly = typeof(Message).Assembly;
             var publicApi = Filter(PublicApiGenerator.ApiGenerator.GeneratePublicApi(assembly, whitelistedNamespacePrefixes: new[] { "Microsoft.Azure.ServiceBus." }));  
-            Approvals.Verify(publicApi);
+                                     
+            try
+            {
+                Approvals.Verify(publicApi);
+            }
+            finally
+            {
+                // The ApprovalTests library does not clean up its temporary files on failure.  Force cleanup.
+                CleanApprovalsTempFiles(ApprovalUtilities.Utilities.PathUtilities.GetDirectoryForCaller());
+            }
         }
 
         string Filter(string text)
@@ -32,6 +46,31 @@
             return string.Join(Environment.NewLine, text.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
                 .Where(l => !l.StartsWith("[assembly: System.Runtime.Versioning.TargetFrameworkAttribute"))
             );
+        }
+                
+        /// <remarks>
+        ///     Failures during clean-up will not be considered critical; they will be reported, but otherwise ignored as not to 
+        ///     influence test results.  These assets are assumed to be cleaned during the build process and should only be 
+        ///     a concern for local runs.
+        /// </remarks>
+        /// 
+        void CleanApprovalsTempFiles(string approvalsWorkingdDirectory)
+        {
+            foreach (var file in Directory.EnumerateFiles(approvalsWorkingdDirectory, $"{ nameof(ApiApprovals) }.*received.txt", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch
+                {
+                    // Avoid using the TestUtility class here, as it has a static dependency on the connection string environment variable, but this is
+                    // not a Live test.
+                    var message = $"Unable to remove the test asset [{ file }].  This non-critical but may leave remnants for a local run.";
+                    Debug.WriteLine(message);
+                    Console.WriteLine(message);
+                }
+            }
         }
     }
 }
