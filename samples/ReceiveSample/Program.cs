@@ -49,7 +49,7 @@ namespace ReceiveSample
                     // Write the message body to the console
                     Console.WriteLine($"Received message: {message.GetBody<string>()}");
 
-                    // Complete the messgage so that it is not received again
+                    // Complete the message so that it is not received again
                     await message.CompleteAsync();
                 }
                 catch (Exception exception)
