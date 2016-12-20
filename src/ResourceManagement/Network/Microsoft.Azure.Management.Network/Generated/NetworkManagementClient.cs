@@ -78,71 +78,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
 
         /// <summary>
-        /// Gets the IExpressRouteCircuitAuthorizationsOperations.
-        /// </summary>
-        public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
-
-        /// <summary>
-        /// Gets the IExpressRouteCircuitPeeringsOperations.
-        /// </summary>
-        public virtual IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; private set; }
-
-        /// <summary>
-        /// Gets the IExpressRouteCircuitsOperations.
-        /// </summary>
-        public virtual IExpressRouteCircuitsOperations ExpressRouteCircuits { get; private set; }
-
-        /// <summary>
-        /// Gets the IExpressRouteServiceProvidersOperations.
-        /// </summary>
-        public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
-
-        /// <summary>
-        /// Gets the ILoadBalancersOperations.
-        /// </summary>
-        public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
-
-        /// <summary>
-        /// Gets the ILocalNetworkGatewaysOperations.
-        /// </summary>
-        public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubnetsOperations.
-        /// </summary>
-        public virtual ISubnetsOperations Subnets { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkPeeringsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
-
-        /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        public virtual IUsagesOperations Usages { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewaysOperations.
-        /// </summary>
-        public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworksOperations.
-        /// </summary>
-        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
-
-        /// <summary>
         /// Gets the IRouteTablesOperations.
         /// </summary>
         public virtual IRouteTablesOperations RouteTables { get; private set; }
@@ -166,6 +101,71 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ISecurityRulesOperations.
         /// </summary>
         public virtual ISecurityRulesOperations SecurityRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ILoadBalancersOperations.
+        /// </summary>
+        public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworksOperations.
+        /// </summary>
+        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubnetsOperations.
+        /// </summary>
+        public virtual ISubnetsOperations Subnets { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkPeeringsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewaysOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the ILocalNetworkGatewaysOperations.
+        /// </summary>
+        public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCircuitAuthorizationsOperations.
+        /// </summary>
+        public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCircuitPeeringsOperations.
+        /// </summary>
+        public virtual IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCircuitsOperations.
+        /// </summary>
+        public virtual IExpressRouteCircuitsOperations ExpressRouteCircuits { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteServiceProvidersOperations.
+        /// </summary>
+        public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -369,24 +369,24 @@ namespace Microsoft.Azure.Management.Network
         private void Initialize()
         {
             ApplicationGateways = new ApplicationGatewaysOperations(this);
-            ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
-            ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
-            ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
-            ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
-            LoadBalancers = new LoadBalancersOperations(this);
-            LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
-            NetworkInterfaces = new NetworkInterfacesOperations(this);
-            Subnets = new SubnetsOperations(this);
-            VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
-            Usages = new UsagesOperations(this);
-            VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
-            VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
-            VirtualNetworks = new VirtualNetworksOperations(this);
             RouteTables = new RouteTablesOperations(this);
             Routes = new RoutesOperations(this);
             PublicIPAddresses = new PublicIPAddressesOperations(this);
             NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
             SecurityRules = new SecurityRulesOperations(this);
+            LoadBalancers = new LoadBalancersOperations(this);
+            VirtualNetworks = new VirtualNetworksOperations(this);
+            Subnets = new SubnetsOperations(this);
+            VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
+            NetworkInterfaces = new NetworkInterfacesOperations(this);
+            Usages = new UsagesOperations(this);
+            VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
+            VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
+            LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
+            ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
+            ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
+            ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
+            ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

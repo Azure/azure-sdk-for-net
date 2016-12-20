@@ -293,6 +293,152 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets information about all network interfaces in a virtual machine in a
+            /// virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='virtualmachineIndex'>
+            /// The virtual machine index.
+            /// </param>
+            public static IPage<NetworkInterface> ListVirtualMachineScaleSetVMNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex)
+            {
+                return operations.ListVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all network interfaces in a virtual machine in a
+            /// virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='virtualmachineIndex'>
+            /// The virtual machine index.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListVirtualMachineScaleSetVMNetworkInterfacesAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListVirtualMachineScaleSetVMNetworkInterfacesWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            public static IPage<NetworkInterface> ListVirtualMachineScaleSetNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName)
+            {
+                return operations.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListVirtualMachineScaleSetNetworkInterfacesAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListVirtualMachineScaleSetNetworkInterfacesWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the specified network interface in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='virtualmachineIndex'>
+            /// The virtual machine index.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The name of the network interface.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands referenced resources.
+            /// </param>
+            public static NetworkInterface GetVirtualMachineScaleSetNetworkInterface(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default(string))
+            {
+                return operations.GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the specified network interface in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualMachineScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='virtualmachineIndex'>
+            /// The virtual machine index.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The name of the network interface.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands referenced resources.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkInterface> GetVirtualMachineScaleSetNetworkInterfaceAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetVirtualMachineScaleSetNetworkInterfaceWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified network interface.
             /// </summary>
             /// <param name='operations'>
@@ -518,6 +664,76 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<NetworkInterface>> ListNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about all network interfaces in a virtual machine in a
+            /// virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetworkInterface> ListVirtualMachineScaleSetVMNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
+            {
+                return operations.ListVirtualMachineScaleSetVMNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all network interfaces in a virtual machine in a
+            /// virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListVirtualMachineScaleSetVMNetworkInterfacesNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListVirtualMachineScaleSetVMNetworkInterfacesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetworkInterface> ListVirtualMachineScaleSetNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
+            {
+                return operations.ListVirtualMachineScaleSetNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all network interfaces in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkInterface>> ListVirtualMachineScaleSetNetworkInterfacesNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListVirtualMachineScaleSetNetworkInterfacesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
