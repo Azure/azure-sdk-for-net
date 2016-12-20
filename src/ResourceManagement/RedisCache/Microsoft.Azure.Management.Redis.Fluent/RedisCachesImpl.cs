@@ -21,13 +21,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         IRedisCaches
     {
         private IPatchSchedulesOperations pathcSchedulesClient;
+
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override async Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        ///GENMHASH:C2F15BEB23386D8534B400C08B468649:2DA21496DE2BD6513C1C418114ACEF97
         internal RedisCachesImpl(IRedisOperations client, IPatchSchedulesOperations patchClient, RedisManager redisManager)
             : base(client, redisManager)
         {
