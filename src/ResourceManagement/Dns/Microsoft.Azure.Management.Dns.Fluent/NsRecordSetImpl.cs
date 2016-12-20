@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Implementation of NsRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5Oc1JlY29yZFNldEltcGw=
-    internal partial class NsRecordSetImpl  :
+    internal partial class NsRecordSetImpl :
         DnsRecordSetImpl,
         INsRecordSet
     {
@@ -52,7 +52,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return resource;
         }
 
-        ///GENMHASH:901E189AE86408AC3D4B4FC4B66B4701:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  NsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

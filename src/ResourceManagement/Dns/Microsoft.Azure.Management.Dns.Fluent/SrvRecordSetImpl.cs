@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Implementation of SrvRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5TcnZSZWNvcmRTZXRJbXBs
-    internal partial class SrvRecordSetImpl  :
+    internal partial class SrvRecordSetImpl :
         DnsRecordSetImpl,
         ISrvRecordSet
     {
@@ -75,7 +75,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
              client);
         }
 
-        ///GENMHASH:F57055097E6BCF7A9A57A97E430EB895:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  SrvRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

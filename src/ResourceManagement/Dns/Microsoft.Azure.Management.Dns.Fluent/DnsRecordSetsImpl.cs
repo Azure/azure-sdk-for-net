@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Represents an record set collection associated with a Dns zone.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5EbnNSZWNvcmRTZXRzSW1wbA==
-    internal partial class DnsRecordSetsImpl  :
+    internal partial class DnsRecordSetsImpl :
         ExternalChildResourcesNonCached<DnsRecordSetImpl,IDnsRecordSet,RecordSetInner, IDnsZone, DnsZoneImpl>
     {
         private IRecordSetsOperations client;
@@ -58,7 +58,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="client">The client to perform REST calls on record sets.</param>
         /// <param name="parent">The parent Dns zone of the record set.</param>
-        ///GENMHASH:F9E2D3727D66DFA1253AB4BD2195C4B1:824964281DB07BCB6FFFF714E2A80FA0
         internal  DnsRecordSetsImpl(IRecordSetsOperations client, DnsZoneImpl parent) : base(parent, "RecordSet")
         {
             this.client = client;

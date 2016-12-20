@@ -10,11 +10,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Implementation of TxtRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5UeHRSZWNvcmRTZXRJbXBs
-    internal partial class TxtRecordSetImpl  :
+    internal partial class TxtRecordSetImpl :
         DnsRecordSetImpl,
         ITxtRecordSet
     {
-        ///GENMHASH:CDD40393B54202CD5F601C8951933BA5:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  TxtRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }
