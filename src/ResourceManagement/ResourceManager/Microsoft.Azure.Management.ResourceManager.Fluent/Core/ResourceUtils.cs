@@ -9,26 +9,46 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     {
         public static string GroupFromResourceId(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
             return ResourceId.ParseResourceId(id).ResourceGroupName;
         }
 
         public static string ResourceProviderFromResourceId(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
             return ResourceId.ParseResourceId(id).ProviderNamespace;
         }
 
         public static string NameFromResourceId(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
             return ResourceId.ParseResourceId(id).Name;
         }
 
         public static string ResourceTypeFromResourceId(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
             return ResourceId.ParseResourceId(id).ResourceType;
         }
 
         public static string ParentResourcePathFromResourceId(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return null;
+            }
             return ResourceId.ParseResourceId(id).Parent.Id;
         }
 
