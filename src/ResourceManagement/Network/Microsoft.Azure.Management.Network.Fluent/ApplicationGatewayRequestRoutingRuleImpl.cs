@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -24,13 +24,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     {
         private bool? associateWithPublicFrontend;
 
-        ///GENMHASH:BF497059E01321BD53A7DF19D85F4D8E:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayRequestRoutingRuleImpl(ApplicationGatewayRequestRoutingRuleInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
 
         #region Withers
-        
+
         ///GENMHASH:75998168C8403D37D5B62BD1214010ED:C1A031BED4FEE36EA5917030CC573179
         public ApplicationGatewayRequestRoutingRuleImpl ToBackendFqdn(string fqdn)
         {
@@ -236,28 +235,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:D457B9CDACC819681A8B8A61E22717C2:E6EC55665567C1657FE0624801BD0B87
+        ///GENMHASH:D457B9CDACC819681A8B8A61E22717C2:DF12139705045E06926F38A1DB38047A
         public ApplicationGatewayProtocol FrontendProtocol()
         {
             var listener = Listener();
             return (listener != null) ? listener.Protocol() : null;
         }
 
-        ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:E87CBDEF5F17393A6105622D05DEB191
+        ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:2FC479C4D2313B66C41985D62871D669
         public string PublicIpAddressId()
         {
             var listener = Listener();
             return (listener != null) ? listener.PublicIpAddressId() : null;
         }
 
-        ///GENMHASH:A80C3FC8655E547C3392C10C546FFF39:B19300B91009A92D52181B37B30FCC7B
+        ///GENMHASH:A80C3FC8655E547C3392C10C546FFF39:4178B96D859F693DD4C685D2EA97E3C1
         public bool RequiresServerNameIndication()
         {
             var listener = Listener();
             return (listener != null) ? listener.RequiresServerNameIndication() : false;
         }
 
-        ///GENMHASH:EB41BE025536B41812665B952EBF2040:6AC3BC741A0D215AAE36D09DD6C6901C
+        ///GENMHASH:EB41BE025536B41812665B952EBF2040:31ACB997844CDB27FC8A75BA5FA0E687
         public int FrontendPort()
         {
             var listener = Listener();
@@ -310,21 +309,21 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:D8B908F745288E8BB24BBEA2614AD276
+        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:95CF36EF4D1A21EAD1633FD0A40F89C9
         public int BackendPort()
         {
             var backendConfig = BackendHttpConfiguration();
             return (backendConfig != null) ? backendConfig.Port() : 0;
         }
 
-        ///GENMHASH:1207E16326E66DA6A51CBA6F0565D088:CDD93AFCE1E2F4AD482190B38A2C9823
+        ///GENMHASH:1207E16326E66DA6A51CBA6F0565D088:CB87CAA0875D78D6AC5C13AF9397F5C9
         public IApplicationGatewaySslCertificate SslCertificate()
         {
             var listener = Listener();
             return (listener != null) ? listener.SslCertificate() : null;
         }
 
-        ///GENMHASH:88B8E503CCDD1E57245F30B2FC889572:31A6A2A69894AFD68DBAC0B8E83EF284
+        ///GENMHASH:88B8E503CCDD1E57245F30B2FC889572:C47FFCDA6121AF8D962DEDAF0FD7135D
         public IList<ApplicationGatewayBackendAddress> BackendAddresses()
         {
             IList<ApplicationGatewayBackendAddress> addresses = new List<ApplicationGatewayBackendAddress>();
@@ -336,7 +335,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return addresses;
         }
 
-        ///GENMHASH:0BBB3340617BD27DD6A3E851FD10BEE1:4BADA88C5FE9D21589BBD33AED331911
+        ///GENMHASH:0BBB3340617BD27DD6A3E851FD10BEE1:D28477BD31DAD54051BEAF76A9FCB4C7
         public bool CookieBasedAffinity()
         {
             var backendConfig = BackendHttpConfiguration();
@@ -359,7 +358,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:A50A011CA652E846C1780DCE98D171DE:264DF620709DF8F8037CB6E71CCB5375
+        ///GENMHASH:A50A011CA652E846C1780DCE98D171DE:8DF47161E6AF3BB720FFC33F3FA597B2
         public string HostName()
         {
             var listener = Listener();
@@ -385,14 +384,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return config;
         }
 
-        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:BA43F9EDEEC35BE6198E496FFC893CBD
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:086E96DC9677CE6EDD1F65C8128BAD7A
         public ApplicationGatewayImpl Attach()
         {
             Parent.WithRequestRoutingRule(this);
             return Parent;
         }
 
-        ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
+        ///GENMHASH:377296039E5241FB1B02988EFB811F77:E4198EDA1A3BA7FDFDD084C7D92465A7
         public IPublicIpAddress GetPublicIpAddress()
         {
             string pipId = PublicIpAddressId();

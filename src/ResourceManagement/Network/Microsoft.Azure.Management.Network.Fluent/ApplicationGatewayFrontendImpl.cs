@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayFrontend.Update.IUpdate
     {
-        ///GENMHASH:6C169A817DC3F6F4927C26EB324FD8B5:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayFrontendImpl(ApplicationGatewayFrontendIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
@@ -143,7 +142,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithExistingSubnet(network.Id, subnetName);
         }
 
-        ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:6BF6D743D6711AFFAF5F35FB435C360B
+        ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:2D759E0FBA03499C970CB12B5A999B9B
         public ApplicationGatewayFrontendImpl WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
             var subnetRef = new SubResource()
@@ -163,7 +162,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithExistingPublicIpAddress(pip.Id);
         }
 
-        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:488D62DEC18443445C34B6C753A0435A
+        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:5185A4691911407C18CF3290890D0252
         public ApplicationGatewayFrontendImpl WithExistingPublicIpAddress(string resourceId)
         {
             var pipRef = new SubResource()
@@ -178,6 +177,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
+        ///GENMHASH:A280AFBA3926E1E20A16C1DA07F8C6A3:144D0CF08C876F0017D38A9B294CEBC7
         public ApplicationGatewayFrontendImpl WithoutSubnet()
         {
             Inner.Subnet = null;

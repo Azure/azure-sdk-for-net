@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5R3JvdXBzSW1wbA==
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
@@ -12,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkSecurityGroups.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5R3JvdXBzSW1wbA==
     internal partial class NetworkSecurityGroupsImpl  :
         GroupableResources<
             INetworkSecurityGroup,
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         INetworkSecurityGroups
     {
         internal  NetworkSecurityGroupsImpl (
-            INetworkSecurityGroupsOperations innerCollection, 
+            INetworkSecurityGroupsOperations innerCollection,
             NetworkManager networkManager) : base(innerCollection, networkManager)
         {
         }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:3F66CB38737E789E83D4F94D3B9FA876:B9B028D620AC932FDF66D2783E476B0D
+        ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name, cancellationToken);

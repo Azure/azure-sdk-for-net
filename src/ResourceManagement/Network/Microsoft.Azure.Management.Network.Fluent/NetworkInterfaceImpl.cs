@@ -1,8 +1,6 @@
-///GENMHASH:B6961E0C7CB3A9659DE0E1489F44A936:0B871D5CC01C5634C2C9305DF6429EF2
-///Manager()
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya0ludGVyZmFjZUltcGw=
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
@@ -18,6 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkInterface and its create and update interfaces.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya0ludGVyZmFjZUltcGw=
     internal partial class NetworkInterfaceImpl :
         GroupableParentResource<INetworkInterface,
                 NetworkInterfaceInner,

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzZXNJbXBs
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for PublicIpAddresses.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzZXNJbXBs
     internal partial class PublicIpAddressesImpl :
         GroupableResources<
             IPublicIpAddress,
@@ -67,7 +68,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             return WrapList(pagedList);
         }
-
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         internal PublicIpAddressImpl Define(string name)

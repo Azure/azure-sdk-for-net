@@ -1,9 +1,5 @@
-///GENMHASH:B6961E0C7CB3A9659DE0E1489F44A936:0B871D5CC01C5634C2C9305DF6429EF2
-///Manager()
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VySW1wbA==
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
@@ -18,6 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation of the LoadBalancer interface.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VySW1wbA==
     internal partial class LoadBalancerImpl : GroupableParentResource<
             ILoadBalancer,
             LoadBalancerInner,
@@ -46,9 +43,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
 
         internal  LoadBalancerImpl (
-            string name, 
-            LoadBalancerInner innerModel, 
-            ILoadBalancersOperations innerCollection, 
+            string name,
+            LoadBalancerInner innerModel,
+            ILoadBalancersOperations innerCollection,
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
@@ -74,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             InitializeInboundNatPoolsFromInner();
         }
 
-        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:B77F30067A5A83D73E40B1731D81D14A
+        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:3061E90D07E191545E5CD32EB1ADE404
         override protected void BeforeCreating ()
         {
             // Account for the newly created public IPs
@@ -143,7 +140,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
                 // Clear deleted probe references
                 var probeRef = lbRule.Inner.Probe;
-                if (probeRef != null 
+                if (probeRef != null
                     && !HttpProbes().ContainsKey(ResourceUtils.NameFromResourceId(probeRef.Id))
                     && !TcpProbes().ContainsKey(ResourceUtils.NameFromResourceId(probeRef.Id))) {
                     lbRule.Inner.Probe = null;
@@ -252,7 +249,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-
         ///GENMHASH:ADBCFE28F7C180796E8BBD413A1F9603:B6E374CF3CE7CCD3A727A0FA7B0194CC
         private void InitializeInboundNatPoolsFromInner ()
         {
@@ -294,7 +290,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             if (frontend == null)
                 return null;
-            else 
+            else
             {
                 frontends[frontend.Name()] = frontend;
                 return this;
@@ -369,7 +365,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithNewPublicIpAddress(dnsLeafLabel);
         }
 
-        ///GENMHASH:978AA5D6B234EB71E90EC88584153043:71918A84C58B7CADF092181503718A07
+        ///GENMHASH:978AA5D6B234EB71E90EC88584153043:1A0B53A6A261C7B22D07B78C2A5F3801
         internal LoadBalancerImpl WithNewPublicIpAddress (string dnsLeafLabel)
         {
             var precreatablePIP = Manager.PublicIpAddresses.Define(dnsLeafLabel)
@@ -387,16 +383,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithNewPublicIpAddress(creatablePip);
         }
 
-        ///GENMHASH:FE2FB4C2B86589D7D187246933236472:D020A423898DC5D326B0FC06179FDFF6
-        internal LoadBalancerImpl WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatablePIP)
+        ///GENMHASH:FE2FB4C2B86589D7D187246933236472:88C4A2955702F46AE10229A90EB45585
+        internal LoadBalancerImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatablePIP)
         {
             creatablePIPKeys.Add(creatablePIP.Key, DEFAULT);
             AddCreatableDependency(creatablePIP as IResourceCreator<IHasId>);
             return this;
         }
 
-        ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:5F59B9F038073A21E202FA1189301B40
-        internal LoadBalancerImpl WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress)
+        ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:B6D0870A3BC4BB18331A504A1F279958
+        internal LoadBalancerImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
         {
             return WithExistingPublicIpAddress(publicIpAddress.Id, DEFAULT);
         }
@@ -413,7 +409,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 .Attach();
         }
 
-        ///GENMHASH:5647899224D30C7B5E1FDCD2D9AAB1DB:E2981ABD5069A930F56B7E822F9B5AD2
         internal LoadBalancerImpl WithExistingSubnet (INetwork network, string subnetName)
         {
             return DefinePrivateFrontend(DEFAULT)
@@ -449,7 +444,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:681EAD9E22B4456AE914816B5A9E04E5:999E5525EF37760D980CB84E6FED7230
-        internal LoadBalancerImpl WithLoadBalancingRule (int frontendPort, TransportProtocol protocol, int backendPort)
+        internal LoadBalancerImpl WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
         {
             DefineLoadBalancingRule(DEFAULT)
                 .WithFrontendPort(frontendPort)
@@ -463,7 +458,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:A35BE9E6064D3B6774D34DFEA041998E:4BAB91751BCC1B4FF8EBF5F20815D8A8
-        internal LoadBalancerImpl WithLoadBalancingRule (int port, TransportProtocol protocol)
+        internal LoadBalancerImpl WithLoadBalancingRule(int port, TransportProtocol protocol)
         {
             return WithLoadBalancingRule(port, protocol, port);
         }
@@ -563,7 +558,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:E255C878339BE0283DF8CD705750D996:4E0599402AB95235FD69889E99B1B4BE
         internal LoadBalancerInboundNatPoolImpl DefineInboundNatPool (string name)
         {
-            ILoadBalancerInboundNatPool natPool; 
+            ILoadBalancerInboundNatPool natPool;
             if (!inboundNatPools.TryGetValue(name, out natPool))
             {
                 InboundNatPoolInner inner = new InboundNatPoolInner()

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for ApplicationGatewayBackendHttpConfiguration.
     /// </summary>
+
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uQXBwbGljYXRpb25HYXRld2F5QmFja2VuZEh0dHBDb25maWd1cmF0aW9uSW1wbA==
     internal partial class ApplicationGatewayBackendHttpConfigurationImpl :
         ChildResource<ApplicationGatewayBackendHttpSettingsInner, ApplicationGatewayImpl, IApplicationGateway>,
@@ -19,14 +20,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayBackendHttpConfiguration.Update.IUpdate
     {
-        ///GENMHASH:B42BC3A9C7262D63AB700D3AA7560DE4:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayBackendHttpConfigurationImpl(ApplicationGatewayBackendHttpSettingsInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
 
         #region Accessors
 
-        ///GENMHASH:D319F463FBCA0E7C5434F8E5BDE378E5:21C8F5F4674718D4F9BB874ED4B6C86E
+        ///GENMHASH:D319F463FBCA0E7C5434F8E5BDE378E5:71EB18EE608CA38D9128AA7F38378AC1
         public int RequestTimeout()
         {
             if (Inner.RequestTimeout != null)
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return ApplicationGatewayProtocol.Parse(Inner.Protocol);
         }
 
-        ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:C151EBC301EA3EE8C113856084E73D31
+        ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:F0090A6ECB1B91C3BCFD966232A4C1D4
         public int Port()
         {
             return Inner.Port != null ? Inner.Port.Value : 0;

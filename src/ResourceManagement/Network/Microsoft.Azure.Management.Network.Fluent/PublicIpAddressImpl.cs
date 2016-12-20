@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzSW1wbA==
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for PublicIpAddress.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSXBBZGRyZXNzSW1wbA==
     internal partial class PublicIpAddressImpl :
         GroupableResource<IPublicIpAddress,
             PublicIPAddressInner,
@@ -83,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithReverseFqdn(null);
         }
 
-        ///GENMHASH:D4505189DA8BE6159A0773DFA0AC5132:069B15B5D06A9F46C25E0C4E96ABB8F0
+        ///GENMHASH:D4505189DA8BE6159A0773DFA0AC5132:A12F20EDB49307C5BFD8B28E927C67DA
         internal int IdleTimeoutInMinutes()
         {
             return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
@@ -166,7 +167,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return EqualsResourceType("frontendIPConfigurations");
         }
 
-        ///GENMHASH:3D00D26E72F1900D476D1ACE8411DAF6:AE59E633CCAEB90CB357B5CFDA9A8D39
+        ///GENMHASH:3D00D26E72F1900D476D1ACE8411DAF6:F971C39FDCD048594E38CC74943E6D11
         internal ILoadBalancerPublicFrontend GetAssignedLoadBalancerFrontend()
         {
             if (HasAssignedLoadBalancer() == true)

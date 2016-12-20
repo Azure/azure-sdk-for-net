@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Network.Fluent
@@ -22,7 +22,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return InnerCollection.DeleteAsync(groupName, name);
         }
 
-        ///GENMHASH:8257BDEA83EA75371BBAD6EFAF87E8AD:27A33792B39BF284AA170EA2D21817BE
         internal RouteTablesImpl(INetworkManagementClient networkClient, INetworkManager networkManager) : base(networkClient.RouteTables, networkManager)
         {
         }

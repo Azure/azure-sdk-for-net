@@ -1,7 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5UnVsZUltcGw=
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Resource.Fluent.Core;
@@ -11,7 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkSecurityRule and its create and update interfaces.
     /// </summary>
-    internal partial class NetworkSecurityRuleImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5UnVsZUltcGw=
+    internal partial class NetworkSecurityRuleImpl :
         ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
         NetworkSecurityRule.Definition.IDefinition<NetworkSecurityGroup.Definition.IWithCreate>,
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.DestinationPortRange;
         }
 
-        ///GENMHASH:F09FEF9E35FF77948775761A5E6A40AB:F97C34C86CF1AE49B0A40C9A8C2AB3A2
+        ///GENMHASH:F09FEF9E35FF77948775761A5E6A40AB:3361B063A896EE37DD13B78E2584BC5B
         internal int Priority()
         {
             return (Inner.Priority.HasValue) ? Inner.Priority.Value : 0;

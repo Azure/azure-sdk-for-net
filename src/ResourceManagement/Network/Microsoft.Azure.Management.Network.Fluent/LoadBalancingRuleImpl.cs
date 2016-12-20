@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2luZ1J1bGVJbXBs
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Management.Network.Fluent.Models;
@@ -10,7 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core.ChildResourceActions;
     using Rest.Azure;
 
-    internal partial class LoadBalancingRuleImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2luZ1J1bGVJbXBs
+    internal partial class LoadBalancingRuleImpl :
         ChildResource<LoadBalancingRuleInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancingRule,
         LoadBalancingRule.Definition.IDefinition<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,
@@ -39,19 +39,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
         }
 
-        ///GENMHASH:D4505189DA8BE6159A0773DFA0AC5132:069B15B5D06A9F46C25E0C4E96ABB8F0
+        ///GENMHASH:D4505189DA8BE6159A0773DFA0AC5132:A12F20EDB49307C5BFD8B28E927C67DA
         internal int IdleTimeoutInMinutes()
         {
             return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
         }
 
-        ///GENMHASH:EB41BE025536B41812665B952EBF2040:D3C9E7CC0C7A90E56C9D56A260B7E36C
+        ///GENMHASH:EB41BE025536B41812665B952EBF2040:2150178DD754E6A8F7ED8A5D0F550A32
         internal int FrontendPort()
         {
             return Inner.FrontendPort;
         }
 
-        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:4D7E221DCF74AB728326D011461F9634
+        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:E7591344CFEDC51C8E94CD9321660C74
         internal int BackendPort()
         {
             return (Inner.BackendPort.HasValue) ? Inner.BackendPort.Value : 0;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:475A4755B19EB893208FCC08E7664C5B:8E47A7551FAA8958BCB5314D0E665506
-        internal LoadBalancingRuleImpl WithProtocol (TransportProtocol protocol)
+        internal LoadBalancingRuleImpl WithProtocol(TransportProtocol protocol)
         {
             Inner.Protocol = protocol.ToString();
             return this;

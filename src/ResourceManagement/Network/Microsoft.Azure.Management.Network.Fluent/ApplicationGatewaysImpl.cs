@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for ApplicationGateways.
     /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uQXBwbGljYXRpb25HYXRld2F5c0ltcGw=
     internal partial class ApplicationGatewaysImpl :
         GroupableResources<IApplicationGateway, ApplicationGatewayImpl, ApplicationGatewayInner, IApplicationGatewaysOperations, INetworkManager>,
         IApplicationGateways
@@ -39,7 +38,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapList(pagedList);
         }
 
-        ///GENMHASH:DB7CDF51E063E00F632236B9A1581DD7:A55F357967E86E32E70097D1F0B4D25E
         internal ApplicationGatewaysImpl(INetworkManagementClient networkClient, INetworkManager networkManager) : base(networkClient.ApplicationGateways, networkManager)
         {
         }
@@ -76,6 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 Manager);
         }
 
+        ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name);

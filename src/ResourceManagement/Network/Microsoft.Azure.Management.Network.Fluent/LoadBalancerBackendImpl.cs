@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyQmFja2VuZEltcGw=
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Backend.
     /// </summary>
-    internal partial class LoadBalancerBackendImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyQmFja2VuZEltcGw=
+    internal partial class LoadBalancerBackendImpl :
         ChildResource<BackendAddressPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerBackend,
         IDefinition<LoadBalancer.Definition.IWithBackendOrProbe>,
@@ -25,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        ///GENMHASH:1FC649C97657147238976F3B54524F58:41142AC1E2F08572766FDBF43EA00E15
+        ///GENMHASH:1FC649C97657147238976F3B54524F58:1DE7E24B5141F230DDAD34D53E6C0E04
         internal IDictionary<string, string> BackendNicIpConfigurationNames()
         {
             // This assumes a NIC can only have one IP config associated with the backend of an LB,

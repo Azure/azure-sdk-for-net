@@ -1,7 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2Vyc0ltcGw=
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Resource.Fluent.Core;
@@ -12,6 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for LoadBalancers.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2Vyc0ltcGw=
     internal partial class LoadBalancersImpl  :
         GroupableResources<
             ILoadBalancer,
@@ -21,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkManager>,
         ILoadBalancers
     {
-        internal LoadBalancersImpl(NetworkManagementClient networkClient, NetworkManager networkManager) 
+        internal LoadBalancersImpl(NetworkManagementClient networkClient, NetworkManager networkManager)
             : base(networkClient.LoadBalancers, networkManager)
         {
         }
@@ -48,7 +47,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapList(pagedList);
         }
 
-
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         internal LoadBalancerImpl Define (string name)
         {
@@ -62,13 +60,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return new LoadBalancerImpl(name, inner, InnerCollection, Manager);
         }
 
-        ///GENMHASH:2B5A2E3F465A968F1950DAD37181F731:0EEAF35671D0922424FEFA21A8D023CA
+        ///GENMHASH:2B5A2E3F465A968F1950DAD37181F731:F150C6361EF462F597E93FAB337DC91B
         override protected ILoadBalancer WrapModel (LoadBalancerInner inner) //$TODO: This needs to return LoadBalancerImpl
         {
             return new LoadBalancerImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        ///GENMHASH:3F66CB38737E789E83D4F94D3B9FA876:B9B028D620AC932FDF66D2783E476B0D
+        ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return InnerCollection.DeleteAsync(groupName, name);

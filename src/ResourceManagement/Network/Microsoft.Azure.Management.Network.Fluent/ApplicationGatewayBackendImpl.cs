@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayBackend.Update.IUpdate
     {
-        ///GENMHASH:57E12F644F2C3EB367E99CBE582AD951:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayBackendImpl(ApplicationGatewayBackendAddressPoolInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
@@ -126,7 +125,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:040FE6797829F09ECF75BDE559FBA5FC:50D6F54EC4B6D5D39C3D750DD28CAF84
+        ///GENMHASH:040FE6797829F09ECF75BDE559FBA5FC:C147FF55BA09CE955B0C5E32B1198058
         public ApplicationGatewayBackendImpl WithIpAddress(string ipAddress)
         {
             if (ipAddress == null)
@@ -156,7 +155,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:BE71ABDD6202EC63298CCC3687E0D342:D0BAB29C2066E9B0BAB942D4C9C7CE4C
+        ///GENMHASH:BE71ABDD6202EC63298CCC3687E0D342:BFAC6742569FBE1AAA654B5BC52885A4
         public ApplicationGatewayBackendImpl WithFqdn(string fqdn)
         {
             if (fqdn == null)
@@ -173,7 +172,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:1EEC75E693F98EC473E92A76B0687A98:1F1F5B0E32A38D9A62957DE6F988C355
+        ///GENMHASH:1EEC75E693F98EC473E92A76B0687A98:C8F2C3635877B7B266960E3BBBF0BC73
         public ApplicationGatewayBackendImpl WithoutIpAddress(string ipAddress)
         {
             if (ipAddress == null)
@@ -200,7 +199,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:237A061FC122426B3FAE4D0084C2C114:B8170174509CC904E5A9DF22C331E935
+        ///GENMHASH:237A061FC122426B3FAE4D0084C2C114:6E6DCF6440064F537DE973B900C3AB46
         public ApplicationGatewayBackendImpl WithoutFqdn(string fqdn)
         {
             if (fqdn == null)

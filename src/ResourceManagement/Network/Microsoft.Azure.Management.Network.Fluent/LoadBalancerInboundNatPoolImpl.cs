@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VySW5ib3VuZE5hdFBvb2xJbXBs
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
@@ -11,14 +10,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for LoadBalancerInboundNatPool.
     /// </summary>
-    internal partial class LoadBalancerInboundNatPoolImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VySW5ib3VuZE5hdFBvb2xJbXBs
+    internal partial class LoadBalancerInboundNatPoolImpl :
         ChildResource<InboundNatPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatPool,
         LoadBalancerInboundNatPool.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
         LoadBalancerInboundNatPool.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerInboundNatPool.Update.IUpdate
     {
-        internal LoadBalancerInboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) 
+        internal LoadBalancerInboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent)
             : base(inner, parent)
         {
         }
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TransportProtocol.Parse(Inner.Protocol);
         }
 
-        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:9C4AAC15022FA26F69A7DFD88E20FB97
+        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:E7591344CFEDC51C8E94CD9321660C74
         internal int BackendPort()
         {
             return Inner.BackendPort;
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return frontend;
         }
 
-        ///GENMHASH:2102448B6A6EA7F1973CA8DA21C276B3:639C34A4E22D4FA74D996D47ADE0413B
+        ///GENMHASH:2102448B6A6EA7F1973CA8DA21C276B3:C69FE1B9C4A435E89D7D136C58A54FEB
         internal int FrontendPortRangeStart()
         {
             return Inner.FrontendPortRangeStart;
         }
 
-        ///GENMHASH:2878757D0F89ECB374D335D6532EDE05:E4BF9FB756C9A0682E70E8E172A29CD2
+        ///GENMHASH:2878757D0F89ECB374D335D6532EDE05:934F312EF757F3FA57D2678CE8D679B9
         internal int FrontendPortRangeEnd()
         {
             return Inner.FrontendPortRangeEnd;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:475A4755B19EB893208FCC08E7664C5B:8E47A7551FAA8958BCB5314D0E665506
-        internal LoadBalancerInboundNatPoolImpl WithProtocol (TransportProtocol protocol)
+        internal LoadBalancerInboundNatPoolImpl WithProtocol(TransportProtocol protocol)
         {
             Inner.Protocol = protocol.ToString();
             return this;

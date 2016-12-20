@@ -1,5 +1,3 @@
-///GENMHASH:B6961E0C7CB3A9659DE0E1489F44A936:34C9CAE76752C3FE7BDCFD7E4CB48F36
-///Manager()
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uU3VibmV0SW1wbA==
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Subnet and its create and update interfaces.
     /// </summary>
-    internal partial class SubnetImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uU3VibmV0SW1wbA==
+    internal partial class SubnetImpl :
         ChildResource<SubnetInner, NetworkImpl, INetwork>,
         ISubnet,
         Subnet.Definition.IDefinition<Network.Definition.IWithCreateAndSubnet>,
