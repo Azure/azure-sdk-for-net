@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5FbGFzdGljUG9vbERhdGFiYXNlQWN0aXZpdHlJbXBs
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -10,6 +9,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for Elastic Pool DatabaseActivity interface.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5FbGFzdGljUG9vbERhdGFiYXNlQWN0aXZpdHlJbXBs
     internal partial class ElasticPoolDatabaseActivityImpl :
         Wrapper<Models.ElasticPoolDatabaseActivityInner>,
         IElasticPoolDatabaseActivity
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.ErrorMessage;
         }
 
-        ///GENMHASH:FA2CBCD1D0B27E5D168FBB43CC86517C:A6A90D47E8DA21F45A16E7EE88010601
+        ///GENMHASH:FA2CBCD1D0B27E5D168FBB43CC86517C:A0A5B3AF0643F29A7053E5BEE8C9882A
         public int ErrorSeverity()
         {
             return this.Inner.ErrorSeverity.GetValueOrDefault();
         }
 
-        ///GENMHASH:6CEDF49FFA73F9F5E2F923E4726F2EFA:739A3B25CE36543C9E40B0962F594D09
+        ///GENMHASH:6CEDF49FFA73F9F5E2F923E4726F2EFA:DCD9AD663CBDFACD6E94C20AED2FD63A
         public int ErrorCode()
         {
             return this.Inner.ErrorCode.GetValueOrDefault();
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.ServerName;
         }
 
-        ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:60E139E176D51169A736C4BE93730827
+        ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:3F5BF88EAEB847CE67B8C16A5FDD2D28
         public int PercentComplete()
         {
             return this.Inner.PercentComplete.GetValueOrDefault();

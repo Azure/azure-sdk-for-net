@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxXYXJlaG91c2VJbXBs
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Models;
@@ -8,7 +7,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for SqlWarehouse and its parent interfaces.
     /// </summary>
-    internal partial class SqlWarehouseImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxXYXJlaG91c2VJbXBs
+    internal partial class SqlWarehouseImpl :
         SqlDatabaseImpl,
         ISqlWarehouse
     {

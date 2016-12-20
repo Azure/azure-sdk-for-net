@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxGaXJld2FsbFJ1bGVJbXBs
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -14,6 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for SqlFirewallRule and its parent interfaces.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxGaXJld2FsbFJ1bGVJbXBs
     internal partial class SqlFirewallRuleImpl :
         IndependentChildImpl<ISqlFirewallRule, ISqlServer, ServerFirewallRuleInner, SqlFirewallRuleImpl, IHasId, IUpdate>,
         ISqlFirewallRule,
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this;
         }
 
-        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:B4BB65C5F3DFF22971E61FCC898DE88C
         /// <return>The resource ID string.</return>
+        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:B4BB65C5F3DFF22971E61FCC898DE88C
         public override string Id
         {
             get

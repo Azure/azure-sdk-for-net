@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5FbGFzdGljUG9vbEFjdGl2aXR5SW1wbA==
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -10,6 +9,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for Elastic Pool Activity interface.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5FbGFzdGljUG9vbEFjdGl2aXR5SW1wbA==
     internal partial class ElasticPoolActivityImpl :
         Wrapper<Models.ElasticPoolActivityInner>,
         IElasticPoolActivity
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.resourceId.ResourceGroupName;
         }
 
-        ///GENMHASH:8F0EFF0AACCEFD64C58E15E16D3EC64E:70C70E99D62337F4F9F74F367F59294D
+        ///GENMHASH:8F0EFF0AACCEFD64C58E15E16D3EC64E:337753FAB2FD3F556E28B3B41F66A995
         public int RequestedDatabaseDtuMin()
         {
             return this.Inner.RequestedDatabaseDtuMin.GetValueOrDefault();
@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.ErrorMessage;
         }
 
-        ///GENMHASH:FA2CBCD1D0B27E5D168FBB43CC86517C:A6A90D47E8DA21F45A16E7EE88010601
+        ///GENMHASH:FA2CBCD1D0B27E5D168FBB43CC86517C:A0A5B3AF0643F29A7053E5BEE8C9882A
         public int ErrorSeverity()
         {
             return this.Inner.ErrorSeverity.GetValueOrDefault();
         }
 
-        ///GENMHASH:6CEDF49FFA73F9F5E2F923E4726F2EFA:739A3B25CE36543C9E40B0962F594D09
+        ///GENMHASH:6CEDF49FFA73F9F5E2F923E4726F2EFA:DCD9AD663CBDFACD6E94C20AED2FD63A
         public int ErrorCode()
         {
             return this.Inner.ErrorCode.GetValueOrDefault();
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.ServerName;
         }
 
-        ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:60E139E176D51169A736C4BE93730827
+        ///GENMHASH:64FDD7DAC0F2CAB9406652DA7545E8AA:3F5BF88EAEB847CE67B8C16A5FDD2D28
         public int PercentComplete()
         {
             return this.Inner.PercentComplete.GetValueOrDefault();
         }
 
-        ///GENMHASH:7E31FD4694B88FC2F9C1EE28D77055ED:CA86D45826B2E49129DE863D3F255A39
+        ///GENMHASH:7E31FD4694B88FC2F9C1EE28D77055ED:EDE1E4292DB486E168AE4CFE8282FCA2
         public int RequestedDtu()
         {
             return this.Inner.RequestedDtu.GetValueOrDefault();
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
         }
 
-        ///GENMHASH:579156BC87293AD83F70BBF347CFEF47:40F8C0C1F215FC2B52066186AE13B563
+        ///GENMHASH:579156BC87293AD83F70BBF347CFEF47:8ACA8E03B61F5FC45CB2DFEE3F51696A
         public long RequestedStorageLimitInGB()
         {
             return this.Inner.RequestedStorageLimitInGB.GetValueOrDefault();
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.resourceId.Name;
         }
 
-        ///GENMHASH:7EF3D853483A47D9B9984C075548A5DB:B29ADBDD046DABE4C442108174E534D6
+        ///GENMHASH:7EF3D853483A47D9B9984C075548A5DB:740F056656F4A0D00BEAED4AA4FBF109
         public int RequestedDatabaseDtuMax()
         {
             return this.Inner.RequestedDatabaseDtuMax.GetValueOrDefault();

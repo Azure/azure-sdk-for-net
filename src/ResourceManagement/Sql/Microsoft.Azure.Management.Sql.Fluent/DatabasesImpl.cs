@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5EYXRhYmFzZXNJbXBs
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -14,6 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation of SqlServer.Databases, which enables the creating the database from the SQLServer directly.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5EYXRhYmFzZXNJbXBs
     internal partial class DatabasesImpl :
         IDatabases
     {
@@ -22,7 +22,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private ISqlDatabaseCreatable databases;
         private Region region;
 
-        ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:714B63AADC1377917C498035051A9621
         internal ISqlDatabases Databases
         {
             get
@@ -49,6 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             await this.databases.DeleteByParentAsync(this.resourceGroupName, this.sqlServerName, databaseName, cancellationToken);
         }
 
+        ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:714B63AADC1377917C498035051A9621
         internal DatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager, string resourceGroupName, string sqlServerName, Region region)
         {
             this.resourceGroupName = resourceGroupName;
