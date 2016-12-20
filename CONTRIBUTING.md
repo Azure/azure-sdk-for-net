@@ -8,7 +8,7 @@ If you would like to become an active contributor to this project, please follow
 
 In the Azure Developer Experience, you are at Step 4:
 
-[API Design Review](https://github.com/Azure/adx-documentation-pr#begin-api-design-review) -> [Engage with ADX team](https://github.com/Azure/adx-documentation-pr/blob/master/README.md#engage-with-adx-team) -> [Swagger specification](https://github.com/Azure/adx-documentation-pr#create-swagger-specification) -> _**[SDKs](https://github.com/Azure/adx-documentation-pr#sdks)**_ -> [CLIs](https://github.com/Azure/adx-documentation-pr#clis)
+[Design, Build and Describe REST API](https://github.com/Azure/adx-documentation-pr/blob/master/README.md#step-1---design-build-and-describe-rest-api) -> [Get Your Swagger Approved](https://github.com/Azure/adx-documentation-pr/blob/master/README.md#step-2---get-your-swagger-approved) -> _**[Generate Request-Response Style Libraries](https://github.com/Azure/adx-documentation-pr/blob/master/README.md#step-3---generate-request-response-style-libraries)**_ -> [Build Command Line Experiences](https://github.com/Azure/adx-documentation-pr/blob/master/README.md#step-4---build-command-line-experiences)
 
 ## Table of Contents
 
@@ -34,8 +34,6 @@ In the Azure Developer Experience, you are at Step 4:
 ## Before Starting
 
 ### Onboarding
-
-Make sure that your GitHub account is part of the Azure organization. [Use this page](http://aka.ms/azuregithub) to link your account.
 
 Before cloning this repository, please make sure you have started in our [documentation repository](https://github.com/Azure/adx-documentation-pr) (you will only have access to that page if you are part of the Azure organization).
 
@@ -71,7 +69,8 @@ To open your own pull request, click [here](https://github.com/Azure/azure-sdk-f
 - Make sure you are pointing to the fork and branch that your changes were made in
 - Choose the correct branch you want your pull request to be merged into
     - The **AutoRest** branch is for code generated from AutoRest
-    - The **master** branch is for code generated from Hyak
+    - The **master** branch is for code generated from Hyak; code in this branch is in support mode only
+    - The **Fluent** branch is for the next generation of Azure SDK Management libraries that implement Fluent interfaces
 - The pull request template that is provided **should be filled out**; this is not something that should just be deleted or ignored when the pull request is created
     - Deleting or ignoring this template will elongate the time it takes for your pull request to be reviewed
 - The SLA for reviewing pull requests is **two business days**
