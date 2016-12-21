@@ -24,11 +24,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The Microsoft Azure Network management API provides a RESTful set of
-    /// web services that interact with Microsoft Azure Networks service to
-    /// manage your network resources. The API has entities that capture the
-    /// relationship between an end user and the Microsoft Azure Networks
-    /// service.
+    /// Composite Swagger for Network Client
     /// </summary>
     public partial class NetworkManagementClient : ServiceClient<NetworkManagementClient>, INetworkManagementClient, IAzureClient
     {
@@ -60,11 +56,6 @@ namespace Microsoft.Azure.Management.Network
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -87,6 +78,76 @@ namespace Microsoft.Azure.Management.Network
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
 
         /// <summary>
+        /// Gets the IRouteTablesOperations.
+        /// </summary>
+        public virtual IRouteTablesOperations RouteTables { get; private set; }
+
+        /// <summary>
+        /// Gets the IRoutesOperations.
+        /// </summary>
+        public virtual IRoutesOperations Routes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityGroupsOperations.
+        /// </summary>
+        public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityRulesOperations.
+        /// </summary>
+        public virtual ISecurityRulesOperations SecurityRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ILoadBalancersOperations.
+        /// </summary>
+        public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworksOperations.
+        /// </summary>
+        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubnetsOperations.
+        /// </summary>
+        public virtual ISubnetsOperations Subnets { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkPeeringsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewaysOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the ILocalNetworkGatewaysOperations.
+        /// </summary>
+        public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
@@ -105,76 +166,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteServiceProvidersOperations.
         /// </summary>
         public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
-
-        /// <summary>
-        /// Gets the ILoadBalancersOperations.
-        /// </summary>
-        public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
-
-        /// <summary>
-        /// Gets the ILocalNetworkGatewaysOperations.
-        /// </summary>
-        public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkSecurityGroupsOperations.
-        /// </summary>
-        public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
-
-        /// <summary>
-        /// Gets the IRouteTablesOperations.
-        /// </summary>
-        public virtual IRouteTablesOperations RouteTables { get; private set; }
-
-        /// <summary>
-        /// Gets the IRoutesOperations.
-        /// </summary>
-        public virtual IRoutesOperations Routes { get; private set; }
-
-        /// <summary>
-        /// Gets the ISecurityRulesOperations.
-        /// </summary>
-        public virtual ISecurityRulesOperations SecurityRules { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubnetsOperations.
-        /// </summary>
-        public virtual ISubnetsOperations Subnets { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkPeeringsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
-
-        /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        public virtual IUsagesOperations Usages { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewaysOperations.
-        /// </summary>
-        public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworksOperations.
-        /// </summary>
-        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -378,26 +369,25 @@ namespace Microsoft.Azure.Management.Network
         private void Initialize()
         {
             ApplicationGateways = new ApplicationGatewaysOperations(this);
+            RouteTables = new RouteTablesOperations(this);
+            Routes = new RoutesOperations(this);
+            PublicIPAddresses = new PublicIPAddressesOperations(this);
+            NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
+            SecurityRules = new SecurityRulesOperations(this);
+            LoadBalancers = new LoadBalancersOperations(this);
+            VirtualNetworks = new VirtualNetworksOperations(this);
+            Subnets = new SubnetsOperations(this);
+            VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
+            NetworkInterfaces = new NetworkInterfacesOperations(this);
+            Usages = new UsagesOperations(this);
+            VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
+            VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
+            LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
-            LoadBalancers = new LoadBalancersOperations(this);
-            LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
-            NetworkInterfaces = new NetworkInterfacesOperations(this);
-            NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
-            PublicIPAddresses = new PublicIPAddressesOperations(this);
-            RouteTables = new RouteTablesOperations(this);
-            Routes = new RoutesOperations(this);
-            SecurityRules = new SecurityRulesOperations(this);
-            Subnets = new SubnetsOperations(this);
-            VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
-            Usages = new UsagesOperations(this);
-            VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
-            VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
-            VirtualNetworks = new VirtualNetworksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2016-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -468,14 +458,11 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
             if (SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            string apiVersion = "2016-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -485,6 +472,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("domainNameLabel", domainNameLabel);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckDnsNameAvailability", tracingParameters);
             }
@@ -498,9 +486,9 @@ namespace Microsoft.Azure.Management.Network
             {
                 _queryParameters.Add(string.Format("domainNameLabel={0}", System.Uri.EscapeDataString(domainNameLabel)));
             }
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static DnsNameAvailabilityResult CheckDnsNameAvailability(this INetworkManagementClient operations, string location, string domainNameLabel = default(string))
             {
-                return Task.Factory.StartNew(s => ((INetworkManagementClient)s).CheckDnsNameAvailabilityAsync(location, domainNameLabel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CheckDnsNameAvailabilityAsync(location, domainNameLabel).GetAwaiter().GetResult();
             }
 
             /// <summary>

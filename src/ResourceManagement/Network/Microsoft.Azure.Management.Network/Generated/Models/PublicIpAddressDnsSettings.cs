@@ -15,8 +15,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains the FQDN of the DNS record associated with the public IP
-    /// address.
+    /// Contains FQDN of the DNS record associated with the public IP address
     /// </summary>
     public partial class PublicIPAddressDnsSettings
     {
@@ -28,20 +27,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PublicIPAddressDnsSettings class.
         /// </summary>
-        /// <param name="domainNameLabel">The domain name label. The
-        /// concatenation of the domain name label and the regionalized DNS
-        /// zone make up the fully qualified domain name associated with the
-        /// public IP address. If a domain name label is specified, an A DNS
-        /// record is created for the public IP in the Microsoft Azure DNS
-        /// system.</param>
-        /// <param name="fqdn">The FQDN (fully qualified domain name) of the A
-        /// DNS record associated with the public IP. This is the concatenation
-        /// of the domainNameLabel and the regionalized DNS zone.</param>
-        /// <param name="reverseFqdn">The reverse FQDN. A user-visible, fully
-        /// qualified domain name that resolves to this public IP address. If
-        /// the reverseFqdn is specified, then a PTR DNS record is created
-        /// pointing from the IP address in the in-addr.arpa domain to the
-        /// reverse FQDN.</param>
+        /// <param name="domainNameLabel">Gets or sets the Domain name
+        /// label.The concatenation of the domain name label and the
+        /// regionalized DNS zone make up the fully qualified domain name
+        /// associated with the public IP address. If a domain name label is
+        /// specified, an A DNS record is created for the public IP in the
+        /// Microsoft Azure DNS system.</param>
+        /// <param name="fqdn">Gets the FQDN, Fully qualified domain name of
+        /// the A DNS record associated with the public IP. This is the
+        /// concatenation of the domainNameLabel and the regionalized DNS
+        /// zone.</param>
+        /// <param name="reverseFqdn">Gets or Sets the Reverse FQDN. A
+        /// user-visible, fully qualified domain name that resolves to this
+        /// public IP address. If the reverseFqdn is specified, then a PTR DNS
+        /// record is created pointing from the IP address in the in-addr.arpa
+        /// domain to the reverse FQDN. </param>
         public PublicIPAddressDnsSettings(string domainNameLabel = default(string), string fqdn = default(string), string reverseFqdn = default(string))
         {
             DomainNameLabel = domainNameLabel;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the domain name label. The concatenation of the domain
+        /// Gets or sets the Domain name label.The concatenation of the domain
         /// name label and the regionalized DNS zone make up the fully
         /// qualified domain name associated with the public IP address. If a
         /// domain name label is specified, an A DNS record is created for the
@@ -60,15 +60,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public string DomainNameLabel { get; set; }
 
         /// <summary>
-        /// Gets or sets the FQDN (fully qualified domain name) of the A DNS
-        /// record associated with the public IP. This is the concatenation of
-        /// the domainNameLabel and the regionalized DNS zone.
+        /// Gets the FQDN, Fully qualified domain name of the A DNS record
+        /// associated with the public IP. This is the concatenation of the
+        /// domainNameLabel and the regionalized DNS zone.
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; set; }
 
         /// <summary>
-        /// Gets or sets the reverse FQDN. A user-visible, fully qualified
+        /// Gets or Sets the Reverse FQDN. A user-visible, fully qualified
         /// domain name that resolves to this public IP address. If the
         /// reverseFqdn is specified, then a PTR DNS record is created pointing
         /// from the IP address in the in-addr.arpa domain to the reverse FQDN.

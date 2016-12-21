@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
-                Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).DeleteAsync(resourceGroupName, publicIpAddressName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static PublicIPAddress Get(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).GetAsync(resourceGroupName, publicIpAddressName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, publicIpAddressName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static PublicIPAddress CreateOrUpdate(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters)
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).CreateOrUpdateAsync(resourceGroupName, publicIpAddressName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, publicIpAddressName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<PublicIPAddress> ListAll(this IPublicIPAddressesOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<PublicIPAddress> List(this IPublicIPAddressesOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
-                Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).BeginDeleteAsync(resourceGroupName, publicIpAddressName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static PublicIPAddress BeginCreateOrUpdate(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters)
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, publicIpAddressName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, publicIpAddressName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<PublicIPAddress> ListAllNext(this IPublicIPAddressesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<PublicIPAddress> ListNext(this IPublicIPAddressesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IPublicIPAddressesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

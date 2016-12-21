@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName)
             {
-                Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).DeleteAsync(resourceGroupName, virtualNetworkName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetwork Get(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).GetAsync(resourceGroupName, virtualNetworkName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, virtualNetworkName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetwork CreateOrUpdate(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetwork> ListAll(this IVirtualNetworksOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetwork> List(this IVirtualNetworksOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPAddressAvailabilityResult CheckIPAddressAvailability(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress = default(string))
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).CheckIPAddressAvailabilityAsync(resourceGroupName, virtualNetworkName, ipAddress), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CheckIPAddressAvailabilityAsync(resourceGroupName, virtualNetworkName, ipAddress).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName)
             {
-                Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).BeginDeleteAsync(resourceGroupName, virtualNetworkName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static VirtualNetwork BeginCreateOrUpdate(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -352,7 +352,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetwork> ListAllNext(this IVirtualNetworksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<VirtualNetwork> ListNext(this IVirtualNetworksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

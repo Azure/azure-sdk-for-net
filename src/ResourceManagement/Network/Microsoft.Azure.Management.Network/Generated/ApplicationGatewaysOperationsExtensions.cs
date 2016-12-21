@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).DeleteAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ApplicationGateway Get(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).GetAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ApplicationGateway CreateOrUpdate(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).CreateOrUpdateAsync(resourceGroupName, applicationGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, applicationGatewayName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ApplicationGateway> List(this IApplicationGatewaysOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ApplicationGateway> ListAll(this IApplicationGatewaysOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Start(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).StartAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.StartAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Stop(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).StopAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.StopAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ApplicationGatewayBackendHealth BackendHealth(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BackendHealthAsync(resourceGroupName, applicationGatewayName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BackendHealthAsync(resourceGroupName, applicationGatewayName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BeginDeleteAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ApplicationGateway BeginCreateOrUpdate(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, applicationGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, applicationGatewayName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginStart(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BeginStartAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginStartAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -464,7 +464,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginStop(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
-                Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BeginStopAsync(resourceGroupName, applicationGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginStopAsync(resourceGroupName, applicationGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -506,7 +506,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ApplicationGatewayBackendHealth BeginBackendHealth(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BeginBackendHealthAsync(resourceGroupName, applicationGatewayName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginBackendHealthAsync(resourceGroupName, applicationGatewayName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ApplicationGateway> ListNext(this IApplicationGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ApplicationGateway> ListAllNext(this IApplicationGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

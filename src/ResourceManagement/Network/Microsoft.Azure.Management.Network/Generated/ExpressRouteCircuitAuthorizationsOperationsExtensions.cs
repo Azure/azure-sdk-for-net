@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).DeleteAsync(resourceGroupName, circuitName, authorizationName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, circuitName, authorizationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitAuthorization Get(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).GetAsync(resourceGroupName, circuitName, authorizationName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, circuitName, authorizationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitAuthorization CreateOrUpdate(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuitAuthorization> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName, authorizationName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, circuitName, authorizationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitAuthorization BeginCreateOrUpdate(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuitAuthorization> ListNext(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

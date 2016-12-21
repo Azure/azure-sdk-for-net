@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static LocalNetworkGateway CreateOrUpdate(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters)
             {
-                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).CreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static LocalNetworkGateway Get(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName)
             {
-                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).GetAsync(resourceGroupName, localNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, localNetworkGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName)
             {
-                Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).DeleteAsync(resourceGroupName, localNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, localNetworkGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<LocalNetworkGateway> List(this ILocalNetworkGatewaysOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static LocalNetworkGateway BeginCreateOrUpdate(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters)
             {
-                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName)
             {
-                Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).BeginDeleteAsync(resourceGroupName, localNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, localNetworkGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<LocalNetworkGateway> ListNext(this ILocalNetworkGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
