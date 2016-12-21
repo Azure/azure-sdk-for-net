@@ -4,7 +4,6 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System;
 using System.Text;
 using Xunit;
 
@@ -60,6 +59,7 @@ namespace Fluent.Tests.Network
 
             manager.Networks.DeleteById(resource.Id);
             manager.NetworkSecurityGroups.DeleteById(nsg.Id);
+            manager.ResourceManager.ResourceGroups.DeleteByName(groupName);
         }
 
 

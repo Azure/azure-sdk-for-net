@@ -72,6 +72,7 @@ namespace Fluent.Tests.Network
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
             manager.NetworkSecurityGroups.DeleteById(resource.Id);
+            manager.ResourceManager.ResourceGroups.DeleteByName(resource.ResourceGroupName);
         }
 
 
