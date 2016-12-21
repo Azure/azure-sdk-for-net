@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
     public class TransportProtocol : ExpandableStringEnum<TransportProtocol>
     {
-        public static readonly TransportProtocol Udp = new TransportProtocol() { Value = "Udp" };
-        public static readonly TransportProtocol Tcp = new TransportProtocol() { Value = "Tcp" };
+        public static readonly TransportProtocol Udp = Parse("Udp");
+        public static readonly TransportProtocol Tcp = Parse("Tcp");
     }
 }

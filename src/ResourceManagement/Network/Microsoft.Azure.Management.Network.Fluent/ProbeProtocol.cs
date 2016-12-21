@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// </summary>
     public class ProbeProtocol : ExpandableStringEnum<ProbeProtocol>
     {
-        public static readonly ProbeProtocol Http = new ProbeProtocol() { Value = "Http" };
-        public static readonly ProbeProtocol Tcp = new ProbeProtocol() { Value = "Tcp" };
+        public static readonly ProbeProtocol Http = Parse("Http");
+        public static readonly ProbeProtocol Tcp = Parse("Tcp");
     }
 }

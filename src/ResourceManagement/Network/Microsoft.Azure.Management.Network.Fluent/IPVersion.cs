@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// </summary>
     public class IPVersion : ExpandableStringEnum<IPVersion>
     {
-        public static readonly IPVersion IPv4 = new IPVersion() { Value = "IPv4" };
-        public static readonly IPVersion IPv6 = new IPVersion() { Value = "IPv6" };
+        public static readonly IPVersion IPv4 = Parse("IPv4");
+        public static readonly IPVersion IPv6 = Parse("IPv6");
     }
 }

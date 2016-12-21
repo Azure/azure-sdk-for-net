@@ -24,13 +24,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         public string Value
         {
             get { return value; }
-            protected set
+            private set
             {
                 this.value = value;
-                if (values == null)
-                {
-                    values = new Dictionary<string, T>();
-                }
                 values[value.ToLower()] = (T)this;
             }
         }
@@ -61,13 +57,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public static T Parse(string value)
         {
+            T v;
             if (value == null)
             {
                 return null;
-            }
-
-            T v;
-            if (values.TryGetValue(value.ToLower(), out v))
+            } else if (values.TryGetValue(value.ToLower(), out v))
             {
                 return v;
             }

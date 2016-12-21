@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
     public class ApplicationGatewayRequestRoutingRuleType : ExpandableStringEnum<ApplicationGatewayRequestRoutingRuleType>
     {
-        public static readonly ApplicationGatewayRequestRoutingRuleType Basic = new ApplicationGatewayRequestRoutingRuleType() { Value = "Basic" };
-        public static readonly ApplicationGatewayRequestRoutingRuleType PathBasedRouting = new ApplicationGatewayRequestRoutingRuleType() { Value = "PathBasedRouting" };
+        public static readonly ApplicationGatewayRequestRoutingRuleType Basic = Parse("Basic");
+        public static readonly ApplicationGatewayRequestRoutingRuleType PathBasedRouting = Parse("PathBasedRouting");
     }
 }
