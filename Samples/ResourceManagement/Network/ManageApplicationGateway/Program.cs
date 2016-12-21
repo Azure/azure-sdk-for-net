@@ -83,8 +83,6 @@ namespace ManageApplicationGateway
         {
             try
             {
-                Stopwatch t;
-
                 //=================================================================
                 // Authenticate
                 var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
@@ -102,7 +100,7 @@ namespace ManageApplicationGateway
                 {
 
                     //=============================================================
-                    // Create a resource group (Where all resources gets created)
+                    // Create a resource group (Where all resources get created)
                     //
                     var resourceGroup = azure.ResourceGroups
                             .Define(rgName)
@@ -122,7 +120,7 @@ namespace ManageApplicationGateway
 
                     Console.WriteLine("Created a public IP address");
 
-                    // Print the virtual network details
+                    // Print the public IP details
                     Utilities.PrintIpAddress(publicIpAddress);
 
                     //=============================================================
@@ -188,7 +186,7 @@ namespace ManageApplicationGateway
                     //=============================================================
                     // Create two backend pools of virtual machines
 
-                    t = Stopwatch.StartNew();
+                    Stopwatch t = Stopwatch.StartNew();
                     Console.WriteLine("Creating virtual machines (two backend pools)");
 
                     var virtualMachines = azure.VirtualMachines.Create(creatableVirtualMachines.ToArray());
@@ -236,7 +234,7 @@ namespace ManageApplicationGateway
                     Console.WriteLine("Creating an application gateway... (this can take about 20 min)");
                     t = Stopwatch.StartNew();
 
-                    var applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
+                    IApplicationGateway applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(resourceGroup)
                             // Request routing rule for HTTP from public 80 to public 8080

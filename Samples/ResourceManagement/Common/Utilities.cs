@@ -12,7 +12,6 @@ using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.Azure.Management.Sql.Fluent;
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             foreach (var backend in backends.Values)
             {
                 info.Append("\n\t\tName: ").Append(backend.Name)
-                    .Append("\n\t\t\tAssociated NIC IP configuration IDs: ").Append(backend.BackendNicIpConfigurationNames.Keys.ToString());
+                    .Append("\n\t\t\tAssociated NIC IP configuration IDs: ").Append(string.Join(", ", backend.BackendNicIpConfigurationNames.Keys.ToArray()));
 
                 // Show addresses
                 var addresses = backend.Addresses;
