@@ -48,19 +48,15 @@ If you save such service principal-based credentials as a file, or store them in
 
 You can easily create a service principal and grant it access privileges for a given subscription through Azure CLI 2.0.
 
-1. Create a new blank text file with the format described in section [Using an authentication file](#using-an-authentication-file).
-1. Install Azure CLI by following the [README](https://github.com/Azure/azure-cli/blob/master/README.rst).
-1. Login by running command `az login`.
-1. Select the subscription you want your service principal to have access to by running `az account set <subscription name>`. You can view your subscriptions by `az account list --out jsonc`. Copy the subscription id into `subscription` field in the file.
-1. Create a service principal by `az ad sp create-for-rbac`. Copy the **client_id** value into `client` field in the file, and **client_secret** value into `key` field.
-1. Assign a role to the service principal. You can find the command to execute in the "Assign a role" section from the output of the previous command. It should look like `az role assignment create --assignee <client id> --role Contributor`. The role can be "Owner", "Contributer", "Reader", etc. For more information about roles in Azure, please refer to https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-what-is/. 
-1. Put your email domain into the `tenant` field, e.g., contoso.com.
-1. Assuming you are using the Azure worldwide public cloud, also add the following to your text file: \(Note that this file follows the .NET properties file format, so certain characters, such as colons, need to be escaped with a backslash\)<br/>
-    `managementURI=https\://management.core.windows.net/`<br/>
-    `baseURL=https\://management.azure.com/`</br>
-    `authURL=https\://login.windows.net/`<br/>
-    `graphURL=https\://graph.windows.net/`<br/> 
-  For other environments, please refer to [AzureEnvironment.cs](https://github.com/Azure/azure-sdk-for-net/blob/Fluent/src/ResourceManagement/ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager/AzureEnvironment.cs) for their corresponding values. 
+1. Install Azure CLI (>=0.1.0b11) by following the [README](https://github.com/Azure/azure-cli/blob/master/README.rst).
+1. Install `jq` (>=1.5) by following the instructions here: https://stedolan.github.io/jq/download/.
+1. Login as a user by running command `az login`. If you are not in Azure public cloud, use `az context create` command to switch to your cloud before login.
+1. Select the subscription you want your service principal to have access to by running `az account set --subscription <subscription name>`. You can view your subscriptions by `az account list --out jsonc`.
+1. Run the following command to create a service principal authentication file.
+
+```
+az ad sp create-for-rbac --expanded-view -o json --query "{subscription: subscriptionId, client: client, key: password, tenant: tenantId, managementURI: endpoints.management, baseURL: endpoints.resourceManager, authURL: endpoints.activeDirectory, graphURL: endpoints.activeDirectoryGraphResourceId}" | jq -r "to_entries|map(\"\(.key)=\(.value|sub(\"https:(?<x>.+[^/])/?$\";\"https\\\\:\(.x)/\"))\")|.[]"
+```
 
 Now all the pieces are in place to enable authenticating your code without requiring an interactive login nor the need to manage access tokens.
 
