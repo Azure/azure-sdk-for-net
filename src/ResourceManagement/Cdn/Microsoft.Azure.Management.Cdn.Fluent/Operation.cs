@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Operation that CDN service supports.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5PcGVyYXRpb24=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5PcGVyYXRpb24=
     public partial class Operation 
     {
         private OperationInner inner;
@@ -65,7 +65,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Construct Operation object from server response object.
         /// </summary>
         /// <param name="inner">Server response object containing supported operation description.</param>
-        ///GENMHASH:4924D6B966B11CA20A30D4D5D28FF8B0:BC4B1282CA708DC220050F834F17A184
         public  Operation(OperationInner inner)
         {
             this.inner = inner;

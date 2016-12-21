@@ -512,7 +512,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     this.Inner.IsCompressionEnabled.Value : false;
         }
 
-        ///GENMHASH:D3FBCD749DB493DA3ADF137746D72E03:9DBDBE523213D7A819804C9FDF7A21BF
         internal CdnEndpointImpl(
             string name,
             CdnProfileImpl parent,

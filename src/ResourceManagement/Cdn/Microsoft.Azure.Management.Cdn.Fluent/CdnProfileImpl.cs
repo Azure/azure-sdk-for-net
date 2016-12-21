@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Implementation for CdnProfile.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5Qcm9maWxlSW1wbA==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5Qcm9maWxlSW1wbA==
     internal partial class CdnProfileImpl  :
         GroupableResource<
             ICdnProfile,
@@ -85,7 +85,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return null;
         }
 
-        ///GENMHASH:354CBBDA97F05BB45365CF6ACDACFE6A:8FB5265E82D3754CF30BC19DF6A29958
 		internal  CdnProfileImpl(
             string name, 
             ProfileInner innerModel, 

@@ -11,8 +11,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Represents an endpoint collection associated with a CDN manager profile.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5FbmRwb2ludHNJbXBs
-    internal partial class CdnEndpointsImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5FbmRwb2ludHNJbXBs
+    internal partial class CdnEndpointsImpl :
         ExternalChildResourcesCached<CdnEndpointImpl,ICdnEndpoint,EndpointInner,ICdnProfile,CdnProfileImpl>
     {
         private IEndpointsOperations client;
@@ -85,7 +85,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this.PrepareUpdate(name);
         }
 
-        ///GENMHASH:0E17135F576ED293506D3C5D4AB3CC33:0A9C82E8F2ECF2EDFD1BDEA306B57C31
         internal  CdnEndpointsImpl(
             IEndpointsOperations client, 
             IOriginsOperations originsClient, 
