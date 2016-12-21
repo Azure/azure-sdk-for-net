@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Azure;
     using Management;
     using Cdn;
+    using Rest;
+    using Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,7 +21,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// Edge node of CDN service.
     /// </summary>
-    public partial class EdgeNode
+    [JsonTransformation]
+    public partial class EdgeNode : Resource
     {
         /// <summary>
         /// Initializes a new instance of the EdgeNode class.
@@ -29,36 +32,38 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the EdgeNode class.
         /// </summary>
-        /// <param name="name">Ip adress group that contains Ipv4 and Ipv6
-        /// addresses</param>
-        /// <param name="resourceGroup">The resource group of the edge
-        /// node.</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="ipAddressGroups">List of ip address groups.</param>
-        public EdgeNode(string name = default(string), string resourceGroup = default(string), IList<IpAddressGroup> ipAddressGroups = default(IList<IpAddressGroup>))
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="tags">Resource tags.</param>
+        public EdgeNode(string location, IList<IpAddressGroup> ipAddressGroups, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(location, id, name, type, tags)
         {
-            Name = name;
-            ResourceGroup = resourceGroup;
             IpAddressGroups = ipAddressGroups;
         }
 
         /// <summary>
-        /// Gets or sets ip adress group that contains Ipv4 and Ipv6 addresses
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource group of the edge node.
-        /// </summary>
-        [JsonProperty(PropertyName = "resourceGroup")]
-        public string ResourceGroup { get; set; }
-
-        /// <summary>
         /// Gets or sets list of ip address groups.
         /// </summary>
-        [JsonProperty(PropertyName = "ipAddressGroups")]
+        [JsonProperty(PropertyName = "properties.ipAddressGroups")]
         public IList<IpAddressGroup> IpAddressGroups { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (IpAddressGroups == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "IpAddressGroups");
+            }
+        }
     }
 }
 

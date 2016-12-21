@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="baseIpAddress">Ip adress itself.</param>
         /// <param name="prefixLength">The length of the prefix of the ip
         /// address.</param>
-        public CidrIpAddress(string baseIpAddress = default(string), string prefixLength = default(string))
+        public CidrIpAddress(string baseIpAddress = default(string), int? prefixLength = default(int?))
         {
             BaseIpAddress = baseIpAddress;
             PrefixLength = prefixLength;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets the length of the prefix of the ip address.
         /// </summary>
         [JsonProperty(PropertyName = "prefixLength")]
-        public string PrefixLength { get; set; }
+        public int? PrefixLength { get; set; }
 
     }
 }
