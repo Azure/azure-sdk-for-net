@@ -79,8 +79,8 @@ namespace ManageSqlDatabase
                     // Update the edition of database.
                     Console.WriteLine("Updating a database");
                     database = database.Update()
-                            .WithEdition(DatabaseEditions.Premium)
-                            .WithServiceObjective(ServiceObjectiveName.P3)
+                            .WithEdition(DatabaseEditions.Standard)
+                            .WithServiceObjective(ServiceObjectiveName.S1)
                             .Apply();
                     Utilities.PrintDatabase(database);
 
