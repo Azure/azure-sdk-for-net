@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Result of the custom domain validation.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5DaGVja05hbWVBdmFpbGFiaWxpdHlSZXN1bHQ=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5DaGVja05hbWVBdmFpbGFiaWxpdHlSZXN1bHQ=
     public class CheckNameAvailabilityResult 
     {
         private CheckNameAvailabilityOutputInner inner;
@@ -42,7 +42,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Construct CheckNameAvailabilityResult object from server response object.
         /// </summary>
         /// <param name="inner">Server response for CheckNameAvailability request.</param>
-        ///GENMHASH:E71ACFFD67FE0B74DBA80A4283F03C63:BC4B1282CA708DC220050F834F17A184
         public CheckNameAvailabilityResult(CheckNameAvailabilityOutputInner inner)
         {
             this.inner = inner;

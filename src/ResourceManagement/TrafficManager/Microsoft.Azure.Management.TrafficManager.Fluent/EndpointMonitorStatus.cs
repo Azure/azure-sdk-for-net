@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// Traffic manager profile endpoint monitor statuses.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkVuZHBvaW50TW9uaXRvclN0YXR1cw==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLkVuZHBvaW50TW9uaXRvclN0YXR1cw==
     public partial class EndpointMonitorStatus 
     {
         public static readonly EndpointMonitorStatus Inactive = new EndpointMonitorStatus("Inactive");
@@ -68,7 +68,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Creates EndpointMonitorStatus.
         /// </summary>
         /// <param name="value">The status.</param>
-        ///GENMHASH:99F38614EB8A7F23E88656112ADD42E8:030291F3BFD74EABE095743C12CD3AEA
         public  EndpointMonitorStatus(string value)
         {
             this.value = value;

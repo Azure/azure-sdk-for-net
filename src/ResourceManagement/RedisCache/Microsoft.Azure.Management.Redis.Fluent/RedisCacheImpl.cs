@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this.Inner.ProvisioningState;
         }
 
-        ///GENMHASH:8E06C1A19EE798AB8D863FD70174E162:A9F7ABE2C221F12F9353A3E7145486B2
+        ///GENMHASH:8E06C1A19EE798AB8D863FD70174E162:EB25F0BF011FB476ED48A193129040E2
         public int SslPort()
         {
             return (this.Inner.SslPort.HasValue)?
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:862EBACEFE3957DB1BC39C20E2DBEF46
+        ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:F0090A6ECB1B91C3BCFD966232A4C1D4
         public int Port()
         {
             return (this.Inner.Port.HasValue)?
@@ -467,7 +467,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return false;
         }
 
-        ///GENMHASH:246CCD739A2C2D6763D6C1A7A4C3F1B3:69D91BCB0FDA78EC692ABA93C9DCD057
+        ///GENMHASH:246CCD739A2C2D6763D6C1A7A4C3F1B3:FCB76FD3E14B5306E0C0D9C582A496EF
         public int ShardCount()
         {
             return (this.Inner.ShardCount.HasValue)?
@@ -518,7 +518,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:1CA727C3FD99D6E28A9659CD7F1CF091:4E78F5B0D0A013537A5A89F07D0A88AD
         internal RedisCacheImpl(
             string name,
             RedisResourceInner innerModel,

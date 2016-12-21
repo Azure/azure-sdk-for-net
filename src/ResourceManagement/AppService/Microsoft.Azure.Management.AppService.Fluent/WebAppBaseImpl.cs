@@ -64,6 +64,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private IDictionary<string, bool> connectionStringStickiness;
         private WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> sourceControl;
         private bool sourceControlToDelete;
+
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.StringDictionaryInner> UpdateAppSettingsAsync(StringDictionaryInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
@@ -237,7 +238,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (bool)Inner.SiteConfig.WebSocketsEnabled;
         }
 
-        ///GENMHASH:994878BE86A846414AFCBD6D6A774106:76D5065C8B4CBF008709864E3A6AFAA4
+        ///GENMHASH:994878BE86A846414AFCBD6D6A774106:7DFE5AF818EC3EFB7C159495BCF92C41
         public int ContainerSize()
         {
             if (Inner.ContainerSize == null)
@@ -250,7 +251,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
         }
 
-        ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:D99F39EFAEA0FEA27CFADE7E7F5F87A9
+        ///GENMHASH:A0391A0E086361AE06DB925568A86EB3:C70FCB6ABBA310D8130B4F53160A0440
         public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync();
@@ -384,7 +385,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:42336CC6A1724D1EDE76A585C5A018A2:306B7C561A246A23FDBF8B69DCA91F1C
+        ///GENMHASH:42336CC6A1724D1EDE76A585C5A018A2:51AAAD58339A59C1CD8D5EBB75F8FBA7
         public bool IsPremiumApp()
         {
             return Inner.PremiumAppDeployed ?? false;
@@ -401,7 +402,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT)this;
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:CEC809FD4F53D4DA22F61A1AC8FF20DD
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:DF632029F61029FAC5B2195A4AAC92F5
         public override async Task<FluentT> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (hostNameSslStateMap.Count > 0)
@@ -616,7 +617,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (SiteAvailabilityState) Inner.AvailabilityState;
         }
 
-        ///GENMHASH:9D3A5AED4F45DE4D03626B77E8ADB8A2:D9D302D7384414CD7579755B13976527
+        ///GENMHASH:9D3A5AED4F45DE4D03626B77E8ADB8A2:9BDB66ADFA5791A2402DF5901EC87936
         public bool HostNamesDisabled()
         {
             return Inner.HostNamesDisabled ?? false;
@@ -833,7 +834,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new RemoteVisualStudioVersion(Inner.SiteConfig.RemoteDebuggingVersion);
         }
 
-        ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:D7E5D52A8F2DD57221DA3F2B254FDF7F
+        ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:B4CE82C3129D4304A7C71A600E1CA97C
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSourceControl()
         {
             return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(new SiteSourceControlInner()
@@ -959,7 +960,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
         internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, manager)
         {

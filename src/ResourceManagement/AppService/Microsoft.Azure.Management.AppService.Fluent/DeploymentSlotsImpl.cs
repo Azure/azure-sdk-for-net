@@ -44,7 +44,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             DeleteByParent(parent.ResourceGroupName, parent.Name, name);
         }
 
-        ///GENMHASH:DED500AFBAD0A9AF916DAD488509F998:73380F084BCBB7208BE9649B9F292E25
         internal DeploymentSlotsImpl(WebAppImpl parent, IWebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base(innerCollection, manager)
         {

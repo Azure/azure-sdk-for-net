@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return ftpPassword;
         }
 
-        ///GENMHASH:F632D8D9095799867FF16C94EA9B05DB:8AA4358217A2D0BD3B50E15A68D68F31
         internal PublishingProfileImpl(string publishingProfileXml)
         {
             var matcher = gitRegex.Match(publishingProfileXml);
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return ftpUsername;
         }
 
-        ///GENMHASH:7F7FC8DC06968B3889A780DE3BDCD874:25B07D16F82F9DBA8A3E9EF1C3B85056
+        ///GENMHASH:7F7FC8DC06968B3889A780DE3BDCD874:3D4DF5C05B9DB567C2A58850D325D1EA
         public string GitUrl()
         {
             return gitUrl;

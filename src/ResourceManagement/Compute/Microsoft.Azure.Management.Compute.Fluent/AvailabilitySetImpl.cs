@@ -1,6 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Microsoft.Azure.Management.Compute.Fluent;
@@ -30,7 +29,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IAvailabilitySetsOperations client;
         private List<string> idOfVMsInSet;
 
-        ///GENMHASH:8C96B0BDC54BDF41F3FC5BCCAA028C8D:113A819FAF18DEACEC4BCC60120F8166
         internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel,
             IAvailabilitySetsOperations client,
             IComputeManager computeManager) : base(name, innerModel, computeManager)
@@ -38,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.client = client;
         }
 
-        ///GENMHASH:C260E0C5666F525F67582200AB726081:4B1DAA6C409946EBB2C2321E793006F2
+        ///GENMHASH:C260E0C5666F525F67582200AB726081:7DE3282328DE495135BCEDAABABE05D1
         public int FaultDomainCount()
         {
             return (Inner.PlatformFaultDomainCount.HasValue) ? Inner.PlatformFaultDomainCount.Value : 0;
@@ -50,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Inner.Statuses;
         }
 
-        ///GENMHASH:1FF50300531E284E780AF0F5120C9D38:152A2C0AC0AC1EEDAAC511B9B9F3A223
+        ///GENMHASH:1FF50300531E284E780AF0F5120C9D38:294D69029925C7F021009A4279127F9F
         public int UpdateDomainCount()
         {
             return (Inner.PlatformUpdateDomainCount.HasValue) ? Inner.PlatformUpdateDomainCount.Value : 0;

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewaySslCertificate.Update.IUpdate
     {
-        ///GENMHASH:10A46E6A29805F84C3DCA9670AF5A0BC:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewaySslCertificateImpl(ApplicationGatewaySslCertificateInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:94F90A4A28B1E983315F51729B27DB77:71EBC245EFF014FF21D0CBEC5F53A54C
+        ///GENMHASH:94F90A4A28B1E983315F51729B27DB77:C1618266BE02E9D02718895EE4730BE4
         public ApplicationGatewaySslCertificateImpl WithPfxFromFile(FileInfo pfxFile)
         {
             if (pfxFile == null) {
@@ -83,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Actions
 
-        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:C900710B9B91094E9DE2F1F22E9BCEA4
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:EE3E7C8735613AC91F1EABEEC252AB88
         public ApplicationGatewayImpl Attach()
         {
             return Parent.WithSslCertificate(this);

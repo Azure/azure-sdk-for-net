@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachinePublisher publisher;
-        ///GENMHASH:BC226EF2EAB4AB4B0C4E94FED5D962F0:D11D3C231EE92D6F7F22BDA2782F6427
         internal VirtualMachineExtensionImageTypesImpl (IVirtualMachineExtensionImagesOperations client, IVirtualMachinePublisher publisher)
         {
             this.client = client;

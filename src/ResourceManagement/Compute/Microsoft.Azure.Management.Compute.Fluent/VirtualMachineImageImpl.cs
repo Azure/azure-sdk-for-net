@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private Region location;
         private ImageReference imageReference;
-        ///GENMHASH:3037DFCA1BCDE07672005B139B094F10:0578F9D5B08EF1856822AB6B7B18110E
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version)
             : base(null)
         {
@@ -30,7 +29,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             };
         }
 
-        ///GENMHASH:CAB6054620B9FCCB39E850FA6DA1DC9E:D5C70E9798250262CE50A31D1767529C
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
             : base(inner)
         {

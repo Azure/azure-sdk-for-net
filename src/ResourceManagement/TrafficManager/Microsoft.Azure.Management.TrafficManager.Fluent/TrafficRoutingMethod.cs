@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// Possible routing methods supported by Traffic manager profile.
     /// </summary>
-    public partial class TrafficRoutingMethod 
+    public partial class TrafficRoutingMethod
     {
         public static readonly TrafficRoutingMethod Performance = new TrafficRoutingMethod("Performance");
         public static readonly TrafficRoutingMethod Weighted = new TrafficRoutingMethod("Weighted");

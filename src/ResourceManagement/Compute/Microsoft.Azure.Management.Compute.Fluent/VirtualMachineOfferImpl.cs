@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Fluent;
@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private string offerName;
         private IVirtualMachineSkus skus;
 
-        ///GENMHASH:2EFBA576A3195EDB2F27440330CF3856:B4E2AB9962FF6934486C326E46FDA9B8
         internal VirtualMachineOfferImpl(IVirtualMachinePublisher publisher, string offer, IVirtualMachineImagesOperations client)
         {
             this.publisher = publisher;

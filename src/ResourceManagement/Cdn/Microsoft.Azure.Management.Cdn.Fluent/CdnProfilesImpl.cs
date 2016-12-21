@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// Implementation for CdnProfiles.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5Qcm9maWxlc0ltcGw=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5Qcm9maWxlc0ltcGw=
     internal partial class CdnProfilesImpl  :
         GroupableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,CdnManager>,
         ICdnProfiles
@@ -82,7 +82,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return null;
         }
 
-        ///GENMHASH:2404C5CA15B0D5D6226D2C7D01E79303:FA381ABED6F4688FD47A380CF0F41845
         internal  CdnProfilesImpl(ICdnManagementClient cdnManagementClient, CdnManager cdnManager)
             : base(cdnManagementClient.Profiles, cdnManager)
         {
@@ -140,7 +139,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 this.Manager);
         }
 
-        ///GENMHASH:5ABD9E20ED5A3AA9092DC3AC7B3573AC:B20E4E386B5A7F961CDF4176B3046556		
+        ///GENMHASH:5ABD9E20ED5A3AA9092DC3AC7B3573AC:B20E4E386B5A7F961CDF4176B3046556
         public void PurgeEndpointContent(
             string resourceGroupName, 
             string profileName, 

@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return WrapModel(await this.InnerCollection.GetAsync(groupName, name));
         }
 
-        ///GENMHASH:6FA0B6DE5CB193A4650CC6B5966DBC04:345CFB0A0B8A514DED6957391B1D99E5
         internal  DnsZonesImpl(DnsManagementClient dnsManagementClient, DnsZoneManager dnsZoneManager) : base(dnsManagementClient.Zones, dnsZoneManager)
         {
             this.recordSetsClient = dnsManagementClient.RecordSets;

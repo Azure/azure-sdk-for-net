@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             DeleteAsync().Wait();
         }
 
-        ///GENMHASH:84A1C38F299C7713046CF6F1527D8F63:F642711AE7F703621C557536E835ED40
+        ///GENMHASH:84A1C38F299C7713046CF6F1527D8F63:1B67F25B1C5584321081FAB1AF143179
         public int OsDiskSizeInGB()
         {
             if (this.Inner.StorageProfile.OsDisk.DiskSizeGB != null) {
@@ -407,7 +407,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.InstanceId(), cancellationToken);
         }
 
-        ///GENMHASH:56E00E1F789510BB94AFCDC1FF61D00B:C0B660115AA9DC53D76DEDA856496556
         internal VirtualMachineScaleSetVMImpl(VirtualMachineScaleSetVMInner inner,
             VirtualMachineScaleSetImpl parent,
             IVirtualMachineScaleSetVMsOperations client,

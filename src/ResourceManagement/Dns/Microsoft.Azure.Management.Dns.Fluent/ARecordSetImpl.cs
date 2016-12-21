@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Implementation of ARecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5BUmVjb3JkU2V0SW1wbA==
-    internal partial class ARecordSetImpl  :
+    internal partial class ARecordSetImpl :
         DnsRecordSetImpl,
         IARecordSet
     {
@@ -55,7 +55,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
              return resource;
         }
 
-        ///GENMHASH:E1426F341AA03829F8336FF9716A3A8D:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  ARecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

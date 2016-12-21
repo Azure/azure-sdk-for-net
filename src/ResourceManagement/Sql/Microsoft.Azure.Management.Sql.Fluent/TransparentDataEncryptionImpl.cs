@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5UcmFuc3BhcmVudERhdGFFbmNyeXB0aW9uSW1wbA==
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -12,6 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for TransparentDataEncryption.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5UcmFuc3BhcmVudERhdGFFbmNyeXB0aW9uSW1wbA==
     internal partial class TransparentDataEncryptionImpl :
         Wrapper<Models.TransparentDataEncryptionInner>,
         ITransparentDataEncryption

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyRnJvbnRlbmRJbXBs
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for PublicFrontend.
     /// </summary>
-    internal partial class LoadBalancerFrontendImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyRnJvbnRlbmRJbXBs
+    internal partial class LoadBalancerFrontendImpl :
         ChildResource<FrontendIPConfigurationInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerFrontend,
         ILoadBalancerPrivateFrontend,
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:B05EFD4EA8C3B19D7640327B8EC0927F
+        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:7C10C7860B6E28E6D17CB999015864B9
         internal string NetworkId()
         {
             var subnetRef = Inner.Subnet;

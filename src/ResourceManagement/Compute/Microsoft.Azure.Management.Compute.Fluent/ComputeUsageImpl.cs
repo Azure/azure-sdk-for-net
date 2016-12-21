@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -19,12 +19,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new ComputeUsageUnit(Usage.Unit);
         }
 
-        ///GENMHASH:A5E7AF81C3FDCACFFFE1D6B50B56161F:C0C35E00AF4E17F141675A2C05C7067B
         internal ComputeUsageImpl(Usage innerObject) : base(innerObject)
         {
         }
 
-        ///GENMHASH:9D196E486CC1E35756FD0BEDAB3F3BE4:D46EE1115C895668AEAF34537890C3E6
+        ///GENMHASH:9D196E486CC1E35756FD0BEDAB3F3BE4:C4C8970BE357CD0ECDFA60C67B17D51F
         public int Limit()
         {
             return (int) Inner.Limit;
@@ -36,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:4CC577A7C618816C07F6CE452B96D1E6:29527C7282619FD9197A428D8ADA0490
+        ///GENMHASH:4CC577A7C618816C07F6CE452B96D1E6:45736D55DD750DB588D0BFED6A1C9F6E
         public int CurrentValue()
         {
             return  Inner.CurrentValue;

@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VySW5ib3VuZE5hdFJ1bGVJbXBs
 namespace Microsoft.Azure.Management.Network.Fluent
 {
 
@@ -15,14 +14,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for IInboundNatRule.
     /// </summary>
-    internal partial class LoadBalancerInboundNatRuleImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VySW5ib3VuZE5hdFJ1bGVJbXBs
+    internal partial class LoadBalancerInboundNatRuleImpl :
         ChildResource<InboundNatRuleInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerInboundNatRule,
         IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
         IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         IUpdate
     {
-        internal LoadBalancerInboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 
+        internal LoadBalancerInboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent)
             : base(inner, parent)
         {
         }
@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (backendRef != null) ? backendRef.Id : null;
         }
 
-        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:351B0447D40855BF2C2A04E4C733F5D9
+        ///GENMHASH:B7056D5E403DF443379DDF57BB0658A2:E7591344CFEDC51C8E94CD9321660C74
         internal int BackendPort()
         {
             return (Inner.BackendPort.HasValue) ? Inner.BackendPort.Value : 0;
         }
 
-        ///GENMHASH:1E1724F49386B38C4557AB9149CEB346:1BEBA13C1A163C64C4863B602DCEC4A7
+        ///GENMHASH:1E1724F49386B38C4557AB9149CEB346:6F5B73524E5F4DCC4417F37C1DD049C3
         internal string BackendNetworkInterfaceId()
         {
             var backendRef = Inner.BackendIPConfiguration;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return TransportProtocol.Parse(Inner.Protocol);
         }
 
-        ///GENMHASH:EB41BE025536B41812665B952EBF2040:319A4DEE75B5885594E0F7F65D52BE4C
+        ///GENMHASH:EB41BE025536B41812665B952EBF2040:2150178DD754E6A8F7ED8A5D0F550A32
         internal int FrontendPort()
         {
             return (Inner.FrontendPort.HasValue) ? Inner.FrontendPort.Value : 0;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:D4505189DA8BE6159A0773DFA0AC5132:069B15B5D06A9F46C25E0C4E96ABB8F0
+        ///GENMHASH:D4505189DA8BE6159A0773DFA0AC5132:A12F20EDB49307C5BFD8B28E927C67DA
         internal int IdleTimeoutInMinutes()
         {
             return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:475A4755B19EB893208FCC08E7664C5B:8E47A7551FAA8958BCB5314D0E665506
-        internal LoadBalancerInboundNatRuleImpl WithProtocol (TransportProtocol protocol)
+        internal LoadBalancerInboundNatRuleImpl WithProtocol(TransportProtocol protocol)
         {
             Inner.Protocol = protocol.ToString();
             return this;

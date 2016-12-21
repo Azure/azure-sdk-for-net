@@ -218,7 +218,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return recordSetsImpl.DefineMxRecordSet(name);
         }
 
-        ///GENMHASH:132875C15861A92E60F93E154E091602:F70AB38B6FDE85737888182B48E6B611
         internal  DnsZoneImpl(string name, ZoneInner innerModel, IZonesOperations innerCollection, IRecordSetsOperations recordSetsClient, IDnsZoneManager dnsZoneManager) : base(name, innerModel, dnsZoneManager)
         {
             this.innerCollection = innerCollection;

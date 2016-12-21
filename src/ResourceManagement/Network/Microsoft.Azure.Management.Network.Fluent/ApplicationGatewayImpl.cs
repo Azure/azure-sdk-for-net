@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -44,7 +44,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private ICreatable<INetwork> creatableNetwork;
         private ICreatable<IPublicIpAddress> creatablePip;
 
-        ///GENMHASH:E348AD1CD59015734202262D2BA6F046:55E548B15E635A8197D52049D3FAB8D3
         internal ApplicationGatewayImpl(
             string name,
             ApplicationGatewayInner innerModel,
@@ -134,7 +133,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
         }
 
-        ///GENMHASH:2B1D79EF0701484A69266710AE199343:CEBE13FB015F4714AF252F0350B6B583
+        ///GENMHASH:2B1D79EF0701484A69266710AE199343:62BC79EC46523CAA9DA5DC9A5E4C242A
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PrivateFrontends()
         {
             Dictionary<string, IApplicationGatewayFrontend> privateFrontends = new Dictionary<string, IApplicationGatewayFrontend>();
@@ -203,7 +202,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return listeners;
         }
 
-        ///GENMHASH:37B3BFB70B7A5569F82FB660A259D248:B96C331B6626B3CE74B216B7FE183B6D
+        ///GENMHASH:37B3BFB70B7A5569F82FB660A259D248:E92DB289B022D8EE6CEDBF8D99A476BC
         public IApplicationGatewayFrontend DefaultPublicFrontend()
         {
             // Default means the only public one or the one tracked as default, if more than one public present
@@ -306,7 +305,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return sslCerts;
         }
 
-        ///GENMHASH:6A7F875381DF37D9F784810F1A3E35BE:E241825902218A85919F43AD19902242
+        ///GENMHASH:6A7F875381DF37D9F784810F1A3E35BE:EFFE7386E0D8E0FFBD6399B90A1C3CF3
         public bool IsPrivate()
         {
             foreach (var frontend in frontends.Values)
@@ -365,7 +364,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region BackendHttpConfigurations
 
-        ///GENMHASH:43D0A80DA689D640320A61D90075ADE8:53F2B2F3AF405296F17DB8BE5C792D5E
+        ///GENMHASH:43D0A80DA689D640320A61D90075ADE8:FC98A09D6ECDCD30021D0B597F97C70C
         internal ApplicationGatewayImpl WithBackendHttpConfiguration(ApplicationGatewayBackendHttpConfigurationImpl httpConfig)
         {
             if (httpConfig != null)
@@ -451,7 +450,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (ApplicationGatewayBackendImpl)backend;
         }
 
-        ///GENMHASH:C000D62B14DEB58BED734D8C97CBA337:B6A0CA4C00D439D0A62611FFBFCB1D01
+        ///GENMHASH:C000D62B14DEB58BED734D8C97CBA337:4F027AEBFAC53ECDC5ED96364FD97831
         internal ApplicationGatewayImpl WithBackend(ApplicationGatewayBackendImpl backend)
         {
             if (backend != null)
@@ -461,7 +460,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:52092E76C641F5B4C13B8CD22D11A1C5:4116AC8D08FAEE8EE2AF72A493453127
+        ///GENMHASH:52092E76C641F5B4C13B8CD22D11A1C5:249224B1D62137072D4A55E6C56A9A20
         public ApplicationGatewayImpl WithoutBackendFqdn(string fqdn)
         {
             foreach (var backend in backends.Values)
@@ -587,7 +586,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (ApplicationGatewayFrontendImpl)frontend;
         }
 
-        ///GENMHASH:7B8AA96C3162D1728416030E94CB731F:AFEC509255ABE08FC417203DFF8CF829
+        ///GENMHASH:7B8AA96C3162D1728416030E94CB731F:833B17009FF35743D36834ABBB879D14
         internal ApplicationGatewayImpl WithFrontend(ApplicationGatewayFrontendImpl frontend)
         {
             if (frontend != null)
@@ -672,7 +671,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:A81618A68C4004FA1972411DF3C316A8:5AE9871F13F11A8541911E75B3398DEF
+        ///GENMHASH:A81618A68C4004FA1972411DF3C316A8:B36F33458166A92EBED50A27DEDA9AF1
         public ApplicationGatewayImpl WithoutPublicFrontend()
         {
             // Delete all public frontends
@@ -704,7 +703,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return EnsureDefaultPrivateFrontend();
         }
 
-        ///GENMHASH:237C0D1ED9460213CBE7249D1C6CA8F9:C10C08F4EDAF857C90407183880ADDB6
+        ///GENMHASH:237C0D1ED9460213CBE7249D1C6CA8F9:83004C1879D69DCF59B0E3CC399F87C9
         public ApplicationGatewayImpl WithoutPrivateFrontend()
         {
             // Delete all private frontends
@@ -744,7 +743,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
                 So the logic here attempts to figure out from the API what that containing subnet for the app gateway is so that the user wouldn't
                 have to re-enter it redundantly when enabling a private frontend, since only that one subnet is supported anyway.
-               
                 * TODO: When the underlying Azure API is reworked to make more sense, or the app gateway service starts supporting the functionality
                 * that the underlying API implies is supported, this model and implementation should be revisited.
              */
@@ -860,7 +858,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:FD3BFA79E44BF0C0FD92A0CE7B31B143:4D125EAA0586FE83630989875156AFFD
+        ///GENMHASH:FD3BFA79E44BF0C0FD92A0CE7B31B143:0C32B144C358DA51784C501FAE5651A1
         internal ApplicationGatewayImpl WithHttpListener(ApplicationGatewayListenerImpl httpListener)
         {
             if (httpListener != null)
@@ -889,7 +887,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region RequestRoutingRules
 
-        ///GENMHASH:9EE982E7421C1A20C7BB22556011B5DC:6EF4C8270DB03AC45C57FAD9087BD439
+        ///GENMHASH:9EE982E7421C1A20C7BB22556011B5DC:345F6A97C61E955CCFAB88208C749162
         internal ApplicationGatewayImpl WithRequestRoutingRule(ApplicationGatewayRequestRoutingRuleImpl rule)
         {
             if (rule != null)
@@ -936,7 +934,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region SslCertificates
 
-        ///GENMHASH:AA53287F5186B0525C5149BB8A3CC41C:783C00636BC9E9FE9A9092254C16B672
+        ///GENMHASH:AA53287F5186B0525C5149BB8A3CC41C:F8A2D339B71D17A2BF48559C2304DA5D
         internal ApplicationGatewayImpl WithSslCertificate(ApplicationGatewaySslCertificateImpl cert)
         {
             if (cert != null)
@@ -977,7 +975,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Helpers
 
-        ///GENMHASH:80375A07B813FDE5A15028546D4FB694:477643FBA49E84CA226936A812310F65
+        ///GENMHASH:80375A07B813FDE5A15028546D4FB694:130D5B3A30C34F066046287000EF7300
         internal ApplicationGatewayImpl WithConfig(ApplicationGatewayIpConfigurationImpl config)
         {
             if (config != null)
@@ -987,7 +985,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:40A35D1A3A7CCDCE21CBF18A30149CF3
+        ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:E6C99E3819DC72204CDC6B1A73151A87
         protected override void InitializeChildrenFromInner()
         {
             InitializeConfigsFromInner();
@@ -1283,7 +1281,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (ipConfig != null) ? ipConfig.Inner.Subnet : null;
         }
 
-        ///GENMHASH:284892F1C09754FA6CF4266448D10168:B11C94B89F9445AECA704E38ECA98A15
+        ///GENMHASH:284892F1C09754FA6CF4266448D10168:6A6B9DA04BA6ED95CE65132FD1333E49
         public IApplicationGatewayFrontend DefaultPrivateFrontend()
         {
             // Default means the only private one or the one tracked as default, if more than one private present
@@ -1325,7 +1323,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return creatablePip;
         }
 
-        ///GENMHASH:DA0903CF2B09DA8DCF45A148EE669133:309987F9DF4AFE44584BBBA0780FD4DD
+        ///GENMHASH:DA0903CF2B09DA8DCF45A148EE669133:E387DB2FECFAD1CD7B9B3A06EC339A39
         internal ApplicationGatewayFrontendImpl EnsureDefaultPublicFrontend()
         {
             var frontend = (ApplicationGatewayFrontendImpl)DefaultPublicFrontend();
@@ -1372,7 +1370,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 .Append(Name).ToString();
         }
 
-        ///GENMHASH:0F667C94F2289EF36EC5F8C809B0D66D:306E4286FAAC968E4A4EDC3FC553DD22
+        ///GENMHASH:0F667C94F2289EF36EC5F8C809B0D66D:BDD4570033866F30B639E2B8A512C623
         internal ApplicationGatewayFrontendImpl EnsureDefaultPrivateFrontend()
         {
             var frontend = (ApplicationGatewayFrontendImpl)DefaultPrivateFrontend();

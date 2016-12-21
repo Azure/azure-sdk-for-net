@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private VirtualMachineScaleSetImpl scaleSet;
         private IVirtualMachineScaleSetVMsOperations client;
         private IComputeManager computeManager;
-        ///GENMHASH:2F547EF235083E7C24F2AAD75FCE9FFC:C140D4869BF21B82D034CCD0BC161B59
         internal VirtualMachineScaleSetVMsImpl(VirtualMachineScaleSetImpl scaleSet,
             IVirtualMachineScaleSetVMsOperations client,
             IComputeManager computeManager)

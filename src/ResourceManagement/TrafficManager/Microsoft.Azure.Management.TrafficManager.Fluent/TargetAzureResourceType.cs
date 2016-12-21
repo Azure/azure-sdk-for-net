@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// Target Azure resource types supported for an Azure endpoint in a traffic manager profile.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlRhcmdldEF6dXJlUmVzb3VyY2VUeXBl
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlRhcmdldEF6dXJlUmVzb3VyY2VUeXBl
     public partial class TargetAzureResourceType 
     {
         public static readonly TargetAzureResourceType PublicIP = new TargetAzureResourceType("Microsoft.Network", "publicIPAddresses");
@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// </summary>
         /// <param name="resourceProviderName">The resource provider name.</param>
         /// <param name="resourceType">The resource type.</param>
-        ///GENMHASH:3F9A7CADE1EFA3BBBF249B9C7356113B:F14AA826FEFD37AE04DE2B5628420CF8
         public  TargetAzureResourceType(string resourceProviderName, string resourceType)
         {
             this.value = resourceProviderName + "/" + resourceType;

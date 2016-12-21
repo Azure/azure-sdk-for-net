@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Fluent;
@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineSku sku;
         private IVirtualMachineImagesOperations innerCollection;
 
-        ///GENMHASH:7C57EFD7D244A6EB7441F4C4C8306084:56F19A0547690A0FACCDBCAEDCD6DC26
         internal VirtualMachineImagesInSkuImpl(IVirtualMachineSku sku, IVirtualMachineImagesOperations innerCollection)
         {
             this.sku = sku;

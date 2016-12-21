@@ -51,7 +51,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
-        ///GENMHASH:0A331C2401291DF824493E64F2798884:AEA9DF2AAC2CFE9730BD7A00060D84F9
         internal VirtualMachineImpl(string name,
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
@@ -429,7 +428,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:E1BE2F8F8F264939D2263E51BBFC811E
+        ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:7AB774480B8E9543A8CAEE7340C4B7B8
         public VirtualMachineImpl WithWinRm(WinRMListener listener)
         {
             if (this.Inner.OsProfile.WindowsConfiguration.WinRM == null)
@@ -775,6 +774,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return Inner.StorageProfile.OsDisk.OsType.Value;
         }
+        ///GENMHASH:D97CA4262C0C853895BFF5AD2FE910FE:75A04C61F19354FB4BFDE8310A43BE22
         public string OsDiskVhdUri()
         {
             return Inner.StorageProfile.OsDisk.Vhd.Uri;
@@ -786,7 +786,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 return Inner.StorageProfile.OsDisk.Caching.Value;
         }
 
-        ///GENMHASH:034DA366E39060AAD75E1DA786657383:DFBF849A13715CBFA4800F1249919148
+        ///GENMHASH:034DA366E39060AAD75E1DA786657383:65EDBB2144C128EB0C43030D512C5EED
         public int OsDiskSize()
         {
             if (Inner.StorageProfile.OsDisk.DiskSizeGB == null)
@@ -1063,7 +1063,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        ///GENMHASH:E9830BD8841F5F66740928BA7AA21EB0:E1FC2FA9E4A5E62A1229A2DF9FFA1C75
+        ///GENMHASH:E9830BD8841F5F66740928BA7AA21EB0:73D58ABB761C4FD3FB4A9FB8F09D4AD9
         private async Task HandleStorageSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IStorageAccount storageAccount = null;

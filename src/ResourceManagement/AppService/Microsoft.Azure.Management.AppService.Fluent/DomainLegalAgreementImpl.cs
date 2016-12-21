@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.Title;
         }
 
-        ///GENMHASH:BECE963A57EABFCEDD1F16F10621E4B7:BEEF63965B869F3B5972C1D6DFCD1A03
         internal DomainLegalAgreementImpl(TldLegalAgreement innerModel)
             : base(innerModel)
         {

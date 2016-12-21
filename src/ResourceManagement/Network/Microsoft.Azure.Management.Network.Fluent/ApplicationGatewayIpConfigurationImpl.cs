@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayIpConfiguration.Update.IUpdate
     {
-        ///GENMHASH:309BFD95E2855ABD94CC4CEB845632F5:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayIpConfigurationImpl(ApplicationGatewayIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }

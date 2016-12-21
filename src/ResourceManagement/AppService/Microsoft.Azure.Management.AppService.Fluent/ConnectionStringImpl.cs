@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private ConnStringValueTypePair valueTypePair;
         private bool sticky;
 
-        ///GENMHASH:45A4D243BCC3EB6FA01DA00F52FDF305:425D09AC93B7A17B1A16F0D028F706A2
         internal ConnectionStringImpl(string name, ConnStringValueTypePair valueTypePair, bool sticky)
         {
             this.name = name;

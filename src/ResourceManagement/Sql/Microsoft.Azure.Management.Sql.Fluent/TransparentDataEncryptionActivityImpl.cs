@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5UcmFuc3BhcmVudERhdGFFbmNyeXB0aW9uQWN0aXZpdHlJbXBs
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -15,6 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     {
         private ResourceId resourceId;
 
+        ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5UcmFuc3BhcmVudERhdGFFbmNyeXB0aW9uQWN0aXZpdHlJbXBs
         internal TransparentDataEncryptionActivityImpl(TransparentDataEncryptionActivity innerObject) : base(innerObject)
         {
             this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);

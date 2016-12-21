@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.PerSiteScaling.GetValueOrDefault();
         }
 
-        ///GENMHASH:448254674B93100CCF6F2C593B4E5197:FE9EC7BA6F2F1F8E0D50FDDD2FEB256B
+        ///GENMHASH:448254674B93100CCF6F2C593B4E5197:0B582D149117BC82BBCECC50876823E6
         public int NumberOfWebApps()
         {
             return Inner.NumberOfSites.GetValueOrDefault();
@@ -72,13 +72,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:B00DB10B25D0B1148EED70A5175FFB95:53DF4E3BBFC6D3B5552E84BE9F95F298
+        ///GENMHASH:B00DB10B25D0B1148EED70A5175FFB95:584BAEFB5CA005AA4A46C1C146CF8142
         public int MaxInstances()
         {
             return Inner.MaximumNumberOfWorkers.GetValueOrDefault();
         }
 
-        ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:DC385B3B87217627D7034E9960A31D06
+        ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:7529ABBB57F7FCA2C180526D76FFE8FE
         public int Capacity()
         {
             return Inner.Sku.Capacity.GetValueOrDefault();
@@ -105,7 +105,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return AppServicePricingTier.FromSkuDescription(Inner.Sku);
         }
 
-        ///GENMHASH:07BF52A3FFAEDB1E45066F5776F5CC29:8A264E667F06CE3E13EBAC780725861E
         internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServicePlansOperations client, AppServiceManager manager)
             : base (name, innerObject, manager)
         {

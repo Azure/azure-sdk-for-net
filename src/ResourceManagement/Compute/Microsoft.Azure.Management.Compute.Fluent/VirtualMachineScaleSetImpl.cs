@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.Compute.Fluent
@@ -68,7 +68,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private List<string> primaryInternalLBBackendsToAddOnUpdate = new List<string>();
         private List<string> primaryInternalLBInboundNatPoolsToAddOnUpdate = new List<string>();
 
-        ///GENMHASH:F0C80BE7722CB6620CCF10F060FE486B:9C152084C68269BCEA950F9F22FF2153
         internal VirtualMachineScaleSetImpl(string name, VirtualMachineScaleSetInner innerModel, IVirtualMachineScaleSetsOperations client, IVirtualMachineScaleSetVMsOperations vmInstancesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) : base(name, innerModel, computeManager)
         {
             this.client = client;
@@ -130,6 +129,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         #region Getters
 
+        ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:B38C06867B5D878680004A07BD077546
         public int Capacity()
         {
             return (int)this.Inner.Sku.Capacity.Value;
@@ -1063,7 +1063,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     && storageProfile.OsDisk.Image.Uri != null;
         }
 
-        ///GENMHASH:A3BEF34E904F3350A24482F5F0F6C369:1AE6C6F6017DBAAC4C2C16699DD30126
+        ///GENMHASH:A3BEF34E904F3350A24482F5F0F6C369:DA52BB75B8BFDF93918E03080D37DEF6
         private async Task HandleOSDiskContainersAsync()
         {
             VirtualMachineScaleSetStorageProfile storageProfile = this.Inner

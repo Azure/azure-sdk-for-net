@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5R3JvdXBJbXBs
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
@@ -12,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NetworkSecurityGroup
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1NlY3VyaXR5R3JvdXBJbXBs
     internal partial class NetworkSecurityGroupImpl :
         GroupableParentResource<INetworkSecurityGroup,
             NetworkSecurityGroupInner,
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, INetworkSecurityRule> rules;
         private IDictionary<string, INetworkSecurityRule> defaultRules;
         internal  NetworkSecurityGroupImpl(
-            string name, 
-            NetworkSecurityGroupInner innerModel, 
-            INetworkSecurityGroupsOperations innerCollection, 
+            string name,
+            NetworkSecurityGroupInner innerModel,
+            INetworkSecurityGroupsOperations innerCollection,
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent;
         private WebSiteManagementClient serviceClient;
         private string githubAccessToken;
-        ///GENMHASH:8560BA43F3FC1809A8347C8CFFC2AB2F:E56B546ECAC80146D9588C9F1C5FB326
+        ///GENMHASH:8560BA43F3FC1809A8347C8CFFC2AB2F:153E3E10E3E86D913133A2F022C5C3C5
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPublicMercurialRepository(string url)
         {
             Inner.IsManualIntegration = true;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:41AFD2B5AA5DD5D065E6012F1607BD83:B14BB884235CB948F2D5AA27CF2B5F0F
+        ///GENMHASH:41AFD2B5AA5DD5D065E6012F1607BD83:317138FE0D466839A44ABBD93DDA4E7F
         internal async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SourceControlInner> RegisterGithubAccessTokenAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (githubAccessToken != null)
@@ -70,7 +70,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return parent;
         }
 
-        ///GENMHASH:DBC91E274023CE112BF5317D36B0BDC3:08D6495FD781CCB57E524CE9B1EDE729
         internal WebAppSourceControlImpl(SiteSourceControlInner inner, WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent, WebSiteManagementClient serviceClient)
             : base (inner)
         {

@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// <summary>
     /// The RedisCache.keys action result.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlZGlzLmltcGxlbWVudGF0aW9uLlJlZGlzQWNjZXNzS2V5c0ltcGw=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlZGlzLmltcGxlbWVudGF0aW9uLlJlZGlzQWNjZXNzS2V5c0ltcGw=
     internal partial class RedisAccessKeysImpl : IRedisAccessKeys
     {
         private RedisAccessKeysInner inner;
@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Creates an instance of the Redis Access keys result object.
         /// </summary>
         /// <param name="inner">The inner object.</param>
-        ///GENMHASH:C452582DCEC9B97DA6C301BBFC245AB7:BC4B1282CA708DC220050F834F17A184
         internal  RedisAccessKeysImpl(RedisAccessKeysInner inner)
         {
             this.inner = inner;

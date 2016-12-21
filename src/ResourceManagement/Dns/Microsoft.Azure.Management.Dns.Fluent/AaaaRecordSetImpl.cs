@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Implementation of AaaaRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5BYWFhUmVjb3JkU2V0SW1wbA==
-    internal partial class AaaaRecordSetImpl  :
+    internal partial class AaaaRecordSetImpl :
         DnsRecordSetImpl,
         IAaaaRecordSet
     {
@@ -57,7 +57,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return ipv6Addresses;
         }
 
-        ///GENMHASH:6CC2CE509AA8735DD6507ACE8F3C9688:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  AaaaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

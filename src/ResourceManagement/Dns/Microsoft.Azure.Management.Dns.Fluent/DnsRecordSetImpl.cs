@@ -335,7 +335,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        ///GENMHASH:C9AB5BEB0FF2C1CFD204A7692C092D2D:2603823A7ECCC53B6CAF90D20F5F9E24
         protected  DnsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(innerModel.Name, parent, innerModel)
         {
             this.client = client;

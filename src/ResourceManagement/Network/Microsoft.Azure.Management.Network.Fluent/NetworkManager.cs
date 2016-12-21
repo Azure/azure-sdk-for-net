@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             networkManagementClient.SubscriptionId = subscriptionId;
         }
 
-
         /// <summary>
         /// Creates an instance of NetworkManager that exposes storage resource management API entry points.
         /// </summary>
@@ -62,7 +61,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             return new Configurable();
         }
-
 
         /// <summary>
         /// The inteface allowing configurations to be set.

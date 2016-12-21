@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IComputeManagementClient client;
 
-        ///GENMHASH:38AF54D6D93CDEF7138D771AB45B7132:FCBE9313644315745EDD2396965C2FE2
         internal ComputeUsagesImpl(IComputeManagementClient client)
         {
             this.client = client;

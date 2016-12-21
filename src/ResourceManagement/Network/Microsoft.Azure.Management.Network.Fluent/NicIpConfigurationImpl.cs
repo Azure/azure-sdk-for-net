@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmljSXBDb25maWd1cmF0aW9uSW1wbA==
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
@@ -17,6 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for NicIpConfiguration and its create and update interfaces.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmljSXBDb25maWd1cmF0aW9uSW1wbA==
     internal partial class NicIpConfigurationImpl :
         ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl, INetworkInterface>,
         INicIpConfiguration,
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
         }
 
-        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:B14DA0AC3DB03BDD505540BB8C860A92
+        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:3754C39D8D71152A51C88CC271F478A1
         internal string NetworkId()
         {
             SubResource subnetRef = Inner.Subnet;
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:744A3724C9A3248553B33B2939CE091A:673D9C18DC13A7E8FB34386AADF2FE3F
+        ///GENMHASH:744A3724C9A3248553B33B2939CE091A:8290E83F29058BFB7602A4E1B2AF6A23
         internal IList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
         {
             IList<InboundNatRuleInner> refs = Inner.LoadBalancerInboundNatRules;
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return rules;
         }
 
-        ///GENMHASH:D5259819D030517B66106CDFA84D3219:8AEBF2F2563AF0E4153FEF0260078FAE
+        ///GENMHASH:D5259819D030517B66106CDFA84D3219:8B7D2308FAEB96F5D9F8C9A539686941
         internal IList<ILoadBalancerBackend> ListAssociatedLoadBalancerBackends()
         {
             var backendRefs = Inner.LoadBalancerBackendAddressPools;

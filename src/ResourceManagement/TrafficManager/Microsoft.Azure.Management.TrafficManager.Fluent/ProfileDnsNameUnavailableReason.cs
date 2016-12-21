@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// <summary>
     /// The reason for unavailability of traffic manager profile DNS name.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlByb2ZpbGVEbnNOYW1lVW5hdmFpbGFibGVSZWFzb24=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlByb2ZpbGVEbnNOYW1lVW5hdmFpbGFibGVSZWFzb24=
     public partial class ProfileDnsNameUnavailableReason 
     {
         public static readonly ProfileDnsNameUnavailableReason Invalid = new ProfileDnsNameUnavailableReason("Invalid");
@@ -51,7 +51,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Creates ProfileDnsNameUnavailableReason.
         /// </summary>
         /// <param name="value">The reason.</param>
-        ///GENMHASH:B4E5B9E5C1234A0BC22C0581DC36CF3E:030291F3BFD74EABE095743C12CD3AEA
         public  ProfileDnsNameUnavailableReason(string value)
         {
             this.value = value;

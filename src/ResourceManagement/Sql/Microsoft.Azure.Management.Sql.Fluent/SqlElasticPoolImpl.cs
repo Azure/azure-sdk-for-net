@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxFbGFzdGljUG9vbEltcGw=
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Definition;
@@ -18,6 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for SqlElasticPool and its parent interfaces.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxFbGFzdGljUG9vbEltcGw=
     internal partial class SqlElasticPoolImpl :
         IndependentChildResourceImpl<ISqlElasticPool, ISqlServer, ElasticPoolInner, SqlElasticPoolImpl, IHasId, IUpdate>,
         ISqlElasticPool,
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.databaseCreatableMap = new Dictionary<string, SqlDatabaseImpl>();
         }
 
-        ///GENMHASH:F018FD6E531156DFCBAA9FAE7F4D8519:F548C4892951BC9F8563B941B288836A
+        ///GENMHASH:F018FD6E531156DFCBAA9FAE7F4D8519:4FA6D0F883E9F521846C7A0D28C7480B
         public int DatabaseDtuMax()
         {
             return this.Inner.DatabaseDtuMax.GetValueOrDefault();
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this;
         }
 
-        ///GENMHASH:88F495E6170B34BE98D7ECF345A40578:945958DE33096D51BB9DD38A7F3CDAD0
+        ///GENMHASH:88F495E6170B34BE98D7ECF345A40578:86A1F833D72B342BD29B3DD462FD72B4
         public int Dtu()
         {
             return this.Inner.Dtu.GetValueOrDefault();
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return databaseActivities.Select((elasticPoolDatabaseActivityInner) => (IElasticPoolDatabaseActivity)new ElasticPoolDatabaseActivityImpl(elasticPoolDatabaseActivityInner)).ToList();
         }
 
-        ///GENMHASH:5AD4BED8CF2346B6D40F11D14D91854E:DF850590D9C93BFBF3C7222561137EEB
+        ///GENMHASH:5AD4BED8CF2346B6D40F11D14D91854E:7666B4D046985F07C01EE064CD7C00B4
         public int DatabaseDtuMin()
         {
             return this.Inner.DatabaseDtuMin.GetValueOrDefault();
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this;
         }
 
-        ///GENMHASH:FB97B6A01BB44DE1679EAB5070CAB853:22EC24984E8319C6ED4EE03CBB19BAE4
+        ///GENMHASH:FB97B6A01BB44DE1679EAB5070CAB853:55229E4F94B6412796A001B6C5185A8A
         public int StorageMB()
         {
             return this.Inner.StorageMB.GetValueOrDefault();

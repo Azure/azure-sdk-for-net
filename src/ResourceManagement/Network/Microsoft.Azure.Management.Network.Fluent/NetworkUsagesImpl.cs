@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     {
         private INetworkManagementClient client;
 
-        internal NetworkUsagesImpl(INetworkManagementClient client) 
+        internal NetworkUsagesImpl(INetworkManagementClient client)
         {
             this.client = client;
         }

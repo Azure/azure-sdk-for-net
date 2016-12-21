@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayListener.Update.IUpdate
     {
-        ///GENMHASH:FDD79F9F4A54F00F3D88A305BD6E4101:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayListenerImpl(ApplicationGatewayHttpListenerInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }
@@ -127,13 +126,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:AFBFDB5617AA4227641C045CF9D86F66:51AAC8329531E69BAAFAC03299414449
+        ///GENMHASH:AFBFDB5617AA4227641C045CF9D86F66:EB7981C52FAC33B9BCE219D5852A1E18
         public ApplicationGatewayListenerImpl WithSslCertificateFromPfxFile(FileInfo pfxFile)
         {
             return WithSslCertificateFromPfxFile(pfxFile, null);
         }
 
-        ///GENMHASH:8ADE3A1B894E5D01B188A0822FC89126:C9DB02E58BCE0380CFA35181A84B25CD
+        ///GENMHASH:8ADE3A1B894E5D01B188A0822FC89126:476A0057C65517B3014056923542CC53
         private ApplicationGatewayListenerImpl WithSslCertificateFromPfxFile(FileInfo pfxFile, string name)
         {
             if (name == null)
@@ -146,7 +145,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithSslCertificate(name);
         }
 
-        ///GENMHASH:382D2BF4EBC04F5E7DF95B5EF5A97146:66502B9267EB235997FE645B0C0A6527
+        ///GENMHASH:382D2BF4EBC04F5E7DF95B5EF5A97146:C01DAB0F887720B1B1F54C7664754686
         public ApplicationGatewayListenerImpl WithSslCertificatePassword(string password)
         {
             var sslCert = (ApplicationGatewaySslCertificateImpl) SslCertificate();
@@ -173,7 +172,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:B1EFB1649097FFA979E13C945E517EDB
+        ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:CF3AF06AB49909937FE8814F73E9DCAE
         public string PublicIpAddressId()
         {
             var frontend = Frontend();
@@ -245,7 +244,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.HostName;
         }
 
-        ///GENMHASH:EB912111C9441B9619D3AD0CCFB7E471:B232091121F1BD47EF36242FE879E57E
+        ///GENMHASH:EB912111C9441B9619D3AD0CCFB7E471:98FC7DF998F67011FCA026433ADD5507
         public int FrontendPortNumber()
         {
             string name = FrontendPortName();

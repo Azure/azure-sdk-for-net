@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// Implementation of MxRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5NeFJlY29yZFNldEltcGw=
-    internal partial class MxRecordSetImpl  :
+    internal partial class MxRecordSetImpl :
         DnsRecordSetImpl,
         IMxRecordSet
     {
@@ -71,7 +71,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return records;
         }
 
-        ///GENMHASH:274A275E58B0BA3B1ED50C81170E88FC:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  MxRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

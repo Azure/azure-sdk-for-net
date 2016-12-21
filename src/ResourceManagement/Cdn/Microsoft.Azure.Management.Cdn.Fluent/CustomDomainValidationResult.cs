@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// <summary>
     /// The com.microsoft.azure.management.cdn.CdnProfile.validateEndpointCustomDomain(String, String) action result.
     /// </summary>
-	///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5DdXN0b21Eb21haW5WYWxpZGF0aW9uUmVzdWx0
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5DdXN0b21Eb21haW5WYWxpZGF0aW9uUmVzdWx0
     public class CustomDomainValidationResult 
     {
         private ValidateCustomDomainOutputInner inner;
@@ -42,7 +42,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Construct CustomDomainValidationResult object from server response object.
         /// </summary>
         /// <param name="inner">Server response for CustomDomainValidation request.</param>
-        ///GENMHASH:13205F709CF5952E9BEB6E9ACB37F499:BC4B1282CA708DC220050F834F17A184
         public  CustomDomainValidationResult(ValidateCustomDomainOutputInner inner)
         {
             this.inner = inner;

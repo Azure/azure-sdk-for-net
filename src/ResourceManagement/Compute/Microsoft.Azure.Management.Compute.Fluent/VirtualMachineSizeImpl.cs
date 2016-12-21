@@ -15,7 +15,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private VirtualMachineSize innerModel;
 
-        ///GENMHASH:54DAF03887166AD77373DBD6DF3CAAE8:9DE16EE3CF4C1A1AEDF10E0F272AF8F2
         internal VirtualMachineSizeImpl (VirtualMachineSize innerModel)
         {
             this.innerModel = innerModel;
@@ -27,31 +26,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return innerModel.Name;
         }
 
-        ///GENMHASH:37DA3A355454B471775FD9E1BCDB8C8B:4249C1EA912375A38ED5A4F19994672F
+        ///GENMHASH:37DA3A355454B471775FD9E1BCDB8C8B:E2B0626BB8660CB2912F6B537C6C2776
         public int NumberOfCores()
         {
             return innerModel.NumberOfCores.Value;
         }
 
-        ///GENMHASH:845FBD8ADE79EEE8EFF759CB350BCAEC:6574850C739CC5D75358E907ED488694
+        ///GENMHASH:845FBD8ADE79EEE8EFF759CB350BCAEC:D44E5029C8A19439E10477CD39524531
         public int OsDiskSizeInMB()
         {
             return innerModel.OsDiskSizeInMB.Value;
         }
 
-        ///GENMHASH:F2AD2AC0A07F724B0BC279CCEFCF7803:FA26FC94BBB5E00C645CCF2670534C6A
+        ///GENMHASH:F2AD2AC0A07F724B0BC279CCEFCF7803:58426CC2D4F69A8C462B9C10F5482042
         public int ResourceDiskSizeInMB()
         {
             return innerModel.ResourceDiskSizeInMB.Value;
         }
 
-        ///GENMHASH:C3098D9CAFCB24F61E03E6540D6AA5B5:1B7F285A527F0836A4A19DD46B43120E
+        ///GENMHASH:C3098D9CAFCB24F61E03E6540D6AA5B5:EFF8100377F022ECFD2249059345D971
         public int MemoryInMB()
         {
             return innerModel.MemoryInMB.Value;
         }
 
-        ///GENMHASH:9A2F2A9AFC20C4420484E2609EEA3C8F:F66905B778A0CFFFCDC9CAA8EB4BFA84
+        ///GENMHASH:9A2F2A9AFC20C4420484E2609EEA3C8F:828EF41F231ACEDE2285509939EB2438
         public int MaxDataDiskCount()
         {
             return innerModel.MaxDataDiskCount.Value;

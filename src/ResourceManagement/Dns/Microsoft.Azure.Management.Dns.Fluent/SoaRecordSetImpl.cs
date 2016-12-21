@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// <summary>
     /// Implementation of SoaRecordSet.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5Tb2FSZWNvcmRTZXRJbXBs
-    internal partial class SoaRecordSetImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5Tb2FSZWNvcmRTZXRJbXBs
+    internal partial class SoaRecordSetImpl :
         DnsRecordSetImpl,
         ISoaRecordSet
     {
@@ -73,7 +73,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
              client);
         }
 
-        ///GENMHASH:86A2E852C7570A43728795EE557D15C5:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  SoaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

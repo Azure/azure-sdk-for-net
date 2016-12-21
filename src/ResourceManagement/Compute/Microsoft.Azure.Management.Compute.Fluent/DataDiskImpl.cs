@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     IUpdateDefinition<VirtualMachine.Update.IUpdate>,
     VirtualMachineDataDisk.Update.IUpdate
     {
-        ///GENMHASH:24F96ABA39A27B68AD45A8C3AFC1BEB0:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) : base(inner, parent)
         {
         }
@@ -64,13 +63,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:C19382933BDE655D0F0F95CD9474DFE7:4D7CB2339C530D89E88DEE5A4D761B52
+        ///GENMHASH:C19382933BDE655D0F0F95CD9474DFE7:28B657BB52464897349F96AD3FEE7B7C
         public int Size()
         {
             return (Inner.DiskSizeGB.HasValue) ? Inner.DiskSizeGB.Value : 0;
         }
 
-        ///GENMHASH:2AACDDD3816365551D8FC102857D11E2:D89ABFB09517172FED352E3CE1BCA70F
+        ///GENMHASH:2AACDDD3816365551D8FC102857D11E2:706919D03598978742E38A749514FA0F
         public int Lun()
         {
             return Inner.Lun;

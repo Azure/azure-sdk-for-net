@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// Defines values for AppServicePricingTier.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuQXBwU2VydmljZVByaWNpbmdUaWVy
     public partial class AppServicePricingTier
     {
         public static readonly AppServicePricingTier Free_F1 = new AppServicePricingTier("Free", "F1");
@@ -43,11 +44,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             };
         }
 
+        ///GENMHASH:9E6C2387B371ABFFE71039FB9CDF745F:6AEFB2B6DB5E36DFCB741BB94BD67ECA
         public override string ToString()
         {
             return SkuDescription.Tier + "_" + SkuDescription.Size;
         }
 
+        ///GENMHASH:86E56D83C59D665A2120AFEA8D89804D:2997034F6A828592A426C244FB4206B1
         public override bool Equals(object obj)
         {
             if (!(obj is AppServicePricingTier))
@@ -63,11 +66,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return ToString().Equals(rhs.ToString());
         }
 
+        ///GENMHASH:0A2A1204F2A167AF288B2FBF2A490437:7FC4781967AC76067191B349FD8FAFC4
         public override int GetHashCode()
         {
             return SkuDescription.GetHashCode();
         }
 
+        ///GENMHASH:3E41C75F291566718F049BE8298BE8DC:A12B779940ABC1017C310E5DAEB47E21
         public static AppServicePricingTier FromSkuDescription(SkuDescription skuDescription)
         {
             return new AppServicePricingTier()

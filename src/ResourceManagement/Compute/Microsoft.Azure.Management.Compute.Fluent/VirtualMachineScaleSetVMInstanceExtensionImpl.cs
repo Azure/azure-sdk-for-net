@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -57,7 +57,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return JsonConvert.SerializeObject(this.publicSettings);
         }
 
-        ///GENMHASH:0016636B1947D033B76D88F9E31C3165:815BF11DE6127502A0AFCB14BE98F20E
         internal VirtualMachineScaleSetVMInstanceExtensionImpl(VirtualMachineExtensionInner inner,
             VirtualMachineScaleSetVMImpl parent) : base(inner, parent)
         {

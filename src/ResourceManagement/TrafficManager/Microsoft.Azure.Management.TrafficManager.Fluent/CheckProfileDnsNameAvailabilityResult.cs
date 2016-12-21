@@ -32,7 +32,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Creates an instance of CheckProfileDnsNameAvailabilityResult.
         /// </summary>
         /// <param name="inner">The inner object.</param>
-        ///GENMHASH:9DB00CCE0DA7D08C2634E2FEDA4635F7:BC4B1282CA708DC220050F834F17A184
         public  CheckProfileDnsNameAvailabilityResult(TrafficManagerNameAvailabilityInner inner)
         {
             this.inner = inner;

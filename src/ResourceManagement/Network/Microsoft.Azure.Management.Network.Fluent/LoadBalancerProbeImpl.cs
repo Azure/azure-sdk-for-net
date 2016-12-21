@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyUHJvYmVJbXBs
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Resource.Fluent.Core;
@@ -9,7 +8,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core.ChildResourceActions;
     using Resource.Fluent;
 
-    internal partial class LoadBalancerProbeImpl  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyUHJvYmVJbXBs
+    internal partial class LoadBalancerProbeImpl :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerTcpProbe,
         LoadBalancerTcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
@@ -24,19 +24,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        ///GENMHASH:8C9CA8DCBA99337975C849D250F5CDBA:CD735CB21F06B6FCB31FB4DD288CB78E
+        ///GENMHASH:8C9CA8DCBA99337975C849D250F5CDBA:623849181C184FE8B1B0D0B95891F044
         internal int IntervalInSeconds()
         {
             return (Inner.IntervalInSeconds.HasValue) ? Inner.IntervalInSeconds.Value : 0;
         }
 
-        ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:862EBACEFE3957DB1BC39C20E2DBEF46
+        ///GENMHASH:BF1200B4E784F046AF04467F35BAC1C4:F0090A6ECB1B91C3BCFD966232A4C1D4
         internal int Port()
         {
             return Inner.Port;
         }
 
-        ///GENMHASH:697E5879EDE9EFEA39889351CBFB2225:C161E010112B932166BE53F219677ECE
+        ///GENMHASH:697E5879EDE9EFEA39889351CBFB2225:87AA991D2E429F5E9DF46FBEDEF21ECB
         internal int NumberOfProbes()
         {
             return (Inner.NumberOfProbes.HasValue) ? Inner.NumberOfProbes.Value : 0;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                     {
                         rules[name] = rule;
                     }
-                }   
+                }  
             }
             return rules;
         }

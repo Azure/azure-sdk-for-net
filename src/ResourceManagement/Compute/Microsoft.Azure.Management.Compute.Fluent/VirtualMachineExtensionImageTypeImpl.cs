@@ -10,13 +10,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// The implementation for VirtualMachineExtensionImageType.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbWFnZVR5cGVJbXBs
-    internal partial class VirtualMachineExtensionImageTypeImpl  :
+    internal partial class VirtualMachineExtensionImageTypeImpl :
         Wrapper<VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageType
     {
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachinePublisher publisher;
-        ///GENMHASH:8175A2B55D06EDD2889B5CCA8AAB9443:B3CBCEB2E89FF4D7DBD086799C1C3A5B
         internal VirtualMachineExtensionImageTypeImpl (IVirtualMachineExtensionImagesOperations client, IVirtualMachinePublisher publisher, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.client = client;
