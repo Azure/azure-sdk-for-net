@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await client.CreateOrUpdateSlotAsync(ResourceGroupName, parent.Name, site, Name());
         }
 
-        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:A86CDF620EDA507B778768789373ADBB
+        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:94C2AB2BE809675E6841AE45278C1F00
         public override void Stop()
         {
             client.StopSlot(ResourceGroupName, parent.Name, Name());
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await client.UpdateApplicationSettingsSlotAsync(ResourceGroupName, parent.Name, inner, Name());
         }
 
-        ///GENMHASH:4E8B46C3D832DF7965F98193C5152D88:256BDD90CDF5E9C0BF04ED1F7DE5F0E8
+        ///GENMHASH:16850E2C75364DB3483B86D73CBDEC35:256BDD90CDF5E9C0BF04ED1F7DE5F0E8
         private void CopyConfigurations(SiteConfigInner configInner, IList<Microsoft.Azure.Management.AppService.Fluent.IAppSetting> appSettings, IList<Microsoft.Azure.Management.AppService.Fluent.IConnectionString> connectionStrings)
         {
             Inner.SiteConfig = configInner;
@@ -152,13 +152,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             client.ResetSlotConfigurationSlot(ResourceGroupName, parent.Name, Name());
         }
 
-        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:E28B203912044121783F6310242520DA
+        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:0D72D3A221EFB4CBD38BE14D627A0290
         public override void Restart()
         {
             client.RestartSlot(ResourceGroupName, parent.Name, Name());
         }
 
-        ///GENMHASH:3F0152723C985A22C1032733AB942C96:0F92CEDBB6FBA622A8EB7A1971ABB63D
+        ///GENMHASH:3F0152723C985A22C1032733AB942C96:D8B1F90C4E79A8518B83FEFE201D1063
         public override IPublishingProfile GetPublishingProfile()
         {
             Stream stream = client.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, Parent().Name, Name());
@@ -201,7 +201,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await client.UpdateConnectionStringsSlotAsync(ResourceGroupName, parent.Name, inner, Name());
         }
 
-        ///GENMHASH:7165E4A72787EF020E1C59029B4D2D13:47A3B406E5605E5ECAF2C6AD49296A9F
         internal DeploymentSlotImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppImpl parent, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
                     : base(Regex.Replace(name, ".*/", ""), innerObject, configObject, client, manager, serviceClient)
         {
@@ -243,7 +242,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await client.GetSlotAsync(ResourceGroupName, parent.Name, Name());
         }
 
-        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:C11CD62012747112F730C878E811FD3B
+        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:ACDFDA9555BC8460257AB6B2FB97F4EB
         public override void Start()
         {
             client.StartSlot(ResourceGroupName, parent.Name, Name());

@@ -193,7 +193,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:26A6AFA5B1D9D9F42E7BEACA61D8B1F9:465961ED63835C1034CC59EDAE98F26D
         internal DomainContactImpl(Contact inner, AppServiceDomainImpl parent)
             : base(inner, parent)
         {

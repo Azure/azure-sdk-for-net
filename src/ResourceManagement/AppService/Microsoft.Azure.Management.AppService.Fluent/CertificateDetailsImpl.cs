@@ -62,7 +62,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.NotAfter.GetValueOrDefault();
         }
 
-        ///GENMHASH:7272D744FF80A0EC280B6D4DB5A4682F:C0C35E00AF4E17F141675A2C05C7067B
         internal CertificateDetailsImpl(CertificateDetailsInner innerObject)
             : base(innerObject)
         {

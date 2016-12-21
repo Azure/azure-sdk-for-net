@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
         internal AppServiceCertificatesImpl(ICertificatesOperations InnerCollection, AppServiceManager manager)
             : base(InnerCollection, manager)
         {

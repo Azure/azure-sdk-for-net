@@ -75,7 +75,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapList(innerPagedList);
         }
 
-        ///GENMHASH:9303C19C6745E77DCF648A0A5F603980:6058FD68A2D3CB7431C37FFF30958B5E
         internal  AppServiceDomainsImpl(IDomainsOperations InnerCollection, ITopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
             : base (InnerCollection, manager)
         {

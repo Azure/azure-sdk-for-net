@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:DF3D2D5058A900DD3618F549F0472A00:691932AACB2AD199524486E8BFB6D5D8
+        ///GENMHASH:DF3D2D5058A900DD3618F549F0472A00:A4AC31C0727B9093054BE7E3EACA2528
         public int KeySize()
         {
             return Inner.KeySize.GetValueOrDefault();
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new CertificateDetailsImpl(Inner.Root);
         }
 
-        ///GENMHASH:C70ACBF55B279BA26BBE5F77DDE46E40:9790D012FA64E47343F12DB13F0AA212
+        ///GENMHASH:C70ACBF55B279BA26BBE5F77DDE46E40:5464228A4B2A39EBA61B99F7033FBFCB
         public string SerialNumber()
         {
             return Inner.SerialNumber;
@@ -139,7 +139,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             await domain.VerifyDomainOwnershipAsync(Name, DomainVerificationToken());
         }
 
-        ///GENMHASH:89B68C3393E544990D0BC1837B4C4C0E:B1CB960E9688630133BF735EE72C4279
         internal AppServiceCertificateOrderImpl(string key, AppServiceCertificateOrderInner innerObject, IAppServiceCertificateOrdersOperations client, AppServiceManager manager)
                     : base(key, innerObject, manager)
         {
@@ -155,7 +154,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:9FDF35464E02B70B2EF312DAD321B8C2:9790D012FA64E47343F12DB13F0AA212
+        ///GENMHASH:9FDF35464E02B70B2EF312DAD321B8C2:82C57278EF9D50148F4779BC9B9CEDCF
         public DateTime? LastCertificateIssuanceTime()
         {
             return Inner.LastCertificateIssuanceTime;
@@ -188,7 +187,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new AppServiceCertificateKeyVaultBindingImpl(appServiceCertificateInner, this);
         }
 
-        ///GENMHASH:79CAEF5E7E9A0A416A2264BF89017C66:D280C94728CB28932A694CCBE324641F
+        ///GENMHASH:79CAEF5E7E9A0A416A2264BF89017C66:8AAFE9E6FE59125D49687296E88D04A7
         public int ValidityInYears()
         {
             return Inner.ValidityInYears.GetValueOrDefault();
@@ -247,7 +246,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new CertificateDetailsImpl(Inner.SignedCertificate);
         }
 
-        ///GENMHASH:6AABC99EE2CD0FF3E4F20F76A87BFD92:BD8EDAEE21E0A80A3794CA1BF6C8293A
+        ///GENMHASH:998ED679562660847C6B644CE156D46C:BD8EDAEE21E0A80A3794CA1BF6C8293A
         public AppServiceCertificateOrderImpl WithWebAppVerification(IWebAppBase webApp)
         {
             this.domainVerifyWebApp = webApp;
@@ -272,7 +271,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             VerifyDomainOwnership(domain);
         }
 
-        ///GENMHASH:4832496C4642B084507B2963F8963228:9790D012FA64E47343F12DB13F0AA212
+        ///GENMHASH:4832496C4642B084507B2963F8963228:8BAA92C0EB2A8A25AC36BC01E781F9F7
         public DateTime? ExpirationTime()
         {
             return Inner.ExpirationTime;

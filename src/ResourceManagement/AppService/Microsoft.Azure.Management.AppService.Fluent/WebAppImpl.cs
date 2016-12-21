@@ -40,13 +40,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         private IDeploymentSlots deploymentSlots;
         private AppServicePlanImpl appServicePlan;
+        
         ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:66A6C8EDFAA0E618EA9FC53E296A637E
         internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await client.CreateOrUpdateAsync(ResourceGroupName, Name, site, cancellationToken: cancellationToken);
         }
 
-        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:24EB3922A5529BDA8E8EB7736FC75359
+        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:E0C4A1757552CAB0ED8F92E2EB35D2E2
         public override void Stop()
         {
             client.Stop(ResourceGroupName, Name);
@@ -144,13 +145,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
-        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:33CF86F287A6C8F3D875788B7BD8FF97
+        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:192EA146CBED61BBAAC7B336DA07F261
         public override void Restart()
         {
             client.Restart(ResourceGroupName, Name);
         }
 
-        ///GENMHASH:3F0152723C985A22C1032733AB942C96:8F1022C470B3D47CCE03F40EE94D5CA0
+        ///GENMHASH:3F0152723C985A22C1032733AB942C96:9A3E19132DCD027C4BA1BBB085642F29
         public override IPublishingProfile GetPublishingProfile()
         {
             Stream stream = client.ListPublishingProfileXmlWithSecrets(ResourceGroupName, Name);
@@ -199,7 +200,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return await client.GetConfigurationAsync(ResourceGroupName, Name);
         }
 
-        ///GENMHASH:934D38FBA69BF2F25673598C416DD202:85DAB0E9BE7E95CC74BF232794CEE142
+        ///GENMHASH:934D38FBA69BF2F25673598C416DD202:E29466D1FE6AACE8059987F066EC1188
         public WebAppImpl WithExistingAppServicePlan(IAppServicePlan appServicePlan)
         {
             Inner.ServerFarmId = appServicePlan.Id;
@@ -242,13 +243,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 WebApp.Definition.IWithAppServicePlan, IUpdate>(siteSourceControlInner, this, serviceClient);
         }
 
-        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:9994372E1F96BEEC17672ADA17707ABA
+        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:57465AB4A649A705C9DC2183EE743214
         public override void Start()
         {
             client.Start(ResourceGroupName, Name);
         }
 
-        ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
         internal WebAppImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, configObject, client, manager, serviceClient)
         {

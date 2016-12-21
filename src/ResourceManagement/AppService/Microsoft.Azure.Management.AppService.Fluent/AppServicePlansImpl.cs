@@ -68,7 +68,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new AppServicePlanImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        ///GENMHASH:13EDEABEC8823ED4BDC78DA4C9882000:0FCD47CBCD9128C3D4A03458C5796741
         internal AppServicePlansImpl(IAppServicePlansOperations innerCollection, AppServiceManager manager)
             : base(innerCollection, manager)
         {
