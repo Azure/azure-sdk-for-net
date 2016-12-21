@@ -108,6 +108,7 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithDomainSsl", "ResourceManagement\AppService\ManageWebAppWithDomainSsl\ManageWebAppWithDomainSsl.xproj", "{32FE889E-6EF4-4B4C-B802-B696683ADF32}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithTrafficManager", "ResourceManagement\AppService\ManageWebAppWithTrafficManager\ManageWebAppWithTrafficManager.xproj", "{B87A21AD-952A-48E6-B388-6BC5ACFCB08D}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{8150418E-7C52-4CF8-9EA7-7FADD5654270}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageSqlDatabase", "ResourceManagement\Sql\ManageSqlDatabase\ManageSqlDatabase.xproj", "{35BF6EB1-0A9A-457E-9567-3370A31F367D}"
@@ -121,6 +122,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cdn", "Cdn", "{489BADFE-FC01-44F3-B77A-89763BDF2559}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageCdn", "ResourceManagement\Cdn\ManageCdn\ManageCdn.xproj", "{91AB0B63-96CB-479E-AE42-1D4089F86788}"
+EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageApplicationGateway", "ResourceManagement\Network\ManageApplicationGateway\ManageApplicationGateway.xproj", "{B02874C8-9567-4C02-BB38-29934E5C4337}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TrafficManager", "TrafficManager", "{ECE996DB-8647-44F7-A814-6F11AD1275B1}"
@@ -134,6 +136,8 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CreateVirtualMachinesInParallel", "ResourceManagement\Compute\CreateVirtualMachinesInParallel\CreateVirtualMachinesInParallel.xproj", "{CDDB1E9F-A2A3-4E3C-8732-9CB637A75F94}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CreateVMsUsingCustomImageOrSpecializedVHD", "ResourceManagement\Compute\CreateVMsUsingCustomImageOrSpecializedVHD\CreateVMsUsingCustomImageOrSpecializedVHD.xproj", "{247863AB-79AD-4E88-A008-2DE6C22E8D46}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppSqlConnection", "ResourceManagement\AppService\ManageWebAppSqlConnection\ManageWebAppSqlConnection.xproj", "{C1B5C6FF-092F-41C4-91D5-FF397BE51A09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -357,6 +361,10 @@ Global
 		{247863AB-79AD-4E88-A008-2DE6C22E8D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{247863AB-79AD-4E88-A008-2DE6C22E8D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{247863AB-79AD-4E88-A008-2DE6C22E8D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B5C6FF-092F-41C4-91D5-FF397BE51A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B5C6FF-092F-41C4-91D5-FF397BE51A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B5C6FF-092F-41C4-91D5-FF397BE51A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B5C6FF-092F-41C4-91D5-FF397BE51A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -415,5 +423,6 @@ Global
 		{31FD545F-22C2-4CD4-BDB6-474DCB4A0521} = {A399C4F3-B15E-49A7-B94D-ED0C51090251}
 		{CDDB1E9F-A2A3-4E3C-8732-9CB637A75F94} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 		{247863AB-79AD-4E88-A008-2DE6C22E8D46} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
+		{C1B5C6FF-092F-41C4-91D5-FF397BE51A09} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 	EndGlobalSection
 EndGlobal
