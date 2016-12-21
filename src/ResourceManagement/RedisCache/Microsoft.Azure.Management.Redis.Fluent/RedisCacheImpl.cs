@@ -216,9 +216,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:0C30EC62BAFB5962817F1799BCD0FA3F
         public IList<Models.ScheduleEntry> ListPatchSchedules()
         {
-            return patchSchedulesInner
-                .Get(this.ResourceGroupName, this.Name)
-                .ScheduleEntries;
+            var schedule = patchSchedulesInner.Get(this.ResourceGroupName, this.Name);
+            return (schedule == null)? null : schedule.ScheduleEntries;
         }
 
         ///GENMHASH:83D353023D85D6E91BB9A3E8AC689039:DF02D821D2252D83CC2CDE0D9667F24E
