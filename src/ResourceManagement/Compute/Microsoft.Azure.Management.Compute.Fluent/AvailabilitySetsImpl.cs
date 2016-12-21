@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Fluent;
@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet, Microsoft.Azure.Management.Compute.Fluent.AvailabilitySetImpl, Models.AvailabilitySetInner, IAvailabilitySetsOperations, IComputeManager>,
         IAvailabilitySets
     {
-        ///GENMHASH:8CC9050C7F8D33DF867D6102B6152B2E:872A681ED7AE386A7C237A1C77E3E12A
         internal AvailabilitySetsImpl(IAvailabilitySetsOperations client, IComputeManager computeManager) : base(client, computeManager)
         {}
 
@@ -35,6 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
+        ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:E05BE5112BBF24DC07F63B90A384905C
         public PagedList<IAvailabilitySet> List()
         {
             // There is no API supporting listing of availabiltiy set across subscription so enumerate all RGs and then
@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }).Flatten();
         }
 
+        ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:3953AC722DFFCDF40E1EEF787AFD1326
         public PagedList<IAvailabilitySet> ListByGroup(string resourceGroupName)
         {
             var pagedList = new PagedList<AvailabilitySetInner>(InnerCollection.List(resourceGroupName));

@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;
         private IDictionary<string, object> protectedSettings;
-        ///GENMHASH:90947EC118BF5E99153E929733992E3D:2B5D1133EDB84DA652C7CF5DCF2A8534
         internal VirtualMachineExtensionImpl(string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner, IVirtualMachineExtensionsOperations client) : base(name, parent, inner)
         {
             this.client = client;
             this.InitializeSettings();
         }
 
+        ///GENMHASH:712957B0CCD6FF08974D0F02498E499C:D9D3A1E2F88492FB40E494CFF83FC124
         internal static VirtualMachineExtensionImpl NewVirtualMachineExtension (string name, VirtualMachineImpl parent, IVirtualMachineExtensionsOperations client)
         {
             return new VirtualMachineExtensionImpl(name,
@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 client);
         }
 
+        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
         public string Id
         {
             get
@@ -68,11 +69,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Inner.VirtualMachineExtensionType;
         }
 
+        ///GENMHASH:59C1C6208A5C449165066C7E1FDE11ED:D218DCBF15733B59D5054B1545063FEA
         public string VersionName()
         {
             return this.Inner.TypeHandlerVersion;
         }
 
+        ///GENMHASH:38030CBAE29B9F2F38D72F365E2E629A:E94F2D3DAC3B970EABC385A12F44BB26
         public bool AutoUpgradeMinorVersionEnabled()
         {
             return this.Inner.AutoUpgradeMinorVersion.Value;
@@ -94,6 +97,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return JsonConvert.SerializeObject(this.publicSettings);
         }
 
+        ///GENMHASH:E21E3E6E61153DDD23E28BC18B49F1AC:6FB4182F747416C98B49B59F74185782
         public VirtualMachineExtensionInstanceView InstanceView()
         {
             return this.Inner.InstanceView;
@@ -130,6 +134,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:FCA44D692D2CBD47AF19A7B5D9CEB263:ACF3758115981B4301C26F8F01A9CEB3
         public VirtualMachineExtensionImpl WithImage (IVirtualMachineExtensionImage image)
         {
             this.Inner.Publisher = image.PublisherName;
@@ -319,6 +324,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
+        ///GENMHASH:1DE96DF05FCD164699FABE2722D3B823:DDB96B1018AF16195187204FD1A5F7F0
         private void InitializeSettings ()
         {
             if (this.Inner.Settings == null)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private readonly IVirtualMachineImagesOperations innerCollection;
         private readonly IVirtualMachineExtensionImagesOperations extensionsInnerCollection;
 
-        ///GENMHASH:FAE60D4985B6939A3E27850EF50CF159:020EAF2CEFD87F9DC43CFF189FE7ABA9
         internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection, IVirtualMachineExtensionImagesOperations extensionsInnerCollection)
         {
             this.innerCollection = innerCollection;

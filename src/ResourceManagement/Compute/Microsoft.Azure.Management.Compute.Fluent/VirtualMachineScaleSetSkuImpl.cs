@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// implementation of VirtualMachineScaleSetSku.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldFNrdUltcGw=
-    internal partial class VirtualMachineScaleSetSkuImpl  :
+    internal partial class VirtualMachineScaleSetSkuImpl :
         Wrapper<VirtualMachineScaleSetSku>,
         IVirtualMachineScaleSetSku
     {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Compute.Fluent
@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="client">The client to perform REST calls on extensions.</param>
         /// <param name="parent">The parent virtual machine of the extensions.</param>
-        ///GENMHASH:5FE619A4E78C738ABAB49088366D56E9:A3B8391A0D11DA58771A04AD80F595FB
         internal VirtualMachineExtensionsImpl(IVirtualMachineExtensionsOperations client, VirtualMachineImpl parent) 
             : base(parent, "VirtualMachineExtension")
         {

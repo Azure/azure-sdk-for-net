@@ -10,11 +10,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// The implementation for VirtualMachineExtensionImages.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFeHRlbnNpb25JbWFnZXNJbXBs
-    internal partial class VirtualMachineExtensionImagesImpl  :
+    internal partial class VirtualMachineExtensionImagesImpl :
         IVirtualMachineExtensionImages
     {
         private IVirtualMachinePublishers publishers;
-        ///GENMHASH:5CB92C08673ABFA2D2A7D4213EB2D305:FA897FEBD514346FC3C576EAB52CCC9D
         internal VirtualMachineExtensionImagesImpl(IVirtualMachinePublishers publishers)
         {
             this.publishers = publishers;

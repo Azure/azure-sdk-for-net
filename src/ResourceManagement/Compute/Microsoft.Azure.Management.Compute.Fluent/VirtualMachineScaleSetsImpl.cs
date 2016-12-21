@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineScaleSetVMsOperations vmInstanceClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
-        ///GENMHASH:D153EE3A7098DCC0FDE502B79387242D:20D58C6F0677BACCE2BBFE4994C6C570
         internal VirtualMachineScaleSetsImpl (
             IVirtualMachineScaleSetsOperations client,
             IVirtualMachineScaleSetVMsOperations vmInstanceClient,
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return WrapModel(name);
         }
 
-        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:27A03B2324B448752C7D390DCE29131C
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:223E215FD844AD43E082687C4AC79625
         protected override VirtualMachineScaleSetImpl WrapModel(string name)
         {
 
@@ -159,7 +158,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.networkManager);
         }
 
-        ///GENMHASH:02DED088A2888BB795F0F3D5DD74F4BD:0CC380C02D012262305D81ABE5B0E53E
+        ///GENMHASH:02DED088A2888BB795F0F3D5DD74F4BD:5D05902D26BEABDC6406C636F9FE6823
         protected override IVirtualMachineScaleSet WrapModel(VirtualMachineScaleSetInner inner)
         {
             return new VirtualMachineScaleSetImpl(inner.Name,
