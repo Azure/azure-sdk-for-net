@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Linq;
     using System.Threading.Tasks;
 
-    class TestUtility
+    static class TestUtility
     {
         static readonly string ConnectionString;
 
@@ -18,17 +18,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var envConnectionString = Environment.GetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariable);
             if (string.IsNullOrWhiteSpace(envConnectionString))
             {
-                throw new InvalidOperationException($"'{nameof(Constants.ConnectionStringEnvironmentVariable)}' environment variable was not found!");
+                throw new InvalidOperationException($"'{Constants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
             }
 
             // Validate the connection string
-            TestUtility.ConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString).ToString();
+            ConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString).ToString();
         }
 
         internal static string GetEntityConnectionString(string entityName)
         {
             // If the entity name is populated in the connection string, it will be overridden.
-            var connectionStringBuilder = new ServiceBusConnectionStringBuilder(TestUtility.ConnectionString)
+            var connectionStringBuilder = new ServiceBusConnectionStringBuilder(ConnectionString)
             {
                 EntityPath = entityName
             };
