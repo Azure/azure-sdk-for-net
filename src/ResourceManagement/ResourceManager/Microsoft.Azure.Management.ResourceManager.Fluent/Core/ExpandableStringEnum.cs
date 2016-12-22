@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
@@ -47,7 +48,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return ReferenceEquals(rhs, null);
             }
-            return lhs.Equals(rhs);
+            else
+            {
+                return lhs.Equals(rhs);
+            }
         }
 
         public static bool operator !=(ExpandableStringEnum<T> lhs, T rhs)
@@ -61,7 +65,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             if (value == null)
             {
                 return null;
-            } else if (values.TryGetValue(value.ToLower(), out v))
+            }
+            else if (values.TryGetValue(value.ToLower(), out v))
             {
                 return v;
             }
@@ -86,6 +91,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         public override bool Equals(object obj)
         {
             string value = ToString();
+            T rhs = (T)obj;
             if (!(obj is T))
             {
                 return false;
@@ -94,13 +100,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return true;
             }
-
-            T rhs = (T)obj;
-            if (value == null)
+            else if (value == null)
             {
                 return rhs.value == null;
             }
-            return value.Equals(rhs.value, StringComparison.OrdinalIgnoreCase);
+            else
+            {
+                return value.Equals(rhs.value, StringComparison.OrdinalIgnoreCase);
+            }
         }
     }
 }
