@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7E3A196C87869BA2C348FE60F0D489C9
-        protected override async Task<VirtualMachineScaleSetInner> CreateInner()
+        protected override async Task<VirtualMachineScaleSetInner> CreateInnerAsync()
         {
             this.SetOSDiskAndOSProfileDefaults();
             this.SetPrimaryIpConfigurationSubnet();

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             InitializeChildrenFromInner();
         }
 
-        protected abstract Task<InnerResourceT> CreateInner();
+        protected abstract Task<InnerResourceT> CreateInnerAsync();
 
         protected abstract void InitializeChildrenFromInner ();
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         public override async Task<IFluentResourceT> CreateResourceAsync(CancellationToken cancellationToken)
         {
             BeforeCreating();
-            var inner = await CreateInner();
+            var inner = await CreateInnerAsync();
             SetInner(inner);
             InitializeChildrenFromInner();
             AfterCreating();

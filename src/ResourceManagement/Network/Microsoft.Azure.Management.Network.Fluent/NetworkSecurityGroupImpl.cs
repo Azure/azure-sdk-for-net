@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Helpers
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<NetworkSecurityGroupInner> CreateInner()
+        override protected Task<NetworkSecurityGroupInner> CreateInnerAsync()
         {
             return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }

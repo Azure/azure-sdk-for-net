@@ -1016,7 +1016,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:257D937A0F04955A15D8633AF5E905F3
-        override protected async Task<ApplicationGatewayInner> CreateInner()
+        override protected async Task<ApplicationGatewayInner> CreateInnerAsync()
         {
             var tasks = new List<Task>();
 

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, IRoute> routes;
 
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
-        override protected Task<RouteTableInner> CreateInner()
+        override protected Task<RouteTableInner> CreateInnerAsync()
         {
             return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
