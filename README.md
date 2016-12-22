@@ -244,7 +244,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
   <tr>
     <td>Traffic Manager</td>
     <td><ul style="list-style-type:circle">
-<li><a href="https://github.com/Azure-Samples/traffic-manager-dotnet-manage-traffic-manage-profiles">Manage traffic manager profiles</a></li>
+<li><a href="https://github.com/Azure-Samples/traffic-manager-dotnet-manage-profiles">Manage traffic manager profiles</a></li>
 </ul></td>
   </tr>
 
@@ -261,14 +261,14 @@ You can find plenty of sample code that illustrates management scenarios in Azur
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-db">Manage SQL databases</a></li>
 <li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-sql-dbs-in-elastic-pool">Manage SQL databases in elastic pools</a></li>
-<li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-sql-dbs-in-elastic-pool">Manage firewalls for SQL databases</a></li>
+<li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-firewalls-for-sql-databases">Manage firewalls for SQL databases</a></li>
 <li><a href="https://github.com/Azure-Samples/sql-database-dotnet-manage-sql-databases-across-regions">Manage SQL databases across regions</a></li>
 </ul></td>
   </tr>
   <tr>
     <td>Redis Cache</td>
     <td><ul style="list-style-type:circle">
-<li><a href="https://github.com/Azure-Samples/redis-dotnet-manage-cache">Manage Redis Cache</a></li>
+<li><a href="https://github.com/Azure-Samples/redis-cache-dotnet-manage-cache">Manage Redis Cache</a></li>
 </ul></td>
 </tr>
 
@@ -303,7 +303,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
   <tr>
     <td>CDN</td>
     <td><ul style="list-style-type:circle">
-<li><a href="https://github.com/Azure-Samples/cdn-dotnet-manage-cdn ">Manage CDNs</a></li>
+<li><a href="https://github.com/Azure-Samples/cdn-dotnet-manage-cdn">Manage CDNs</a></li>
 </ul></td>
   </tr>
   <tr>
