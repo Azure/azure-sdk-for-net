@@ -850,13 +850,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:CBF523A860AE839D0C4D7384E636EA3A:FBFD113A504A5E7AC32C778EDF3C9726
         public VirtualMachineScaleSetImpl WithoutOverProvisioning()
         {
-            return this.WithOverProvision(true);
+            return this.WithOverProvision(false);
         }
 
         ///GENMHASH:D05B148D26960ED1D8EF344B16F36F78:00EC0F6EA3A819049F5C89068A74593C
         public VirtualMachineScaleSetImpl WithOverProvisioning()
         {
-            return this.WithOverProvision(false);
+            return this.WithOverProvision(true);
         }
 
         ///GENMHASH:085C052B5E99B190740EE6AF70CF4D53:4F450AB75A3E01A0CCB9AFBF4F23BE28
