@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).DeleteAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, circuitName, peeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitPeering Get(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).GetAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, circuitName, peeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitPeering CreateOrUpdate(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuitPeering> List(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).ListAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, circuitName, peeringName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitPeering BeginCreateOrUpdate(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<ExpressRouteCircuitPeering> ListNext(this IExpressRouteCircuitPeeringsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

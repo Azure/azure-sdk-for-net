@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName)
             {
-                Task.Factory.StartNew(s => ((IRouteTablesOperations)s).DeleteAsync(resourceGroupName, routeTableName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, routeTableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static RouteTable Get(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).GetAsync(resourceGroupName, routeTableName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, routeTableName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static RouteTable CreateOrUpdate(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, RouteTable parameters)
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).CreateOrUpdateAsync(resourceGroupName, routeTableName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, routeTableName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<RouteTable> List(this IRouteTablesOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<RouteTable> ListAll(this IRouteTablesOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName)
             {
-                Task.Factory.StartNew(s => ((IRouteTablesOperations)s).BeginDeleteAsync(resourceGroupName, routeTableName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, routeTableName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static RouteTable BeginCreateOrUpdate(this IRouteTablesOperations operations, string resourceGroupName, string routeTableName, RouteTable parameters)
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, routeTableName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, routeTableName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<RouteTable> ListNext(this IRouteTablesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<RouteTable> ListAllNext(this IRouteTablesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IRouteTablesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

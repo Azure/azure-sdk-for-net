@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName)
             {
-                Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).DeleteAsync(resourceGroupName, loadBalancerName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, loadBalancerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static LoadBalancer Get(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).GetAsync(resourceGroupName, loadBalancerName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, loadBalancerName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static LoadBalancer CreateOrUpdate(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).CreateOrUpdateAsync(resourceGroupName, loadBalancerName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, loadBalancerName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<LoadBalancer> ListAll(this ILoadBalancersOperations operations)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<LoadBalancer> List(this ILoadBalancersOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName)
             {
-                Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).BeginDeleteAsync(resourceGroupName, loadBalancerName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, loadBalancerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static LoadBalancer BeginCreateOrUpdate(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, loadBalancerName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, loadBalancerName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<LoadBalancer> ListAllNext(this ILoadBalancersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<LoadBalancer> ListNext(this ILoadBalancersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

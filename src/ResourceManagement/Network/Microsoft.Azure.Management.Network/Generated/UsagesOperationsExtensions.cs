@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<Usage> List(this IUsagesOperations operations, string location)
             {
-                return Task.Factory.StartNew(s => ((IUsagesOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<Usage> ListNext(this IUsagesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IUsagesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

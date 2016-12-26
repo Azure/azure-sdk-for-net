@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
             {
-                Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).DeleteAsync(resourceGroupName, networkSecurityGroupName, securityRuleName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, networkSecurityGroupName, securityRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static SecurityRule Get(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
             {
-                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).GetAsync(resourceGroupName, networkSecurityGroupName, securityRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, networkSecurityGroupName, securityRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static SecurityRule CreateOrUpdate(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters)
             {
-                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).CreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<SecurityRule> List(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName)
             {
-                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListAsync(resourceGroupName, networkSecurityGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, networkSecurityGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
             {
-                Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).BeginDeleteAsync(resourceGroupName, networkSecurityGroupName, securityRuleName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, networkSecurityGroupName, securityRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static SecurityRule BeginCreateOrUpdate(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters)
             {
-                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<SecurityRule> ListNext(this ISecurityRulesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

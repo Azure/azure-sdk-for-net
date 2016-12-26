@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName)
             {
-                Task.Factory.StartNew(s => ((ISubnetsOperations)s).DeleteAsync(resourceGroupName, virtualNetworkName, subnetName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, virtualNetworkName, subnetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static Subnet Get(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).GetAsync(resourceGroupName, virtualNetworkName, subnetName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, virtualNetworkName, subnetName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static Subnet CreateOrUpdate(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters)
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<Subnet> List(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName)
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).ListAsync(resourceGroupName, virtualNetworkName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName)
             {
-                Task.Factory.StartNew(s => ((ISubnetsOperations)s).BeginDeleteAsync(resourceGroupName, virtualNetworkName, subnetName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, virtualNetworkName, subnetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static Subnet BeginCreateOrUpdate(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters)
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static IPage<Subnet> ListNext(this ISubnetsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
