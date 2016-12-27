@@ -160,52 +160,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Update an existing Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update Redis operation.
-            /// </param>
-            public static RedisResourceInner BeginUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParametersInner parameters)
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update an existing Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update Redis operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<RedisResourceInner> BeginUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParametersInner parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a Redis cache.
             /// </summary>
             /// <param name='operations'>
@@ -605,7 +559,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into Redis cache.
+            /// Export data from the redis cache to blobs in a container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -625,7 +579,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into Redis cache.
+            /// Export data from the redis cache to blobs in a container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -648,7 +602,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into Redis cache.
+            /// Export data from the redis cache to blobs in a container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -668,7 +622,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Import data into Redis cache.
+            /// Export data from the redis cache to blobs in a container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
