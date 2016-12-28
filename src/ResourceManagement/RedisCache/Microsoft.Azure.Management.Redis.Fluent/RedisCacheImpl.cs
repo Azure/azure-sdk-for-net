@@ -268,6 +268,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         public async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> UpdateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await client.UpdateAsync(this.ResourceGroupName, this.Name, updateParameters, cancellationToken);
+
+            while (!inner.ProvisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase) &&
+                !cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(30 * 1000, cancellationToken);
+                inner = await client.GetAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            }
             this.SetInner(inner);
             await this.UpdatePatchSchedules(cancellationToken);
             return this;
@@ -284,12 +291,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:5E5963AD8180E75B1BDD4665CB491F14
         public override async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            createParameters.Location = this.RegionName;
-            createParameters.Tags = this.Inner.Tags;
-            var inner = await this.client.CreateAsync(this.ResourceGroupName, this.Name, createParameters, cancellationToken);
-            this.SetInner(inner);
-            await this.UpdatePatchSchedules(cancellationToken);
-            return this;
+            if (IsInCreateMode)
+            {
+                createParameters.Location = this.RegionName;
+                createParameters.Tags = this.Inner.Tags;
+                var inner = await this.client.CreateAsync(this.ResourceGroupName, this.Name, createParameters, cancellationToken);
+                this.SetInner(inner);
+                await this.UpdatePatchSchedules(cancellationToken);
+                return this;
+            }
+            else
+            {
+                return await this.UpdateResourceAsync(cancellationToken);
+            }
         }
 
         ///GENMHASH:7EDCF977DFDBB33CAD61C0A35BD4E3F0:FDF1D73E8E4D62C39446855B695C604B

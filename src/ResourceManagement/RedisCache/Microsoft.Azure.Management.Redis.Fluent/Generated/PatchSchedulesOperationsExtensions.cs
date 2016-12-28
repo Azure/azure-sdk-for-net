@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     public static partial class PatchSchedulesOperationsExtensions
     {
             /// <summary>
-            /// Create or replace the patching schedule for Redis cache.
+            /// Create or replace the patching schedule for Redis cache (requires Premium
+            /// SKU).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters to set patch schedules for Redis cache.
+            /// Parameters to set the patching schedule for Redis cache.
             /// </param>
             public static RedisPatchScheduleInner CreateOrUpdate(this IPatchSchedulesOperations operations, string resourceGroupName, string name, RedisPatchScheduleInner parameters)
             {
@@ -38,7 +39,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Create or replace the patching schedule for Redis cache.
+            /// Create or replace the patching schedule for Redis cache (requires Premium
+            /// SKU).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +52,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the Redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters to set patch schedules for Redis cache.
+            /// Parameters to set the patching schedule for Redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,7 +66,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Deletes the patching schedule for Redis cache.
+            /// Deletes the patching schedule of a redis cache (requires Premium SKU).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the Redis cache.
+            /// The name of the redis cache.
             /// </param>
             public static void Delete(this IPatchSchedulesOperations operations, string resourceGroupName, string name)
             {
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Deletes the patching schedule for Redis cache.
+            /// Deletes the patching schedule of a redis cache (requires Premium SKU).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -90,7 +92,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the Redis cache.
+            /// The name of the redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -101,7 +103,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets the patching schedule for Redis cache.
+            /// Gets the patching schedule of a redis cache (requires Premium SKU).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,7 +112,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the Redis cache.
+            /// The name of the redis cache.
             /// </param>
             public static RedisPatchScheduleInner Get(this IPatchSchedulesOperations operations, string resourceGroupName, string name)
             {
@@ -118,7 +120,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
 
             /// <summary>
-            /// Gets the patching schedule for Redis cache.
+            /// Gets the patching schedule of a redis cache (requires Premium SKU).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,7 +129,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// The name of the Redis cache.
+            /// The name of the redis cache.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

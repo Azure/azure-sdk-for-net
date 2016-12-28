@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         public RedisManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or replace the patching schedule for Redis cache.
+        /// Create or replace the patching schedule for Redis cache (requires Premium
+        /// SKU).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// The name of the Redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters to set patch schedules for Redis cache.
+        /// Parameters to set the patching schedule for Redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -251,13 +252,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Deletes the patching schedule for Redis cache.
+        /// Deletes the patching schedule of a redis cache (requires Premium SKU).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the Redis cache.
+        /// The name of the redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -371,7 +372,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
@@ -413,13 +414,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Gets the patching schedule for Redis cache.
+        /// Gets the patching schedule of a redis cache (requires Premium SKU).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// The name of the Redis cache.
+        /// The name of the redis cache.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
