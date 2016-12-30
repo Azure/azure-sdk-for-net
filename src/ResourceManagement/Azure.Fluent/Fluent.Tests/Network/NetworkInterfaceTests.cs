@@ -33,7 +33,7 @@ namespace Fluent.Tests.Network
             var resource = manager.NetworkInterfaces.GetByGroup("rg" + this.testId, "nic" + testId);
             resource = resource.Update()
                 .WithoutIpForwarding()
-                .UpdateIpConfiguration("primary-nic-config") // Updating the primary ip configuration
+                .UpdateIpConfiguration(resource.PrimaryIpConfiguration.Name) // Updating the primary ip configuration
                     .WithPrivateIpAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIpAddressDynamic()
                     .WithoutPublicIpAddress()      // Equivalent to ..update().withoutPrimaryPublicIpAddress()
                     .Parent()
@@ -107,6 +107,7 @@ namespace Fluent.Tests.Network
             Assert.NotNull(resourceGroup);
             INetwork network = (INetwork)batchNics.CreatedRelatedResource(networkCreatable.Key);
             Assert.NotNull(network);
+            azure.ResourceGroups.DeleteByName(resourceGroup.Name);
         }
 
         public void print(INetworkInterface resource)

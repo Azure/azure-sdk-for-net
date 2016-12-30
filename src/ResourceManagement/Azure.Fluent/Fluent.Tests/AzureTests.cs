@@ -5,9 +5,11 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Xunit;
 using Xunit.Abstractions;
 using static Microsoft.Azure.Management.Resource.Fluent.Core.HttpLoggingDelegatingHandler;
+using System.Linq;
 
 namespace Azure.Tests
 {
@@ -46,6 +48,30 @@ namespace Azure.Tests
             new Network.ApplicationGateway.PublicMinimal(
                 azure.Networks)
                 .RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+        }
+
+        public class ExpandableStringEnumFoo : ExpandableStringEnum<ExpandableStringEnumFoo>
+        {
+            public static readonly ExpandableStringEnumFoo Foo1 = Parse("value1");
+            public static readonly ExpandableStringEnumFoo Foo2 = Parse("value2");
+        }
+
+        public class ExpandableStringEnumBar : ExpandableStringEnum<ExpandableStringEnumBar>
+        {
+            public static readonly ExpandableStringEnumBar Bar1 = Parse("value1");
+            public static readonly ExpandableStringEnumBar Bar2 = Parse("value3");
+        }
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void TestExpandableEnums()
+        {
+            ExpandableStringEnumFoo foo = ExpandableStringEnumFoo.Foo1;
+            Assert.True(ExpandableStringEnumFoo.Foo1 == foo);
+
+            Assert.True(ExpandableStringEnumFoo.Foo1 == ExpandableStringEnumFoo.Parse(ExpandableStringEnumFoo.Foo1.ToString()));
+            Assert.True(ExpandableStringEnumFoo.Foo1 != ExpandableStringEnumFoo.Parse(ExpandableStringEnumFoo.Foo2.ToString()));
+            Assert.True(ExpandableStringEnumBar.Bar1 == ExpandableStringEnumBar.Parse(ExpandableStringEnumBar.Bar1.ToString()));
+            Assert.True(ExpandableStringEnumBar.Bar1 != ExpandableStringEnumBar.Parse(ExpandableStringEnumBar.Bar2.ToString()));
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]

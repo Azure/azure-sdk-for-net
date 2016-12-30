@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// </summary>
     public class IPAllocationMethod : ExpandableStringEnum<IPAllocationMethod>
     {
-        public static readonly IPAllocationMethod Static = new IPAllocationMethod() { Value = "Static" };
-        public static readonly IPAllocationMethod Dynamic = new IPAllocationMethod() { Value = "Dynamic" };
+        public static readonly IPAllocationMethod Static = Parse("Static");
+        public static readonly IPAllocationMethod Dynamic = Parse("Dynamic");
     }
 }

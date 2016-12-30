@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// </summary>
     public class ApplicationGatewayProtocol : ExpandableStringEnum<ApplicationGatewayProtocol>
     {
-        public static readonly ApplicationGatewayProtocol Http = new ApplicationGatewayProtocol() { Value = "Http" };
-        public static readonly ApplicationGatewayProtocol Https = new ApplicationGatewayProtocol() { Value = "Https" };
+        public static readonly ApplicationGatewayProtocol Http = Parse("Http");
+        public static readonly ApplicationGatewayProtocol Https = Parse("Https");
     }
 }

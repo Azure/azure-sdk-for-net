@@ -43,7 +43,7 @@ namespace Fluent.Tests.Network
             Assert.True(resource.IdleTimeoutInMinutes == updatedIdleTimeout);
 
             manager.PublicIpAddresses.DeleteById(pip.Id);
-
+            manager.ResourceManager.ResourceGroups.DeleteByName(newRG);
         }
 
 

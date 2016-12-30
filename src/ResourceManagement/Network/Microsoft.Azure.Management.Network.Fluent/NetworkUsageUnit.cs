@@ -7,11 +7,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
     public class NetworkUsageUnit : ExpandableStringEnum<NetworkUsageUnit>
     {
-        public static readonly NetworkUsageUnit Count = new NetworkUsageUnit() { Value = "Count" };
-        public static readonly NetworkUsageUnit Bytes = new NetworkUsageUnit() { Value = "Bytes" };
-        public static readonly NetworkUsageUnit Seconds = new NetworkUsageUnit() { Value = "Seconds" };
-        public static readonly NetworkUsageUnit Percent= new NetworkUsageUnit() { Value = "Percent" };
-        public static readonly NetworkUsageUnit CountsPerSecond = new NetworkUsageUnit() { Value = "CountsPerSecond" };
-        public static readonly NetworkUsageUnit BytesPerSecond = new NetworkUsageUnit() { Value = "BytesPerSecond" };
+        public static readonly NetworkUsageUnit Count = Parse("Count");
+        public static readonly NetworkUsageUnit Bytes = Parse("Bytes");
+        public static readonly NetworkUsageUnit Seconds = Parse("Seconds");
+        public static readonly NetworkUsageUnit Percent= Parse("Percent");
+        public static readonly NetworkUsageUnit CountsPerSecond = Parse("CountsPerSecond");
+        public static readonly NetworkUsageUnit BytesPerSecond = Parse("BytesPerSecond");
     }
 }

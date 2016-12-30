@@ -50,8 +50,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:8E698A4D3F26647C89221EE26B291774
         internal INetworkSecurityGroup GetNetworkSecurityGroup ()
         {
-            return (NetworkSecurityGroupId() != null)
-                ? Parent.Manager.NetworkSecurityGroups.GetById(RouteTableId())
+            var nsgId = NetworkSecurityGroupId();
+            return (nsgId != null)
+                ? Parent.Manager.NetworkSecurityGroups.GetById(nsgId)
                 : null;
         }
 

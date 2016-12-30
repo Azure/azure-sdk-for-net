@@ -10,10 +10,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// </summary>
     public class RouteNextHopType : ExpandableStringEnum<RouteNextHopType>
     {
-        public static readonly RouteNextHopType VirtualNetworkGateway = new RouteNextHopType() { Value = "VirtualNetworkGateway" };
-        public static readonly RouteNextHopType VirtualNetworkLocal = new RouteNextHopType() { Value = "VnetLocal" };
-        public static readonly RouteNextHopType Internet = new RouteNextHopType() { Value = "Internet" };
-        public static readonly RouteNextHopType VirtualAppliance = new RouteNextHopType() { Value = "VirtualAppliance" };
-        public static readonly RouteNextHopType None = new RouteNextHopType() { Value = "None" };
+        public static readonly RouteNextHopType VirtualNetworkGateway = Parse("VirtualNetworkGateway");
+        public static readonly RouteNextHopType VirtualNetworkLocal = Parse("VnetLocal");
+        public static readonly RouteNextHopType Internet = Parse("Internet");
+        public static readonly RouteNextHopType VirtualAppliance = Parse("VirtualAppliance");
+        public static readonly RouteNextHopType None = Parse("None");
     }
 }
