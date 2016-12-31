@@ -311,34 +311,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Parameters supplied to the Update Redis operation.
         /// </param>
         /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisResourceInner>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisUpdateParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // Send Request
-            Microsoft.Rest.Azure.AzureOperationResponse<RedisResourceInner> _response = await BeginUpdateWithHttpMessagesAsync(
-                resourceGroupName, name, parameters, customHeaders, cancellationToken);
-            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
-                customHeaders,
-                cancellationToken);
-        }
-
-        /// <summary>
-        /// Update an existing Redis cache.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// The name of the Redis cache.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Redis operation.
-        /// </param>
-        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -356,7 +328,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisResourceInner>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisUpdateParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisResourceInner>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisUpdateParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -389,7 +361,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -2047,7 +2019,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Import data into Redis cache.
+        /// Export data from the redis cache to blobs in a container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2073,7 +2045,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         /// <summary>
-        /// Import data into Redis cache.
+        /// Export data from the redis cache to blobs in a container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

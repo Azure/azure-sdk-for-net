@@ -103,34 +103,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisResourceInner>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisUpdateParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Update an existing Redis cache.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// The name of the Redis cache.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Redis operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisResourceInner>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisUpdateParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
         /// Deletes a Redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -374,7 +346,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginImportDataWithHttpMessagesAsync(string resourceGroupName, string name, ImportRDBParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Import data into Redis cache.
+        /// Export data from the redis cache to blobs in a container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -399,7 +371,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ExportDataWithHttpMessagesAsync(string resourceGroupName, string name, ExportRDBParametersInner parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Import data into Redis cache.
+        /// Export data from the redis cache to blobs in a container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
