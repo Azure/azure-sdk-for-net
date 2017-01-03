@@ -1,6 +1,6 @@
-# Prepare for Azure Management Libraries for NET 1.0.0-beta4#
+# Prepare for Azure Management Libraries for NET 1.0.0-beta4.1#
 
-Steps to migrate code that uses Azure Management Libraries for NET from beta 3 to beta 4 …
+Steps to migrate code that uses Azure Management Libraries for NET from beta 3 to beta 4.1 …
 
 > If this note missed any breaking changes, please open a pull request.
 
