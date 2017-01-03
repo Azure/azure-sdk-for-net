@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this.CertificatePassword = certificatePassword;
 
             //Resource Uri of data lake 
-            this.ResourceUri = new Uri("https://management.core.windows.net/");
+            this.ResourceUri = new Uri("https://datalake.azure.net/");
         }
     }
 }
