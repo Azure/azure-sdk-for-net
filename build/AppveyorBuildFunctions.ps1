@@ -2,11 +2,32 @@ function Build-Solution
 {
     Write-Host "Building Service Bus projects"
 
-    dotnet restore  
+    dotnet restore
+
+    # $? Returns True or False value indicating whether previous command ended with an error.
+    # This is used to throw an error that will cause the AppVeyor process to fail as expected.
+    if (-not $?)
+    {
+        throw "Package restore failed."
+    }
+
     dotnet build src/Microsoft.Azure.ServiceBus/project.json
+
+    if (-not $?)
+    {
+        throw "Build failed."
+    }
+
     dotnet build test/Microsoft.Azure.ServiceBus.UnitTests/project.json
-    
-    Write-Host "Building complete"
+
+    if (-not $?)
+    {
+        throw "Build failed."
+    }
+    else
+    {
+        Write-Host "Building complete."   
+    }
 }
 
 function Add-StrongNameEntry
@@ -78,10 +99,15 @@ function Run-UnitTests
         Write-Host "Running unit tests."
 
         dotnet test test/Microsoft.Azure.ServiceBus.UnitTests/project.json
+
+        if (-not $?)
+        {
+            throw "Unit tests failed."
+        }
     }
     else
     {
-        Write-Host "No environment variables present. Skipping unit tests."
+        Write-Host "Connection string environment variable not present. Skipping unit tests."
     }
 }
 
