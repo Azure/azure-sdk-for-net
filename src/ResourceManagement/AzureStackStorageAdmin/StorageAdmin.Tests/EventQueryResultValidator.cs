@@ -28,7 +28,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             Assert.Equal(new DateTime(2015, 5, 15, 18, 2, 0, DateTimeKind.Utc), eventQuery.TableInfos[0].StartTime);
             Assert.Equal(new DateTime(2015, 5, 25, 18, 2, 0, DateTimeKind.Utc), eventQuery.TableInfos[0].EndTime);
             Assert.Equal("WDEvent20150515", eventQuery.TableInfos[0].TableName);
-            Assert.Equal("sv=2014-02-14&sr=b&st=2015-01-02T01%3A40%3A51Z&se=2015-01-02T02%3A00%3A51Z&sp=r",
+            Assert.Equal("token",
                 eventQuery.TableInfos[0].SasToken);
         }
 
