@@ -29,7 +29,7 @@ namespace Fluent.Tests.Miscellaneous
             ServiceClientTracing.IsEnabled = true;
             try
             {
-                AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my2.azureauth");
+                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
                 credentials.WithDefaultSubscription(null); // Clearing subscriptionId loaded from the auth 
                                                            // file so that below WithDefaultSubscription() 
                                                            // will force listing subscriptions and fetching
