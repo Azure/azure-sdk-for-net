@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
 
@@ -9,12 +10,15 @@ namespace Fluent.Tests.ResourceManager
 {
     public class SubscriptionsTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListSubscriptions()
         {
-            var authenticated = TestHelper.Authenticate();
-            var subscriptions = authenticated.Subscriptions.List();
-            Assert.True(subscriptions.Count > 0);
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+            	var authenticated = TestHelper.Authenticate();
+            	var subscriptions = authenticated.Subscriptions.List();
+            	Assert.True(subscriptions.Count > 0);
+			}
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]

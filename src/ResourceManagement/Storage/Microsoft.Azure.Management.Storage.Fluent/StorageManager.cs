@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         /// <returns>the StorageManager</returns>
         public static IStorageManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
-            return new StorageManager(RestClient.Configure()
+            return Authenticate(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
                     .Build(), subscriptionId);
