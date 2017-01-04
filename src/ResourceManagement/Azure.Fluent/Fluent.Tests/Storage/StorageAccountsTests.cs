@@ -2,12 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Storage.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Storage.Fluent;
 using System.Linq;
 using Xunit;
+using Fluent.Tests.Common;
 
 namespace Fluent.Tests.Storage
 {
@@ -21,7 +20,7 @@ namespace Fluent.Tests.Storage
         {
             try
             {
-                var storageManager = CreateStorageManager();
+                var storageManager = TestHelper.CreateStorageManager();
 
                 // Check name availability
                 CheckNameAvailabilityResult result = storageManager.StorageAccounts
@@ -79,30 +78,11 @@ namespace Fluent.Tests.Storage
             {
                 try
                 {
-                    CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
                 }
                 catch
                 {}
             }
-        }
-
-        private IStorageManager CreateStorageManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            return StorageManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }

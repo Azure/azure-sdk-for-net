@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Fluent.Tests.Common;
 
 namespace Fluent.Tests.Compute
 {
@@ -27,7 +28,7 @@ namespace Fluent.Tests.Compute
             string backEndVMName = ResourceNamer.RandomResourceName("bevm", 24);
             string publicIpAddressLeafDNSForFrontEndVM = ResourceNamer.RandomResourceName("pip1", 24);
 
-            INetworkManager manager = this.CreateNetworkManager();
+            INetworkManager manager = TestHelper.CreateNetworkManager();
 
             string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
             INetworkSecurityGroup backEndSubnetNsg = manager.NetworkSecurityGroups
@@ -105,15 +106,6 @@ namespace Fluent.Tests.Compute
 
 
             manager.Networks.DeleteById(virtualNetwork2.Id);
-        }
-
-        public INetworkManager CreateNetworkManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            return NetworkManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }
 }

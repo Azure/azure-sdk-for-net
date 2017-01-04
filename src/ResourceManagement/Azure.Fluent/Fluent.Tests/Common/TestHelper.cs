@@ -13,6 +13,9 @@ using Xunit.Abstractions;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
+using Microsoft.Azure.Management.Cdn.Fluent;
+using Microsoft.Azure.Management.Redis.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent;
 
 namespace Fluent.Tests.Common
 {
@@ -20,7 +23,7 @@ namespace Fluent.Tests.Common
     {
         public static ITestOutputHelper TestLogger { get; set; }
 
-        private static string authFilePath = @"C:\my2.azureauth";
+        private static string authFilePath = Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
 
         public static void WriteLine(string format, params string[] parameters)
         {
@@ -109,11 +112,46 @@ namespace Fluent.Tests.Common
 
         public static IKeyVaultManager CreateKeyVaultManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return KeyVaultManager
                 .Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
+        }
+
+        public static ICdnManager CreateCdnManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+            return CdnManager
+                .Configure()
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+        }
+
+        public static IRedisManager CreateRedisManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+            return RedisManager
+                .Configure()
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+        }
+
+        public static IStorageManager CreateStorageManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+            return StorageManager
+                .Configure()
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+        }
+
+        public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+            return Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials);
         }
     }
 }

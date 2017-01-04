@@ -1,13 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Fluent.Tests.ResourceManager
@@ -32,7 +29,7 @@ namespace Fluent.Tests.ResourceManager
 
             try
             {
-                var resourceManager = CreateResourceManager();
+                var resourceManager = TestHelper.CreateResourceManager();
                 var resourceGroup = resourceManager.ResourceGroups.Define(rgName)
                     .WithRegion(Region.US_EAST2)
                     .WithTag("t1", "v1")
@@ -56,21 +53,11 @@ namespace Fluent.Tests.ResourceManager
             {
                 try
                 {
-                    CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
                 }
                 catch
                 { }
             }
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }

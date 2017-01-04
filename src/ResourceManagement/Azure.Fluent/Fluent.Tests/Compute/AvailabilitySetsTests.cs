@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System;
 using Xunit;
 
 namespace Fluent.Tests.Compute
@@ -21,7 +19,7 @@ namespace Fluent.Tests.Compute
             try
             {
                 // Create
-                IComputeManager computeManager = CreateComputeManager();
+                IComputeManager computeManager = TestHelper.CreateComputeManager();
                 var availabilitySet = computeManager.AvailabilitySets
                     .Define(availName)
                     .WithRegion(Region.US_EAST)
@@ -60,30 +58,11 @@ namespace Fluent.Tests.Compute
             {
                 try
                 {
-                    var resourceManager = CreateResourceManager();
+                    var resourceManager = TestHelper.CreateResourceManager();
                     resourceManager.ResourceGroups.DeleteByName(rgName);
                 }
                 catch { }
             }
-        }
-
-        private IComputeManager CreateComputeManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            return ComputeManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }

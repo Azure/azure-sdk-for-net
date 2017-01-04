@@ -3,14 +3,11 @@
 
 using Microsoft.Azure.Management.Resource.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
+using Fluent.Tests.Common;
 
 namespace Fluent.Tests.ResourceManager
 {
@@ -19,7 +16,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanRegisterAndUnRegisterProvider()
         {
-            var resourceManager = CreateResourceManager();
+            var resourceManager = TestHelper.CreateResourceManager();
             var providers = resourceManager.Providers.List();
             IProvider provider = providers.FirstOrDefault();
             Assert.NotNull(provider);
@@ -40,16 +37,6 @@ namespace Fluent.Tests.ResourceManager
             Assert.True(string.Equals(provider.RegistrationState, "Registered"));
             IList<ProviderResourceType> resourceTypes = provider.ResourceTypes;
             Assert.True(resourceTypes.Count > 0);
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }

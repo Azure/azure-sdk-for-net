@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Fluent.Tests.ResourceManager
@@ -23,7 +22,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateUpdateMoveResource()
         {
-            IResourceManager resourceManager = CreateResourceManager();
+            IResourceManager resourceManager = TestHelper.CreateResourceManager();
             IGenericResources genericResources = resourceManager.GenericResources;
 
             IGenericResource resource = genericResources.Define(resourceName)
@@ -84,16 +83,6 @@ namespace Fluent.Tests.ResourceManager
                 .WithApiVersion("2015-08-01")
                 .WithProperties(JsonConvert.DeserializeObject("{\"SiteMode\":\"Limited\",\"ComputeMode\":\"Dynamic\"}"))
                 .Apply();
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }
