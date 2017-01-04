@@ -28,5 +28,16 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<string>("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
         }
 
+        [Fact]
+        public void LoginUsnPwd()
+        {
+            //This environmentsetting string needs to be set from credentials from keyvault for domain that still have userName/Password and 2factor Auth is disabled        
+            HttpMockServer.Mode = HttpRecorderMode.Record;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string userName = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.UserIdKey];
+            Assert.False(string.IsNullOrEmpty(userName));
+            Assert.Equal<string>("admin@AzureSDKTeam.onmicrosoft.com", userName);
+        }
+
     }
 }
