@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -26,7 +27,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateVirtualNetwork()
         {
-            IResourceManager resourceManager = CreateResourceManager();
+            IResourceManager resourceManager = TestHelper.CreateResourceManager();
 
             resourceManager.Deployments
                 .Define(deploymentName1)
@@ -70,7 +71,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCancelVirtualNetworkDeployment()
         {
-            IResourceManager resourceManager = CreateResourceManager();
+            IResourceManager resourceManager = TestHelper.CreateResourceManager();
             resourceManager.Deployments
                 .Define(deploymentName2)
                 .WithNewResourceGroup(rgName, Region.US_EAST)
@@ -89,7 +90,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanUpdateVirtualNetworkDeployment()
         {
-            IResourceManager resourceManager = CreateResourceManager();
+            IResourceManager resourceManager = TestHelper.CreateResourceManager();
 
             resourceManager.Deployments
                 .Define(deploymentName3)
@@ -116,16 +117,6 @@ namespace Fluent.Tests.ResourceManager
             IGenericResource genericVnet = resourceManager.GenericResources.Get(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet2", "2015-06-15");
             Assert.NotNull(genericVnet);
             resourceManager.GenericResources.Delete(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet2", "2015-06-15");
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }

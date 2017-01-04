@@ -1,15 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Cdn.Fluent;
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Azure.Tests.Cdn
@@ -29,7 +24,7 @@ namespace Azure.Tests.Cdn
 
             try
             {
-                var cdnManager = CreateCdnManager();
+                var cdnManager = TestHelper.CreateCdnManager();
 
                 var standardProfile = cdnManager.Profiles.Define(cdnStandardProfileName)
                         .WithRegion(Region.US_CENTRAL)
@@ -169,30 +164,11 @@ namespace Azure.Tests.Cdn
             {
                 try
                 {
-                    CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
                 }
                 catch
                 { }
             }
         }
-
-        private ICdnManager CreateCdnManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"D:\my.azureauth");
-            return CdnManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"D:\my.azureauth");
-            IResourceManager resourceManager = ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
-        }
-    }
+   }
 }

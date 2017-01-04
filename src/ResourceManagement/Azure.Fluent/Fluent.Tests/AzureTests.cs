@@ -6,10 +6,10 @@ using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using System;
 using Xunit;
 using Xunit.Abstractions;
 using static Microsoft.Azure.Management.Resource.Fluent.Core.HttpLoggingDelegatingHandler;
-using System.Linq;
 
 namespace Azure.Tests
 {
@@ -22,7 +22,7 @@ namespace Azure.Tests
         {
             TestHelper.TestLogger = output;
 
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\automation\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
             
             // Authenticate based on credentials instance
             var azureAuthed = Microsoft.Azure.Management.Fluent.Azure.Configure()

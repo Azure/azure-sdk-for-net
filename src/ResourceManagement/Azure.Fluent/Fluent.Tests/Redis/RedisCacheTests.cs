@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Redis.Fluent;
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Redis.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Rest.Azure;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Azure.Tests.Redis
@@ -29,7 +25,7 @@ namespace Azure.Tests.Redis
         {
             try
             {
-                var redisManager = CreateRedisManager();
+                var redisManager = TestHelper.CreateRedisManager();
 
                 // Create
                 var resourceGroup = redisManager.ResourceManager.ResourceGroups
@@ -184,36 +180,17 @@ namespace Azure.Tests.Redis
             {
                 try
                 {
-                    CreateResourceManager().ResourceGroups.DeleteByName(RG_NAME);
+                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(RG_NAME);
                 }
                 catch
                 { }
                 try
                 {
-                    CreateResourceManager().ResourceGroups.DeleteByName(RG_NAME_SECOND);
+                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(RG_NAME_SECOND);
                 }
                 catch
                 { }
             }
-        }
-
-        private IRedisManager CreateRedisManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            return RedisManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
-        }
-
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
         }
     }
 }
