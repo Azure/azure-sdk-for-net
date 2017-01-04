@@ -73,7 +73,7 @@ function Deploy-AzureResources
 
 function Run-UnitTests
 {
-    if ([bool][Environment]::GetEnvironmentVariable('azure-service-bus-dotnet/connectionstring', "User"))
+    if ([bool][Environment]::GetEnvironmentVariable('azure-service-bus-dotnet/connectionstring'))
     {
         Write-Host "Running unit tests."
 
