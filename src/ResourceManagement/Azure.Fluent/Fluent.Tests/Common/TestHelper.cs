@@ -16,6 +16,10 @@ using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Net.Http;
+using Microsoft.Azure.Test.HttpRecorder;
+using System.Collections.Generic;
 
 namespace Fluent.Tests.Common
 {
@@ -27,14 +31,14 @@ namespace Fluent.Tests.Common
 
         public static void WriteLine(string format, params string[] parameters)
         {
-            TestHelper.WriteLine(string.Format(format, parameters));
+            WriteLine(string.Format(format, parameters));
         }
 
         public static void WriteLine(string message)
         {
-            if(TestHelper.TestLogger != null)
+            if(TestLogger != null)
             {
-                TestHelper.TestLogger.WriteLine(message);
+                TestLogger.WriteLine(message);
             }
             else
             {
@@ -46,6 +50,7 @@ namespace Fluent.Tests.Common
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return Microsoft.Azure.Management.Fluent.Azure.Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);
         }
@@ -55,6 +60,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return NetworkManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -64,6 +70,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return ComputeManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -71,7 +78,9 @@ namespace Fluent.Tests.Common
         public static IResourceManager CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
+            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);
@@ -83,6 +92,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return BatchManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -91,13 +101,11 @@ namespace Fluent.Tests.Common
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
 
-            RestClient restClient = RestClient.Configure()
-                    .WithBaseUri(AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint)
-                    .WithCredentials(credentials)
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Build();
-            
-            return SqlManager.Authenticate(restClient, credentials.DefaultSubscriptionId);
+            return SqlManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
         public static IAppServiceManager CreateAppServiceManager()
@@ -105,6 +113,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return AppServiceManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -115,6 +124,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return KeyVaultManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -124,6 +134,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return CdnManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -133,6 +144,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return RedisManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
@@ -142,16 +154,72 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return StorageManager
                 .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
-        public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate()
+        // TODO - ans - context is not required here as we are getting the handler directly from HttpMockServer.
+        public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate(MockContext context)
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
+            return Microsoft.Azure.Management.Resource.Fluent.ResourceManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials);
+        }
+
+        public static DelegatingHandler[] GetHandlers()
+        {
+            HttpMockServer server;
+
+            try
+            {
+                server = HttpMockServer.CreateInstance();
+            }
+            catch (InvalidOperationException)
+            {
+                // mock server has never been initialized, we will need to initialize it.
+                HttpMockServer.Initialize("TestEnvironment", "InitialCreation");
+                server = HttpMockServer.CreateInstance();
+            }
+
+            var handlers = new List<DelegatingHandler>();
+            if (!MockServerInHandlers(handlers))
+            {
+                handlers.Add(server);
+            }
+
+            // TODO - ans - Needs token Credential here to delete the resource group.
+            //ResourceGroupCleaner cleaner = new ResourceGroupCleaner(credentials);
+            //handlers.Add(cleaner);
+            // TODO - ans - We need to add this to clean resource group.
+            //undoHandlers.Add(cleaner);
+
+            return handlers.ToArray();
+        }
+
+        private static bool MockServerInHandlers(List<DelegatingHandler> handlers)
+        {
+            var result = false;
+            foreach (var handler in handlers)
+            {
+                if (HandlerContains<HttpMockServer>(handler))
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private static bool HandlerContains<T1>(DelegatingHandler handler)
+        {
+            return (handler is T1 || (handler.InnerHandler != null
+                && handler.InnerHandler is DelegatingHandler
+                && HandlerContains<T1>(handler.InnerHandler as DelegatingHandler)));
         }
     }
 }

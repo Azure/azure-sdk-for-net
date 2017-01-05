@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public static IComputeManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
-            return new ComputeManager(RestClient.Configure()
+            return Authenticate(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
                     .Build(), subscriptionId);
