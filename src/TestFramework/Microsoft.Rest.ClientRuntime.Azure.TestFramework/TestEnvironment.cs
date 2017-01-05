@@ -171,7 +171,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             if (Enum.TryParse<HttpRecorderMode>(testMode, out recorderMode))
             {
                 HttpMockServer.Mode = recorderMode;
-
             }
             else
             {
@@ -234,15 +233,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string password = this.ConnectionString.GetValue(ConnectionStringKeys.PasswordKey);
             string spnClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey);
             string spnSecret = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalSecretKey);
+            //We use this because when login silently using userTokenProvider, we need to provide a well known ClientId for an app that has delegating permissions.
+            //All first party app have that permissions, so we use PowerShell app ClientId
+            string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
 
-            /*
-            Currently we prioritize login as below:
-            1) UserName / Password combination
-            2) ServicePrincipal/ServicePrincipal Secret Key
-            3) Interactive Login (where user will be presented with prompt to login)
-           */
-            #region Login
-            ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
+        /*
+        Currently we prioritize login as below:
+        1) UserName / Password combination
+        2) ServicePrincipal/ServicePrincipal Secret Key
+        3) Interactive Login (where user will be presented with prompt to login)
+       */
+        #region Login
+        ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
             {
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
                 TokenAudience = this.Endpoints.AADTokenAudienceUri
@@ -256,7 +258,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(password)))
             {
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                                                                           .LoginSilentAsync(spnClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+                                                                           .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
             }
