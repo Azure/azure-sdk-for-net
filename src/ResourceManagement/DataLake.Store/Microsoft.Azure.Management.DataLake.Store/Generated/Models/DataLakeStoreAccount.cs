@@ -77,15 +77,15 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="endpoint">the gateway host.</param>
         /// <param name="defaultGroup">the default owner group for all new
         /// folders and files created in the Data Lake Store account.</param>
-        /// <param name="newTier">the billing tier to use for next month.
+        /// <param name="newTier">the commitment tier to use for next month.
         /// Possible values include: 'Consumption', 'Commitment_1TB',
         /// 'Commitment_10TB', 'Commitment_100TB', 'Commitment_500TB',
         /// 'Commitment_1PB', 'Commitment_5PB'</param>
-        /// <param name="currentTier">the billing tier in use for the current
-        /// month. Possible values include: 'Consumption', 'Commitment_1TB',
-        /// 'Commitment_10TB', 'Commitment_100TB', 'Commitment_500TB',
-        /// 'Commitment_1PB', 'Commitment_5PB'</param>
-        public DataLakeStoreAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), System.DateTime? creationTime = default(System.DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), FirewallState? firewallState = default(FirewallState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), IList<TrustedIdProvider> trustedIdProviders = default(IList<TrustedIdProvider>), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultGroup = default(string), PricingTierType? newTier = default(PricingTierType?), PricingTierType? currentTier = default(PricingTierType?))
+        /// <param name="currentTier">the commitment tier in use for the
+        /// current month. Possible values include: 'Consumption',
+        /// 'Commitment_1TB', 'Commitment_10TB', 'Commitment_100TB',
+        /// 'Commitment_500TB', 'Commitment_1PB', 'Commitment_5PB'</param>
+        public DataLakeStoreAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), System.DateTime? creationTime = default(System.DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), FirewallState? firewallState = default(FirewallState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), IList<TrustedIdProvider> trustedIdProviders = default(IList<TrustedIdProvider>), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultGroup = default(string), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -205,22 +205,22 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string DefaultGroup { get; set; }
 
         /// <summary>
-        /// Gets or sets the billing tier to use for next month. Possible
+        /// Gets or sets the commitment tier to use for next month. Possible
         /// values include: 'Consumption', 'Commitment_1TB', 'Commitment_10TB',
         /// 'Commitment_100TB', 'Commitment_500TB', 'Commitment_1PB',
         /// 'Commitment_5PB'
         /// </summary>
         [JsonProperty(PropertyName = "properties.newTier")]
-        public PricingTierType? NewTier { get; set; }
+        public TierType? NewTier { get; set; }
 
         /// <summary>
-        /// Gets the billing tier in use for the current month. Possible values
-        /// include: 'Consumption', 'Commitment_1TB', 'Commitment_10TB',
+        /// Gets the commitment tier in use for the current month. Possible
+        /// values include: 'Consumption', 'Commitment_1TB', 'Commitment_10TB',
         /// 'Commitment_100TB', 'Commitment_500TB', 'Commitment_1PB',
         /// 'Commitment_5PB'
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentTier")]
-        public PricingTierType? CurrentTier { get; protected set; }
+        public TierType? CurrentTier { get; protected set; }
 
         /// <summary>
         /// Validate the object.

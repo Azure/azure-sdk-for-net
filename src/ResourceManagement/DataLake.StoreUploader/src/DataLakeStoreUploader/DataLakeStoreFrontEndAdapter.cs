@@ -47,10 +47,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         private const int PerRequestTimeoutMs = 60000; // 60 seconds and we timeout the request
 
-        private readonly string _invocationId;
-
-        private readonly bool _shouldTrace;
-
         #endregion
 
         #region Constructor
@@ -74,12 +70,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="token">The token.</param>
         public DataLakeStoreFrontEndAdapter(string accountName, IDataLakeStoreFileSystemManagementClient client, CancellationToken token)
         {
-            _shouldTrace = ServiceClientTracing.IsEnabled;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-            }
-
             _accountName = accountName;
             _client = client;
             _token = token;
@@ -108,21 +98,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     var ex = new TaskCanceledException(string.Format("Create stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
-
+                    TracingHelper.LogError(ex);
                     throw ex;
                 }
 
                 task.GetAwaiter().GetResult();
             }
             stopWatch.Stop();
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Information("Op:CREATE,Path:{0},Overwrite:{1},TimeMs:{2}", streamPath, overwrite, stopWatch.ElapsedMilliseconds);
-            }
+            TracingHelper.LogInfo("Op:CREATE,Path:{0},Overwrite:{1},TimeMs:{2}", streamPath, overwrite, stopWatch.ElapsedMilliseconds);
+            
         }
 
         /// <summary>
@@ -153,20 +137,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     var ex = new TaskCanceledException(string.Format("Delete stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
 
                 task.GetAwaiter().GetResult();
                 stopWatch.Stop();
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Information("Op:DELETE,Path:{0},recurse:{1},TimeMs:{2}", streamPath, recurse, stopWatch.ElapsedMilliseconds);
-                }
+                TracingHelper.LogInfo("Op:DELETE,Path:{0},recurse:{1},TimeMs:{2}", streamPath, recurse, stopWatch.ElapsedMilliseconds);
             }
         }
 
@@ -189,10 +167,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     var ex = new TaskCanceledException(string.Format("Append to stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
@@ -200,10 +175,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 task.GetAwaiter().GetResult();
             }
             stopWatch.Stop();
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Information("Op:APPEND,Path:{0},offset:{1},TimeMs:{2}", streamPath, offset, stopWatch.ElapsedMilliseconds);
-            }
+            TracingHelper.LogInfo("Op:APPEND,Path:{0},offset:{1},TimeMs:{2}", streamPath, offset, stopWatch.ElapsedMilliseconds);
         }
 
         public Stream ReadStream(string streamPath, long offset, long length, bool isDownload = false)
@@ -217,20 +189,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     var ex = new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds. TraceId: {1}", PerRequestTimeoutMs, task.Result.RequestId));
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
 
                 Stream toReturn = task.GetAwaiter().GetResult().Body;
                 stopWatch.Stop();
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Information("Op:READ,Path:{0},offset:{1},length:{2},TimeMs:{3}", streamPath, offset, length, stopWatch.ElapsedMilliseconds);
-                }
+                TracingHelper.LogInfo("Op:READ,Path:{0},offset:{1},length:{2},TimeMs:{3}", streamPath, offset, length, stopWatch.ElapsedMilliseconds);
 
                 return toReturn;
             }
@@ -242,10 +208,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (offset >= stream.Length)
                 {
                     var ex = new ArgumentException("StartOffset is beyond the end of the input file", "StartOffset");
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
@@ -282,10 +245,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         var ex = new TaskCanceledException(
                             string.Format("Get file status operation did not complete after {0} milliseconds.",
                                 PerRequestTimeoutMs));
-                        if (_shouldTrace)
-                        {
-                            ServiceClientTracing.Error(_invocationId, ex);
-                        }
+                        TracingHelper.LogError(ex);
 
                         throw ex;
                     }
@@ -296,10 +256,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 {
                     if (ex.InnerExceptions.Count != 1)
                     {
-                        if (_shouldTrace)
-                        {
-                            ServiceClientTracing.Error(_invocationId, ex);
-                        }
+                        TracingHelper.LogError(ex);
 
                         throw ex;
                     }
@@ -310,10 +267,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         return false;
                     }
 
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
@@ -324,20 +278,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         return false;
                     }
 
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, cloudEx);
-                    }
+                    TracingHelper.LogError(cloudEx);
 
                     throw cloudEx;
                 }
                 finally
                 {
                     stopWatch.Stop();
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Information("Op:GETFILESTATUS,Path:{0},TestStream,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
-                    }
+                    TracingHelper.LogInfo("Op:GETFILESTATUS,Path:{0},TestStream,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
                 }
 
                 return true;
@@ -371,20 +319,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         string.Format("Get file status operation did not complete after {0} milliseconds.",
                             PerRequestTimeoutMs));
 
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
 
                 var fileInfoResponse = task.Result;
                 stopWatch.Stop();
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Information("Op:GETFILESTATUS,Path:{0},GetLength,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
-                }
+                TracingHelper.LogInfo("Op:GETFILESTATUS,Path:{0},GetLength,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
 
                 return (long)fileInfoResponse.FileStatus.Length;
             }
@@ -411,20 +353,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     string.Format("Get file status operation did not complete after {0} milliseconds.",
                         PerRequestTimeoutMs));
 
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
+                TracingHelper.LogError(ex);
 
                 throw ex;
             }
 
             var fileInfoResponse = task.Result;
             stopWatch.Stop();
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Information("Op:GETFILESTATUS,Path:{0},IsDirectory,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
-            }
+            TracingHelper.LogInfo("Op:GETFILESTATUS,Path:{0},IsDirectory,TimeMs:{1}", streamPath, stopWatch.ElapsedMilliseconds);
 
             return fileInfoResponse.FileStatus.Type.GetValueOrDefault() == FileType.DIRECTORY;
         }
@@ -474,10 +410,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (inputStreamPaths.Length != 2)
                 {
                     var ex = new InvalidOperationException(string.Format("Invalid list of stream paths for download finalization. Expected Paths: 2. Actual paths: {0}", inputStreamPaths.Length));
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
@@ -504,20 +437,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             string.Format("Concatenate operation did not complete after {0} milliseconds.",
                                 PerRequestTimeoutMs));
 
-                        if (_shouldTrace)
-                        {
-                            ServiceClientTracing.Error(_invocationId, ex);
-                        }
+                        TracingHelper.LogError(ex);
 
                         throw ex;
                     }
 
                     task.GetAwaiter().GetResult();
                     stopWatch.Stop();
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Information("Op:MSCONCAT,Path:{0},NumberOfStreams:{1},TimeMs:{2}", targetStreamPath, inputStreamPaths.Length, stopWatch.ElapsedMilliseconds);
-                    }
+                    TracingHelper.LogInfo("Op:MSCONCAT,Path:{0},NumberOfStreams:{1},TimeMs:{2}", targetStreamPath, inputStreamPaths.Length, stopWatch.ElapsedMilliseconds);
                 }
             }
         }

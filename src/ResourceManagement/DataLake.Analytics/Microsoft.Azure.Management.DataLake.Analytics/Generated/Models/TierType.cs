@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for PricingTierType.
+    /// Defines values for TierType.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum PricingTierType
+    public enum TierType
     {
         [EnumMember(Value = "Consumption")]
         Consumption,

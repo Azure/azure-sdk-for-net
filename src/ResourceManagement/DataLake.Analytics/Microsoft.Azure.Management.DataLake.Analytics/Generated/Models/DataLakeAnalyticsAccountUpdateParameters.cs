@@ -47,13 +47,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// metadata is retained.</param>
         /// <param name="maxJobCount">the maximum supported jobs running under
         /// the account at the same time.</param>
-        /// <param name="newTier">the billing tier to use for next month.
+        /// <param name="newTier">the commitment tier to use for next month.
         /// Possible values include: 'Consumption', 'Commitment_100AUHours',
         /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
         /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
         /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
         /// 'Commitment_500000AUHours'</param>
-        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), PricingTierType? newTier = default(PricingTierType?))
+        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), TierType? newTier = default(TierType?))
         {
             Tags = tags;
             MaxDegreeOfParallelism = maxDegreeOfParallelism;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? MaxJobCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the billing tier to use for next month. Possible
+        /// Gets or sets the commitment tier to use for next month. Possible
         /// values include: 'Consumption', 'Commitment_100AUHours',
         /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
         /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// 'Commitment_500000AUHours'
         /// </summary>
         [JsonProperty(PropertyName = "properties.newTier")]
-        public PricingTierType? NewTier { get; set; }
+        public TierType? NewTier { get; set; }
 
         /// <summary>
         /// Validate the object.

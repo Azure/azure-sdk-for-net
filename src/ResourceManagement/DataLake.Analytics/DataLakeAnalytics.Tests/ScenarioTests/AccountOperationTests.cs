@@ -57,7 +57,7 @@ namespace DataLakeAnalytics.Tests
                             {
                                 { "testkey","testvalue" }
                             },
-                            NewTier = PricingTierType.Commitment100AUHours
+                            NewTier = TierType.Commitment100AUHours
                         });
 
                 // verify the account exists
@@ -91,8 +91,8 @@ namespace DataLakeAnalytics.Tests
 
                 // Confirm that the account creation did succeed
                 Assert.True(responseGet.ProvisioningState == DataLakeAnalyticsAccountStatus.Succeeded);
-                Assert.Equal(PricingTierType.Commitment100AUHours, responseGet.CurrentTier);
-                Assert.Equal(PricingTierType.Commitment100AUHours, responseGet.NewTier);
+                Assert.Equal(TierType.Commitment100AUHours, responseGet.CurrentTier);
+                Assert.Equal(TierType.Commitment100AUHours, responseGet.NewTier);
                 // Update the account and confirm the updates make it in.
                 var newAccount = responseGet;
                 var firstStorageAccountName = newAccount.DataLakeStoreAccounts.ToList()[0].Name;
@@ -108,7 +108,7 @@ namespace DataLakeAnalytics.Tests
                 var updateAccount = new DataLakeAnalyticsAccountUpdateParameters
                 {
                     Tags = newAccount.Tags,
-                    NewTier = PricingTierType.Consumption
+                    NewTier = TierType.Consumption
                 };
 
                 var updateResponse = clientToUse.Account.Update(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName, updateAccount);
@@ -128,8 +128,8 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
                 Assert.True(updateResponseGet.DataLakeStoreAccounts.Count == 1);
                 Assert.True(updateResponseGet.DataLakeStoreAccounts.ToList()[0].Name.Equals(firstStorageAccountName));
-                Assert.Equal(PricingTierType.Commitment100AUHours, updateResponseGet.CurrentTier);
-                Assert.Equal(PricingTierType.Consumption, updateResponseGet.NewTier);
+                Assert.Equal(TierType.Commitment100AUHours, updateResponseGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
 
                 // Create another account and ensure that list account returns both
                 responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName);

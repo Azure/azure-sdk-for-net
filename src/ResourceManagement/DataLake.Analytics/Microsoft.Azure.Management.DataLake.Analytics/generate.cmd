@@ -8,9 +8,9 @@ setlocal
 set autoRestVersion=1.0.0-Nightly20170104
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
-set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/232749acbb85396a194248114a43b90491604532/arm-datalake-analytics/account/2016-11-01/swagger/account.json"
-set jobSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/232749acbb85396a194248114a43b90491604532/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
-set catalogSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/232749acbb85396a194248114a43b90491604532/arm-datalake-analytics/catalog/2016-11-01/swagger/catalog.json"
+set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/437211d491f920f862daa5790759ebdaf1f29f3d/arm-datalake-analytics/account/2016-11-01/swagger/account.json"
+set jobSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/437211d491f920f862daa5790759ebdaf1f29f3d/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
+set catalogSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/437211d491f920f862daa5790759ebdaf1f29f3d/arm-datalake-analytics/catalog/2016-11-01/swagger/catalog.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated

@@ -45,8 +45,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private readonly CancellationToken _token;
         private UploadSegmentMetadata _segmentMetadata;
         private UploadMetadata _metadata;
-        private readonly string _invocationId;
-        private readonly bool _shouldTrace;
         #endregion
 
         #region Constructor
@@ -73,12 +71,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="progressTracker">(Optional) A tracker to report progress on this segment.</param>
         public SingleSegmentUploader(int segmentNumber, UploadMetadata uploadMetadata, IFrontEndAdapter frontEnd, CancellationToken token, IProgress<SegmentUploadProgress> progressTracker = null)
         {
-            _shouldTrace = ServiceClientTracing.IsEnabled;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-            }
-
             _metadata = uploadMetadata;
             _segmentMetadata = uploadMetadata.Segments[segmentNumber];
 
@@ -113,10 +105,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             if (!File.Exists(_metadata.InputFilePath))
             {
                 var ex = new FileNotFoundException("Unable to locate input file", _metadata.InputFilePath);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
+                TracingHelper.LogError(ex);
 
                 throw ex;
             }
@@ -133,10 +122,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 if (endPosition > inputStream.Length)
                 {
                     var ex = new InvalidOperationException("StartOffset+UploadLength is beyond the end of the input file");
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Error(_invocationId, ex);
-                    }
+                    TracingHelper.LogError(ex);
 
                     throw ex;
                 }
@@ -171,33 +157,24 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     _token.ThrowIfCancellationRequested();
                     if (retryCount >= MaxBufferUploadAttemptCount)
                     {
-                        if (_shouldTrace)
-                        {
-                            ServiceClientTracing.Error(_invocationId, e);
-                        }
+                        TracingHelper.LogError(e);
 
                         throw e;
                     }
 
                     var waitTime= WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
-                    if (_shouldTrace)
-                    {
-                        ServiceClientTracing.Information("VerifyUploadedStream: GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
-                            _segmentMetadata.Path,
-                            retryCount,
-                            e,
-                            waitTime);
-                    }
+                    TracingHelper.LogInfo("VerifyUploadedStream: GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                        _segmentMetadata.Path,
+                        retryCount,
+                        e,
+                        waitTime);
                 }
             }
 
             if (_segmentMetadata.Length != remoteLength)
             {
                 var ex = new UploadFailedException(string.Format("Post-upload stream verification failed: target stream has a length of {0}, expected {1}", remoteLength, _segmentMetadata.Length));
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
+                TracingHelper.LogError(ex);
 
                 throw ex;
             }
@@ -263,10 +240,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             if (uploadCutoff <= 0 && (_metadata.SegmentCount > 1 || bufferDataLength >= MaxRecordLength))
             {
                 var ex = new UploadFailedException(string.Format("Found a record that exceeds the maximum allowed record length around offset {0}", inputStream.Position));
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
+                TracingHelper.LogError(ex);
 
                 throw ex;
             }
@@ -334,10 +308,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             if (attemptCount >= MaxBufferUploadAttemptCount)
                             {
                                 ReportProgress(targetStreamOffset, true);
-                                if (_shouldTrace)
-                                {
-                                    ServiceClientTracing.Error(_invocationId, e);
-                                }
+                                TracingHelper.LogError(e);
 
                                 throw e;
                             }
@@ -345,15 +316,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             {
                                 
                                 var waitTime= WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
-                                if (_shouldTrace)
-                                {
-                                    ServiceClientTracing.Information("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
-                                        targetStreamOffset == 0 ? "CREATE" : "APPEND",
-                                        _segmentMetadata.Path,
-                                        attemptCount,
-                                        e,
-                                        waitTime);
-                                }
+                                TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                    targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                    _segmentMetadata.Path,
+                                    attemptCount,
+                                    e,
+                                    waitTime);
                             }
                         }
                     }
@@ -363,25 +331,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         if (attemptCount >= MaxBufferUploadAttemptCount)
                         {
                             ReportProgress(targetStreamOffset, true);
-                            if (_shouldTrace)
-                            {
-                                ServiceClientTracing.Error(_invocationId, e);
-                            }
+                            TracingHelper.LogError(e);
 
                             throw e;
                         }
                         else
                         {
                             var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
-                            if (_shouldTrace)
-                            {
-                                ServiceClientTracing.Information("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
-                                    targetStreamOffset == 0 ? "CREATE" : "APPEND",
-                                    _segmentMetadata.Path,
-                                    attemptCount,
-                                    e,
-                                    waitTime);
-                            }
+                            TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                _segmentMetadata.Path,
+                                attemptCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -400,25 +362,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         if (attemptCount >= MaxBufferUploadAttemptCount)
                         {
                             ReportProgress(targetStreamOffset, true);
-                            if (_shouldTrace)
-                            {
-                                ServiceClientTracing.Error(_invocationId, e);
-                            }
+                            TracingHelper.LogError(e);
 
                             throw e;
                         }
                         else
                         {
                             var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
-                            if (_shouldTrace)
-                            {
-                                ServiceClientTracing.Information("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
-                                    targetStreamOffset == 0 ? "CREATE" : "APPEND",
-                                    _segmentMetadata.Path,
-                                    attemptCount,
-                                    e,
-                                    waitTime);
-                            }
+                            TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                _segmentMetadata.Path,
+                                attemptCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -428,25 +384,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     if (attemptCount >= MaxBufferUploadAttemptCount)
                     {
                         ReportProgress(targetStreamOffset, true);
-                        if (_shouldTrace)
-                        {
-                            ServiceClientTracing.Error(_invocationId, ex);
-                        }
+                        TracingHelper.LogError(ex);
 
                         throw ex;
                     }
                     else
                     {
                         var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
-                        if (_shouldTrace)
-                        {
-                            ServiceClientTracing.Information("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
-                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
-                                _segmentMetadata.Path,
-                                attemptCount,
-                                ex,
-                                waitTime);
-                        }
+                        TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                            targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                            _segmentMetadata.Path,
+                            attemptCount,
+                            ex,
+                            waitTime);
                     }
                 }
             }

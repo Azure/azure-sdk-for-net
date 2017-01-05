@@ -38,8 +38,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private readonly int _maxThreadCount;
         private readonly IProgress<SegmentUploadProgress> _progressTracker;
         private readonly CancellationToken _token;
-        private readonly string _invocationId;
-        private readonly bool _shouldTrace;
 
         #endregion
 
@@ -72,12 +70,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             _frontEnd = frontEnd;
             _progressTracker = progressTracker;
             _token = token;
-
-            _shouldTrace = ServiceClientTracing.IsEnabled;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-            }
 
             this.UseSegmentBlockBackOffRetryStrategy = true;
         } 
@@ -126,10 +118,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             if (exceptions.Count > 0 && !_token.IsCancellationRequested)
             {
                 var ex = new AggregateException("One or more segments could not be uploaded. Review the Upload Metadata to determine which segments failed", exceptions);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
+                TracingHelper.LogError(ex);
 
                 throw ex;
             }
@@ -214,10 +203,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 //something horrible happened, mark the segment as failed and throw the original exception (the caller will handle it)
                 UpdateSegmentMetadataStatus(metadata, segmentNumber, SegmentUploadStatus.Failed);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
+                TracingHelper.LogError(ex);
 
                 throw ex;
             }
