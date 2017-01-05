@@ -641,9 +641,21 @@
         }
 
         // BUGBUG:  TODO:  fix this up with ranged GETs or whatever...
-        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(string jobId, string taskId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(
+            string jobId,
+            string taskId,
+            string fileName,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
         {
             var request = new FileGetFromTaskBatchRequest(this._client, cancellationToken);
+
+            if (byteRange != null)
+            {
+                request.Options.OcpRange = byteRange.GetOcpRangeHeader();
+            }
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetFromTaskWithHttpMessagesAsync(
                     jobId,
@@ -1343,9 +1355,21 @@
         }
 
         // BUGBUG:  TODO:  fix this up with ranged GETs or whatever...
-        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(string poolId, string computeNodeId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(
+            string poolId,
+            string computeNodeId,
+            string fileName,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
         {
             var request = new FileGetFromComputeNodeBatchRequest(this._client, cancellationToken);
+
+            if (byteRange != null)
+            {
+                request.Options.OcpRange = byteRange.GetOcpRangeHeader();
+            }
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetFromComputeNodeWithHttpMessagesAsync(
                     poolId,

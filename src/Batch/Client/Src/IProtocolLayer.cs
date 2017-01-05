@@ -132,7 +132,14 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.TaskReactivateHeaders>> ReactivateTask(string jobId, string taskId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(string jobId, string taskId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(
+            string jobId,
+            string taskId,
+            string fileName,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesByTask(string jobId, string taskId, string fileName, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
@@ -248,7 +255,14 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.FileDeleteFromComputeNodeHeaders>> DeleteNodeFileByNode(string poolId, string nodeId, string fileName, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(string poolId, string nodeId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(
+            string poolId,
+            string nodeId,
+            string fileName,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesByNode(string poolId, string nodeId, string fileName, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
