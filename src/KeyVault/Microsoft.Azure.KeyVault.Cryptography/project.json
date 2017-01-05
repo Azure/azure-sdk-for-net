@@ -1,5 +1,5 @@
 {
-  "version": "2.0.4",
+  "version": "2.0.5",
   "title": "Microsoft Azure Key Vault Cryptography",
   "description": "Microsoft Azure Key Vault Cryptography Class Library",
   "authors": [ "Microsoft" ],
@@ -29,7 +29,6 @@
         "debugType": "portable"
       },
       "frameworkAssemblies": {
-        "System.Diagnostics.Tools": "4.0.0.0"
       }
     },
     "netstandard1.5": {
