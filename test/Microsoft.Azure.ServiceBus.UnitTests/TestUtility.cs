@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             while (receiveAttempts++ < Constants.MaxAttemptsCount && messagesToReturn.Count < messageCount)
             {
-                var messages = await messageReceiver.ReceiveAsync(messageCount);
+                var messages = await messageReceiver.ReceiveAsync(messageCount - messagesToReturn.Count);
                 if (messages != null)
                 {
                     messagesToReturn.AddRange(messages);
