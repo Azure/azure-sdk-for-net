@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
     using System;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL ElasticPool's Activity.
@@ -15,52 +15,84 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasName,
         IHasId
     {
-        /// <return>The name of the Elastic Pool.</return>
+        /// <summary>
+        /// Gets the name of the Elastic Pool.
+        /// </summary>
         string ElasticPoolName { get; }
 
-        /// <return>The requested min DTU per database if available.</return>
+        /// <summary>
+        /// Gets the requested min DTU per database if available.
+        /// </summary>
         int RequestedDatabaseDtuMin { get; }
 
-        /// <return>The error message if available.</return>
+        /// <summary>
+        /// Gets the error message if available.
+        /// </summary>
         string ErrorMessage { get; }
 
-        /// <return>The error severity if available.</return>
+        /// <summary>
+        /// Gets the error severity if available.
+        /// </summary>
         int ErrorSeverity { get; }
 
-        /// <return>The error code if available.</return>
+        /// <summary>
+        /// Gets the error code if available.
+        /// </summary>
         int ErrorCode { get; }
 
-        /// <return>The name of the Azure SQL Server the Elastic Pool is in.</return>
+        /// <summary>
+        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
+        /// </summary>
         string ServerName { get; }
 
-        /// <return>The percentage complete if available.</return>
+        /// <summary>
+        /// Gets the percentage complete if available.
+        /// </summary>
         int PercentComplete { get; }
 
-        /// <return>The requested DTU for the pool if available.</return>
+        /// <summary>
+        /// Gets the requested DTU for the pool if available.
+        /// </summary>
         int RequestedDtu { get; }
 
-        /// <return>The requested name for the Elastic Pool if available.</return>
+        /// <summary>
+        /// Gets the requested name for the Elastic Pool if available.
+        /// </summary>
         string RequestedElasticPoolName { get; }
 
-        /// <return>The requested storage limit for the pool in GB if available.</return>
+        /// <summary>
+        /// Gets the requested storage limit for the pool in GB if available.
+        /// </summary>
         long RequestedStorageLimitInGB { get; }
 
-        /// <return>The requested max DTU per database if available.</return>
+        /// <summary>
+        /// Gets the requested max DTU per database if available.
+        /// </summary>
         int RequestedDatabaseDtuMax { get; }
 
-        /// <return>The unique operation ID.</return>
+        /// <summary>
+        /// Gets the unique operation ID.
+        /// </summary>
         string OperationId { get; }
 
-        /// <return>The time the operation started (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time the operation started (ISO8601 format).
+        /// </summary>
         System.DateTime StartTime { get; }
 
-        /// <return>The time the operation finished (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time the operation finished (ISO8601 format).
+        /// </summary>
         System.DateTime EndTime { get; }
 
-        /// <return>The current state of the operation.</return>
+        /// <summary>
+        /// Gets the current state of the operation.
+        /// </summary>
         string State { get; }
 
-        /// <return>The operation name.</return>
+        /// <summary>
+        /// Gets the operation name.
+        /// </summary>
         string Operation { get; }
     }
 }

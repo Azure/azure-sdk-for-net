@@ -24,6 +24,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISqlDatabase,
         IDefinition,
         IUpdate,
+        SqlDatabase.Definition.IWithCollation,
+        SqlDatabase.Definition.IWithMaxSizeBytes,
         IWithParentResource<ISqlDatabase, ISqlServer>
     {
         internal IDatabasesOperations innerCollection;
@@ -58,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:F046F9D4961504E7A52F5995CDC5EE6D:67E0D89B9ED5BC9ECD83BA032F54BCDD
-        public ISqlWarehouse CastToWarehouse()
+        public ISqlWarehouse AsWarehouse()
         {
             if (this.IsDataWarehouse())
             {
@@ -187,7 +189,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0E666BFDFC9A666CA31FD735D7839414:F7AAC54BC083EB0E4E1C567F427FB501
-        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric> ListUsages()
         {
             Func<DatabaseMetric, DatabaseMetricImpl> convertor = (databaseMetricInner) => new DatabaseMetricImpl(databaseMetricInner);
 
@@ -265,7 +267,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:37206883074CEB63F8267ADE2545CF11:7A5A0501B5D9CE9FC49981A622109CC5
-        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRestorePoint> ListRestorePoints()
         {
             Func<RestorePointInner, RestorePointImpl> convertor = (restorePointInner) => new RestorePointImpl(restorePointInner);
 

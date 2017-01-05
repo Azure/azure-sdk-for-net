@@ -2,21 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System;
-
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
     internal partial class RecommendedElasticPoolImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
@@ -29,16 +31,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool;
         }
 
-        /// <return>
-        /// The edition of the Azure SQL Recommended Elastic Pool. The
+        /// <summary>
+        /// Gets the edition of the Azure SQL Recommended Elastic Pool. The
         /// ElasticPoolEditions enumeration contains all the valid editions.
         /// Possible values include: 'Basic', 'Standard', 'Premium'.
-        /// </return>
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.DatabaseEdition
         {
             get
             {
-                return this.DatabaseEdition() as string;
+                return this.DatabaseEdition();
             }
         }
 
@@ -60,7 +62,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.ListMetrics() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric>;
         }
 
-        /// <return>The observation period start (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the observation period start (ISO8601 format).
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.ObservationPeriodStart
         {
             get
@@ -69,7 +73,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The minimum DTU for the database.</return>
+        /// <summary>
+        /// Gets the minimum DTU for the database.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.DatabaseDtuMin
         {
             get
@@ -78,7 +84,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The DTU for the SQL Azure Recommended Elastic Pool.</return>
+        /// <summary>
+        /// Gets the DTU for the SQL Azure Recommended Elastic Pool.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.Dtu
         {
             get
@@ -87,7 +95,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The maximum DTU for the database.</return>
+        /// <summary>
+        /// Gets the maximum DTU for the database.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.DatabaseDtuMax
         {
             get
@@ -106,7 +116,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.GetDatabase(databaseName) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
         }
 
-        /// <return>Maximum observed storage in megabytes.</return>
+        /// <summary>
+        /// Gets maximum observed storage in megabytes.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.MaxObservedStorageMB
         {
             get
@@ -115,7 +127,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Maximum observed DTU.</return>
+        /// <summary>
+        /// Gets maximum observed DTU.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.MaxObservedDtu
         {
             get
@@ -124,16 +138,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Name of the SQL Server to which this database belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this database belongs.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.SqlServerName
         {
             get
             {
-                return this.SqlServerName() as string;
+                return this.SqlServerName();
             }
         }
 
-        /// <return>The list of Azure SQL Databases in this pool. Expanded property.</return>
+        /// <summary>
+        /// Gets the list of Azure SQL Databases in this pool. Expanded property.
+        /// </summary>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.Databases
         {
             get
@@ -142,7 +160,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The observation period start (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the observation period start (ISO8601 format).
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.ObservationPeriodEnd
         {
             get
@@ -151,7 +171,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Storage size in megabytes.</return>
+        /// <summary>
+        /// Gets storage size in megabytes.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.StorageMB
         {
             get
@@ -160,21 +182,25 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The resource ID string.</return>
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
 
-        /// <return>The name of the resource group.</return>
+        /// <summary>
+        /// Gets the name of the resource group.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasResourceGroup.ResourceGroupName
         {
             get
             {
-                return this.ResourceGroupName() as string;
+                return this.ResourceGroupName();
             }
         }
     }

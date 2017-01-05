@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
 {
-    using Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition;
-    using Microsoft.Azure.Management.Sql.Fluent;
     using System.Threading;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Sql.Fluent;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Entry point to access ElasticPools from the SQL Server.
@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
         /// Delete specified database in the server.
         /// </summary>
         /// <param name="databaseName">Name of the database to delete.</param>
+        /// <return>Observable for the delete operation.</return>
         Task DeleteAsync(string databaseName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

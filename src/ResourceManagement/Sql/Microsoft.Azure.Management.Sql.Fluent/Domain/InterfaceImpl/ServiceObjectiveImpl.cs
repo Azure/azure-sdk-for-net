@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Models;
-
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Models;
 
     internal partial class ServiceObjectiveImpl 
     {
@@ -18,19 +18,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.IServiceObjective;
         }
 
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>
-        /// Whether the service level objective is the default service
+        /// <summary>
+        /// Gets whether the service level objective is the default service
         /// objective.
-        /// </return>
+        /// </summary>
         bool Microsoft.Azure.Management.Sql.Fluent.IServiceObjective.IsDefault
         {
             get
@@ -39,16 +41,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Name of the SQL Server to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IServiceObjective.SqlServerName
         {
             get
             {
-                return this.SqlServerName() as string;
+                return this.SqlServerName();
             }
         }
 
-        /// <return>Whether the service level objective is enabled.</return>
+        /// <summary>
+        /// Gets whether the service level objective is enabled.
+        /// </summary>
         bool Microsoft.Azure.Management.Sql.Fluent.IServiceObjective.Enabled
         {
             get
@@ -57,7 +63,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Whether the service level objective is a system service objective.</return>
+        /// <summary>
+        /// Gets whether the service level objective is a system service objective.
+        /// </summary>
         bool Microsoft.Azure.Management.Sql.Fluent.IServiceObjective.IsSystem
         {
             get
@@ -66,39 +74,47 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The description for the service level objective.</return>
+        /// <summary>
+        /// Gets the description for the service level objective.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IServiceObjective.Description
         {
             get
             {
-                return this.Description() as string;
+                return this.Description();
             }
         }
 
-        /// <return>The name for the service objective.</return>
+        /// <summary>
+        /// Gets the name for the service objective.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IServiceObjective.ServiceObjectiveName
         {
             get
             {
-                return this.ServiceObjectiveName() as string;
+                return this.ServiceObjectiveName();
             }
         }
 
-        /// <return>The name of the resource group.</return>
+        /// <summary>
+        /// Gets the name of the resource group.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasResourceGroup.ResourceGroupName
         {
             get
             {
-                return this.ResourceGroupName() as string;
+                return this.ResourceGroupName();
             }
         }
 
-        /// <return>The resource ID string.</return>
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
     }

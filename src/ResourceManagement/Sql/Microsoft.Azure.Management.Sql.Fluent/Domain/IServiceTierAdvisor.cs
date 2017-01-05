@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using System;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using System.Collections.Generic;
     using Models;
+    using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Service tier advisor.
@@ -18,94 +18,118 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasName,
         IHasId
     {
-        /// <return>Or sets currentServiceLevelObjective for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets currentServiceLevelObjective for service tier advisor.
+        /// </summary>
         string CurrentServiceLevelObjective { get; }
 
-        /// <return>Name of the SQL Database to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Database to which this replication belongs.
+        /// </summary>
         string DatabaseName { get; }
 
-        /// <return>Name of the SQL Server to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
         string SqlServerName { get; }
 
-        /// <return>
-        /// Or sets databaseSizeBasedRecommendationServiceLevelObjective for
+        /// <summary>
+        /// Gets or sets databaseSizeBasedRecommendationServiceLevelObjective for
         /// service tier advisor.
-        /// </return>
+        /// </summary>
         string DatabaseSizeBasedRecommendationServiceLevelObjective { get; }
 
-        /// <return>
-        /// Or sets overallRecommendationServiceLevelObjective for service
+        /// <summary>
+        /// Gets or sets overallRecommendationServiceLevelObjective for service
         /// tier advisor.
-        /// </return>
+        /// </summary>
         string OverallRecommendationServiceLevelObjective { get; }
 
-        /// <return>Or sets avgDtu for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets avgDtu for service tier advisor.
+        /// </summary>
         double AvgDtu { get; }
 
-        /// <return>Or sets confidence for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets confidence for service tier advisor.
+        /// </summary>
         double Confidence { get; }
 
-        /// <return>
-        /// Or sets overallRecommendationServiceLevelObjectiveId for service
+        /// <summary>
+        /// Gets or sets overallRecommendationServiceLevelObjectiveId for service
         /// tier advisor.
-        /// </return>
+        /// </summary>
         System.Guid OverallRecommendationServiceLevelObjectiveId { get; }
 
-        /// <return>Or sets minDtu for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets minDtu for service tier advisor.
+        /// </summary>
         double MinDtu { get; }
 
-        /// <return>
-        /// Or sets usageBasedRecommendationServiceLevelObjectiveId for
+        /// <summary>
+        /// Gets or sets usageBasedRecommendationServiceLevelObjectiveId for
         /// service tier advisor.
-        /// </return>
+        /// </summary>
         System.Guid UsageBasedRecommendationServiceLevelObjectiveId { get; }
 
-        /// <return>
-        /// Or sets disasterPlanBasedRecommendationServiceLevelObjectiveId for
+        /// <summary>
+        /// Gets or sets disasterPlanBasedRecommendationServiceLevelObjectiveId for
         /// service tier advisor.
-        /// </return>
+        /// </summary>
         System.Guid DisasterPlanBasedRecommendationServiceLevelObjectiveId { get; }
 
-        /// <return>Or sets maxDtu for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets maxDtu for service tier advisor.
+        /// </summary>
         double MaxDtu { get; }
 
-        /// <return>
-        /// ServiceLevelObjectiveUsageMetrics for the service tier
+        /// <summary>
+        /// Gets serviceLevelObjectiveUsageMetrics for the service tier
         /// advisor.
-        /// </return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics { get; }
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics { get; }
 
-        /// <return>The observation period start (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the observation period start (ISO8601 format).
+        /// </summary>
         System.DateTime ObservationPeriodEnd { get; }
 
-        /// <return>The activeTimeRatio for service tier advisor.</return>
+        /// <summary>
+        /// Gets the activeTimeRatio for service tier advisor.
+        /// </summary>
         double ActiveTimeRatio { get; }
 
-        /// <return>
-        /// Or sets databaseSizeBasedRecommendationServiceLevelObjectiveId for
+        /// <summary>
+        /// Gets or sets databaseSizeBasedRecommendationServiceLevelObjectiveId for
         /// service tier advisor.
-        /// </return>
+        /// </summary>
         System.Guid DatabaseSizeBasedRecommendationServiceLevelObjectiveId { get; }
 
-        /// <return>Or sets currentServiceLevelObjectiveId for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets currentServiceLevelObjectiveId for service tier advisor.
+        /// </summary>
         System.Guid CurrentServiceLevelObjectiveId { get; }
 
-        /// <return>The observation period start (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the observation period start (ISO8601 format).
+        /// </summary>
         System.DateTime ObservationPeriodStart { get; }
 
-        /// <return>
-        /// Or sets disasterPlanBasedRecommendationServiceLevelObjective for
+        /// <summary>
+        /// Gets or sets disasterPlanBasedRecommendationServiceLevelObjective for
         /// service tier advisor.
-        /// </return>
+        /// </summary>
         string DisasterPlanBasedRecommendationServiceLevelObjective { get; }
 
-        /// <return>Or sets maxSizeInGB for service tier advisor.</return>
+        /// <summary>
+        /// Gets or sets maxSizeInGB for service tier advisor.
+        /// </summary>
         double MaxSizeInGB { get; }
 
-        /// <return>
-        /// Or sets usageBasedRecommendationServiceLevelObjective for service
+        /// <summary>
+        /// Gets or sets usageBasedRecommendationServiceLevelObjective for service
         /// tier advisor.
-        /// </return>
+        /// </summary>
         string UsageBasedRecommendationServiceLevelObjective { get; }
     }
 }

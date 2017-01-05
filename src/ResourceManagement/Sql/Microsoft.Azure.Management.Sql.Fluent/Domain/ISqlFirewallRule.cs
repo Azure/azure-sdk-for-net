@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Models;
     using SqlFirewallRule.Update;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Server FirewallRule.
@@ -16,19 +16,29 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IUpdatable<SqlFirewallRule.Update.IUpdate>,
         IWrapper<Models.ServerFirewallRuleInner>
     {
-        /// <return>The end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.</return>
+        /// <summary>
+        /// Gets the end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
+        /// </summary>
         string EndIpAddress { get; }
 
-        /// <return>Name of the SQL Server to which this firewall rule belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this firewall rule belongs.
+        /// </summary>
         string SqlServerName { get; }
 
-        /// <return>Kind of SQL Server that contains this firewall rule.</return>
+        /// <summary>
+        /// Gets kind of SQL Server that contains this firewall rule.
+        /// </summary>
         string Kind { get; }
 
-        /// <return>Region of SQL Server that contains this firewall rule.</return>
+        /// <summary>
+        /// Gets region of SQL Server that contains this firewall rule.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Region { get; }
 
-        /// <return>The start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.</return>
+        /// <summary>
+        /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
+        /// </summary>
         string StartIpAddress { get; }
 
         /// <summary>

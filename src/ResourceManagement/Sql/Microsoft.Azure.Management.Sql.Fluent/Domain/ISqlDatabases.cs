@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using SqlDatabase.Definition;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Entry point to SQL Database management API.

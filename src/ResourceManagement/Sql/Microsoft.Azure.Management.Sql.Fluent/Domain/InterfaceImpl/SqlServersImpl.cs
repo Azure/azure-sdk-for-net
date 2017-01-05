@@ -2,23 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Models;
-    using System.Threading.Tasks;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Resource.Fluent;
     using SqlServer.Definition;
-    
+    using Models;
 
     internal partial class SqlServersImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.
-        /// <p>
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
         /// process in Azure is Creatable.create().
-        /// <p>
         /// Note that the Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
         /// parameters specified. If you do not see Creatable.create() among the available methods, it

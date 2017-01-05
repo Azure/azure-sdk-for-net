@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Models;
     using System;
 
     /// <summary>
@@ -17,25 +17,39 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasName,
         IHasId
     {
-        /// <return>The replication state for the replication link.</return>
+        /// <summary>
+        /// Gets the replication state for the replication link.
+        /// </summary>
         string ReplicationState { get; }
 
-        /// <return>The role of the SQL Database in the replication link.</return>
+        /// <summary>
+        /// Gets the role of the SQL Database in the replication link.
+        /// </summary>
         Models.ReplicationRole Role { get; }
 
-        /// <return>Name of the SQL Database to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Database to which this replication belongs.
+        /// </summary>
         string DatabaseName { get; }
 
-        /// <return>Name of the SQL Server to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
         string SqlServerName { get; }
 
-        /// <return>The name of the Azure SQL Server hosting the partner Azure SQL Database.</return>
+        /// <summary>
+        /// Gets the name of the Azure SQL Server hosting the partner Azure SQL Database.
+        /// </summary>
         string PartnerServer { get; }
 
-        /// <return>The role of the partner SQL Database in the replication link.</return>
+        /// <summary>
+        /// Gets the role of the partner SQL Database in the replication link.
+        /// </summary>
         Models.ReplicationRole PartnerRole { get; }
 
-        /// <return>The percentage of the seeding completed for the replication link.</return>
+        /// <summary>
+        /// Gets the percentage of the seeding completed for the replication link.
+        /// </summary>
         int PercentComplete { get; }
 
         /// <summary>
@@ -53,13 +67,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         void Failover();
 
-        /// <return>The name of the partner Azure SQL Database.</return>
+        /// <summary>
+        /// Gets the name of the partner Azure SQL Database.
+        /// </summary>
         string PartnerDatabase { get; }
 
-        /// <return>Start time for the replication link (ISO8601 format).</return>
+        /// <summary>
+        /// Gets start time for the replication link (ISO8601 format).
+        /// </summary>
         System.DateTime StartTime { get; }
 
-        /// <return>The Azure Region of the partner Azure SQL Database.</return>
+        /// <summary>
+        /// Gets the Azure Region of the partner Azure SQL Database.
+        /// </summary>
         string PartnerLocation { get; }
     }
 }
