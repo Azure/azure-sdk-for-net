@@ -18,6 +18,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         internal const string PartitionedTopicName = "partitioned-topic";
         internal const string NonPartitionedTopicName = "non-partitioned-topic";
 
+        internal const string PartitionedSessionTopicName = "partitioned-session-topic";
+        internal const string NonPartitionedSessionTopicName = "non-partitioned-session-topic";
+
         internal const string SubscriptionName = "subscription";
         internal const string SessionSubscriptionName = "session-subscription";
     }

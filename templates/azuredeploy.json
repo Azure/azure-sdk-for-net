@@ -16,6 +16,8 @@
 		"sessionNonPartitionedQueueName": "non-partitioned-session-queue",
 		"partitionedTopicName": "partitioned-topic",
 		"nonPartitionedTopicName": "non-partitioned-topic",
+		"partitionedSessionTopicName": "partitioned-session-topic",
+		"nonPartitionedSessionTopicName": "non-partitioned-session-topic",
 		"subscriptionName": "subscription",
 		"sessionSubscriptionName": "session-subscription",
 
@@ -104,13 +106,26 @@
 							"properties": {
 								"requiresSession": false
 							}
-						},
+						}
+					]
+				},
+								{
+					"apiVersion": "[variables('sbVersion')]",
+					"name": "[variables('partitionedSessionTopicName')]",
+					"type": "topics",
+					"dependsOn": [
+						"[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespaceName'))]"
+					],
+					"properties": {
+						"enablePartitioning": true
+					},
+					"resources": [
 						{
 							"apiVersion": "[variables('sbVersion')]",
 							"name": "[variables('sessionSubscriptionName')]",
 							"type": "Subscriptions",
 							"dependsOn": [
-								"[variables('partitionedTopicName')]"
+								"[variables('partitionedSessionTopicName')]"
 							],
 							"properties": {
 								"requiresSession": true
@@ -139,13 +154,26 @@
 							"properties": {
 								"requiresSession": false
 							}
-						},
+						}
+					]
+				},
+				{
+					"apiVersion": "[variables('sbVersion')]",
+					"name": "[variables('nonPartitionedSessionTopicName')]",
+					"type": "topics",
+					"dependsOn": [
+						"[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespaceName'))]"
+					],
+					"properties": {
+						"enablePartitioning": false
+					},
+					"resources": [
 						{
 							"apiVersion": "[variables('sbVersion')]",
 							"name": "[variables('sessionSubscriptionName')]",
 							"type": "Subscriptions",
 							"dependsOn": [
-								"[variables('nonPartitionedTopicName')]"
+								"[variables('nonPartitionedSessionTopicName')]"
 							],
 							"properties": {
 								"requiresSession": true
