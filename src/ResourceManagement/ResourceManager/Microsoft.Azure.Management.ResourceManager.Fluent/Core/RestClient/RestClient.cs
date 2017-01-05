@@ -105,6 +105,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
                 IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler);
 
+                IBuildable WithDelegatingHandlers(params DelegatingHandler[] delegatingHandlers);
+
                 IBuildable WithLogLevel(HttpLoggingDelegatingHandler.Level level);
 
                 IBuildable WithCredentials(ServiceClientCredentials credentials);
@@ -139,6 +141,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             public IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler)
             {
                 handlers.Add(delegatingHandler);
+                return this;
+            }
+
+
+            public IBuildable WithDelegatingHandlers(params DelegatingHandler[] delegatingHandlers)
+            {
+                handlers.AddRange(delegatingHandlers);
                 return this;
             }
 
