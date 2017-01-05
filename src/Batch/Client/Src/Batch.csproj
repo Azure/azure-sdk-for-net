@@ -55,6 +55,7 @@
     <Compile Include="Common\Enumerations\OSType.cs" />
     <Compile Include="Common\Enumerations\AddTaskStatus.cs" />
     <Compile Include="FileStaging\FileStagingUtils.cs" />
+    <Compile Include="GetFileRequestByteRange.cs" />
     <Compile Include="ImageReference.cs" />
     <Compile Include="IPropertyMetadata.cs" />
     <Compile Include="IReadOnly.cs" />

@@ -84,6 +84,7 @@
     <Compile Include="ComputeNodeUnitTests.cs" />
     <Compile Include="FakeHttpClientHandler.cs" />
     <Compile Include="FileUnitTests.cs" />
+    <Compile Include="GetFileRequestByteRangeTests.cs" />
     <Compile Include="JobAutoTerminationUnitTests.cs" />
     <Compile Include="BatchClientUnitTest.cs" />
     <Compile Include="CommitAndRefreshUnitTests.cs" />

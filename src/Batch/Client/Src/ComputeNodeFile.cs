@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Batch
 #region // NodeFile
 
         public override async System.Threading.Tasks.Task CopyToStreamAsync(
-            Stream stream, 
+            Stream stream,
+            GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Batch
                     _poolId, 
                     _computeNodeId, 
                     base.Name, 
-                    stream, 
+                    stream,
+                    byteRange,
                     bhMgr, 
                     cancellationToken);
 
