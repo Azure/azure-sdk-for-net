@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ApplicationPackageReference
         /// class.
         /// </summary>
-        /// <param name="applicationId">The id of the application to
+        /// <param name="applicationId">The ID of the application to
         /// deploy.</param>
         /// <param name="version">The version of the application to deploy. If
         /// omitted, the default version is deployed.</param>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the application to deploy.
+        /// Gets or sets the ID of the application to deploy.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
@@ -55,6 +55,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the version of the application to deploy. If omitted,
         /// the default version is deployed.
         /// </summary>
+        /// <remarks>
+        /// If this is omitted, and no default version is specified for this
+        /// application, the request fails with the error code
+        /// InvalidApplicationPackageReferences. If you are calling the REST
+        /// API directly, the HTTP status code is 409.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 

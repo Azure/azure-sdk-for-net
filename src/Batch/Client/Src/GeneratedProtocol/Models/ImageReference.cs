@@ -21,7 +21,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace image.
+    /// A reference to an Azure Virtual Machines Marketplace image. To get the
+    /// list of all imageReferences verified by Azure Batch, see the 'List
+    /// supported node agent SKUs' operation.
     /// </summary>
     public partial class ImageReference
     {

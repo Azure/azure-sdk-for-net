@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ResourceFile class.
         /// </summary>
         /// <param name="blobSource">The URL of the file within Azure Blob
-        /// Storage. This URL should include a shared access signature if the
-        /// blob is not publicly readable.</param>
-        /// <param name="filePath">The location to which to download the file,
-        /// relative to the task's working directory.</param>
-        /// <param name="fileMode">The file mode attribute in octal
+        /// Storage.</param>
+        /// <param name="filePath">The location on the compute node to which
+        /// to download the file, relative to the task's working
+        /// directory.</param>
+        /// <param name="fileMode">The file permission mode attribute in octal
         /// format.</param>
         public ResourceFile(string blobSource, string filePath, string fileMode = default(string))
         {
@@ -48,26 +48,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the URL of the file within Azure Blob Storage. This
-        /// URL should include a shared access signature if the blob is not
-        /// publicly readable.
+        /// Gets or sets the URL of the file within Azure Blob Storage.
         /// </summary>
+        /// <remarks>
+        /// This URL must be readable using anonymous access; that is, the
+        /// Batch service does not present any credentials when downloading
+        /// the blob. There are two ways to get such a URL for a blob in
+        /// Azure storage: include a Shared Access Signature (SAS) granting
+        /// read permissions on the blob, or set the ACL for the blob or its
+        /// container to allow public access.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "blobSource")]
         public string BlobSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the location to which to download the file, relative
-        /// to the task's working directory.
+        /// Gets or sets the location on the compute node to which to download
+        /// the file, relative to the task's working directory.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "filePath")]
         public string FilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the file mode attribute in octal format.
+        /// Gets or sets the file permission mode attribute in octal format.
         /// </summary>
         /// <remarks>
-        /// This property will be ignored if it is specified for a
-        /// resourceFile which will be downloaded to a Windows compute node.
+        /// This property applies only to files being downloaded to Linux
+        /// compute nodes. It will be ignored if it is specified for a
+        /// resourceFile which will be downloaded to a Windows node. If this
+        /// property is not specified for a Linux node, then a default value
+        /// of 0770 is applied to the file.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }

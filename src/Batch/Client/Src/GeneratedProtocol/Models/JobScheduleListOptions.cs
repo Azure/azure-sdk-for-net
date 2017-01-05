@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="select">An OData $select clause.</param>
         /// <param name="expand">An OData $expand clause.</param>
         /// <param name="maxResults">The maximum number of items to return in
-        /// the response.</param>
+        /// the response. A maximum of 1000 job schedules can be
+        /// returned.</param>
         /// <param name="timeout">The maximum time that the server can spend
         /// processing the request, in seconds. The default is 30
         /// seconds.</param>
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// identity, in the form of a GUID with no decoration such as curly
         /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
         /// <param name="returnClientRequestId">Whether the server should
-        /// return the client-request-id identifier in the response.</param>
+        /// return the client-request-id in the response.</param>
         /// <param name="ocpDate">The time the request was issued. If not
         /// specified, this header will be automatically populated with the
         /// current system clock time.</param>
@@ -80,7 +81,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Expand { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of items to return in the response.
+        /// Gets or sets the maximum number of items to return in the
+        /// response. A maximum of 1000 job schedules can be returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public int? MaxResults { get; set; }
@@ -102,7 +104,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether the server should return the
-        /// client-request-id identifier in the response.
+        /// client-request-id in the response.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }

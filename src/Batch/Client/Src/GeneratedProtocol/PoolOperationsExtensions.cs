@@ -31,6 +31,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Lists the usage metrics, aggregated by pool across individual time
             /// intervals, for the specified account.
             /// </summary>
+            /// <remarks>
+            /// If you do not specify a $filter clause including a poolId, the response
+            /// includes all pools that existed in the account in the time range of the
+            /// returned aggregation intervals.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -46,6 +51,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Lists the usage metrics, aggregated by pool across individual time
             /// intervals, for the specified account.
             /// </summary>
+            /// <remarks>
+            /// If you do not specify a $filter clause including a poolId, the response
+            /// includes all pools that existed in the account in the time range of the
+            /// returned aggregation intervals.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -110,6 +120,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Adds a pool to the specified account.
             /// </summary>
+            /// <remarks>
+            /// When naming pools, avoid including sensitive information such as user
+            /// names or secret project names. This information may appear in telemetry
+            /// logs accessible to Microsoft Support engineers.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -127,6 +142,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Adds a pool to the specified account.
             /// </summary>
+            /// <remarks>
+            /// When naming pools, avoid including sensitive information such as user
+            /// names or secret project names. This information may appear in telemetry
+            /// logs accessible to Microsoft Support engineers.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -184,11 +204,26 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Deletes a pool from the specified account.
             /// </summary>
+            /// <remarks>
+            /// When you request that a pool be deleted, the following actions occur: the
+            /// pool state is set to deleting; any ongoing resize operation on the pool
+            /// are stopped; the Batch service starts resizing the pool to zero nodes;
+            /// any tasks running on existing nodes are terminated and requeued (as if a
+            /// resize pool operation had been requested with the default requeue
+            /// option); finally, the pool is removed from the system. Because running
+            /// tasks are requeued, the user can rerun these tasks by updating their job
+            /// to target a different pool. The tasks can then run on the new pool. If
+            /// you want to override the requeue behavior, then you should call resize
+            /// pool explicitly to shrink the pool to zero size before deleting the pool.
+            /// If you call an Update, Patch or Delete API on a pool in the deleting
+            /// state, it will fail with HTTP status code 409 with error code
+            /// PoolBeingDeleted.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to delete.
+            /// The ID of the pool to delete.
             /// </param>
             /// <param name='poolDeleteOptions'>
             /// Additional parameters for the operation
@@ -201,11 +236,26 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Deletes a pool from the specified account.
             /// </summary>
+            /// <remarks>
+            /// When you request that a pool be deleted, the following actions occur: the
+            /// pool state is set to deleting; any ongoing resize operation on the pool
+            /// are stopped; the Batch service starts resizing the pool to zero nodes;
+            /// any tasks running on existing nodes are terminated and requeued (as if a
+            /// resize pool operation had been requested with the default requeue
+            /// option); finally, the pool is removed from the system. Because running
+            /// tasks are requeued, the user can rerun these tasks by updating their job
+            /// to target a different pool. The tasks can then run on the new pool. If
+            /// you want to override the requeue behavior, then you should call resize
+            /// pool explicitly to shrink the pool to zero size before deleting the pool.
+            /// If you call an Update, Patch or Delete API on a pool in the deleting
+            /// state, it will fail with HTTP status code 409 with error code
+            /// PoolBeingDeleted.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to delete.
+            /// The ID of the pool to delete.
             /// </param>
             /// <param name='poolDeleteOptions'>
             /// Additional parameters for the operation
@@ -228,7 +278,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to get.
+            /// The ID of the pool to get.
             /// </param>
             /// <param name='poolExistsOptions'>
             /// Additional parameters for the operation
@@ -245,7 +295,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to get.
+            /// The ID of the pool to get.
             /// </param>
             /// <param name='poolExistsOptions'>
             /// Additional parameters for the operation
@@ -268,7 +318,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to get.
+            /// The ID of the pool to get.
             /// </param>
             /// <param name='poolGetOptions'>
             /// Additional parameters for the operation
@@ -285,7 +335,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to get.
+            /// The ID of the pool to get.
             /// </param>
             /// <param name='poolGetOptions'>
             /// Additional parameters for the operation
@@ -302,13 +352,19 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of a pool.
+            /// Updates the properties of the specified pool.
             /// </summary>
+            /// <remarks>
+            /// This only replaces the pool properties specified in the request. For
+            /// example, if the pool has a start task associated with it, and a request
+            /// does not specify a start task element, then the pool keeps the existing
+            /// start task.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to update.
+            /// The ID of the pool to update.
             /// </param>
             /// <param name='poolPatchParameter'>
             /// The parameters for the request.
@@ -322,13 +378,19 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of a pool.
+            /// Updates the properties of the specified pool.
             /// </summary>
+            /// <remarks>
+            /// This only replaces the pool properties specified in the request. For
+            /// example, if the pool has a start task associated with it, and a request
+            /// does not specify a start task element, then the pool keeps the existing
+            /// start task.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to update.
+            /// The ID of the pool to update.
             /// </param>
             /// <param name='poolPatchParameter'>
             /// The parameters for the request.
@@ -354,7 +416,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool on which to disable automatic scaling.
+            /// The ID of the pool on which to disable automatic scaling.
             /// </param>
             /// <param name='poolDisableAutoScaleOptions'>
             /// Additional parameters for the operation
@@ -371,7 +433,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool on which to disable automatic scaling.
+            /// The ID of the pool on which to disable automatic scaling.
             /// </param>
             /// <param name='poolDisableAutoScaleOptions'>
             /// Additional parameters for the operation
@@ -390,11 +452,19 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Enables automatic scaling for a pool.
             /// </summary>
+            /// <remarks>
+            /// You cannot enable automatic scaling on a pool if a resize operation is in
+            /// progress on the pool. If automatic scaling of the pool is currently
+            /// disabled, you must specify a valid autoscale formula as part of the
+            /// request. If automatic scaling of the pool is already enabled, you may
+            /// specify a new autoscale formula and/or a new evaluation interval. You
+            /// cannot call this API for the same pool more than once every 30 seconds.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool on which to enable automatic scaling.
+            /// The ID of the pool on which to enable automatic scaling.
             /// </param>
             /// <param name='poolEnableAutoScaleParameter'>
             /// The parameters for the request.
@@ -410,11 +480,19 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Enables automatic scaling for a pool.
             /// </summary>
+            /// <remarks>
+            /// You cannot enable automatic scaling on a pool if a resize operation is in
+            /// progress on the pool. If automatic scaling of the pool is currently
+            /// disabled, you must specify a valid autoscale formula as part of the
+            /// request. If automatic scaling of the pool is already enabled, you may
+            /// specify a new autoscale formula and/or a new evaluation interval. You
+            /// cannot call this API for the same pool more than once every 30 seconds.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool on which to enable automatic scaling.
+            /// The ID of the pool on which to enable automatic scaling.
             /// </param>
             /// <param name='poolEnableAutoScaleParameter'>
             /// The parameters for the request.
@@ -436,14 +514,23 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Gets the result of evaluating an automatic scaling formula on the pool.
             /// </summary>
+            /// <remarks>
+            /// This API is primarily for validating an autoscale formula, as it simply
+            /// returns the result without applying the formula to the pool.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool on which to evaluate the automatic scaling formula.
+            /// The ID of the pool on which to evaluate the automatic scaling formula.
             /// </param>
             /// <param name='autoScaleFormula'>
-            /// A formula for the desired number of compute nodes in the pool.
+            /// The formula for the desired number of compute nodes in the pool. The
+            /// formula is validated and its results calculated, but it is not applied to
+            /// the pool. To apply the formula to the pool, 'Enable automatic scaling on
+            /// a pool'. For more information about specifying this formula, see
+            /// Automatically scale compute nodes in an Azure Batch pool
+            /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
             /// </param>
             /// <param name='poolEvaluateAutoScaleOptions'>
             /// Additional parameters for the operation
@@ -456,14 +543,23 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Gets the result of evaluating an automatic scaling formula on the pool.
             /// </summary>
+            /// <remarks>
+            /// This API is primarily for validating an autoscale formula, as it simply
+            /// returns the result without applying the formula to the pool.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool on which to evaluate the automatic scaling formula.
+            /// The ID of the pool on which to evaluate the automatic scaling formula.
             /// </param>
             /// <param name='autoScaleFormula'>
-            /// A formula for the desired number of compute nodes in the pool.
+            /// The formula for the desired number of compute nodes in the pool. The
+            /// formula is validated and its results calculated, but it is not applied to
+            /// the pool. To apply the formula to the pool, 'Enable automatic scaling on
+            /// a pool'. For more information about specifying this formula, see
+            /// Automatically scale compute nodes in an Azure Batch pool
+            /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
             /// </param>
             /// <param name='poolEvaluateAutoScaleOptions'>
             /// Additional parameters for the operation
@@ -482,11 +578,20 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Changes the number of compute nodes that are assigned to a pool.
             /// </summary>
+            /// <remarks>
+            /// You can only resize a pool when its allocation state is steady. If the
+            /// pool is already resizing, the request fails with status code 409. When
+            /// you resize a pool, the pool's allocation state changes from steady to
+            /// resizing. You cannot resize pools which are configured for automatic
+            /// scaling. If you try to do this, the Batch service returns an error 409.
+            /// If you resize a pool downwards, the Batch service chooses which nodes to
+            /// remove. To remove specific nodes, use the pool remove nodes API instead.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to resize.
+            /// The ID of the pool to resize.
             /// </param>
             /// <param name='poolResizeParameter'>
             /// The parameters for the request.
@@ -502,11 +607,20 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Changes the number of compute nodes that are assigned to a pool.
             /// </summary>
+            /// <remarks>
+            /// You can only resize a pool when its allocation state is steady. If the
+            /// pool is already resizing, the request fails with status code 409. When
+            /// you resize a pool, the pool's allocation state changes from steady to
+            /// resizing. You cannot resize pools which are configured for automatic
+            /// scaling. If you try to do this, the Batch service returns an error 409.
+            /// If you resize a pool downwards, the Batch service chooses which nodes to
+            /// remove. To remove specific nodes, use the pool remove nodes API instead.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to resize.
+            /// The ID of the pool to resize.
             /// </param>
             /// <param name='poolResizeParameter'>
             /// The parameters for the request.
@@ -531,13 +645,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <remarks>
             /// This does not restore the pool to its previous state before the resize
             /// operation: it only stops any further changes being made, and the pool
-            /// maintains its current state.
+            /// maintains its current state. A resize operation need not be an explicit
+            /// resize pool request; this API can also be used to halt the initial sizing
+            /// of the pool when it is created.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool whose resizing you want to stop.
+            /// The ID of the pool whose resizing you want to stop.
             /// </param>
             /// <param name='poolStopResizeOptions'>
             /// Additional parameters for the operation
@@ -553,13 +669,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <remarks>
             /// This does not restore the pool to its previous state before the resize
             /// operation: it only stops any further changes being made, and the pool
-            /// maintains its current state.
+            /// maintains its current state. A resize operation need not be an explicit
+            /// resize pool request; this API can also be used to halt the initial sizing
+            /// of the pool when it is created.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool whose resizing you want to stop.
+            /// The ID of the pool whose resizing you want to stop.
             /// </param>
             /// <param name='poolStopResizeOptions'>
             /// Additional parameters for the operation
@@ -576,13 +694,19 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of a pool.
+            /// Updates the properties of the specified pool.
             /// </summary>
+            /// <remarks>
+            /// This fully replaces all the updateable properties of the pool. For
+            /// example, if the pool has a start task associated with it and if start
+            /// task is not specified with this request, then the Batch service will
+            /// remove the existing start task.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to update.
+            /// The ID of the pool to update.
             /// </param>
             /// <param name='poolUpdatePropertiesParameter'>
             /// The parameters for the request.
@@ -596,13 +720,19 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the properties of a pool.
+            /// Updates the properties of the specified pool.
             /// </summary>
+            /// <remarks>
+            /// This fully replaces all the updateable properties of the pool. For
+            /// example, if the pool has a start task associated with it and if start
+            /// task is not specified with this request, then the Batch service will
+            /// remove the existing start task.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to update.
+            /// The ID of the pool to update.
             /// </param>
             /// <param name='poolUpdatePropertiesParameter'>
             /// The parameters for the request.
@@ -624,11 +754,24 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Upgrades the operating system of the specified pool.
             /// </summary>
+            /// <remarks>
+            /// During an upgrade, the Batch service upgrades each compute node in the
+            /// pool. When a compute node is chosen for upgrade, any tasks running on
+            /// that node are removed from the node and returned to the queue to be rerun
+            /// later (or on a different compute node). The node will be unavailable
+            /// until the upgrade is complete. This operation results in temporarily
+            /// reduced pool capacity as nodes are taken out of service to be upgraded.
+            /// Although the Batch service tries to avoid upgrading all compute nodes at
+            /// the same time, it does not guarantee to do this (particularly on small
+            /// pools); therefore, the pool may be temporarily unavailable to run tasks.
+            /// When this operation runs, the pool state changes to upgrading. When all
+            /// compute nodes have finished upgrading, the pool state returns to active.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to upgrade.
+            /// The ID of the pool to upgrade.
             /// </param>
             /// <param name='targetOSVersion'>
             /// The Azure Guest OS version to be installed on the virtual machines in the
@@ -645,11 +788,24 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Upgrades the operating system of the specified pool.
             /// </summary>
+            /// <remarks>
+            /// During an upgrade, the Batch service upgrades each compute node in the
+            /// pool. When a compute node is chosen for upgrade, any tasks running on
+            /// that node are removed from the node and returned to the queue to be rerun
+            /// later (or on a different compute node). The node will be unavailable
+            /// until the upgrade is complete. This operation results in temporarily
+            /// reduced pool capacity as nodes are taken out of service to be upgraded.
+            /// Although the Batch service tries to avoid upgrading all compute nodes at
+            /// the same time, it does not guarantee to do this (particularly on small
+            /// pools); therefore, the pool may be temporarily unavailable to run tasks.
+            /// When this operation runs, the pool state changes to upgrading. When all
+            /// compute nodes have finished upgrading, the pool state returns to active.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool to upgrade.
+            /// The ID of the pool to upgrade.
             /// </param>
             /// <param name='targetOSVersion'>
             /// The Azure Guest OS version to be installed on the virtual machines in the
@@ -672,11 +828,16 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Removes compute nodes from the specified pool.
             /// </summary>
+            /// <remarks>
+            /// This operation can only run when the allocation state of the pool is
+            /// steady. When this operation runs, the allocation state changes from
+            /// steady to resizing.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool from which you want to remove nodes.
+            /// The ID of the pool from which you want to remove nodes.
             /// </param>
             /// <param name='nodeRemoveParameter'>
             /// The parameters for the request.
@@ -692,11 +853,16 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Removes compute nodes from the specified pool.
             /// </summary>
+            /// <remarks>
+            /// This operation can only run when the allocation state of the pool is
+            /// steady. When this operation runs, the allocation state changes from
+            /// steady to resizing.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The id of the pool from which you want to remove nodes.
+            /// The ID of the pool from which you want to remove nodes.
             /// </param>
             /// <param name='nodeRemoveParameter'>
             /// The parameters for the request.
@@ -719,6 +885,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Lists the usage metrics, aggregated by pool across individual time
             /// intervals, for the specified account.
             /// </summary>
+            /// <remarks>
+            /// If you do not specify a $filter clause including a poolId, the response
+            /// includes all pools that existed in the account in the time range of the
+            /// returned aggregation intervals.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -737,6 +908,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Lists the usage metrics, aggregated by pool across individual time
             /// intervals, for the specified account.
             /// </summary>
+            /// <remarks>
+            /// If you do not specify a $filter clause including a poolId, the response
+            /// includes all pools that existed in the account in the time range of the
+            /// returned aggregation intervals.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

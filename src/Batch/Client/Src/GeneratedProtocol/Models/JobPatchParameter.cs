@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudJobOperations.Patch request.
+    /// The set of changes to be made to a job.
     /// </summary>
     public partial class JobPatchParameter
     {
@@ -36,8 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="priority">The priority of the job.</param>
         /// <param name="onAllTasksComplete">Specifies an action the Batch
         /// service should take when all tasks in the job are in the
-        /// completed state. Possible values include: 'noAction',
-        /// 'terminateJob'</param>
+        /// completed state.</param>
         /// <param name="constraints">The execution constraints for the
         /// job.</param>
         /// <param name="poolInfo">The pool on which the Batch service runs
@@ -66,9 +65,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets specifies an action the Batch service should take
-        /// when all tasks in the job are in the completed state. Possible
-        /// values include: 'noAction', 'terminateJob'
+        /// when all tasks in the job are in the completed state.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the completion behavior is left unchanged. You may not
+        /// change the value from terminatejob to noaction – that is, once
+        /// you have engaged automatic job termination, you cannot turn it
+        /// off again. If you try to do this, the request fails with an
+        /// 'invalid property value' error response; if you are calling the
+        /// REST API directly, the HTTP status code is 400 (Bad Request).
+        /// Possible values include: 'noAction', 'terminateJob'
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 

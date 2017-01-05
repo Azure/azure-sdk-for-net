@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="imageReference">A reference to the Azure Virtual
         /// Machines Marketplace image to use.</param>
-        /// <param name="nodeAgentSKUId">The SKU of Batch Node Agent to be
-        /// provisioned on the compute node.</param>
+        /// <param name="nodeAgentSKUId">The SKU of the Batch node agent to be
+        /// provisioned on compute nodes in the pool.</param>
         /// <param name="windowsConfiguration">Windows operating system
         /// settings on the virtual machine.</param>
         public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
@@ -57,14 +57,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU of Batch Node Agent to be provisioned on the
-        /// compute node.
+        /// Gets or sets the SKU of the Batch node agent to be provisioned on
+        /// compute nodes in the pool.
         /// </summary>
         /// <remarks>
         /// The Batch node agent is a program that runs on each node in the
         /// pool, and provides the command-and-control interface between the
         /// node and the Batch service. There are different implementations
-        /// of the node agent, known as SKUs, for different operating systems.
+        /// of the node agent, known as SKUs, for different operating
+        /// systems. You must specify a node agent SKU which matches the
+        /// selected image reference. To get the list of supported node agent
+        /// SKUs along with their list of verified image references, see the
+        /// 'List supported node agent SKUs' operation.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }

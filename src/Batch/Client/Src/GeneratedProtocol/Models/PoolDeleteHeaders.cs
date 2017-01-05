@@ -33,11 +33,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolDeleteHeaders class.
         /// </summary>
-        /// <param name="clientRequestId">The ClientRequestId provided by the
-        /// client during the request, if present and requested to be
-        /// returned.</param>
-        /// <param name="requestId">The value that uniquely identifies a
-        /// request.</param>
+        /// <param name="clientRequestId">The client-request-id provided by
+        /// the client during the request. This will be returned only if the
+        /// return-client-request-id parameter was set to true.</param>
+        /// <param name="requestId">This header uniquely identifies the
+        /// request that was made and can be used for troubleshooting the
+        /// request. If a request is consistently failing and you have
+        /// verified that the request is properly formulated, you may use
+        /// this value to report the error to Microsoft. In your report,
+        /// include the value of this header, the approximate time that the
+        /// request was made, the Batch account against which the request was
+        /// made, and the region that account resides in.</param>
         public PoolDeleteHeaders(string clientRequestId = default(string), string requestId = default(string))
         {
             ClientRequestId = clientRequestId;
@@ -45,14 +51,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the ClientRequestId provided by the client during the
-        /// request, if present and requested to be returned.
+        /// Gets or sets the client-request-id provided by the client during
+        /// the request. This will be returned only if the
+        /// return-client-request-id parameter was set to true.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets the value that uniquely identifies a request.
+        /// Gets or sets this header uniquely identifies the request that was
+        /// made and can be used for troubleshooting the request. If a
+        /// request is consistently failing and you have verified that the
+        /// request is properly formulated, you may use this value to report
+        /// the error to Microsoft. In your report, include the value of this
+        /// header, the approximate time that the request was made, the Batch
+        /// account against which the request was made, and the region that
+        /// account resides in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }

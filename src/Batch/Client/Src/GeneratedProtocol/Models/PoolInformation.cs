@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolInformation class.
         /// </summary>
-        /// <param name="poolId">The id of an existing pool. All the tasks of
+        /// <param name="poolId">The ID of an existing pool. All the tasks of
         /// the job will run on the specified pool.</param>
         /// <param name="autoPoolSpecification">Characteristics for a
         /// temporary 'auto pool'. The Batch service will create this auto
@@ -45,12 +45,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of an existing pool. All the tasks of the job
+        /// Gets or sets the ID of an existing pool. All the tasks of the job
         /// will run on the specified pool.
         /// </summary>
         /// <remarks>
-        /// You must specify either poolId or autoPoolSpecification, but not
-        /// both.
+        /// You must ensure that the pool referenced by this property exists.
+        /// If the pool does not exist at the time the Batch service tries to
+        /// schedule a job, no tasks for the job will run until you create a
+        /// pool with that id. Note that the Batch service will not reject
+        /// the job request; it will simply not run tasks until the pool
+        /// exists. You must specify either the pool ID or the auto pool
+        /// specification, but not both.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
@@ -61,8 +66,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// submitted.
         /// </summary>
         /// <remarks>
-        /// You must specify either poolId or autoPoolSpecification, but not
-        /// both.
+        /// If auto pool creation fails, the Batch service moves the job to a
+        /// completed state, and the pool creation error is set in the job's
+        /// scheduling error property. The Batch service manages the lifetime
+        /// (both creation and, unless keepAlive is specified, deletion) of
+        /// the auto pool. Any user actions that affect the lifetime of the
+        /// auto pool while the job is active will result in unexpected
+        /// behavior. You must specify either the pool ID or the auto pool
+        /// specification, but not both.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoPoolSpecification")]
         public AutoPoolSpecification AutoPoolSpecification { get; set; }

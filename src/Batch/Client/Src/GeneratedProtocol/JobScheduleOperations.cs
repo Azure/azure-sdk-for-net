@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Checks the specified job schedule exists.
         /// </summary>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule which you want to check.
+        /// The ID of the job schedule which you want to check.
         /// </param>
         /// <param name='jobScheduleExistsOptions'>
         /// Additional parameters for the operation
@@ -330,8 +330,16 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Deletes a job schedule from the specified account.
         /// </summary>
+        /// <remarks>
+        /// When you delete a job schedule, this also deletes all jobs and tasks under
+        /// that schedule. When tasks are deleted, all the files in their working
+        /// directories on the compute nodes are also deleted (the retention period
+        /// is ignored). The job schedule statistics are no longer accessible once
+        /// the job schedule is deleted, though they are still counted towards
+        /// account lifetime statistics.
+        /// </remarks>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to delete.
+        /// The ID of the job schedule to delete.
         /// </param>
         /// <param name='jobScheduleDeleteOptions'>
         /// Additional parameters for the operation
@@ -606,7 +614,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Gets information about the specified job schedule.
         /// </summary>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to get.
+        /// The ID of the job schedule to get.
         /// </param>
         /// <param name='jobScheduleGetOptions'>
         /// Additional parameters for the operation
@@ -921,8 +929,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Updates the properties of the specified job schedule.
         /// </summary>
+        /// <remarks>
+        /// This replaces only the job schedule properties specified in the request.
+        /// For example, if the schedule property is not specified with this request,
+        /// then the Batch service will keep the existing schedule. Changes to a job
+        /// schedule only impact jobs created by the schedule after the update has
+        /// taken place; currently running jobs are unaffected.
+        /// </remarks>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to update.
+        /// The ID of the job schedule to update.
         /// </param>
         /// <param name='jobSchedulePatchParameter'>
         /// The parameters for the request.
@@ -1210,8 +1225,15 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Updates the properties of the specified job schedule.
         /// </summary>
+        /// <remarks>
+        /// This fully replaces all the updateable properties of the job schedule. For
+        /// example, if the schedule property is not specified with this request,
+        /// then the Batch service will remove the existing schedule. Changes to a
+        /// job schedule only impact jobs created by the schedule after the update
+        /// has taken place; currently running jobs are unaffected.
+        /// </remarks>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to update.
+        /// The ID of the job schedule to update.
         /// </param>
         /// <param name='jobScheduleUpdateParameter'>
         /// The parameters for the request.
@@ -1503,8 +1525,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Disables a job schedule.
         /// </summary>
+        /// <remarks>
+        /// No new jobs will be created until the job schedule is enabled again.
+        /// </remarks>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to disable.
+        /// The ID of the job schedule to disable.
         /// </param>
         /// <param name='jobScheduleDisableOptions'>
         /// Additional parameters for the operation
@@ -1779,7 +1804,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Enables a job schedule.
         /// </summary>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to enable.
+        /// The ID of the job schedule to enable.
         /// </param>
         /// <param name='jobScheduleEnableOptions'>
         /// Additional parameters for the operation
@@ -2054,7 +2079,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Terminates a job schedule.
         /// </summary>
         /// <param name='jobScheduleId'>
-        /// The id of the job schedule to terminates.
+        /// The ID of the job schedule to terminates.
         /// </param>
         /// <param name='jobScheduleTerminateOptions'>
         /// Additional parameters for the operation

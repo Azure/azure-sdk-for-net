@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a ComputeNodeOperations.Reimage request.
+    /// Options for reimaging a compute node.
     /// </summary>
     public partial class NodeReimageParameter
     {

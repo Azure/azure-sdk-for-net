@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudPoolOperations.Resize request.
+    /// Options for changing the size of a pool.
     /// </summary>
     public partial class PoolResizeParameter
     {
@@ -58,7 +58,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool or removal of compute nodes from the pool.
         /// </summary>
         /// <remarks>
-        /// The default value is 10 minutes.
+        /// The default value is 15 minutes. The minimum value is 5 minutes.
+        /// If you specify a value less than 5 minutes, the Batch service
+        /// returns an error; if you are calling the REST API directly, the
+        /// HTTP status code is 400 (Bad Request).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
         public System.TimeSpan? ResizeTimeout { get; set; }
@@ -68,8 +71,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// size is decreasing.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'requeue', 'terminate', 'taskcompletion',
-        /// 'retaineddata'
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskcompletion', 'retaineddata'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job to which the task is to be added.
+            /// The ID of the job to which the task is to be added.
             /// </param>
             /// <param name='task'>
             /// The task to be added.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job to which the task is to be added.
+            /// The ID of the job to which the task is to be added.
             /// </param>
             /// <param name='task'>
             /// The task to be added.
@@ -76,11 +76,16 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Lists all of the tasks that are associated with the specified job.
             /// </summary>
+            /// <remarks>
+            /// For multi-instance tasks, information such as affinityId, executionInfo
+            /// and nodeInfo refer to the primary task. Use the list subtasks API to
+            /// retrieve information about subtasks.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job.
+            /// The ID of the job.
             /// </param>
             /// <param name='taskListOptions'>
             /// Additional parameters for the operation
@@ -93,11 +98,16 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Lists all of the tasks that are associated with the specified job.
             /// </summary>
+            /// <remarks>
+            /// For multi-instance tasks, information such as affinityId, executionInfo
+            /// and nodeInfo refer to the primary task. Use the list subtasks API to
+            /// retrieve information about subtasks.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job.
+            /// The ID of the job.
             /// </param>
             /// <param name='taskListOptions'>
             /// Additional parameters for the operation
@@ -116,11 +126,22 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Adds a collection of tasks to the specified job.
             /// </summary>
+            /// <remarks>
+            /// Note that each task must have a unique ID. The Batch service may not
+            /// return the results for each task in the same order the tasks were
+            /// submitted in this request. If the server times out or the connection is
+            /// closed during the request, the request may have been partially or fully
+            /// processed, or not at all. In such cases, the user should re-issue the
+            /// request. Note that it is up to the user to correctly handle failures when
+            /// re-issuing a request. For example, you should use the same task ids
+            /// during a retry so that if the prior operation succeeded, the retry will
+            /// not create extra tasks unexpectedly.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job to which the task collection is to be added.
+            /// The ID of the job to which the task collection is to be added.
             /// </param>
             /// <param name='value'>
             /// The collection of tasks to add.
@@ -136,11 +157,22 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Adds a collection of tasks to the specified job.
             /// </summary>
+            /// <remarks>
+            /// Note that each task must have a unique ID. The Batch service may not
+            /// return the results for each task in the same order the tasks were
+            /// submitted in this request. If the server times out or the connection is
+            /// closed during the request, the request may have been partially or fully
+            /// processed, or not at all. In such cases, the user should re-issue the
+            /// request. Note that it is up to the user to correctly handle failures when
+            /// re-issuing a request. For example, you should use the same task ids
+            /// during a retry so that if the prior operation succeeded, the retry will
+            /// not create extra tasks unexpectedly.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job to which the task collection is to be added.
+            /// The ID of the job to which the task collection is to be added.
             /// </param>
             /// <param name='value'>
             /// The collection of tasks to add.
@@ -162,14 +194,21 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Deletes a task from the specified job.
             /// </summary>
+            /// <remarks>
+            /// When a task is deleted, all of the files in its directory on the compute
+            /// node where it ran are also deleted (regardless of the retention time).
+            /// For multi-instance tasks, the delete task operation applies synchronously
+            /// to the primary task; subtasks and their files are then deleted
+            /// asynchronously in the background.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job from which to delete the task.
+            /// The ID of the job from which to delete the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to delete.
+            /// The ID of the task to delete.
             /// </param>
             /// <param name='taskDeleteOptions'>
             /// Additional parameters for the operation
@@ -182,14 +221,21 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Deletes a task from the specified job.
             /// </summary>
+            /// <remarks>
+            /// When a task is deleted, all of the files in its directory on the compute
+            /// node where it ran are also deleted (regardless of the retention time).
+            /// For multi-instance tasks, the delete task operation applies synchronously
+            /// to the primary task; subtasks and their files are then deleted
+            /// asynchronously in the background.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job from which to delete the task.
+            /// The ID of the job from which to delete the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to delete.
+            /// The ID of the task to delete.
             /// </param>
             /// <param name='taskDeleteOptions'>
             /// Additional parameters for the operation
@@ -208,14 +254,19 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Gets information about the specified task.
             /// </summary>
+            /// <remarks>
+            /// For multi-instance tasks, information such as affinityId, executionInfo
+            /// and nodeInfo refer to the primary task. Use the list subtasks API to
+            /// retrieve information about subtasks.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job that contains the task.
+            /// The ID of the job that contains the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to get information about.
+            /// The ID of the task to get information about.
             /// </param>
             /// <param name='taskGetOptions'>
             /// Additional parameters for the operation
@@ -228,14 +279,19 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Gets information about the specified task.
             /// </summary>
+            /// <remarks>
+            /// For multi-instance tasks, information such as affinityId, executionInfo
+            /// and nodeInfo refer to the primary task. Use the list subtasks API to
+            /// retrieve information about subtasks.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job that contains the task.
+            /// The ID of the job that contains the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to get information about.
+            /// The ID of the task to get information about.
             /// </param>
             /// <param name='taskGetOptions'>
             /// Additional parameters for the operation
@@ -258,10 +314,10 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job containing the task.
+            /// The ID of the job containing the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to update.
+            /// The ID of the task to update.
             /// </param>
             /// <param name='constraints'>
             /// Constraints that apply to this task. If omitted, the task is given the
@@ -282,10 +338,10 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job containing the task.
+            /// The ID of the job containing the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to update.
+            /// The ID of the task to update.
             /// </param>
             /// <param name='constraints'>
             /// Constraints that apply to this task. If omitted, the task is given the
@@ -309,14 +365,18 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Lists all of the subtasks that are associated with the specified
             /// multi-instance task.
             /// </summary>
+            /// <remarks>
+            /// If the task is not a multi-instance task then this returns an empty
+            /// collection.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job.
+            /// The ID of the job.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task.
+            /// The ID of the task.
             /// </param>
             /// <param name='taskListSubtasksOptions'>
             /// Additional parameters for the operation
@@ -330,14 +390,18 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Lists all of the subtasks that are associated with the specified
             /// multi-instance task.
             /// </summary>
+            /// <remarks>
+            /// If the task is not a multi-instance task then this returns an empty
+            /// collection.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job.
+            /// The ID of the job.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task.
+            /// The ID of the task.
             /// </param>
             /// <param name='taskListSubtasksOptions'>
             /// Additional parameters for the operation
@@ -356,14 +420,20 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Terminates the specified task.
             /// </summary>
+            /// <remarks>
+            /// When the task has been terminated, it moves to the completed state. For
+            /// multi-instance tasks, the terminate task operation applies synchronously
+            /// to the primary task; subtasks are then terminated asynchronously in the
+            /// background.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job containing the task.
+            /// The ID of the job containing the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to terminate.
+            /// The ID of the task to terminate.
             /// </param>
             /// <param name='taskTerminateOptions'>
             /// Additional parameters for the operation
@@ -376,14 +446,20 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Terminates the specified task.
             /// </summary>
+            /// <remarks>
+            /// When the task has been terminated, it moves to the completed state. For
+            /// multi-instance tasks, the terminate task operation applies synchronously
+            /// to the primary task; subtasks are then terminated asynchronously in the
+            /// background.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job containing the task.
+            /// The ID of the job containing the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to terminate.
+            /// The ID of the task to terminate.
             /// </param>
             /// <param name='taskTerminateOptions'>
             /// Additional parameters for the operation
@@ -404,18 +480,21 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </summary>
             /// <remarks>
             /// Reactivation makes a task eligible to be retried again up to its maximum
-            /// retry count. This will fail for tasks that are not completed or that
-            /// previously completed successfully (with an exit code of 0). Additionally,
-            /// this will fail if the job has completed (or is terminating or deleting).
+            /// retry count. The task's state is changed to active. As the task is no
+            /// longer in the completed state, any previous exit code or scheduling error
+            /// is no longer available after reactivation. This will fail for tasks that
+            /// are not completed or that previously completed successfully (with an exit
+            /// code of 0). Additionally, this will fail if the job has completed (or is
+            /// terminating or deleting).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job containing the task.
+            /// The ID of the job containing the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to reactivate.
+            /// The ID of the task to reactivate.
             /// </param>
             /// <param name='taskReactivateOptions'>
             /// Additional parameters for the operation
@@ -430,18 +509,21 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </summary>
             /// <remarks>
             /// Reactivation makes a task eligible to be retried again up to its maximum
-            /// retry count. This will fail for tasks that are not completed or that
-            /// previously completed successfully (with an exit code of 0). Additionally,
-            /// this will fail if the job has completed (or is terminating or deleting).
+            /// retry count. The task's state is changed to active. As the task is no
+            /// longer in the completed state, any previous exit code or scheduling error
+            /// is no longer available after reactivation. This will fail for tasks that
+            /// are not completed or that previously completed successfully (with an exit
+            /// code of 0). Additionally, this will fail if the job has completed (or is
+            /// terminating or deleting).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobId'>
-            /// The id of the job containing the task.
+            /// The ID of the job containing the task.
             /// </param>
             /// <param name='taskId'>
-            /// The id of the task to reactivate.
+            /// The ID of the task to reactivate.
             /// </param>
             /// <param name='taskReactivateOptions'>
             /// Additional parameters for the operation
@@ -460,6 +542,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Lists all of the tasks that are associated with the specified job.
             /// </summary>
+            /// <remarks>
+            /// For multi-instance tasks, information such as affinityId, executionInfo
+            /// and nodeInfo refer to the primary task. Use the list subtasks API to
+            /// retrieve information about subtasks.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -477,6 +564,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Lists all of the tasks that are associated with the specified job.
             /// </summary>
+            /// <remarks>
+            /// For multi-instance tasks, information such as affinityId, executionInfo
+            /// and nodeInfo refer to the primary task. Use the list subtasks API to
+            /// retrieve information about subtasks.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

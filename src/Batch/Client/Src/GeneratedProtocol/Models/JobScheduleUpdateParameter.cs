@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudJobScheduleOperations.Update request.
+    /// The set of changes to be made to a job schedule.
     /// </summary>
     public partial class JobScheduleUpdateParameter
     {
@@ -60,6 +60,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets details of the jobs to be created on this schedule.
         /// </summary>
+        /// <remarks>
+        /// Updates affect only jobs that are started after the update has
+        /// taken place. Any currently active job continues with the older
+        /// specification.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 

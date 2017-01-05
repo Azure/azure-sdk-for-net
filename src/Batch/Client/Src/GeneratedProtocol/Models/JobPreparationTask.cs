@@ -70,9 +70,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task within the job.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores and cannot contain more than 64
-        /// characters.
+        /// characters. If you do not specify this property, the Batch
+        /// service assigns a default value of 'jobpreparation'. No other
+        /// task in the job can have the same id as the Job Preparation task.
+        /// If you try to submit a task with the same id, the Batch service
+        /// rejects the request with error code
+        /// TaskIdSameAsJobPreparationTask; if you are calling the REST API
+        /// directly, the HTTP status code is 409 (Conflict).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -94,6 +100,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of files that the Batch service will download
         /// to the compute node before running the command line.
         /// </summary>
+        /// <remarks>
+        /// Files listed under this element are located in the task's working
+        /// directory.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
         public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
@@ -115,6 +125,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Preparation task to complete successfully before scheduling any
         /// other tasks of the job on the compute node.
         /// </summary>
+        /// <remarks>
+        /// If true and the Job Preparation task fails on a compute node, the
+        /// Batch service retries the Job Preparation task up to its maximum
+        /// retry count (as specified in the constraints element). If the
+        /// task has still not completed successfully after all retries, then
+        /// the Batch service will not schedule tasks of the job to the
+        /// compute node. The compute node remains active and eligible to run
+        /// tasks of other jobs. If false, the Batch service will not wait
+        /// for the Job Preparation task to complete. In this case, other
+        /// tasks of the job can start executing on the compute node while
+        /// the Job Preparation task is still running; and even if the Job
+        /// Preparation task fails, new tasks will continue to be scheduled
+        /// on the node. The default value is true.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
@@ -130,10 +154,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Preparation task after a compute node reboots.
         /// </summary>
         /// <remarks>
-        /// Note that the Job Preparation task should still be written to be
-        /// idempotent because it can be rerun if the compute node is
-        /// rebooted while Job Preparation task is still running. The default
-        /// value is true.
+        /// The Job Preparation task is always rerun if a compute node is
+        /// reimaged, or if the Job Preparation task did not complete (e.g.
+        /// because the reboot occurred while the task was running).
+        /// Therefore, you should always write a Job Preparation task to be
+        /// idempotent and to behave correctly if run multiple times. The
+        /// default value is true.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
         public bool? RerunOnNodeRebootAfterSuccess { get; set; }

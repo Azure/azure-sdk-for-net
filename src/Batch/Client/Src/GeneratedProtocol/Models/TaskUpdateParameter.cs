@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudTaskOperations.Update request.
+    /// The set of changes to be made to a task.
     /// </summary>
     public partial class TaskUpdateParameter
     {

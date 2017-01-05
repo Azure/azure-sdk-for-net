@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudJobScheduleOperations.Patch request.
+    /// The set of changes to be made to a job schedule.
     /// </summary>
     public partial class JobSchedulePatchParameter
     {
@@ -49,6 +49,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
         /// </summary>
+        /// <remarks>
+        /// If you do not specify this element, the existing schedule is left
+        /// unchanged.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
@@ -56,6 +60,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the details of the jobs to be created on this
         /// schedule.
         /// </summary>
+        /// <remarks>
+        /// Updates affect only jobs that are started after the update has
+        /// taken place. Any currently active job continues with the older
+        /// specification.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
@@ -63,6 +72,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of name-value pairs associated with the job
         /// schedule as metadata.
         /// </summary>
+        /// <remarks>
+        /// If you do not specify this element, existing metadata is left
+        /// unchanged.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 

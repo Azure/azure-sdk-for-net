@@ -60,17 +60,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// environment variable settings. These environment variables are
         /// set for all tasks in the job (including the Job Manager, Job
         /// Preparation and Job Release tasks).</param>
-        /// <param name="poolInfo">The pool on which the Batch service runs
-        /// the job's tasks.</param>
+        /// <param name="poolInfo">The pool settings associated with the
+        /// job.</param>
         /// <param name="onAllTasksComplete">The action the Batch service
-        /// should take when all tasks in the job are in the completed state.
-        /// Possible values include: 'noAction', 'terminateJob'</param>
+        /// should take when all tasks in the job are in the completed
+        /// state.</param>
         /// <param name="onTaskFailure">The action the Batch service should
         /// take when any task in the job fails. A task is considered to have
         /// failed if it completes with a non-zero exit code and has
-        /// exhausted its retry count, or if it had a scheduling error.
-        /// Possible values include: 'noAction',
-        /// 'performExitOptionsJobAction'</param>
+        /// exhausted its retry count, or if it had a scheduling
+        /// error.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the job as metadata.</param>
         /// <param name="executionInfo">The execution information for the
@@ -109,7 +108,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// account.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
@@ -138,12 +137,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the ETag of the job.
         /// </summary>
+        /// <remarks>
+        /// This is an opaque string. You can use it to detect whether the job
+        /// has changed between requests. In particular, you can be pass the
+        /// ETag when updating a job to specify that your changes should take
+        /// effect only if nobody else has modified the job in the meantime.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the job.
         /// </summary>
+        /// <remarks>
+        /// This is the last time at which the job level data, such as the job
+        /// state or priority, changed. It does not factor in task-level
+        /// changes such as adding new tasks or tasks changing state.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
         public System.DateTime? LastModified { get; set; }
 
@@ -193,9 +203,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the priority of the job.
         /// </summary>
         /// <remarks>
-        /// Priority values can range from -1000 to 1000, with -1000 being
-        /// the lowest priority and 1000 being the highest priority. The
-        /// default value is 0.
+        /// Priority values can range from -1000 to 1000, with -1000 being the
+        /// lowest priority and 1000 being the highest priority. The default
+        /// value is 0.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
@@ -216,12 +226,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the Job Preparation task.
         /// </summary>
+        /// <remarks>
+        /// The Job Preparation task is a special task run on each node before
+        /// any other task of the job.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Release task.
         /// </summary>
+        /// <remarks>
+        /// The Job Release task is a special task run at the end of the job
+        /// on each node that has run any other task of the job.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
@@ -235,17 +253,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.Collections.Generic.IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the job's
-        /// tasks.
+        /// Gets or sets the pool settings associated with the job.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the action the Batch service should take when all
-        /// tasks in the job are in the completed state. Possible values
-        /// include: 'noAction', 'terminateJob'
+        /// tasks in the job are in the completed state.
         /// </summary>
+        /// <remarks>
+        /// Permitted values are: noaction – do nothing. The job remains
+        /// active unless terminated or disabled by some other means.
+        /// terminatejob – terminate the job. The job's terminateReason is
+        /// set to 'AllTasksComplete'. The default is noaction. Possible
+        /// values include: 'noAction', 'terminateJob'
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
@@ -253,9 +276,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the action the Batch service should take when any
         /// task in the job fails. A task is considered to have failed if it
         /// completes with a non-zero exit code and has exhausted its retry
-        /// count, or if it had a scheduling error. Possible values include:
-        /// 'noAction', 'performExitOptionsJobAction'
+        /// count, or if it had a scheduling error.
         /// </summary>
+        /// <remarks>
+        /// Permitted values are: noaction – do nothing.
+        /// performexitoptionsjobaction – take the action associated with the
+        /// task exit condition in the task's exitConditions collection.
+        /// (This may still result in no action being taken, if that is what
+        /// the task specifies.) The default is noaction. Possible values
+        /// include: 'noAction', 'performExitOptionsJobAction'
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }
 
@@ -263,6 +293,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of name-value pairs associated with the job as
         /// metadata.
         /// </summary>
+        /// <remarks>
+        /// The Batch service does not assign any meaning to metadata; it is
+        /// solely for the use of user code.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 

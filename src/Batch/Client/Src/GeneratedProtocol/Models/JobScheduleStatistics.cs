@@ -131,6 +131,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the total wall clock time of all the tasks in all the
         /// jobs created under the schedule.
         /// </summary>
+        /// <remarks>
+        /// The wall clock time is the elapsed time from when the task started
+        /// running on a compute node to when it finished (or to the last
+        /// time the statistics were updated, if the task had not finished by
+        /// then). If a task was retried, this includes the wall clock time
+        /// of all the task retries.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "wallClockTime")]
         public System.TimeSpan WallClockTime { get; set; }
 
@@ -193,6 +200,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task execution. (If the task is retried due to failures, the wait
         /// time is the time to the most recent task execution.)
         /// </summary>
+        /// <remarks>
+        /// This value is only reported in the account lifetime statistics; it
+        /// is not included in the job statistics.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "waitTime")]
         public System.TimeSpan WaitTime { get; set; }
 

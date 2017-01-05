@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Response to a TaskOperations.AddCollection request.
+    /// The result of adding a collection of tasks to a job.
     /// </summary>
     public partial class TaskAddCollectionResult
     {

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudJobOperations.Terminate request.
+    /// Options when terminating a job.
     /// </summary>
     public partial class JobTerminateParameter
     {

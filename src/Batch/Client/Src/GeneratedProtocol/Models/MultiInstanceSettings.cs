@@ -37,10 +37,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the MultiInstanceSettings class.
         /// </summary>
         /// <param name="numberOfInstances">The number of compute nodes
-        /// required by the multi-instance task.</param>
-        /// <param name="coordinationCommandLine">The command to run on the
-        /// compute node instances for coordinating among the
-        /// subtasks.</param>
+        /// required by the task.</param>
+        /// <param name="coordinationCommandLine">The command line to run on
+        /// all the compute nodes to enable them to coordinate when the
+        /// primary runs the main task command.</param>
         /// <param name="commonResourceFiles">A list of files that the Batch
         /// service will download before running the coordination command
         /// line.</param>
@@ -52,16 +52,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the number of compute nodes required by the
-        /// multi-instance task.
+        /// Gets or sets the number of compute nodes required by the task.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfInstances")]
         public int NumberOfInstances { get; set; }
 
         /// <summary>
-        /// Gets or sets the command to run on the compute node instances for
-        /// coordinating among the subtasks.
+        /// Gets or sets the command line to run on all the compute nodes to
+        /// enable them to coordinate when the primary runs the main task
+        /// command.
         /// </summary>
+        /// <remarks>
+        /// A typical coordination command line launches a background service
+        /// and verifies that the service is ready to process inter-node
+        /// messages.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "coordinationCommandLine")]
         public string CoordinationCommandLine { get; set; }
 

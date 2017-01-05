@@ -29,6 +29,14 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Lists all of the applications available in the specified account.
         /// </summary>
+        /// <remarks>
+        /// This operation returns only applications and versions that are
+        /// available for use on compute nodes; that is, that can be used in
+        /// an application package reference. For administrator information
+        /// about applications and versions that are not yet available to
+        /// compute nodes, use the Azure portal or the Azure Resource Manager
+        /// API.
+        /// </remarks>
         /// <param name='applicationListOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -52,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Gets information about the specified application.
         /// </summary>
         /// <param name='applicationId'>
-        /// The id of the application.
+        /// The ID of the application.
         /// </param>
         /// <param name='applicationGetOptions'>
         /// Additional parameters for the operation
@@ -76,6 +84,14 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Lists all of the applications available in the specified account.
         /// </summary>
+        /// <remarks>
+        /// This operation returns only applications and versions that are
+        /// available for use on compute nodes; that is, that can be used in
+        /// an application package reference. For administrator information
+        /// about applications and versions that are not yet available to
+        /// compute nodes, use the Azure portal or the Azure Resource Manager
+        /// API.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

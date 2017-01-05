@@ -47,10 +47,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job Release task may run on a given compute node, measured from
         /// the time the task starts. If the task does not complete within
         /// the time limit, the Batch service terminates it. The default
-        /// value is 15 minutes.</param>
-        /// <param name="retentionTime">The minimum time to retain the working
+        /// value is 15 minutes. You may not specify a timeout longer than 15
+        /// minutes. If you do, the Batch service rejects it with an error;
+        /// if you are calling the REST API directly, the HTTP status code is
+        /// 400 (Bad Request).</param>
+        /// <param name="retentionTime">The minimum time to retain the task
         /// directory for the Job Release task on the compute node. After
-        /// this time, the Batch service may delete the working directory and
+        /// this time, the Batch service may delete the task directory and
         /// all its contents.</param>
         /// <param name="runElevated">Whether to run the Job Release task in
         /// elevated mode.</param>
@@ -70,9 +73,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task within the job.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores and cannot contain more than 64
-        /// characters.
+        /// characters. If you do not specify this property, the Batch
+        /// service assigns a default value of 'jobrelease'. No other task in
+        /// the job can have the same id as the Job Release task. If you try
+        /// to submit a task with the same id, the Batch service rejects the
+        /// request with error code TaskIdSameAsJobReleaseTask; if you are
+        /// calling the REST API directly, the HTTP status code is 409
+        /// (Conflict).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -94,6 +103,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of files that the Batch service will download
         /// to the compute node before running the command line.
         /// </summary>
+        /// <remarks>
+        /// Files listed under this element are located in the task's working
+        /// directory.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
         public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
@@ -108,19 +121,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the maximum elapsed time that the Job Release task
         /// may run on a given compute node, measured from the time the task
         /// starts. If the task does not complete within the time limit, the
-        /// Batch service terminates it. The default value is 15 minutes.
+        /// Batch service terminates it. The default value is 15 minutes. You
+        /// may not specify a timeout longer than 15 minutes. If you do, the
+        /// Batch service rejects it with an error; if you are calling the
+        /// REST API directly, the HTTP status code is 400 (Bad Request).
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "maxWallClockTime")]
         public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum time to retain the working directory for
-        /// the Job Release task on the compute node. After this time, the
-        /// Batch service may delete the working directory and all its
-        /// contents.
+        /// Gets or sets the minimum time to retain the task directory for the
+        /// Job Release task on the compute node. After this time, the Batch
+        /// service may delete the task directory and all its contents.
         /// </summary>
         /// <remarks>
-        /// The default is infinite.
+        /// The default is infinite, i.e. the task directory will be retained
+        /// until the compute node is removed or reimaged.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }

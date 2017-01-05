@@ -88,6 +88,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the password to access the certificate's private key.
         /// </summary>
+        /// <remarks>
+        /// This is required if the certificate format is pfx. It should be
+        /// omitted if the certificate format is cer.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 

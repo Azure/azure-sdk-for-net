@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeAgentSku class.
         /// </summary>
-        /// <param name="id">The node agent SKU id.</param>
+        /// <param name="id">The ID of the node agent SKU.</param>
         /// <param name="verifiedImageReferences">The list of images verified
         /// to be compatible with this node agent SKU.</param>
-        /// <param name="osType">The type of operating system compatible with
-        /// the node agent SKU.</param>
+        /// <param name="osType">The type of operating system (e.g. Windows or
+        /// Linux) compatible with the node agent SKU.</param>
         public NodeAgentSku(string id = default(string), System.Collections.Generic.IList<ImageReference> verifiedImageReferences = default(System.Collections.Generic.IList<ImageReference>), OSType? osType = default(OSType?))
         {
             Id = id;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the node agent SKU id.
+        /// Gets or sets the ID of the node agent SKU.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.Collections.Generic.IList<ImageReference> VerifiedImageReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of operating system compatible with the node
-        /// agent SKU.
+        /// Gets or sets the type of operating system (e.g. Windows or Linux)
+        /// compatible with the node agent SKU.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'linux', 'windows', 'unmapped'

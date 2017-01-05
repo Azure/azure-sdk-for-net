@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the RecentJob class.
         /// </summary>
-        /// <param name="id">The id of the job.</param>
+        /// <param name="id">The ID of the job.</param>
         /// <param name="url">The URL of the job.</param>
         public RecentJob(string id = default(string), string url = default(string))
         {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the job.
+        /// Gets or sets the ID of the job.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

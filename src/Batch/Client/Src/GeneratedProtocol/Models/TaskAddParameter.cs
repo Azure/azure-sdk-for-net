@@ -35,10 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="id">A string that uniquely identifies the task within
         /// the job.</param>
-        /// <param name="commandLine">The command line of the task. For
-        /// multi-instance tasks, the command line is executed on the primary
-        /// subtask after all the subtasks have finished executing the
-        /// coordianation command line.</param>
+        /// <param name="commandLine">The command line of the task.</param>
         /// <param name="displayName">A display name for the task.</param>
         /// <param name="exitConditions">How the Batch service should respond
         /// when the task completes.</param>
@@ -54,9 +51,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// this task.</param>
         /// <param name="runElevated">Whether to run the task in elevated
         /// mode.</param>
-        /// <param name="multiInstanceSettings">Information about how to run
-        /// the multi-instance task.</param>
-        /// <param name="dependsOn">Any other tasks that this task depends
+        /// <param name="multiInstanceSettings">An object that indicates that
+        /// the task is a multi-instance task, and contains information about
+        /// how to run the multi-instance task.</param>
+        /// <param name="dependsOn">The tasks that this task depends
         /// on.</param>
         /// <param name="applicationPackageReferences">A list of application
         /// packages that the Batch service will deploy to the compute node
@@ -82,9 +80,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than
-        /// 64 characters. It is common to use a GUID for the id.
+        /// 64 characters. The ID is case-preserving and case-insensitive
+        /// (that is, you may not have two IDs within a job that differ only
+        /// by case).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -92,18 +92,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets a display name for the task.
         /// </summary>
+        /// <remarks>
+        /// The display name need not be unique and can contain any Unicode
+        /// characters up to a maximum length of 1024.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line of the task. For multi-instance
-        /// tasks, the command line is executed on the primary subtask after
-        /// all the subtasks have finished executing the coordianation
-        /// command line.
+        /// Gets or sets the command line of the task.
         /// </summary>
         /// <remarks>
-        /// The command line does not run under a shell, and therefore cannot
-        /// take advantage of shell features such as environment variable
+        /// For multi-instance tasks, the command line is executed as the
+        /// primary task, after the primary task and all subtasks have
+        /// finished executing the coordination command line. The command
+        /// line does not run under a shell, and therefore cannot take
+        /// advantage of shell features such as environment variable
         /// expansion. If you want to take advantage of such features, you
         /// should invoke the shell in the command line, for example using
         /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
@@ -124,7 +128,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// For multi-instance tasks, the resource files will only be
-        /// downloaded to the compute node on which the primary subtask is
+        /// downloaded to the compute node on which the primary task is
         /// executed.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
@@ -146,24 +150,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the execution constraints that apply to this task.
         /// </summary>
+        /// <remarks>
+        /// If you do not specify constraints, the maxTaskRetryCount is the
+        /// maxTaskRetryCount specified for the job, and the maxWallClockTime
+        /// and retentionTime are infinite.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
+        /// <remarks>
+        /// The default value is false.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Gets or sets information about how to run the multi-instance task.
+        /// Gets or sets an object that indicates that the task is a
+        /// multi-instance task, and contains information about how to run
+        /// the multi-instance task.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets any other tasks that this task depends on.
+        /// Gets or sets the tasks that this task depends on.
         /// </summary>
+        /// <remarks>
+        /// The task will not be scheduled until all depended-on tasks have
+        /// completed successfully. (If any depended-on tasks fail and
+        /// exhaust their retry counts, the task will never be scheduled.) If
+        /// the job does not have usesTaskDependencies set to true, and this
+        /// element is present, the request fails with error code
+        /// TaskDependenciesNotSpecifiedOnJob.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dependsOn")]
         public TaskDependencies DependsOn { get; set; }
 
