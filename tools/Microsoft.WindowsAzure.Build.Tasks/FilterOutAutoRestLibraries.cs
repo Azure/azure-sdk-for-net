@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Build.Framework;
@@ -61,9 +62,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                 if (!string.IsNullOrEmpty(NugetPackagesToPublish))
                 {   
-                    nPkgsList = NugetPackagesToPublish.Split(' ').ToList<string>();
+                    nPkgsList = NugetPackagesToPublish.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
                 }
             }
+
             foreach (ITaskItem solution in AllLibraries)
             {
                 bool isAutoRestLibrary = false;

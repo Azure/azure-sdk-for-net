@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="RunPublishTest" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<UsingTask TaskName="DebugTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
-	<PropertyGroup>		
+	<PropertyGroup>
 		<LibrarySourceFolder Condition="'$(PublishTestProjects)' == 'true'">$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks.Tests\TestPublishProjects</LibrarySourceFolder>
 		<LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
 		<FxTargetList>portable;net40;net45</FxTargetList>
 		<NuGetPublishingSource>$(USERPROFILE)\nugetPublish</NuGetPublishingSource>
 		<NuGetKey>1234</NuGetKey>
 	</PropertyGroup>
-	
+	<PropertyGroup>
+		<TestInit>
+			CommonInit;
+			prepareforautorestlibraries;
+			BuildTestPackages;
+			Package;
+			Publish
+		</TestInit>
+	</PropertyGroup>
 	<ItemGroup>
-		<!-- <LibrariesToBuild Remove="@(LibrariesToBuild)"/> -->
 		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" Condition=" '$(Scope)' != 'All' Or '$(Scope)' == '' " />
 		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'All' Or '$(Scope)' == '' " />		
 		<LibraryFxTargetList Include="$(FxTargetList)" />
 		<AutoRestLibraryFxTargetList Include="portable;net45" />	
 	</ItemGroup>
-<!--
-	<Import Project="$(LibrarySourceFolder)\MultiProjectMultiSln\CSProjTestPublish\CSProjTestPublish.nuget.proj" />
-	-->
-	<Target Name="OnePackageInit">
-	<!-- Use Case: You have to provide scope here, the way msbuild builds it's build graph for imports
-		and the way we have authored our DynamicNuSpec targets
-		msbuild build.proj /p:PublishTestProjects=true /t:Publish_OnePackage /p:Scope=MultiProjectMultiSln
-	-->
+	
+	<Target Name="OnePackageInit">	
 		<Message Text="Executing 'OnePackageInit'" />
 		<PropertyGroup>
 		  <Scope>MultiProjectMultiSln</Scope>
@@ -36,38 +37,33 @@
 		<Message Text="Scope: '$(Scope)', PackageName: '$(PackageName)'"/>
 		<Error Text="No Project found to be built." Condition=" '@(LibrariesToBuild)' == '' " />
 	</Target>
-
-	<Target Name="MultiPackageInit">
-		<Message Text="Executing 'MultiPackageInit'" />
+	<Target Name="AllPackageInit">
+		<Message Text="Executing 'AllPackageInit'" />
 		<PropertyGroup>
 		  <Scope>MultiProjectSingleSln</Scope>
-		  <PackageName>Sdk RP1_MgmtPlane RP2_SDK.Test</PackageName>
+		  <!-- <PackageName>Sdk RP1_MgmtPlane RP2_SDK.Test</PackageName> -->
 		</PropertyGroup>
 		<ItemGroup>
 			<LibrariesToBuild Remove="@(LibrariesToBuild)" Condition=" '@(LibrariesToBuild)' != '' " />
 			<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" />
 		</ItemGroup>
 		<Error Text="No Project found to be built." Condition=" '@(LibrariesToBuild)' == '' " />
-	</Target>
-
-	<Target Name="Publish_MultiplePackage" DependsOnTargets="MultiPackageInit;TestInit;CommonSteps">
-		<Message Text="'Publish_MutiplePackage' completed"/>
-	</Target>
-
-	<Target Name="Publish_OnePackage" DependsOnTargets="OnePackageInit;TestInit;CommonSteps">
-		<Message Text="'Publish_OnePackage' succeeded" Condition="Exists('$(NuGetPublishingSource)\CSProjTestPublish.0.0.1.nupkg')" />
-		<Error Text="'Publish_OnePackage' failed" Condition="!Exists('$(NuGetPublishingSource)\CSProjTestPublish.0.0.1.nupkg')" />
-	</Target>
-
-	<Target Name="CommonSteps" DependsOnTargets="prepareforautorestlibraries;BuildTestPackages;Package;Publish" />
-	
-	<Target Name="TestInit" >
+	</Target>	
+	<Target Name="MultiSelectedPackagesInit">
+		<Message Text="Executing 'MultiSelectedPackagesInit'" />
+		<ItemGroup>
+			<LibrariesToBuild Remove="@(LibrariesToBuild)" Condition=" '@(LibrariesToBuild)' != '' " />
+			<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\**\*.sln" />
+		</ItemGroup>
+		<Error Text="No Project found to be built." Condition=" '@(LibrariesToBuild)' == '' " />
+	</Target>	
+	<Target Name="CommonInit" >
+		<Message Text="Executing 'CommonInit'" />
 		<Message Text="Trying to Create directory $(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
 		<MakeDir Directories="$(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
 		<Message Text="Test Publishing directory detected $(NuGetPublishingSource)" Condition="Exists($(NuGetPublishingSource))" />
 		<Error Text="Directory creation failed for '$(NuGetPublishingSource)'" Condition="!Exists($(NuGetPublishingSource))" />
-	</Target>
-	
+	</Target>	
 	<Target  Name="BuildTestPackages">
 		<Message Text="Non-NetCore Test Packages Libs to be built:  @(Non_NetCore_AutoRestLibraries)" />
 		<MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"             
@@ -79,4 +75,31 @@
 
 		<Message Text="Building packages completed. Publishing not done" />
   </Target>
-</Project>
+  
+  <!-- TEST CASES -->
+  
+  <!-- Use Case:
+		msbuild build.proj /p:PublishTestProjects=true /t:Publish_MultipleSelectedPackage /p:Scope=MultiProjectSingleSln /p:PackageName="Sdk RP1_MgmtPlane"
+	-->
+	<Target Name="Publish_MultipleSelectedPackage" DependsOnTargets="MultiSelectedPackagesInit;$(TestInit)">
+		<Message Text="'Publish_MultipleSelectedPackage' completed"/>
+	</Target>
+	
+	<!-- Use Case:
+		msbuild build.proj /p:PublishTestProjects=true /t:Publish_AllPackage
+	-->
+	<Target Name="Publish_AllPackage" DependsOnTargets="AllPackageInit;$(TestInit)">
+		<Message Text="'Publish_MultiplePackage' completed"/>
+	</Target>
+
+	<!-- Use Case: You have to provide scope here, the way msbuild builds it's build graph for imports
+		and the way we have authored our DynamicNuSpec targets
+		msbuild build.proj /p:PublishTestProjects=true /t:Publish_OnePackage /p:Scope=MultiProjectMultiSln
+	-->
+	<Target Name="Publish_OnePackage" DependsOnTargets="OnePackageInit;$(TestInit)">
+		<Message Text="'Publish_OnePackage' succeeded" Condition="Exists('$(NuGetPublishingSource)\CSProjTestPublish.0.0.1.nupkg')" />
+		<Error Text="'Publish_OnePackage' failed" Condition="!Exists('$(NuGetPublishingSource)\CSProjTestPublish.0.0.1.nupkg')" />
+	</Target>
+  
+  <!-- END OF TEST CASES -->
+  </Project>
