@@ -5,11 +5,11 @@
 
 @echo off
 setlocal
-set autoRestVersion=1.0.0-Nightly20161206
+set autoRestVersion=1.0.0-Nightly20170104
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
-set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/bd6687e49fe9ff4c136eebd27eb120060eb758a5/arm-datalake-store/account/2016-11-01/swagger/account.json"
-set filesystemSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/bd6687e49fe9ff4c136eebd27eb120060eb758a5/arm-datalake-store/filesystem/2016-11-01/swagger/filesystem.json"
+set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/232749acbb85396a194248114a43b90491604532/arm-datalake-store/account/2016-11-01/swagger/account.json"
+set filesystemSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/232749acbb85396a194248114a43b90491604532/arm-datalake-store/filesystem/2016-11-01/swagger/filesystem.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated

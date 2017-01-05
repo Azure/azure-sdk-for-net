@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static JobStatistics GetStatistics(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetStatisticsAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetStatisticsAsync(accountName, jobIdentity).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static JobDataPath GetDebugDataPath(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetDebugDataPathAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetDebugDataPathAsync(accountName, jobIdentity).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static JobInformation Build(this IJobOperations operations, string accountName, JobInformation parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).BuildAsync(accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BuildAsync(accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void Cancel(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                Task.Factory.StartNew(s => ((IJobOperations)s).CancelAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.CancelAsync(accountName, jobIdentity).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static JobInformation Get(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(accountName, jobIdentity).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static JobInformation Create(this IJobOperations operations, string accountName, System.Guid jobIdentity, JobInformation parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).CreateAsync(accountName, jobIdentity, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateAsync(accountName, jobIdentity, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<JobInformation> List(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<JobInformation> ListNext(this IJobOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
