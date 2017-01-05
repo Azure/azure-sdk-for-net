@@ -57,12 +57,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a string that uniquely identifies the schedule within
         /// the account.
         /// </summary>
+        /// <remarks>
+        /// The ID can contain any combination of alphanumeric characters
+        /// including hyphens and underscores, and cannot contain more than
+        /// 64 characters. The id is case-preserving and case-insensitive
+        /// (that is, you may not have two ids within an account that differ
+        /// only by case).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the schedule.
         /// </summary>
+        /// <remarks>
+        /// The display name need not be unique and can contain any Unicode
+        /// characters up to a maximum length of 1024.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
@@ -83,6 +94,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of name-value pairs associated with the
         /// schedule as metadata.
         /// </summary>
+        /// <remarks>
+        /// The Batch service does not assign any meaning to metadata; it is
+        /// solely for the use of user code.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 

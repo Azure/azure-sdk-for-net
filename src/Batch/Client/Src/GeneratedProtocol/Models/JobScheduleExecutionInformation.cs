@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies how tasks should be run in a job associated with a job
-    /// schedule.
+    /// Contains information about jobs that have been and will be run under a
+    /// job schedule.
     /// </summary>
     public partial class JobScheduleExecutionInformation
     {
@@ -52,6 +52,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the next time at which a job will be created under
         /// this schedule.
         /// </summary>
+        /// <remarks>
+        /// This property is meaningful only if the schedule is in the active
+        /// state when the time comes around. For example, if the schedule is
+        /// disabled, no job will be created at nextRunTime unless the job is
+        /// enabled before then.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nextRunTime")]
         public System.DateTime? NextRunTime { get; set; }
 
@@ -59,6 +65,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets information about the most recent job under the job
         /// schedule.
         /// </summary>
+        /// <remarks>
+        /// This property is present only if the at least one job has run
+        /// under the schedule.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "recentJob")]
         public RecentJob RecentJob { get; set; }
 

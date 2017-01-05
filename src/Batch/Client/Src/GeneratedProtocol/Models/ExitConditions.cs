@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="exitCodes">A list of individual task exit codes and
         /// how the Batch service should respond to them.</param>
-        /// <param name="exitCodeRanges">A list of task exit codes ranges and
+        /// <param name="exitCodeRanges">A list of task exit code ranges and
         /// how the Batch service should respond to them.</param>
         /// <param name="schedulingError">How the Batch service should respond
         /// if the task fails with a scheduling error.</param>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.Collections.Generic.IList<ExitCodeMapping> ExitCodes { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of task exit codes ranges and how the Batch
+        /// Gets or sets a list of task exit code ranges and how the Batch
         /// service should respond to them.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "exitCodeRanges")]
@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// exitCodes or exitCodeRanges collection, or a scheduling error if
         /// the schedulingError property is not present.
         /// </summary>
+        /// <remarks>
+        /// Note that the default condition does not include exit code 0. If
+        /// you want non-default behaviour on exit code 0, you must list it
+        /// explicitly using the exitCodes or exitCodeRanges collection.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "default")]
         public ExitOptions DefaultProperty { get; set; }
 

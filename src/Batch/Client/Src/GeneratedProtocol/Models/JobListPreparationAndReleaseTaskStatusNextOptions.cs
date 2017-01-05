@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// identity, in the form of a GUID with no decoration such as curly
         /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
         /// <param name="returnClientRequestId">Whether the server should
-        /// return the client-request-id identifier in the response.</param>
+        /// return the client-request-id in the response.</param>
         /// <param name="ocpDate">The time the request was issued. If not
         /// specified, this header will be automatically populated with the
         /// current system clock time.</param>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether the server should return the
-        /// client-request-id identifier in the response.
+        /// client-request-id in the response.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }

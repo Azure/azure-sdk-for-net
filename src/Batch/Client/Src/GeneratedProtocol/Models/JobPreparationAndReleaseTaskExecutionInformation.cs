@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobPreparationAndReleaseTaskExecutionInformation class.
         /// </summary>
-        /// <param name="poolId">The id of the pool containing the compute
+        /// <param name="poolId">The ID of the pool containing the compute
         /// node to which this entry refers.</param>
-        /// <param name="nodeId">The id of the compute node to which this
+        /// <param name="nodeId">The ID of the compute node to which this
         /// entry refers.</param>
         /// <param name="nodeUrl">The URL of the compute node to which this
         /// entry refers.</param>
@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the pool containing the compute node to
+        /// Gets or sets the ID of the pool containing the compute node to
         /// which this entry refers.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the compute node to which this entry refers.
+        /// Gets or sets the ID of the compute node to which this entry refers.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeId")]
         public string NodeId { get; set; }

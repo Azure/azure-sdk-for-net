@@ -65,8 +65,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
         /// compute nodes in the pool.</param>
-        /// <param name="autoScaleEvaluationInterval">A time interval for the
-        /// desired AutoScale evaluation period in the pool.</param>
+        /// <param name="autoScaleEvaluationInterval">The time interval at
+        /// which to automatically adjust the pool size according to the
+        /// autoscale formula.</param>
         /// <param name="autoScaleRun">The results and errors from the last
         /// execution of the autoscale formula.</param>
         /// <param name="enableInterNodeCommunication">Whether the pool
@@ -126,7 +127,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// account.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
@@ -136,6 +137,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the display name for the pool.
         /// </summary>
+        /// <remarks>
+        /// The display name need not be unique and can contain any Unicode
+        /// characters up to a maximum length of 1024.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
@@ -148,12 +153,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the ETag of the pool.
         /// </summary>
+        /// <remarks>
+        /// This is an opaque string. You can use it to detect whether the
+        /// pool has changed between requests. In particular, you can be pass
+        /// the ETag when updating a pool to specify that your changes should
+        /// take effect only if nobody else has modified the pool in the
+        /// meantime.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the pool.
         /// </summary>
+        /// <remarks>
+        /// This is the last time at which the pool level data, such as the
+        /// targetDedicated or enableAutoscale settings, changed. It does not
+        /// factor in node-level changes such as a compute node changing
+        /// state.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
         public System.DateTime? LastModified { get; set; }
 
@@ -167,7 +185,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the pool.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'active', 'deleting', 'upgrading'
+        /// Possible values are: active – The pool is available to run tasks
+        /// subject to the availability of compute nodes. deleting – The user
+        /// has requested that the pool be deleted, but the delete operation
+        /// has not yet completed. upgrading – The user has requested that
+        /// the operating system of the pool's nodes be upgraded, but the
+        /// upgrade operation has not yet completed (that is, some nodes in
+        /// the pool have not yet been upgraded). While upgrading, the pool
+        /// may be able to run tasks (with reduced capacity) but this is not
+        /// guaranteed. Possible values include: 'active', 'deleting',
+        /// 'upgrading'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public PoolState? State { get; set; }
@@ -182,6 +209,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the pool is resizing.
         /// </summary>
         /// <remarks>
+        /// Possible values are: steady – The pool is not resizing. There are
+        /// no changes to the number of nodes in the pool in progress. A pool
+        /// enters this state when it is created and when no operations are
+        /// being performed on the pool to change the number of dedicated
+        /// nodes. resizing - The pool is resizing; that is, compute nodes
+        /// are being added to or removed from the pool. stopping - The pool
+        /// was resizing, but the user has requested that the resize be
+        /// stopped, but the stop request has not yet been completed.
         /// Possible values include: 'steady', 'resizing', 'stopping'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "allocationState")]
@@ -198,6 +233,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the size of virtual machines in the pool. All virtual
         /// machines in a pool are the same size.
         /// </summary>
+        /// <remarks>
+        /// For information about available sizes of virtual machines for
+        /// Cloud Services pools (pools created with
+        /// cloudServiceConfiguration), see Sizes for Cloud Services
+        /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall. For
+        /// information about available VM sizes for pools using images from
+        /// the Virtual Machines Marketplace (pools created with
+        /// virtualMachineConfiguration) see Sizes for Virtual Machines
+        /// (Linux)
+        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
+        /// or Sizes for Virtual Machines (Windows)
+        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/).
+        /// Batch supports all Azure VM sizes except STANDARD_A0 and those
+        /// with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
+        /// series).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
@@ -226,8 +278,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.
         /// </summary>
         /// <remarks>
-        /// This is the timeout for the most recent resize operation. The
-        /// default value is 10 minutes.
+        /// This is the timeout for the most recent resize operation. (The
+        /// initial sizing when the pool is created counts as a resize.) The
+        /// default value is 15 minutes.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
         public System.TimeSpan? ResizeTimeout { get; set; }
@@ -253,8 +306,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the desired number of compute nodes in the pool.
         /// </summary>
         /// <remarks>
-        /// This property must have the default value if enableAutoScale is
-        /// true. It is required if enableAutoScale is false.
+        /// This property is not set if enableAutoScale is true. It is
+        /// required if enableAutoScale is false.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicated")]
         public int? TargetDedicated { get; set; }
@@ -274,13 +327,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a formula for the desired number of compute nodes in
         /// the pool.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the pool automatically scales, i.e.
+        /// enableAutoScale is true.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
-        /// Gets or sets a time interval for the desired AutoScale evaluation
-        /// period in the pool.
+        /// Gets or sets the time interval at which to automatically adjust
+        /// the pool size according to the autoscale formula.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the pool automatically scales, i.e.
+        /// enableAutoScale is true.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
         public System.TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
@@ -288,6 +349,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the results and errors from the last execution of the
         /// autoscale formula.
         /// </summary>
+        /// <remarks>
+        /// This property is set only if the pool automatically scales, i.e.
+        /// enableAutoScale is true.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleRun")]
         public AutoScaleRun AutoScaleRun { get; set; }
 
@@ -295,6 +360,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the pool permits direct communication between
         /// nodes.
         /// </summary>
+        /// <remarks>
+        /// This imposes restrictions on which nodes can be assigned to the
+        /// pool. Specifying this value can reduce the chance of the
+        /// requested number of nodes to be allocated in the pool.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
@@ -315,6 +385,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of certificates to be installed on each
         /// compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// For Windows compute nodes, the Batch service installs the
+        /// certificates to the specified certificate store and location. For
+        /// Linux compute nodes, the certificates are stored in a directory
+        /// inside the task working directory and an environment variable
+        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for
+        /// this location. For certificates with visibility of remoteuser, a
+        /// certs directory is created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) where certificates are placed.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
         public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
 

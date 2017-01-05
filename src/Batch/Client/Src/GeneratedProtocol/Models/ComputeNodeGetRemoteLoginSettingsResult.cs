@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Response to a ComputeNodeOperation.GetRemoteLoginSettings request.
+    /// The remote login settings for a compute node.
     /// </summary>
     public partial class ComputeNodeGetRemoteLoginSettingsResult
     {

@@ -55,19 +55,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Deletes the specified task file from the compute node where the task ran.
         /// </summary>
         /// <param name='jobId'>
-        /// The id of the job that contains the task.
+        /// The ID of the job that contains the task.
         /// </param>
         /// <param name='taskId'>
-        /// The id of the task whose file you want to delete.
+        /// The ID of the task whose file you want to delete.
         /// </param>
         /// <param name='fileName'>
         /// The path to the task file that you want to delete.
         /// </param>
         /// <param name='recursive'>
         /// Whether to delete children of a directory. If the fileName parameter
-        /// represents a directory instead of a file, you can set Recursive to true
+        /// represents a directory instead of a file, you can set recursive to true
         /// to delete the directory and all of the files and subdirectories in it. If
-        /// Recursive is false then the directory must be empty or deletion will fail.
+        /// recursive is false then the directory must be empty or deletion will fail.
         /// </param>
         /// <param name='fileDeleteFromTaskOptions'>
         /// Additional parameters for the operation
@@ -303,10 +303,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Returns the content of the specified task file.
         /// </summary>
         /// <param name='jobId'>
-        /// The id of the job that contains the task.
+        /// The ID of the job that contains the task.
         /// </param>
         /// <param name='taskId'>
-        /// The id of the task whose file you want to retrieve.
+        /// The ID of the task whose file you want to retrieve.
         /// </param>
         /// <param name='fileName'>
         /// The path to the task file that you want to get the content of.
@@ -590,10 +590,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Gets the properties of the specified task file.
         /// </summary>
         /// <param name='jobId'>
-        /// The id of the job that contains the task.
+        /// The ID of the job that contains the task.
         /// </param>
         /// <param name='taskId'>
-        /// The id of the task whose file you want to get the properties of.
+        /// The ID of the task whose file you want to get the properties of.
         /// </param>
         /// <param name='fileName'>
         /// The path to the task file that you want to get the properties of.
@@ -855,19 +855,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Deletes the specified task file from the compute node.
         /// </summary>
         /// <param name='poolId'>
-        /// The id of the pool that contains the compute node.
+        /// The ID of the pool that contains the compute node.
         /// </param>
         /// <param name='nodeId'>
-        /// The id of the compute node from which you want to delete the file.
+        /// The ID of the compute node from which you want to delete the file.
         /// </param>
         /// <param name='fileName'>
         /// The path to the file that you want to delete.
         /// </param>
         /// <param name='recursive'>
         /// Whether to delete children of a directory. If the fileName parameter
-        /// represents a directory instead of a file, you can set Recursive to true
+        /// represents a directory instead of a file, you can set recursive to true
         /// to delete the directory and all of the files and subdirectories in it. If
-        /// Recursive is false then the directory must be empty or deletion will fail.
+        /// recursive is false then the directory must be empty or deletion will fail.
         /// </param>
         /// <param name='fileDeleteFromComputeNodeOptions'>
         /// Additional parameters for the operation
@@ -1103,10 +1103,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Returns the content of the specified task file.
         /// </summary>
         /// <param name='poolId'>
-        /// The id of the pool that contains the compute node.
+        /// The ID of the pool that contains the compute node.
         /// </param>
         /// <param name='nodeId'>
-        /// The id of the compute node that contains the file.
+        /// The ID of the compute node that contains the file.
         /// </param>
         /// <param name='fileName'>
         /// The path to the task file that you want to get the content of.
@@ -1390,10 +1390,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Gets the properties of the specified compute node file.
         /// </summary>
         /// <param name='poolId'>
-        /// The id of the pool that contains the compute node.
+        /// The ID of the pool that contains the compute node.
         /// </param>
         /// <param name='nodeId'>
-        /// The id of the compute node that contains the file.
+        /// The ID of the compute node that contains the file.
         /// </param>
         /// <param name='fileName'>
         /// The path to the compute node file that you want to get the properties of.
@@ -1655,13 +1655,14 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Lists the files in a task's directory on its compute node.
         /// </summary>
         /// <param name='jobId'>
-        /// The id of the job that contains the task.
+        /// The ID of the job that contains the task.
         /// </param>
         /// <param name='taskId'>
-        /// The id of the task whose files you want to list.
+        /// The ID of the task whose files you want to list.
         /// </param>
         /// <param name='recursive'>
-        /// Whether to list children of a directory.
+        /// Whether to list children of a directory. This parameter can be used in
+        /// combination with the filter parameter to list specific type of files.
         /// </param>
         /// <param name='fileListFromTaskOptions'>
         /// Additional parameters for the operation
@@ -1932,10 +1933,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Lists all of the files in task directories on the specified compute node.
         /// </summary>
         /// <param name='poolId'>
-        /// The id of the pool that contains the compute node.
+        /// The ID of the pool that contains the compute node.
         /// </param>
         /// <param name='nodeId'>
-        /// The id of the compute node whose files you want to list.
+        /// The ID of the compute node whose files you want to list.
         /// </param>
         /// <param name='recursive'>
         /// Whether to list children of a directory.

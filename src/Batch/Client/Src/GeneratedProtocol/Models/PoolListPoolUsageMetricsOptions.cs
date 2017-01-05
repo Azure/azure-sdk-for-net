@@ -37,13 +37,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="startTime">The earliest time from which to include
         /// metrics. This must be at least two and a half hours before the
-        /// current time.</param>
+        /// current time. If not specified this defaults to the start time of
+        /// the last aggregation interval currently available.</param>
         /// <param name="endTime">The latest time from which to include
-        /// metrics. This must be at least two hours before the current
-        /// time.</param>
-        /// <param name="filter">An OData $filter clause.</param>
+        /// metrics. This must be at least two hours before the current time.
+        /// If not specified this defaults to the end time of the last
+        /// aggregation interval currently available.</param>
+        /// <param name="filter">An OData $filter clause. If this is not
+        /// specified the response includes all pools that existed in the
+        /// account in the time range of the returned aggregation
+        /// intervals.</param>
         /// <param name="maxResults">The maximum number of items to return in
-        /// the response.</param>
+        /// the response. A maximum of 1000 results will be returned.</param>
         /// <param name="timeout">The maximum time that the server can spend
         /// processing the request, in seconds. The default is 30
         /// seconds.</param>
@@ -51,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// identity, in the form of a GUID with no decoration such as curly
         /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
         /// <param name="returnClientRequestId">Whether the server should
-        /// return the client-request-id identifier in the response.</param>
+        /// return the client-request-id in the response.</param>
         /// <param name="ocpDate">The time the request was issued. If not
         /// specified, this header will be automatically populated with the
         /// current system clock time.</param>
@@ -69,26 +74,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the earliest time from which to include metrics. This
-        /// must be at least two and a half hours before the current time.
+        /// must be at least two and a half hours before the current time. If
+        /// not specified this defaults to the start time of the last
+        /// aggregation interval currently available.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the latest time from which to include metrics. This
-        /// must be at least two hours before the current time.
+        /// must be at least two hours before the current time. If not
+        /// specified this defaults to the end time of the last aggregation
+        /// interval currently available.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets an OData $filter clause.
+        /// Gets or sets an OData $filter clause. If this is not specified the
+        /// response includes all pools that existed in the account in the
+        /// time range of the returned aggregation intervals.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of items to return in the response.
+        /// Gets or sets the maximum number of items to return in the
+        /// response. A maximum of 1000 results will be returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public int? MaxResults { get; set; }
@@ -110,7 +122,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether the server should return the
-        /// client-request-id identifier in the response.
+        /// client-request-id in the response.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }

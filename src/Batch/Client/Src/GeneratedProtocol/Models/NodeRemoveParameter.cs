@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a ComputeNodeOperations.Remove request.
+    /// Options for removing compute nodes from a pool.
     /// </summary>
     public partial class NodeRemoveParameter
     {
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// nodes to be removed from the specified pool.</param>
         /// <param name="resizeTimeout">The timeout for removal of compute
         /// nodes to the pool.</param>
-        /// <param name="nodeDeallocationOption">When compute nodes may be
-        /// removed from the pool.</param>
+        /// <param name="nodeDeallocationOption">When to remove compute nodes
+        /// and what to do with currently running tasks.</param>
         public NodeRemoveParameter(System.Collections.Generic.IList<string> nodeList, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
             NodeList = nodeList;
@@ -57,17 +57,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the timeout for removal of compute nodes to the pool.
         /// </summary>
         /// <remarks>
-        /// The default value is 10 minutes.
+        /// The default value is 15 minutes. The minimum value is 5 minutes.
+        /// If you specify a value less than 5 minutes, the Batch service
+        /// returns an error; if you are calling the REST API directly, the
+        /// HTTP status code is 400 (Bad Request).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets when compute nodes may be removed from the pool.
+        /// Gets or sets when to remove compute nodes and what to do with
+        /// currently running tasks.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'requeue', 'terminate', 'taskcompletion',
-        /// 'retaineddata'
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskcompletion', 'retaineddata'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }

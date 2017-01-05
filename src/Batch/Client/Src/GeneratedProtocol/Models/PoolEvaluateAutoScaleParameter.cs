@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudJobOperations.EvaluateAutoScale request.
+    /// Options for evaluating an automatic scaling formula on a pool.
     /// </summary>
     public partial class PoolEvaluateAutoScaleParameter
     {
@@ -35,17 +35,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolEvaluateAutoScaleParameter
         /// class.
         /// </summary>
-        /// <param name="autoScaleFormula">A formula for the desired number of
-        /// compute nodes in the pool.</param>
+        /// <param name="autoScaleFormula">The formula for the desired number
+        /// of compute nodes in the pool.</param>
         public PoolEvaluateAutoScaleParameter(string autoScaleFormula)
         {
             AutoScaleFormula = autoScaleFormula;
         }
 
         /// <summary>
-        /// Gets or sets a formula for the desired number of compute nodes in
-        /// the pool.
+        /// Gets or sets the formula for the desired number of compute nodes
+        /// in the pool.
         /// </summary>
+        /// <remarks>
+        /// The formula is validated and its results calculated, but it is not
+        /// applied to the pool. To apply the formula to the pool, 'Enable
+        /// automatic scaling on a pool'. For more information about
+        /// specifying this formula, see Automatically scale compute nodes in
+        /// an Azure Batch pool
+        /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 

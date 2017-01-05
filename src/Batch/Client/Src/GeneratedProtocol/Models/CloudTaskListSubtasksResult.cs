@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Response to a CloudTaskOperations.ListSubtasks request.
+    /// The result of listing the subtasks of a task.
     /// </summary>
     public partial class CloudTaskListSubtasksResult
     {
@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the CloudTaskListSubtasksResult
         /// class.
         /// </summary>
-        /// <param name="value">The list of information of subtasks.</param>
+        /// <param name="value">The list of subtasks.</param>
         public CloudTaskListSubtasksResult(System.Collections.Generic.IList<SubtaskInformation> value = default(System.Collections.Generic.IList<SubtaskInformation>))
         {
             Value = value;
         }
 
         /// <summary>
-        /// Gets or sets the list of information of subtasks.
+        /// Gets or sets the list of subtasks.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
         public System.Collections.Generic.IList<SubtaskInformation> Value { get; set; }

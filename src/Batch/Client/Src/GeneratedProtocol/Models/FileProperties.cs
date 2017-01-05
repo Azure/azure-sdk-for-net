@@ -52,6 +52,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the file creation time.
         /// </summary>
+        /// <remarks>
+        /// The creation time is not returned for files on Linux compute nodes.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
         public System.DateTime? CreationTime { get; set; }
 
@@ -77,7 +80,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the file mode attribute in octal format.
         /// </summary>
         /// <remarks>
-        /// This property will be returned only from a Linux compute node.
+        /// The file mode is returned only for files on Linux compute nodes.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }

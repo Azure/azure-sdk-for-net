@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a ComputeNodeOperations.DisableScheduling request.
+    /// Options for disabling scheduling on a compute node.
     /// </summary>
     public partial class NodeDisableSchedulingParameter
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="nodeDisableSchedulingOption">What to do with
-        /// currently running tasks when disable task scheduling on the
+        /// currently running tasks when disabling task scheduling on the
         /// compute node.</param>
         public NodeDisableSchedulingParameter(DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?))
         {
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         }
 
         /// <summary>
-        /// Gets or sets what to do with currently running tasks when disable
-        /// task scheduling on the compute node.
+        /// Gets or sets what to do with currently running tasks when
+        /// disabling task scheduling on the compute node.
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudPoolOperations.UpgradeOS request.
+    /// Options for upgrading the operating system of compute nodes in a pool.
     /// </summary>
     public partial class PoolUpgradeOSParameter
     {

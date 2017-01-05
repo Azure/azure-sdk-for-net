@@ -113,6 +113,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the total wall clock time of the task.
         /// </summary>
+        /// <remarks>
+        /// The wall clock time is the elapsed time from when the task started
+        /// running on a compute node to when it finished (or to the last
+        /// time the statistics were updated, if the task had not finished by
+        /// then). If the task was retried, this includes the wall clock time
+        /// of all the task retries.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "wallClockTime")]
         public System.TimeSpan WallClockTime { get; set; }
 

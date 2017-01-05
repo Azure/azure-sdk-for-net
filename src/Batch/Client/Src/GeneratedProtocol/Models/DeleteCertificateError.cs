@@ -67,6 +67,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of additional error details related to the
         /// certificate deletion error.
         /// </summary>
+        /// <remarks>
+        /// This list includes details such as the active pools and nodes
+        /// referencing this certificate. However, if a large number of
+        /// resources reference the certificate, the list contains only about
+        /// the first hundred.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "values")]
         public System.Collections.Generic.IList<NameValuePair> Values { get; set; }
 

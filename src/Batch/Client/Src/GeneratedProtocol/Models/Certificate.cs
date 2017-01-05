@@ -35,10 +35,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the Certificate class.
         /// </summary>
         /// <param name="thumbprint">The X.509 thumbprint of the certificate.
-        /// This is a sequence of up to 40 hex digits (it may include spaces
-        /// but these are removed).</param>
+        /// This is a sequence of up to 40 hex digits.</param>
         /// <param name="thumbprintAlgorithm">The algorithm used to derive the
-        /// thumbprint. This must be sha1.</param>
+        /// thumbprint.</param>
         /// <param name="url">The URL of the certificate.</param>
         /// <param name="state">The current state of the certificate.</param>
         /// <param name="stateTransitionTime">The time at which the
@@ -66,15 +65,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the X.509 thumbprint of the certificate. This is a
-        /// sequence of up to 40 hex digits (it may include spaces but these
-        /// are removed).
+        /// sequence of up to 40 hex digits.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
-        /// Gets or sets the algorithm used to derive the thumbprint. This
-        /// must be sha1.
+        /// Gets or sets the algorithm used to derive the thumbprint.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudJobOperations.Update request.
+    /// The set of changes to be made to a job.
     /// </summary>
     public partial class JobUpdateParameter
     {
@@ -42,8 +42,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the job as metadata.</param>
         /// <param name="onAllTasksComplete">Specifies an action the Batch
         /// service should take when all tasks in the job are in the
-        /// completed state. Possible values include: 'noAction',
-        /// 'terminateJob'</param>
+        /// completed state.</param>
         public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
             Priority = priority;
@@ -101,9 +100,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets specifies an action the Batch service should take
-        /// when all tasks in the job are in the completed state. Possible
-        /// values include: 'noAction', 'terminateJob'
+        /// when all tasks in the job are in the completed state.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the completion behavior is set to noaction. If the
+        /// current value is terminatejob, this is an error because a job's
+        /// completion behavior may not be changed from terminatejob to
+        /// noaction. Possible values include: 'noAction', 'terminateJob'
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 

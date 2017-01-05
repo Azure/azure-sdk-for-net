@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="startTime">The time at which the task started
         /// running. Note that every time the task is restarted, this value
         /// is updated.</param>
-        /// <param name="state">The current state of the Job Release
-        /// task.</param>
+        /// <param name="state">The current state of the Job Release task on
+        /// the compute node.</param>
         /// <param name="endTime">The time at which the Job Release task
         /// completed.</param>
         /// <param name="taskRootDirectory">The root directory of the Job
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// of the Job Release task on the compute node.</param>
         /// <param name="exitCode">The exit code of the program specified on
         /// the task command line.</param>
-        /// <param name="schedulingError">The scheduling error encountered by
-        /// the Batch service when starting the task.</param>
+        /// <param name="schedulingError">The error encountered by the Batch
+        /// service when starting the task.</param>
         public JobReleaseTaskExecutionInformation(System.DateTime startTime, JobReleaseTaskState state, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError))
         {
             StartTime = startTime;
@@ -80,10 +80,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the Job Release task.
+        /// Gets or sets the current state of the Job Release task on the
+        /// compute node.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'running', 'completed'
+        /// Possible values are: running – the task is currently running
+        /// (including retrying). completed – the task has exited, or the
+        /// Batch service was unable to start the task due to scheduling
+        /// errors. Possible values include: 'running', 'completed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public JobReleaseTaskState State { get; set; }
@@ -121,8 +125,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the scheduling error encountered by the Batch service
-        /// when starting the task.
+        /// Gets or sets the error encountered by the Batch service when
+        /// starting the task.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }

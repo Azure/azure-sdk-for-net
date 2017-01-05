@@ -70,8 +70,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node into which to install the certificate.
         /// </summary>
         /// <remarks>
-        /// The default value is CurrentUser. Possible values include:
-        /// 'currentuser', 'localmachine', 'unmapped'
+        /// The default value is CurrentUser. This property is applicable only
+        /// for pools configured with Windows nodes (that is, created with
+        /// cloudServiceConfiguration, or with virtualMachineConfiguration
+        /// using a Windows image reference). For Linux compute nodes, the
+        /// certificates are stored in a directory inside the task working
+        /// directory and an environment variable AZ_BATCH_CERTIFICATES_DIR
+        /// is supplied to the task to query for this location. For
+        /// certificates with visibility of remoteuser, a certs directory is
+        /// created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) where certificates are placed. Possible
+        /// values include: 'currentuser', 'localmachine', 'unmapped'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
@@ -81,7 +90,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// into which to install the certificate.
         /// </summary>
         /// <remarks>
-        /// The default value is My.
+        /// The default value is My. This property is applicable only for
+        /// pools configured with Windows nodes (that is, created with
+        /// cloudServiceConfiguration, or with virtualMachineConfiguration
+        /// using a Windows image reference).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storeName")]
         public string StoreName { get; set; }

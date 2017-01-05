@@ -50,8 +50,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
         /// compute nodes in the pool.</param>
-        /// <param name="autoScaleEvaluationInterval">A time interval for the
-        /// desired autoscale evaluation period in the pool.</param>
+        /// <param name="autoScaleEvaluationInterval">The time interval at
+        /// which to automatically adjust the pool size according to the
+        /// autoscale formula.</param>
         /// <param name="enableInterNodeCommunication">Whether the pool
         /// permits direct communication between nodes.</param>
         /// <param name="networkConfiguration">The network configuration for
@@ -95,9 +96,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// account.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than
-        /// 64 characters. It is common to use a GUID for the id.
+        /// 64 characters. The ID is case-preserving and case-insensitive
+        /// (that is, you may not have two pool IDs within an account that
+        /// differ only by case).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -105,6 +108,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the display name for the pool.
         /// </summary>
+        /// <remarks>
+        /// The display name need not be unique and can contain any Unicode
+        /// characters up to a maximum length of 1024.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
@@ -112,6 +119,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the size of virtual machines in the pool. All virtual
         /// machines in a pool are the same size.
         /// </summary>
+        /// <remarks>
+        /// For information about available sizes of virtual machines for
+        /// Cloud Services pools (pools created with
+        /// cloudServiceConfiguration), see Sizes for Cloud Services
+        /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall. For
+        /// information about available VM sizes for pools using images from
+        /// the Virtual Machines Marketplace (pools created with
+        /// virtualMachineConfiguration) see Sizes for Virtual Machines
+        /// (Linux)
+        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
+        /// or Sizes for Virtual Machines (Windows)
+        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/).
+        /// Batch supports all Azure VM sizes except STANDARD_A0 and those
+        /// with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
+        /// series).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
@@ -140,7 +164,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.
         /// </summary>
         /// <remarks>
-        /// The default value is 10 minutes.
+        /// This timeout applies only to manual scaling; it has no effect when
+        /// enableAutoScale is set to true. The default value is 15 minutes.
+        /// The minimum value is 5 minutes. If you specify a value less than
+        /// 5 minutes, the Batch service returns an error; if you are calling
+        /// the REST API directly, the HTTP status code is 400 (Bad Request).
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
         public System.TimeSpan? ResizeTimeout { get; set; }
@@ -161,7 +189,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// If true, the autoScaleFormula property must be set. If false, the
-        /// targetDedicated property must be set.
+        /// targetDedicated property must be set. The default value is false.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
@@ -170,13 +198,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a formula for the desired number of compute nodes in
         /// the pool.
         /// </summary>
+        /// <remarks>
+        /// This property must not be specified if enableAutoScale is set to
+        /// false. It is required if enableAutoScale is set to true. The
+        /// formula is checked for validity before the pool is created. If
+        /// the formula is not valid, the Batch service rejects the request
+        /// with detailed error information. For more information about
+        /// specifying this formula, see 'Automatically scale compute nodes
+        /// in an Azure Batch pool'
+        /// (https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
-        /// Gets or sets a time interval for the desired autoscale evaluation
-        /// period in the pool.
+        /// Gets or sets the time interval at which to automatically adjust
+        /// the pool size according to the autoscale formula.
         /// </summary>
+        /// <remarks>
+        /// The default value is 15 minutes. The minimum and maximum value are
+        /// 5 minutes and 168 hours respectively. If you specify a value less
+        /// than 5 minutes or greater than 168 hours, the Batch service
+        /// returns an error; if you are calling the REST API directly, the
+        /// HTTP status code is 400 (Bad Request).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
         public System.TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
@@ -184,6 +229,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the pool permits direct communication between
         /// nodes.
         /// </summary>
+        /// <remarks>
+        /// Enabling inter-node communication limits the maximum size of the
+        /// pool due to deployment restrictions on the nodes of the pool.
+        /// This may result in the pool not reaching its desired size. The
+        /// default value is false.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
@@ -197,6 +248,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a task specified to run on each compute node as it
         /// joins the pool.
         /// </summary>
+        /// <remarks>
+        /// The task runs when the node is added to the pool or when the node
+        /// is restarted.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
@@ -204,6 +259,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of certificates to be installed on each
         /// compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// For Windows compute nodes, the Batch service installs the
+        /// certificates to the specified certificate store and location. For
+        /// Linux compute nodes, the certificates are stored in a directory
+        /// inside the task working directory and an environment variable
+        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for
+        /// this location. For certificates with visibility of remoteuser, a
+        /// certs directory is created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) where certificates are placed.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
         public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
 
@@ -211,6 +276,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of application packages to be installed on
         /// each compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// This property is currently not supported on pools created using
+        /// the virtualMachineConfiguration (IaaS) property.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
@@ -218,6 +287,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the maximum number of tasks that can run concurrently
         /// on a single compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// The default value is 1. The maximum value of this setting depends
+        /// on the size of the compute nodes in the pool (the vmSize setting).
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
@@ -232,6 +305,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of name-value pairs associated with the pool
         /// as metadata.
         /// </summary>
+        /// <remarks>
+        /// The Batch service does not assign any meaning to metadata; it is
+        /// solely for the use of user code.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 

@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="startTime">The time at which the task started
         /// running.</param>
-        /// <param name="state">The current state of the Job Preparation
-        /// task.</param>
+        /// <param name="state">The current state of the Job Preparation task
+        /// on the compute node.</param>
         /// <param name="retryCount">The number of times the task has been
         /// retried by the Batch service. Every time the task exits with a
         /// non-zero exit code, it is deemed a task failure. The Batch
@@ -90,9 +90,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the current state of the Job Preparation task.
+        /// Gets or sets the current state of the Job Preparation task on the
+        /// compute node.
         /// </summary>
         /// <remarks>
+        /// Possible values are: running – the task is currently running
+        /// (including retrying). completed – the task has exited with exit
+        /// code 0, or the task has exhausted its retry limit, or the Batch
+        /// service was unable to start the task due to scheduling errors.
         /// Possible values include: 'running', 'completed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
@@ -152,7 +157,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property is set only if the task was retried (i.e. retryCount
-        /// is nonzero).
+        /// is nonzero). If present, this is typically the same as startTime,
+        /// but may be different if the task has been restarted for reasons
+        /// other than retry; for example, if the compute node was rebooted
+        /// during a retry, then the startTime is updated but the
+        /// lastRetryTime is not.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lastRetryTime")]
         public System.DateTime? LastRetryTime { get; set; }

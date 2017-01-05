@@ -105,12 +105,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the ETag of the job schedule.
         /// </summary>
+        /// <remarks>
+        /// This is an opaque string. You can use it to detect whether the job
+        /// schedule has changed between requests. In particular, you can be
+        /// pass the ETag with an Update Job Schedule request to specify that
+        /// your changes should take effect only if nobody else has modified
+        /// the schedule in the meantime.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the job schedule.
         /// </summary>
+        /// <remarks>
+        /// This is the last time at which the schedule level data, such as
+        /// the job specification or recurrence information, changed. It does
+        /// not factor in job-level changes such as new jobs being created or
+        /// jobs changing state.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
         public System.DateTime? LastModified { get; set; }
 
@@ -141,8 +154,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the previous state of the job schedule.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'active', 'completed', 'disabled',
-        /// 'terminating', 'deleting'
+        /// This property is not present if the job schedule is in its initial
+        /// active state. Possible values include: 'active', 'completed',
+        /// 'disabled', 'terminating', 'deleting'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
         public JobScheduleState? PreviousState { get; set; }
@@ -151,6 +165,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the time at which the job schedule entered its
         /// previous state.
         /// </summary>
+        /// <remarks>
+        /// This property is not present if the job schedule is in its initial
+        /// active state.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
         public System.DateTime? PreviousStateTransitionTime { get; set; }
 
@@ -178,6 +196,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of name-value pairs associated with the
         /// schedule as metadata.
         /// </summary>
+        /// <remarks>
+        /// The Batch service does not assign any meaning to metadata; it is
+        /// solely for the use of user code.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 

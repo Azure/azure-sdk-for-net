@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="taskState">The current state of the task.</param>
         /// <param name="taskUrl">The URL of the task.</param>
-        /// <param name="jobId">The id of the job to which the task
+        /// <param name="jobId">The ID of the job to which the task
         /// belongs.</param>
-        /// <param name="taskId">The id of the task.</param>
-        /// <param name="subtaskId">The id of the subtask if the task is a
+        /// <param name="taskId">The ID of the task.</param>
+        /// <param name="subtaskId">The ID of the subtask if the task is a
         /// multi-instance task.</param>
         /// <param name="executionInfo">Information about the execution of the
         /// task.</param>
@@ -59,19 +59,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string TaskUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the job to which the task belongs.
+        /// Gets or sets the ID of the job to which the task belongs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobId")]
         public string JobId { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the task.
+        /// Gets or sets the ID of the task.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "taskId")]
         public string TaskId { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the subtask if the task is a multi-instance
+        /// Gets or sets the ID of the subtask if the task is a multi-instance
         /// task.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "subtaskId")]

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the TaskAddResult class.
         /// </summary>
         /// <param name="status">The status of the add task request.</param>
-        /// <param name="taskId">The id of the task for which this is the
+        /// <param name="taskId">The ID of the task for which this is the
         /// result.</param>
         /// <param name="eTag">The ETag of the task, if the task was
         /// successfully added.</param>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskAddStatus Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the task for which this is the result.
+        /// Gets or sets the ID of the task for which this is the result.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "taskId")]
         public string TaskId { get; set; }

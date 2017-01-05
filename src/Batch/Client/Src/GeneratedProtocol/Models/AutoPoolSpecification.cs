@@ -56,7 +56,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool is automatically created.
         /// </summary>
         /// <remarks>
-        /// The prefix can be up to 20 characters long.
+        /// The Batch service assigns each auto pool a unique identifier on
+        /// creation. To distinguish between pools created for different
+        /// purposes, you can specify this element to add a prefix to the id
+        /// that is assigned. The prefix can be up to 20 characters long.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "autoPoolIdPrefix")]
         public string AutoPoolIdPrefix { get; set; }
@@ -66,6 +69,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// multiple jobs on a schedule are assigned to pools.
         /// </summary>
         /// <remarks>
+        /// When the pool lifetime scope is jobschedule level, the Batch
+        /// service keeps track of the last autopool created for the
+        /// jobschedule, and deletes that pool when the jobschedule
+        /// completes. Batch will also delete this pool if the user updates
+        /// the auto pool specification in a way that changes this lifetime.
         /// Possible values include: 'jobschedule', 'job', 'unmapped'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "poolLifetimeOption")]
@@ -75,6 +83,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether to keep an auto pool alive after its lifetime
         /// expires.
         /// </summary>
+        /// <remarks>
+        /// If false, the Batch service deletes the pool once its lifetime (as
+        /// determined by the poolLifetimeOption setting) expires; that is,
+        /// when the job or job schedule completes. If true, the Batch
+        /// service does not delete the pool automatically. It is up to the
+        /// user to delete auto pools created with this option.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "keepAlive")]
         public bool? KeepAlive { get; set; }
 

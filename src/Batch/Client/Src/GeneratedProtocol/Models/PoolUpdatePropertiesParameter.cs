@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for a CloudPoolOperations.UpdateProperties request.
+    /// The set of changes to be made to a pool.
     /// </summary>
     public partial class PoolUpdatePropertiesParameter
     {
@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
         /// <param name="startTask">A task to run on each compute node as it
-        /// joins the pool.</param>
+        /// joins the pool. The task runs when the node is added to the pool
+        /// or when the node is restarted.</param>
         public PoolUpdatePropertiesParameter(System.Collections.Generic.IList<CertificateReference> certificateReferences, System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences, System.Collections.Generic.IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
         {
             StartTask = startTask;
@@ -53,9 +54,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a task to run on each compute node as it joins the
-        /// pool.
+        /// pool. The task runs when the node is added to the pool or when
+        /// the node is restarted.
         /// </summary>
         /// <remarks>
+        /// If this element is present, it overwrites any existing start task.
         /// If omitted, any existing start task is removed from the pool.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
@@ -67,7 +70,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// If you specify an empty collection, any existing certificate
-        /// references are removed from the pool.
+        /// references are removed from the pool. For Windows compute nodes,
+        /// the Batch service installs the certificates to the specified
+        /// certificate store and location. For Linux compute nodes, the
+        /// certificates are stored in a directory inside the task working
+        /// directory and an environment variable AZ_BATCH_CERTIFICATES_DIR
+        /// is supplied to the task to query for this location. For
+        /// certificates with visibility of remoteuser, a certs directory is
+        /// created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) where certificates are placed.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
         public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
@@ -77,7 +88,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// each compute node in the pool.
         /// </summary>
         /// <remarks>
-        /// If you specify an empty collection, any existing application
+        /// Changes to application package references affect all new compute
+        /// nodes joining the pool, but do not affect compute nodes that are
+        /// already in the pool until they are rebooted or reimaged. The list
+        /// replaces any existing application package references. If omitted,
+        /// or if you specify an empty collection, any existing application
         /// packages references are removed from the pool.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
@@ -88,8 +103,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// as metadata.
         /// </summary>
         /// <remarks>
-        /// If you specify an empty collection, any existing metadata is
-        /// removed from the pool.
+        /// This list replaces any existing metadata configured on the pool.
+        /// If omitted, or if you specify an empty collection, any existing
+        /// metadata is removed from the pool.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }

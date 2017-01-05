@@ -133,20 +133,37 @@ namespace Azure.Batch.Unit.Tests
                 jobSchedule.Id = jobScheduleId;
                 jobSchedule.DisplayName = displayName;
                 jobSchedule.Metadata = new List<MetadataItem> { metadataItem };
+                jobSchedule.JobSpecification = new JobSpecification
+                {
+                    OnAllTasksComplete = OnAllTasksComplete.TerminateJob,
+                    OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction
+                };
 
                 Assert.Equal(jobSchedule.Id, jobScheduleId); // can set an unbound object
                 Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
+                Assert.Equal(jobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
+                Assert.Equal(jobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
 
                 jobSchedule.Commit(additionalBehaviors: InterceptorFactory.CreateAddJobScheduleRequestInterceptor());
 
                 // writing isn't allowed for a jobSchedule that is in an read only state.
                 Assert.Throws<InvalidOperationException>(() => jobSchedule.Id = "cannot-change-id");
                 Assert.Throws<InvalidOperationException>(() => jobSchedule.DisplayName = "cannot-change-display-name");
-
+                
                 //Can still read though
                 Assert.Equal(jobScheduleId, jobSchedule.Id);
                 Assert.Equal(displayName, jobSchedule.DisplayName);
+
+                jobSchedule.Refresh(additionalBehaviors:
+                        InterceptorFactory.CreateGetJobScheduleRequestInterceptor(
+                            new Models.CloudJobSchedule()
+                                {
+                                    JobSpecification = new Models.JobSpecification()
+                                }));
+
+                jobSchedule.JobSpecification.OnAllTasksComplete = OnAllTasksComplete.NoAction;
+                jobSchedule.JobSpecification.OnTaskFailure = OnTaskFailure.NoAction;
             }
         }
 
@@ -171,7 +188,12 @@ namespace Azure.Batch.Unit.Tests
                             {
                                 new Models.MetadataItem { Name = metadataItem.Name, Value = metadataItem.Value }
                             },
-                    CreationTime = creationTime
+                    CreationTime = creationTime,
+                    JobSpecification = new Models.JobSpecification
+                            {
+                                OnAllTasksComplete = Models.OnAllTasksComplete.TerminateJob,
+                                OnTaskFailure = Models.OnTaskFailure.PerformExitOptionsJobAction
+                            }
                 };
 
                 CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(
@@ -181,9 +203,17 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(jobScheduleId, boundJobSchedule.Id); // reading is allowed from a jobSchedule that is returned from the server.
                 Assert.Equal(creationTime, boundJobSchedule.CreationTime);
                 Assert.Equal(displayName, boundJobSchedule.DisplayName);
+                Assert.Equal(boundJobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
+                Assert.Equal(boundJobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
 
                 Assert.Throws<InvalidOperationException>(() => boundJobSchedule.DisplayName = "cannot-change-display-name");
                 Assert.Throws<InvalidOperationException>(() => boundJobSchedule.Id = "cannot-change-id");
+
+                boundJobSchedule.JobSpecification.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
+                boundJobSchedule.JobSpecification.OnTaskFailure = OnTaskFailure.NoAction;
+
+                Assert.Equal(boundJobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
+                Assert.Equal(boundJobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.NoAction);
             }
         }
 
@@ -284,7 +314,6 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Throws<InvalidOperationException>(() => boundJob.JobManagerTask = new JobManagerTask());
             }
         }
-
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]

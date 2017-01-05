@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// made by all tasks in the job.</param>
         /// <param name="writeIOps">The total number of disk write operations
         /// made by all tasks in the job.</param>
-        /// <param name="readIOGiB">The total gibibytes read from disk by all
-        /// tasks in the job.</param>
-        /// <param name="writeIOGiB">The total gibibytes written to disk by
-        /// all tasks in the job.</param>
+        /// <param name="readIOGiB">The total amount of data in GiB read from
+        /// disk by all tasks in the job.</param>
+        /// <param name="writeIOGiB">The total amount of data in GiB written
+        /// to disk by all tasks in the job.</param>
         /// <param name="numSucceededTasks">The total number of tasks
         /// successfully completed in the job during the given time
         /// range.</param>
@@ -138,15 +138,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public long WriteIOps { get; set; }
 
         /// <summary>
-        /// Gets or sets the total gibibytes read from disk by all tasks in
-        /// the job.
+        /// Gets or sets the total amount of data in GiB read from disk by all
+        /// tasks in the job.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
-        /// Gets or sets the total gibibytes written to disk by all tasks in
-        /// the job.
+        /// Gets or sets the total amount of data in GiB written to disk by
+        /// all tasks in the job.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
@@ -155,6 +155,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the total number of tasks successfully completed in
         /// the job during the given time range.
         /// </summary>
+        /// <remarks>
+        /// A task completes successfully if it returns exit code 0.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numSucceededTasks")]
         public long NumSucceededTasks { get; set; }
 
@@ -162,6 +165,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the total number of tasks in the job that failed
         /// during the given time range.
         /// </summary>
+        /// <remarks>
+        /// A task fails if it exhausts its maximum retry count without
+        /// returning exit code 0.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "numFailedTasks")]
         public long NumFailedTasks { get; set; }
 
@@ -179,7 +186,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The wait time for a task is defined as the elapsed time between
         /// the creation of the task and the start of task execution. (If the
         /// task is retried due to failures, the wait time is the time to the
-        /// most recent task execution.)
+        /// most recent task execution.) This value is only reported in the
+        /// account lifetime statistics; it is not included in the job
+        /// statistics.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "waitTime")]
         public System.TimeSpan WaitTime { get; set; }
