@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             return new Authenticated(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandlers()
                     .Build()
                 );
         }

@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using Xunit;
 
 namespace Fluent.Tests.ResourceManager
@@ -9,12 +11,15 @@ namespace Fluent.Tests.ResourceManager
     public class TenantsTests
     {
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListTenants()
         {
-            var authenticated = TestHelper.Authenticate();
-            var tenants = authenticated.Tenants.List();
-            Assert.True(tenants.Count > 0);
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var authenticated = TestHelper.Authenticate(null);
+                var tenants = authenticated.Tenants.List();
+                Assert.True(tenants.Count > 0);
+            }
         }
     }
 }
