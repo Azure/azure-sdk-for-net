@@ -273,8 +273,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 !cancellationToken.IsCancellationRequested)
             {
 #if !NETSTANDARD11
-                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE")
-                    .Equals("Record", StringComparison.OrdinalIgnoreCase))
+                var testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+                if (testMode == null || 
+                    !testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
                 {
 #endif
                     await Task.Delay(30 * 1000, cancellationToken);
