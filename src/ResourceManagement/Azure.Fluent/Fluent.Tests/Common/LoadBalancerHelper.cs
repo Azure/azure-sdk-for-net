@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
@@ -13,24 +13,27 @@ using System.Text;
 
 namespace Azure.Tests.Common
 {
-    public static class LoadBalancerHelper
+    public class LoadBalancerHelper : NetworkTestHelperBase
     {
-        public static readonly long TEST_ID = DateTime.Now.Millisecond;
-        public static readonly Region REGION = Region.US_WEST;
-        public static readonly string GROUP_NAME = "rg" + TEST_ID;
-        public static readonly string LB_NAME = "lb" + TEST_ID;
-        public static readonly string[] PIP_NAMES = { "pipa" + TEST_ID, "pipb" + TEST_ID };
-        public static readonly string[] VM_IDS =
+        public LoadBalancerHelper(string testId)
+            : base(testId)
+        {
+            this.LB_NAME = "lb" + TEST_ID; ;
+        }
+
+        public string LB_NAME { get; private set; }
+
+        public string[] VM_IDS =
             {
                 "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest1",
                 "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest3"
         };
 
         // Create VNet for the LB
-        public static IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
+        public  IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i<PIP_NAMES.Length; i++)
+            for (int i = 0; i < PIP_NAMES.Length; i++)
             {
                 creatablePips.Add(pips.Define(PIP_NAMES[i])
                                   .WithRegion(REGION)
@@ -42,9 +45,9 @@ namespace Azure.Tests.Common
         }
 
         // Ensure VMs for the LB
-        public static IEnumerable<IVirtualMachine> EnsureVMs(
-            INetworks networks, 
-            IVirtualMachines vms, 
+        public IEnumerable<IVirtualMachine> EnsureVMs(
+            INetworks networks,
+            IVirtualMachines vms,
             params string[] vmIds)
         {
             var createdVMs = new List<IVirtualMachine>();
@@ -164,7 +167,7 @@ namespace Azure.Tests.Common
                 // Show associated load balancing rules
                 info.Append("\n\t\t\tReferenced from load balancing rules: ")
                     .Append(probe.LoadBalancingRules.Count);
-                foreach( var rule in probe.LoadBalancingRules.Values)
+                foreach (var rule in probe.LoadBalancingRules.Values)
                 {
                     info.Append("\n\t\t\t\tName: ").Append(rule.Name);
                 }
@@ -173,7 +176,7 @@ namespace Azure.Tests.Common
             // Show load balancing rules
             info.Append("\n\tLoad balancing rules: ")
                 .Append(resource.LoadBalancingRules.Count);
-            foreach( var rule in resource.LoadBalancingRules.Values)
+            foreach (var rule in resource.LoadBalancingRules.Values)
             {
                 info.Append("\n\t\tLB rule name: ").Append(rule.Name)
                     .Append("\n\t\t\tProtocol: ").Append(rule.Protocol)
@@ -241,7 +244,7 @@ namespace Azure.Tests.Common
                 // Inbound NAT pool references
                 info.Append("\n\t\t\tReferenced inbound NAT pools: ")
                     .Append(frontend.InboundNatPools.Count);
-                foreach ( var pool in frontend.InboundNatPools.Values)
+                foreach (var pool in frontend.InboundNatPools.Values)
                 {
                     info.Append("\n\t\t\t\tName: ").Append(pool.Name);
                 }
@@ -249,7 +252,7 @@ namespace Azure.Tests.Common
                 // Inbound NAT rule references
                 info.Append("\n\t\t\tReferenced inbound NAT rules: ")
                     .Append(frontend.InboundNatRules.Count);
-                foreach ( var rule in frontend.InboundNatRules.Values)
+                foreach (var rule in frontend.InboundNatRules.Values)
                 {
                     info.Append("\n\t\t\t\tName: ").Append(rule.Name);
                 }
@@ -297,14 +300,14 @@ namespace Azure.Tests.Common
             // Show backends
             info.Append("\n\tBackends: ")
                 .Append(resource.Backends.Count);
-            foreach ( var backend in resource.Backends.Values)
+            foreach (var backend in resource.Backends.Values)
             {
                 info.Append("\n\t\tBackend name: ").Append(backend.Name);
 
                 // Show assigned backend NICs
                 info.Append("\n\t\t\tReferenced NICs: ")
                     .Append(backend.BackendNicIpConfigurationNames.Count);
-                foreach ( var entry in backend.BackendNicIpConfigurationNames)
+                foreach (var entry in backend.BackendNicIpConfigurationNames)
                 {
                     info.Append("\n\t\t\t\tNIC ID: ").Append(entry.Key)
                         .Append(" - IP Config: ").Append(entry.Value);
@@ -314,14 +317,14 @@ namespace Azure.Tests.Common
                 var vmIds = backend.GetVirtualMachineIds();
                 info.Append("\n\t\t\tReferenced virtual machine ids: ")
                     .Append(vmIds.Count);
-                foreach ( var vmId in vmIds)
+                foreach (var vmId in vmIds)
                 {
                     info.Append("\n\t\t\t\tVM ID: ").Append(vmId);
                 }
 
                 // Show assigned load balancing rules
                 info.Append("\n\t\t\tReferenced load balancing rules: ")
-                    .Append( string.Join(", ", backend.LoadBalancingRules.Keys));
+                    .Append(string.Join(", ", backend.LoadBalancingRules.Keys));
             }
 
             TestHelper.WriteLine(info.ToString());

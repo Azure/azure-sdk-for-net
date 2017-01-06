@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Azure.Tests.Network.LoadBalancer
@@ -19,12 +20,17 @@ namespace Azure.Tests.Network.LoadBalancer
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
         private INetworks networks;
+        private LoadBalancerHelper loadBalancerHelper;
 
         public InternetWithNatRule(
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
-                INetworks networks)
+                INetworks networks,
+                [CallerMemberName] string methodName = "testframework_failed")
+            : base(methodName)
         {
+            loadBalancerHelper = new LoadBalancerHelper(methodName);
+
             this.pips = pips;
             this.vms = vms;
             this.networks = networks;
@@ -37,16 +43,16 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
             Assert.Equal(2, existingVMs.Count());
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(loadBalancerHelper.LB_NAME)
+                        .WithRegion(loadBalancerHelper.REGION)
+                        .WithExistingResourceGroup(loadBalancerHelper.GROUP_NAME)
 
                         // Frontends
                         .DefinePublicFrontend("frontend1")
@@ -109,7 +115,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
             // Verify frontends
             Assert.True(lb.Frontends.ContainsKey("frontend1"));
-            Assert.True(lb.Frontends.Count == 1);
+            Assert.Equal(lb.Frontends.Count, 1);
 
             existingPips.ElementAt(0).Refresh();
             Assert.True(existingPips.ElementAt(0).GetAssignedLoadBalancerFrontend()
@@ -118,18 +124,18 @@ namespace Azure.Tests.Network.LoadBalancer
 
             // Verify backends
             Assert.True(lb.Backends.ContainsKey("backend1"));
-            Assert.True(lb.Backends.Count == 1);
+            Assert.Equal(lb.Backends.Count, 1);
 
             // Verify probes
             Assert.True(lb.HttpProbes.ContainsKey("httpProbe1"));
             Assert.True(lb.TcpProbes.ContainsKey("tcpProbe1"));
-            Assert.True(!lb.HttpProbes.ContainsKey("default"));
-            Assert.True(!lb.TcpProbes.ContainsKey("default"));
+            Assert.False(lb.HttpProbes.ContainsKey("default"));
+            Assert.False(lb.TcpProbes.ContainsKey("default"));
 
             // Verify rules
             Assert.True(lb.LoadBalancingRules.ContainsKey("rule1"));
-            Assert.True(!lb.LoadBalancingRules.ContainsKey("default"));
-            Assert.True(lb.LoadBalancingRules.Values.Count() == 1);
+            Assert.False(lb.LoadBalancingRules.ContainsKey("default"));
+            Assert.Equal(lb.LoadBalancingRules.Values.Count(), 1);
             var rule = lb.LoadBalancingRules["rule1"];
             Assert.True(rule.Backend.Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
             Assert.True(rule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
@@ -137,18 +143,18 @@ namespace Azure.Tests.Network.LoadBalancer
 
             // Verify inbound NAT rules
             Assert.True(lb.InboundNatRules.ContainsKey("natrule1"));
-            Assert.True(lb.InboundNatRules.Count == 1);
+            Assert.Equal(lb.InboundNatRules.Count, 1);
             var inboundNatRule = lb.InboundNatRules["natrule1"];
             Assert.True(inboundNatRule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
-            Assert.True(inboundNatRule.FrontendPort == 88);
-            Assert.True(inboundNatRule.BackendPort == 88);
+            Assert.Equal(inboundNatRule.FrontendPort, 88);
+            Assert.Equal(inboundNatRule.BackendPort, 88);
 
             return lb;
         }
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
             Assert.Equal(2, existingVMs.Count());
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
@@ -158,16 +164,16 @@ namespace Azure.Tests.Network.LoadBalancer
                 .WithoutLoadBalancerBackends()
                 .WithoutLoadBalancerInboundNatRules()
                 .Apply();
-            Assert.True(nic1.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().Count == 0);
+            Assert.Equal(nic1.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().Count, 0);
 
             nic2.Update()
                     .WithoutLoadBalancerBackends()
                     .WithoutLoadBalancerInboundNatRules()
                     .Apply();
-            Assert.True(nic2.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().Count == 0);
+            Assert.Equal(nic2.PrimaryIpConfiguration.ListAssociatedLoadBalancerBackends().Count, 0);
 
             // Update the load balancer
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             resource = resource.Update()
                         .UpdateInternetFrontend("frontend1")
                             .WithExistingPublicIpAddress(existingPips.ElementAt(1))

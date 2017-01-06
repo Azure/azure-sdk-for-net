@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
@@ -13,32 +13,26 @@ using System.Text;
 
 namespace Azure.Tests.Common
 {
-    public static class ApplicationGatewayHelper
+    public class ApplicationGatewayHelper : NetworkTestHelperBase
     {
-        public static readonly string ID_TEMPLATE = "/subscriptions/${subId}/resourceGroups/${rgName}/providers/Microsoft.Network/applicationGateways/${resourceName}";
-        public static readonly Region REGION = Region.US_WEST;
-        public static readonly long TEST_ID = DateTime.Now.Millisecond;
-        public static readonly string GROUP_NAME = "rg" + TEST_ID;
-        public static readonly string APP_GATEWAY_NAME = "ag" + TEST_ID;
-        public static readonly string[] PIP_NAMES = { "pipa" + TEST_ID, "pipb" + TEST_ID };
-        public static readonly string[] VM_IDS = {
-                "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest1",
-                "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest3"
-        };
-
-        public static string CreateResourceId(string subscriptionId)
+        public ApplicationGatewayHelper (string testId)
+            : base(testId)
         {
-            return ID_TEMPLATE
-                    .Replace("${subId}", subscriptionId)
-                    .Replace("${rgName}", GROUP_NAME)
-                    .Replace("${resourceName}", APP_GATEWAY_NAME);
+            APP_GATEWAY_NAME = "ag" + TEST_ID;
+        }
+
+        public string APP_GATEWAY_NAME { get; private set; }
+
+        public string CreateResourceId(string subscriptionId)
+        {
+            return $"/subscriptions/{subscriptionId}/resourceGroups/{GROUP_NAME}/providers/Microsoft.Network/applicationGateways/{APP_GATEWAY_NAME}";
         }
 
         // Create VNet for the LB
-        public static IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
+        public IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i<PIP_NAMES.Length; i++)
+            for (int i = 0; i < PIP_NAMES.Length; i++)
             {
                 creatablePips.Add(pips.Define(PIP_NAMES[i])
                                   .WithRegion(REGION)
@@ -49,9 +43,9 @@ namespace Azure.Tests.Common
         }
 
         // Ensure VMs for the LB
-        public static IEnumerable<IVirtualMachine> EnsureVMs(
-            INetworks networks, 
-            IVirtualMachines vms, 
+        public IEnumerable<IVirtualMachine> EnsureVMs(
+            INetworks networks,
+            IVirtualMachines vms,
             params string[] vmIds)
         {
             var createdVMs = new List<IVirtualMachine>();

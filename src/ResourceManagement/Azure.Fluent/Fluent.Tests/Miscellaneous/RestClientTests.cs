@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Rest;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,54 +18,59 @@ namespace Fluent.Tests.Miscellaneous
 {
     public class RestClientTests
     {
-        private string rgName = ResourceNamer.RandomResourceName("rg", 15);
-        private string stgName = ResourceNamer.RandomResourceName("stg", 15);
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanSetMultipleDelegateHandlers()
         {
-            IAzure azure = null;
-            // Sets the intercepter so that logging and user agent in log can be asserted.
-            var logAndUserAgentInterceptor = new LogAndUserAgentInterceptor();
-            ServiceClientTracing.AddTracingInterceptor(logAndUserAgentInterceptor);
-            ServiceClientTracing.IsEnabled = true;
-            try
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
-                credentials.WithDefaultSubscription(null); // Clearing subscriptionId loaded from the auth 
-                                                           // file so that below WithDefaultSubscription() 
-                                                           // will force listing subscriptions and fetching
-                                                           // the first.
-                azure = Microsoft.Azure.Management.Fluent.Azure
-                    .Configure()
-                    .WithUserAgent("azure-fluent-test", "1.0.0-prelease")
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(credentials)
-                    .WithDefaultSubscription();
+                string rgName = TestUtilities.GenerateName("rg");
+                string stgName = TestUtilities.GenerateName("stg");
 
-                IStorageAccount storageAccount = azure.StorageAccounts
-                   .Define(stgName)
-                   .WithRegion(Region.US_EAST)
-                   .WithNewResourceGroup(rgName)
-                   .Create();
-
-                Assert.True(string.Equals(storageAccount.ResourceGroupName, rgName));
-            }
-            finally
-            {
-                ServiceClientTracing.RemoveTracingInterceptor(logAndUserAgentInterceptor);
-                ServiceClientTracing.IsEnabled = false;
-                if (azure != null)
+                IAzure azure = null;
+                // Sets the intercepter so that logging and user agent in log can be asserted.
+                var logAndUserAgentInterceptor = new LogAndUserAgentInterceptor();
+                ServiceClientTracing.AddTracingInterceptor(logAndUserAgentInterceptor);
+                ServiceClientTracing.IsEnabled = true;
+                try
                 {
-                    azure.ResourceGroups.DeleteByName(rgName);
+                    AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                    credentials.WithDefaultSubscription(null); // Clearing subscriptionId loaded from the auth
+                                                               // file so that below WithDefaultSubscription()
+                                                               // will force listing subscriptions and fetching
+                                                               // the first.
+                    azure = Microsoft.Azure.Management.Fluent.Azure
+                        .Configure()
+                        .WithUserAgent("azure-fluent-test", "1.0.0-prelease")
+                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                        .WithDelegatingHandlers(TestHelper.GetHandlers())
+                        .Authenticate(credentials)
+                        .WithDefaultSubscription();
+
+                    IStorageAccount storageAccount = azure.StorageAccounts
+                       .Define(stgName)
+                       .WithRegion(Region.US_EAST)
+                       .WithNewResourceGroup(rgName)
+                       .Create();
+
+                    Assert.True(string.Equals(storageAccount.ResourceGroupName, rgName));
                 }
+                finally
+                {
+                    ServiceClientTracing.RemoveTracingInterceptor(logAndUserAgentInterceptor);
+                    ServiceClientTracing.IsEnabled = false;
+                    if (azure != null)
+                    {
+                        azure.ResourceGroups.DeleteByName(rgName);
+                    }
+                }
+                Assert.True(logAndUserAgentInterceptor.FoundUserAgentInLog);
             }
-            Assert.True(logAndUserAgentInterceptor.FoundUserAgentInLog);
         }
 
         private class LogAndUserAgentInterceptor : IServiceClientTracingInterceptor
         {
             public bool FoundUserAgentInLog { get; private set; }
+
             public void Configuration(string source, string name, string value)
             {
             }
