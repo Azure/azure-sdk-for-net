@@ -17,7 +17,7 @@ namespace Azure.Tests.TrafficManager
         [Fact]
         public void CanCreateUpdateTrafficManagerProfile()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var region = Region.US_EAST;
                 var externalEndpointName21 = "external-ep-1";

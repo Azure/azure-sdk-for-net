@@ -19,7 +19,7 @@ namespace Azure.Tests.Dns
         [Fact]
         public void CanCreateUpdateDnsZone()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var region = Region.US_EAST;
                 var groupName = TestUtilities.GenerateName("rgdnschash");

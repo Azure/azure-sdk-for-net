@@ -3,8 +3,8 @@
 
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
 
@@ -22,7 +22,7 @@ namespace Azure.Tests.Cdn
         [Fact]
         public void CanCRUDCdn()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 try
                 {

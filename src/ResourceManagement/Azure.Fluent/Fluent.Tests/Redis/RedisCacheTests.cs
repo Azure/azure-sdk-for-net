@@ -24,7 +24,7 @@ namespace Azure.Tests.Redis
         [Fact]
         public void CanCRUDRedisCache()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 try
                 {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -23,7 +24,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact]
         public void CanCreateUpdateMoveResource()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 IResourceManager resourceManager = TestHelper.CreateResourceManager();
                 IGenericResources genericResources = resourceManager.GenericResources;

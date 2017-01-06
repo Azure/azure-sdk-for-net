@@ -10,6 +10,7 @@ using System.Linq;
 using Xunit;
 using System;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.KeyVault
 {
@@ -23,7 +24,7 @@ namespace Fluent.Tests.KeyVault
         [Fact]
         public void CanCRUDKeyVault()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string vaultName1 = TestUtilities.GenerateName("vault1");
                 string vaultName2 = TestUtilities.GenerateName("vault2");

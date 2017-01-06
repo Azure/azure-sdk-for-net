@@ -9,6 +9,7 @@ using System.Threading;
 using Xunit;
 using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.ResourceManager
 {
@@ -17,7 +18,7 @@ namespace Fluent.Tests.ResourceManager
         [Fact]
         public void CanRegisterAndUnRegisterProvider()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var resourceManager = TestHelper.CreateResourceManager();
                 var providers = resourceManager.Providers.List();

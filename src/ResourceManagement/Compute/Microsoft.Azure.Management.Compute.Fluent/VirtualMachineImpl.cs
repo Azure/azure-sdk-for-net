@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private readonly IStorageManager storageManager;
         private readonly INetworkManager networkManager;
         private readonly string vmName;
-        private readonly ResourceNamer namer;
+        private readonly IResourceNamer namer;
         private string creatableStorageAccountKey;
         private string creatableAvailabilitySetKey;
         private string creatablePrimaryNetworkInterfaceKey;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.networkManager = networkManager;
             this.vmName = name;
             this.isMarketplaceLinuxImage = false;
-            this.namer = new ResourceNamer(this.vmName);
+            this.namer = SharedSettings.CreateResourceNamer(this.vmName);
             this.creatableSecondaryNetworkInterfaceKeys = new List<string>();
             this.existingSecondaryNetworkInterfacesToAssociate = new List<INetworkInterface>();
             this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(extensionsClient, this);
@@ -1018,7 +1018,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     // VM name cannot contain only numeric values and cannot exceed 15 chars
                     if ((new Regex(@"^\d+$")).IsMatch(vmName))
                     {
-                        this.Inner.OsProfile.ComputerName = ResourceNamer.RandomResourceName("vm", 15);
+                        this.Inner.OsProfile.ComputerName = SharedSettings.RandomResourceName("vm", 15);
                     }
                     else if (vmName.Length <= 15)
                     {
@@ -1026,7 +1026,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     }
                     else
                     {
-                        this.Inner.OsProfile.ComputerName = ResourceNamer.RandomResourceName("vm", 15);
+                        this.Inner.OsProfile.ComputerName = SharedSettings.RandomResourceName("vm", 15);
                     }
                 }
             }

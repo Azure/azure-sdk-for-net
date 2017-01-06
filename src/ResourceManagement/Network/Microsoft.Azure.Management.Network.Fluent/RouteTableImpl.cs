@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:71D5B4DBFB32B4FF553CCD0A78B871EC:16C831421CFC3F51EA84222302D9DFFE
         public RouteTableImpl WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress)
         {
-            return DefineRoute(ResourceNamer.RandomResourceName("route_" + Name, 20))
+            return DefineRoute(SharedSettings.RandomResourceName("route_" + Name, 20))
                 .WithDestinationAddressPrefix(destinationAddressPrefix)
                 .WithNextHopToVirtualAppliance(ipAddress)
                 .Attach();
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:8200D5EDD19C5D72B80F6841AD9D0FF0:F58B9D6D280E3F1581C12EFC5360F4C9
         public RouteTableImpl WithRoute(string destinationAddressPrefix, RouteNextHopType nextHop)
         {
-            return DefineRoute(ResourceNamer.RandomResourceName("route_" + Name, 20))
+            return DefineRoute(SharedSettings.RandomResourceName("route_" + Name, 20))
                 .WithDestinationAddressPrefix(destinationAddressPrefix)
                 .WithNextHop(nextHop)
                 .Attach();

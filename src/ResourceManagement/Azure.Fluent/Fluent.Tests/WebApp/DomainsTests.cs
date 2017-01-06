@@ -16,7 +16,7 @@ namespace Azure.Tests.WebApp
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDDomain()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 

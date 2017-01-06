@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.Batch
 {
@@ -22,7 +23,7 @@ namespace Fluent.Tests.Batch
         [Fact]
         public async Task CanCRUDBatchAccounts()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rgName = TestUtilities.GenerateName("rgstg");
                 var batchAccountName = TestUtilities.GenerateName("batchaccount");
@@ -180,7 +181,7 @@ namespace Fluent.Tests.Batch
         [Fact]
         public async Task CanCreateBatchAccountWithApplication()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 try
                 {

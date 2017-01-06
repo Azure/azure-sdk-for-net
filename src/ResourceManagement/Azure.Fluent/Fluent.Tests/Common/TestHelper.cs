@@ -166,8 +166,7 @@ namespace Fluent.Tests.Common
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
-        // TODO - ans - context is not required here as we are getting the handler directly from HttpMockServer.
-        public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate(MockContext context)
+        public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate()
         {
             return CreateMockedManager(c => Microsoft.Azure.Management.Resource.Fluent.ResourceManager
                 .Configure()
@@ -178,8 +177,16 @@ namespace Fluent.Tests.Common
 
         private static T CreateMockedManager<T>(Func<AzureCredentials, T> builder)
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath)
-                .WithDefaultSubscription(TestEnvironmentFactory.GetTestEnvironment().SubscriptionId);
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                credentials = credentials.WithDefaultSubscription(TestEnvironmentFactory.GetTestEnvironment().SubscriptionId);
+            }
+            else
+            {
+                HttpMockServer.Variables.Add(ConnectionStringKeys.SubscriptionIdKey, credentials.DefaultSubscriptionId);
+            }
 
             var manager = builder.Invoke(credentials);
 

@@ -19,7 +19,7 @@ namespace Azure.Tests.WebApp
         [Fact]
         public async Task CanDeploySourceControl()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 string RG_NAME = TestUtilities.GenerateName("javacsmrg");
                 string WEBAPP_NAME = TestUtilities.GenerateName("java-webapp-");

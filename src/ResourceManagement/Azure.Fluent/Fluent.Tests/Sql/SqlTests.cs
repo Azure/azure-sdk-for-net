@@ -53,7 +53,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanOperateSqlFromRollUpClient()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 GenerateNewRGAndSqlServerNameForTest();
                 var rollUpClient = TestHelper.CreateRollupClient();
@@ -73,7 +73,7 @@ namespace Azure.Tests.Sql
         [Fact(Skip ="This test require existing SQL server so that there can be recommended elastic pools")]
         public void CanListRecommendedElasticPools()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
                 var sqlServer = sqlServerManager.SqlServers.GetByGroup("ans", "ans-secondary");
@@ -87,7 +87,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanCRUDSqlServer()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -130,7 +130,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanUseCoolShortcutsForResourceCreation()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -321,7 +321,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanCRUDSqlDatabase()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -422,7 +422,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanManageReplicationLinks()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -491,7 +491,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanDoOperationsOnDataWarehouse()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -546,7 +546,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanCRUDSqlDatabaseWithElasticPool()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -678,7 +678,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanCRUDSqlElasticPool()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
@@ -737,7 +737,7 @@ namespace Azure.Tests.Sql
         [Fact]
         public void CanCRUDSqlFirewallRule()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var sqlServerManager = TestHelper.CreateSqlManager();
 
