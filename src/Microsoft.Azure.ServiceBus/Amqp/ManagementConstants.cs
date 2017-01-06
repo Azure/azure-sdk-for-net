@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Messaging.Amqp
             public const string RenewSessionLockOperation = Microsoft + ":renew-session-lock";
             public const string SetSessionStateOperation = Microsoft + ":set-session-state";
             public const string GetSessionStateOperation = Microsoft + ":get-session-state";
+            public const string PeekMessageOperation = Microsoft + ":peek-message";
         }
 
         public static class Properties
@@ -48,6 +49,9 @@ namespace Microsoft.Azure.Messaging.Amqp
             public static readonly MapKey Message = new MapKey("message");
             public static readonly MapKey Messages = new MapKey("messages");
             public static readonly MapKey DispositionStatus = new MapKey("disposition-status");
+
+            public static readonly MapKey FromSequenceNumber = new MapKey("from-sequence-number");
+            public static readonly MapKey MessageCount = new MapKey("message-count");
         }
     }
 }

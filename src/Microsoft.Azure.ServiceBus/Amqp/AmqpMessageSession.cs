@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
 
-                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await ((AmqpMessageReceiver)this.InnerMessageReceiver).ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 Stream sessionState = null;
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = null;
                 }
 
-                await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                await ((AmqpMessageReceiver)this.InnerMessageReceiver).ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
             }
             catch (AmqpException amqpException)
             {
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
 
-                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await ((AmqpMessageReceiver)this.InnerMessageReceiver).ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {

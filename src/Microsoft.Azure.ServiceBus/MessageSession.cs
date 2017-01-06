@@ -8,8 +8,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.IO;
     using System.Threading.Tasks;
     using Amqp;
-    using Azure.Amqp;
-    using Messaging.Amqp;
 
     public abstract class MessageSession : MessageReceiver
     {
@@ -102,9 +100,9 @@ namespace Microsoft.Azure.ServiceBus
             return this.InnerMessageReceiver.RenewLockAsync(lockToken);
         }
 
-        protected override Task<AmqpResponseMessage> OnExecuteRequestResponseAsync(AmqpRequestMessage requestAmqpMessage)
+        protected override Task<IList<BrokeredMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
         {
-            throw new NotImplementedException();
+            return this.InnerMessageReceiver.PeekAsync(messageCount);
         }
     }
 }

@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -112,6 +111,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 await this.RenewLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+            }
+            finally
+            {
+                await queueClient.CloseAsync();
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        async Task PeekAsyncTest(string queueName, int messageCount = 10)
+        {
+            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName), ReceiveMode.ReceiveAndDelete);
+            try
+            {
+                await this.PeekAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
             }
             finally
             {

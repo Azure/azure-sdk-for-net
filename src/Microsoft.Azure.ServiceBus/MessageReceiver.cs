@@ -13,12 +13,14 @@ namespace Microsoft.Azure.ServiceBus
     {
         readonly TimeSpan operationTimeout;
         int prefetchCount;
+        long lastPeekedSequenceNumber;
 
         protected MessageReceiver(ReceiveMode receiveMode, TimeSpan operationTimeout)
             : base(nameof(MessageReceiver) + StringUtility.GetRandomString())
         {
             this.ReceiveMode = receiveMode;
             this.operationTimeout = operationTimeout;
+            this.lastPeekedSequenceNumber = Constants.DefaultLastPeekedSequenceNumber;
         }
 
         public abstract string Path { get; }
@@ -40,6 +42,24 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 this.prefetchCount = value;
+            }
+        }
+
+        public virtual long LastPeekedSequenceNumber
+        {
+            get
+            {
+                return this.lastPeekedSequenceNumber;
+            }
+
+            internal set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(this.LastPeekedSequenceNumber), value.ToString());
+                }
+
+                this.lastPeekedSequenceNumber = value;
             }
         }
 
@@ -111,9 +131,34 @@ namespace Microsoft.Azure.ServiceBus
             return this.OnRenewLockAsync(lockToken);
         }
 
-        internal Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
+        /// <summary>
+        /// Asynchronously reads the next message without changing the state of the receiver or the message source.
+        /// </summary>
+        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
+        public Task<BrokeredMessage> PeekAsync()
         {
-            return this.OnExecuteRequestResponseAsync(amqpRequestMessage);
+            return this.PeekBySequenceNumberAsync(this.lastPeekedSequenceNumber + 1);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the next batch of message without changing the state of the receiver or the message source.
+        /// </summary>
+        /// <param name="maxMessageCount">The number of messages.</param>
+        /// <returns>The asynchronous operation that returns a list of <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> to be read.</returns>
+        public async Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
+        {
+            return await this.OnPeekAsync(this.lastPeekedSequenceNumber + 1, maxMessageCount).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the next message without changing the state of the receiver or the message source.
+        /// </summary>
+        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
+        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
+        public async Task<BrokeredMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
+        {
+            var messages = await this.OnPeekAsync(fromSequenceNumber, messageCount: 1).ConfigureAwait(false);
+            return messages?.FirstOrDefault();
         }
 
         protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount);
@@ -130,7 +175,7 @@ namespace Microsoft.Azure.ServiceBus
 
         protected abstract Task<DateTime> OnRenewLockAsync(Guid lockToken);
 
-        protected abstract Task<AmqpResponseMessage> OnExecuteRequestResponseAsync(AmqpRequestMessage requestAmqpMessage);
+        protected abstract Task<IList<BrokeredMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1);
 
         static void ValidateLockTokens(IEnumerable<Guid> lockTokens)
         {

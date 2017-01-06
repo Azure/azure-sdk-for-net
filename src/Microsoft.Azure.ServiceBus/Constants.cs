@@ -14,5 +14,7 @@ namespace Microsoft.Azure.ServiceBus
         public const int MaxSessionIdLength = 128;
 
         public static readonly int MaximumMessageHeaderPropertySize = ushort.MaxValue;
+
+        public static readonly long DefaultLastPeekedSequenceNumber = 0;
     }
 }

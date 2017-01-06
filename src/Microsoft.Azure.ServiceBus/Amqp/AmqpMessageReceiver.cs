@@ -112,6 +112,21 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             this.lockedUntilUtc = receivingAmqpLink.Settings.Properties.TryGetValue(AmqpClientConstants.LockedUntilUtc, out lockedUntilUtcTicks) ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc) : DateTime.MinValue;
         }
 
+        internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
+        {
+            AmqpMessage amqpMessage = amqpRequestMessage.AmqpMessage;
+            TimeoutHelper timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
+            RequestResponseAmqpLink requestResponseAmqpLink = await this.RequestResponseLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+
+            AmqpMessage responseAmqpMessage = await Task.Factory.FromAsync(
+                (c, s) => requestResponseAmqpLink.BeginRequest(amqpMessage, timeoutHelper.RemainingTime(), c, s),
+                (a) => requestResponseAmqpLink.EndRequest(a),
+                this).ConfigureAwait(false);
+
+            AmqpResponseMessage responseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+            return responseMessage;
+        }
+
         protected override async Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount)
         {
             try
@@ -158,6 +173,56 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 throw AmqpExceptionHelper.ToMessagingContract(amqpException.Error);
             }
+        }
+
+        protected override async Task<IList<BrokeredMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
+        {
+            try
+            {
+                AmqpRequestMessage requestMessage =
+                    AmqpRequestMessage.CreateRequest(
+                        ManagementConstants.Operations.PeekMessageOperation,
+                        this.OperationTimeout,
+                        null);
+
+                requestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber;
+                requestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+
+                if (!string.IsNullOrWhiteSpace(this.sessionId))
+                {
+                    requestMessage.Map[ManagementConstants.Properties.SessionId] = this.sessionId;
+                }
+
+                List<BrokeredMessage> messages = new List<BrokeredMessage>();
+
+                AmqpResponseMessage response = await this.ExecuteRequestResponseAsync(requestMessage);
+                if (response.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    BrokeredMessage brokeredMessage = null;
+                    var messageList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                    foreach (AmqpMap entry in messageList)
+                    {
+                        var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
+                        AmqpMessage amqpMessage =
+                            AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                        brokeredMessage = AmqpMessageConverter.ClientGetMessage(amqpMessage);
+                        messages.Add(brokeredMessage);
+                    }
+
+                    if (brokeredMessage != null)
+                    {
+                        this.LastPeekedSequenceNumber = brokeredMessage.SequenceNumber;
+                    }
+
+                    return messages;
+                }
+            }
+            catch (AmqpException amqpException)
+            {
+                throw AmqpExceptionHelper.ToMessagingContract(amqpException.Error);
+            }
+
+            return null;
         }
 
         protected override async Task<IList<BrokeredMessage>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
@@ -298,21 +363,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return lockedUntilUtc;
-        }
-
-        protected override async Task<AmqpResponseMessage> OnExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
-        {
-            AmqpMessage amqpMessage = amqpRequestMessage.AmqpMessage;
-            TimeoutHelper timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
-            RequestResponseAmqpLink requestResponseAmqpLink = await this.RequestResponseLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-
-            AmqpMessage responseAmqpMessage = await Task.Factory.FromAsync(
-                (c, s) => requestResponseAmqpLink.BeginRequest(amqpMessage, timeoutHelper.RemainingTime(), c, s),
-                (a) => requestResponseAmqpLink.EndRequest(a),
-                this).ConfigureAwait(false);
-
-            AmqpResponseMessage responseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
-            return responseMessage;
         }
 
         async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome)

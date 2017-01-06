@@ -139,5 +139,23 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             Assert.True(receivedMessages.Count() == messageCount);
         }
+
+        protected async Task PeekAsyncTestCase(MessageSender messageSender, MessageReceiver messageReceiver, int messageCount)
+        {
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            List<BrokeredMessage> peekedMessages = new List<BrokeredMessage>();
+            peekedMessages.Add(await TestUtility.PeekMessageAsync(messageReceiver));
+            peekedMessages.AddRange(await TestUtility.PeekMessagesAsync(messageReceiver, messageCount - 1));
+
+            Assert.True(messageCount == peekedMessages.Count());
+            long lastSequenceNumber = -1;
+            foreach (BrokeredMessage message in peekedMessages)
+            {
+                Assert.True(message.SequenceNumber != lastSequenceNumber);
+                lastSequenceNumber = message.SequenceNumber;
+            }
+
+            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
+        }
     }
 }

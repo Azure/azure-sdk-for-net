@@ -169,6 +169,39 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        async Task PeekSessionAsyncTest(string topicName, int messageCount = 10)
+        {
+            var entityConnectionString = TestUtility.GetEntityConnectionString(topicName);
+            var topicClient = TopicClient.CreateFromConnectionString(entityConnectionString);
+            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(entityConnectionString, this.SubscriptionName, ReceiveMode.ReceiveAndDelete);
+            try
+            {
+                var messageId1 = "test-message1";
+                var sessionId1 = "sessionId1";
+                await topicClient.SendAsync(new BrokeredMessage() { MessageId = messageId1, SessionId = sessionId1 });
+                TestUtility.Log($"Sent Message: {messageId1} to Session: {sessionId1}");
+
+                var messageId2 = "test-message2";
+                var sessionId2 = "sessionId2";
+                await topicClient.SendAsync(new BrokeredMessage() { MessageId = messageId2, SessionId = sessionId2 });
+                TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
+
+                // Peek Message, Receive and Delete with SessionId - sessionId 1
+                await this.PeekAndDeleteMessageAsync(subscriptionClient, sessionId1, messageId1);
+
+                // Peek Message, Receive and Delete with SessionId - sessionId 2
+                await this.PeekAndDeleteMessageAsync(subscriptionClient, sessionId2, messageId2);
+            }
+            finally
+            {
+                await subscriptionClient.CloseAsync();
+                await topicClient.CloseAsync();
+            }
+        }
+
         async Task AcceptAndCompleteSessionsAsync(SubscriptionClient subscriptionClient, string sessionId, string messageId)
         {
             var sessionReceiver = await subscriptionClient.AcceptMessageSessionAsync(sessionId);
@@ -181,6 +214,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
             await message.CompleteAsync();
             TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
+        }
+
+        async Task PeekAndDeleteMessageAsync(SubscriptionClient queueClient, string sessionId, string messageId)
+        {
+            var sessionReceiver = await queueClient.AcceptMessageSessionAsync(sessionId);
+            if (sessionId != null)
+            {
+                Assert.True(sessionReceiver.SessionId == sessionId);
+            }
+
+            var message = await sessionReceiver.PeekAsync();
+            Assert.True(message.MessageId == messageId);
+            TestUtility.Log($"Peeked Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
+
+            message = await sessionReceiver.ReceiveAsync();
+            Assert.True(message.MessageId == messageId);
+            TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
+
+            await sessionReceiver.CloseAsync();
         }
     }
 }
