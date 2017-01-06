@@ -3,6 +3,7 @@
 
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 namespace Azure.Tests.WebApp
@@ -15,34 +16,37 @@ namespace Azure.Tests.WebApp
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDCertificateOrder()
         {
-            var appServiceManager = TestHelper.CreateAppServiceManager();
-
-            // CREATE
-            var certificateOrder = appServiceManager.AppServiceCertificateOrders
-                .Define(CERTIFICATE_NAME)
-                .WithExistingResourceGroup(RG_NAME)
-                .WithHostName("graph-dm7720.com")
-                .WithStandardSku()
-                .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com"))
-                .WithNewKeyVault("graphvault", Region.US_WEST)
-                .WithValidYears(1)
-                .Create();
-            Assert.NotNull(certificateOrder);
-            // GET
-            Assert.NotNull(appServiceManager.AppServiceCertificateOrders.GetByGroup(RG_NAME, CERTIFICATE_NAME));
-            // LIST
-            var certificateOrders = appServiceManager.AppServiceCertificateOrders.ListByGroup(RG_NAME);
-            var found = false;
-            foreach (var co in certificateOrders)
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                if (CERTIFICATE_NAME.Equals(co.Name))
+                var appServiceManager = TestHelper.CreateAppServiceManager();
+
+                // CREATE
+                var certificateOrder = appServiceManager.AppServiceCertificateOrders
+                    .Define(CERTIFICATE_NAME)
+                    .WithExistingResourceGroup(RG_NAME)
+                    .WithHostName("graph-dm7720.com")
+                    .WithStandardSku()
+                    .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com"))
+                    .WithNewKeyVault("graphvault", Region.US_WEST)
+                    .WithValidYears(1)
+                    .Create();
+                Assert.NotNull(certificateOrder);
+                // GET
+                Assert.NotNull(appServiceManager.AppServiceCertificateOrders.GetByGroup(RG_NAME, CERTIFICATE_NAME));
+                // LIST
+                var certificateOrders = appServiceManager.AppServiceCertificateOrders.ListByGroup(RG_NAME);
+                var found = false;
+                foreach (var co in certificateOrders)
                 {
-                    found = true;
-                    break;
+                    if (CERTIFICATE_NAME.Equals(co.Name))
+                    {
+                        found = true;
+                        break;
+                    }
                 }
+                Assert.True(found);
+                // UPDATE
             }
-            Assert.True(found);
-            // UPDATE
         }
     }
 }

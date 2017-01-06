@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourcegroups/javacsmrg3589?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlZ3JvdXBzL2phdmFjc21yZzM1ODk/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "49a4cba4-cadd-44b5-91dc-b71648c124f1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg3589\",\r\n  \"name\": \"javacsmrg3589\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "179"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 02:20:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-request-id": [
+          "47d5a249-5224-4761-84fc-1c183cc5324e"
+        ],
+        "x-ms-correlation-request-id": [
+          "47d5a249-5224-4761-84fc-1c183cc5324e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170106T022022Z:47d5a249-5224-4761-84fc-1c183cc5324e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    }
+  ],
+  "Names": {
+    "CanCRUDWebApp": [
+      "javacsmrg3589",
+      "javacsmrg1353",
+      "java-webapp-709",
+      "java-webapp-8302",
+      "java-asp-3591",
+      "java-asp-1012"
+    ]
+  },
+  "Variables": {}
+}

@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -17,76 +18,79 @@ namespace Azure.Tests.WebApp
 {
     public class HostnameSslTests
     {
-        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("javacsmrg", 20);
-        private static readonly string WEBAPP_NAME = ResourceNamer.RandomResourceName("java-webapp-", 20);
-        private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
-
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public async Task CanBindHostnameAndSsl()
         {
-            var appServiceManager = TestHelper.CreateAppServiceManager();
-            var domain = appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com");
-            var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup("javacsmrg9b9912262", "graphdmcert7720");
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                string RG_NAME = TestUtilities.GenerateName("javacsmrg");
+                string WEBAPP_NAME = TestUtilities.GenerateName("java-webapp-");
+                string APP_SERVICE_PLAN_NAME = TestUtilities.GenerateName("java-asp-");
 
-            // hostname binding
-            appServiceManager.WebApps.Define(WEBAPP_NAME)
-                .WithNewResourceGroup(RG_NAME)
-                .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
-                .WithRegion(Region.US_WEST)
-                .WithPricingTier(AppServicePricingTier.Basic_B1)
-                .DefineHostnameBinding()
-                    .WithAzureManagedDomain(domain)
-                    .WithSubDomain(WEBAPP_NAME)
-                    .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
-                    .Attach()
-                .Create();
+                var appServiceManager = TestHelper.CreateAppServiceManager();
+                var domain = appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com");
+                var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup("javacsmrg9b9912262", "graphdmcert7720");
 
-            var webApp = appServiceManager.WebApps.GetByGroup(RG_NAME, WEBAPP_NAME);
-            Assert.NotNull(webApp);
-
-            var response = await CheckAddress("http://" + WEBAPP_NAME + "." + domain.Name);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(await response.Content.ReadAsStringAsync());
-
-            // hostname binding shortcut
-            webApp.Update()
-                    .WithManagedHostnameBindings(domain, WEBAPP_NAME + "-1", WEBAPP_NAME + "-2")
-                    .Apply();
-            response = await CheckAddress("http://" + WEBAPP_NAME + "-1." + domain.Name);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(await response.Content.ReadAsStringAsync());
-            response = await CheckAddress("http://" + WEBAPP_NAME + "-2." + domain.Name);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(await response.Content.ReadAsStringAsync());
-
-            // SSL binding
-            webApp.Update()
-                    .DefineSslBinding()
-                        .ForHostname(WEBAPP_NAME + "." + domain.Name)
-                        .WithExistingAppServiceCertificateOrder(certificateOrder)
-                        .WithSniBasedSsl()
+                // hostname binding
+                appServiceManager.WebApps.Define(WEBAPP_NAME)
+                    .WithNewResourceGroup(RG_NAME)
+                    .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
+                    .WithRegion(Region.US_WEST)
+                    .WithPricingTier(AppServicePricingTier.Basic_B1)
+                    .DefineHostnameBinding()
+                        .WithAzureManagedDomain(domain)
+                        .WithSubDomain(WEBAPP_NAME)
+                        .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
                         .Attach()
-                    .Apply();
-            response = null;
-            var retryCount = 3;
-            while (response == null && retryCount > 0)
-            {
-                try
+                    .Create();
+
+                var webApp = appServiceManager.WebApps.GetByGroup(RG_NAME, WEBAPP_NAME);
+                Assert.NotNull(webApp);
+
+                var response = await CheckAddress("http://" + WEBAPP_NAME + "." + domain.Name);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(await response.Content.ReadAsStringAsync());
+
+                // hostname binding shortcut
+                webApp.Update()
+                        .WithManagedHostnameBindings(domain, WEBAPP_NAME + "-1", WEBAPP_NAME + "-2")
+                        .Apply();
+                response = await CheckAddress("http://" + WEBAPP_NAME + "-1." + domain.Name);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(await response.Content.ReadAsStringAsync());
+                response = await CheckAddress("http://" + WEBAPP_NAME + "-2." + domain.Name);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(await response.Content.ReadAsStringAsync());
+
+                // SSL binding
+                webApp.Update()
+                        .DefineSslBinding()
+                            .ForHostname(WEBAPP_NAME + "." + domain.Name)
+                            .WithExistingAppServiceCertificateOrder(certificateOrder)
+                            .WithSniBasedSsl()
+                            .Attach()
+                        .Apply();
+                response = null;
+                var retryCount = 3;
+                while (response == null && retryCount > 0)
                 {
-                    response = await CheckAddress("https://" + WEBAPP_NAME + "." + domain.Name);
+                    try
+                    {
+                        response = await CheckAddress("https://" + WEBAPP_NAME + "." + domain.Name);
+                    }
+                    catch (Exception)
+                    {
+                        retryCount--;
+                        TestHelper.Delay(5000);
+                    }
                 }
-                catch (Exception)
+                if (retryCount == 0)
                 {
-                    retryCount--;
-                    TestHelper.Delay(5000);
+                    Assert.True(false);
                 }
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(await response.Content.ReadAsStringAsync());
             }
-            if (retryCount == 0)
-            {
-                Assert.True(false);
-            }
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(await response.Content.ReadAsStringAsync());
         }
 
         private static async Task<HttpResponseMessage> CheckAddress(string url)

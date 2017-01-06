@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Fluent.Tests.Common;
+using Xunit;
 
 namespace Fluent.Tests.Compute
 {
@@ -15,8 +16,8 @@ namespace Fluent.Tests.Compute
          * Main entry point.
          * @param args the parameters
          */
-
         // TODO - ans - Does not look like a test. Check with Author and see.
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void Test()
         {
             string vnetName1 = ResourceNamer.RandomResourceName("vnet1", 20);
