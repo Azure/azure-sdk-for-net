@@ -4,7 +4,6 @@
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Fluent.Tests.Common;
 
@@ -16,6 +15,8 @@ namespace Fluent.Tests.Compute
          * Main entry point.
          * @param args the parameters
          */
+
+        // TODO - ans - Does not look like a test. Check with Author and see.
         public void Test()
         {
             string vnetName1 = ResourceNamer.RandomResourceName("vnet1", 20);

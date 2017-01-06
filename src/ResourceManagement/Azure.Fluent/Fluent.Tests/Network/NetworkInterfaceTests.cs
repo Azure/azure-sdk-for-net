@@ -10,104 +10,113 @@ using System.Linq;
 using System.Text;
 using Xunit;
 using Fluent.Tests.Common;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Fluent.Tests.Network
 {
     public class NetworkInterfaceTests
     {
-        string testId = "" + System.DateTime.Now.Ticks % 100000L;
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CreateUpdateTest()
         {
-            var manager = TestHelper.CreateNetworkManager();
-            manager.NetworkInterfaces.Define("nic" + testId)
-                    .WithRegion(Region.US_EAST)
-                    .WithNewResourceGroup("rg" + this.testId)
-                    .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithNewPrimaryPublicIpAddress("pipdns" + this.testId)
-                    .WithIpForwarding()
-                    .Create();
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                var testId = TestUtilities.GenerateName("");
 
-            var resource = manager.NetworkInterfaces.GetByGroup("rg" + this.testId, "nic" + testId);
-            resource = resource.Update()
-                .WithoutIpForwarding()
-                .UpdateIpConfiguration(resource.PrimaryIpConfiguration.Name) // Updating the primary ip configuration
-                    .WithPrivateIpAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIpAddressDynamic()
-                    .WithoutPublicIpAddress()      // Equivalent to ..update().withoutPrimaryPublicIpAddress()
-                    .Parent()
-                .WithTag("tag1", "value1")
-                .WithTag("tag2", "value2")
-                .Apply();
-            Assert.True(resource.Tags.ContainsKey("tag1"));
+                var manager = TestHelper.CreateNetworkManager();
+                manager.NetworkInterfaces.Define("nic" + testId)
+                        .WithRegion(Region.US_EAST)
+                        .WithNewResourceGroup("rg" + testId)
+                        .WithNewPrimaryNetwork("10.0.0.0/28")
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithNewPrimaryPublicIpAddress("pipdns" + testId)
+                        .WithIpForwarding()
+                        .Create();
 
-            manager.NetworkInterfaces.DeleteById(resource.Id);
+                var resource = manager.NetworkInterfaces.GetByGroup("rg" + testId, "nic" + testId);
+                resource = resource.Update()
+                    .WithoutIpForwarding()
+                    .UpdateIpConfiguration(resource.PrimaryIpConfiguration.Name) // Updating the primary ip configuration
+                        .WithPrivateIpAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIpAddressDynamic()
+                        .WithoutPublicIpAddress()      // Equivalent to ..update().withoutPrimaryPublicIpAddress()
+                        .Parent()
+                    .WithTag("tag1", "value1")
+                    .WithTag("tag2", "value2")
+                    .Apply();
+                Assert.True(resource.Tags.ContainsKey("tag1"));
+
+                manager.NetworkInterfaces.DeleteById(resource.Id);
+            }
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CreateBatchOfNetworkInterfaces()
         {
-            var azure = TestHelper.CreateRollupClient();
-            var region = Region.US_EAST;
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                var testId = TestUtilities.GenerateName("");
 
-            ICreatable<IResourceGroup> rgCreatable = azure.ResourceGroups
-                .Define("rg" + testId)
-                .WithRegion(region);
+                var azure = TestHelper.CreateRollupClient();
+                var region = Region.US_EAST;
 
-            string vnetName = "vnet1212";
-            ICreatable<INetwork> networkCreatable = azure.Networks
-                .Define(vnetName)
-                .WithRegion(region)
-                .WithNewResourceGroup(rgCreatable)
-                .WithAddressSpace("10.0.0.0/28");
+                ICreatable<IResourceGroup> rgCreatable = azure.ResourceGroups
+                    .Define("rg" + testId)
+                    .WithRegion(region);
 
-            string nic1Name = "nic1";
-            ICreatable<INetworkInterface> nic1Creatable = azure.NetworkInterfaces
-                .Define(nic1Name)
+                string vnetName = "vnet1212";
+                ICreatable<INetwork> networkCreatable = azure.Networks
+                    .Define(vnetName)
+                    .WithRegion(region)
+                    .WithNewResourceGroup(rgCreatable)
+                    .WithAddressSpace("10.0.0.0/28");
+
+                string nic1Name = "nic1";
+                ICreatable<INetworkInterface> nic1Creatable = azure.NetworkInterfaces
+                    .Define(nic1Name)
+                    .WithRegion(region)
+                    .WithNewResourceGroup(rgCreatable)
+                    .WithNewPrimaryNetwork(networkCreatable)
+                    .WithPrimaryPrivateIpAddressStatic("10.0.0.5");
+
+                string nic2Name = "nic2";
+                ICreatable<INetworkInterface> nic2Creatable = azure.NetworkInterfaces
+                .Define(nic2Name)
                 .WithRegion(region)
                 .WithNewResourceGroup(rgCreatable)
                 .WithNewPrimaryNetwork(networkCreatable)
-                .WithPrimaryPrivateIpAddressStatic("10.0.0.5");
+                .WithPrimaryPrivateIpAddressStatic("10.0.0.6");
 
-            string nic2Name = "nic2";
-            ICreatable<INetworkInterface> nic2Creatable = azure.NetworkInterfaces
-            .Define(nic2Name)
-            .WithRegion(region)
-            .WithNewResourceGroup(rgCreatable)
-            .WithNewPrimaryNetwork(networkCreatable)
-            .WithPrimaryPrivateIpAddressStatic("10.0.0.6");
+                string nic3Name = "nic3";
+                ICreatable<INetworkInterface> nic3Creatable = azure.NetworkInterfaces
+                .Define(nic3Name)
+                .WithRegion(region)
+                .WithNewResourceGroup(rgCreatable)
+                .WithNewPrimaryNetwork(networkCreatable)
+                .WithPrimaryPrivateIpAddressStatic("10.0.0.7");
 
-            string nic3Name = "nic3";
-            ICreatable<INetworkInterface> nic3Creatable = azure.NetworkInterfaces
-            .Define(nic3Name)
-            .WithRegion(region)
-            .WithNewResourceGroup(rgCreatable)
-            .WithNewPrimaryNetwork(networkCreatable)
-            .WithPrimaryPrivateIpAddressStatic("10.0.0.7");
+                string nic4Name = "nic4";
+                ICreatable<INetworkInterface> nic4Creatable = azure.NetworkInterfaces
+                .Define(nic4Name)
+                .WithRegion(region)
+                .WithNewResourceGroup(rgCreatable)
+                .WithNewPrimaryNetwork(networkCreatable)
+                .WithPrimaryPrivateIpAddressStatic("10.0.0.8");
 
-            string nic4Name = "nic4";
-            ICreatable<INetworkInterface> nic4Creatable = azure.NetworkInterfaces
-            .Define(nic4Name)
-            .WithRegion(region)
-            .WithNewResourceGroup(rgCreatable)
-            .WithNewPrimaryNetwork(networkCreatable)
-            .WithPrimaryPrivateIpAddressStatic("10.0.0.8");
+                ICreatedResources<INetworkInterface> batchNics = azure.NetworkInterfaces
+                                                                    .Create(nic1Creatable, nic2Creatable, nic3Creatable, nic4Creatable);
 
-            ICreatedResources<INetworkInterface> batchNics = azure.NetworkInterfaces
-                                                                .Create(nic1Creatable, nic2Creatable, nic3Creatable, nic4Creatable);
+                Assert.True(batchNics.Count() == 4);
+                Assert.True(batchNics.Any(nic => nic.Name.Equals(nic1Name, StringComparison.OrdinalIgnoreCase)));
+                Assert.True(batchNics.Any(nic => nic.Name.Equals(nic2Name, StringComparison.OrdinalIgnoreCase)));
+                Assert.True(batchNics.Any(nic => nic.Name.Equals(nic3Name, StringComparison.OrdinalIgnoreCase)));
+                Assert.True(batchNics.Any(nic => nic.Name.Equals(nic4Name, StringComparison.OrdinalIgnoreCase)));
 
-            Assert.True(batchNics.Count() == 4);
-            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic1Name, StringComparison.OrdinalIgnoreCase)));
-            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic2Name, StringComparison.OrdinalIgnoreCase)));
-            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic3Name, StringComparison.OrdinalIgnoreCase)));
-            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic4Name, StringComparison.OrdinalIgnoreCase)));
-
-            IResourceGroup resourceGroup = (IResourceGroup)batchNics.CreatedRelatedResource(rgCreatable.Key);
-            Assert.NotNull(resourceGroup);
-            INetwork network = (INetwork)batchNics.CreatedRelatedResource(networkCreatable.Key);
-            Assert.NotNull(network);
-            azure.ResourceGroups.DeleteByName(resourceGroup.Name);
+                IResourceGroup resourceGroup = (IResourceGroup)batchNics.CreatedRelatedResource(rgCreatable.Key);
+                Assert.NotNull(resourceGroup);
+                INetwork network = (INetwork)batchNics.CreatedRelatedResource(networkCreatable.Key);
+                Assert.NotNull(network);
+                azure.ResourceGroups.DeleteByName(resourceGroup.Name);
+            }
         }
 
         public void print(INetworkInterface resource)
