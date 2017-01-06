@@ -4,6 +4,7 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,70 +20,73 @@ namespace Fluent.Tests.ResourceManager
         private string rgName = "csmrg720";
         private string newRgName = "csmrg189";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateUpdateMoveResource()
         {
-            IResourceManager resourceManager = TestHelper.CreateResourceManager();
-            IGenericResources genericResources = resourceManager.GenericResources;
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                IResourceManager resourceManager = TestHelper.CreateResourceManager();
+                IGenericResources genericResources = resourceManager.GenericResources;
 
-            IGenericResource resource = genericResources.Define(resourceName)
-                .WithRegion(Region.US_EAST)
-                .WithNewResourceGroup(rgName)
-                .WithResourceType("sites")
-                .WithProviderNamespace("Microsoft.Web")
-                .WithoutPlan()
-                .WithApiVersion("2015-08-01")
-                .WithParentResource("")
-                .WithProperties(JsonConvert.DeserializeObject("{\"SiteMode\":\"Limited\",\"ComputeMode\":\"Shared\"}"))
-                .Create();
+                IGenericResource resource = genericResources.Define(resourceName)
+                    .WithRegion(Region.US_EAST)
+                    .WithNewResourceGroup(rgName)
+                    .WithResourceType("sites")
+                    .WithProviderNamespace("Microsoft.Web")
+                    .WithoutPlan()
+                    .WithApiVersion("2015-08-01")
+                    .WithParentResource("")
+                    .WithProperties(JsonConvert.DeserializeObject("{\"SiteMode\":\"Limited\",\"ComputeMode\":\"Shared\"}"))
+                    .Create();
 
-            // List
-            var found = (from r in genericResources.ListByGroup(rgName)
-                         where string.Equals(r.Name, resourceName, StringComparison.OrdinalIgnoreCase)
-                         select r).FirstOrDefault();
-            Assert.NotNull(found);
+                // List
+                var found = (from r in genericResources.ListByGroup(rgName)
+                             where string.Equals(r.Name, resourceName, StringComparison.OrdinalIgnoreCase)
+                             select r).FirstOrDefault();
+                Assert.NotNull(found);
 
-            // Get
-            resource = genericResources.Get(rgName, 
-                resource.ResourceProviderNamespace,
-                resource.ParentResourceId,
-                resource.ResourceType,
-                resource.Name,
-                resource.ApiVersion);
+                // Get
+                resource = genericResources.Get(rgName,
+                    resource.ResourceProviderNamespace,
+                    resource.ParentResourceId,
+                    resource.ResourceType,
+                    resource.Name,
+                    resource.ApiVersion);
 
-            // Move
-            IResourceGroup newGroup = resourceManager
-                .ResourceGroups
-                .Define(newRgName)
-                .WithRegion(Region.US_EAST)
-                .Create();
-            genericResources.MoveResources(rgName, newGroup, new List<string>
+                // Move
+                IResourceGroup newGroup = resourceManager
+                    .ResourceGroups
+                    .Define(newRgName)
+                    .WithRegion(Region.US_EAST)
+                    .Create();
+                genericResources.MoveResources(rgName, newGroup, new List<string>
             {
                 resource.Id
             });
 
-            // Check existence [TODO: Server returned "MethodNotAllowed" for CheckExistence call]
-            /*bool exists = genericResources.CheckExistence(newRgName,
-                resource.ResourceProviderNamespace,
-                resource.ParentResourceId,
-                resource.ResourceType,
-                resource.Name,
-                resource.ApiVersion);
+                // Check existence [TODO: Server returned "MethodNotAllowed" for CheckExistence call]
+                /*bool exists = genericResources.CheckExistence(newRgName,
+                    resource.ResourceProviderNamespace,
+                    resource.ParentResourceId,
+                    resource.ResourceType,
+                    resource.Name,
+                    resource.ApiVersion);
 
-            Assert.True(exists);
-            */
+                Assert.True(exists);
+                */
 
-            // Get and update
-            resource = genericResources.Get(newRgName,
-                resource.ResourceProviderNamespace,
-                resource.ParentResourceId,
-                resource.ResourceType,
-                resource.Name,
-                resource.ApiVersion);
-            resource.Update()
-                .WithApiVersion("2015-08-01")
-                .WithProperties(JsonConvert.DeserializeObject("{\"SiteMode\":\"Limited\",\"ComputeMode\":\"Dynamic\"}"))
-                .Apply();
+                // Get and update
+                resource = genericResources.Get(newRgName,
+                    resource.ResourceProviderNamespace,
+                    resource.ParentResourceId,
+                    resource.ResourceType,
+                    resource.Name,
+                    resource.ApiVersion);
+                resource.Update()
+                    .WithApiVersion("2015-08-01")
+                    .WithProperties(JsonConvert.DeserializeObject("{\"SiteMode\":\"Limited\",\"ComputeMode\":\"Dynamic\"}"))
+                    .Apply();
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;
 
@@ -11,52 +12,54 @@ namespace Fluent.Tests.ResourceManager
 {
     public class ResourceGroupsTests
     {
-        private string rgName = ResourceNamer.RandomResourceName("rgchash-", 20);
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDResourceGroup()
         {
-            Action<IResourceGroup> checkResourceGroup = (IResourceGroup resourceGroup) =>
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                Assert.NotNull(resourceGroup.Name);
-                Assert.True(resourceGroup.Name.Equals(rgName, StringComparison.OrdinalIgnoreCase));
-                Assert.NotNull(resourceGroup.RegionName);
-                Assert.True(resourceGroup.RegionName.Equals(Region.US_EAST2));
-                Assert.NotNull(resourceGroup.Id);
-                Assert.NotNull(resourceGroup.Tags);
-                Assert.Equal(resourceGroup.Tags.Count, 3);
-            };
+                var rgName = TestUtilities.GenerateName("rgchash-");
+                Action<IResourceGroup> checkResourceGroup = (IResourceGroup resourceGroup) =>
+                {
+                    Assert.NotNull(resourceGroup.Name);
+                    Assert.True(resourceGroup.Name.Equals(rgName, StringComparison.OrdinalIgnoreCase));
+                    Assert.NotNull(resourceGroup.RegionName);
+                    Assert.True(StringComparer.CurrentCultureIgnoreCase.Equals(resourceGroup.RegionName, Region.US_EAST2.Name));
+                    Assert.NotNull(resourceGroup.Id);
+                    Assert.NotNull(resourceGroup.Tags);
+                    Assert.Equal(resourceGroup.Tags.Count, 3);
+                };
 
-            try
-            {
-                var resourceManager = TestHelper.CreateResourceManager();
-                var resourceGroup = resourceManager.ResourceGroups.Define(rgName)
-                    .WithRegion(Region.US_EAST2)
-                    .WithTag("t1", "v1")
-                    .WithTag("t2", "v2")
-                    .WithTag("t3", "v3")
-                    .Create();
-                checkResourceGroup(resourceGroup);
-
-                resourceGroup = resourceManager.ResourceGroups.GetByName(rgName);
-                checkResourceGroup(resourceGroup);
-
-                resourceGroup.Update()
-                    .WithoutTag("t1")
-                    .WithTag("t4", "v4")
-                    .WithTag("t5", "v5")
-                    .Apply();
-                Assert.NotNull(resourceGroup.Tags);
-                Assert.Equal(resourceGroup.Tags.Count, 4);
-            }
-            finally
-            {
                 try
                 {
-                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    var resourceManager = TestHelper.CreateResourceManager();
+                    var resourceGroup = resourceManager.ResourceGroups.Define(rgName)
+                        .WithRegion(Region.US_EAST2)
+                        .WithTag("t1", "v1")
+                        .WithTag("t2", "v2")
+                        .WithTag("t3", "v3")
+                        .Create();
+                    checkResourceGroup(resourceGroup);
+
+                    resourceGroup = resourceManager.ResourceGroups.GetByName(rgName);
+                    checkResourceGroup(resourceGroup);
+
+                    resourceGroup.Update()
+                        .WithoutTag("t1")
+                        .WithTag("t4", "v4")
+                        .WithTag("t5", "v5")
+                        .Apply();
+                    Assert.NotNull(resourceGroup.Tags);
+                    Assert.Equal(resourceGroup.Tags.Count, 4);
                 }
-                catch
-                { }
+                finally
+                {
+                    try
+                    {
+                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch
+                    { }
+                }
             }
         }
     }
