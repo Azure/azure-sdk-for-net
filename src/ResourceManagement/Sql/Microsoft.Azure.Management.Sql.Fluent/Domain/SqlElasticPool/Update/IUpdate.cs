@@ -19,19 +19,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update
     }
 
     /// <summary>
-    /// The SQL Elastic Pool definition to set the storage limit for the SQL Azure Database Elastic Pool in MB.
-    /// </summary>
-    public interface IWithStorageCapacity 
-    {
-        /// <summary>
-        /// Sets the storage limit for the SQL Azure Database Elastic Pool in MB.
-        /// </summary>
-        /// <param name="storageMB">Storage limit for the SQL Azure Database Elastic Pool in MB.</param>
-        /// <return>The next stage of definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IUpdate WithStorageCapacity(int storageMB);
-    }
-
-    /// <summary>
     /// The SQL Elastic Pool definition to set the number of shared DTU for elastic pool.
     /// </summary>
     public interface IWithDtu 
@@ -45,16 +32,16 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update
     }
 
     /// <summary>
-    /// The SQL Elastic Pool definition to set the maximum DTU for one database.
+    /// The SQL Elastic Pool definition to set the storage limit for the SQL Azure Database Elastic Pool in MB.
     /// </summary>
-    public interface IWithDatabaseDtuMax 
+    public interface IWithStorageCapacity 
     {
         /// <summary>
-        /// Sets the maximum DTU any one SQL Azure Database can consume.
+        /// Sets the storage limit for the SQL Azure Database Elastic Pool in MB.
         /// </summary>
-        /// <param name="databaseDtuMax">Maximum DTU any one SQL Azure Database can consume.</param>
+        /// <param name="storageMB">Storage limit for the SQL Azure Database Elastic Pool in MB.</param>
         /// <return>The next stage of definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IUpdate WithDatabaseDtuMax(int databaseDtuMax);
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IUpdate WithStorageCapacity(int storageMB);
     }
 
     /// <summary>
@@ -95,5 +82,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update
         /// <param name="databaseDtuMin">Minimum DTU for all SQL Azure databases.</param>
         /// <return>The next stage of definition.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IUpdate WithDatabaseDtuMin(int databaseDtuMin);
+    }
+
+    /// <summary>
+    /// The SQL Elastic Pool definition to set the maximum DTU for one database.
+    /// </summary>
+    public interface IWithDatabaseDtuMax 
+    {
+        /// <summary>
+        /// Sets the maximum DTU any one SQL Azure Database can consume.
+        /// </summary>
+        /// <param name="databaseDtuMax">Maximum DTU any one SQL Azure Database can consume.</param>
+        /// <return>The next stage of definition.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IUpdate WithDatabaseDtuMax(int databaseDtuMax);
     }
 }

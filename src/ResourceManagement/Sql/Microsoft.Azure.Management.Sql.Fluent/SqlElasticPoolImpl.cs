@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public SqlElasticPoolImpl WithNewDatabase(string databaseName)
         {
             this.databaseCreatableMap.Add(databaseName,
-                (SqlDatabaseImpl)this.databasesImpl.Define(databaseName).WithExistingElasticPool(this.Name).WithoutSourceDatabaseId());
+                (SqlDatabaseImpl)this.databasesImpl.Define(databaseName).WithExistingElasticPool(this.Name));
             return this;
         }
 

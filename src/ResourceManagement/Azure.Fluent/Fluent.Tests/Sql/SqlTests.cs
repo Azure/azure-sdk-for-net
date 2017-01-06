@@ -308,8 +308,6 @@ namespace Azure.Tests.Sql
 
             var sqlDatabase = sqlServer.Databases
                 .Define(SQL_DATABASE_NAME)
-                .WithoutElasticPool()
-                .WithoutSourceDatabaseId()
                 .WithCollation(COLLATION)
                 .WithEdition(DatabaseEditions.Standard)
                 .Create();
@@ -383,8 +381,6 @@ namespace Azure.Tests.Sql
             // Add another database to the server
             sqlDatabase = sqlServer.Databases
                     .Define("newDatabase")
-                    .WithoutElasticPool()
-                    .WithoutSourceDatabaseId()
                     .WithCollation(COLLATION)
                     .WithEdition(DatabaseEditions.Standard)
                     .Create();
@@ -406,8 +402,6 @@ namespace Azure.Tests.Sql
 
             var databaseInServer1 = sqlServer1.Databases
                 .Define(SQL_DATABASE_NAME)
-                .WithoutElasticPool()
-                .WithoutSourceDatabaseId()
                 .WithCollation(COLLATION)
                 .WithEdition(DatabaseEditions.Standard)
                 .Create();
@@ -415,7 +409,6 @@ namespace Azure.Tests.Sql
             ValidateSqlDatabase(databaseInServer1, SQL_DATABASE_NAME);
             var databaseInServer2 = sqlServer2.Databases
                 .Define(SQL_DATABASE_NAME)
-                .WithoutElasticPool()
                 .WithSourceDatabase(databaseInServer1.Id)
                 .WithMode(CreateMode.OnlineSecondary)
                 .Create();
@@ -473,8 +466,6 @@ namespace Azure.Tests.Sql
 
             var sqlDatabase = sqlServer.Databases
                     .Define(SQL_DATABASE_NAME)
-                    .WithoutElasticPool()
-                    .WithoutSourceDatabaseId()
                     .WithCollation(COLLATION)
                     .WithEdition(DatabaseEditions.DataWarehouse)
                     .Create();
@@ -484,7 +475,7 @@ namespace Azure.Tests.Sql
             Assert.True(sqlDatabase.IsDataWarehouse);
 
             // Get
-            var dataWarehouse = sqlServer.Databases.Get(SQL_DATABASE_NAME).CastToWarehouse();
+            var dataWarehouse = sqlServer.Databases.Get(SQL_DATABASE_NAME).AsWarehouse();
 
             Assert.NotNull(dataWarehouse);
             Assert.Equal(dataWarehouse.Name, SQL_DATABASE_NAME);
@@ -523,10 +514,7 @@ namespace Azure.Tests.Sql
             var sqlDatabase = sqlServer.Databases
                     .Define(SQL_DATABASE_NAME)
                     .WithNewElasticPool(sqlElasticPoolCreatable)
-                    .WithoutSourceDatabaseId()
                     .WithCollation(COLLATION)
-                    .WithEdition(DatabaseEditions.Standard)
-                    .WithServiceObjective(ServiceObjectiveName.S1)
                     .Create();
 
             ValidateSqlDatabase(sqlDatabase, SQL_DATABASE_NAME);
@@ -622,9 +610,7 @@ namespace Azure.Tests.Sql
             sqlDatabase = sqlServer.Databases
                     .Define("newDatabase")
                     .WithExistingElasticPool(sqlElasticPool)
-                    .WithoutSourceDatabaseId()
                     .WithCollation(COLLATION)
-                    .WithEdition(DatabaseEditions.Standard)
                     .Create();
             sqlServer.Databases.Delete(sqlDatabase.Name);
             ValidateSqlDatabaseNotFound("newDatabase");

@@ -100,10 +100,8 @@ namespace ManageSqlDatabaseInElasticPool
                     // Create a Database in SQL server created above.
                     Console.WriteLine("Creating a database");
 
-                    var database = sqlServer.Databases.Define("myNewDatabase")
-                            .WithoutElasticPool()
-                            .WithoutSourceDatabaseId()
-                            .WithEdition(DatabaseEditions.Basic)
+                    var database = sqlServer.Databases
+                            .Define("myNewDatabase")
                             .Create();
                     Utilities.PrintDatabase(database);
 
@@ -125,8 +123,6 @@ namespace ManageSqlDatabaseInElasticPool
                     // ============================================================
                     // Create another database and move it in elastic pool as update to the elastic pool.
                     var anotherDatabase = sqlServer.Databases.Define(anotherDatabaseName)
-                            .WithoutElasticPool()
-                            .WithoutSourceDatabaseId()
                             .Create();
 
                     // ============================================================
@@ -191,9 +187,6 @@ namespace ManageSqlDatabaseInElasticPool
                     Console.WriteLine("Create ElasticPool in existing SQL Server");
                     var elasticPool2 = sqlServer.ElasticPools.Define(elasticPool2Name)
                             .WithEdition(elasticPoolEdition)
-                            .WithDtu(100)
-                            .WithDatabaseDtuMax(50)
-                            .WithDatabaseDtuMin(10)
                             .Create();
 
                     Utilities.PrintElasticPool(elasticPool2);

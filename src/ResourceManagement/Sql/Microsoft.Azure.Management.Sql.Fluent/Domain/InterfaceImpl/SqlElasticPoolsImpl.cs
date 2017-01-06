@@ -3,13 +3,13 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Threading.Tasks;
-    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using System.Collections.Generic;
     using SqlElasticPool.Definition;
     using SqlElasticPools.SqlElasticPoolsCreatable;
+    using Models;
+    using System.Collections.Generic;
 
     internal partial class SqlElasticPoolsImpl 
     {
@@ -59,11 +59,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         /// <summary>
         /// Begins a definition for a new resource.
-        /// <p>
         /// This is the beginning of the builder pattern used to create top level resources
         /// in Azure. The final method completing the definition and starting the actual resource creation
         /// process in Azure is Creatable.create().
-        /// <p>
         /// Note that the Creatable.create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
         /// parameters specified. If you do not see Creatable.create() among the available methods, it
@@ -115,7 +113,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>An observable to the request.</return>
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByParent.DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken)
         {
-             await this.DeleteByParentAsync(groupName, parentName, name, cancellationToken);
+ 
+            await this.DeleteByParentAsync(groupName, parentName, name, cancellationToken);
         }
     }
 }

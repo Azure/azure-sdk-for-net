@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update
 {
-    using Microsoft.Azure.Management.Sql.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Sql.Fluent;
 
     /// <summary>
     /// The SQL Database definition to set the elastic pool for database.
@@ -39,6 +39,19 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update
     }
 
     /// <summary>
+    /// The SQL Database definition to set the edition for database.
+    /// </summary>
+    public interface IWithEdition 
+    {
+        /// <summary>
+        /// Sets the edition for the SQL Database.
+        /// </summary>
+        /// <param name="edition">Edition to be set for database.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IUpdate WithEdition(string edition);
+    }
+
+    /// <summary>
     /// The SQL Database definition to set the service level objective.
     /// </summary>
     public interface IWithServiceObjective 
@@ -49,6 +62,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update
         /// <param name="serviceLevelObjective">Service level objected for the SQL Database.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IUpdate WithServiceObjective(string serviceLevelObjective);
+    }
+
+    /// <summary>
+    /// The template for a SQLDatabase modifyState operation, containing all the settings that can be modified.
+    /// </summary>
+    public interface IUpdate  :
+        IWithEdition,
+        IWithElasticPoolName,
+        IWithMaxSizeBytes,
+        IWithServiceObjective,
+        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
+    {
     }
 
     /// <summary>
@@ -67,30 +92,5 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update
         /// </param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IUpdate WithMaxSizeBytes(long maxSizeBytes);
-    }
-
-    /// <summary>
-    /// The template for a SQLDatabase modifyState operation, containing all the settings that can be modified.
-    /// </summary>
-    public interface IUpdate  :
-        IWithEdition,
-        IWithElasticPoolName,
-        IWithMaxSizeBytes,
-        IWithServiceObjective,
-        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
-    {
-    }
-
-    /// <summary>
-    /// The SQL Database definition to set the edition for database.
-    /// </summary>
-    public interface IWithEdition 
-    {
-        /// <summary>
-        /// Sets the edition for the SQL Database.
-        /// </summary>
-        /// <param name="edition">Edition to be set for database.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Update.IUpdate WithEdition(string edition);
     }
 }
