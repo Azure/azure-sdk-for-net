@@ -80,7 +80,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// defined for the web service, given as a global parameter name to
         /// default value map. If no default value is specified, the
         /// parameter is considered to be required.</param>
-        public WebServiceProperties(string title = default(string), string description = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), bool? exposeSampleData = default(bool?), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), System.Collections.Generic.IDictionary<string, AssetItem> assets = default(System.Collections.Generic.IDictionary<string, AssetItem>), System.Collections.Generic.IDictionary<string, string> parameters = default(System.Collections.Generic.IDictionary<string, string>))
+        /// <param name="payloadsInBlobStorage">If
+        /// Assets+Input+Output+Package+Parameters+ExampleRequest is too
+        /// large (> 3MB), this field will be set to true and the content
+        /// will be put into a blob. Otherwise, this will be set to false and
+        /// Assets, Input, Output, Package, Parameters, ExampleRequest will
+        /// be inline.</param>
+        /// <param name="payloadsLocation">Blob location of the large
+        /// payload.</param>
+        public WebServiceProperties(string title = default(string), string description = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), string provisioningState = default(string), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), bool? exposeSampleData = default(bool?), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), ExampleRequest exampleRequest = default(ExampleRequest), System.Collections.Generic.IDictionary<string, AssetItem> assets = default(System.Collections.Generic.IDictionary<string, AssetItem>), System.Collections.Generic.IDictionary<string, WebServiceParameter> parameters = default(System.Collections.Generic.IDictionary<string, WebServiceParameter>), bool? payloadsInBlobStorage = default(bool?), BlobLocation payloadsLocation = default(BlobLocation))
         {
             Title = title;
             Description = description;
@@ -101,6 +109,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
             ExampleRequest = exampleRequest;
             Assets = assets;
             Parameters = parameters;
+            PayloadsInBlobStorage = payloadsInBlobStorage;
+            PayloadsLocation = payloadsLocation;
         }
 
         /// <summary>
@@ -246,7 +256,24 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// considered to be required.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "parameters")]
-        public System.Collections.Generic.IDictionary<string, string> Parameters { get; set; }
+        public System.Collections.Generic.IDictionary<string, WebServiceParameter> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets if
+        /// Assets+Input+Output+Package+Parameters+ExampleRequest is too
+        /// large (&gt; 3MB), this field will be set to true and the content
+        /// will be put into a blob. Otherwise, this will be set to false and
+        /// Assets, Input, Output, Package, Parameters, ExampleRequest will
+        /// be inline.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "payloadsInBlobStorage")]
+        public bool? PayloadsInBlobStorage { get; set; }
+
+        /// <summary>
+        /// Gets or sets blob location of the large payload.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "PayloadsLocation")]
+        public BlobLocation PayloadsLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -289,6 +316,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
                         valueElement.Validate();
                     }
                 }
+            }
+            if (this.PayloadsLocation != null)
+            {
+                this.PayloadsLocation.Validate();
             }
         }
     }
