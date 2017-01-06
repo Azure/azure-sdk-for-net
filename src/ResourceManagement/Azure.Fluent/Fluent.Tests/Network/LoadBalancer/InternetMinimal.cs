@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Azure.Tests.Network.LoadBalancer
@@ -19,12 +20,16 @@ namespace Azure.Tests.Network.LoadBalancer
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
         private INetworks networks;
+        private LoadBalancerHelper loadBalancerHelper;
 
         public InternetMinimal(
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
-                INetworks networks)
+                INetworks networks,
+                [CallerMemberName] string methodName = "testframework_failed")
+            : base(methodName)
         {
+            loadBalancerHelper = new LoadBalancerHelper(methodName);
             this.pips = pips;
             this.vms = vms;
             this.networks = networks;
@@ -37,13 +42,13 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(loadBalancerHelper.LB_NAME)
+                        .WithRegion(loadBalancerHelper.REGION)
+                        .WithExistingResourceGroup(loadBalancerHelper.GROUP_NAME)
                         // Frontend (default)
                         .WithExistingPublicIpAddress(existingPips.ElementAt(0))
                         // Backend (default)
@@ -70,7 +75,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var pip = existingPips.ElementAt(1);
             resource = resource.Update()
                     .WithExistingPublicIpAddress(pip)
@@ -100,15 +105,15 @@ namespace Azure.Tests.Network.LoadBalancer
                     .WithTag("tag2", "value2")
                     .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
-            Assert.True(resource.TcpProbes["default"].Port == 22);
-            Assert.True(resource.HttpProbes["httpprobe"].NumberOfProbes == 3);
+            Assert.Equal(resource.TcpProbes["default"].Port, 22);
+            Assert.Equal(resource.HttpProbes["httpprobe"].NumberOfProbes, 3);
             Assert.True(resource.Backends.ContainsKey("backend2"));
             Assert.True(!resource.Backends.ContainsKey("default"));
 
             var lbRule = resource.LoadBalancingRules["default"];
-            Assert.True(lbRule != null);
-            Assert.True(lbRule.Backend == null);
-            Assert.True(lbRule.BackendPort == 8080);
+            Assert.NotNull(lbRule);
+            Assert.Equal(lbRule.Backend, null);
+            Assert.Equal(lbRule.BackendPort, 8080);
             Assert.True(lbRule.Frontend.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
 
             var frontend = resource.Frontends["default"];
@@ -117,8 +122,8 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.True(lbRule.Probe.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
 
             lbRule = resource.LoadBalancingRules["lbrule2"];
-            Assert.True(lbRule != null);
-            Assert.True(lbRule.FrontendPort == 22);
+            Assert.NotNull(lbRule);
+            Assert.Equal(lbRule.FrontendPort, 22);
 
             return resource;
         }

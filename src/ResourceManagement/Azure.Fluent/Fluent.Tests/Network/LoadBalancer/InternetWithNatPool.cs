@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,12 +22,17 @@ namespace Azure.Tests.Network.LoadBalancer
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
         private INetworks networks;
+        private LoadBalancerHelper loadBalancerHelper;
 
         public InternetWithNatPool(
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
-                INetworks networks)
+                INetworks networks,
+                [CallerMemberName] string methodName = "testframework_failed")
+            : base(methodName)
         {
+            loadBalancerHelper = new LoadBalancerHelper(methodName);
+
             this.pips = pips;
             this.vms = vms;
             this.networks = networks;
@@ -39,13 +45,13 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(loadBalancerHelper.LB_NAME)
+                        .WithRegion(loadBalancerHelper.REGION)
+                        .WithExistingResourceGroup(loadBalancerHelper.GROUP_NAME)
 
                         // Frontends
                         .WithExistingPublicIpAddress(existingPips.ElementAt(0))
@@ -95,12 +101,12 @@ namespace Azure.Tests.Network.LoadBalancer
             // Verify frontends
             Assert.True(lb.Frontends.ContainsKey("frontend1"));
             Assert.True(lb.Frontends.ContainsKey("default"));
-            Assert.True(lb.Frontends.Count == 2);
+            Assert.Equal(lb.Frontends.Count, 2);
 
             // Verify backends
             Assert.True(lb.Backends.ContainsKey("default"));
             Assert.True(lb.Backends.ContainsKey("backend1"));
-            Assert.True(lb.Backends.Count == 2);
+            Assert.Equal(lb.Backends.Count, 2);
 
             // Verify probes
             Assert.True(lb.HttpProbes.ContainsKey("httpProbe1"));
@@ -111,7 +117,7 @@ namespace Azure.Tests.Network.LoadBalancer
             // Verify rules
             Assert.True(lb.LoadBalancingRules.ContainsKey("rule1"));
             Assert.True(!lb.LoadBalancingRules.ContainsKey("default"));
-            Assert.True(lb.LoadBalancingRules.Values.Count() == 1);
+            Assert.Equal(lb.LoadBalancingRules.Values.Count(), 1);
             var rule = lb.LoadBalancingRules["rule1"];
             Assert.True(rule.Backend.Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
             Assert.True(rule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
@@ -119,12 +125,12 @@ namespace Azure.Tests.Network.LoadBalancer
 
             // Verify inbound NAT pools
             Assert.True(lb.InboundNatPools.ContainsKey("natpool1"));
-            Assert.True(lb.InboundNatPools.Count == 1);
+            Assert.Equal(lb.InboundNatPools.Count, 1);
             var inboundNatPool = lb.InboundNatPools["natpool1"];
             Assert.True(inboundNatPool.Frontend.Name.Equals("frontend1"));
-            Assert.True(inboundNatPool.FrontendPortRangeStart == 2000);
-            Assert.True(inboundNatPool.FrontendPortRangeEnd == 2001);
-            Assert.True(inboundNatPool.BackendPort == 8080);
+            Assert.Equal(inboundNatPool.FrontendPortRangeStart, 2000);
+            Assert.Equal(inboundNatPool.FrontendPortRangeEnd, 2001);
+            Assert.Equal(inboundNatPool.BackendPort, 8080);
 
             return lb;
         }

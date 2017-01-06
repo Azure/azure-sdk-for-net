@@ -1,0 +1,1383 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchashtm6552?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL3JnY2hhc2h0bTY1NTI/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "38c080fa-d67c-4c38-b046-00830e62b0e9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552\",\r\n  \"name\": \"rgchashtm6552\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "179"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "5c0d39e6-f634-4869-b951-5070cebbb54f"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c0d39e6-f634-4869-b951-5070cebbb54f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200617Z:5c0d39e6-f634-4869-b951-5070cebbb54f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/nestedtm2646?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvbmVzdGVkdG0yNjQ2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"trafficRoutingMethod\": \"Priority\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"nestedtmdns1028\",\r\n      \"ttl\": 500\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"https\",\r\n      \"port\": 443,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": []\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "317"
+        ],
+        "x-ms-client-request-id": [
+          "e044f723-7403-42fd-8a96-fccfc3b53af4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n  \"name\": \"nestedtm2646\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Priority\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"nestedtmdns1028\",\r\n      \"fqdn\": \"nestedtmdns1028.trafficmanager.net\",\r\n      \"ttl\": 500\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTPS\",\r\n      \"port\": 443,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "549"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e044f723-7403-42fd-8a96-fccfc3b53af4"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10799"
+        ],
+        "x-ms-correlation-request-id": [
+          "e6a6662e-7b36-430f-a071-61b5eac00451"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200619Z:e6a6662e-7b36-430f-a071-61b5eac00451"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/nestedtm2646/externalEndpoints/external-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvbmVzdGVkdG0yNjQ2L2V4dGVybmFsRW5kcG9pbnRzL2V4dGVybmFsLWVwLTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"external-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"www.gitbook.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"endpointLocation\": \"centralindia\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "255"
+        ],
+        "x-ms-client-request-id": [
+          "4538b272-b7bd-4416-a118-e8f801728962"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646/externalEndpoints/external-ep-1\",\r\n  \"name\": \"external-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"www.gitbook.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"Central India\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4538b272-b7bd-4416-a118-e8f801728962"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "976644d5-ad23-4ec6-98fe-f73165f7e2b1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200620Z:976644d5-ad23-4ec6-98fe-f73165f7e2b1"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3B1YmxpY0lQQWRkcmVzc2VzL3BpcDI5NzM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"contoso7012\"\r\n    }\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "137"
+        ],
+        "x-ms-client-request-id": [
+          "84b1c221-42d0-45f4-8043-a2b3c3f94112"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Network.Fluent.NetworkManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"pip2973\",\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n  \"etag\": \"W/\\\"db5f4ee1-f37d-40c5-bbad-787e9560ab85\\\"\",\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"eaaba306-a2d8-4dec-9eab-881e3315757c\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"contoso7012\",\r\n      \"fqdn\": \"contoso7012.eastus.cloudapp.azure.com\"\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "683"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "3"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "16766bf5-7bcb-4768-8ffd-8451d6d28cd9"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/providers/Microsoft.Network/locations/eastus/operations/16766bf5-7bcb-4768-8ffd-8451d6d28cd9?api-version=2016-06-01"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "1acfc3c6-dcb3-4b4e-b6cc-1565e6de888c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200621Z:1acfc3c6-dcb3-4b4e-b6cc-1565e6de888c"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/providers/Microsoft.Network/locations/eastus/operations/16766bf5-7bcb-4768-8ffd-8451d6d28cd9?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnMvMTY3NjZiZjUtN2JjYi00NzY4LThmZmQtODQ1MWQ2ZDI4Y2Q5P2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Network.Fluent.NetworkManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "3d670a60-c727-4747-80a8-ccf0e2246df7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14937"
+        ],
+        "x-ms-correlation-request-id": [
+          "b3d19f33-93ac-456a-a92e-b00586b16d60"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200652Z:b3d19f33-93ac-456a-a92e-b00586b16d60"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3B1YmxpY0lQQWRkcmVzc2VzL3BpcDI5NzM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Network.Fluent.NetworkManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"pip2973\",\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n  \"etag\": \"W/\\\"69f1fb90-bf78-4738-85c8-1ae7f2ac7649\\\"\",\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"eaaba306-a2d8-4dec-9eab-881e3315757c\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"contoso7012\",\r\n      \"fqdn\": \"contoso7012.eastus.cloudapp.azure.com\"\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "W/\"69f1fb90-bf78-4738-85c8-1ae7f2ac7649\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "1c4c9d15-3cfb-42eb-90a8-022e35ac11b4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14936"
+        ],
+        "x-ms-correlation-request-id": [
+          "31c2c32f-7972-4ec1-bd5a-3a2119efad6d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200652Z:31c2c32f-7972-4ec1-bd5a-3a2119efad6d"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"trafficRoutingMethod\": \"Weighted\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"tmdns1028\",\r\n      \"ttl\": 300\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": []\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "309"
+        ],
+        "x-ms-client-request-id": [
+          "8c0fcb45-ec2e-4a01-a8a8-9195cc69ba7d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646\",\r\n  \"name\": \"tm2646\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Weighted\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"tmdns1028\",\r\n      \"fqdn\": \"tmdns1028.trafficmanager.net\",\r\n      \"ttl\": 300\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "523"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:52 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8c0fcb45-ec2e-4a01-a8a8-9195cc69ba7d"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10798"
+        ],
+        "x-ms-correlation-request-id": [
+          "b01a4f9a-81f2-4623-8f71-517c50608944"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200653Z:b01a4f9a-81f2-4623-8f71-517c50608944"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"tmdns1028\",\r\n      \"fqdn\": \"tmdns1028.trafficmanager.net\",\r\n      \"ttl\": 600\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Online\",\r\n      \"protocol\": \"http\",\r\n      \"port\": 8080,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": [\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-1\",\r\n        \"name\": \"external-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"target\": \"www.azure.microsoft.com\",\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"weight\": 1,\r\n          \"priority\": 1,\r\n          \"endpointLocation\": \"East US\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-2\",\r\n        \"name\": \"external-ep-2\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"target\": \"www.bing.com\",\r\n          \"endpointStatus\": \"Disabled\",\r\n          \"weight\": 1,\r\n          \"priority\": 2,\r\n          \"endpointLocation\": \"East US 2\",\r\n          \"endpointMonitorStatus\": \"Disabled\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/azureEndpoints/azure-ep-1\",\r\n        \"name\": \"azure-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n        \"properties\": {\r\n          \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n          \"target\": \"contoso7012.eastus.cloudapp.azure.com\",\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"weight\": 2,\r\n          \"priority\": 5,\r\n          \"endpointLocation\": \"East US\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/nestedEndpoints/nested-profile-ep-1\",\r\n        \"name\": \"nested-profile-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n        \"properties\": {\r\n          \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n          \"target\": \"nestedtmdns1028.trafficmanager.net\",\r\n          \"endpointStatus\": \"Disabled\",\r\n          \"weight\": 1,\r\n          \"priority\": 4,\r\n          \"endpointLocation\": \"Central India\",\r\n          \"endpointMonitorStatus\": \"Online\",\r\n          \"minChildEndpoints\": 1\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646\",\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "3344"
+        ],
+        "x-ms-client-request-id": [
+          "ff94aaa4-a621-43e1-86e4-4c109d33d9eb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646\",\r\n  \"name\": \"tm2646\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"tmdns1028\",\r\n      \"fqdn\": \"tmdns1028.trafficmanager.net\",\r\n      \"ttl\": 600\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"CheckingEndpoints\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 8080,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": [\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-1\",\r\n        \"name\": \"external-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n          \"target\": \"www.azure.microsoft.com\",\r\n          \"weight\": 1,\r\n          \"priority\": 1,\r\n          \"endpointLocation\": \"East US\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-2\",\r\n        \"name\": \"external-ep-2\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Disabled\",\r\n          \"endpointMonitorStatus\": \"Disabled\",\r\n          \"target\": \"www.bing.com\",\r\n          \"weight\": 1,\r\n          \"priority\": 2,\r\n          \"endpointLocation\": \"East US 2\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/nestedEndpoints/nested-profile-ep-1\",\r\n        \"name\": \"nested-profile-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Disabled\",\r\n          \"endpointMonitorStatus\": null,\r\n          \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n          \"target\": \"nestedtmdns1028.trafficmanager.net\",\r\n          \"weight\": 1,\r\n          \"priority\": 4,\r\n          \"endpointLocation\": \"Central India\",\r\n          \"minChildEndpoints\": 1\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/azureEndpoints/azure-ep-1\",\r\n        \"name\": \"azure-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n          \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n          \"target\": \"contoso7012.eastus.cloudapp.azure.com\",\r\n          \"weight\": 2,\r\n          \"priority\": 5,\r\n          \"endpointLocation\": \"East US\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:31 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ff94aaa4-a621-43e1-86e4-4c109d33d9eb"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10799"
+        ],
+        "x-ms-correlation-request-id": [
+          "c4d06a89-3177-42ae-89e2-f859fd825145"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200731Z:c4d06a89-3177-42ae-89e2-f859fd825145"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/externalEndpoints/external-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L2V4dGVybmFsRW5kcG9pbnRzL2V4dGVybmFsLWVwLTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"external-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"www.azure.microsoft.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"eastus\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "277"
+        ],
+        "x-ms-client-request-id": [
+          "0802946b-e742-47bc-bb82-37f376e038b3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-1\",\r\n  \"name\": \"external-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"www.azure.microsoft.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"East US\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "455"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:53 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0802946b-e742-47bc-bb82-37f376e038b3"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "16c56d3a-93a5-4ca0-9d67-611a829bc969"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200654Z:16c56d3a-93a5-4ca0-9d67-611a829bc969"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/azureEndpoints/azure-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L2F6dXJlRW5kcG9pbnRzL2F6dXJlLWVwLTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"azure-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 3\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "357"
+        ],
+        "x-ms-client-request-id": [
+          "cc22a69b-42d2-4918-9daa-839bacfb08a1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/azureEndpoints/azure-ep-1\",\r\n  \"name\": \"azure-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n    \"target\": \"contoso7012.eastus.cloudapp.azure.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 3,\r\n    \"endpointLocation\": \"East US\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "621"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:06:53 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "cc22a69b-42d2-4918-9daa-839bacfb08a1"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "89a54dc7-5883-4bf6-bd05-3d77d1aadb48"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200654Z:89a54dc7-5883-4bf6-bd05-3d77d1aadb48"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/azureEndpoints/azure-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L2F6dXJlRW5kcG9pbnRzL2F6dXJlLWVwLTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/azureEndpoints/azure-ep-1\",\r\n  \"name\": \"azure-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n    \"target\": \"contoso7012.eastus.cloudapp.azure.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 2,\r\n    \"priority\": 5,\r\n    \"endpointLocation\": \"East US\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "676"
+        ],
+        "x-ms-client-request-id": [
+          "8c68eb73-e41c-4f69-86f6-455197f8f799"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/azureEndpoints/azure-ep-1\",\r\n  \"name\": \"azure-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n    \"target\": \"contoso7012.eastus.cloudapp.azure.com\",\r\n    \"weight\": 2,\r\n    \"priority\": 5,\r\n    \"endpointLocation\": \"East US\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "621"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:27 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8c68eb73-e41c-4f69-86f6-455197f8f799"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "92936e07-a9b0-4675-a3d7-e57683d661a6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200727Z:92936e07-a9b0-4675-a3d7-e57683d661a6"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/externalEndpoints/external-ep-2?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L2V4dGVybmFsRW5kcG9pbnRzL2V4dGVybmFsLWVwLTI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"external-ep-2\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"www.bing.com\",\r\n    \"endpointStatus\": \"Disabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 2,\r\n    \"endpointLocation\": \"eastus2\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "268"
+        ],
+        "x-ms-client-request-id": [
+          "930d3a8d-c6c9-4faf-b827-205ec423c5ca"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-2\",\r\n  \"name\": \"external-ep-2\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Disabled\",\r\n    \"endpointMonitorStatus\": \"Disabled\",\r\n    \"target\": \"www.bing.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 2,\r\n    \"endpointLocation\": \"East US 2\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "439"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:08 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "930d3a8d-c6c9-4faf-b827-205ec423c5ca"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "cec5e671-ac9b-4dd0-b18b-b03e25c413d5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200709Z:cec5e671-ac9b-4dd0-b18b-b03e25c413d5"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/nestedEndpoints/nested-profile-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L25lc3RlZEVuZHBvaW50cy9uZXN0ZWQtcHJvZmlsZS1lcC0xP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"nested-profile-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 4,\r\n    \"endpointLocation\": \"centralindia\",\r\n    \"minChildEndpoints\": 1\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "447"
+        ],
+        "x-ms-client-request-id": [
+          "94c1cc36-1575-4e19-9a6b-da81c361539e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/nestedEndpoints/nested-profile-ep-1\",\r\n  \"name\": \"nested-profile-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": null,\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n    \"target\": \"nestedtmdns1028.trafficmanager.net\",\r\n    \"weight\": 1,\r\n    \"priority\": 4,\r\n    \"endpointLocation\": \"Central India\",\r\n    \"minChildEndpoints\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "662"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:09 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "94c1cc36-1575-4e19-9a6b-da81c361539e"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "01be5950-8a71-4ad3-b976-b1b42d33e662"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200710Z:01be5950-8a71-4ad3-b976-b1b42d33e662"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/nestedEndpoints/nested-profile-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L25lc3RlZEVuZHBvaW50cy9uZXN0ZWQtcHJvZmlsZS1lcC0xP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/nestedEndpoints/nested-profile-ep-1\",\r\n  \"name\": \"nested-profile-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n    \"target\": \"nestedtmdns1028.trafficmanager.net\",\r\n    \"endpointStatus\": \"Disabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 4,\r\n    \"endpointLocation\": \"Central India\",\r\n    \"endpointMonitorStatus\": \"Online\",\r\n    \"minChildEndpoints\": 1\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "729"
+        ],
+        "x-ms-client-request-id": [
+          "ad4c2188-b864-41c4-ba8c-94d8ae336bbc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/nestedEndpoints/nested-profile-ep-1\",\r\n  \"name\": \"nested-profile-ep-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Disabled\",\r\n    \"endpointMonitorStatus\": null,\r\n    \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n    \"target\": \"nestedtmdns1028.trafficmanager.net\",\r\n    \"weight\": 1,\r\n    \"priority\": 4,\r\n    \"endpointLocation\": \"Central India\",\r\n    \"minChildEndpoints\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "663"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:12 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ad4c2188-b864-41c4-ba8c-94d8ae336bbc"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "be70da16-9029-4a2a-b234-32437a4622af"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200712Z:be70da16-9029-4a2a-b234-32437a4622af"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "18e98563-fc96-4c55-a3f4-bd62e206499f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646\",\r\n  \"name\": \"tm2646\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Weighted\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"tmdns1028\",\r\n      \"fqdn\": \"tmdns1028.trafficmanager.net\",\r\n      \"ttl\": 300\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Online\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": [\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-1\",\r\n        \"name\": \"external-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n          \"target\": \"www.azure.microsoft.com\",\r\n          \"weight\": 1,\r\n          \"priority\": 1,\r\n          \"endpointLocation\": \"East US\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-2\",\r\n        \"name\": \"external-ep-2\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Disabled\",\r\n          \"endpointMonitorStatus\": \"Disabled\",\r\n          \"target\": \"www.bing.com\",\r\n          \"weight\": 1,\r\n          \"priority\": 2,\r\n          \"endpointLocation\": \"East US 2\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/azureEndpoints/azure-ep-1\",\r\n        \"name\": \"azure-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n          \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/publicIPAddresses/pip2973\",\r\n          \"target\": \"contoso7012.eastus.cloudapp.azure.com\",\r\n          \"weight\": 1,\r\n          \"priority\": 3,\r\n          \"endpointLocation\": \"East US\"\r\n        }\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/nestedEndpoints/nested-profile-ep-1\",\r\n        \"name\": \"nested-profile-ep-1\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/nestedEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"endpointMonitorStatus\": \"Online\",\r\n          \"targetResourceId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/nestedtm2646\",\r\n          \"target\": \"nestedtmdns1028.trafficmanager.net\",\r\n          \"weight\": 1,\r\n          \"priority\": 4,\r\n          \"endpointLocation\": \"Central India\",\r\n          \"minChildEndpoints\": 1\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:09 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "18e98563-fc96-4c55-a3f4-bd62e206499f"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10799"
+        ],
+        "x-ms-correlation-request-id": [
+          "5234f7ca-aafe-49e4-a6a3-c4e9221b794d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200710Z:5234f7ca-aafe-49e4-a6a3-c4e9221b794d"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/externalEndpoints/external-ep-1?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L2V4dGVybmFsRW5kcG9pbnRzL2V4dGVybmFsLWVwLTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3a2434c3-7c24-4ece-a0f0-6c9759275be7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3a2434c3-7c24-4ece-a0f0-6c9759275be7"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "17fc9052-e67f-4afb-a44f-08718ca6e545"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200711Z:17fc9052-e67f-4afb-a44f-08718ca6e545"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficmanagerprofiles/tm2646/externalEndpoints/external-ep-3?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL3JnY2hhc2h0bTY1NTIvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdG0yNjQ2L2V4dGVybmFsRW5kcG9pbnRzL2V4dGVybmFsLWVwLTM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"external-ep-3\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"www.github.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 6,\r\n    \"endpointLocation\": \"centralus\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "271"
+        ],
+        "x-ms-client-request-id": [
+          "55a6ef94-a02e-4fdc-a7b6-8f4218d490a1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchashtm6552/providers/Microsoft.Network/trafficManagerProfiles/tm2646/externalEndpoints/external-ep-3\",\r\n  \"name\": \"external-ep-3\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"www.github.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 6,\r\n    \"endpointLocation\": \"Central US\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "449"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "55a6ef94-a02e-4fdc-a7b6-8f4218d490a1"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "bfa3cda4-0173-4847-8621-da7d613713aa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200726Z:bfa3cda4-0173-4847-8621-da7d613713aa"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchashtm6552?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL3JnY2hhc2h0bTY1NTI/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "34b7b136-7cab-4457-9083-d21ba3222d79"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:07:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "64ea9e62-8cdc-4001-942e-70dcef6b2d34"
+        ],
+        "x-ms-correlation-request-id": [
+          "64ea9e62-8cdc-4001-942e-70dcef6b2d34"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200733Z:64ea9e62-8cdc-4001-942e-70dcef6b2d34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUjBOSVFWTklWRTAyTlRVeUxVVkJVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pWldGemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:08:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14978"
+        ],
+        "x-ms-request-id": [
+          "1b7e27d5-64a8-4f8a-a424-f0fd2c1bbcd2"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b7e27d5-64a8-4f8a-a424-f0fd2c1bbcd2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200803Z:1b7e27d5-64a8-4f8a-a424-f0fd2c1bbcd2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUjBOSVFWTklWRTAyTlRVeUxVVkJVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pWldGemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:08:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14977"
+        ],
+        "x-ms-request-id": [
+          "4b803d09-b71b-4708-8e1e-7fb148e2870f"
+        ],
+        "x-ms-correlation-request-id": [
+          "4b803d09-b71b-4708-8e1e-7fb148e2870f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200833Z:4b803d09-b71b-4708-8e1e-7fb148e2870f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUjBOSVFWTklWRTAyTlRVeUxVVkJVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pWldGemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:09:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-request-id": [
+          "53a48c4e-0b7b-41fa-93a9-4a93dd798fd5"
+        ],
+        "x-ms-correlation-request-id": [
+          "53a48c4e-0b7b-41fa-93a9-4a93dd798fd5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200904Z:53a48c4e-0b7b-41fa-93a9-4a93dd798fd5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR0NIQVNIVE02NTUyLUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUjBOSVFWTklWRTAyTlRVeUxVVkJVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pWldGemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 20:09:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
+        ],
+        "x-ms-request-id": [
+          "5c2bb6c9-f177-45a3-a1d3-7e0209178062"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c2bb6c9-f177-45a3-a1d3-7e0209178062"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170106T200934Z:5c2bb6c9-f177-45a3-a1d3-7e0209178062"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateUpdateTrafficManagerProfile": [
+      "rgchashtm6552",
+      "pip2973",
+      "contoso7012",
+      "tm2646",
+      "tmdns1028"
+    ]
+  },
+  "Variables": {}
+}
