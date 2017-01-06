@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
@@ -123,6 +123,17 @@ namespace Azure.Tests.Redis
                 catch (CloudException)
                 {
                     // expected since Sku downgrade is not supported
+                }
+                catch (AggregateException ex)
+                {
+                    if(ex.InnerException == null ||
+                        ex.InnerException.InnerException == null ||
+                        !(ex.InnerException.InnerException is CloudException))
+                    {
+                        // expected since Sku downgrade is not supported and the inner exception
+                        // should be of type CloudException
+                        Assert.False(true);
+                    }
                 }
 
                 // Refresh

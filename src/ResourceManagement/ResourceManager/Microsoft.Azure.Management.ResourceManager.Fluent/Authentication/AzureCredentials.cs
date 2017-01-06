@@ -128,13 +128,35 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
                 { "graphurl", AzureEnvironment.AzureGlobalCloud.GraphEndpoint }
             };
 
-            File.ReadLines(authFile)
-                .All(line =>
-                {
-                    var keyVal = line.Trim().Split(new char[] { '=' }, 2);
-                    config[keyVal[0].ToLowerInvariant()] = keyVal[1];
-                    return true;
-                });
+            bool isInTestMode = false;
+#if !NETSTANDARD11
+            var testMode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+            if (testMode != null &&
+                testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
+            {
+                isInTestMode = true;
+            }
+#endif
+            if (!isInTestMode)
+            {
+                File.ReadLines(authFile)
+                    .All(line =>
+                    {
+                        var keyVal = line.Trim().Split(new char[] { '=' }, 2);
+                        config[keyVal[0].ToLowerInvariant()] = keyVal[1];
+                        return true;
+                    });
+            }
+            else
+            {
+                config["authurl"] = "https://www.contoso.com";
+                config["managementuri"] = "https://www.contoso.com";
+                config["baseurl"] = "https://www.contoso.com";
+                config["graphurl"] = "https://www.contoso.com";
+                config["client"] = "[guid]";
+                config["key"] = "[guid]";
+                config["tenant"] = "[guid]";
+            }
 
             var env = new AzureEnvironment()
             {

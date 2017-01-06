@@ -20,6 +20,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net.Http;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Fluent.Tests.Common
 {
@@ -28,6 +29,22 @@ namespace Fluent.Tests.Common
         public static ITestOutputHelper TestLogger { get; set; }
 
         private static string authFilePath = Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
+
+        public static void Delay(int millisecondsTimeout)
+        {
+            if(HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                Thread.Sleep(millisecondsTimeout);
+            }
+        }
+
+        public static void Delay(TimeSpan timeout)
+        {
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                Thread.Sleep(timeout);
+            }
+        }
 
         public static void WriteLine(string format, params string[] parameters)
         {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.Txt in the project root for license information.
 
 using Azure.Tests.Common;
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System.Collections.Generic;
@@ -115,7 +116,7 @@ namespace Azure.Tests.Network.ApplicationGateway
             creationThread.Start();
 
             // ...But don't wait till the end - not needed for the test, 30 sec should be enough
-            Thread.Sleep(30 * 1000);
+            TestHelper.Delay(30 * 1000);
 
             // Get the resource as created so far
             string resourceId = ApplicationGatewayHelper.CreateResourceId(resources.Manager.SubscriptionId);

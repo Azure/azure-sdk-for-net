@@ -24,14 +24,14 @@ namespace Fluent.Tests.ResourceManager
             provider = resourceManager.Providers.Unregister(provider.Namespace);
             while (provider.RegistrationState.Equals("Unregistering"))
             {
-                Thread.Sleep(5000);
+                TestHelper.Delay(5000);
                 provider = resourceManager.Providers.GetByName(provider.Namespace);
             }
 
             provider = resourceManager.Providers.Register(provider.Namespace);
             while (provider.RegistrationState.Equals("Registering"))
             {
-                Thread.Sleep(5000);
+                TestHelper.Delay(5000);
                 provider = resourceManager.Providers.GetByName(provider.Namespace);
             }
             Assert.True(string.Equals(provider.RegistrationState, "Registered"));
