@@ -156,6 +156,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
                 config["client"] = "[guid]";
                 config["key"] = "[guid]";
                 config["tenant"] = "[guid]";
+                config["subscription"] = "[guid]";
             }
 
             var env = new AzureEnvironment()
