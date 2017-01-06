@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Parameters for redis export operation.
@@ -61,11 +67,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (Prefix == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Prefix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Prefix");
             }
             if (Container == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Container");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Container");
             }
         }
     }

@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Sku parameters supplied to the create redis operation.
@@ -70,11 +76,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
             if (Family == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Family");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Family");
             }
         }
     }

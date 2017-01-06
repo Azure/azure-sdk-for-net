@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis
 {
-    using Microsoft.Rest.Azure;
+    using System;		
+    using System.Collections.Generic;		
+    using System.Net.Http;		
+    using System.Threading;		
+    using System.Threading.Tasks;		
+    using Rest;
+    using Rest.Azure;
     using Models;
 
     /// <summary>
@@ -43,7 +49,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisPatchSchedule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisPatchSchedule parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<RedisPatchSchedule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisPatchSchedule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the patching schedule for redis cache.
         /// </summary>
@@ -65,7 +71,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the patching schedule for redis cache.
         /// </summary>
@@ -90,6 +96,6 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<RedisPatchSchedule>> GetWithHttpMessagesAsync(string resourceGroupName, string name, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<RedisPatchSchedule>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

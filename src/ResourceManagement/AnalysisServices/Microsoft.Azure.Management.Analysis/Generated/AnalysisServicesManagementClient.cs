@@ -8,9 +8,22 @@
 
 namespace Microsoft.Azure.Management.Analysis
 {
+    using System;
     using System.Linq;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Rest;
+    using Rest.Serialization;
+    using Newtonsoft.Json;
+    using Rest;
+    using Rest.Azure;
     using Models;
 
     /// <summary>
@@ -18,12 +31,12 @@ namespace Microsoft.Azure.Management.Analysis
     /// services that enables users to create, retrieve, update, and delete
     /// Analysis Services servers
     /// </summary>
-    public partial class AnalysisServicesManagementClient : Microsoft.Rest.ServiceClient<AnalysisServicesManagementClient>, IAnalysisServicesManagementClient, IAzureClient
+    public partial class AnalysisServicesManagementClient : ServiceClient<AnalysisServicesManagementClient>, IAnalysisServicesManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        public Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -38,7 +51,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
+        public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// A unique identifier of a Microsoft Azure subscription. The subscription id
@@ -81,7 +94,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// </param>
         protected AnalysisServicesManagementClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
         {
-            this.Initialize();
+            Initialize();
         }
 
         /// <summary>
@@ -95,7 +108,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// </param>
         protected AnalysisServicesManagementClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
-            this.Initialize();
+            Initialize();
         }
 
         /// <summary>
@@ -110,13 +123,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AnalysisServicesManagementClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        protected AnalysisServicesManagementClient(Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
-            this.BaseUri = baseUri;
+            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -134,13 +147,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AnalysisServicesManagementClient(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected AnalysisServicesManagementClient(Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
-            this.BaseUri = baseUri;
+            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -155,16 +168,16 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public AnalysisServicesManagementClient(ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
-                throw new System.ArgumentNullException("credentials");
+                throw new ArgumentNullException("credentials");
             }
-            this.Credentials = credentials;
-            if (this.Credentials != null)
+            Credentials = credentials;
+            if (Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+                Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -183,16 +196,16 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AnalysisServicesManagementClient(ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
-                throw new System.ArgumentNullException("credentials");
+                throw new ArgumentNullException("credentials");
             }
-            this.Credentials = credentials;
-            if (this.Credentials != null)
+            Credentials = credentials;
+            if (Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+                Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -211,21 +224,21 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public AnalysisServicesManagementClient(Uri baseUri, ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
             if (credentials == null)
             {
-                throw new System.ArgumentNullException("credentials");
+                throw new ArgumentNullException("credentials");
             }
-            this.BaseUri = baseUri;
-            this.Credentials = credentials;
-            if (this.Credentials != null)
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+                Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -247,21 +260,21 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AnalysisServicesManagementClient(Uri baseUri, ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
             if (credentials == null)
             {
-                throw new System.ArgumentNullException("credentials");
+                throw new ArgumentNullException("credentials");
             }
-            this.BaseUri = baseUri;
-            this.Credentials = credentials;
-            if (this.Credentials != null)
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+                Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -274,12 +287,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// </summary>
         private void Initialize()
         {
-            this.Servers = new ServersOperations(this);
-            this.BaseUri = new System.Uri("https://management.azure.com");
-            this.ApiVersion = "2016-05-16";
-            this.AcceptLanguage = "en-US";
-            this.LongRunningOperationRetryTimeout = 30;
-            this.GenerateClientRequestId = true;
+            Servers = new ServersOperations(this);
+            BaseUri = new Uri("https://management.azure.com");
+            ApiVersion = "2016-05-16";
+            AcceptLanguage = "en-US";
+            LongRunningOperationRetryTimeout = 30;
+            GenerateClientRequestId = true;
             SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -287,28 +300,28 @@ namespace Microsoft.Azure.Management.Analysis
                 DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
-                ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
+                ContractResolver = new ReadOnlyJsonContractResolver(),
                 Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
                     {
-                        new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
+                        new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new Microsoft.Rest.Serialization.TransformationJsonConverter());
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
-                ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
+                ContractResolver = new ReadOnlyJsonContractResolver(),
                 Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
                     {
-                        new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
+                        new Iso8601TimeSpanConverter()
                     }
             };
             CustomInitialize();
-            DeserializationSettings.Converters.Add(new Microsoft.Rest.Serialization.TransformationJsonConverter());
-            DeserializationSettings.Converters.Add(new Microsoft.Rest.Azure.CloudErrorJsonConverter()); 
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }
 }

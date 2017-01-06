@@ -1,0 +1,718 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.CodeAnalysis.Workspaces.Desktop</name>
+    </assembly>
+    <members>
+        <member name="F:Microsoft.CodeAnalysis.Text.EncodedStringText.s_fallbackEncoding">
+            <summary>
+            Encoding to use when there is no byte order mark (BOM) on the stream. This encoder may throw a <see cref="T:System.Text.DecoderFallbackException"/>
+            if the stream contains invalid UTF-8 bytes.
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.Text.EncodedStringText.s_defaultEncoding">
+            <summary>
+            Encoding to use when UTF-8 fails. If available, we use CodePage 1252. If not, we use Latin1.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Text.EncodedStringText.Create(System.IO.Stream,System.Text.Encoding,Microsoft.CodeAnalysis.Text.SourceHashAlgorithm)">
+            <summary>
+            Initializes an instance of <see cref="T:Microsoft.CodeAnalysis.Text.SourceText"/> from the provided stream. This version differs
+            from <see cref="M:Microsoft.CodeAnalysis.Text.SourceText.From(System.IO.Stream,System.Text.Encoding,Microsoft.CodeAnalysis.Text.SourceHashAlgorithm,System.Boolean)"/> in two ways:
+            1. It attempts to minimize allocations by trying to read the stream into a byte array.
+            2. If <paramref name="defaultEncoding"/> is null, it will first try UTF8 and, if that fails, it will
+               try CodePage 1252. If CodePage 1252 is not available on the system, then it will try Latin1.
+            </summary>
+            <param name="stream">The stream containing encoded text.</param>
+            <param name="defaultEncoding">
+            Specifies an encoding to be used if the actual encoding can't be determined from the stream content (the stream doesn't start with Byte Order Mark).
+            If not specified auto-detect heuristics are used to determine the encoding. If these heuristics fail the decoding is assumed to be Encoding.Default.
+            Note that if the stream starts with Byte Order Mark the value of <paramref name="defaultEncoding"/> is ignored.
+            </param>
+            <param name="checksumAlgorithm">Hash algorithm used to calculate document checksum.</param>
+            <exception cref="T:System.IO.InvalidDataException">
+            The stream content can't be decoded using the specified <paramref name="defaultEncoding"/>, or
+            <paramref name="defaultEncoding"/> is null and the stream appears to be a binary file.
+            </exception>
+            <exception cref="T:System.IO.IOException">An IO error occurred while reading from the stream.</exception>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Text.EncodedStringText.Decode(System.IO.Stream,System.Text.Encoding,Microsoft.CodeAnalysis.Text.SourceHashAlgorithm,System.Boolean)">
+            <summary>
+            Try to create a <see cref="T:Microsoft.CodeAnalysis.Text.SourceText"/> from the given stream using the given encoding.
+            </summary>
+            <param name="data">The input stream containing the encoded text. The stream will not be closed.</param>
+            <param name="encoding">The expected encoding of the stream. The actual encoding used may be different if byte order marks are detected.</param>
+            <param name="checksumAlgorithm">The checksum algorithm to use.</param>
+            <param name="throwIfBinaryDetected">Throw <see cref="T:System.IO.InvalidDataException"/> if binary (non-text) data is detected.</param>
+            <returns>The <see cref="T:Microsoft.CodeAnalysis.Text.SourceText"/> decoded from the stream.</returns>
+            <exception cref="T:System.Text.DecoderFallbackException">The decoder was unable to decode the stream with the given encoding.</exception>
+            <remarks>
+            internal for unit testing
+            </remarks>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Text.EncodedStringText.TryGetByteArrayFromStream(System.IO.Stream)">
+            <summary>
+            Some streams are easily represented as byte arrays.
+            </summary>
+            <param name="data">The stream</param>
+            <returns>
+            The contents of <paramref name="data"/> as a byte array or null if the stream can't easily
+            be read into a byte array.
+            </returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Text.EncodedStringText.TryGetByteArrayFromMemoryStream(System.IO.MemoryStream,System.Byte[]@)">
+            <summary>
+            If the MemoryStream was created with publiclyVisible=true, then we can access its buffer
+            directly and save allocations in StreamReader. The input MemoryStream is not closed on exit.
+            </summary>
+            <returns>True if a byte array could be created.</returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Text.EncodedStringText.TryGetByteArrayFromFileStream(System.IO.Stream,System.Byte[]@)">
+            <summary>
+            Read the contents of a FileStream into a byte array.
+            </summary>
+            <param name="stream">The FileStream with encoded text.</param>
+            <param name="buffer">A byte array filled with the contents of the file.</param>
+            <returns>True if a byte array could be created.</returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.AbstractAnalyzerAssemblyLoader.LoadCore(System.String)">
+            <summary>
+            Implemented by derived types to handle the actual loading of an assembly from
+            a file on disk, and any bookkeeping specific to the derived type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.AbstractAnalyzerAssemblyLoader.CurrentDomain_AssemblyResolve(System.Object,System.ResolveEventArgs)">
+            <summary>
+            Handler for <see cref="E:System.AppDomain.AssemblyResolve"/>. Delegates to <see cref="M:Microsoft.CodeAnalysis.AbstractAnalyzerAssemblyLoader.AssemblyResolveInternal(System.ResolveEventArgs)"/>
+            and prevents exceptions from leaking out.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FusionAssemblyIdentity.ToAssemblyName(Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName)">
+            <summary>
+            Converts <see cref="T:Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName"/> to <see cref="T:System.Reflection.AssemblyName"/> with possibly missing name components.
+            </summary>
+            <returns>
+            An <see cref="T:System.Reflection.AssemblyName"/> whose fields are be null if not present in <paramref name="nameObject"/>.
+            </returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FusionAssemblyIdentity.ToAssemblyIdentity(Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName)">
+            <summary>
+            Converts <see cref="T:Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName"/> to <see cref="T:System.Reflection.AssemblyName"/> with all metadata fields filled.
+            </summary>
+            <returns>
+            Assembly name with Version, Culture and PublicKeyToken components filled in:
+            "SimpleName, Version=#.#.#.#, Culture=XXX, PublicKeyToken=XXXXXXXXXXXXXXXX".
+            In addition Retargetable flag and ContentType are set.
+            </returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FusionAssemblyIdentity.ToAssemblyNameObject(System.Reflection.AssemblyName)">
+            <summary>
+            Converts <see cref="T:System.Reflection.AssemblyName"/> to an equivalent <see cref="T:Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FusionAssemblyIdentity.ToAssemblyNameObject(System.String)">
+            <summary>
+            Creates <see cref="T:Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName"/> object by parsing given display name.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FusionAssemblyIdentity.GetBestMatch(System.Collections.Generic.IEnumerable{Microsoft.CodeAnalysis.FusionAssemblyIdentity.IAssemblyName},System.String)">
+            <summary>
+            Selects the candidate assembly with the largest version number.  Uses culture as a tie-breaker if it is provided.
+            All candidates are assumed to have the same name and must include versions and cultures.  
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.GlobalAssemblyCache">
+            <summary>
+            Provides APIs to enumerate and look up assemblies stored in the Global Assembly Cache.
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.GlobalAssemblyCache.CurrentArchitectures">
+            <summary>
+            Represents the current Processor architecture
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.GlobalAssemblyCache.GetAssemblyIdentities(System.Reflection.AssemblyName,System.Collections.Immutable.ImmutableArray{System.Reflection.ProcessorArchitecture})">
+            <summary>
+            Enumerates assemblies in the GAC returning those that match given partial name and
+            architecture.
+            </summary>
+            <param name="partialName">Optional partial name.</param>
+            <param name="architectureFilter">Optional architecture filter.</param>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.GlobalAssemblyCache.GetAssemblyIdentities(System.String,System.Collections.Immutable.ImmutableArray{System.Reflection.ProcessorArchitecture})">
+            <summary>
+            Enumerates assemblies in the GAC returning those that match given partial name and
+            architecture.
+            </summary>
+            <param name="partialName">The optional partial name.</param>
+            <param name="architectureFilter">The optional architecture filter.</param>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.GlobalAssemblyCache.GetAssemblySimpleNames(System.Collections.Immutable.ImmutableArray{System.Reflection.ProcessorArchitecture})">
+            <summary>
+            Enumerates assemblies in the GAC returning their simple names.
+            </summary>
+            <param name="architectureFilter">Optional architecture filter.</param>
+            <returns>Unique simple names of GAC assemblies.</returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.GlobalAssemblyCache.ResolvePartialName(System.String,System.Collections.Immutable.ImmutableArray{System.Reflection.ProcessorArchitecture},System.Globalization.CultureInfo)">
+            <summary>
+            Looks up specified partial assembly name in the GAC and returns the best matching <see cref="T:Microsoft.CodeAnalysis.AssemblyIdentity"/>.
+            </summary>
+            <param name="displayName">The display name of an assembly</param>
+            <param name="architectureFilter">The optional processor architecture</param>
+            <param name="preferredCulture">The optional preferred culture information</param>
+            <returns>An assembly identity or null, if <paramref name="displayName"/> can't be resolved.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="displayName"/> is null.</exception>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.GlobalAssemblyCache.ResolvePartialName(System.String,System.String@,System.Collections.Immutable.ImmutableArray{System.Reflection.ProcessorArchitecture},System.Globalization.CultureInfo)">
+            <summary>
+            Looks up specified partial assembly name in the GAC and returns the best matching <see cref="T:Microsoft.CodeAnalysis.AssemblyIdentity"/>.
+            </summary>
+            <param name="displayName">The display name of an assembly</param>
+            <param name="location">Full path name of the resolved assembly</param>
+            <param name="architectureFilter">The optional processor architecture</param>
+            <param name="preferredCulture">The optional preferred culture information</param>
+            <returns>An assembly identity or null, if <paramref name="displayName"/> can't be resolved.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="displayName"/> is null.</exception>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.Scripting.GacFileResolver">
+            <summary>
+            Extends MetadataFileReferenceResolver to enable resolution of assembly
+            simple names in the GAC.
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.Scripting.GacFileResolver.Default">
+            <summary>
+            A resolver that is configured to resolve against the GAC associated
+            with the bitness of the currently executing process.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Scripting.GacFileResolver.#ctor(System.Collections.Generic.IEnumerable{System.String},System.String,System.Collections.Immutable.ImmutableArray{System.Reflection.ProcessorArchitecture},System.Globalization.CultureInfo)">
+            <summary>
+            Constructs an instance of a <see cref="T:Microsoft.CodeAnalysis.Scripting.GacFileResolver"/>
+            </summary>
+            <param name="assemblySearchPaths">An ordered set of fully qualified 
+            paths which are searched when resolving assembly names.</param>
+            <param name="baseDirectory">Directory used when resolving relative paths.</param>
+            <param name="architectures">Supported architectures used to filter GAC assemblies.</param>
+            <param name="preferredCulture">A culture to use when choosing the best assembly from 
+            among the set filtered by <paramref name="architectures"/></param>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.Scripting.GacFileResolver.Architectures">
+            <summary>
+            Architecture filter used when resolving assembly references.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.Scripting.GacFileResolver.PreferredCulture">
+            <summary>
+            CultureInfo used when resolving assembly references.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.AssemblyIdentityExtensions.ToAssemblyName(Microsoft.CodeAnalysis.AssemblyIdentity)">
+            <summary>
+            Converts this identity to <see cref="T:System.Reflection.AssemblyName"/>.
+            </summary>
+            <returns>A new instance of <see cref="T:System.Reflection.AssemblyName"/>.</returns>
+            <exception cref="T:System.Globalization.CultureNotFoundException">The culture specified in <see cref="P:Microsoft.CodeAnalysis.AssemblyIdentity.CultureName"/> is not available on the current platform.</exception>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.SimpleAnalyzerAssemblyLoader">
+            <summary>
+            Loads analyzer assemblies from their original locations in the file system.
+            Assemblies will only be loaded from the locations specified when the loader
+            is instantiated.
+            </summary>
+            <remarks>
+            This type is meant to be used in scenarios where it is OK for the analyzer
+            assemblies to be locked on disk for the lifetime of the host; for example,
+            csc.exe and vbc.exe. In scenarios where support for updating or deleting
+            the analyzer on disk is required a different loader should be used.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.Internal.Log.EtwLogger">
+            <summary>
+            A logger that publishes events to ETW using an EventSource.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.Internal.Log.RoslynEventSource">
+            <summary>
+            This EventSource exposes our events to ETW.
+            RoslynEventSource GUID is {bf965e67-c7fb-5c5b-d98f-cdf68f8154c2}.
+            
+            When updating this class, use the following to also update Main\Source\Test\Performance\Log\RoslynEventSourceParser.cs:
+            Main\Tools\Source\TraceParserGen\bin\Debug\TraceParserGen.exe Microsoft.CodeAnalysis.Workspaces.dll -eventsource:RoslynEventSource
+            
+            Use this command to register the ETW manifest on any machine where you need to decode events in xperf/etlstackbrowse:
+            "\\clrmain\tools\managed\etw\eventRegister\bin\Debug\eventRegister.exe" Microsoft.CodeAnalysis.Workspaces.dll
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.WorkspaceDesktopResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.WorkspaceDesktopResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.WorkspaceDesktopResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.WorkspaceDesktopResources.InvalidAssemblyName">
+            <summary>
+              Looks up a localized string similar to Invalid assembly name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.WorkspaceDesktopResources.InvalidCharactersInAssemblyName">
+            <summary>
+              Looks up a localized string similar to Invalid characters in assembly name.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CommandLineProject.CreateProjectInfo(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.String,Microsoft.CodeAnalysis.Workspace)">
+            <summary>
+            Create a <see cref="T:Microsoft.CodeAnalysis.ProjectInfo"/> structure initialized from a compilers command line arguments.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CommandLineProject.CreateProjectInfo(System.String,System.String,System.String,System.String,Microsoft.CodeAnalysis.Workspace)">
+            <summary>
+            Create a <see cref="T:Microsoft.CodeAnalysis.ProjectInfo"/> structure initialized with data from a compiler command line.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FileTextLoader.#ctor(System.String,System.Text.Encoding)">
+            <summary>
+            Creates a content loader for specified file.
+            </summary>
+            <param name="path">An absolute file path.</param>
+            <param name="defaultEncoding">
+            Specifies an encoding to be used if the actual encoding can't be determined from the stream content (the stream doesn't start with Byte Order Mark).
+            If not specified auto-detect heuristics are used to determine the encoding. If these heuristics fail the decoding is assumed to be <see cref="P:System.Text.Encoding.Default"/>.
+            Note that if the stream starts with Byte Order Mark the value of <paramref name="defaultEncoding"/> is ignored.
+            </param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="path"/> is null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="path"/> is not an absolute path.</exception>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.FileTextLoader.Path">
+            <summary>
+            Absolute path of the file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.FileTextLoader.DefaultEncoding">
+            <summary>
+            Specifies an encoding to be used if the actual encoding of the file 
+            can't be determined from the stream content (the stream doesn't start with Byte Order Mark).
+            If <c>null</c> auto-detect heristics are used to determine the encoding. 
+            If these heuristics fail the decoding is assumed to be <see cref="P:System.Text.Encoding.Default"/>.
+            Note that if the stream starts with Byte Order Mark the value of <see cref="P:Microsoft.CodeAnalysis.FileTextLoader.DefaultEncoding"/> is ignored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.FileTextLoader.LoadTextAndVersionAsync(Microsoft.CodeAnalysis.Workspace,Microsoft.CodeAnalysis.DocumentId,System.Threading.CancellationToken)">
+            <summary>
+            Load a text and a version of the document in the workspace.
+            </summary>
+            <exception cref="T:System.IO.IOException"></exception>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.Host.Mef.MefV1HostServices">
+            <summary>
+            A class that provides host services via classes instances exported via a MEF version 1 composition.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.Mef.MefV1HostServices.CreateWorkspaceServices(Microsoft.CodeAnalysis.Workspace)">
+            <summary>
+            Creates a new <see cref="T:Microsoft.CodeAnalysis.Host.HostWorkspaceServices"/> associated with the specified workspace.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.Mef.MefV1HostServices.GetExports``2">
+            <summary>
+            Gets all the MEF exports of the specified type with the specified metadata.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.Mef.MefV1HostServices.GetExports``1">
+            <summary>
+            Gets all the MEF exports of the specified type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.TemporaryStorageService">
+            <summary>
+            Temporarily stores text and streams in memory mapped files.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedFileManager">
+            <summary>
+            Rather than creating a separate MemoryMappedFile for every string/stream we need to persist,
+            use several large MemoryMappedFile 'arenas' that contain multiple buffers each.
+            
+            Group buffers by size to simplify fragmentation and complexity of this memory management code.
+            Currently, anything larger than 256KB will get its own MemoryMappedFile.
+            
+            When opening Roslyn.sln and doing a full initialization through Solution Navigator, we get
+            8000+ requests.  Since the minimum OS allocation for a memory mapped file is rounded up to 
+            64KB, this would map ~500MB alone, not counting the additional space needed for files > 64KB.
+            Using the strategy below for the same scenario, we create only 90 4MB arenas which hold all but
+            104 buffers that are larger than 256KB.  So we avoid creating ~7500 MemoryMappedFile objects
+            and save roughly 400MB of fragmentation when compared to the simple one MemoryMappedFile per
+            request approach.
+            
+            The MemoryMappedFileManager, MemoryMappedFileArena, and MemoryMappedInfo classes all
+            have very tight coupling in the current implementation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo._streamCount">
+            <summary>
+            ref count of stream given out
+            </summary>
+        </member>
+        <member name="F:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo._accessor">
+            <summary>
+            actual memory accessor that owns the VM
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo.CreateReadableStream">
+            <summary>
+            Caller is responsible for disposing the returned stream.
+            multiple call of this will not increase VM.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo.CreateWritableStream">
+            <summary>
+            Caller is responsible for disposing the returned stream.
+            multiple call of this will increase VM.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo.SharedReadableStream.GetPointer">
+            <summary>
+            Get underlying native memory directly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo.SharedReadableStream.AcquirePointer(System.IO.MemoryMappedFiles.MemoryMappedViewAccessor)">
+            <summary>
+            Acquire the fixed pointer to the start of the memory mapped view.
+            The pointer will be released during <see cref="M:Microsoft.CodeAnalysis.Host.TemporaryStorageServiceFactory.MemoryMappedInfo.SharedReadableStream.Dispose(System.Boolean)"/>
+            </summary>
+            <returns>The pointer to the start of the memory mapped view. The pointer is valid, and remains fixed for the lifetime of this object.</returns>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace">
+            <summary>
+            A workspace that can be populated by opening MSBuild solution and project files.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.Create">
+            <summary>
+            Create a new instance of a workspace that can be populated by opening solution and project files.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.Create(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Create a new instance of a workspace that can be populated by opening solution and project files.
+            </summary>
+            <param name="properties">An optional set of MSBuild properties used when interpreting project files.
+            These are the same properties that are passed to msbuild via the /property:&lt;n&gt;=&lt;v&gt; command line argument.</param>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.Create(System.Collections.Generic.IDictionary{System.String,System.String},Microsoft.CodeAnalysis.Host.HostServices)">
+            <summary>
+            Create a new instance of a workspace that can be populated by opening solution and project files.
+            </summary>
+            <param name="properties">The MSBuild properties used when interpreting project files.
+            These are the same properties that are passed to msbuild via the /property:&lt;n&gt;=&lt;v&gt; command line argument.</param>
+            <param name="hostServices">The <see cref="T:Microsoft.CodeAnalysis.Host.HostServices"/> used to configure this workspace.</param>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.Properties">
+            <summary>
+            The MSBuild properties used when interpreting project files.
+            These are the same properties that are passed to msbuild via the /property:&lt;n&gt;=&lt;v&gt; command line argument.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.LoadMetadataForReferencedProjects">
+            <summary>
+            Determines if metadata from existing output assemblies is loaded instead of opening referenced projects.
+            If the referenced project is already opened, the metadata will not be loaded.
+            If the metadata assembly cannot be found the referenced project will be opened instead.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.SkipUnrecognizedProjects">
+            <summary>
+            Determines if unrecognized projects are skipped when solutions or projects are opened.
+            
+            An project is unrecognized if it either has 
+              a) an invalid file path, 
+              b) a non-existent project file,
+              c) has an unrecognized file extension or 
+              d) a file extension associated with an unsupported language.
+            
+            If unrecognized projects cannot be skipped a corresponding exception is thrown.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.AssociateFileExtensionWithLanguage(System.String,System.String)">
+            <summary>
+            Associates a project file extension with a language name.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.CloseSolution">
+            <summary>
+            Close the open solution, and reset the workspace to a new empty solution.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.OpenSolutionAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Open a solution file and all referenced projects.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.OpenProjectAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Open a project file and all referenced projects.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.ProjectAlreadyReferencesProject(System.Collections.Generic.Dictionary{Microsoft.CodeAnalysis.ProjectId,Microsoft.CodeAnalysis.ProjectInfo},Microsoft.CodeAnalysis.ProjectId,Microsoft.CodeAnalysis.ProjectId)">
+            <summary>
+            Returns true if the project identified by <paramref name="fromProject"/> has a reference (even indirectly)
+            on the project identified by <paramref name="targetProject"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.MSBuildWorkspace.GetProjectMetadata(System.String,System.Collections.Immutable.ImmutableArray{System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            Gets a MetadataReference to a project's output assembly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.BuildTargets">
+            <summary>
+            Defines a list of build targets and operations to modify that list.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.BuildTargets.Remove(System.String)">
+            <summary>
+            Remove the specified target from the build targets. 
+            
+            If the target is nested (a dependent target) of one of the build targets, 
+            promote the siblings of the target to the formal list (in execution order.)
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.BuildTargets.RemoveAfter(System.String,System.Boolean)">
+            <summary>
+            Remove all targets after the specified target (and possibly also remove the specified target).
+            
+            If a removed target is nested (a dependent target) of one of the build targets, 
+            promote the siblings of the removed target to the formal list (in execution order).
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.DocumentFileInfo">
+            <summary>
+            Represents a source file that is part of a project file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.DocumentFileInfo.FilePath">
+            <summary>
+            The absolute path to the document file on disk.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.DocumentFileInfo.LogicalPath">
+            <summary>
+            A fictional path to the document, relative to the project.
+            The document may not actually exist at this location, and is used
+            to represent linked documents. This includes the file name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.DocumentFileInfo.IsLinked">
+            <summary>
+            True if the document has a logical path that differs from its 
+            absolute file path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.DocumentFileInfo.IsGenerated">
+            <summary>
+            True if the file was generated during build.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.IProjectFile">
+            <summary>
+            Represents a project file loaded from disk.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.IProjectFile.FilePath">
+            <summary>
+            The path to the project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.GetProjectFileInfoAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets the project file info asynchronously.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.GetSourceCodeKind(System.String)">
+            <summary>
+            Get the kind of source found in the specified file. 
+            This is usually determined by the file name extension.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.GetDocumentExtension(Microsoft.CodeAnalysis.SourceCodeKind)">
+            <summary>
+            Gets the corresponding extension for a source file of a given kind.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.GetPropertyValue(System.String)">
+            <summary>
+            Gets a specific project file property.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.AddDocument(System.String,System.String)">
+            <summary>
+            Add a source document to a project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.RemoveDocument(System.String)">
+            <summary>
+            Remove a source document from a project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.AddMetadataReference(Microsoft.CodeAnalysis.MetadataReference,Microsoft.CodeAnalysis.AssemblyIdentity)">
+            <summary>
+             Add a metadata reference to a project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.RemoveMetadataReference(Microsoft.CodeAnalysis.MetadataReference,Microsoft.CodeAnalysis.AssemblyIdentity)">
+            <summary>
+            Remove a metadata reference from a project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.AddProjectReference(System.String,Microsoft.CodeAnalysis.MSBuild.ProjectFileReference)">
+            <summary>
+            Add a reference to another project to a project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.RemoveProjectReference(System.String,System.String)">
+            <summary>
+            Remove a reference to another project from a project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.AddAnalyzerReference(Microsoft.CodeAnalysis.Diagnostics.AnalyzerReference)">
+            <summary>
+            Add an analyzer reference to the project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.RemoveAnalyzerReference(Microsoft.CodeAnalysis.Diagnostics.AnalyzerReference)">
+            <summary>
+            Remove an analyzer reference from the project file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.IProjectFile.Save">
+            <summary>
+            Save the current state of the project file to disk.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.ProjectFile.CreateProjectFileReference(Microsoft.Build.Execution.ProjectItemInstance)">
+            <summary>
+            Create a <see cref="T:Microsoft.CodeAnalysis.MSBuild.ProjectFileReference"/> from a ProjectReference node in the MSBuild file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.MSBuild.ProjectFile.GetAbsolutePath(System.String)">
+            <summary>
+            Resolves the given path that is possibly relative to the project directory.
+            </summary>
+            <remarks>
+            The resulting path is absolute but might not be normalized.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo">
+            <summary>
+            Represents a project file loaded from disk.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.OutputFilePath">
+            <summary>
+            The path to the output file this project generates.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.AssemblyName">
+            <summary>
+            The assembly name of the output.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.CompilationOptions">
+            <summary>
+            The compilation options for this project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.ParseOptions">
+            <summary>
+            The parse options for this project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.CodePage">
+            <summary>
+            The codepage for this project.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.Documents">
+            <summary>
+            The source documents.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.AdditionalDocuments">
+            <summary>
+            The additional documents.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.ProjectReferences">
+            <summary>
+            References to other projects.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.MetadataReferences">
+            <summary>
+            References to other metadata files; libraries and executables.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileInfo.AnalyzerReferences">
+            <summary>
+            References to analyzer assembly files; contains diagnostic analyzers.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.ProjectFileReference">
+            <summary>
+            Represents a reference to another project file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileReference.Path">
+            <summary>
+            The path on disk to the other project file. 
+            This path may be relative to the referencing project's file or an absolute path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.MSBuild.ProjectFileReference.Aliases">
+            <summary>
+            The aliases assigned to this reference, if any.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.MSBuild.SectionBlock">
+            <summary>
+            Represents a SectionBlock in a .sln file. Section blocks are of the form:
+            
+            Type(ParenthesizedName) = Value
+                Key = Value
+                [more keys/values]
+            EndType
+            </summary>
+        </member>
+        <member name="F:Roslyn.Utilities.FileKey.FullPath">
+            <summary>
+            Full case-insensitive path.
+            </summary>
+        </member>
+        <member name="F:Roslyn.Utilities.FileKey.Timestamp">
+            <summary>
+            Last write time (UTC).
+            </summary>
+        </member>
+        <member name="M:Roslyn.Utilities.FileKey.#ctor(System.String,System.DateTime)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="fullPath">Full path.</param>
+            <param name="timestamp">Last write time (UTC).</param>
+        </member>
+        <member name="M:Roslyn.Utilities.FileKey.Create(System.String)">
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+    </members>
+</doc>

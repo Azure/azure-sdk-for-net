@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Patch schedule entry for Premium Redis Cache.
@@ -31,7 +37,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// can start.</param>
         /// <param name="maintenanceWindow">ISO8601 timespan specifying how
         /// much time cache patching can take. </param>
-        public ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow = default(System.TimeSpan?))
+        public ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow = default(TimeSpan?))
         {
             DayOfWeek = dayOfWeek;
             StartHourUtc = startHourUtc;
@@ -57,7 +63,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// patching can take.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "maintenanceWindow")]
-        public System.TimeSpan? MaintenanceWindow { get; set; }
+        public TimeSpan? MaintenanceWindow { get; set; }
 
         /// <summary>
         /// Validate the object.

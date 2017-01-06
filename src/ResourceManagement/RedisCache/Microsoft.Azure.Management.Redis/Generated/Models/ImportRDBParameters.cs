@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Parameters for redis import operation.
@@ -25,7 +31,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         /// <param name="files">files to import</param>
         /// <param name="format">File format.</param>
-        public ImportRDBParameters(System.Collections.Generic.IList<string> files, string format = default(string))
+        public ImportRDBParameters(IList<string> files, string format = default(string))
         {
             Format = format;
             Files = files;
@@ -41,7 +47,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Gets or sets files to import
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "files")]
-        public System.Collections.Generic.IList<string> Files { get; set; }
+        public IList<string> Files { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -53,7 +59,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (Files == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Files");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Files");
             }
         }
     }

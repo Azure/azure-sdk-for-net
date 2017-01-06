@@ -8,12 +8,18 @@
 
 namespace Microsoft.Azure.Management.Analysis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Provision request specification
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class AnalysisServicesServerUpdateParameters
     {
         /// <summary>
@@ -29,7 +35,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <param name="sku">Sku of the Analysis Services resource</param>
         /// <param name="tags">Key value pairs of additional properties that
         /// can ebe specified</param>
-        public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators))
+        public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), IDictionary<string, string> tags = default(IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators))
         {
             Sku = sku;
             Tags = tags;
@@ -47,7 +53,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// specified
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
-        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// </summary>
@@ -62,9 +68,9 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Sku != null)
+            if (Sku != null)
             {
-                this.Sku.Validate();
+                Sku.Validate();
             }
         }
     }

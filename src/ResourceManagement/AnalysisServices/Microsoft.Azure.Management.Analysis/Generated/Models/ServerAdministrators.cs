@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Analysis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Array of administrator user identities
@@ -25,7 +31,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// </summary>
         /// <param name="members">Collection of administrator user
         /// identities</param>
-        public ServerAdministrators(System.Collections.Generic.IList<string> members = default(System.Collections.Generic.IList<string>))
+        public ServerAdministrators(IList<string> members = default(IList<string>))
         {
             Members = members;
         }
@@ -34,7 +40,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Gets or sets collection of administrator user identities
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "members")]
-        public System.Collections.Generic.IList<string> Members { get; set; }
+        public IList<string> Members { get; set; }
 
     }
 }

@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Specifies which redis access keys to reset.

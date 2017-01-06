@@ -8,8 +8,15 @@
 
 namespace Microsoft.Azure.Management.Analysis
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using System;		
+    using System.Collections.Generic;		
+    using System.Net.Http;		
+    using System.Threading;		
+    using System.Threading.Tasks;		
+    using Newtonsoft.Json;		
+    using Rest;
+    using Rest;
+    using Rest.Azure;
     using Models;
 
     /// <summary>
@@ -17,12 +24,12 @@ namespace Microsoft.Azure.Management.Analysis
     /// services that enables users to create, retrieve, update, and delete
     /// Analysis Services servers
     /// </summary>
-    public partial interface IAnalysisServicesManagementClient : System.IDisposable
+    public partial interface IAnalysisServicesManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
+        Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -37,7 +44,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        Microsoft.Rest.ServiceClientCredentials Credentials { get; }
+        ServiceClientCredentials Credentials { get; }
 
         /// <summary>
         /// A unique identifier of a Microsoft Azure subscription. The

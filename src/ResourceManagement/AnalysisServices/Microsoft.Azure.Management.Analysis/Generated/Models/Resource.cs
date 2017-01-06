@@ -8,12 +8,18 @@
 
 namespace Microsoft.Azure.Management.Analysis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Represents an instance of Analysis Services resource
     /// </summary>
-    public partial class Resource : Microsoft.Rest.Azure.IResource
+    public partial class Resource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Resource class.
@@ -33,7 +39,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// resource</param>
         /// <param name="tags">Key value pairs of additional properties that
         /// can ebe specified</param>
-        public Resource(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        public Resource(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -78,7 +84,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// specified
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
-        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -90,15 +96,15 @@ namespace Microsoft.Azure.Management.Analysis.Models
         {
             if (Location == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
             if (Sku == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Sku");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
             }
-            if (this.Sku != null)
+            if (Sku != null)
             {
-                this.Sku.Validate();
+                Sku.Validate();
             }
         }
     }

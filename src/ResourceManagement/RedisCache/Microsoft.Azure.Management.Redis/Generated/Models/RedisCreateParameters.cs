@@ -8,12 +8,18 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Parameters supplied to the Create Redis operation.
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class RedisCreateParameters : Resource
     {
         /// <summary>
@@ -44,7 +50,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
         /// <param name="staticIP">Required when deploying a redis cache
         /// inside an existing Azure Virtual Network.</param>
-        public RedisCreateParameters(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IDictionary<string, string> redisConfiguration = default(System.Collections.Generic.IDictionary<string, string>), bool? enableNonSslPort = default(bool?), System.Collections.Generic.IDictionary<string, string> tenantSettings = default(System.Collections.Generic.IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string))
+        public RedisCreateParameters(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string))
             : base(location, id, name, type, tags)
         {
             RedisConfiguration = redisConfiguration;
@@ -62,7 +68,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.redisConfiguration")]
-        public System.Collections.Generic.IDictionary<string, string> RedisConfiguration { get; set; }
+        public IDictionary<string, string> RedisConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets if the value is true, then the non-ssl redis server
@@ -75,7 +81,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Gets or sets tenantSettings
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.tenantSettings")]
-        public System.Collections.Generic.IDictionary<string, string> TenantSettings { get; set; }
+        public IDictionary<string, string> TenantSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the number of shards to be created on a Premium
@@ -116,25 +122,25 @@ namespace Microsoft.Azure.Management.Redis.Models
             base.Validate();
             if (Sku == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Sku");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
             }
-            if (this.SubnetId != null)
+            if (SubnetId != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.SubnetId, "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(SubnetId, "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$"))
                 {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "SubnetId", "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "SubnetId", "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$");
                 }
             }
-            if (this.StaticIP != null)
+            if (StaticIP != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.StaticIP, "^\\d+\\.\\d+\\.\\d+\\.\\d+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(StaticIP, "^\\d+\\.\\d+\\.\\d+\\.\\d+$"))
                 {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "StaticIP", "^\\d+\\.\\d+\\.\\d+\\.\\d+$");
+                    throw new ValidationException(ValidationRules.Pattern, "StaticIP", "^\\d+\\.\\d+\\.\\d+\\.\\d+$");
                 }
             }
-            if (this.Sku != null)
+            if (Sku != null)
             {
-                this.Sku.Validate();
+                Sku.Validate();
             }
         }
     }

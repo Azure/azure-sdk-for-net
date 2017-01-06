@@ -8,12 +8,18 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Response to put/get patch schedules for redis cache.
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class RedisPatchSchedule
     {
         /// <summary>
@@ -30,7 +36,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
-        public RedisPatchSchedule(System.Collections.Generic.IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        public RedisPatchSchedule(IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
@@ -67,7 +73,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Gets or sets list of patch schedules for redis cache.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.scheduleEntries")]
-        public System.Collections.Generic.IList<ScheduleEntry> ScheduleEntries { get; set; }
+        public IList<ScheduleEntry> ScheduleEntries { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -79,11 +85,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (ScheduleEntries == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ScheduleEntries");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ScheduleEntries");
             }
-            if (this.ScheduleEntries != null)
+            if (ScheduleEntries != null)
             {
-                foreach (var element in this.ScheduleEntries)
+                foreach (var element in ScheduleEntries)
                 {
                     if (element != null)
                     {

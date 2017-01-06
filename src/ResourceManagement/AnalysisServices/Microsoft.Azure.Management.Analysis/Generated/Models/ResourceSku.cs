@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Analysis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Represents the SKU name and tier for Analysis Services resource
@@ -58,7 +64,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         {
             if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
         }
     }

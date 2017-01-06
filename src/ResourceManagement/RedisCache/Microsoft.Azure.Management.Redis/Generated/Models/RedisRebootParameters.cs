@@ -8,7 +8,13 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using System;		
     using System.Linq;
+    using System.Collections.Generic;		
+    using Newtonsoft.Json;		
+    using Rest;		
+    using Rest.Serialization;		
+    using Rest.Azure;		
 
     /// <summary>
     /// Specifies which redis node(s) to reboot.
@@ -59,7 +65,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         {
             if (RebootType == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "RebootType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "RebootType");
             }
         }
     }
