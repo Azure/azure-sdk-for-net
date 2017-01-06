@@ -5,7 +5,7 @@
 		<LibrarySourceFolder Condition="'$(PublishTestProjects)' == 'true'">$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks.Tests\TestPublishProjects</LibrarySourceFolder>
 		<LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
 		<FxTargetList>portable;net40;net45</FxTargetList>
-		<NuGetPublishingSource>$(USERPROFILE)\nugetPublish</NuGetPublishingSource>
+		<NuGetPublishingSource Condition="'$(NuGetPublishingSource)' == ''">$(LibraryRoot)\packages\nugetPublish</NuGetPublishingSource>
 		<NuGetKey>1234</NuGetKey>
 	</PropertyGroup>
 	<PropertyGroup>
