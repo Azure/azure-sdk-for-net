@@ -4,64 +4,68 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 namespace Fluent.Tests.Compute
 {
     public class AvailabilitySetsTests
     {
-        private string rgName = "rgstg1546";
-        private string availName = "availset732";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDAvailabilitySet()
         {
-            try
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                // Create
-                IComputeManager computeManager = TestHelper.CreateComputeManager();
-                var availabilitySet = computeManager.AvailabilitySets
-                    .Define(availName)
-                    .WithRegion(Region.US_EAST)
-                    .WithNewResourceGroup(rgName)
-                    .WithUpdateDomainCount(2)
-                    .WithFaultDomainCount(3)
-                    .Create();
-
-                Assert.True(string.Equals(availabilitySet.ResourceGroupName, rgName));
-                Assert.True(availabilitySet.UpdateDomainCount == 2);
-                Assert.True(availabilitySet.FaultDomainCount == 3);
-
-                // Get
-                var feteched = computeManager.AvailabilitySets.GetById(availabilitySet.Id);
-                Assert.NotNull(feteched);
-
-                // List
-                var availabilitySets = computeManager.AvailabilitySets.ListByGroup(rgName);
-                // todo: fix listing
-                // Assert.True(availabilitySets.Count() > 0);
-
-                // Update
-                var availabilitySetUpdated = availabilitySet.Update()
-                    .WithTag("a", "aa")
-                    .WithTag("b", "bb")
-                    .Apply();
-
-                // Delete
-                computeManager.AvailabilitySets.DeleteById(availabilitySet.Id);
-            }
-            catch
-            {
-                //
-            }
-            finally
-            {
+                var rgName = TestUtilities.GenerateName("rgstg");
+                var availName = TestUtilities.GenerateName("availset");
                 try
                 {
-                    var resourceManager = TestHelper.CreateResourceManager();
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    // Create
+                    IComputeManager computeManager = TestHelper.CreateComputeManager();
+                    var availabilitySet = computeManager.AvailabilitySets
+                        .Define(availName)
+                        .WithRegion(Region.US_EAST)
+                        .WithNewResourceGroup(rgName)
+                        .WithUpdateDomainCount(2)
+                        .WithFaultDomainCount(3)
+                        .Create();
+
+                    Assert.True(string.Equals(availabilitySet.ResourceGroupName, rgName));
+                    Assert.True(availabilitySet.UpdateDomainCount == 2);
+                    Assert.True(availabilitySet.FaultDomainCount == 3);
+
+                    // Get
+                    var feteched = computeManager.AvailabilitySets.GetById(availabilitySet.Id);
+                    Assert.NotNull(feteched);
+
+                    // List
+                    var availabilitySets = computeManager.AvailabilitySets.ListByGroup(rgName);
+                    // todo: fix listing
+                    // Assert.True(availabilitySets.Count() > 0);
+
+                    // Update
+                    var availabilitySetUpdated = availabilitySet.Update()
+                        .WithTag("a", "aa")
+                        .WithTag("b", "bb")
+                        .Apply();
+
+                    // Delete
+                    computeManager.AvailabilitySets.DeleteById(availabilitySet.Id);
                 }
-                catch { }
+                catch
+                {
+                    //
+                }
+                finally
+                {
+                    try
+                    {
+                        var resourceManager = TestHelper.CreateResourceManager();
+                        resourceManager.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
+                }
             }
         }
     }

@@ -2,265 +2,229 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
-using System;
-using System.Linq;
-using Xunit;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Azure.Management.Fluent;
-using System.Collections.Generic;
-using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
-using System.Threading;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Renci.SshNet;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Xunit;
 
 namespace Fluent.Tests.Compute
 {
     public class VirtualMachineTests
     {
-        private readonly string RG_NAME = ResourceNamer.RandomResourceName("rgfluentchash-", 20);
         private const string LOCATION = "southcentralus";
         private const string VMNAME = "chashvm";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateVirtualMachine()
         {
-            var computeManager = TestHelper.CreateComputeManager();
-            var resourceManager = TestHelper.CreateResourceManager();
-
-            try
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                // Create
-                var vm = computeManager.VirtualMachines
-                    .Define(VMNAME)
-                    .WithRegion(LOCATION)
-                    .WithNewResourceGroup(RG_NAME)
-                    .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIpAddressDynamic()
-                    .WithoutPrimaryPublicIpAddress()
-                    .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_DATACENTER)
-                    .WithAdminUsername("Foo12")
-                    .WithAdminPassword("BaR@12!Foo")
-                    .WithSize(VirtualMachineSizeTypes.StandardD3)
-                    .WithOsDiskCaching(CachingTypes.ReadWrite)
-                    .WithOsDiskName("javatest")
-                    .Create();
+                var rgName = TestUtilities.GenerateName("rgfluentchash-");
+                var computeManager = TestHelper.CreateComputeManager();
+                var resourceManager = TestHelper.CreateResourceManager();
 
-                var foundedVM = computeManager.VirtualMachines.ListByGroup(RG_NAME)
-                    .FirstOrDefault(v => v.Name.Equals(VMNAME, StringComparison.OrdinalIgnoreCase));
+                try
+                {
+                    // Create
+                    var vm = computeManager.VirtualMachines
+                        .Define(VMNAME)
+                        .WithRegion(LOCATION)
+                        .WithNewResourceGroup(rgName)
+                        .WithNewPrimaryNetwork("10.0.0.0/28")
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithoutPrimaryPublicIpAddress()
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_DATACENTER)
+                        .WithAdminUsername("Foo12")
+                        .WithAdminPassword("BaR@12!Foo")
+                        .WithSize(VirtualMachineSizeTypes.StandardD3)
+                        .WithOsDiskCaching(CachingTypes.ReadWrite)
+                        .WithOsDiskName("javatest")
+                        .Create();
 
-                Assert.NotNull(foundedVM);
-                Assert.Equal(LOCATION, foundedVM.RegionName);
-                // Get
-                foundedVM = computeManager.VirtualMachines.GetByGroup(RG_NAME, VMNAME);
-                Assert.NotNull(foundedVM);
-                Assert.Equal(LOCATION, foundedVM.RegionName);
+                    var foundedVM = computeManager.VirtualMachines.ListByGroup(rgName)
+                        .FirstOrDefault(v => v.Name.Equals(VMNAME, StringComparison.OrdinalIgnoreCase));
 
-                // Fetch instance view
-                PowerState powerState = foundedVM.PowerState;
-                Assert.True(powerState == PowerState.RUNNING);
-                VirtualMachineInstanceView instanceView = foundedVM.InstanceView;
-                Assert.NotNull(instanceView);
-                Assert.NotNull(instanceView.Statuses.Count > 0);
+                    Assert.NotNull(foundedVM);
+                    Assert.Equal(LOCATION, foundedVM.RegionName);
+                    // Get
+                    foundedVM = computeManager.VirtualMachines.GetByGroup(rgName, VMNAME);
+                    Assert.NotNull(foundedVM);
+                    Assert.Equal(LOCATION, foundedVM.RegionName);
 
-                // Capture the VM [Requires VM to be Poweroff and generalized]
-                foundedVM.PowerOff();
-                foundedVM.Generalize();
-                var jsonResult = foundedVM.Capture("capturedVhds", "cpt", true);
-                Assert.NotNull(jsonResult);
+                    // Fetch instance view
+                    PowerState powerState = foundedVM.PowerState;
+                    Assert.True(powerState == PowerState.RUNNING);
+                    VirtualMachineInstanceView instanceView = foundedVM.InstanceView;
+                    Assert.NotNull(instanceView);
+                    Assert.NotNull(instanceView.Statuses.Count > 0);
 
-                // Delete VM
-                computeManager.VirtualMachines.DeleteById(foundedVM.Id);
-            } finally {
-                resourceManager.ResourceGroups.DeleteByName(RG_NAME);
+                    // Capture the VM [Requires VM to be Poweroff and generalized]
+                    foundedVM.PowerOff();
+                    foundedVM.Generalize();
+                    var jsonResult = foundedVM.Capture("capturedvhds", "cpt", true);
+                    Assert.NotNull(jsonResult);
+
+                    // Delete VM
+                    computeManager.VirtualMachines.DeleteById(foundedVM.Id);
+                }
+                finally
+                {
+                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                }
             }
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
         {
-            var resourceGroupName = ResourceNamer.RandomResourceName("rgvmtest-", 20);
-            var vmNamePrefix = "vmz";
-            var publicIpNamePrefix = ResourceNamer.RandomResourceName("pip-", 15);
-            var networkNamePrefix = ResourceNamer.RandomResourceName("vnet-", 15);
-
-            var region = Region.US_EAST;
-            int count = 5;
-
-            var azure = TestHelper.CreateRollupClient();
-            try
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                var resourceGroupCreatable = azure.ResourceGroups
-                .Define(resourceGroupName)
-                .WithRegion(region);
+                var resourceGroupName = TestUtilities.GenerateName("rgvmtest-");
+                var vmNamePrefix = "vmz";
+                var publicIpNamePrefix = TestUtilities.GenerateName("pip-");
+                var networkNamePrefix = TestUtilities.GenerateName("vnet-");
 
-                var storageAccountCreatable = azure.StorageAccounts
-                    .Define(ResourceNamer.RandomResourceName("stg", 20))
-                    .WithRegion(region)
-                    .WithNewResourceGroup(resourceGroupCreatable);
+                var region = Region.US_EAST;
+                int count = 5;
 
-                var networkCreatableKeys = new List<string>();
-                var publicIpCreatableKeys = new List<string>();
-                var virtualMachineCreatables = new List<ICreatable<IVirtualMachine>>();
-                for (int i = 0; i < count; i++)
+                var azure = TestHelper.CreateRollupClient();
+                try
                 {
-                    var networkCreatable = azure.Networks
-                            .Define($"{networkNamePrefix}-{i}")
-                            .WithRegion(region)
-                            .WithNewResourceGroup(resourceGroupCreatable)
-                            .WithAddressSpace("10.0.0.0/28");
-                    networkCreatableKeys.Add(networkCreatable.Key);
+                    var resourceGroupCreatable = azure.ResourceGroups
+                    .Define(resourceGroupName)
+                    .WithRegion(region);
 
-                    var publicIpAddressCreatable = azure.PublicIpAddresses
-                            .Define($"{publicIpNamePrefix}-{i}")
-                            .WithRegion(region)
-                            .WithNewResourceGroup(resourceGroupCreatable);
-                    publicIpCreatableKeys.Add(publicIpAddressCreatable.Key);
+                    var storageAccountCreatable = azure.StorageAccounts
+                        .Define(TestUtilities.GenerateName("stg"))
+                        .WithRegion(region)
+                        .WithNewResourceGroup(resourceGroupCreatable);
 
-                    var virtualMachineCreatable = azure.VirtualMachines
-                            .Define($"{vmNamePrefix}-{i}")
-                            .WithRegion(region)
-                            .WithNewResourceGroup(resourceGroupCreatable)
-                            .WithNewPrimaryNetwork(networkCreatable)
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUsername("tirekicker")
-                            .WithRootPassword("BaR@12!#")
-                            .WithNewStorageAccount(storageAccountCreatable);
-                    virtualMachineCreatables.Add(virtualMachineCreatable);
+                    var networkCreatableKeys = new List<string>();
+                    var publicIpCreatableKeys = new List<string>();
+                    var virtualMachineCreatables = new List<ICreatable<IVirtualMachine>>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        var networkCreatable = azure.Networks
+                                .Define($"{networkNamePrefix}-{i}")
+                                .WithRegion(region)
+                                .WithNewResourceGroup(resourceGroupCreatable)
+                                .WithAddressSpace("10.0.0.0/28");
+                        networkCreatableKeys.Add(networkCreatable.Key);
+
+                        var publicIpAddressCreatable = azure.PublicIpAddresses
+                                .Define($"{publicIpNamePrefix}-{i}")
+                                .WithRegion(region)
+                                .WithNewResourceGroup(resourceGroupCreatable);
+                        publicIpCreatableKeys.Add(publicIpAddressCreatable.Key);
+
+                        var virtualMachineCreatable = azure.VirtualMachines
+                                .Define($"{vmNamePrefix}-{i}")
+                                .WithRegion(region)
+                                .WithNewResourceGroup(resourceGroupCreatable)
+                                .WithNewPrimaryNetwork(networkCreatable)
+                                .WithPrimaryPrivateIpAddressDynamic()
+                                .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
+                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                                .WithRootUsername("tirekicker")
+                                .WithRootPassword("BaR@12!#")
+                                .WithNewStorageAccount(storageAccountCreatable);
+                        virtualMachineCreatables.Add(virtualMachineCreatable);
+                    }
+
+                    var createdVirtualMachines = azure.VirtualMachines.Create(virtualMachineCreatables.ToArray());
+                    Assert.True(createdVirtualMachines.Count() == count);
+
+                    HashSet<string> virtualMachineNames = new HashSet<string>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        virtualMachineNames.Add($"{vmNamePrefix}-{i}");
+                    }
+
+                    foreach (var virtualMachine in createdVirtualMachines)
+                    {
+                        Assert.True(virtualMachineNames.Contains(virtualMachine.Name));
+                        Assert.NotNull(virtualMachine.Id);
+                    }
+
+                    var networkNames = new HashSet<string>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        networkNames.Add($"{networkNamePrefix}-{i}");
+                    }
+
+                    foreach (var networkCreatableKey in networkCreatableKeys)
+                    {
+                        var createdNetwork = (INetwork)createdVirtualMachines.CreatedRelatedResource(networkCreatableKey);
+                        Assert.NotNull(createdNetwork);
+                        Assert.True(networkNames.Contains(createdNetwork.Name));
+                    }
+
+                    HashSet<string> publicIpAddressNames = new HashSet<string>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        publicIpAddressNames.Add($"{publicIpNamePrefix}-{i}");
+                    }
+
+                    foreach (string publicIpCreatableKey in publicIpCreatableKeys)
+                    {
+                        var createdPublicIpAddress = (IPublicIpAddress)createdVirtualMachines.CreatedRelatedResource(publicIpCreatableKey);
+                        Assert.NotNull(createdPublicIpAddress);
+                        Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
+                    }
                 }
-
-                var createdVirtualMachines = azure.VirtualMachines.Create(virtualMachineCreatables.ToArray());
-                Assert.True(createdVirtualMachines.Count() == count);
-
-                HashSet<string> virtualMachineNames = new HashSet<string>();
-                for (int i = 0; i < count; i++)
+                catch (Exception exception)
                 {
-                    virtualMachineNames.Add($"{vmNamePrefix}-{i}");
+                    Assert.True(false, exception.Message);
                 }
-
-                foreach (var virtualMachine in createdVirtualMachines)
+                finally
                 {
-                    Assert.True(virtualMachineNames.Contains(virtualMachine.Name));
-                    Assert.NotNull(virtualMachine.Id);
+                    azure.ResourceGroups.DeleteByName(resourceGroupName);
                 }
-
-                var networkNames = new HashSet<string>();
-                for (int i = 0; i < count; i++)
-                {
-                    networkNames.Add($"{networkNamePrefix}-{i}");
-                }
-
-                foreach (var networkCreatableKey in networkCreatableKeys)
-                {
-                    var createdNetwork = (INetwork)createdVirtualMachines.CreatedRelatedResource(networkCreatableKey);
-                    Assert.NotNull(createdNetwork);
-                    Assert.True(networkNames.Contains(createdNetwork.Name));
-                }
-
-                HashSet<string> publicIpAddressNames = new HashSet<string>();
-                for (int i = 0; i < count; i++)
-                {
-                    publicIpAddressNames.Add($"{publicIpNamePrefix}-{i}");
-                }
-
-                foreach (string publicIpCreatableKey in publicIpCreatableKeys)
-                {
-                    var createdPublicIpAddress = (IPublicIpAddress)createdVirtualMachines.CreatedRelatedResource(publicIpCreatableKey);
-                    Assert.NotNull(createdPublicIpAddress);
-                    Assert.True(publicIpAddressNames.Contains(createdPublicIpAddress.Name));
-                }
-            }
-            catch (Exception exception)
-            {
-                Assert.True(false, exception.Message);
-            }
-            finally
-            {
-                azure.ResourceGroups.DeleteByName(resourceGroupName);
             }
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateVirtualMachineWithCustomData()
         {
-            var vmName = ResourceNamer.RandomResourceName("vm", 10);
-            var username = "testuser";
-            var password = "12NewPA$$w0rd!";
-            var publicIpDnsLabel = ResourceNamer.RandomResourceName("abc", 16);
-            var region = Region.US_EAST;
-            var cloudInitEncodedString = Convert.ToBase64String(Encoding.ASCII.GetBytes("#cloud-config\r\npackages:\r\n - pwgen"));
-
-            var azure = TestHelper.CreateRollupClient();
-
-            var publicIpAddress = azure.PublicIpAddresses.Define(publicIpDnsLabel)
-                .WithRegion(region)
-                .WithNewResourceGroup()
-                .WithLeafDomainLabel(publicIpDnsLabel)
-                .Create();
-
-            var virtualMachine = azure.VirtualMachines.Define(vmName)
-                .WithRegion(region)
-                .WithExistingResourceGroup(publicIpAddress.ResourceGroupName)
-                .WithNewPrimaryNetwork("10.0.0.0/28")
-                .WithPrimaryPrivateIpAddressDynamic()
-                .WithExistingPrimaryPublicIpAddress(publicIpAddress)
-                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                .WithRootUsername(username)
-                .WithRootPassword(password)
-                .WithCustomData(cloudInitEncodedString)
-                .Create();
-
-            publicIpAddress.Refresh();
-            Assert.True(publicIpAddress.HasAssignedNetworkInterface);
-
-            ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
-                new AuthenticationMethod[] {
-                    new PasswordAuthenticationMethod(username, password)
-                });
-            using (var sshClient = new SshClient(connectionInfo))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                sshClient.Connect();
-                var commandToExecute = "pwgen;";
-                using (var command = sshClient.CreateCommand(commandToExecute))
-                {
-                    var commandOutput = command.Execute();
-                    Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
-                }
-                sshClient.Disconnect();
-            }
-        }
+                var vmName = TestUtilities.GenerateName("vm");
+                var username = "testuser";
+                var password = "12NewPA$$w0rd!";
+                var publicIpDnsLabel = TestUtilities.GenerateName("abc");
+                var region = Region.US_EAST;
+                var cloudInitEncodedString = Convert.ToBase64String(Encoding.ASCII.GetBytes("#cloud-config\r\npackages:\r\n - pwgen"));
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanSShConnectToVirtualMachine()
-        {
-            var rgName = ResourceNamer.RandomResourceName("rg", 10);
-            var vmName = ResourceNamer.RandomResourceName("vm", 10);
-            var username = "testuser";
-            var password = "12NewPA$$w0rd!";
-            var publicIpDnsLabel = ResourceNamer.RandomResourceName("abc", 16);
-            var region = Region.US_EAST;
+                var azure = TestHelper.CreateRollupClient();
 
-            var azure = TestHelper.CreateRollupClient();
-            try
-            {
+                var publicIpAddress = azure.PublicIpAddresses.Define(publicIpDnsLabel)
+                    .WithRegion(region)
+                    .WithNewResourceGroup()
+                    .WithLeafDomainLabel(publicIpDnsLabel)
+                    .Create();
+
                 var virtualMachine = azure.VirtualMachines.Define(vmName)
                     .WithRegion(region)
-                    .WithNewResourceGroup(rgName)
+                    .WithExistingResourceGroup(publicIpAddress.ResourceGroupName)
                     .WithNewPrimaryNetwork("10.0.0.0/28")
                     .WithPrimaryPrivateIpAddressDynamic()
-                    .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                    .WithExistingPrimaryPublicIpAddress(publicIpAddress)
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
                     .WithRootUsername(username)
                     .WithRootPassword(password)
+                    .WithCustomData(cloudInitEncodedString)
                     .Create();
 
-                var publicIpAddress = virtualMachine.GetPrimaryPublicIpAddress();
+                publicIpAddress.Refresh();
+                Assert.True(publicIpAddress.HasAssignedNetworkInterface);
 
                 ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
                     new AuthenticationMethod[] {
@@ -268,25 +232,72 @@ namespace Fluent.Tests.Compute
                     });
                 using (var sshClient = new SshClient(connectionInfo))
                 {
-                    try
+                    sshClient.Connect();
+                    var commandToExecute = "pwgen;";
+                    using (var command = sshClient.CreateCommand(commandToExecute))
                     {
-                        sshClient.Connect();
-                        sshClient.Disconnect();
+                        var commandOutput = command.Execute();
+                        Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
                     }
-                    catch (Exception exception)
-                    {
-                        Assert.False(true, $"Ssh connection failure to {publicIpAddress.Fqdn}, {exception.Message}");
-                    }
+                    sshClient.Disconnect();
                 }
             }
-            finally
+        }
+
+        [Fact]
+        public void CanSShConnectToVirtualMachine()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
             {
+                var rgName = TestUtilities.GenerateName("rg");
+                var vmName = TestUtilities.GenerateName("vm");
+                var username = "testuser";
+                var password = "12NewPA$$w0rd!";
+                var publicIpDnsLabel = TestUtilities.GenerateName("abc");
+                var region = Region.US_EAST;
+
+                var azure = TestHelper.CreateRollupClient();
                 try
                 {
-                    azure.ResourceGroups.DeleteByName(rgName);
+                    var virtualMachine = azure.VirtualMachines.Define(vmName)
+                        .WithRegion(region)
+                        .WithNewResourceGroup(rgName)
+                        .WithNewPrimaryNetwork("10.0.0.0/28")
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithRootUsername(username)
+                        .WithRootPassword(password)
+                        .Create();
+
+                    var publicIpAddress = virtualMachine.GetPrimaryPublicIpAddress();
+
+                    ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
+                        new AuthenticationMethod[] {
+                    new PasswordAuthenticationMethod(username, password)
+                        });
+                    using (var sshClient = new SshClient(connectionInfo))
+                    {
+                        try
+                        {
+                            sshClient.Connect();
+                            sshClient.Disconnect();
+                        }
+                        catch (Exception exception)
+                        {
+                            Assert.False(true, $"Ssh connection failure to {publicIpAddress.Fqdn}, {exception.Message}");
+                        }
+                    }
                 }
-                catch
-                { }
+                finally
+                {
+                    try
+                    {
+                        azure.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch
+                    { }
+                }
             }
         }
 

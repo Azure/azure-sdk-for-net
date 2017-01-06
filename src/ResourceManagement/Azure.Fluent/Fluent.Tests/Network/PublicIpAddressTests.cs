@@ -4,6 +4,7 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Text;
 using Xunit;
@@ -12,38 +13,41 @@ namespace Fluent.Tests.Network
 {
     public class IPublicIpAddressTests
     {
-        string testId = "" + System.DateTime.Now.Ticks % 100000L;
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CreateUpdateTest()
         {
-            var newPipName = "pip" + this.testId;
-            var newRG = "rg" + this.testId;
-            var manager = TestHelper.CreateNetworkManager();
-            var pip = manager.PublicIpAddresses.Define(newPipName)
-                .WithRegion(Region.US_WEST)
-                .WithNewResourceGroup(newRG)
-                .WithDynamicIp()
-                .WithLeafDomainLabel(newPipName)
-                .WithIdleTimeoutInMinutes(10)
-                .Create();
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                var testId = TestUtilities.GenerateName("");
+                var newPipName = "pip" + testId;
+                var newRG = "rg" + testId;
+                var manager = TestHelper.CreateNetworkManager();
+                var pip = manager.PublicIpAddresses.Define(newPipName)
+                    .WithRegion(Region.US_WEST)
+                    .WithNewResourceGroup(newRG)
+                    .WithDynamicIp()
+                    .WithLeafDomainLabel(newPipName)
+                    .WithIdleTimeoutInMinutes(10)
+                    .Create();
 
-            var resource = manager.PublicIpAddresses.GetByGroup(newRG, newPipName);
-            var updatedDnsName = resource.LeafDomainLabel + "xx";
-            var updatedIdleTimeout = 15;
-            resource = resource.Update()
-                    .WithStaticIp()
-                    .WithLeafDomainLabel(updatedDnsName)
-                    .WithReverseFqdn(resource.LeafDomainLabel + "." + resource.RegionName + ".cloudapp.azure.com")
-                    .WithIdleTimeoutInMinutes(updatedIdleTimeout)
-                    .WithTag("tag1", "value1")
-                    .WithTag("tag2", "value2")
-                    .Apply();
-            Assert.True(resource.LeafDomainLabel.Equals(updatedDnsName, StringComparison.OrdinalIgnoreCase));
-            Assert.True(resource.IdleTimeoutInMinutes == updatedIdleTimeout);
+                var resource = manager.PublicIpAddresses.GetByGroup(newRG, newPipName);
+                var updatedDnsName = resource.LeafDomainLabel + "xx";
+                var updatedIdleTimeout = 15;
+                resource = resource.Update()
+                        .WithStaticIp()
+                        .WithLeafDomainLabel(updatedDnsName)
+                        .WithReverseFqdn(resource.LeafDomainLabel + "." + resource.RegionName + ".cloudapp.azure.com")
+                        .WithIdleTimeoutInMinutes(updatedIdleTimeout)
+                        .WithTag("tag1", "value1")
+                        .WithTag("tag2", "value2")
+                        .Apply();
+                Assert.True(resource.LeafDomainLabel.Equals(updatedDnsName, StringComparison.OrdinalIgnoreCase));
+                Assert.True(resource.IdleTimeoutInMinutes == updatedIdleTimeout);
 
-            manager.PublicIpAddresses.DeleteById(pip.Id);
-            manager.ResourceManager.ResourceGroups.DeleteByName(newRG);
+                manager.PublicIpAddresses.DeleteById(pip.Id);
+                manager.ResourceManager.ResourceGroups.DeleteByName(newRG);
+            }
         }
 
 
