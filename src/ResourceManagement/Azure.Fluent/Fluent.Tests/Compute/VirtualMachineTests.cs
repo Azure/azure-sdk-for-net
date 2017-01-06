@@ -295,7 +295,7 @@ namespace Fluent.Tests.Compute
             string commandOutput = null;
             while (retryCount > 0)
             {
-                Thread.Sleep(backoffTime);
+                TestHelper.Delay(backoffTime);
                 using (var sshClient = new SshClient(connectionInfo))
                 {
                     try

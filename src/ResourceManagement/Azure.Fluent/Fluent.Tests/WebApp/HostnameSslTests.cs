@@ -78,7 +78,7 @@ namespace Azure.Tests.WebApp
                 catch (Exception)
                 {
                     retryCount--;
-                    Thread.Sleep(5000);
+                    TestHelper.Delay(5000);
                 }
             }
             if (retryCount == 0)

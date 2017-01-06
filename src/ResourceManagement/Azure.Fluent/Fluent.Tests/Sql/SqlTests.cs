@@ -330,7 +330,7 @@ namespace Azure.Tests.Sql
             transparentDataEncryptionActivities = transparentDataEncryption.ListActivities();
             Assert.NotNull(transparentDataEncryptionActivities);
 
-            Thread.Sleep(10000);
+            TestHelper.Delay(10000);
             transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption().UpdateStatus(TransparentDataEncryptionStates.Disabled);
             Assert.NotNull(transparentDataEncryption);
             Assert.Equal(transparentDataEncryption.Status, TransparentDataEncryptionStates.Disabled);
@@ -419,7 +419,7 @@ namespace Azure.Tests.Sql
                 .WithSourceDatabase(databaseInServer1.Id)
                 .WithMode(CreateMode.OnlineSecondary)
                 .Create();
-            Thread.Sleep(2000);
+            TestHelper.Delay(2000);
             var replicationLinksInDb1 = new List<IReplicationLink>(databaseInServer1.ListReplicationLinks().Values);
 
             Assert.Equal(replicationLinksInDb1.Count(), 1);
@@ -437,12 +437,12 @@ namespace Azure.Tests.Sql
             // Failover
             replicationLinksInDb2.FirstOrDefault().Failover();
             replicationLinksInDb2.FirstOrDefault().Refresh();
-            Thread.Sleep(30000);
+            TestHelper.Delay(30000);
             // Force failover
             replicationLinksInDb1.FirstOrDefault().ForceFailoverAllowDataLoss();
             replicationLinksInDb1.FirstOrDefault().Refresh();
 
-            Thread.Sleep(30000);
+            TestHelper.Delay(30000);
 
             replicationLinksInDb2.FirstOrDefault().Delete();
             Assert.Equal(databaseInServer2.ListReplicationLinks().Count(), 0);
