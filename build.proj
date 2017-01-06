@@ -288,7 +288,7 @@
   replacements in files such as NuGet specs.
   -->
   <Target Name="BuildMsBuildTask">
-	<Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"/>
+	<Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.sln -PackagesDirectory $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\packages"/>
     <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
              Properties="Configuration=Debug;Platform=AnyCPU" />
