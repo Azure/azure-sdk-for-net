@@ -8,35 +8,39 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 using Fluent.Tests.Common;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Fluent.Tests.ResourceManager
 {
     public class ProvidersTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanRegisterAndUnRegisterProvider()
         {
-            var resourceManager = TestHelper.CreateResourceManager();
-            var providers = resourceManager.Providers.List();
-            IProvider provider = providers.FirstOrDefault();
-            Assert.NotNull(provider);
-
-            provider = resourceManager.Providers.Unregister(provider.Namespace);
-            while (provider.RegistrationState.Equals("Unregistering"))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                TestHelper.Delay(5000);
-                provider = resourceManager.Providers.GetByName(provider.Namespace);
-            }
+                var resourceManager = TestHelper.CreateResourceManager();
+                var providers = resourceManager.Providers.List();
+                IProvider provider = providers.FirstOrDefault();
+                Assert.NotNull(provider);
 
-            provider = resourceManager.Providers.Register(provider.Namespace);
-            while (provider.RegistrationState.Equals("Registering"))
-            {
-                TestHelper.Delay(5000);
-                provider = resourceManager.Providers.GetByName(provider.Namespace);
+                provider = resourceManager.Providers.Unregister(provider.Namespace);
+                while (provider.RegistrationState.Equals("Unregistering"))
+                {
+                    TestHelper.Delay(5000);
+                    provider = resourceManager.Providers.GetByName(provider.Namespace);
+                }
+
+                provider = resourceManager.Providers.Register(provider.Namespace);
+                while (provider.RegistrationState.Equals("Registering"))
+                {
+                    TestHelper.Delay(5000);
+                    provider = resourceManager.Providers.GetByName(provider.Namespace);
+                }
+                Assert.True(string.Equals(provider.RegistrationState, "Registered"));
+                IList<ProviderResourceType> resourceTypes = provider.ResourceTypes;
+                Assert.True(resourceTypes.Count > 0);
             }
-            Assert.True(string.Equals(provider.RegistrationState, "Registered"));
-            IList<ProviderResourceType> resourceTypes = provider.ResourceTypes;
-            Assert.True(resourceTypes.Count > 0);
         }
     }
 }
