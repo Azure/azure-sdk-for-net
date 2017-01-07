@@ -29,12 +29,12 @@ namespace KeyVault.Management.Tests
 
                 string vaultName = TestUtilities.GenerateName("sdktestvault");
                 var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var objectIdStr = testBase.objectId;
                 var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
                 var accPol = new AccessPolicyEntry
                                   {
                                       TenantId = tenantIdGuid,
-                                      ObjectId = objectIdGuid,
+                                      ObjectId = objectIdStr,
                                       PermissionsToKeys = new string[] { "all" },
                                       PermissionsToSecrets = null
                                   };
@@ -154,13 +154,13 @@ namespace KeyVault.Management.Tests
 
                 string vaultName = TestUtilities.GenerateName("sdktestvault");
                 var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var objectIdStr = testBase.objectId;
                 var applicationIdGuid = Guid.Parse(testBase.applicationId);
                 var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
                 var accPol = new AccessPolicyEntry
                 {
                     TenantId = tenantIdGuid,
-                    ObjectId = objectIdGuid,
+                    ObjectId = objectIdStr,
                     ApplicationId = applicationIdGuid,
                     PermissionsToKeys = new string[] { "all" },
                     PermissionsToSecrets = null
@@ -323,7 +323,7 @@ namespace KeyVault.Management.Tests
 
                 string rgName = TestUtilities.GenerateName("sdktestrg");
                 var tenantIdGuid = Guid.Parse(testBase.tenantId);
-                var objectIdGuid = Guid.Parse(testBase.objectId);
+                var objectIdStr = testBase.objectId;
 
                 var tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
@@ -352,7 +352,7 @@ namespace KeyVault.Management.Tests
                                     new AccessPolicyEntry
                                     {
                                         TenantId = tenantIdGuid,
-                                        ObjectId = objectIdGuid,
+                                        ObjectId = objectIdStr,
                                         PermissionsToKeys = new string[]{"all"},
                                         PermissionsToSecrets = new string[]{"all"}
                                     }

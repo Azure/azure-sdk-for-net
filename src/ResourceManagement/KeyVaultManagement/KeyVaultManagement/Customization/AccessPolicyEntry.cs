@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <summary>
         /// Object ID of the principal
         /// </summary>
-        public Guid ObjectId
+        public string ObjectId
         {
             get;
             set;
