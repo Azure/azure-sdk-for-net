@@ -8,6 +8,7 @@ using System.Text;
 using Xunit;
 using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.Network
 {
@@ -17,7 +18,7 @@ namespace Fluent.Tests.Network
         [Fact]
         public void CreateUpdateTest()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var testId = TestUtilities.GenerateName("");
                 var newName = "nsg" + testId;

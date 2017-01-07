@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IStorageManager storageManager;
         private INetworkManager networkManager;
         // used to generate unique name for any dependency resources
-        private ResourceNamer namer;
+        private IResourceNamer namer;
         private bool isMarketplaceLinuxImage = false;
         // name of an existing subnet in the primary network to use
         private string existingPrimaryNetworkSubnetNameToAssociate;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.vmInstancesClient = vmInstancesClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
-            this.namer = new ResourceNamer(this.Name);
+            this.namer = SharedSettings.CreateResourceNamer(this.Name);
         }
 
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:3AA1543C2E39D6E6D148C51D89E3B4C6
@@ -1043,7 +1043,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 // VM name cannot contain only numeric values and cannot exceed 15 chars
                 if ((new Regex(@"^\d+$")).IsMatch(this.Name))
                 {
-                    this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
+                    this.WithComputerNamePrefix(SharedSettings.RandomResourceName("vmss-vm", 12));
                 }
                 else if (this.Name.Length <= 12)
                 {
@@ -1051,7 +1051,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
                 else
                 {
-                    this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
+                    this.WithComputerNamePrefix(SharedSettings.RandomResourceName("vmss-vm", 12));
                 }
             }
         }

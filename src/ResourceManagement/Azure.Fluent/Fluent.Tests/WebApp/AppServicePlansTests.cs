@@ -15,7 +15,7 @@ namespace Azure.Tests.WebApp
         [Fact]
         public void CanCRUDAppServicePlan()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 string RG_NAME = TestUtilities.GenerateName("javacsmrg");
                 string APP_SERVICE_PLAN_NAME = TestUtilities.GenerateName("java-asp-");

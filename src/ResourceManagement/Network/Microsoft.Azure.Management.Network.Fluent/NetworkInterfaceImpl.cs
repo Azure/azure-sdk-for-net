@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     {
         private INetworkInterfacesOperations innerCollection;
         private string nicName;
-        protected ResourceNamer namer;
+        protected IResourceNamer namer;
         private NicIpConfigurationImpl nicPrimaryIpConfiguration;
         private IDictionary<string, INicIpConfiguration> nicIpConfigurations;
         private string creatableNetworkSecurityGroupKey;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             innerCollection = client;
             nicName = name;
-            namer = new ResourceNamer(nicName);
+            namer = SharedSettings.CreateResourceNamer(nicName);
             InitializeChildrenFromInner();
         }
 

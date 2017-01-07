@@ -4,7 +4,6 @@
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent.Models;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
@@ -16,14 +15,14 @@ namespace Azure.Tests.WebApp
         [Fact]
         public void CanCRUDSwapSlots()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 string RG_NAME = TestUtilities.GenerateName("javacsmrg");
                 string WEBAPP_NAME = TestUtilities.GenerateName("java-webapp-");
                 string SLOT_NAME_1 = TestUtilities.GenerateName("java-slot-");
                 string SLOT_NAME_2 = TestUtilities.GenerateName("java-slot-");
                 string SLOT_NAME_3 = TestUtilities.GenerateName("java-slot-");
-                string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
+                string APP_SERVICE_PLAN_NAME = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
@@ -25,7 +26,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanCreateVirtualMachine()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var rgName = TestUtilities.GenerateName("rgfluentchash-");
                 var computeManager = TestHelper.CreateComputeManager();
@@ -85,7 +86,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var resourceGroupName = TestUtilities.GenerateName("rgvmtest-");
                 var vmNamePrefix = "vmz";
@@ -194,7 +195,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanCreateVirtualMachineWithCustomData()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var vmName = TestUtilities.GenerateName("vm");
                 var username = "testuser";
@@ -247,7 +248,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanSShConnectToVirtualMachine()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var rgName = TestUtilities.GenerateName("rg");
                 var vmName = TestUtilities.GenerateName("vm");

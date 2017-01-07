@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
@@ -21,7 +22,7 @@ namespace Fluent.Tests.Miscellaneous
         [Fact]
         public void CanSetMultipleDelegateHandlers()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("rg");
                 string stgName = TestUtilities.GenerateName("stg");

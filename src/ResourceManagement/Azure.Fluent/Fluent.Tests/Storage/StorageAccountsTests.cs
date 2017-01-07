@@ -8,6 +8,7 @@ using System.Linq;
 using Xunit;
 using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.Storage
 {
@@ -16,7 +17,7 @@ namespace Fluent.Tests.Storage
         [Fact(Skip="Update on storage account is using patch and tags are not properly handled there.")]
         public void CanCRUDStorageAccount()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rgName = TestUtilities.GenerateName("rgstg");
                 var stgName = TestUtilities.GenerateName("stgbnc");

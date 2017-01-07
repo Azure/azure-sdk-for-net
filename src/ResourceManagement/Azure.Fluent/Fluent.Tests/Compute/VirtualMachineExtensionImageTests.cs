@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.Compute
 {
@@ -17,7 +18,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanListExtensionImages()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
                 int maxListing = 20;
@@ -34,7 +35,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanGetExtensionTypeVersionAndImage()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
                 var extensionImages =

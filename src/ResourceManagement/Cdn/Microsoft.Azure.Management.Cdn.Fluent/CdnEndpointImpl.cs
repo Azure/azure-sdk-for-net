@@ -11,11 +11,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using Resource.Fluent;
     using Resource.Fluent.Core.ChildResourceActions;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using System;
 
     /// <summary>
     /// Implementation for CdnEndpoint.
@@ -101,7 +99,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     this.Parent.ResourceGroupName,
                     this.Parent.Name,
                     this.Name(),
-                    ResourceNamer.RandomResourceName("CustomDomain", 50),
+                    SharedSettings.RandomResourceName("CustomDomain", 50),
                     itemToCreate.HostName,
                     cancellationToken);
             }

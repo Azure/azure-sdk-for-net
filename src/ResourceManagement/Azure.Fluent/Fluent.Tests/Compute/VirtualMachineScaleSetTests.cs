@@ -14,6 +14,7 @@ using System.Net.Http;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Runtime.CompilerServices;
+using Azure.Tests;
 
 namespace Fluent.Tests.Compute
 {
@@ -24,7 +25,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanCreateVirtualMachineScaleSetWithCustomScriptExtension()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("javacsmrg");
                 string vmssName = TestUtilities.GenerateName("vmss");
@@ -89,7 +90,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanCreateUpdateVirtualMachineScaleSet()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string vmss_name = TestUtilities.GenerateName("vmss");
                 string rgName = TestUtilities.GenerateName("javacsmrg");

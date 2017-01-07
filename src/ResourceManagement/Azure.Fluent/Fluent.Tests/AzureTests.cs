@@ -25,7 +25,7 @@ namespace Azure.Tests
         [Fact]
         public void TestAppGatewaysPrivateMinimal()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
@@ -38,7 +38,7 @@ namespace Azure.Tests
         [Fact]
         public void TestAppGatewaysPublicMinimal()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
@@ -51,7 +51,7 @@ namespace Azure.Tests
         [Fact]
         public void TestAppGatewaysPrivateComplex()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
                 new Network.ApplicationGateway.PrivateComplex(
@@ -64,7 +64,7 @@ namespace Azure.Tests
         [Fact]
         public void TestAppGatewaysPublicComplex()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
@@ -76,7 +76,7 @@ namespace Azure.Tests
         [Fact(Skip ="Enable once Martin's changes are in")]
         public void TestLoadBalancersNatRules()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
@@ -91,7 +91,7 @@ namespace Azure.Tests
         [Fact(Skip = "Enable once Martin's changes are in")]
         public void TestLoadBalancersNatPools()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
@@ -106,7 +106,7 @@ namespace Azure.Tests
         [Fact(Skip = "Enable once Martin's changes are in")]
         public void TestLoadBalancersInternetMinimum()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
@@ -121,7 +121,7 @@ namespace Azure.Tests
         [Fact(Skip = "Enable once Martin's changes are in")]
         public void TestLoadBalancersInternalMinimum()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 

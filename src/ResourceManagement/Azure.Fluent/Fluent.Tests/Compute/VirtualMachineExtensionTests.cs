@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.Compute
 {
@@ -17,7 +18,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanResetPasswordUsingVMAccessExtension()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("vmexttest");
                 string location = "eastus";
@@ -66,7 +67,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanInstallUninstallCustomExtension()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("vmexttest");
                 string location = "eastus";
@@ -124,7 +125,7 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanHandleExtensionReference()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("vmexttest");
                 string location = "eastus";

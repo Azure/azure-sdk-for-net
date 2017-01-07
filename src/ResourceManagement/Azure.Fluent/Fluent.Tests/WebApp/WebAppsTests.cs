@@ -15,7 +15,7 @@ namespace Azure.Tests.WebApp
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDWebApp()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 string RG_NAME_1 = TestUtilities.GenerateName("javacsmrg");
                 string RG_NAME_2 = TestUtilities.GenerateName("javacsmrg");
