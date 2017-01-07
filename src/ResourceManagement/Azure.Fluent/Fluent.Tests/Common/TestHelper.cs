@@ -21,6 +21,9 @@ using System.Net.Http;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Rest.Azure;
 
 namespace Fluent.Tests.Common
 {
@@ -65,126 +68,162 @@ namespace Fluent.Tests.Common
 
         public static IAzure CreateRollupClient()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return Microsoft.Azure.Management.Fluent.Azure.Configure()
+            return CreateMockedManager(c => Microsoft.Azure.Management.Fluent.Azure.Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
+                .Authenticate(c)
+                .WithSubscription(c.DefaultSubscriptionId));
         }
 
         public static INetworkManager CreateNetworkManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return NetworkManager
+            return CreateMockedManager(c => NetworkManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static IComputeManager CreateComputeManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return ComputeManager
+            return CreateMockedManager(c => ComputeManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static IResourceManager CreateResourceManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager
+            return CreateMockedManager(c => Microsoft.Azure.Management.Resource.Fluent.ResourceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
+                .Authenticate(c)
+                .WithSubscription(c.DefaultSubscriptionId));
         }
 
         public static IBatchManager CreateBatchManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return BatchManager
+            return CreateMockedManager(c => BatchManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static ISqlManager CreateSqlManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-
-            return SqlManager
+            return CreateMockedManager(c => SqlManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static IAppServiceManager CreateAppServiceManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return AppServiceManager
+            return CreateMockedManager(c => AppServiceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
 
         public static IKeyVaultManager CreateKeyVaultManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return KeyVaultManager
+            return CreateMockedManager(c => KeyVaultManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static ICdnManager CreateCdnManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return CdnManager
+            return CreateMockedManager(c => CdnManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static IRedisManager CreateRedisManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return RedisManager
+            return CreateMockedManager(c => RedisManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         public static IStorageManager CreateStorageManager()
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return StorageManager
+            return CreateMockedManager(c => StorageManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+                .Authenticate(c, c.DefaultSubscriptionId));
         }
 
         // TODO - ans - context is not required here as we are getting the handler directly from HttpMockServer.
         public static Microsoft.Azure.Management.Resource.Fluent.ResourceManager.IAuthenticated Authenticate(MockContext context)
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return Microsoft.Azure.Management.Resource.Fluent.ResourceManager
+            return CreateMockedManager(c => Microsoft.Azure.Management.Resource.Fluent.ResourceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials);
+                .Authenticate(c));
+        }
+
+        private static T CreateMockedManager<T>(Func<AzureCredentials, T> builder)
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath)
+                .WithDefaultSubscription(TestEnvironmentFactory.GetTestEnvironment().SubscriptionId);
+
+            var manager = builder.Invoke(credentials);
+
+
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                var managersList = new List<object>();
+                var managerTraversalStack = new Stack<object>();
+
+                managerTraversalStack.Push(manager);
+
+                while (managerTraversalStack.Count > 0)
+                {
+                    var stackedObject = managerTraversalStack.Pop();
+                    // if not a rollup package
+                    if (!(stackedObject is IAzure))
+                    {
+                        managersList.Add(stackedObject);
+                        var resourceManager = stackedObject.GetType().GetProperty("ResourceManager");
+                        if (resourceManager != null)
+                        {
+                            managersList.Add(resourceManager.GetValue(stackedObject));
+                        }
+                    }
+
+                    foreach (var obj in stackedObject
+                        .GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                        .Where(f => f.FieldType.GetInterfaces().Contains(typeof(IManagerBase)))
+                        .Select(f => (IManagerBase)f.GetValue(stackedObject)))
+                    {
+                        managerTraversalStack.Push(obj);
+                    }
+                }
+
+                foreach (var m in managersList)
+                {
+                    m.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                            .Where(f => f.FieldType.GetInterfaces().Contains(typeof(IAzureClient)))
+                            .Select(f => (IAzureClient)f.GetValue(m))
+                            .ToList()
+                            .ForEach(c => c.LongRunningOperationRetryTimeout = 0);
+                }
+            }
+            return manager;
         }
 
         public static DelegatingHandler[] GetHandlers()

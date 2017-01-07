@@ -29,7 +29,7 @@ namespace Azure.Tests.Redis
                 try
                 {
                     var redisManager = TestHelper.CreateRedisManager();
-
+                    
                     // Create
                     var resourceGroup = redisManager.ResourceManager.ResourceGroups
                                             .Define(RG_NAME_SECOND)
