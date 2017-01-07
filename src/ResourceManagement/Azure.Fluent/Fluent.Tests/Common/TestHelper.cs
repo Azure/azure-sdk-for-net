@@ -185,7 +185,7 @@ namespace Fluent.Tests.Common
             }
             else
             {
-                HttpMockServer.Variables.Add(ConnectionStringKeys.SubscriptionIdKey, credentials.DefaultSubscriptionId);
+                HttpMockServer.Variables[ConnectionStringKeys.SubscriptionIdKey] = credentials.DefaultSubscriptionId;
             }
 
             var manager = builder.Invoke(credentials);
