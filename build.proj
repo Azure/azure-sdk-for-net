@@ -69,8 +69,9 @@
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
-    <ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj" />
-    <ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj" />
+    <ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj"/>
+    <ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj"/>
+	<ClientRuntimeRootDir Include="%(ClientRuntimeProjects.RootDir)"/>
   </ItemGroup>
   
   <Import Condition="$(PublishTestProjects) == 'true'" Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks.Tests\PublishNugetPackageTests.proj" />
@@ -80,7 +81,7 @@
   <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   
   <!-- Building ClientRuntime projects -->
-  <Target Name="BuildClientRuntime">
+  <Target Name="BuildClientRuntime" Condition="Exists($(ClientRuntimeRootDir))">
       <Exec Command="dotnet restore" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
       <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
   </Target>
@@ -130,16 +131,11 @@
     
     <!--Do not build old libraries except Authentication, which Azure PowerShell still uses-->
     <ItemGroup>
-	<NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"	  
-                            Condition=" '$(Scope)' == 'all' or '$(Scope)' == 'Authentication' " />
-    <!--
-		<NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"
-                            Condition=" ('$(Scope)' == 'all' or '$(Scope)' == 'Authentication') and Exists('$(LibrarySourceFolder)\Authentication\Authentication.sln')" />
-	-->
-		
+		<NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"	  
+                            Condition=" '$(Scope)' == 'all' or '$(Scope)' == 'Authentication' " />    	
     </ItemGroup>
-    <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />
-     
+	
+    <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />     
     <Message Text="Ensure 7zip is available" />
     <Exec
       Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
