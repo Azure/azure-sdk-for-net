@@ -155,8 +155,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
                 config["graphurl"] = "https://www.contoso.com";
                 config["client"] = "[guid]";
                 config["key"] = "[guid]";
-                config["tenant"] = "[guid]";
-                config["subscription"] = "[guid]";
+                config["tenant"] = Guid.NewGuid().ToString();
+                config["subscription"] = Guid.NewGuid().ToString();
             }
 
             var env = new AzureEnvironment()
@@ -180,6 +180,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
 
         public async override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+#if !NETSTANDARD11
+            var testMode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+            if (testMode != null &&
+                testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+#endif
             var adSettings = new ActiveDirectoryServiceSettings
             {
                 AuthenticationEndpoint = new Uri(Environment.AuthenticationEndpoint),
