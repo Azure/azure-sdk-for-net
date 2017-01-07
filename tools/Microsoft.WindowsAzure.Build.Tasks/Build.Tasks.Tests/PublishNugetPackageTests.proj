@@ -78,6 +78,11 @@
   
   <!-- TEST CASES -->
   
+  <!-- Job commandline args
+  /t:Clean;Build;Package;Publish /p:CodeSign=true;Configuration=Release /p:NuGetKey=<key> 
+  /p:NuGetPublishingSource=https://www.nuget.org/api/v2/package/ /fl /flp:logfile=build.out;verbosity=normal 
+  /p:Scope=$Scope /p:PackageName="$PackageName" /p:PublishTestProjects=true
+  -->
   <!-- Use Case:
 		msbuild build.proj /p:PublishTestProjects=true /t:Publish_MultipleSelectedPackage /p:Scope=MultiProjectSingleSln /p:PackageName="Sdk RP1_MgmtPlane"
 	-->
