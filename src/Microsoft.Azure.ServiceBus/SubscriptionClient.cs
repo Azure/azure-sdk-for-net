@@ -170,6 +170,59 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Asynchronously reads the next message without changing the state of the receiver or the message source.
+        /// </summary>
+        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
+        public Task<BrokeredMessage> PeekAsync()
+        {
+            try
+            {
+                return this.innerReceiver.PeekAsync();
+            }
+            catch (Exception)
+            {
+                // TODO: Log Peek Exception
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously reads the next batch of message without changing the state of the receiver or the message source.
+        /// </summary>
+        /// <param name="maxMessageCount">The number of messages.</param>
+        /// <returns>The asynchronous operation that returns a list of <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> to be read.</returns>
+        public Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
+        {
+            try
+            {
+                return this.innerReceiver.PeekAsync(maxMessageCount);
+            }
+            catch (Exception)
+            {
+                // TODO: Log Receive Exception
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously reads the next message without changing the state of the receiver or the message source.
+        /// </summary>
+        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
+        /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
+        public Task<BrokeredMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
+        {
+            try
+            {
+                return this.innerReceiver.PeekBySequenceNumberAsync(fromSequenceNumber);
+            }
+            catch (Exception)
+            {
+                // TODO: Log Receive Exception
+                throw;
+            }
+        }
+
         public Task CompleteAsync(Guid lockToken)
         {
             return this.CompleteAsync(new Guid[] { lockToken });
