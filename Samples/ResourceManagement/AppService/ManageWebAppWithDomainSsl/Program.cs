@@ -30,11 +30,11 @@ namespace ManageWebAppWithDomainSsl
 
     public class Program
     {
-        private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
-        private static readonly string planName = ResourceNamer.RandomResourceName("jplan_", 15);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMV_", 24);
-        private static readonly string domainName = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".com";
+        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+        private static readonly string planName = SharedSettings.RandomResourceName("jplan_", 15);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
+        private static readonly string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
         private static readonly string certPassword = "StrongPass!12";
 
         public static void Main(string[] args)

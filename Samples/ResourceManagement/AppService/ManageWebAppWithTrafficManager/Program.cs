@@ -28,19 +28,19 @@ namespace ManageWebAppWithTrafficManager
 
     public class Program
     {
-        private static string RG_NAME = ResourceNamer.RandomResourceName("rgNEMV_", 24);
+        private static string RG_NAME = SharedSettings.RandomResourceName("rgNEMV_", 24);
         private static string CERT_PASSWORD = "StrongPass!12";
         private static string pfxPath;
-        private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = ResourceNamer.RandomResourceName("webapp3-", 20);
-        private static readonly string app4Name = ResourceNamer.RandomResourceName("webapp4-", 20);
-        private static readonly string app5Name = ResourceNamer.RandomResourceName("webapp5-", 20);
-        private static readonly string plan1Name = ResourceNamer.RandomResourceName("jplan1_", 15);
-        private static readonly string plan2Name = ResourceNamer.RandomResourceName("jplan2_", 15);
-        private static readonly string plan3Name = ResourceNamer.RandomResourceName("jplan3_", 15);
-        private static readonly string domainName = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".com";
-        private static readonly string tmName = ResourceNamer.RandomResourceName("jsdktm-", 20);
+        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+        private static readonly string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
+        private static readonly string app5Name = SharedSettings.RandomResourceName("webapp5-", 20);
+        private static readonly string plan1Name = SharedSettings.RandomResourceName("jplan1_", 15);
+        private static readonly string plan2Name = SharedSettings.RandomResourceName("jplan2_", 15);
+        private static readonly string plan3Name = SharedSettings.RandomResourceName("jplan3_", 15);
+        private static readonly string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
+        private static readonly string tmName = SharedSettings.RandomResourceName("jsdktm-", 20);
 
         public static void Main(string[] args)
         {

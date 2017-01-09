@@ -36,9 +36,9 @@ namespace ManageDns
     public class Program
     {
         private static readonly string customDomainName = "THE CUSTOM DOMAIN THAT YOU OWN (e.g. contoso.com)";
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMV_", 24);
-        private static readonly string appServicePlanName = ResourceNamer.RandomResourceName("jplan1_", 15);
-        private static readonly string webAppName = ResourceNamer.RandomResourceName("webapp1-", 20);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
+        private static readonly string appServicePlanName = SharedSettings.RandomResourceName("jplan1_", 15);
+        private static readonly string webAppName = SharedSettings.RandomResourceName("webapp1-", 20);
 
         public static void Main(string[] args)
         {
@@ -141,12 +141,12 @@ namespace ManageDns
 
                     Console.WriteLine("Creating a virtual machine with public IP...");
                     var virtualMachine1 = azure.VirtualMachines
-                            .Define(ResourceNamer.RandomResourceName("employeesvm-", 20))
+                            .Define(SharedSettings.RandomResourceName("employeesvm-", 20))
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(ResourceNamer.RandomResourceName("empip-", 20))
+                            .WithNewPrimaryPublicIpAddress(SharedSettings.RandomResourceName("empip-", 20))
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
                             .WithAdminUsername("testuser")
                             .WithAdminPassword("12NewPA$$w0rd!")
@@ -228,12 +228,12 @@ namespace ManageDns
 
                     Console.WriteLine("Creating a virtual machine with public IP...");
                     var virtualMachine2 = azure.VirtualMachines
-                            .Define(ResourceNamer.RandomResourceName("partnersvm-", 20))
+                            .Define(SharedSettings.RandomResourceName("partnersvm-", 20))
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
-                            .WithNewPrimaryPublicIpAddress(ResourceNamer.RandomResourceName("ptnerpip-", 20))
+                            .WithNewPrimaryPublicIpAddress(SharedSettings.RandomResourceName("ptnerpip-", 20))
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
                             .WithAdminUsername("testuser")
                             .WithAdminPassword("12NewPA$$w0rd!")

@@ -21,9 +21,9 @@ namespace ManageVirtualMachinesInParallel
     public class Program
     {
         private static readonly int vmCount = 2;
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOPP", 24);
-        private static readonly string networkName = ResourceNamer.RandomResourceName("vnetCOMV", 24);
-        private static readonly string storageAccountName = ResourceNamer.RandomResourceName("stgCOMV", 20);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgCOPP", 24);
+        private static readonly string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
+        private static readonly string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
 

@@ -32,7 +32,7 @@ namespace ManageRedis
          * - Create CDN profile using Standard Verizon SKU with endpoints in each region of Web apps.
          * - Load some content (referenced by Web Apps) to the CDN endpoints.
          */
-        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("rgCDN_", 24);
+        private static readonly string RG_NAME = SharedSettings.RandomResourceName("rgCDN_", 24);
         private static readonly string SUFFIX = ".azurewebsites.net";
 
         public static void Main(string[] args)
@@ -66,7 +66,7 @@ namespace ManageRedis
                     // Create 8 websites
                     for (int i = 0; i < 8; i++)
                     {
-                        appNames[i] = ResourceNamer.RandomResourceName("webapp" + (i + 1) + "-", 20);
+                        appNames[i] = SharedSettings.RandomResourceName("webapp" + (i + 1) + "-", 20);
                     }
 
                     // 2 in US
@@ -153,7 +153,7 @@ namespace ManageRedis
 
         private static IWebApp CreateWebApp(IAzure azure, string appName, Region region)
         {
-            var planName = ResourceNamer.RandomResourceName("jplan_", 15);
+            var planName = SharedSettings.RandomResourceName("jplan_", 15);
             var appUrl = appName + SUFFIX;
 
             Console.WriteLine("Creating web app " + appName + " with master branch...");

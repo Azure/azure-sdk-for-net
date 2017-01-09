@@ -13,7 +13,7 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "90071bd9-d821-47be-98d2-4cf3a04e4959"
+          "edba7d40-7e78-43ad-b62e-d20126215d59"
         ],
         "accept-language": [
           "en-US"
@@ -25,9 +25,6 @@
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12\",\r\n  \"name\": \"rgchash12\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "171"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
@@ -38,28 +35,34 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:05:55 GMT"
+          "Sat, 07 Jan 2017 05:50:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-request-id": [
-          "fd225017-1333-41e8-a430-75e624de6868"
+          "10bdbf7f-148f-4ac5-a0c9-761b29b79541"
         ],
         "x-ms-correlation-request-id": [
-          "fd225017-1333-41e8-a430-75e624de6868"
+          "10bdbf7f-148f-4ac5-a0c9-761b29b79541"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000556Z:fd225017-1333-41e8-a430-75e624de6868"
+          "CENTRALUS:20170107T055035Z:10bdbf7f-148f-4ac5-a0c9-761b29b79541"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ]
       },
-      "StatusCode": 201
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1?api-version=2016-02-01",
@@ -74,7 +77,7 @@
           "455"
         ],
         "x-ms-client-request-id": [
-          "552eecc2-de60-414b-b7f6-2b25f55a0bfd"
+          "36dbd72a-3e55-4299-a9c6-97ef6ead3259"
         ],
         "accept-language": [
           "en-US"
@@ -84,11 +87,8 @@
           "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n  \"name\": \"deployment1\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parametersLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"vnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"VNet1\"\r\n      },\r\n      \"vnetAddressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/16\"\r\n      },\r\n      \"subnet1Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/24\"\r\n      },\r\n      \"subnet1Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet1\"\r\n      },\r\n      \"subnet2Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.1.0/24\"\r\n      },\r\n      \"subnet2Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet2\"\r\n      }\r\n    },\r\n    \"mode\": \"Complete\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2017-01-06T00:05:57.8760373Z\",\r\n    \"duration\": \"PT0.4653253S\",\r\n    \"correlationId\": \"ea926a36-7a9c-4e09-9107-bcfb88674dde\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n  \"name\": \"deployment1\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parametersLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"vnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"VNet1\"\r\n      },\r\n      \"vnetAddressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/16\"\r\n      },\r\n      \"subnet1Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/24\"\r\n      },\r\n      \"subnet1Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet1\"\r\n      },\r\n      \"subnet2Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.1.0/24\"\r\n      },\r\n      \"subnet2Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet2\"\r\n      }\r\n    },\r\n    \"mode\": \"Complete\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2017-01-07T05:50:36.6768158Z\",\r\n    \"duration\": \"PT0.5388834S\",\r\n    \"correlationId\": \"45f28ff2-c3b4-4283-82bb-dd225416c9b8\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": []\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "1163"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
@@ -99,35 +99,38 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:05:57 GMT"
+          "Sat, 07 Jan 2017 05:50:36 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operationStatuses/08587179457280669398?api-version=2016-02-01"
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operationStatuses/08587178386493397135?api-version=2016-02-01"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1195"
         ],
         "x-ms-request-id": [
-          "ea926a36-7a9c-4e09-9107-bcfb88674dde"
+          "45f28ff2-c3b4-4283-82bb-dd225416c9b8"
         ],
         "x-ms-correlation-request-id": [
-          "ea926a36-7a9c-4e09-9107-bcfb88674dde"
+          "45f28ff2-c3b4-4283-82bb-dd225416c9b8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000558Z:ea926a36-7a9c-4e09-9107-bcfb88674dde"
+          "CENTRALUS:20170107T055036Z:45f28ff2-c3b4-4283-82bb-dd225416c9b8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ]
       },
-      "StatusCode": 201
+      "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operationStatuses/08587179457280669398?api-version=2016-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL3JnY2hhc2gxMi9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9kZXBsb3ltZW50MS9vcGVyYXRpb25TdGF0dXNlcy8wODU4NzE3OTQ1NzI4MDY2OTM5OD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operationStatuses/08587178386493397135?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL3JnY2hhc2gxMi9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9kZXBsb3ltZW50MS9vcGVyYXRpb25TdGF0dXNlcy8wODU4NzE3ODM4NjQ5MzM5NzEzNT9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -148,7 +151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:28 GMT"
+          "Sat, 07 Jan 2017 05:51:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -157,16 +160,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14945"
         ],
         "x-ms-request-id": [
-          "bd3b469f-7627-4bfc-bc2a-269ec63deb7e"
+          "0c31ebc3-4b19-4c7f-94bf-3e11eb0efce8"
         ],
         "x-ms-correlation-request-id": [
-          "bd3b469f-7627-4bfc-bc2a-269ec63deb7e"
+          "0c31ebc3-4b19-4c7f-94bf-3e11eb0efce8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000628Z:bd3b469f-7627-4bfc-bc2a-269ec63deb7e"
+          "CENTRALUS:20170107T055107Z:0c31ebc3-4b19-4c7f-94bf-3e11eb0efce8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -185,7 +188,7 @@
           "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n  \"name\": \"deployment1\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parametersLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"vnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"VNet1\"\r\n      },\r\n      \"vnetAddressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/16\"\r\n      },\r\n      \"subnet1Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/24\"\r\n      },\r\n      \"subnet1Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet1\"\r\n      },\r\n      \"subnet2Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.1.0/24\"\r\n      },\r\n      \"subnet2Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet2\"\r\n      }\r\n    },\r\n    \"mode\": \"Complete\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-01-06T00:06:15.2844388Z\",\r\n    \"duration\": \"PT17.8737268S\",\r\n    \"correlationId\": \"ea926a36-7a9c-4e09-9107-bcfb88674dde\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"Microsoft.Network/virtualNetworks/VNet1\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n  \"name\": \"deployment1\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parametersLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"vnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"VNet1\"\r\n      },\r\n      \"vnetAddressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/16\"\r\n      },\r\n      \"subnet1Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/24\"\r\n      },\r\n      \"subnet1Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet1\"\r\n      },\r\n      \"subnet2Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.1.0/24\"\r\n      },\r\n      \"subnet2Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet2\"\r\n      }\r\n    },\r\n    \"mode\": \"Complete\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-01-07T05:50:43.1479528Z\",\r\n    \"duration\": \"PT7.0100204S\",\r\n    \"correlationId\": \"45f28ff2-c3b4-4283-82bb-dd225416c9b8\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"Microsoft.Network/virtualNetworks/VNet1\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -197,7 +200,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:28 GMT"
+          "Sat, 07 Jan 2017 05:51:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -206,16 +209,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14944"
         ],
         "x-ms-request-id": [
-          "9a70b130-5995-4c0d-b864-8504b3428b6e"
+          "e14df897-dd14-4f69-871e-2fdacddb18a7"
         ],
         "x-ms-correlation-request-id": [
-          "9a70b130-5995-4c0d-b864-8504b3428b6e"
+          "e14df897-dd14-4f69-871e-2fdacddb18a7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000628Z:9a70b130-5995-4c0d-b864-8504b3428b6e"
+          "CENTRALUS:20170107T055107Z:e14df897-dd14-4f69-871e-2fdacddb18a7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -230,7 +233,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "683240f5-105c-450f-9137-db4d4a16a52e"
+          "49e02f93-b04a-4f7e-b76e-7ebe02a645b7"
         ],
         "accept-language": [
           "en-US"
@@ -240,7 +243,7 @@
           "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n  \"name\": \"deployment1\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parametersLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"vnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"VNet1\"\r\n      },\r\n      \"vnetAddressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/16\"\r\n      },\r\n      \"subnet1Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/24\"\r\n      },\r\n      \"subnet1Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet1\"\r\n      },\r\n      \"subnet2Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.1.0/24\"\r\n      },\r\n      \"subnet2Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet2\"\r\n      }\r\n    },\r\n    \"mode\": \"Complete\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-01-06T00:06:15.2844388Z\",\r\n    \"duration\": \"PT17.8737268S\",\r\n    \"correlationId\": \"ea926a36-7a9c-4e09-9107-bcfb88674dde\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"Microsoft.Network/virtualNetworks/VNet1\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n  \"name\": \"deployment1\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parametersLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"vnetName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"VNet1\"\r\n      },\r\n      \"vnetAddressPrefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/16\"\r\n      },\r\n      \"subnet1Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.0.0/24\"\r\n      },\r\n      \"subnet1Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet1\"\r\n      },\r\n      \"subnet2Prefix\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"10.0.1.0/24\"\r\n      },\r\n      \"subnet2Name\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Subnet2\"\r\n      }\r\n    },\r\n    \"mode\": \"Complete\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-01-07T05:50:43.1479528Z\",\r\n    \"duration\": \"PT7.0100204S\",\r\n    \"correlationId\": \"45f28ff2-c3b4-4283-82bb-dd225416c9b8\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Network\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"virtualNetworks\",\r\n            \"locations\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"Microsoft.Network/virtualNetworks/VNet1\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -252,7 +255,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:28 GMT"
+          "Sat, 07 Jan 2017 05:51:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -261,16 +264,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14942"
         ],
         "x-ms-request-id": [
-          "d73cbdc9-cfbf-440c-8c9b-a588ec94189e"
+          "46a8692e-184d-4046-ac81-08dbb7792e91"
         ],
         "x-ms-correlation-request-id": [
-          "d73cbdc9-cfbf-440c-8c9b-a588ec94189e"
+          "46a8692e-184d-4046-ac81-08dbb7792e91"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000628Z:d73cbdc9-cfbf-440c-8c9b-a588ec94189e"
+          "CENTRALUS:20170107T055107Z:46a8692e-184d-4046-ac81-08dbb7792e91"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -285,7 +288,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b2053ff8-4139-47bb-94ce-68f160a8e2ef"
+          "0fd0ff46-c42f-424d-b0c8-e4e282c11cd5"
         ],
         "accept-language": [
           "en-US"
@@ -295,7 +298,7 @@
           "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n      \"name\": \"deployment1\",\r\n      \"properties\": {\r\n        \"templateLink\": {\r\n          \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n          \"contentVersion\": \"1.0.0.0\"\r\n        },\r\n        \"parametersLink\": {\r\n          \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n          \"contentVersion\": \"1.0.0.0\"\r\n        },\r\n        \"parameters\": {\r\n          \"vnetName\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"VNet1\"\r\n          },\r\n          \"vnetAddressPrefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/16\"\r\n          },\r\n          \"subnet1Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/24\"\r\n          },\r\n          \"subnet1Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet1\"\r\n          },\r\n          \"subnet2Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.1.0/24\"\r\n          },\r\n          \"subnet2Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet2\"\r\n          }\r\n        },\r\n        \"mode\": \"Complete\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-06T00:06:15.2844388Z\",\r\n        \"duration\": \"PT17.8737268S\",\r\n        \"correlationId\": \"ea926a36-7a9c-4e09-9107-bcfb88674dde\",\r\n        \"providers\": [\r\n          {\r\n            \"namespace\": \"Microsoft.Network\",\r\n            \"resourceTypes\": [\r\n              {\r\n                \"resourceType\": \"virtualNetworks\",\r\n                \"locations\": [\r\n                  \"eastus\"\r\n                ]\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"dependencies\": [],\r\n        \"outputResources\": [\r\n          {\r\n            \"id\": \"Microsoft.Network/virtualNetworks/VNet1\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1\",\r\n      \"name\": \"deployment1\",\r\n      \"properties\": {\r\n        \"templateLink\": {\r\n          \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n          \"contentVersion\": \"1.0.0.0\"\r\n        },\r\n        \"parametersLink\": {\r\n          \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n          \"contentVersion\": \"1.0.0.0\"\r\n        },\r\n        \"parameters\": {\r\n          \"vnetName\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"VNet1\"\r\n          },\r\n          \"vnetAddressPrefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/16\"\r\n          },\r\n          \"subnet1Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/24\"\r\n          },\r\n          \"subnet1Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet1\"\r\n          },\r\n          \"subnet2Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.1.0/24\"\r\n          },\r\n          \"subnet2Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet2\"\r\n          }\r\n        },\r\n        \"mode\": \"Complete\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-07T05:50:43.1479528Z\",\r\n        \"duration\": \"PT7.0100204S\",\r\n        \"correlationId\": \"45f28ff2-c3b4-4283-82bb-dd225416c9b8\",\r\n        \"providers\": [\r\n          {\r\n            \"namespace\": \"Microsoft.Network\",\r\n            \"resourceTypes\": [\r\n              {\r\n                \"resourceType\": \"virtualNetworks\",\r\n                \"locations\": [\r\n                  \"eastus\"\r\n                ]\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"dependencies\": [],\r\n        \"outputResources\": [\r\n          {\r\n            \"id\": \"Microsoft.Network/virtualNetworks/VNet1\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment3\",\r\n      \"name\": \"deployment3\",\r\n      \"properties\": {\r\n        \"parameters\": {\r\n          \"vnetName\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"VNet2\"\r\n          },\r\n          \"vnetAddressPrefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/16\"\r\n          },\r\n          \"subnet1Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/24\"\r\n          },\r\n          \"subnet1Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet1\"\r\n          },\r\n          \"subnet2Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.1.0/24\"\r\n          },\r\n          \"subnet2Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet222\"\r\n          }\r\n        },\r\n        \"mode\": \"Incremental\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-06T00:07:21.6299761Z\",\r\n        \"duration\": \"PT21.7991399S\",\r\n        \"correlationId\": \"2eca0721-b904-4db8-a333-eac98cd18c73\",\r\n        \"providers\": [\r\n          {\r\n            \"namespace\": \"Microsoft.Network\",\r\n            \"resourceTypes\": [\r\n              {\r\n                \"resourceType\": \"virtualNetworks\",\r\n                \"locations\": [\r\n                  \"eastus\"\r\n                ]\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"dependencies\": [],\r\n        \"outputResources\": [\r\n          {\r\n            \"id\": \"Microsoft.Network/virtualNetworks/VNet2\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment2\",\r\n      \"name\": \"deployment2\",\r\n      \"properties\": {\r\n        \"templateLink\": {\r\n          \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.json\",\r\n          \"contentVersion\": \"1.0.0.0\"\r\n        },\r\n        \"parametersLink\": {\r\n          \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vnet-two-subnets/azuredeploy.parameters.json\",\r\n          \"contentVersion\": \"1.0.0.0\"\r\n        },\r\n        \"parameters\": {\r\n          \"vnetName\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"VNet1\"\r\n          },\r\n          \"vnetAddressPrefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/16\"\r\n          },\r\n          \"subnet1Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.0.0/24\"\r\n          },\r\n          \"subnet1Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet1\"\r\n          },\r\n          \"subnet2Prefix\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"10.0.1.0/24\"\r\n          },\r\n          \"subnet2Name\": {\r\n            \"type\": \"String\",\r\n            \"value\": \"Subnet2\"\r\n          }\r\n        },\r\n        \"mode\": \"Complete\",\r\n        \"provisioningState\": \"Canceled\",\r\n        \"timestamp\": \"2017-01-06T00:06:59.352282Z\",\r\n        \"duration\": \"PT4.6087098S\",\r\n        \"correlationId\": \"4427523a-bb81-48c4-9113-9fae007c4a92\",\r\n        \"providers\": [\r\n          {\r\n            \"namespace\": \"Microsoft.Network\",\r\n            \"resourceTypes\": [\r\n              {\r\n                \"resourceType\": \"virtualNetworks\",\r\n                \"locations\": [\r\n                  \"eastus\"\r\n                ]\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"dependencies\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -307,7 +310,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:28 GMT"
+          "Sat, 07 Jan 2017 05:51:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -316,16 +319,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14943"
         ],
         "x-ms-request-id": [
-          "c1524cc3-2b08-405e-8cdb-b9b4ce771ea2"
+          "ce264b9e-c5b0-452e-a7af-45544858b9a2"
         ],
         "x-ms-correlation-request-id": [
-          "c1524cc3-2b08-405e-8cdb-b9b4ce771ea2"
+          "ce264b9e-c5b0-452e-a7af-45544858b9a2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000628Z:c1524cc3-2b08-405e-8cdb-b9b4ce771ea2"
+          "CENTRALUS:20170107T055107Z:ce264b9e-c5b0-452e-a7af-45544858b9a2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -340,7 +343,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "768a4425-e8c7-48d0-9702-19b9dc156195"
+          "ae48824c-4bae-461e-af88-3a1f36abee44"
         ],
         "accept-language": [
           "en-US"
@@ -362,7 +365,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:28 GMT"
+          "Sat, 07 Jan 2017 05:51:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -371,16 +374,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1194"
         ],
         "x-ms-request-id": [
-          "4c89cee2-3ecf-42ed-80c7-5ce5a33da427"
+          "8d005dca-1d70-4b86-a99e-da2f243b28aa"
         ],
         "x-ms-correlation-request-id": [
-          "4c89cee2-3ecf-42ed-80c7-5ce5a33da427"
+          "8d005dca-1d70-4b86-a99e-da2f243b28aa"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000628Z:4c89cee2-3ecf-42ed-80c7-5ce5a33da427"
+          "CENTRALUS:20170107T055107Z:8d005dca-1d70-4b86-a99e-da2f243b28aa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -395,7 +398,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "281f400e-8dbb-475b-a6b5-0dc6073dee1f"
+          "9e22bb76-d160-490b-b2bd-7725b27c9e07"
         ],
         "accept-language": [
           "en-US"
@@ -417,7 +420,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:28 GMT"
+          "Sat, 07 Jan 2017 05:51:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -426,16 +429,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14941"
         ],
         "x-ms-request-id": [
-          "0d54e4b9-f46b-4986-8170-b72767d61417"
+          "66fc6ae9-2fc9-4af3-950f-d44d3aa9d253"
         ],
         "x-ms-correlation-request-id": [
-          "0d54e4b9-f46b-4986-8170-b72767d61417"
+          "66fc6ae9-2fc9-4af3-950f-d44d3aa9d253"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000629Z:0d54e4b9-f46b-4986-8170-b72767d61417"
+          "CENTRALUS:20170107T055108Z:66fc6ae9-2fc9-4af3-950f-d44d3aa9d253"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -456,7 +459,7 @@
           "99"
         ],
         "x-ms-client-request-id": [
-          "745ae68f-a739-4347-af39-4ac4514cb645"
+          "271850de-86f7-4120-8f44-00654033aa40"
         ],
         "accept-language": [
           "en-US"
@@ -478,7 +481,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:29 GMT"
+          "Sat, 07 Jan 2017 05:51:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -487,16 +490,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14940"
         ],
         "x-ms-request-id": [
-          "29e758d5-f2c6-4c39-b0d9-c1a2918322e5"
+          "58366f14-a8b2-4385-8f9a-43d466338a5d"
         ],
         "x-ms-correlation-request-id": [
-          "29e758d5-f2c6-4c39-b0d9-c1a2918322e5"
+          "58366f14-a8b2-4385-8f9a-43d466338a5d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000629Z:29e758d5-f2c6-4c39-b0d9-c1a2918322e5"
+          "CENTRALUS:20170107T055108Z:58366f14-a8b2-4385-8f9a-43d466338a5d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -511,7 +514,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e32943ca-f403-4327-87f8-eb81574a50b0"
+          "cb9393e4-d115-428d-a816-f821a99b28db"
         ],
         "accept-language": [
           "en-US"
@@ -521,7 +524,7 @@
           "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operations/7728748212273333\",\r\n      \"operationId\": \"7728748212273333\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-06T00:06:14.6574762Z\",\r\n        \"duration\": \"PT15.8118095S\",\r\n        \"trackingId\": \"f30eaba2-dccc-41ab-a5f1-6659342e7191\",\r\n        \"serviceRequestId\": \"5f81b4d2-3ab1-463d-a0d3-9eed55dd24d1\",\r\n        \"statusCode\": \"OK\",\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Network/virtualNetworks/VNet1\",\r\n          \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n          \"resourceName\": \"VNet1\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operations/08587179457280669398\",\r\n      \"operationId\": \"08587179457280669398\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"EvaluateDeploymentOutput\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-06T00:06:15.2389999Z\",\r\n        \"duration\": \"PT0.1947193S\",\r\n        \"trackingId\": \"b9625d04-36cd-45c6-aff0-54d9422010ca\",\r\n        \"statusCode\": \"OK\",\r\n        \"statusMessage\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operations/7728748212273333\",\r\n      \"operationId\": \"7728748212273333\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-07T05:50:42.8301356Z\",\r\n        \"duration\": \"PT4.8614501S\",\r\n        \"trackingId\": \"b408ea6a-3736-4249-ba4a-1514f20d3fba\",\r\n        \"serviceRequestId\": \"77433fec-a0ee-4f0c-a04d-9f4ac0cc685b\",\r\n        \"statusCode\": \"OK\",\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Network/virtualNetworks/VNet1\",\r\n          \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n          \"resourceName\": \"VNet1\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operations/08587178386493397135\",\r\n      \"operationId\": \"08587178386493397135\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"EvaluateDeploymentOutput\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2017-01-07T05:50:43.1007429Z\",\r\n        \"duration\": \"PT0.1022418S\",\r\n        \"trackingId\": \"3b80ebea-018d-4ca6-9db8-62e1a05ecbd4\",\r\n        \"statusCode\": \"OK\",\r\n        \"statusMessage\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -533,7 +536,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:29 GMT"
+          "Sat, 07 Jan 2017 05:51:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -542,16 +545,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "14939"
         ],
         "x-ms-request-id": [
-          "f745275a-6185-4ae6-8b8c-e4c74a7394f6"
+          "97a441b7-839f-4ea0-a3d9-c2e63b294363"
         ],
         "x-ms-correlation-request-id": [
-          "f745275a-6185-4ae6-8b8c-e4c74a7394f6"
+          "97a441b7-839f-4ea0-a3d9-c2e63b294363"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000629Z:f745275a-6185-4ae6-8b8c-e4c74a7394f6"
+          "CENTRALUS:20170107T055108Z:97a441b7-839f-4ea0-a3d9-c2e63b294363"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -566,7 +569,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d141f2f2-f5fd-4bc6-a2a6-4966a8e89421"
+          "35a0a633-c923-47dc-b6f3-390b837d1f90"
         ],
         "accept-language": [
           "en-US"
@@ -576,7 +579,7 @@
           "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operations/7728748212273333\",\r\n  \"operationId\": \"7728748212273333\",\r\n  \"properties\": {\r\n    \"provisioningOperation\": \"Create\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-01-06T00:06:14.6574762Z\",\r\n    \"duration\": \"PT15.8118095S\",\r\n    \"trackingId\": \"f30eaba2-dccc-41ab-a5f1-6659342e7191\",\r\n    \"serviceRequestId\": \"5f81b4d2-3ab1-463d-a0d3-9eed55dd24d1\",\r\n    \"statusCode\": \"OK\",\r\n    \"targetResource\": {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Network/virtualNetworks/VNet1\",\r\n      \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n      \"resourceName\": \"VNet1\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Resources/deployments/deployment1/operations/7728748212273333\",\r\n  \"operationId\": \"7728748212273333\",\r\n  \"properties\": {\r\n    \"provisioningOperation\": \"Create\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2017-01-07T05:50:42.8301356Z\",\r\n    \"duration\": \"PT4.8614501S\",\r\n    \"trackingId\": \"b408ea6a-3736-4249-ba4a-1514f20d3fba\",\r\n    \"serviceRequestId\": \"77433fec-a0ee-4f0c-a04d-9f4ac0cc685b\",\r\n    \"statusCode\": \"OK\",\r\n    \"targetResource\": {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Network/virtualNetworks/VNet1\",\r\n      \"resourceType\": \"Microsoft.Network/virtualNetworks\",\r\n      \"resourceName\": \"VNet1\"\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -588,7 +591,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:29 GMT"
+          "Sat, 07 Jan 2017 05:51:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -597,16 +600,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14938"
         ],
         "x-ms-request-id": [
-          "2163c64c-9c52-445c-a684-a9d41089381e"
+          "1c303e80-b01a-40c7-8834-799be8cdcaab"
         ],
         "x-ms-correlation-request-id": [
-          "2163c64c-9c52-445c-a684-a9d41089381e"
+          "1c303e80-b01a-40c7-8834-799be8cdcaab"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000629Z:2163c64c-9c52-445c-a684-a9d41089381e"
+          "CENTRALUS:20170107T055109Z:1c303e80-b01a-40c7-8834-799be8cdcaab"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -621,7 +624,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5e477bf2-e973-4688-9c42-16ba49b1424e"
+          "5db5202f-6e28-46df-af40-7f561f3f156f"
         ],
         "accept-language": [
           "en-US"
@@ -643,13 +646,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Jan 2017 00:06:29 GMT"
+          "Sat, 07 Jan 2017 05:51:09 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/providers/Microsoft.Network/locations/eastus/operationResults/e8b366f5-a8de-45cd-99b3-9b329ecafce7?api-version=2015-06-15"
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/providers/Microsoft.Network/locations/eastus/operationResults/2d726c41-dd10-4659-a432-fc4675fd5399?api-version=2015-06-15"
         ],
         "Retry-After": [
           "10"
@@ -659,29 +662,29 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "e8b366f5-a8de-45cd-99b3-9b329ecafce7"
+          "2d726c41-dd10-4659-a432-fc4675fd5399"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/providers/Microsoft.Network/locations/eastus/operations/e8b366f5-a8de-45cd-99b3-9b329ecafce7?api-version=2015-06-15"
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/providers/Microsoft.Network/locations/eastus/operations/2d726c41-dd10-4659-a432-fc4675fd5399?api-version=2015-06-15"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "d47e34e9-14f0-4c99-b80e-97164fb1bdda"
+          "c289a99e-5e07-43b8-bb3b-e5ef053958d3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170106T000630Z:d47e34e9-14f0-4c99-b80e-97164fb1bdda"
+          "CENTRALUS:20170107T055109Z:c289a99e-5e07-43b8-bb3b-e5ef053958d3"
         ]
       },
       "StatusCode": 202
     }
   ],
   "Names": {},
-"Variables": {
+  "Variables": {
     "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
   }
 }

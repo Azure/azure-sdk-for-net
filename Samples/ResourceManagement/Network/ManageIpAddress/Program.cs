@@ -23,12 +23,12 @@ namespace ManageIpAddress
 
     public class Program
     {
-        private static readonly string publicIpAddressName1 = ResourceNamer.RandomResourceName("pip1", 20);
-        private static readonly string publicIpAddressName2 = ResourceNamer.RandomResourceName("pip2", 20);
-        private static readonly string publicIpAddressLeafDNS1 = ResourceNamer.RandomResourceName("pip1", 20);
-        private static readonly string publicIpAddressLeafDNS2 = ResourceNamer.RandomResourceName("pip2", 20);
-        private static readonly string vmName = ResourceNamer.RandomResourceName("vm", 8);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMP", 24);
+        private static readonly string publicIpAddressName1 = SharedSettings.RandomResourceName("pip1", 20);
+        private static readonly string publicIpAddressName2 = SharedSettings.RandomResourceName("pip2", 20);
+        private static readonly string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 20);
+        private static readonly string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 20);
+        private static readonly string vmName = SharedSettings.RandomResourceName("vm", 8);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMP", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
 

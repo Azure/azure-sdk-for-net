@@ -25,9 +25,9 @@ namespace ManageKeyVault
 
     public class Program
     {
-        private static readonly string vaultName1 = ResourceNamer.RandomResourceName("vault1", 20);
-        private static readonly string vaultName2 = ResourceNamer.RandomResourceName("vault2", 20);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
+        private static readonly string vaultName1 = SharedSettings.RandomResourceName("vault1", 20);
+        private static readonly string vaultName2 = SharedSettings.RandomResourceName("vault2", 20);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
 
         public static void Main(string[] args)
         {

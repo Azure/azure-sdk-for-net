@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "96109274-c8df-4990-bb45-39ccbbb289de"
+          "ee29ade6-8d8a-471d-bb36-5f5590ee1803"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 04 Jan 2017 21:45:30 GMT"
+          "Sat, 07 Jan 2017 05:50:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -44,13 +44,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "a9804516-86f5-41fb-b00e-5d105434133b"
+          "64872220-33aa-4984-a729-f1e08e5d3555"
         ],
         "x-ms-correlation-request-id": [
-          "a9804516-86f5-41fb-b00e-5d105434133b"
+          "64872220-33aa-4984-a729-f1e08e5d3555"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170104T214531Z:a9804516-86f5-41fb-b00e-5d105434133b"
+          "CENTRALUS:20170107T055032Z:64872220-33aa-4984-a729-f1e08e5d3555"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -60,7 +60,7 @@
     }
   ],
   "Names": {},
-"Variables": {
+  "Variables": {
     "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
   }
 }
