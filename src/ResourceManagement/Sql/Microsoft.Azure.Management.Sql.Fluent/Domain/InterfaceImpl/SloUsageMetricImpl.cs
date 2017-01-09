@@ -2,22 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
     using System;
 
     internal partial class SloUsageMetricImpl 
     {
-        /// <return>The serviceLevelObjective for SLO usage metric.</return>
+        /// <summary>
+        /// Gets the serviceLevelObjective for SLO usage metric.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric.ServiceLevelObjective
         {
             get
             {
-                return this.ServiceLevelObjective() as string;
+                return this.ServiceLevelObjective();
             }
         }
 
-        /// <return>The serviceLevelObjectiveId for SLO usage metric.</return>
+        /// <summary>
+        /// Gets the serviceLevelObjectiveId for SLO usage metric.
+        /// </summary>
         System.Guid Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric.ServiceLevelObjectiveId
         {
             get
@@ -26,7 +30,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>InRangeTimeRatio for SLO usage metric.</return>
+        /// <summary>
+        /// Gets inRangeTimeRatio for SLO usage metric.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric.InRangeTimeRatio
         {
             get

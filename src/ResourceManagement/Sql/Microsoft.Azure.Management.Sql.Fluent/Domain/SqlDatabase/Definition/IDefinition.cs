@@ -2,57 +2,30 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
 {
-    using Microsoft.Azure.Management.Sql.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Sql.Fluent.Models;
+    using Microsoft.Azure.Management.Sql.Fluent;
 
     /// <summary>
-    /// Container interface for all the definitions that need to be implemented.
+    /// The stage to decide whether using existing database or not.
     /// </summary>
-    public interface IDefinition  :
-        IBlank,
-        IWithCreate,
-        IWithCollation,
-        IWithEdition,
-        IWithElasticPoolName,
+    public interface IWithExistingDatabase  :
         IWithSourceDatabaseId,
-        IWithCreateMode,
-        IWithCreateWithLessOptions,
-        IWithExistingDatabase
+        IWithCreateWithElasticPoolOptions
     {
     }
 
     /// <summary>
-    /// A SQL Database definition with sufficient inputs to create a new
-    /// SQL Server in the cloud, but exposing additional optional inputs to
-    /// specify.
+    /// The SQL Database definition to set the create mode for database.
     /// </summary>
-    public interface IWithCreateWithLessOptions  :
-        ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate>
-    {
-    }
-
-    /// <summary>
-    /// The SQL Database definition to set the edition for database.
-    /// </summary>
-    public interface IWithEdition 
+    public interface IWithCreateMode 
     {
         /// <summary>
-        /// Sets the edition for the SQL Database.
+        /// Sets the create mode for the SQL Database.
         /// </summary>
-        /// <param name="edition">Edition to be set for database.</param>
+        /// <param name="createMode">Create mode for the database, should not be default in this flow.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithEdition(string edition);
-    }
-
-    /// <summary>
-    /// The first stage of the SQL Server definition.
-    /// </summary>
-    public interface IBlank  :
-        IWithElasticPoolName
-    {
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithLessOptions WithMode(string createMode);
     }
 
     /// <summary>
@@ -70,20 +43,28 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
         /// GB | 30 GB … 150 GB | 200 GB … 500 GB }.
         /// </param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithMaxSizeBytes(long maxSizeBytes);
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithElasticPoolOptions WithMaxSizeBytes(long maxSizeBytes);
     }
 
     /// <summary>
-    /// The SQL Database definition to set the service level objective.
+    /// The SQL Database interface with all starting options for definition.
     /// </summary>
-    public interface IWithServiceObjective 
+    public interface IWithAllDifferentOptions  :
+        IWithElasticPoolName,
+        IWithSourceDatabaseId,
+        IWithCreate
     {
-        /// <summary>
-        /// Sets the service level objective for the SQL Database.
-        /// </summary>
-        /// <param name="serviceLevelObjective">Service level objected for the SQL Database.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithServiceObjective(string serviceLevelObjective);
+    }
+
+    /// <summary>
+    /// A SQL Database definition with sufficient inputs to create a new
+    /// SQL Server in the cloud, but exposing additional optional inputs to
+    /// specify.
+    /// </summary>
+    public interface IWithCreateWithLessOptions  :
+        ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate>
+    {
     }
 
     /// <summary>
@@ -91,12 +72,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// </summary>
     public interface IWithElasticPoolName 
     {
-        /// <summary>
-        /// Specifies database to be created without elastic pool.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithExistingDatabase WithoutElasticPool();
-
         /// <summary>
         /// Sets the new elastic pool for the SQLDatabase, this will create a new elastic pool while creating database.
         /// </summary>
@@ -120,29 +95,54 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     }
 
     /// <summary>
-    /// The SQL Database definition to set the create mode for database.
+    /// The SQL Database definition to set the Max Size in Bytes for database.
     /// </summary>
-    public interface IWithCreateMode 
+    public interface IWithMaxSizeBytesAllCreateOptions 
     {
         /// <summary>
-        /// Sets the create mode for the SQL Database.
+        /// Sets the max size in bytes for SQL Database.
         /// </summary>
-        /// <param name="createMode">Create mode for the database, should not be default in this flow.</param>
+        /// <param name="maxSizeBytes">
+        /// Max size of the Azure SQL Database expressed in bytes. Note: Only
+        /// the following sizes are supported (in addition to limitations being
+        /// placed on each edition): { 100 MB | 500 MB |1 GB | 5 GB | 10 GB | 20
+        /// GB | 30 GB … 150 GB | 200 GB … 500 GB }.
+        /// </param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithLessOptions WithMode(string createMode);
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithMaxSizeBytes(long maxSizeBytes);
     }
 
     /// <summary>
-    /// The stage to decide whether using existing database or not.
+    /// The SQL Database definition to set the collation for database.
     /// </summary>
-    public interface IWithExistingDatabase  :
-        IWithSourceDatabaseId
+    public interface IWithCollation 
     {
         /// <summary>
-        /// Sets the creation flow to ask relevant question when source database is not specified.
+        /// Sets the collation for the SQL Database.
         /// </summary>
+        /// <param name="collation">Collation to be set for database.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithoutSourceDatabaseId();
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithElasticPoolOptions WithCollation(string collation);
+    }
+
+    /// <summary>
+    /// The SQL Database definition to set the edition for database.
+    /// </summary>
+    public interface IWithEdition 
+    {
+        /// <summary>
+        /// Sets the edition for the SQL Database.
+        /// </summary>
+        /// <param name="edition">Edition to be set for database.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithEdition(string edition);
+    }
+
+    public interface IWithCreateWithElasticPoolOptions  :
+        IWithCollation,
+        IWithMaxSizeBytes,
+        IWithCreateWithLessOptions
+    {
     }
 
     /// <summary>
@@ -175,18 +175,53 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        IWithMaxSizeBytes,
         IWithServiceObjective,
-        IWithCollation,
         IWithEdition,
+        IWithCollationAllCreateOptions,
+        IWithMaxSizeBytesAllCreateOptions,
         IWithCreateWithLessOptions
+    {
+    }
+
+    /// <summary>
+    /// Container interface for all the definitions that need to be implemented.
+    /// </summary>
+    public interface IDefinition  :
+        IBlank,
+        IWithCreate,
+        IWithSourceDatabaseId,
+        IWithExistingDatabase,
+        IWithElasticPoolName,
+        IWithCreateMode,
+        IWithCreateWithLessOptions
+    {
+    }
+
+    /// <summary>
+    /// The SQL Database definition to set the service level objective.
+    /// </summary>
+    public interface IWithServiceObjective 
+    {
+        /// <summary>
+        /// Sets the service level objective for the SQL Database.
+        /// </summary>
+        /// <param name="serviceLevelObjective">Service level objected for the SQL Database.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate WithServiceObjective(string serviceLevelObjective);
+    }
+
+    /// <summary>
+    /// The first stage of the SQL Server definition.
+    /// </summary>
+    public interface IBlank  :
+        IWithAllDifferentOptions
     {
     }
 
     /// <summary>
     /// The SQL Database definition to set the collation for database.
     /// </summary>
-    public interface IWithCollation 
+    public interface IWithCollationAllCreateOptions 
     {
         /// <summary>
         /// Sets the collation for the SQL Database.

@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Models;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Recommended ElasticPool.
@@ -18,19 +18,29 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasName,
         IHasId
     {
-        /// <return>The list of Azure SQL Databases in this pool. Expanded property.</return>
+        /// <summary>
+        /// Gets the list of Azure SQL Databases in this pool. Expanded property.
+        /// </summary>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Databases { get; }
 
-        /// <return>The maximum DTU for the database.</return>
+        /// <summary>
+        /// Gets the maximum DTU for the database.
+        /// </summary>
         double DatabaseDtuMax { get; }
 
-        /// <return>The DTU for the SQL Azure Recommended Elastic Pool.</return>
+        /// <summary>
+        /// Gets the DTU for the SQL Azure Recommended Elastic Pool.
+        /// </summary>
         double Dtu { get; }
 
-        /// <return>Name of the SQL Server to which this database belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this database belongs.
+        /// </summary>
         string SqlServerName { get; }
 
-        /// <return>Maximum observed DTU.</return>
+        /// <summary>
+        /// Gets maximum observed DTU.
+        /// </summary>
         double MaxObservedDtu { get; }
 
         /// <summary>
@@ -39,20 +49,26 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>List of the databases in recommended elastic pool.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases();
 
-        /// <return>Maximum observed storage in megabytes.</return>
+        /// <summary>
+        /// Gets maximum observed storage in megabytes.
+        /// </summary>
         double MaxObservedStorageMB { get; }
 
-        /// <return>The observation period start (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the observation period start (ISO8601 format).
+        /// </summary>
         System.DateTime ObservationPeriodEnd { get; }
 
-        /// <return>
-        /// The edition of the Azure SQL Recommended Elastic Pool. The
+        /// <summary>
+        /// Gets the edition of the Azure SQL Recommended Elastic Pool. The
         /// ElasticPoolEditions enumeration contains all the valid editions.
         /// Possible values include: 'Basic', 'Standard', 'Premium'.
-        /// </return>
+        /// </summary>
         string DatabaseEdition { get; }
 
-        /// <return>The minimum DTU for the database.</return>
+        /// <summary>
+        /// Gets the minimum DTU for the database.
+        /// </summary>
         double DatabaseDtuMin { get; }
 
         /// <summary>
@@ -68,10 +84,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>List of the databases in recommended elastic pool.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric> ListMetrics();
 
-        /// <return>The observation period start (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the observation period start (ISO8601 format).
+        /// </summary>
         System.DateTime ObservationPeriodStart { get; }
 
-        /// <return>Storage size in megabytes.</return>
+        /// <summary>
+        /// Gets storage size in megabytes.
+        /// </summary>
         double StorageMB { get; }
     }
 }

@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return null;
             }
-            return ResourceId.ParseResourceId(id).Parent.Id;
+            return ResourceId.ParseResourceId(id)?.Parent?.Id;
         }
 
         public static string ConstructResourceId(

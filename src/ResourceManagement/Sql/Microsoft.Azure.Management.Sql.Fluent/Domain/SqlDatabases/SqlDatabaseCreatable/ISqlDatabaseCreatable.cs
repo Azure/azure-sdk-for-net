@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabases.SqlDatabaseCreatable
 {
-    using Microsoft.Azure.Management.Sql.Fluent;
-    using Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition;
+    using Microsoft.Azure.Management.Sql.Fluent;
 
     /// <summary>
     /// Entry point to SQL FirewallRule management API, which already have the SQLServer specified.
