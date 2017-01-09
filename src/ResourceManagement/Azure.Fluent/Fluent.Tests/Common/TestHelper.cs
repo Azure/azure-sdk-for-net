@@ -24,6 +24,7 @@ using System.Threading;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Rest.Azure;
+using Azure.Tests;
 
 namespace Fluent.Tests.Common
 {
@@ -177,7 +178,7 @@ namespace Fluent.Tests.Common
 
         private static T CreateMockedManager<T>(Func<AzureCredentials, T> builder)
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
+            AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(authFilePath);
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {

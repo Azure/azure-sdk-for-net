@@ -11,6 +11,7 @@ using Xunit;
 using System;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
+using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace Fluent.Tests.KeyVault
 {
@@ -44,10 +45,10 @@ namespace Fluent.Tests.KeyVault
                     Assert.NotNull(vault1);
                     Assert.Equal(vaultName1, vault1.Name);
                     Assert.Equal(0, vault1.AccessPolicies.Count);
-
+                    var clientId = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId;
                     vault1 = vault1.Update()
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                                .ForServicePrincipal(clientId)
                                 .AllowKeyAllPermissions()
                                 .AllowSecretPermissions(SecretPermissions.Get)
                                 .AllowSecretPermissions(SecretPermissions.List)
@@ -75,7 +76,7 @@ namespace Fluent.Tests.KeyVault
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                                .ForServicePrincipal(clientId)
                                 .AllowKeyPermissions(KeyPermissions.Get)
                                 .AllowKeyPermissions(KeyPermissions.List)
                                 .AllowKeyPermissions(KeyPermissions.Decrypt)

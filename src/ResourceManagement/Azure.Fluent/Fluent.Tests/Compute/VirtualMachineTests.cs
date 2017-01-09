@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Renci.SshNet;
 using System;
@@ -192,7 +193,7 @@ namespace Fluent.Tests.Compute
             }
         }
 
-        [Fact(Skip = "Failing at 236, with error no suitable authentication method found.")]
+        [Fact(Skip = "Failing at 240, with error no suitable authentication method found.")]
         public void CanCreateVirtualMachineWithCustomData()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -226,21 +227,25 @@ namespace Fluent.Tests.Compute
 
                 publicIpAddress.Refresh();
                 Assert.True(publicIpAddress.HasAssignedNetworkInterface);
+                Assert.NotNull(publicIpAddress.Fqdn);
 
-                ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                {
+                    ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
                     new AuthenticationMethod[] {
                         new PasswordAuthenticationMethod(username, password)
                     });
-                using (var sshClient = new SshClient(connectionInfo))
-                {
-                    sshClient.Connect();
-                    var commandToExecute = "pwgen;";
-                    using (var command = sshClient.CreateCommand(commandToExecute))
+                    using (var sshClient = new SshClient(connectionInfo))
                     {
-                        var commandOutput = command.Execute();
-                        Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
+                        sshClient.Connect();
+                        var commandToExecute = "pwgen;";
+                        using (var command = sshClient.CreateCommand(commandToExecute))
+                        {
+                            var commandOutput = command.Execute();
+                            Assert.False(commandOutput.ToLowerInvariant().Contains("the program 'pwgen' is currently not installed"));
+                        }
+                        sshClient.Disconnect();
                     }
-                    sshClient.Disconnect();
                 }
             }
         }
@@ -272,21 +277,25 @@ namespace Fluent.Tests.Compute
                         .Create();
 
                     var publicIpAddress = virtualMachine.GetPrimaryPublicIpAddress();
+                    Assert.NotNull(publicIpAddress.Fqdn);
 
-                    ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
-                        new AuthenticationMethod[] {
-                            new PasswordAuthenticationMethod(username, password)
-                        });
-                    using (var sshClient = new SshClient(connectionInfo))
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                     {
-                        try
+                        ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
+                            new AuthenticationMethod[] {
+                            new PasswordAuthenticationMethod(username, password)
+                            });
+                        using (var sshClient = new SshClient(connectionInfo))
                         {
-                            sshClient.Connect();
-                            sshClient.Disconnect();
-                        }
-                        catch (Exception exception)
-                        {
-                            Assert.False(true, $"Ssh connection failure to {publicIpAddress.Fqdn}, {exception.Message}");
+                            try
+                            {
+                                sshClient.Connect();
+                                sshClient.Disconnect();
+                            }
+                            catch (Exception exception)
+                            {
+                                Assert.False(true, $"Ssh connection failure to {publicIpAddress.Fqdn}, {exception.Message}");
+                            }
                         }
                     }
                 }

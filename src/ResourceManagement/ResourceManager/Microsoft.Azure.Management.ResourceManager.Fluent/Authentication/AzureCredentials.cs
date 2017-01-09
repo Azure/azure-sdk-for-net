@@ -6,8 +6,6 @@ using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +17,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
     /// </summary>
     public class AzureCredentials : ServiceClientCredentials
     {
-        private string username, password;
+        private string username;
+        private string password;
         private string clientSecret;
         private IDictionary<Uri, ServiceClientCredentials> credentialsCache;
 #if PORTABLE
@@ -34,144 +33,31 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
 
         public AzureEnvironment Environment { get; private set; }
 
-        private AzureCredentials() 
+        public AzureCredentials(string username, string password, string clientId, string tenantId, AzureEnvironment environment)
+            : this()
         {
-            Environment = AzureEnvironment.AzureGlobalCloud;
+            this.username = username;
+            this.password = password;
+            ClientId = clientId;
+            TenantId = tenantId;
+            Environment = environment ?? AzureEnvironment.AzureGlobalCloud;
+        }
+
+        private AzureCredentials()
+        {
             credentialsCache = new Dictionary<Uri, ServiceClientCredentials>();
         }
 
-        /// <summary>
-        /// Creates a credentials object from a username/password combination.
-        /// </summary>
-        /// <param name="username">the user name</param>
-        /// <param name="password">the associated password</param>
-        /// <param name="clientId">the client ID of the application</param>
-        /// <param name="tenantId">the tenant ID or domain the user is in</param>
-        /// <param name="environment">the environment to authenticate to</param>
-        /// <returns>an authenticated credentials object</returns>
-        public static AzureCredentials FromUser(string username, string password, string clientId, string tenantId, AzureEnvironment environment)
-        {
-            AzureCredentials credentials = new AzureCredentials()
-            {
-                username = username,
-                password = password,
-                ClientId = clientId,
-                TenantId = tenantId,
-                Environment = environment
-            };
-            return credentials;
-        }
-
 #if PORTABLE
-        /// <summary>
-        /// Creates a credentials object through device flow.
-        /// </summary>
-        /// <param name="clientId">the client ID of the application</param>
-        /// <param name="tenantId">the tenant ID or domain</param>
-        /// <param name="environment">the environment to authenticate to</param>
-        /// <param name="deviceCodeHandler">a user defined function to handle device flow</param>
-        /// <returns>an authenticated credentials object</returns>
-        public static AzureCredentials FromDevice(string clientId, string tenantId, AzureEnvironment environment, Func<DeviceCodeResult, bool> deviceCodeFlowHandler = null)
+        public AzureCredentials(string clientId, string tenantId, AzureEnvironment environment, Func<DeviceCodeResult, bool> deviceCodeFlowHandler)
         {
-            AzureCredentials credentials = new AzureCredentials()
-            {
-                ClientId = clientId,
-                TenantId = tenantId,
-                Environment = environment
-            };
-
-            credentials.deviceCodeHandler = deviceCodeFlowHandler;
-            return credentials;
+            ClientId = clientId;
+            TenantId = tenantId;
+            Environment = environment;
+            this.deviceCodeHandler = deviceCodeFlowHandler;
         }
 #endif
 
-        /// <summary>
-        /// Creates a credentials object from a service principal.
-        /// </summary>
-        /// <param name="clientId">the client ID of the application the service principal is associated with</param>
-        /// <param name="clientSecret">the secret for the client ID</param>
-        /// <param name="tenantId">the tenant ID or domain the application is in</param>
-        /// <param name="environment">the environment to authenticate to</param>
-        /// <returns>an authenticated credentials object</returns>
-        public static AzureCredentials FromServicePrincipal(string clientId, string clientSecret, string tenantId, AzureEnvironment environment)
-        {
-            AzureCredentials credentials = new AzureCredentials()
-            {
-                clientSecret = clientSecret,
-                ClientId = clientId,
-                TenantId = tenantId,
-                Environment = environment
-            };
-            return credentials;
-        }
-
-        /// <summary>
-        /// Creates a credentials object from a file in the following format:
-        /// 
-        ///     subscription=&lt;subscription-id&gt;
-        ///     tenant=&lt;tenant-id&gt;
-        ///     client=&lt;client-id&gt;
-        ///     key=&lt;client-key&gt;
-        ///     managementURI=&lt;management-URI&gt;
-        ///     baseURL=&lt;base-URL&gt;
-        ///     authURL=&lt;authentication-URL&gt;
-        /// </summary>
-        /// <param name="authFile">the path to the file</param>
-        /// <returns>an authenticated credentials object</returns>
-        public static AzureCredentials FromFile(string authFile)
-        {
-            var config = new Dictionary<string, string>()
-            {
-                { "authurl", AzureEnvironment.AzureGlobalCloud.AuthenticationEndpoint },
-                { "baseurl", AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint },
-                { "managementuri", AzureEnvironment.AzureGlobalCloud.ManagementEnpoint },
-                { "graphurl", AzureEnvironment.AzureGlobalCloud.GraphEndpoint }
-            };
-
-            bool isInTestMode = false;
-#if !NETSTANDARD11
-            var testMode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-            if (testMode != null &&
-                testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
-            {
-                isInTestMode = true;
-            }
-#endif
-            if (!isInTestMode)
-            {
-                File.ReadLines(authFile)
-                    .All(line =>
-                    {
-                        var keyVal = line.Trim().Split(new char[] { '=' }, 2);
-                        config[keyVal[0].ToLowerInvariant()] = keyVal[1];
-                        return true;
-                    });
-            }
-            else
-            {
-                config["authurl"] = "https://www.contoso.com";
-                config["managementuri"] = "https://www.contoso.com";
-                config["baseurl"] = "https://www.contoso.com";
-                config["graphurl"] = "https://www.contoso.com";
-                config["client"] = "[guid]";
-                config["key"] = "[guid]";
-                config["tenant"] = Guid.NewGuid().ToString();
-                config["subscription"] = Guid.NewGuid().ToString();
-            }
-
-            var env = new AzureEnvironment()
-            {
-                AuthenticationEndpoint = config["authurl"].Replace("\\", ""),
-                ManagementEnpoint = config["managementuri"].Replace("\\", ""),
-                ResourceManagerEndpoint = config["baseurl"].Replace("\\", ""),
-                GraphEndpoint = config["graphurl"].Replace("\\", "")
-            };
-
-            AzureCredentials credentials = FromServicePrincipal(config["client"], config["key"], config["tenant"], env);
-            credentials.WithDefaultSubscription(config["subscription"]);
-            return credentials;
-        }
-        
         public AzureCredentials WithDefaultSubscription(string subscriptionId)
         {
             DefaultSubscriptionId = subscriptionId;
@@ -180,14 +66,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
 
         public async override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-#if !NETSTANDARD11
-            var testMode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-            if (testMode != null &&
-                testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-#endif
             var adSettings = new ActiveDirectoryServiceSettings
             {
                 AuthenticationEndpoint = new Uri(Environment.AuthenticationEndpoint),
