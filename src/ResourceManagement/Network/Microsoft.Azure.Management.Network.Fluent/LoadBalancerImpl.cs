@@ -101,7 +101,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
 
             // Reset and update inbound NAT rules
-            Inner.InboundNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values);
+            var innerNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values);
+            if (null == innerNatRules) {
+                innerNatRules = new List<InboundNatRuleInner>();
+            }
+            Inner.InboundNatRules = innerNatRules;
             foreach (var natRule in inboundNatRules.Values) {
                 // Clear deleted frontend references
                 var frontendRef = natRule.Inner.FrontendIPConfiguration;
@@ -112,7 +116,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             // Reset and update inbound NAT pools
-            Inner.InboundNatPools = InnersFromWrappers<InboundNatPoolInner, ILoadBalancerInboundNatPool>(inboundNatPools.Values);
+            var innerNatPools = InnersFromWrappers<InboundNatPoolInner, ILoadBalancerInboundNatPool>(inboundNatPools.Values);
+            if (null == innerNatPools) {
+                innerNatPools = new List<InboundNatPoolInner>();
+            }
+            Inner.InboundNatPools = innerNatPools;
             foreach (var natPool in inboundNatPools.Values) {
                 // Clear deleted frontend references
                 var frontendRef = natPool.Inner.FrontendIPConfiguration;
@@ -123,7 +131,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             // Reset and update load balancing rules
-            Inner.LoadBalancingRules = InnersFromWrappers<LoadBalancingRuleInner, ILoadBalancingRule>(loadBalancingRules.Values);
+            var innerRules = InnersFromWrappers<LoadBalancingRuleInner, ILoadBalancingRule>(loadBalancingRules.Values);
+            if (innerRules == null) {
+                innerRules = new List<LoadBalancingRuleInner>();
+            }
+            Inner.LoadBalancingRules = innerRules;
             foreach (var lbRule in loadBalancingRules.Values) {
                 // Clear deleted frontend references
                 var frontendRef = lbRule.Inner.FrontendIPConfiguration;
