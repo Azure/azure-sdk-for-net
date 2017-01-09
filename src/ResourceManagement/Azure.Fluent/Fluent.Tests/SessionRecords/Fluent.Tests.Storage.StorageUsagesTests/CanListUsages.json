@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0084c4f7-4b44-45a9-8e85-d01c9149671e"
+          "520bb483-59e3-475e-94a6-55bab068fda9"
         ],
         "accept-language": [
           "en-US"
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Storage.Fluent.StorageManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 14,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 38,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 04 Jan 2017 22:02:39 GMT"
+          "Sat, 07 Jan 2017 05:50:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -45,16 +45,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "11b526c8-1fed-4c8b-b39d-fc493d8d48a9"
+          "5adc5764-46ce-4fca-b89c-78d76995cf32"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "11b526c8-1fed-4c8b-b39d-fc493d8d48a9"
+          "5adc5764-46ce-4fca-b89c-78d76995cf32"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170104T220240Z:11b526c8-1fed-4c8b-b39d-fc493d8d48a9"
+          "CENTRALUS:20170107T055030Z:5adc5764-46ce-4fca-b89c-78d76995cf32"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -69,7 +69,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ddcfe30d-d68f-4d63-8fdc-2b026c25017f"
+          "48ff92c2-2912-49ec-b109-c411fc535dd1"
         ],
         "accept-language": [
           "en-US"
@@ -79,7 +79,7 @@
           "Microsoft.Azure.Management.Storage.Fluent.StorageManagementClient/1.0.0-beta4.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 14,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 38,\r\n      \"limit\": 250,\r\n      \"name\": {\r\n        \"value\": \"StorageAccounts\",\r\n        \"localizedValue\": \"Storage Accounts\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -91,7 +91,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 04 Jan 2017 22:02:39 GMT"
+          "Sat, 07 Jan 2017 05:50:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -107,16 +107,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "6ca21abc-04c0-4e07-9bc2-f57e5e07906f"
+          "ef06c4c8-bc45-497e-b0a1-abd274f3223f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "6ca21abc-04c0-4e07-9bc2-f57e5e07906f"
+          "ef06c4c8-bc45-497e-b0a1-abd274f3223f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170104T220240Z:6ca21abc-04c0-4e07-9bc2-f57e5e07906f"
+          "CENTRALUS:20170107T055030Z:ef06c4c8-bc45-497e-b0a1-abd274f3223f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -126,7 +126,7 @@
     }
   ],
   "Names": {},
-"Variables": {
+  "Variables": {
     "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
   }
 }

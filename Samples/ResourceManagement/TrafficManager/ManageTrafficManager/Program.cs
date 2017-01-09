@@ -36,12 +36,12 @@ namespace ManageTrafficManager
      */
     public class Program
     {
-        private static readonly string rgName                   = ResourceNamer.RandomResourceName("rgNEMV_", 24);
-        private static readonly string domainName               = ResourceNamer.RandomResourceName("jsdkdemo-", 20) + ".com";
+        private static readonly string rgName                   = SharedSettings.RandomResourceName("rgNEMV_", 24);
+        private static readonly string domainName               = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
         private static readonly string certPassword             = "StrongPass!12";
-        private static readonly string appServicePlanNamePrefix = ResourceNamer.RandomResourceName("jplan1_", 15);
-        private static readonly string webAppNamePrefix         = ResourceNamer.RandomResourceName("webapp1-", 20);
-        private static readonly string tmName                   = ResourceNamer.RandomResourceName("jsdktm-", 20);
+        private static readonly string appServicePlanNamePrefix = SharedSettings.RandomResourceName("jplan1_", 15);
+        private static readonly string webAppNamePrefix         = SharedSettings.RandomResourceName("webapp1-", 20);
+        private static readonly string tmName                   = SharedSettings.RandomResourceName("jsdktm-", 20);
         private static readonly List<Region> regions            = new List<Region>();
 
         public static void Main(string[] args)

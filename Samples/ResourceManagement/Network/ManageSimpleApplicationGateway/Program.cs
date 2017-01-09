@@ -52,8 +52,8 @@ namespace ManageSimpleApplicationGateway
      */
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEAGS", 15);
-        private static readonly string pipName = ResourceNamer.RandomResourceName("pip" + "-", 18);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEAGS", 15);
+        private static readonly string pipName = SharedSettings.RandomResourceName("pip" + "-", 18);
 
         public static void Main(string[] args)
         {

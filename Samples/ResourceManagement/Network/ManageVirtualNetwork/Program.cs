@@ -25,18 +25,18 @@ namespace ManageVirtualNetwork
 
     public class Program
     {
-        private static readonly string vnetName1 = ResourceNamer.RandomResourceName("vnet1", 20);
-        private static readonly string vnetName2 = ResourceNamer.RandomResourceName("vnet2", 20);
+        private static readonly string vnetName1 = SharedSettings.RandomResourceName("vnet1", 20);
+        private static readonly string vnetName2 = SharedSettings.RandomResourceName("vnet2", 20);
         private static readonly string vnet1FrontEndSubnetName = "frontend";
         private static readonly string vnet1BackEndSubnetName = "backend";
         private static readonly string vnet1FrontEndSubnetNsgName = "frontendnsg";
         private static readonly string vnet1BackEndSubnetNsgName = "backendnsg";
-        private static readonly string frontEndVmName = ResourceNamer.RandomResourceName("fevm", 24);
-        private static readonly string backEndVmName = ResourceNamer.RandomResourceName("bevm", 24);
-        private static readonly string publicIpAddressLeafDnsForFrontEndVm = ResourceNamer.RandomResourceName("pip1", 24);
+        private static readonly string frontEndVmName = SharedSettings.RandomResourceName("fevm", 24);
+        private static readonly string backEndVmName = SharedSettings.RandomResourceName("bevm", 24);
+        private static readonly string publicIpAddressLeafDnsForFrontEndVm = SharedSettings.RandomResourceName("pip1", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
 
         public static void Main(string[] args)
         {

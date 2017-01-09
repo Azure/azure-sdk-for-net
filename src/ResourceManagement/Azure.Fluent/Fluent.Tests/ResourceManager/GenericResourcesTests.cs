@@ -16,16 +16,15 @@ namespace Fluent.Tests.ResourceManager
 {
     public class GenericResourcesTests
     {
-
-        private string resourceName = "rgweb955";
-        private string rgName = "csmrg720";
-        private string newRgName = "csmrg189";
-
         [Fact]
         public void CanCreateUpdateMoveResource()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
+                var resourceName = TestUtilities.GenerateName("rgweb");
+                var rgName = TestUtilities.GenerateName("csmrg");
+                var newRgName = TestUtilities.GenerateName("csmrg");
+
                 IResourceManager resourceManager = TestHelper.CreateResourceManager();
                 IGenericResources genericResources = resourceManager.GenericResources;
 

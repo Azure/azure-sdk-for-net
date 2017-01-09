@@ -57,10 +57,10 @@ namespace ManageInternetFacingLoadBalancer
 
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEML", 15);
-        private static readonly string vnetName = ResourceNamer.RandomResourceName("vnet", 24);
-        private static readonly string loadBalancerName1 = ResourceNamer.RandomResourceName("intlb1" + "-", 18);
-        private static readonly string loadBalancerName2 = ResourceNamer.RandomResourceName("intlb2" + "-", 18);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEML", 15);
+        private static readonly string vnetName = SharedSettings.RandomResourceName("vnet", 24);
+        private static readonly string loadBalancerName1 = SharedSettings.RandomResourceName("intlb1" + "-", 18);
+        private static readonly string loadBalancerName2 = SharedSettings.RandomResourceName("intlb2" + "-", 18);
         private static readonly string publicIpName1 = "pip1-" + loadBalancerName1;
         private static readonly string publicIpName2 = "pip2-" + loadBalancerName1;
         private static readonly string frontendName = loadBalancerName1 + "-FE1";
@@ -74,11 +74,11 @@ namespace ManageInternetFacingLoadBalancer
         private static readonly string natRule5001to23forVM1 = "nat5001to23forVM1";
         private static readonly string natRule5002to22forVM2 = "nat5002to22forVM2";
         private static readonly string natRule5003to23forVM2 = "nat5003to23forVM2";
-        private static readonly string networkInterfaceName1 = ResourceNamer.RandomResourceName("nic1", 24);
-        private static readonly string networkInterfaceName2 = ResourceNamer.RandomResourceName("nic2", 24);
-        private static readonly string availSetName = ResourceNamer.RandomResourceName("av", 24);
-        private static readonly string vmName1 = ResourceNamer.RandomResourceName("lVM1", 24);
-        private static readonly string vmName2 = ResourceNamer.RandomResourceName("lVM2", 24);
+        private static readonly string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
+        private static readonly string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
+        private static readonly string availSetName = SharedSettings.RandomResourceName("av", 24);
+        private static readonly string vmName1 = SharedSettings.RandomResourceName("lVM1", 24);
+        private static readonly string vmName2 = SharedSettings.RandomResourceName("lVM2", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
 

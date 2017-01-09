@@ -66,8 +66,8 @@ namespace ManageApplicationGateway
      */
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEAG", 15);
-        private static readonly string pipName = ResourceNamer.RandomResourceName("pip" + "-", 18);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEAG", 15);
+        private static readonly string pipName = SharedSettings.RandomResourceName("pip" + "-", 18);
         private static readonly string userName = "tirekicker";
         private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
         private static readonly string sslCertificatePfxPath = "myTest._pfx"; // Relative to project root directory by default
@@ -134,7 +134,7 @@ namespace ManageApplicationGateway
                         //=============================================================
                         // Create 1 network creatable per region
                         // Prepare Creatable Network definition (Where all the virtual machines get added to)
-                        var networkName = ResourceNamer.RandomResourceName("vnetNEAG-", 20);
+                        var networkName = SharedSettings.RandomResourceName("vnetNEAG-", 20);
 
                         var networkCreatable = azure.Networks
                                 .Define(networkName)
@@ -144,13 +144,13 @@ namespace ManageApplicationGateway
 
                         //=============================================================
                         // Create 1 storage creatable per region (For storing VMs disk)
-                        var storageAccountName = ResourceNamer.RandomResourceName("stgneag", 20);
+                        var storageAccountName = SharedSettings.RandomResourceName("stgneag", 20);
                         var storageAccountCreatable = azure.StorageAccounts
                                 .Define(storageAccountName)
                                 .WithRegion(regions[i])
                                 .WithExistingResourceGroup(resourceGroup);
 
-                        var linuxVMNamePrefix = ResourceNamer.RandomResourceName("vm-", 15);
+                        var linuxVMNamePrefix = SharedSettings.RandomResourceName("vm-", 15);
 
                         for (int j = 0; j < vmCountInAPool; j++)
                         {

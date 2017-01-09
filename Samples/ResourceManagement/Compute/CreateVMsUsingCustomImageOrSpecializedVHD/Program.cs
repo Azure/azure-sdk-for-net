@@ -26,11 +26,11 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
      */
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOMV", 10);
-        private static readonly string linuxVmName1 = ResourceNamer.RandomResourceName("VM1", 10);
-        private static readonly string linuxVmName2 = ResourceNamer.RandomResourceName("VM2", 10);
-        private static readonly string linuxVmName3 = ResourceNamer.RandomResourceName("VM3", 10);
-        private static readonly string publicIpDnsLabel = ResourceNamer.RandomResourceName("pip", 10);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgCOMV", 10);
+        private static readonly string linuxVmName1 = SharedSettings.RandomResourceName("VM1", 10);
+        private static readonly string linuxVmName2 = SharedSettings.RandomResourceName("VM2", 10);
+        private static readonly string linuxVmName3 = SharedSettings.RandomResourceName("VM3", 10);
+        private static readonly string publicIpDnsLabel = SharedSettings.RandomResourceName("pip", 10);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
         private readonly static List<string> apacheInstallScriptUris = new List<string>()
