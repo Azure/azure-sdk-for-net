@@ -1,6 +1,6 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
-### Changes in 1.0.2
+### Changes in 2.0.0
 - As the first official stable release of the `Microsoft.Azure.Management.DataLake.Analytics` package, changes between this version and the preview version are enumerated below. 
 	- All nested properties have been flattened down into their containing objects. For example: `myAccount.Properties.DefaultDataLakeStoreAccount` is now: `myAccount.DefaultDataLakeStoreAccount`
 	-  Reorganized account management operations into three distinct operation groups: `Account`, `StorageAccounts` and `DataLakeStoreAccounts`. This results in changes to how certain operations are reached. For example, to get firewall rules previously this would be called: `myClient.Account.GetStorageAccount()`. Now: `myClient.StorageAccounts.Get()`.
@@ -11,3 +11,5 @@
 	- As part of credential CRUD, added cascading delete support for a given credential, which will delete all other catalog resources dependent on the credential automatically.
 	- Removed unsupported OData query options
 	- Added new `SeverityType` enum values
+	- Added deprecation warnings for `CreateSecret`,`UpdateSecret` and `DeleteSecret`
+	- Fixed the return type for `UpdateSecret` to properly reflect that nothing is returned.
