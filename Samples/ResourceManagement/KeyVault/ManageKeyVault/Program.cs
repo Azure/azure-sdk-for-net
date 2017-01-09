@@ -35,7 +35,7 @@ namespace ManageKeyVault
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -70,7 +70,7 @@ namespace ManageKeyVault
 
                     vault1 = vault1.Update()
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                                .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
                                 .AllowKeyAllPermissions()
                                 .AllowSecretPermissions(SecretPermissions.Get)
                                 .AllowSecretPermissions(SecretPermissions.List)
@@ -105,7 +105,7 @@ namespace ManageKeyVault
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                                .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
                                 .AllowKeyPermissions(KeyPermissions.List)
                                 .AllowKeyPermissions(KeyPermissions.Get)
                                 .AllowKeyPermissions(KeyPermissions.Decrypt)
