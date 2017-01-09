@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Management.Network;
     using System.Threading.Tasks;
     using System.Text;
+    using System;
 
     /// <summary>
     /// Implementation of the LoadBalancer interface.
@@ -154,6 +155,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             // Update the NICs to point to the backend pool
             if (nicsInBackends != null)
             {
+                List<Exception> nicExceptions = new List<Exception>();
+
                 foreach (var nicInBackend in nicsInBackends)
                 {
                     string nicId = nicInBackend.Key;
@@ -168,10 +171,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
                             .Parent()
                         .Apply();
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        // Skip and continue
+                        // Aggregate the exceptions
+                        nicExceptions.Add(e);
                     }
+                }
+
+                if (nicExceptions.Count > 0)
+                {
+                    throw new AggregateException(nicExceptions);
                 }
 
                 nicsInBackends.Clear();
