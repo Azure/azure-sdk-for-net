@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal ServiceObjectiveImpl(ServiceObjectiveInner innerObject, IServersOperations serversInner)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
             this.serversInner = serversInner;
         }
 

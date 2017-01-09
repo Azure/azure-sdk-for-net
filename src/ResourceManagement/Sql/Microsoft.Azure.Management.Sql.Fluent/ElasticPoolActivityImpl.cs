@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         internal ElasticPoolActivityImpl(ElasticPoolActivityInner innerObject) : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
         }
 
         ///GENMHASH:579156BC87293AD83F70BBF347CFEF47:8ACA8E03B61F5FC45CB2DFEE3F51696A

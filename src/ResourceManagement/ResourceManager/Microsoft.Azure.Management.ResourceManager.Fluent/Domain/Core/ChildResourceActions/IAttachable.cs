@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions
 
     }
     /// <summary>
-    /// The final stage of the child object definition, at which it can be attached to the parent, using {@link Attachable#attach()}.
+    /// The final stage of the child object definition, at which it can be attached to the parent.
     /// 
-    /// @param <ParentT> the parent definition {@link Attachable#attach()} returns to
+    /// @param <ParentT> the parent definition Attachable#attach()} returns to
     /// </summary>
     public interface IAttachable<ParentT> 
     {

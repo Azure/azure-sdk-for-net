@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
 
         public async Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ResourceId resourceId = ResourceId.ParseResourceId(id);
+            ResourceId resourceId = ResourceId.FromString(id);
 
             return await GetByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name);
         }
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ///GENMHASH:4D33A73A344E127F784620E76B686786:45501AE2D88C8DB770F13846C7DD5857
         public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ResourceId resourceId = ResourceId.ParseResourceId(id);
+            ResourceId resourceId = ResourceId.FromString(id);
 
             await DeleteByParentAsync(resourceId.ResourceGroupName, resourceId.Parent.Name, resourceId.Name);
         }
