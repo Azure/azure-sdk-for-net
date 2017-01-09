@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return null;
             }
-            return ResourceId.ParseResourceId(id).ResourceGroupName;
+            return ResourceId.FromString(id).ResourceGroupName;
         }
 
         public static string ResourceProviderFromResourceId(string id)
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return null;
             }
-            return ResourceId.ParseResourceId(id).ProviderNamespace;
+            return ResourceId.FromString(id).ProviderNamespace;
         }
 
         public static string NameFromResourceId(string id)
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return null;
             }
-            return ResourceId.ParseResourceId(id).Name;
+            return ResourceId.FromString(id).Name;
         }
 
         public static string ResourceTypeFromResourceId(string id)
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return null;
             }
-            return ResourceId.ParseResourceId(id).ResourceType;
+            return ResourceId.FromString(id).ResourceType;
         }
 
         public static string ParentResourcePathFromResourceId(string id)
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             {
                 return null;
             }
-            return ResourceId.ParseResourceId(id)?.Parent?.Id;
+            return ResourceId.FromString(id)?.Parent?.Id;
         }
 
         public static string ConstructResourceId(

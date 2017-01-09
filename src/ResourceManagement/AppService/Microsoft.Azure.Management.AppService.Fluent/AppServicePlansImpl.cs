@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:E776888E46F8A3FC56D24DF4A74E5B74:938AF55195C22DFA74E6820E73D5DEE3
         public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var resourceId = ResourceId.ParseResourceId(id);
+            var resourceId = ResourceId.FromString(id);
             return WrapModel(await InnerCollection.GetAsync(resourceId.ResourceGroupName, resourceId.Name));
         }
 

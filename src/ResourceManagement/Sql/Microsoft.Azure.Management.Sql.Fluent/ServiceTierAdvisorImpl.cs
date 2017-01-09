@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal ServiceTierAdvisorImpl(ServiceTierAdvisorInner innerObject, IDatabasesOperations databasesInner)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
             this.databasesInner = databasesInner;
         }
 

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal RestorePointImpl(RestorePointInner innerObject)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
         }
 
         ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:9FE42D967416923E070F823D07063A47

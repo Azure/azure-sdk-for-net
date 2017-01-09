@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 
         internal ElasticPoolDatabaseActivityImpl(ElasticPoolDatabaseActivityInner innerObject) : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
         }
 
         ///GENMHASH:C6D8988AF7EA777E24996BD3189A69D3:1DCBD2B51CFB22959B5134B47BA63D40
