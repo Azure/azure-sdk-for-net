@@ -43,7 +43,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                 .DefineRequestRoutingRule("rule1")
                     .FromPublicFrontend()
                     .FromFrontendHttpsPort(443)
-                    .WithSslCertificateFromPfxFile(new FileInfo(@"Assets\myTest._pfx"))
+                    .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets", "myTest._pfx")))
                     .WithSslCertificatePassword("Abc123")
                     .ToBackendHttpPort(8080)
                     .ToBackendIpAddress("11.1.1.1")
