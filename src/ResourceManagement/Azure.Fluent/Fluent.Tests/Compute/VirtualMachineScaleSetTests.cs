@@ -15,6 +15,7 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Runtime.CompilerServices;
 using Azure.Tests;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Fluent.Tests.Compute
 {
@@ -79,11 +80,16 @@ namespace Fluent.Tests.Compute
                         .GetById(publicIpAddressIds[0]);
 
                 string fqdn = publicIpAddress.Fqdn;
-                // Assert public load balancing connection
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://" + fqdn);
-                HttpResponseMessage response = client.GetAsync("/").Result;
-                Assert.True(response.IsSuccessStatusCode);
+                Assert.NotNull(fqdn);
+
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                {
+                    // Assert public load balancing connection
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://" + fqdn);
+                    HttpResponseMessage response = client.GetAsync("/").Result;
+                    Assert.True(response.IsSuccessStatusCode);
+                }
             }
         }
 
