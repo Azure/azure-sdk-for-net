@@ -15,9 +15,9 @@ namespace Azure.Tests.WebApp
 {
     public class SourceControlTests
     {
-        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("javacsmrg", 20);
-        private static readonly string WEBAPP_NAME = ResourceNamer.RandomResourceName("java-webapp-", 20);
-        private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
+        private static readonly string GroupName = ResourceNamer.RandomResourceName("javacsmrg", 20);
+        private static readonly string WebAppName = ResourceNamer.RandomResourceName("java-webapp-", 20);
+        private static readonly string AppServicePlanName = ResourceNamer.RandomResourceName("java-asp-", 20);
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public async Task CanDeploySourceControl()
@@ -25,9 +25,9 @@ namespace Azure.Tests.WebApp
             var appServiceManager = TestHelper.CreateAppServiceManager();
 
             // Create web app
-            var webApp = appServiceManager.WebApps.Define(WEBAPP_NAME)
-                .WithNewResourceGroup(RG_NAME)
-                .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
+            var webApp = appServiceManager.WebApps.Define(WebAppName)
+                .WithNewResourceGroup(GroupName)
+                .WithNewAppServicePlan(AppServicePlanName)
                 .WithRegion(Region.US_WEST)
                 .WithPricingTier(AppServicePricingTier.Standard_S1)
                 .DefineSourceControl()
@@ -36,7 +36,7 @@ namespace Azure.Tests.WebApp
                     .Attach()
                 .Create();
             Assert.NotNull(webApp);
-            var response = await CheckAddress("http://" + WEBAPP_NAME + "." + "azurewebsites.Net");
+            var response = await CheckAddress("http://" + WebAppName + "." + "azurewebsites.Net");
             Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
 
             var body = await response.Content.ReadAsStringAsync();

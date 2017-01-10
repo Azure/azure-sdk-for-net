@@ -11,8 +11,8 @@ namespace Azure.Tests.WebApp
 {
     public class AppServicePlansTests
     {
-        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("javacsmrg", 20);
-        private static readonly string APP_SERVICE_PLAN_NAME = ResourceNamer.RandomResourceName("java-asp-", 20);
+        private static readonly string GroupName = ResourceNamer.RandomResourceName("javacsmrg", 20);
+        private static readonly string AppServicePlanName = ResourceNamer.RandomResourceName("java-asp-", 20);
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDAppServicePlan()
@@ -21,9 +21,9 @@ namespace Azure.Tests.WebApp
 
             // CREATE
             var appServicePlan = appServiceManager.AppServicePlans
-                .Define(APP_SERVICE_PLAN_NAME)
+                .Define(AppServicePlanName)
                 .WithRegion(Region.US_WEST)
-                .WithNewResourceGroup(RG_NAME)
+                .WithNewResourceGroup(GroupName)
                 .WithPricingTier(AppServicePricingTier.Premium_P1)
                 .WithPerSiteScaling(false)
                 .WithCapacity(2)
@@ -35,13 +35,13 @@ namespace Azure.Tests.WebApp
             Assert.Equal(0, appServicePlan.NumberOfWebApps);
             Assert.Equal(20, appServicePlan.MaxInstances);
             // GET
-            Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(RG_NAME, APP_SERVICE_PLAN_NAME));
+            Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(GroupName, AppServicePlanName));
             // LIST
-            var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(RG_NAME);
+            var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(GroupName);
             var found = false;
             foreach (var asp in appServicePlans)
             {
-                if (APP_SERVICE_PLAN_NAME.Equals(asp.Name))
+                if (AppServicePlanName.Equals(asp.Name))
                 {
                     found = true;
                     break;

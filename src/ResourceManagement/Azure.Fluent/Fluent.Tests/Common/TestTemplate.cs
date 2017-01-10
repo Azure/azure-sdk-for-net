@@ -43,7 +43,7 @@ namespace Azure.Tests.Common
          */
         public int VerifyListing()
         {
-            var resources = this.collection.List();
+            var resources = collection.List();
             foreach (T r in resources)
             {
                 TestHelper.WriteLine("resource id: " + r.Id);
@@ -60,8 +60,8 @@ namespace Azure.Tests.Common
          */
         public T VerifyGetting()
         {
-            T resourceByGroup = this.collection.GetByGroup(this.resource.ResourceGroupName, this.resource.Name);
-            T resourceById = this.collection.GetById(resourceByGroup.Id);
+            T resourceByGroup = collection.GetByGroup(resource.ResourceGroupName, resource.Name);
+            T resourceById = collection.GetById(resourceByGroup.Id);
             Assert.True(resourceById.Id.Equals(resourceByGroup.Id, StringComparison.OrdinalIgnoreCase));
             return resourceById;
         }
@@ -72,9 +72,9 @@ namespace Azure.Tests.Common
          */
         public void VerifyDeleting()
         {
-            var groupName = this.resource.ResourceGroupName;
-            this.collection.DeleteById(this.resource.Id);
-            this.resourceGroups.DeleteByName(groupName);
+            var groupName = resource.ResourceGroupName;
+            collection.DeleteById(resource.Id);
+            resourceGroups.DeleteByName(groupName);
         }
 
         /**
@@ -99,7 +99,7 @@ namespace Azure.Tests.Common
             int initialCount = VerifyListing();
 
             // Verify creation
-            this.resource = CreateResource(collection);
+            resource = CreateResource(collection);
             TestHelper.WriteLine("\n------------\nAfter creation:\n");
             Print(resource);
 
@@ -107,16 +107,16 @@ namespace Azure.Tests.Common
             VerifyListing();
 
             // Verify getting
-            this.resource = VerifyGetting();
-            Assert.NotNull(this.resource);
+            resource = VerifyGetting();
+            Assert.NotNull(resource);
             TestHelper.WriteLine("\n------------\nRetrieved resource:\n");
-            Print(this.resource);
+            Print(resource);
 
             // Verify update
-            this.resource = UpdateResource(this.resource);
-            Assert.NotNull(this.resource);
+            resource = UpdateResource(resource);
+            Assert.NotNull(resource);
             TestHelper.WriteLine("\n------------\nUpdated resource:\n");
-            Print(this.resource);
+            Print(resource);
 
             // Verify deletion
             VerifyDeleting();
