@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 
@@ -13,44 +14,39 @@ namespace Azure.Tests
     {
         public override AzureCredentials FromFile(string authFile)
         {
-            var config = new Dictionary<string, string>()
-            {
-                { "authurl", AzureEnvironment.AzureGlobalCloud.AuthenticationEndpoint },
-                { "baseurl", AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint },
-                { "managementuri", AzureEnvironment.AzureGlobalCloud.ManagementEnpoint },
-                { "graphurl", AzureEnvironment.AzureGlobalCloud.GraphEndpoint }
-            };
-#if !NETSTANDARD11
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                config["authurl"] = "https://www.contoso.com";
-                config["managementuri"] = "https://www.contoso.com";
-                config["baseurl"] = "https://www.contoso.com";
-                config["graphurl"] = "https://www.contoso.com";
-                config["client"] = "[guid]";
-                config["key"] = "[guid]";
-                config["tenant"] = Guid.NewGuid().ToString();
-                config["subscription"] = Guid.NewGuid().ToString();
-
                 var env = new AzureEnvironment()
                 {
-                    AuthenticationEndpoint = config["authurl"].Replace("\\", ""),
-                    ManagementEnpoint = config["managementuri"].Replace("\\", ""),
-                    ResourceManagerEndpoint = config["baseurl"].Replace("\\", ""),
-                    GraphEndpoint = config["graphurl"].Replace("\\", "")
+                    AuthenticationEndpoint = "https://www.contoso.com",
+                    ManagementEnpoint = "https://www.contoso.com",
+                    ResourceManagerEndpoint = "https://www.contoso.com",
+                    GraphEndpoint = "https://www.contoso.com"
                 };
 
-                AzureCredentials credentials = new TestAzureCredentials(new ServicePrincipalLoginInformation
-                {
-                    ClientId  = config["client"],
-                    ClientSecret = config["key"]
-                }
-                , config["tenant"], env);
-                credentials.WithDefaultSubscription(config["subscription"]);
+                AzureCredentials credentials = new TestAzureCredentials(
+                    new ServicePrincipalLoginInformation
+                    {
+                        ClientId = HttpMockServer.Variables.ContainsKey(ConnectionStringKeys.AADTenantKey) ?
+                            HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey] : "servicePrincipalNotRecorded",
+                        ClientSecret = null
+                    }, 
+                    HttpMockServer.Variables.ContainsKey(ConnectionStringKeys.AADTenantKey) ?
+                        HttpMockServer.Variables[ConnectionStringKeys.AADTenantKey] : "tenantIdNotRecorded", env);
+                credentials.WithDefaultSubscription(
+                    HttpMockServer.Variables.ContainsKey(ConnectionStringKeys.SubscriptionIdKey) ?
+                        HttpMockServer.Variables[ConnectionStringKeys.SubscriptionIdKey] : "subscriptionIdNotRecorded");
+
                 return credentials;
             }
-#endif
-            return base.FromFile(authFile);
+
+            var retValue = base.FromFile(authFile);
+
+            HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey] = retValue.ClientId;
+            HttpMockServer.Variables[ConnectionStringKeys.AADTenantKey] = retValue.TenantId;
+            HttpMockServer.Variables[ConnectionStringKeys.SubscriptionIdKey] = retValue.DefaultSubscriptionId;
+
+            return retValue;
         }
     }
 }

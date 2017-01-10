@@ -180,17 +180,7 @@ namespace Fluent.Tests.Common
         {
             AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(authFilePath);
 
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                credentials = credentials.WithDefaultSubscription(TestEnvironmentFactory.GetTestEnvironment().SubscriptionId);
-            }
-            else
-            {
-                HttpMockServer.Variables[ConnectionStringKeys.SubscriptionIdKey] = credentials.DefaultSubscriptionId;
-            }
-
             var manager = builder.Invoke(credentials);
-
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {

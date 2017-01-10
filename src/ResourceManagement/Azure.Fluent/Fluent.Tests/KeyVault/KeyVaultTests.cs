@@ -11,6 +11,7 @@ using Xunit;
 using System;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace Fluent.Tests.KeyVault
@@ -30,8 +31,10 @@ namespace Fluent.Tests.KeyVault
                 string vaultName1 = TestUtilities.GenerateName("vault1");
                 string vaultName2 = TestUtilities.GenerateName("vault2");
                 string rgName = TestUtilities.GenerateName("rgNEMV");
-
+                
                 IKeyVaultManager manager = TestHelper.CreateKeyVaultManager();
+
+                var spnCredentialsClientId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];
 
                 try
                 {
@@ -45,10 +48,9 @@ namespace Fluent.Tests.KeyVault
                     Assert.NotNull(vault1);
                     Assert.Equal(vaultName1, vault1.Name);
                     Assert.Equal(0, vault1.AccessPolicies.Count);
-                    var clientId = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId;
                     vault1 = vault1.Update()
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(clientId)
+                                .ForServicePrincipal(spnCredentialsClientId)
                                 .AllowKeyAllPermissions()
                                 .AllowSecretPermissions(SecretPermissions.Get)
                                 .AllowSecretPermissions(SecretPermissions.List)
@@ -76,7 +78,7 @@ namespace Fluent.Tests.KeyVault
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(clientId)
+                                .ForServicePrincipal(spnCredentialsClientId)
                                 .AllowKeyPermissions(KeyPermissions.Get)
                                 .AllowKeyPermissions(KeyPermissions.List)
                                 .AllowKeyPermissions(KeyPermissions.Decrypt)
@@ -98,7 +100,11 @@ namespace Fluent.Tests.KeyVault
                 }
                 finally
                 {
-                    TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    try
+                    {
+                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
                 }
             }
         }

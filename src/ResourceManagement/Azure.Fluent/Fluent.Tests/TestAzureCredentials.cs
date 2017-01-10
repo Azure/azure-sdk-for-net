@@ -20,12 +20,10 @@ namespace Azure.Tests
 
         public async override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-#if !NETSTANDARD11
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 return;
             }
-#endif
             await base.ProcessHttpRequestAsync(request, cancellationToken);
         }
 
