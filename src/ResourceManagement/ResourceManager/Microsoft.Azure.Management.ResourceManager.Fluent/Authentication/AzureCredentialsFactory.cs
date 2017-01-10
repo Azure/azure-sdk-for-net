@@ -22,7 +22,12 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
         /// <returns>an authenticated credentials object</returns>
         public AzureCredentials FromUser(string username, string password, string clientId, string tenantId, AzureEnvironment environment)
         {
-            return new AzureCredentials(username, password, clientId, tenantId, environment);
+            return new AzureCredentials(new UserLoginInformation
+            {
+                UserName = username,
+                Password = password,
+                ClientId = clientId
+            }, tenantId, environment);
         }
 
 #if PORTABLE
@@ -36,7 +41,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
         /// <returns>an authenticated credentials object</returns>
         public AzureCredentials FromDevice(string clientId, string tenantId, AzureEnvironment environment, Func<DeviceCodeResult, bool> deviceCodeFlowHandler = null)
         {
-            AzureCredentials credentials = new AzureCredentials(clientId, tenantId, environment, deviceCodeFlowHandler);
+            AzureCredentials credentials = new AzureCredentials(new DeviceCredentialInformation {
+                    ClientId = clientId,
+                    DeviceCodeFlowHandler = deviceCodeFlowHandler
+                }, tenantId, environment);
             return credentials;
         }
 #endif
@@ -51,7 +59,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
         /// <returns>an authenticated credentials object</returns>
         public AzureCredentials FromServicePrincipal(string clientId, string clientSecret, string tenantId, AzureEnvironment environment)
         {
-            return new AzureCredentials(null, clientSecret, clientId, tenantId, environment);
+            return new AzureCredentials(new ServicePrincipalLoginInformation
+            {
+                ClientId = clientId,
+                ClientSecret = clientSecret
+            }, tenantId, environment);
         }
 
         /// <summary>

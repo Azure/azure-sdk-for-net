@@ -272,16 +272,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             while (!inner.ProvisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase) &&
                 !cancellationToken.IsCancellationRequested)
             {
-#if !NETSTANDARD11
-                var testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-                if (testMode == null || 
-                    !testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
-                {
-#endif
-                    await Task.Delay(30 * 1000, cancellationToken);
-#if !NETSTANDARD11
-                }
-#endif
+                await SharedSettings.DelayProvider.Delay(30 * 1000, cancellationToken);
                 inner = await client.GetAsync(this.ResourceGroupName, this.Name, cancellationToken);
             }
             this.SetInner(inner);
