@@ -19,7 +19,7 @@ namespace Fluent.Tests.Miscellaneous
 {
     public class RestClientTests
     {
-        [Fact]
+        [Fact(Skip="This code tries to connect in the playback mode")]
         public void CanSetMultipleDelegateHandlers()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -28,7 +28,7 @@ namespace Fluent.Tests.Miscellaneous
                 string stgName = TestUtilities.GenerateName("stg");
 
                 IAzure azure = null;
-                // Sets the intercepter so that logging and user agent in log can be asserted.
+                // Sets the interceptor so that logging and user agent in log can be asserted.
                 var logAndUserAgentInterceptor = new LogAndUserAgentInterceptor();
                 ServiceClientTracing.AddTracingInterceptor(logAndUserAgentInterceptor);
                 ServiceClientTracing.IsEnabled = true;

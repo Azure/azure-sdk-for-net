@@ -352,7 +352,10 @@ namespace Microsoft.Azure.Management.Fluent
                         RestClient.Configure()
                             .WithBaseUri(restClient.BaseUri)
                             .WithCredentials(restClient.Credentials).Build());
-                    var subscription = resourceManager.Subscriptions.List().FirstOrDefault();
+                    var subscription = resourceManager.Subscriptions.List()
+                        .FirstOrDefault(s =>
+                            s.State.Equals("Enabled", System.StringComparison.OrdinalIgnoreCase) ||
+                            s.State.Equals("Warned", System.StringComparison.OrdinalIgnoreCase));
 
                     return WithSubscription(subscription?.SubscriptionId);
                 }
