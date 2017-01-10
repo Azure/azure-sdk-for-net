@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public static ResourceNamerCreator CreateResourceNamer { get; set; } = new ResourceNamerCreator((name) => new ResourceNamer(name));
 
+        public static DelayProvider DelayProvider { get; set; } = new DelayProvider();
+
         public static string RandomResourceName(string prefix, int maxLen)
         {
             var namer = CreateResourceNamer("");

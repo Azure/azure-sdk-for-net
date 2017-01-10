@@ -12,7 +12,9 @@ namespace Azure.Tests
 {
     public class TestAzureCredentials : AzureCredentials
     {
-        public TestAzureCredentials(string username, string password, string clientId, string tenantId, AzureEnvironment environment) : base(username, password, clientId, tenantId, environment)
+        public TestAzureCredentials(ServicePrincipalLoginInformation servicePrincipalLoginInformation,
+            string tenantId, AzureEnvironment environment)
+            : base(servicePrincipalLoginInformation, tenantId, environment)
         {
         }
 

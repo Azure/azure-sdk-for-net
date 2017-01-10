@@ -40,7 +40,12 @@ namespace Azure.Tests
                     GraphEndpoint = config["graphurl"].Replace("\\", "")
                 };
 
-                AzureCredentials credentials = new TestAzureCredentials(null, config["key"], config["client"], config["tenant"], env);
+                AzureCredentials credentials = new TestAzureCredentials(new ServicePrincipalLoginInformation
+                {
+                    ClientId  = config["client"],
+                    ClientSecret = config["key"]
+                }
+                , config["tenant"], env);
                 credentials.WithDefaultSubscription(config["subscription"]);
                 return credentials;
             }

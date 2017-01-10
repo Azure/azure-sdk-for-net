@@ -17,44 +17,58 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
     /// </summary>
     public class AzureCredentials : ServiceClientCredentials
     {
-        private string username;
-        private string password;
-        private string clientSecret;
+        private UserLoginInformation userLoginInformation;
+        private ServicePrincipalLoginInformation servicePrincipalLoginInformation;
         private IDictionary<Uri, ServiceClientCredentials> credentialsCache;
 #if PORTABLE
-        private Func<DeviceCodeResult, bool> deviceCodeHandler;
+        private DeviceCredentialInformation deviceCredentialInformation;
 #endif
 
         public string DefaultSubscriptionId { get; private set; }
 
         public string TenantId { get; private set; }
 
-        public string ClientId { get; private set; }
+        public string ClientId
+        {
+            get
+            {
+#if PORTABLE
+                if (deviceCredentialInformation != null)
+                {
+                    return deviceCredentialInformation.ClientId;
+                }
+#endif
+
+                return userLoginInformation?.ClientId ?? servicePrincipalLoginInformation?.ClientId;
+            }
+        }
 
         public AzureEnvironment Environment { get; private set; }
 
-        public AzureCredentials(string username, string password, string clientId, string tenantId, AzureEnvironment environment)
-            : this()
+        public AzureCredentials(UserLoginInformation userLoginInformation, string tenantId, AzureEnvironment environment)
+            : this(tenantId, environment)
         {
-            this.username = username;
-            this.password = password;
-            ClientId = clientId;
-            TenantId = tenantId;
-            Environment = environment ?? AzureEnvironment.AzureGlobalCloud;
+            this.userLoginInformation = userLoginInformation;
+        }
+        public AzureCredentials(ServicePrincipalLoginInformation servicePrincipalLoginInformation, string tenantId, AzureEnvironment environment)
+            : this(tenantId, environment)
+        {
+            this.servicePrincipalLoginInformation = servicePrincipalLoginInformation;
         }
 
-        private AzureCredentials()
+        private AzureCredentials(string tenantId, AzureEnvironment environment)
         {
+            TenantId = tenantId;
+            Environment = environment;
             credentialsCache = new Dictionary<Uri, ServiceClientCredentials>();
         }
 
 #if PORTABLE
-        public AzureCredentials(string clientId, string tenantId, AzureEnvironment environment, Func<DeviceCodeResult, bool> deviceCodeFlowHandler)
+        public AzureCredentials(DeviceCredentialInformation deviceCredentialInformation, string tenantId, AzureEnvironment environment)
+            : this(tenantId, environment)
         {
-            ClientId = clientId;
-            TenantId = tenantId;
-            Environment = environment;
-            this.deviceCodeHandler = deviceCodeFlowHandler;
+            this.deviceCredentialInformation = deviceCredentialInformation;
+
         }
 #endif
 
@@ -80,21 +94,22 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
 
             if (!credentialsCache.ContainsKey(adSettings.TokenAudience))
             {
-                if (username != null && password != null)
+                if (userLoginInformation != null)
                 {
                     credentialsCache[adSettings.TokenAudience] = await UserTokenProvider.LoginSilentAsync(
-                        ClientId, TenantId, username, password, adSettings, TokenCache.DefaultShared);
+                        userLoginInformation.ClientId, TenantId, userLoginInformation.UserName,
+                        userLoginInformation.Password, adSettings, TokenCache.DefaultShared);
                 }
-                else if (clientSecret != null)
+                else if (servicePrincipalLoginInformation != null)
                 {
                     credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
-                        TenantId, ClientId, clientSecret, adSettings, TokenCache.DefaultShared);
+                        TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.ClientSecret, adSettings, TokenCache.DefaultShared);
                 }
 #if PORTABLE
-                else if (deviceCodeHandler != null)
+                else if (deviceCredentialInformation != null)
                 {
                     credentialsCache[adSettings.TokenAudience] = await UserTokenProvider.LoginByDeviceCodeAsync(
-                        ClientId, TenantId, adSettings, TokenCache.DefaultShared, deviceCodeHandler);
+                        deviceCredentialInformation.ClientId, TenantId, adSettings, TokenCache.DefaultShared, deviceCredentialInformation.DeviceCodeFlowHandler);
                 }
 #endif
             }
