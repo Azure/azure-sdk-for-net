@@ -15,7 +15,7 @@ namespace Azure.Tests.Redis
     public class RedisCacheTests
     {
 
-        [Fact(Skip = "Failing at line number 86, got 7 redis accounts rather than 3.")]
+        [Fact]
         public void CanCRUDRedisCache()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
