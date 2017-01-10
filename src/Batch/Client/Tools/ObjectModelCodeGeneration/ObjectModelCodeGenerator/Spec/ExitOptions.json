@@ -1,0 +1,21 @@
+    {
+      "Name": "ExitOptions",
+      "ProtocolName": "Models.ExitOptions",
+      "Comment": "How the Batch service should respond to a particular exit condition.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "Common.JobAction?",
+            "Name": "JobAction",
+            "SummaryComment": "An action to take on the job containing the task, if the task completes with the given exit condition and the job's <see cref=\"CloudJob.OnTaskFailure\"/> property is <see cref=\"Common.OnTaskFailure.PerformExitOptionsJobAction\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+          },
+          "Value": {
+            "Type": "Models.JobAction?",
+            "Name": "JobAction",
+          }
+        },
+      ]
+    }

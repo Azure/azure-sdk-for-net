@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudPoolOperations.EnableAutoScale request.
@@ -41,9 +35,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolEnableAutoScaleParameter
         /// class.
         /// </summary>
-        /// <param name="autoScaleFormula">The formula for the desired number of compute nodes in the pool.</param>
-        /// <param name="autoScaleEvaluationInterval">A time interval for the desired autoscale evaluation period in the pool.</param>
-        public PoolEnableAutoScaleParameter(string autoScaleFormula = default(string), TimeSpan? autoScaleEvaluationInterval = default(TimeSpan?))
+        /// <param name="autoScaleFormula">The formula for the desired number
+        /// of compute nodes in the pool.</param>
+        /// <param name="autoScaleEvaluationInterval">A time interval for the
+        /// desired autoscale evaluation period in the pool.</param>
+        public PoolEnableAutoScaleParameter(string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?))
         {
             AutoScaleFormula = autoScaleFormula;
             AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
@@ -53,15 +49,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the formula for the desired number of compute nodes
         /// in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "autoScaleFormula")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
         /// Gets or sets a time interval for the desired autoscale evaluation
         /// period in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
-        public TimeSpan? AutoScaleEvaluationInterval { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
+        public System.TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
     }
 }

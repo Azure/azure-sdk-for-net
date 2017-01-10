@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Represents a name-value pair.
@@ -50,13 +44,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the name in the name-value pair.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the value in the name-value pair.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

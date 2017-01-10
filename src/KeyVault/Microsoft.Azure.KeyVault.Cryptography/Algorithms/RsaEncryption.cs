@@ -4,6 +4,9 @@
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// Abstract RSA encryption algorithm.
+    /// </summary>
     public abstract class RsaEncryption : AsymmetricEncryptionAlgorithm
     {
         protected RsaEncryption( string name ) : base( name )

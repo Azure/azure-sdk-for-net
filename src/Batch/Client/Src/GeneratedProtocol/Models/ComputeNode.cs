@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A compute node in the Batch service.
@@ -42,22 +36,44 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="id">The id of the compute node.</param>
         /// <param name="url">The URL of the compute node.</param>
         /// <param name="state">The current state of the compute node.</param>
-        /// <param name="schedulingState">Whether the compute node should be available for task scheduling.</param>
-        /// <param name="stateTransitionTime">The time at which the compute node entered its current state.</param>
-        /// <param name="lastBootTime">The time at which the compute node was started.</param>
-        /// <param name="allocationTime">The time at which this compute node was allocated to the pool.</param>
-        /// <param name="ipAddress">The IP address that other compute nodes can use to communicate with this compute node.</param>
-        /// <param name="affinityId">An identifier which can be passed in the Add Task API to request that the task be scheduled close to this compute node.</param>
-        /// <param name="vmSize">The size of the virtual machine hosting the compute node.</param>
-        /// <param name="totalTasksRun">The total number of job tasks completed on the compute node. This includes Job Preparation, Job Release and Job Manager tasks, but not the pool start task.</param>
-        /// <param name="runningTasksCount">The total number of currently running job tasks on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.</param>
-        /// <param name="totalTasksSucceeded">The total number of job tasks which completed successfully (with exitCode 0) on the compute node. This includes Job Preparation, Job Release, and Job Manager tasks, but not the pool start task.</param>
-        /// <param name="recentTasks">The list of tasks that are currently running on the compute node.</param>
-        /// <param name="startTask">The task specified to run on the compute node as it joins the pool.</param>
-        /// <param name="startTaskInfo">Runtime information about the execution of the start task on the compute node.</param>
-        /// <param name="certificateReferences">The list of certificates installed on the compute node.</param>
-        /// <param name="errors">The list of errors that are currently being encountered by the compute node.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), DateTime? stateTransitionTime = default(DateTime?), DateTime? lastBootTime = default(DateTime?), DateTime? allocationTime = default(DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>))
+        /// <param name="schedulingState">Whether the compute node should be
+        /// available for task scheduling.</param>
+        /// <param name="stateTransitionTime">The time at which the compute
+        /// node entered its current state.</param>
+        /// <param name="lastBootTime">The time at which the compute node was
+        /// started.</param>
+        /// <param name="allocationTime">The time at which this compute node
+        /// was allocated to the pool.</param>
+        /// <param name="ipAddress">The IP address that other compute nodes
+        /// can use to communicate with this compute node.</param>
+        /// <param name="affinityId">An identifier which can be passed in the
+        /// Add Task API to request that the task be scheduled close to this
+        /// compute node.</param>
+        /// <param name="vmSize">The size of the virtual machine hosting the
+        /// compute node.</param>
+        /// <param name="totalTasksRun">The total number of job tasks
+        /// completed on the compute node. This includes Job Preparation, Job
+        /// Release and Job Manager tasks, but not the pool start
+        /// task.</param>
+        /// <param name="runningTasksCount">The total number of currently
+        /// running job tasks on the compute node. This includes Job
+        /// Preparation, Job Release, and Job Manager tasks, but not the pool
+        /// start task.</param>
+        /// <param name="totalTasksSucceeded">The total number of job tasks
+        /// which completed successfully (with exitCode 0) on the compute
+        /// node. This includes Job Preparation, Job Release, and Job Manager
+        /// tasks, but not the pool start task.</param>
+        /// <param name="recentTasks">The list of tasks that are currently
+        /// running on the compute node.</param>
+        /// <param name="startTask">The task specified to run on the compute
+        /// node as it joins the pool.</param>
+        /// <param name="startTaskInfo">Runtime information about the
+        /// execution of the start task on the compute node.</param>
+        /// <param name="certificateReferences">The list of certificates
+        /// installed on the compute node.</param>
+        /// <param name="errors">The list of errors that are currently being
+        /// encountered by the compute node.</param>
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IList<TaskInformation> recentTasks = default(System.Collections.Generic.IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ComputeNodeError> errors = default(System.Collections.Generic.IList<ComputeNodeError>))
         {
             Id = id;
             Url = url;
@@ -82,13 +98,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the id of the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
@@ -100,7 +116,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 'waitingforstarttask', 'starttaskfailed', 'unknown',
         /// 'leavingpool', 'offline'
         /// </remarks>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }
 
         /// <summary>
@@ -110,48 +126,48 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'enabled', 'disabled'
         /// </remarks>
-        [JsonProperty(PropertyName = "schedulingState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingState")]
         public SchedulingState? SchedulingState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the compute node entered its
         /// current state.
         /// </summary>
-        [JsonProperty(PropertyName = "stateTransitionTime")]
-        public DateTime? StateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the compute node was started.
         /// </summary>
-        [JsonProperty(PropertyName = "lastBootTime")]
-        public DateTime? LastBootTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastBootTime")]
+        public System.DateTime? LastBootTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which this compute node was allocated to
         /// the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "allocationTime")]
-        public DateTime? AllocationTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "allocationTime")]
+        public System.DateTime? AllocationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the IP address that other compute nodes can use to
         /// communicate with this compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "ipAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets an identifier which can be passed in the Add Task API
         /// to request that the task be scheduled close to this compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "affinityId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the virtual machine hosting the compute
         /// node.
         /// </summary>
-        [JsonProperty(PropertyName = "vmSize")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
@@ -159,7 +175,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node. This includes Job Preparation, Job Release and Job
         /// Manager tasks, but not the pool start task.
         /// </summary>
-        [JsonProperty(PropertyName = "totalTasksRun")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalTasksRun")]
         public int? TotalTasksRun { get; set; }
 
         /// <summary>
@@ -167,7 +183,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the compute node. This includes Job Preparation, Job Release, and
         /// Job Manager tasks, but not the pool start task.
         /// </summary>
-        [JsonProperty(PropertyName = "runningTasksCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runningTasksCount")]
         public int? RunningTasksCount { get; set; }
 
         /// <summary>
@@ -176,48 +192,48 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job Preparation, Job Release, and Job Manager tasks, but not the
         /// pool start task.
         /// </summary>
-        [JsonProperty(PropertyName = "totalTasksSucceeded")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalTasksSucceeded")]
         public int? TotalTasksSucceeded { get; set; }
 
         /// <summary>
         /// Gets or sets the list of tasks that are currently running on the
         /// compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "recentTasks")]
-        public IList<TaskInformation> RecentTasks { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "recentTasks")]
+        public System.Collections.Generic.IList<TaskInformation> RecentTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the task specified to run on the compute node as it
         /// joins the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "startTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
         /// Gets or sets runtime information about the execution of the start
         /// task on the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "startTaskInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTaskInfo")]
         public StartTaskInformation StartTaskInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the list of certificates installed on the compute
         /// node.
         /// </summary>
-        [JsonProperty(PropertyName = "certificateReferences")]
-        public IList<CertificateReference> CertificateReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
+        public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of errors that are currently being
         /// encountered by the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "errors")]
-        public IList<ComputeNodeError> Errors { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "errors")]
+        public System.Collections.Generic.IList<ComputeNodeError> Errors { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

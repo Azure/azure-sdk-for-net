@@ -31,12 +31,29 @@ namespace AzureRedisCache.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+                var _redisCacheManagementHelper = new RedisCacheManagementHelper(this, context);
+                _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
+                var resourceGroupName = TestUtilities.GenerateName("redisCacheRGsunnyjapan");
+                var redisCacheName = TestUtilities.GenerateName("sunny-scheduling-dv2");
+                var location = "Japan West";
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
+                _redisCacheManagementHelper.TryCreateResourceGroup(resourceGroupName, location);
+                _client.Redis.Create(resourceGroupName, redisCacheName,
+                                        parameters: new RedisCreateParameters
+                                        {
+                                            Location = location,
+                                            Sku = new Sku()
+                                            {
+                                                Name = SkuName.Premium,
+                                                Family = SkuFamily.P,
+                                                Capacity = 1
+                                            }
+                                        });
 
                 // First try to get cache and verify that it is premium cache
-                RedisResource response = _client.Redis.Get(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2");
-                Assert.Contains("sunny-scheduling-dv2", response.Id);
-                Assert.Equal("sunny-scheduling-dv2", response.Name);
+                RedisResource response = _client.Redis.Get(resourceGroupName, redisCacheName);
+                Assert.Contains(redisCacheName, response.Id);
+                Assert.Equal(redisCacheName, response.Name);
                 Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
@@ -57,19 +74,27 @@ namespace AzureRedisCache.Tests
                     }
                 };
 
-                ValidateResponseForSchedulePatch(_client.PatchSchedules.CreateOrUpdate(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2", parameters: new RedisPatchSchedulesRequest(entries)));
-                ValidateResponseForSchedulePatch(_client.PatchSchedules.Get(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2"));
-                _client.PatchSchedules.Delete(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2");
-                var ex = Assert.Throws<CloudException>(() => _client.PatchSchedules.Get(resourceGroupName: "sunnyjapan", name: "sunny-scheduling-dv2"));
-                Assert.Contains("There are no patch schedules found for redis cache 'sunny-scheduling-dv2'", ex.Message);
-                Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                ValidateResponseForSchedulePatch(
+                    _client.PatchSchedules.CreateOrUpdate(
+                        resourceGroupName, 
+                        redisCacheName, 
+                        parameters: 
+                        new RedisPatchSchedule(entries)), 
+                    redisCacheName);
+                ValidateResponseForSchedulePatch(
+                    _client.PatchSchedules.Get(resourceGroupName, redisCacheName),
+                    redisCacheName);
+
+                _client.PatchSchedules.Delete(resourceGroupName, redisCacheName);
+                var schedules = _client.PatchSchedules.Get(resourceGroupName, redisCacheName);
+                Assert.Null(schedules);
             }
         }
 
-        private void ValidateResponseForSchedulePatch(RedisPatchSchedulesResponse schedulesSet)
+        private void ValidateResponseForSchedulePatch(RedisPatchSchedule schedulesSet, string redisName)
         {
-            Assert.Contains("sunny-scheduling-dv2/patchSchedules/default", schedulesSet.Id);
-            Assert.Contains("sunny-scheduling-dv2/default", schedulesSet.Name);
+            Assert.Contains(redisName + "/patchSchedules/default", schedulesSet.Id);
+            Assert.Contains(redisName + "/default", schedulesSet.Name);
             Assert.Contains("Microsoft.Cache/Redis/PatchSchedules", schedulesSet.Type);
             Assert.Equal(2, schedulesSet.ScheduleEntries.Count);
             foreach (var schedule in schedulesSet.ScheduleEntries)

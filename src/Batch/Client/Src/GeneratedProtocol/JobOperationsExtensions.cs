@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for JobOperations.
@@ -48,7 +43,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobStatistics GetAllJobsLifetimeStatistics(this IJobOperations operations, JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetAllJobsLifetimeStatisticsAsync(jobGetAllJobsLifetimeStatisticsOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).GetAllJobsLifetimeStatisticsAsync(jobGetAllJobsLifetimeStatisticsOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -68,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobStatistics> GetAllJobsLifetimeStatisticsAsync(this IJobOperations operations, JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobStatistics> GetAllJobsLifetimeStatisticsAsync(this IJobOperations operations, JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetAllJobsLifetimeStatisticsWithHttpMessagesAsync(jobGetAllJobsLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -90,7 +85,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobDeleteHeaders Delete(this IJobOperations operations, string jobId, JobDeleteOptions jobDeleteOptions = default(JobDeleteOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).DeleteAsync(jobId, jobDeleteOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).DeleteAsync(jobId, jobDeleteOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,7 +103,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDeleteHeaders> DeleteAsync(this IJobOperations operations, string jobId, JobDeleteOptions jobDeleteOptions = default(JobDeleteOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobDeleteHeaders> DeleteAsync(this IJobOperations operations, string jobId, JobDeleteOptions jobDeleteOptions = default(JobDeleteOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(jobId, jobDeleteOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -130,7 +125,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CloudJob Get(this IJobOperations operations, string jobId, JobGetOptions jobGetOptions = default(JobGetOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(jobId, jobGetOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(jobId, jobGetOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,7 +143,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CloudJob> GetAsync(this IJobOperations operations, string jobId, JobGetOptions jobGetOptions = default(JobGetOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<CloudJob> GetAsync(this IJobOperations operations, string jobId, JobGetOptions jobGetOptions = default(JobGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(jobId, jobGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -173,7 +168,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobPatchHeaders Patch(this IJobOperations operations, string jobId, JobPatchParameter jobPatchParameter, JobPatchOptions jobPatchOptions = default(JobPatchOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).PatchAsync(jobId, jobPatchParameter, jobPatchOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).PatchAsync(jobId, jobPatchParameter, jobPatchOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,7 +189,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobPatchHeaders> PatchAsync(this IJobOperations operations, string jobId, JobPatchParameter jobPatchParameter, JobPatchOptions jobPatchOptions = default(JobPatchOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobPatchHeaders> PatchAsync(this IJobOperations operations, string jobId, JobPatchParameter jobPatchParameter, JobPatchOptions jobPatchOptions = default(JobPatchOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.PatchWithHttpMessagesAsync(jobId, jobPatchParameter, jobPatchOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -219,7 +214,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobUpdateHeaders Update(this IJobOperations operations, string jobId, JobUpdateParameter jobUpdateParameter, JobUpdateOptions jobUpdateOptions = default(JobUpdateOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).UpdateAsync(jobId, jobUpdateParameter, jobUpdateOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).UpdateAsync(jobId, jobUpdateParameter, jobUpdateOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -240,7 +235,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobUpdateHeaders> UpdateAsync(this IJobOperations operations, string jobId, JobUpdateParameter jobUpdateParameter, JobUpdateOptions jobUpdateOptions = default(JobUpdateOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobUpdateHeaders> UpdateAsync(this IJobOperations operations, string jobId, JobUpdateParameter jobUpdateParameter, JobUpdateOptions jobUpdateOptions = default(JobUpdateOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(jobId, jobUpdateParameter, jobUpdateOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -266,7 +261,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobDisableHeaders Disable(this IJobOperations operations, string jobId, DisableJobOption disableTasks, JobDisableOptions jobDisableOptions = default(JobDisableOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).DisableAsync(jobId, disableTasks, jobDisableOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).DisableAsync(jobId, disableTasks, jobDisableOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -288,7 +283,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDisableHeaders> DisableAsync(this IJobOperations operations, string jobId, DisableJobOption disableTasks, JobDisableOptions jobDisableOptions = default(JobDisableOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobDisableHeaders> DisableAsync(this IJobOperations operations, string jobId, DisableJobOption disableTasks, JobDisableOptions jobDisableOptions = default(JobDisableOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DisableWithHttpMessagesAsync(jobId, disableTasks, jobDisableOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -310,7 +305,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobEnableHeaders Enable(this IJobOperations operations, string jobId, JobEnableOptions jobEnableOptions = default(JobEnableOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).EnableAsync(jobId, jobEnableOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).EnableAsync(jobId, jobEnableOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -328,7 +323,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobEnableHeaders> EnableAsync(this IJobOperations operations, string jobId, JobEnableOptions jobEnableOptions = default(JobEnableOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobEnableHeaders> EnableAsync(this IJobOperations operations, string jobId, JobEnableOptions jobEnableOptions = default(JobEnableOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.EnableWithHttpMessagesAsync(jobId, jobEnableOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -354,7 +349,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobTerminateHeaders Terminate(this IJobOperations operations, string jobId, string terminateReason = default(string), JobTerminateOptions jobTerminateOptions = default(JobTerminateOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).TerminateAsync(jobId, terminateReason, jobTerminateOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).TerminateAsync(jobId, terminateReason, jobTerminateOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -376,7 +371,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobTerminateHeaders> TerminateAsync(this IJobOperations operations, string jobId, string terminateReason = default(string), JobTerminateOptions jobTerminateOptions = default(JobTerminateOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobTerminateHeaders> TerminateAsync(this IJobOperations operations, string jobId, string terminateReason = default(string), JobTerminateOptions jobTerminateOptions = default(JobTerminateOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.TerminateWithHttpMessagesAsync(jobId, terminateReason, jobTerminateOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -398,7 +393,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static JobAddHeaders Add(this IJobOperations operations, JobAddParameter job, JobAddOptions jobAddOptions = default(JobAddOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).AddAsync(job, jobAddOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).AddAsync(job, jobAddOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -416,7 +411,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobAddHeaders> AddAsync(this IJobOperations operations, JobAddParameter job, JobAddOptions jobAddOptions = default(JobAddOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobAddHeaders> AddAsync(this IJobOperations operations, JobAddParameter job, JobAddOptions jobAddOptions = default(JobAddOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.AddWithHttpMessagesAsync(job, jobAddOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -433,9 +428,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<CloudJob> List(this IJobOperations operations, JobListOptions jobListOptions = default(JobListOptions))
+            public static Microsoft.Rest.Azure.IPage<CloudJob> List(this IJobOperations operations, JobListOptions jobListOptions = default(JobListOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(jobListOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(jobListOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -450,7 +445,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CloudJob>> ListAsync(this IJobOperations operations, JobListOptions jobListOptions = default(JobListOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CloudJob>> ListAsync(this IJobOperations operations, JobListOptions jobListOptions = default(JobListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(jobListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -470,9 +465,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobListFromJobScheduleOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<CloudJob> ListFromJobSchedule(this IJobOperations operations, string jobScheduleId, JobListFromJobScheduleOptions jobListFromJobScheduleOptions = default(JobListFromJobScheduleOptions))
+            public static Microsoft.Rest.Azure.IPage<CloudJob> ListFromJobSchedule(this IJobOperations operations, string jobScheduleId, JobListFromJobScheduleOptions jobListFromJobScheduleOptions = default(JobListFromJobScheduleOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListFromJobScheduleAsync(jobScheduleId, jobListFromJobScheduleOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListFromJobScheduleAsync(jobScheduleId, jobListFromJobScheduleOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -490,7 +485,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CloudJob>> ListFromJobScheduleAsync(this IJobOperations operations, string jobScheduleId, JobListFromJobScheduleOptions jobListFromJobScheduleOptions = default(JobListFromJobScheduleOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CloudJob>> ListFromJobScheduleAsync(this IJobOperations operations, string jobScheduleId, JobListFromJobScheduleOptions jobListFromJobScheduleOptions = default(JobListFromJobScheduleOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFromJobScheduleWithHttpMessagesAsync(jobScheduleId, jobListFromJobScheduleOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -511,9 +506,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobListPreparationAndReleaseTaskStatusOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<JobPreparationAndReleaseTaskExecutionInformation> ListPreparationAndReleaseTaskStatus(this IJobOperations operations, string jobId, JobListPreparationAndReleaseTaskStatusOptions jobListPreparationAndReleaseTaskStatusOptions = default(JobListPreparationAndReleaseTaskStatusOptions))
+            public static Microsoft.Rest.Azure.IPage<JobPreparationAndReleaseTaskExecutionInformation> ListPreparationAndReleaseTaskStatus(this IJobOperations operations, string jobId, JobListPreparationAndReleaseTaskStatusOptions jobListPreparationAndReleaseTaskStatusOptions = default(JobListPreparationAndReleaseTaskStatusOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListPreparationAndReleaseTaskStatusAsync(jobId, jobListPreparationAndReleaseTaskStatusOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListPreparationAndReleaseTaskStatusAsync(jobId, jobListPreparationAndReleaseTaskStatusOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -532,7 +527,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobPreparationAndReleaseTaskExecutionInformation>> ListPreparationAndReleaseTaskStatusAsync(this IJobOperations operations, string jobId, JobListPreparationAndReleaseTaskStatusOptions jobListPreparationAndReleaseTaskStatusOptions = default(JobListPreparationAndReleaseTaskStatusOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<JobPreparationAndReleaseTaskExecutionInformation>> ListPreparationAndReleaseTaskStatusAsync(this IJobOperations operations, string jobId, JobListPreparationAndReleaseTaskStatusOptions jobListPreparationAndReleaseTaskStatusOptions = default(JobListPreparationAndReleaseTaskStatusOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListPreparationAndReleaseTaskStatusWithHttpMessagesAsync(jobId, jobListPreparationAndReleaseTaskStatusOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -552,9 +547,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<CloudJob> ListNext(this IJobOperations operations, string nextPageLink, JobListNextOptions jobListNextOptions = default(JobListNextOptions))
+            public static Microsoft.Rest.Azure.IPage<CloudJob> ListNext(this IJobOperations operations, string nextPageLink, JobListNextOptions jobListNextOptions = default(JobListNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListNextAsync(nextPageLink, jobListNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListNextAsync(nextPageLink, jobListNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -572,7 +567,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CloudJob>> ListNextAsync(this IJobOperations operations, string nextPageLink, JobListNextOptions jobListNextOptions = default(JobListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CloudJob>> ListNextAsync(this IJobOperations operations, string nextPageLink, JobListNextOptions jobListNextOptions = default(JobListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, jobListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -592,9 +587,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobListFromJobScheduleNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<CloudJob> ListFromJobScheduleNext(this IJobOperations operations, string nextPageLink, JobListFromJobScheduleNextOptions jobListFromJobScheduleNextOptions = default(JobListFromJobScheduleNextOptions))
+            public static Microsoft.Rest.Azure.IPage<CloudJob> ListFromJobScheduleNext(this IJobOperations operations, string nextPageLink, JobListFromJobScheduleNextOptions jobListFromJobScheduleNextOptions = default(JobListFromJobScheduleNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListFromJobScheduleNextAsync(nextPageLink, jobListFromJobScheduleNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListFromJobScheduleNextAsync(nextPageLink, jobListFromJobScheduleNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -612,7 +607,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CloudJob>> ListFromJobScheduleNextAsync(this IJobOperations operations, string nextPageLink, JobListFromJobScheduleNextOptions jobListFromJobScheduleNextOptions = default(JobListFromJobScheduleNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CloudJob>> ListFromJobScheduleNextAsync(this IJobOperations operations, string nextPageLink, JobListFromJobScheduleNextOptions jobListFromJobScheduleNextOptions = default(JobListFromJobScheduleNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFromJobScheduleNextWithHttpMessagesAsync(nextPageLink, jobListFromJobScheduleNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -633,9 +628,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='jobListPreparationAndReleaseTaskStatusNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<JobPreparationAndReleaseTaskExecutionInformation> ListPreparationAndReleaseTaskStatusNext(this IJobOperations operations, string nextPageLink, JobListPreparationAndReleaseTaskStatusNextOptions jobListPreparationAndReleaseTaskStatusNextOptions = default(JobListPreparationAndReleaseTaskStatusNextOptions))
+            public static Microsoft.Rest.Azure.IPage<JobPreparationAndReleaseTaskExecutionInformation> ListPreparationAndReleaseTaskStatusNext(this IJobOperations operations, string nextPageLink, JobListPreparationAndReleaseTaskStatusNextOptions jobListPreparationAndReleaseTaskStatusNextOptions = default(JobListPreparationAndReleaseTaskStatusNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListPreparationAndReleaseTaskStatusNextAsync(nextPageLink, jobListPreparationAndReleaseTaskStatusNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListPreparationAndReleaseTaskStatusNextAsync(nextPageLink, jobListPreparationAndReleaseTaskStatusNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -654,7 +649,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobPreparationAndReleaseTaskExecutionInformation>> ListPreparationAndReleaseTaskStatusNextAsync(this IJobOperations operations, string nextPageLink, JobListPreparationAndReleaseTaskStatusNextOptions jobListPreparationAndReleaseTaskStatusNextOptions = default(JobListPreparationAndReleaseTaskStatusNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<JobPreparationAndReleaseTaskExecutionInformation>> ListPreparationAndReleaseTaskStatusNextAsync(this IJobOperations operations, string nextPageLink, JobListPreparationAndReleaseTaskStatusNextOptions jobListPreparationAndReleaseTaskStatusNextOptions = default(JobListPreparationAndReleaseTaskStatusNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListPreparationAndReleaseTaskStatusNextWithHttpMessagesAsync(nextPageLink, jobListPreparationAndReleaseTaskStatusNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

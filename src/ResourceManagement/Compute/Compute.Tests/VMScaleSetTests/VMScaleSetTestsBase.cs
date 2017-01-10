@@ -66,7 +66,7 @@ namespace Compute.Tests
                     Capacity = 2,
                     Name = VirtualMachineSizeTypes.StandardA0,
                 },
-                OverProvision = false,
+                Overprovision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
                     Mode = UpgradeMode.Automatic

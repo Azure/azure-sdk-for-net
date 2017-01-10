@@ -20,11 +20,8 @@ For technical overview, see http://azure.microsoft.com/documentation/articles/ba
 API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</description>
     <summary>The client library for the Microsoft Azure Batch service.</summary>
     <releaseNotes>
-Bug fixes:
-- Fixed bug CommitChanges would incorrectly include elements in the request which did not actually change.
-
-This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
-        </releaseNotes>
+For detailed release notes, see https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/src/Batch/Client/changelog.md
+    </releaseNotes>
     <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">

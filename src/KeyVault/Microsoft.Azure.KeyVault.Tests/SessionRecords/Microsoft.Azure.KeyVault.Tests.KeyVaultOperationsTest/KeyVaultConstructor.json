@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/keys?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "41c003c9-fe04-4533-8181-afcf5a4d2abb"
+        ],
+        "accept-language": [
+          "en-US"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/createManualEnrollmentJava4\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"nbf\": 1469048531,\r\n        \"exp\": 1500585131,\r\n        \"created\": 1469049131,\r\n        \"updated\": 1469049131\r\n      },\r\n      \"managed\": true\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/createManualEnrollmentJava6\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"nbf\": 1469567919,\r\n        \"exp\": 1501104519,\r\n        \"created\": 1469568520,\r\n        \"updated\": 1469568520\r\n      },\r\n      \"managed\": true\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/createManualEnrollmentJava7\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"nbf\": 1469568292,\r\n        \"exp\": 1501104892,\r\n        \"created\": 1469568892,\r\n        \"updated\": 1469568892\r\n      },\r\n      \"managed\": true\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/createManualEnrollmentJava8\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"nbf\": 1469569754,\r\n        \"exp\": 1501106354,\r\n        \"created\": 1469570354,\r\n        \"updated\": 1469570354\r\n      },\r\n      \"managed\": true\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/createManualEnrollmentJava9\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"nbf\": 1469574262,\r\n        \"exp\": 1501110862,\r\n        \"created\": 1469574863,\r\n        \"updated\": 1469574863\r\n      },\r\n      \"managed\": true\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/listkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1478201850,\r\n        \"updated\": 1478201850\r\n      }\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/listkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1478201851,\r\n        \"updated\": 1478201851\r\n      }\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/listkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1478201851,\r\n        \"updated\": 1478201851\r\n      }\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/listkeyversionstest\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1478201844,\r\n        \"updated\": 1478201844\r\n      }\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/sdktestkey\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1478564458,\r\n        \"updated\": 1478564458\r\n      }\r\n    },\r\n    {\r\n      \"kid\": \"https://sdktestvault0511.vault.azure.net/keys/UnknownIssuerCert\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"nbf\": 1469493191,\r\n        \"exp\": 1501029791,\r\n        \"created\": 1469493792,\r\n        \"updated\": 1469493792\r\n      },\r\n      \"managed\": true\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1957"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Nov 2016 00:20:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "East US"
+        ],
+        "x-ms-request-id": [
+          "dae84c87-8253-48d5-a09e-25b9db40ad58"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.783"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "VaultAddress": "https://sdktestvault0511.vault.azure.net",
+    "KeyName": "sdktestkey",
+    "KeyVersion": "70af9ac375194d018c0c7a0ef35b1d56"
+  }
+}

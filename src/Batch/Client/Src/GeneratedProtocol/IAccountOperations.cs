@@ -18,12 +18,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -47,13 +41,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusWithHttpMessagesAsync(AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusWithHttpMessagesAsync(AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all node agent SKUs supported by the Azure Batch service.
         /// </summary>
@@ -72,12 +66,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusNextWithHttpMessagesAsync(string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusNextWithHttpMessagesAsync(string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

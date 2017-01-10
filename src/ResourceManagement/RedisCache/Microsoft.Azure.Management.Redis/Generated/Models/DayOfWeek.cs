@@ -8,21 +8,30 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DayOfWeek.
     /// </summary>
-    public static class DayOfWeek
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum DayOfWeek
     {
-        public const string Monday = "Monday";
-        public const string Tuesday = "Tuesday";
-        public const string Wednesday = "Wednesday";
-        public const string Thursday = "Thursday";
-        public const string Friday = "Friday";
-        public const string Saturday = "Saturday";
-        public const string Sunday = "Sunday";
+        [System.Runtime.Serialization.EnumMember(Value = "Monday")]
+        Monday,
+        [System.Runtime.Serialization.EnumMember(Value = "Tuesday")]
+        Tuesday,
+        [System.Runtime.Serialization.EnumMember(Value = "Wednesday")]
+        Wednesday,
+        [System.Runtime.Serialization.EnumMember(Value = "Thursday")]
+        Thursday,
+        [System.Runtime.Serialization.EnumMember(Value = "Friday")]
+        Friday,
+        [System.Runtime.Serialization.EnumMember(Value = "Saturday")]
+        Saturday,
+        [System.Runtime.Serialization.EnumMember(Value = "Sunday")]
+        Sunday,
+        [System.Runtime.Serialization.EnumMember(Value = "Everyday")]
+        Everyday,
+        [System.Runtime.Serialization.EnumMember(Value = "Weekend")]
+        Weekend
     }
 }

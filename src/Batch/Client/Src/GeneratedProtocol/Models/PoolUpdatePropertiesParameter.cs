@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudPoolOperations.UpdateProperties request.
@@ -41,11 +35,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolUpdatePropertiesParameter
         /// class.
         /// </summary>
-        /// <param name="certificateReferences">A list of certificates to be installed on each compute node in the pool.</param>
-        /// <param name="applicationPackageReferences">A list of application packages to be installed on each compute node in the pool.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the pool as metadata.</param>
-        /// <param name="startTask">A task to run on each compute node as it joins the pool.</param>
-        public PoolUpdatePropertiesParameter(IList<CertificateReference> certificateReferences, IList<ApplicationPackageReference> applicationPackageReferences, IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
+        /// <param name="certificateReferences">A list of certificates to be
+        /// installed on each compute node in the pool.</param>
+        /// <param name="applicationPackageReferences">A list of application
+        /// packages to be installed on each compute node in the pool.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the pool as metadata.</param>
+        /// <param name="startTask">A task to run on each compute node as it
+        /// joins the pool.</param>
+        public PoolUpdatePropertiesParameter(System.Collections.Generic.IList<CertificateReference> certificateReferences, System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences, System.Collections.Generic.IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
         {
             StartTask = startTask;
             CertificateReferences = certificateReferences;
@@ -60,7 +58,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, any existing start task is removed from the pool.
         /// </remarks>
-        [JsonProperty(PropertyName = "startTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
@@ -71,8 +69,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you specify an empty collection, any existing certificate
         /// references are removed from the pool.
         /// </remarks>
-        [JsonProperty(PropertyName = "certificateReferences")]
-        public IList<CertificateReference> CertificateReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
+        public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
         /// Gets or sets a list of application packages to be installed on
@@ -82,8 +80,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you specify an empty collection, any existing application
         /// packages references are removed from the pool.
         /// </remarks>
-        [JsonProperty(PropertyName = "applicationPackageReferences")]
-        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
+        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool
@@ -93,28 +91,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you specify an empty collection, any existing metadata is
         /// removed from the pool.
         /// </remarks>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (CertificateReferences == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CertificateReferences");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CertificateReferences");
             }
             if (ApplicationPackageReferences == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationPackageReferences");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ApplicationPackageReferences");
             }
             if (Metadata == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Metadata");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Metadata");
             }
             if (this.StartTask != null)
             {

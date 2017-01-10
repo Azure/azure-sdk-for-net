@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Result for a single task added as part of an add task collection
@@ -41,12 +35,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the TaskAddResult class.
         /// </summary>
         /// <param name="status">The status of the add task request.</param>
-        /// <param name="taskId">The id of the task for which this is the result.</param>
-        /// <param name="eTag">The ETag of the task, if the task was successfully added.</param>
-        /// <param name="lastModified">The last modified time of the task.</param>
-        /// <param name="location">The URL of the task, if the task was successfully added.</param>
-        /// <param name="error">The error encountered while attempting to add the task.</param>
-        public TaskAddResult(TaskAddStatus status, string taskId, string eTag = default(string), DateTime? lastModified = default(DateTime?), string location = default(string), BatchError error = default(BatchError))
+        /// <param name="taskId">The id of the task for which this is the
+        /// result.</param>
+        /// <param name="eTag">The ETag of the task, if the task was
+        /// successfully added.</param>
+        /// <param name="lastModified">The last modified time of the
+        /// task.</param>
+        /// <param name="location">The URL of the task, if the task was
+        /// successfully added.</param>
+        /// <param name="error">The error encountered while attempting to add
+        /// the task.</param>
+        public TaskAddResult(TaskAddStatus status, string taskId, string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), string location = default(string), BatchError error = default(BatchError))
         {
             Status = status;
             TaskId = taskId;
@@ -63,53 +62,53 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'success', 'clienterror', 'servererror',
         /// 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "status")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "status")]
         public TaskAddStatus Status { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the task for which this is the result.
         /// </summary>
-        [JsonProperty(PropertyName = "taskId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskId")]
         public string TaskId { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the task, if the task was successfully
         /// added.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
+        public System.DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the task, if the task was successfully
         /// added.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the error encountered while attempting to add the
         /// task.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "error")]
         public BatchError Error { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (TaskId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TaskId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TaskId");
             }
         }
     }

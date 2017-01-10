@@ -1,4 +1,8 @@
-﻿using Microsoft.Azure;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Rest;
@@ -14,7 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AzureRedisCache.Tests
+namespace AzureRedisCache.Tests.InMemoryTests
 {
     public class RegenerateKeyTests
     {
@@ -23,7 +27,7 @@ namespace AzureRedisCache.Tests
         {
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(null, requestIdHeader, HttpStatusCode.OK);
-            RedisListKeysResult response = client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary });
+            var response = client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary });
         }
 
         [Fact]

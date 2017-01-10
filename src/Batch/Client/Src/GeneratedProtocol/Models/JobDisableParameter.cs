@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobOperations.Disable request.
@@ -39,7 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobDisableParameter class.
         /// </summary>
-        /// <param name="disableTasks">What to do with active tasks associated with the job.</param>
+        /// <param name="disableTasks">What to do with active tasks associated
+        /// with the job.</param>
         public JobDisableParameter(DisableJobOption disableTasks)
         {
             DisableTasks = disableTasks;
@@ -51,13 +46,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'requeue', 'terminate', 'wait'
         /// </remarks>
-        [JsonProperty(PropertyName = "disableTasks")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "disableTasks")]
         public DisableJobOption DisableTasks { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Search.Models
     /// option. Matching is greedy (longest pattern matching at a given point
     /// wins). Replacement is allowed to be the empty string. This character
     /// filter is implemented using Apache Lucene.
-    /// <see href="*https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/MappingCharFilter.html" />
+    /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/MappingCharFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.MappingCharFilter")]
     public partial class MappingCharFilter : CharFilter

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobOperations.EvaluateAutoScale request.
@@ -41,7 +35,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolEvaluateAutoScaleParameter
         /// class.
         /// </summary>
-        /// <param name="autoScaleFormula">A formula for the desired number of compute nodes in the pool.</param>
+        /// <param name="autoScaleFormula">A formula for the desired number of
+        /// compute nodes in the pool.</param>
         public PoolEvaluateAutoScaleParameter(string autoScaleFormula)
         {
             AutoScaleFormula = autoScaleFormula;
@@ -51,20 +46,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a formula for the desired number of compute nodes in
         /// the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "autoScaleFormula")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (AutoScaleFormula == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AutoScaleFormula");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AutoScaleFormula");
             }
         }
     }

@@ -81,6 +81,7 @@
     public partial class TaskGetOptions : ITimeoutOptions, IODataSelect, IODataExpand { }
     public partial class TaskListOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }
     public partial class TaskListNextOptions : IOptions { }
+    public partial class TaskReactivateOptions : ITimeoutOptions { }
     public partial class TaskTerminateOptions : ITimeoutOptions { }
     public partial class TaskUpdateOptions : ITimeoutOptions { }
     public partial class TaskListSubtasksOptions : ITimeoutOptions, IODataSelect { }

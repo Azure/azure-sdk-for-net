@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The network configuration for a pool.
@@ -39,7 +33,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NetworkConfiguration class.
         /// </summary>
-        /// <param name="subnetId">The ARM resource identifier of the virtual network subnet which the compute nodes of the pool will join. The virtual network must be in the same region and subscription as the Azure Batch account. This property can only be specified for pools created with a cloudServiceConfiguration.</param>
+        /// <param name="subnetId">The ARM resource identifier of the virtual
+        /// network subnet which the compute nodes of the pool will join. The
+        /// virtual network must be in the same region and subscription as
+        /// the Azure Batch account. This property can only be specified for
+        /// pools created with a cloudServiceConfiguration.</param>
         public NetworkConfiguration(string subnetId = default(string))
         {
             SubnetId = subnetId;
@@ -52,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch account. This property can only be specified for pools
         /// created with a cloudServiceConfiguration.
         /// </summary>
-        [JsonProperty(PropertyName = "subnetId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subnetId")]
         public string SubnetId { get; set; }
 
     }

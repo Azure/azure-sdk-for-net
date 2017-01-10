@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies details of the jobs to be created on a schedule.
@@ -39,17 +33,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSpecification class.
         /// </summary>
-        /// <param name="poolInfo">The pool on which the Batch service runs the tasks of jobs created under this schedule.</param>
-        /// <param name="priority">The priority of jobs created under this schedule.</param>
-        /// <param name="displayName">The display name for jobs created under this schedule.</param>
-        /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
-        /// <param name="constraints">The execution constraints for jobs created under this schedule.</param>
-        /// <param name="jobManagerTask">The details of a Job Manager task to be launched when a job is started under this schedule.</param>
-        /// <param name="jobPreparationTask">The Job Preparation task for jobs created under this schedule.</param>
-        /// <param name="jobReleaseTask">The Job Release task for jobs created under this schedule.</param>
-        /// <param name="commonEnvironmentSettings">A list of common environment variable settings. These environment variables are set for all tasks in jobs created under this schedule (including the Job Manager, Job Preparation and Job Release tasks).</param>
-        /// <param name="metadata">A list of name-value pairs associated with each job created under this schedule as metadata.</param>
-        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="poolInfo">The pool on which the Batch service runs
+        /// the tasks of jobs created under this schedule.</param>
+        /// <param name="priority">The priority of jobs created under this
+        /// schedule.</param>
+        /// <param name="displayName">The display name for jobs created under
+        /// this schedule.</param>
+        /// <param name="usesTaskDependencies">The flag that determines if
+        /// this job will use tasks with dependencies.</param>
+        /// <param name="constraints">The execution constraints for jobs
+        /// created under this schedule.</param>
+        /// <param name="jobManagerTask">The details of a Job Manager task to
+        /// be launched when a job is started under this schedule.</param>
+        /// <param name="jobPreparationTask">The Job Preparation task for jobs
+        /// created under this schedule.</param>
+        /// <param name="jobReleaseTask">The Job Release task for jobs created
+        /// under this schedule.</param>
+        /// <param name="commonEnvironmentSettings">A list of common
+        /// environment variable settings. These environment variables are
+        /// set for all tasks in jobs created under this schedule (including
+        /// the Job Manager, Job Preparation and Job Release tasks).</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// each job created under this schedule as metadata.</param>
+        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), System.Collections.Generic.IList<EnvironmentSetting> commonEnvironmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Priority = priority;
             DisplayName = displayName;
@@ -71,7 +77,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the lowest priority and 1000 being the highest priority. The
         /// default value is 0.
         /// </remarks>
-        [JsonProperty(PropertyName = "priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
@@ -81,42 +87,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The name need not be unique and can contain any Unicode characters
         /// up to a maximum length of 1024.
         /// </remarks>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the flag that determines if this job will use tasks
         /// with dependencies.
         /// </summary>
-        [JsonProperty(PropertyName = "usesTaskDependencies")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for jobs created under this
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets the details of a Job Manager task to be launched when
         /// a job is started under this schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobManagerTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Preparation task for jobs created under this
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobPreparationTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Release task for jobs created under this
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobReleaseTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
@@ -125,34 +131,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// this schedule (including the Job Manager, Job Preparation and Job
         /// Release tasks).
         /// </summary>
-        [JsonProperty(PropertyName = "commonEnvironmentSettings")]
-        public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commonEnvironmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the pool on which the Batch service runs the tasks of
         /// jobs created under this schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "poolInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with each job
         /// created under this schedule as metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (PoolInfo == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolInfo");
             }
             if (this.JobManagerTask != null)
             {

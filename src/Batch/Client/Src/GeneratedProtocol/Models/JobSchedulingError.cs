@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An error encountered by the Batch service when scheduling a job.
@@ -39,11 +33,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSchedulingError class.
         /// </summary>
-        /// <param name="category">The category of the job scheduling error.</param>
-        /// <param name="code">An identifier for the job scheduling error. Codes are invariant and are intended to be consumed programmatically.</param>
-        /// <param name="message">A message describing the job scheduling error, intended to be suitable for display in a user interface.</param>
-        /// <param name="details">A list of additional error details related to the scheduling error.</param>
-        public JobSchedulingError(SchedulingErrorCategory category, string code = default(string), string message = default(string), IList<NameValuePair> details = default(IList<NameValuePair>))
+        /// <param name="category">The category of the job scheduling
+        /// error.</param>
+        /// <param name="code">An identifier for the job scheduling error.
+        /// Codes are invariant and are intended to be consumed
+        /// programmatically.</param>
+        /// <param name="message">A message describing the job scheduling
+        /// error, intended to be suitable for display in a user
+        /// interface.</param>
+        /// <param name="details">A list of additional error details related
+        /// to the scheduling error.</param>
+        public JobSchedulingError(SchedulingErrorCategory category, string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> details = default(System.Collections.Generic.IList<NameValuePair>))
         {
             Category = category;
             Code = code;
@@ -57,34 +57,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'usererror', 'servererror', 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "category")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "category")]
         public SchedulingErrorCategory Category { get; set; }
 
         /// <summary>
         /// Gets or sets an identifier for the job scheduling error. Codes are
         /// invariant and are intended to be consumed programmatically.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message describing the job scheduling error,
         /// intended to be suitable for display in a user interface.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets a list of additional error details related to the
         /// scheduling error.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<NameValuePair> Details { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "details")]
+        public System.Collections.Generic.IList<NameValuePair> Details { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

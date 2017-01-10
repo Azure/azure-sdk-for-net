@@ -4,6 +4,7 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -12,6 +13,7 @@ namespace Microsoft.Azure.Search.Models
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PathHierarchyTokenizer")]
+    [Obsolete("This type is obsolete. Please use PathHierarchyTokenizerV2 instead.")]
     public partial class PathHierarchyTokenizer : Tokenizer
     {
         /// <summary>

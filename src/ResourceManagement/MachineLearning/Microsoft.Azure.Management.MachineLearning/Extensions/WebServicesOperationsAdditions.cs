@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public async Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithProperRequestIdAsync(WebService createOrUpdatePayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<WebService> _response = await this.BeginCreateOrUpdateWithHttpMessagesAsync(
-                createOrUpdatePayload, resourceGroupName, webServiceName, null, cancellationToken);
+                resourceGroupName, webServiceName, createOrUpdatePayload, null, cancellationToken);
             try
             {
                 AzureOperationResponse<WebService> operationResult = await this.Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken);
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public async Task<AzureOperationResponse<WebService>> PatchWebServiceWithProperRequestIdAsync(WebService patchPayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<WebService> _response = await BeginPatchWithHttpMessagesAsync(
-                patchPayload, resourceGroupName, webServiceName, customHeaders, cancellationToken);
+                resourceGroupName, webServiceName, patchPayload, customHeaders, cancellationToken);
             try
             {
                 AzureOperationResponse<WebService> operationResult = await this.Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken);

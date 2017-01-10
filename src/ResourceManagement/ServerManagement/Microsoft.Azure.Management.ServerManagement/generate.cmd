@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.16.0-Nightly20160406
+set autoRestVersion=0.17.0-Nightly20161003
 if  "%1" == "" (
     set specFile="https://raw.githubusercontent.com/fearthecowboy/azure-rest-api-specs/master/arm-servermanagement/2015-07-01-preview/servermanagement.json"
 ) else (

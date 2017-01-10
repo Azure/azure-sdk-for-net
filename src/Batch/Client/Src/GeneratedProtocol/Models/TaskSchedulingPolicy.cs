@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies how tasks should be distributed across compute nodes.
@@ -39,7 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskSchedulingPolicy class.
         /// </summary>
-        /// <param name="nodeFillType">How tasks should be distributed across compute nodes</param>
+        /// <param name="nodeFillType">How tasks should be distributed across
+        /// compute nodes</param>
         public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
@@ -51,13 +46,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'spread', 'pack', 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "nodeFillType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeFillType")]
         public ComputeNodeFillType NodeFillType { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

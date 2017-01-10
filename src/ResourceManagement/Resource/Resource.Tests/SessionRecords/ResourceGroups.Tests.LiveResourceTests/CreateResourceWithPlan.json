@@ -1,8 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/SuccessBricks.ClearDB?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Byb3ZpZGVycy9TdWNjZXNzQnJpY2tzLkNsZWFyREI/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/SuccessBricks.ClearDB?api-version=2016-09-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -55,8 +54,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNjQ5OT9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499?api-version=2016-09-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
@@ -116,7 +114,6 @@
     },
     {
       "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499/providers/SuccessBricks.ClearDB//databases/csmr8260?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNjQ5OS9wcm92aWRlcnMvU3VjY2Vzc0JyaWNrcy5DbGVhckRCLy9kYXRhYmFzZXMvY3NtcjgyNjA/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"location\": \"Canada East\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -189,7 +186,6 @@
     },
     {
       "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499/providers/SuccessBricks.ClearDB//databases/csmr8260?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNjQ5OS9wcm92aWRlcnMvU3VjY2Vzc0JyaWNrcy5DbGVhckRCLy9kYXRhYmFzZXMvY3NtcjgyNjA/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

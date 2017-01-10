@@ -44,8 +44,8 @@ namespace AzureRedisCache.Tests
             { 
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
 
-                RedisResourceWithAccessKey responseCreate = _client.Redis.CreateOrUpdate(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
-                                        parameters: new RedisCreateOrUpdateParameters
+                var responseCreate = _client.Redis.Create(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
+                                        parameters: new RedisCreateParameters
                                         {
                                             Location = fixture.Location,
                                             Sku = new Sku()
@@ -61,7 +61,7 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(fixture.RedisCacheName, responseCreate.Name);
                 Assert.Equal("Microsoft.Cache/Redis", responseCreate.Type);
 
-                Assert.True("creating".Equals(responseCreate.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                Assert.True("succeeded".Equals(responseCreate.ProvisioningState, StringComparison.OrdinalIgnoreCase));
                 Assert.Equal(SkuName.Basic, responseCreate.Sku.Name);
                 Assert.Equal(SkuFamily.C, responseCreate.Sku.Family);
                 Assert.Equal(0, responseCreate.Sku.Capacity);
@@ -70,23 +70,10 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(6379, responseCreate.Port);
                 Assert.Equal(6380, responseCreate.SslPort);
                 Assert.False(responseCreate.EnableNonSslPort);
-            
-                // wait for maximum 30 minutes for cache to create
-                for (int i = 0; i < 60; i++)
-                {
-                    TestUtilities.Wait(new TimeSpan(0, 0, 30));
-                    RedisResource responseGet = _client.Redis.Get(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
-                    if ("succeeded".Equals(responseGet.ProvisioningState, StringComparison.OrdinalIgnoreCase))
-                    {
-                        break;
-                    }
-                    Assert.False(i == 60, "Cache is not in succeeded state even after 30 min.");
-                }
 
-                RedisResourceWithAccessKey responseUpdate = _client.Redis.CreateOrUpdate(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
-                                        parameters: new RedisCreateOrUpdateParameters
+                var responseUpdate = _client.Redis.Update(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
+                                        parameters: new RedisUpdateParameters
                                         {
-                                            Location = fixture.Location,
                                             Sku = new Sku()
                                             {
                                                 Name = SkuName.Basic,

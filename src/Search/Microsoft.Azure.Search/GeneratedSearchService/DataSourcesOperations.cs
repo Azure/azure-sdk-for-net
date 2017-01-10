@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Creates a new Azure Search datasource or updates a datasource if it
         /// already exists.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946900.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
         /// The name of the datasource to create or update.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Deletes an Azure Search datasource.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946881.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
         /// The name of the datasource to delete.
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Retrieves a datasource definition from Azure Search.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946893.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Data-Source" />
         /// </summary>
         /// <param name='dataSourceName'>
         /// The name of the datasource to retrieve.
@@ -709,7 +709,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Lists all datasources available for an Azure Search service.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946878.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Data-Sources" />
         /// </summary>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -895,7 +895,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new Azure Search datasource.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn946876.aspx" />
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Data-Source" />
         /// </summary>
         /// <param name='dataSource'>
         /// The definition of the datasource to create.

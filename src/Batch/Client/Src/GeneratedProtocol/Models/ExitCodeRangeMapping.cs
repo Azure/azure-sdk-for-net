@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A range of exit codes and how the Batch service should respond to exit
@@ -42,7 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="start">The first exit code in the range.</param>
         /// <param name="end">The last exit code in the range.</param>
-        /// <param name="exitOptions">An exitOptions specifying how the Batch service should respond if the task exits with an exit code in the range start to end.</param>
+        /// <param name="exitOptions">An exitOptions specifying how the Batch
+        /// service should respond if the task exits with an exit code in the
+        /// range start to end.</param>
         public ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions)
         {
             Start = start;
@@ -53,13 +49,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the first exit code in the range.
         /// </summary>
-        [JsonProperty(PropertyName = "start")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "start")]
         public int Start { get; set; }
 
         /// <summary>
         /// Gets or sets the last exit code in the range.
         /// </summary>
-        [JsonProperty(PropertyName = "end")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "end")]
         public int End { get; set; }
 
         /// <summary>
@@ -67,20 +63,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should respond if the task exits with an exit code in the range
         /// start to end.
         /// </summary>
-        [JsonProperty(PropertyName = "exitOptions")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitOptions")]
         public ExitOptions ExitOptions { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (ExitOptions == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ExitOptions");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ExitOptions");
             }
         }
     }

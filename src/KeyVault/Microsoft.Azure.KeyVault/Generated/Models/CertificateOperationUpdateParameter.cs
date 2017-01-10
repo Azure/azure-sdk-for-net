@@ -17,7 +17,7 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The certificate issuer update parameters.
+    /// The certificate operation update parameters.
     /// </summary>
     public partial class CertificateOperationUpdateParameter
     {

@@ -106,8 +106,8 @@ namespace Networks.Tests
                     },
                 Sku = new ApplicationGatewaySku()
                     {
-                        Name = ApplicationGatewaySkuName.StandardSmall,
-                        Tier = ApplicationGatewayTier.Standard,
+                        Name = ApplicationGatewaySkuName.WAFMedium,
+                        Tier = ApplicationGatewayTier.WAF,
                         Capacity = 2
                     },
                 GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
@@ -376,7 +376,12 @@ namespace Networks.Tests
                         //    }
                         //}
                     },
-                AuthenticationCertificates = authCertList
+                AuthenticationCertificates = authCertList,
+                WebApplicationFirewallConfiguration = new ApplicationGatewayWebApplicationFirewallConfiguration()
+                {
+                    Enabled = true,
+                    FirewallMode = ApplicationGatewayFirewallMode.Prevention,
+                },
             };
             return appGw;
         }
@@ -396,6 +401,8 @@ namespace Networks.Tests
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
             Assert.Equal(gw1.SslPolicy.DisabledSslProtocols.Count, gw2.SslPolicy.DisabledSslProtocols.Count);
             Assert.Equal(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
+            Assert.Equal(gw1.WebApplicationFirewallConfiguration.Enabled, gw2.WebApplicationFirewallConfiguration.Enabled);
+            Assert.Equal(gw1.WebApplicationFirewallConfiguration.FirewallMode, gw2.WebApplicationFirewallConfiguration.FirewallMode);
         }
 
         [Fact]
@@ -410,7 +417,7 @@ namespace Networks.Tests
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
-                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/applicationgateways");
+                var location = "West US";
 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
@@ -474,6 +481,11 @@ namespace Networks.Tests
                 var getGateway = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
                 Assert.Equal(appGwName, getGateway.Name);
                 CompareApplicationGateway(appGw, getGateway);
+
+                //Get AppGw backend health
+                var backendHealth = networkManagementClient.ApplicationGateways.BackendHealth(resourceGroupName, appGwName);
+                Assert.Equal(1, backendHealth.BackendAddressPools.Count);
+                Assert.Equal(2, backendHealth.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
 
                 // Create Nics
                 string nic1name = TestUtilities.GenerateName();

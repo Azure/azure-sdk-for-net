@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AllocationState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum AllocationState
     {
-        [EnumMember(Value = "steady")]
+        [System.Runtime.Serialization.EnumMember(Value = "steady")]
         Steady,
-        [EnumMember(Value = "resizing")]
+        [System.Runtime.Serialization.EnumMember(Value = "resizing")]
         Resizing,
-        [EnumMember(Value = "stopping")]
+        [System.Runtime.Serialization.EnumMember(Value = "stopping")]
         Stopping
     }
 }

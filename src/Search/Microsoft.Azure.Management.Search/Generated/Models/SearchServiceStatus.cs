@@ -8,27 +8,24 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SearchServiceStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SearchServiceStatus
     {
-        [EnumMember(Value = "running")]
+        [System.Runtime.Serialization.EnumMember(Value = "running")]
         Running,
-        [EnumMember(Value = "provisioning")]
+        [System.Runtime.Serialization.EnumMember(Value = "provisioning")]
         Provisioning,
-        [EnumMember(Value = "deleting")]
+        [System.Runtime.Serialization.EnumMember(Value = "deleting")]
         Deleting,
-        [EnumMember(Value = "degraded")]
+        [System.Runtime.Serialization.EnumMember(Value = "degraded")]
         Degraded,
-        [EnumMember(Value = "disabled")]
+        [System.Runtime.Serialization.EnumMember(Value = "disabled")]
         Disabled,
-        [EnumMember(Value = "error")]
+        [System.Runtime.Serialization.EnumMember(Value = "error")]
         Error
     }
 }

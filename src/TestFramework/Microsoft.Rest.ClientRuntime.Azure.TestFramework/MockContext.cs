@@ -161,7 +161,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var constructors = typeof(T).GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
 
             ConstructorInfo constructor = null;
-            if (currentEnvironment.UsesCustomUri() && !internalBaseUri)
+            //We no longer use UseCustomUri function, rather check if BaseUri is notNull
+            //UseCustomeUri use to return true when BaseUri was set to some value
+            if ((currentEnvironment.BaseUri != null) && !internalBaseUri)
             {
                 foreach (var c in constructors)
                 {

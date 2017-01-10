@@ -26,6 +26,7 @@ namespace ServerManagement.Tests
         private static string _gatewayone;
         private static string _gatewaytwo;
         private static string _sessionId;
+        private static string _sessionIdTwo;
         private readonly ITestOutputHelper _output;
 
 
@@ -162,6 +163,18 @@ namespace ServerManagement.Tests
             {
                 return _sessionId ??
                        (_sessionId = HttpMockServer.GetVariable("SMT_SESSION_ID", Guid.NewGuid().ToString()).ToLower());
+            }
+        }
+
+        /// <summary>
+        /// the session id to use when creating an encrypted session
+        /// </summary>
+        protected static string SessionIdTwo
+        {
+            get
+            {
+                return _sessionIdTwo ??
+                       (_sessionIdTwo = HttpMockServer.GetVariable("SMT_SESSION_ID_2", Guid.NewGuid().ToString()).ToLower());
             }
         }
 

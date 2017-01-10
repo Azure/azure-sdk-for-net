@@ -3,13 +3,16 @@
 // license information.
 
 using System;
-using System.Globalization;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.Cryptography;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
+
+#if NETSTANDARD
+using TaskException = System.Threading.Tasks.Task;
+#endif
 
 namespace Microsoft.Azure.KeyVault
 {
@@ -23,7 +26,7 @@ namespace Microsoft.Azure.KeyVault
 
         private static readonly int DefaultKeySize = KeySize2048;
 
-        private RSACryptoServiceProvider _csp;
+        private RSA _csp;
 
         /// <summary>
         /// Key Identifier
@@ -57,7 +60,9 @@ namespace Microsoft.Azure.KeyVault
 
             Kid = kid;
 
-            _csp = new RSACryptoServiceProvider( keySize );
+            _csp = RSA.Create();
+
+            _csp.KeySize = keySize;
         }
 
         /// <summary>
@@ -72,7 +77,7 @@ namespace Microsoft.Azure.KeyVault
 
             Kid = kid;
 
-            _csp = new RSACryptoServiceProvider();
+            _csp = RSA.Create();
             _csp.ImportParameters( keyParameters );
         }
 
@@ -80,9 +85,12 @@ namespace Microsoft.Azure.KeyVault
         /// Constructor.
         /// </summary>
         /// <param name="kid">The key identifier to use</param>
-        /// <param name="csp">The RSA CSP object for the key</param>
-        /// <remarks>A new CSP is created using the parameters from the parameter CSP</remarks>
-        public RsaKey( string kid, RSACryptoServiceProvider csp )
+        /// <param name="csp">The RSA object for the key</param>
+        /// <remarks>The RSA object is IDisposable, this class will hold a
+        /// reference to the RSA object but will not dispose it, the caller
+        /// of this constructor is responsible for the lifetime of this
+        /// parameter.</remarks>
+        public RsaKey( string kid, RSA csp )
         {
             if ( string.IsNullOrWhiteSpace( kid ) )
                 throw new ArgumentNullException( "kid" );
@@ -92,8 +100,8 @@ namespace Microsoft.Azure.KeyVault
 
             Kid = kid;
 
-            _csp = new RSACryptoServiceProvider();
-            _csp.ImportParameters( csp.PublicOnly ? csp.ExportParameters( false ) : csp.ExportParameters( true ) );
+            // NOTE: RSA is disposable and that may lead to runtime errors later.
+            _csp = csp;
         }
 
         // Intentionally excluded.
@@ -123,20 +131,7 @@ namespace Microsoft.Azure.KeyVault
             // Clean up native resources always
         }
 
-        /// <summary>
-        /// Indicates whether the RSA key has only public key material.
-        /// </summary>
-        public bool PublicOnly
-        {
-            get
-            {
-                if ( _csp == null )
-                    throw new ObjectDisposedException( string.Format( CultureInfo.InvariantCulture, "RsaKey {0} is disposed", Kid ) );
-
-                return _csp.PublicOnly; }
-        }
-
-        #region IKey implementation
+#region IKey implementation
 
         public string DefaultEncryptionAlgorithm
         {
@@ -153,10 +148,7 @@ namespace Microsoft.Azure.KeyVault
             get { return Rs256.AlgorithmName; }
         }
         
-// Warning 1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
-#pragma warning disable 1998
-
-        public async Task<byte[]> DecryptAsync( byte[] ciphertext, byte[] iv, byte[] authenticationData = null, byte[] authenticationTag = null, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
+        public Task<byte[]> DecryptAsync( byte[] ciphertext, byte[] iv, byte[] authenticationData = null, byte[] authenticationTag = null, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -173,8 +165,9 @@ namespace Microsoft.Azure.KeyVault
             if ( authenticationData != null )
                 throw new ArgumentException( "Authentication data must be null", "authenticationData" );
 
-            if ( _csp.PublicOnly )
-                throw new NotSupportedException( "Decrypt is not supported because no private key is available" );
+            // TODO: Not available via the RSA class
+            //if ( _csp.PublicOnly )
+            //    throw new NotSupportedException( "Decrypt is not supported because no private key is available" );
 
             AsymmetricEncryptionAlgorithm algo = AlgorithmResolver.Default[algorithm] as AsymmetricEncryptionAlgorithm;
 
@@ -183,11 +176,20 @@ namespace Microsoft.Azure.KeyVault
 
             using ( var encryptor = algo.CreateDecryptor( _csp ) )
             {
-                return encryptor.TransformFinalBlock( ciphertext, 0, ciphertext.Length );
+                try
+                {
+                    var result = encryptor.TransformFinalBlock( ciphertext, 0, ciphertext.Length );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<byte[]>( ex );
+                }
             }
         }
 
-        public async Task<Tuple<byte[], byte[], string>> EncryptAsync( byte[] plaintext, byte[] iv = null, byte[] authenticationData = null, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
+        public Task<Tuple<byte[], byte[], string>> EncryptAsync( byte[] plaintext, byte[] iv = null, byte[] authenticationData = null, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -211,11 +213,20 @@ namespace Microsoft.Azure.KeyVault
 
             using ( var encryptor = algo.CreateEncryptor( _csp ) )
             {
-                return new Tuple<byte[], byte[], string>( encryptor.TransformFinalBlock( plaintext, 0, plaintext.Length ), null, algorithm );
+                try
+                {
+                    var result = new Tuple<byte[], byte[], string>( encryptor.TransformFinalBlock( plaintext, 0, plaintext.Length ), null, algorithm );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<Tuple<byte[], byte[], string>>( ex );
+                }
             }
         }
 
-        public async Task<Tuple<byte[], string>> WrapKeyAsync( byte[] key, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
+        public Task<Tuple<byte[], string>> WrapKeyAsync( byte[] key, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -233,11 +244,20 @@ namespace Microsoft.Azure.KeyVault
 
             using ( var encryptor = algo.CreateEncryptor( _csp ) )
             {
-                return new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
+                try
+                {
+                    var result = new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<Tuple<byte[], string>>( ex );
+                }
             }
         }
 
-        public async Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
+        public Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = RsaOaep.AlgorithmName, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -248,8 +268,9 @@ namespace Microsoft.Azure.KeyVault
             if ( encryptedKey == null || encryptedKey.Length == 0 )
                 throw new ArgumentNullException( "encryptedKey" );
 
-            if ( _csp.PublicOnly )
-                throw new NotSupportedException( "UnwrapKey is not supported because no private key is available" );
+            // TODO: Not available via the RSA class
+            //if ( _csp.PublicOnly )
+            //    throw new NotSupportedException( "UnwrapKey is not supported because no private key is available" );
 
             AsymmetricEncryptionAlgorithm algo = AlgorithmResolver.Default[algorithm] as AsymmetricEncryptionAlgorithm;
 
@@ -258,11 +279,20 @@ namespace Microsoft.Azure.KeyVault
 
             using ( var encryptor = algo.CreateDecryptor( _csp ) )
             {
-                return encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
+                try
+                {
+                    var result =  encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<byte[]>( ex );
+                }
             }
         }
 
-        public async Task<Tuple<byte[], string>> SignAsync( byte[] digest, string algorithm, CancellationToken token = default(CancellationToken) )
+        public Task<Tuple<byte[], string>> SignAsync( byte[] digest, string algorithm, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -273,18 +303,29 @@ namespace Microsoft.Azure.KeyVault
             if ( digest == null )
                 throw new ArgumentNullException( "digest" );
 
-            if ( _csp.PublicOnly )
-                throw new NotSupportedException( "Sign is not supported because no private key is available" );
+            // TODO: Not available via the RSA class
+            //if ( _csp.PublicOnly )
+            //    throw new NotSupportedException( "Sign is not supported because no private key is available" );
 
-            AsymmetricSignatureAlgorithm algo = AlgorithmResolver.Default[algorithm] as AsymmetricSignatureAlgorithm;
+            AsymmetricSignatureAlgorithm algo      = AlgorithmResolver.Default[algorithm] as AsymmetricSignatureAlgorithm;
+            ISignatureTransform          transform = algo != null ? algo.CreateSignatureTransform( _csp ) : null;
 
-            if ( algo == null )
+            if ( algo == null || transform == null )
                 throw new NotSupportedException( "algorithm is not supported" );
 
-            return new Tuple<byte[], string>( algo.SignHash( _csp, digest ), algorithm );
+            try
+            {
+                var result = new Tuple<byte[], string>( transform.Sign( digest ), algorithm );
+
+                return Task.FromResult( result );
+            }
+            catch ( Exception ex )
+            {
+                return TaskException.FromException<Tuple<byte[], string>>( ex );
+            }
         }
 
-        public async Task<bool> VerifyAsync( byte[] digest, byte[] signature, string algorithm, CancellationToken token = default(CancellationToken) )
+        public Task<bool> VerifyAsync( byte[] digest, byte[] signature, string algorithm, CancellationToken token = default(CancellationToken) )
         {
             if ( _csp == null )
                 throw new ObjectDisposedException( string.Format( "RsaKey {0} is disposed", Kid ) );
@@ -299,15 +340,23 @@ namespace Microsoft.Azure.KeyVault
                 algorithm = DefaultSignatureAlgorithm;
 
             AsymmetricSignatureAlgorithm algo = AlgorithmResolver.Default[algorithm] as AsymmetricSignatureAlgorithm;
+            ISignatureTransform          transform = algo != null ? algo.CreateSignatureTransform( _csp ) : null;
 
-            if ( algo == null )
+            if ( algo == null || transform == null )
                 throw new NotSupportedException( "algorithm is not supported" );
 
-            return algo.VerifyHash( _csp, digest, signature );
+            try
+            {
+                var result = transform.Verify( digest, signature );
+
+                return Task.FromResult( result );
+            }
+            catch ( Exception ex )
+            {
+                return TaskException.FromException<bool>( ex );
+            }
         }
 
-#pragma warning restore 1998
-
-        #endregion
+#endregion
     }
 }

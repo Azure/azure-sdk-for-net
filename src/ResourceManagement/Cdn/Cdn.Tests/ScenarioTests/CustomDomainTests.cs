@@ -44,7 +44,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                Profile createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -55,11 +55,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements
-                string endpointName = "endpoint-554d5e6b9f56";
-                var endpointCreateParameters = new EndpointCreateParameters
+                string endpointName = "endpoint-f3757d2a3e10";
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -74,71 +74,60 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // List custom domains one this endpoint should return none
-                var customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                var customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(0, customDomains.Count());
 
                 // NOTE: There is a CName mapping already created for this custom domain and endpoint hostname
-                // "sdk-1-5b4d5e6b9f56.azureedge-test.net" maps to "endpoint-554d5e6b9f56.azureedge-test.net"
-                // "sdk-2-5b4d5e6b9f56.azureedge-test.net" maps to "endpoint-554d5e6b9f56.azureedge-test.net"
+                // "sdk-1-f3757d2a3e10.azureedge-test.net" maps to "endpoint-f3757d2a3e10.azureedge.net"
+                // "sdk-2-f3757d2a3e10.azureedge-test.net" maps to "endpoint-f3757d2a3e10.azureedge.net"
 
                 // Create custom domain on running endpoint should succeed
                 string customDomainName1 = TestUtilities.GenerateName("customDomain");
-                cdnMgmtClient.CustomDomains.Create(customDomainName1, endpointName, profileName, resourceGroupName, "sdk-1-5b4d5e6b9f56.azureedge-test.net");
+
+                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName1, "sdk-1-f3757d2a3e10.azureedge-test.net");
 
                 // List custom domains one this endpoint should return one
-                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(1, customDomains.Count());
 
-                // Update custom domain on running endpoint should fail
-                Assert.ThrowsAny<ErrorResponseException>(() =>
-                {
-                    cdnMgmtClient.CustomDomains.Update(customDomainName1, endpointName, profileName, resourceGroupName, "customdomain11.hello.com");
-                });
-
                 // Stop endpoint
-                cdnMgmtClient.Endpoints.Stop(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Stop(resourceGroupName, profileName, endpointName);
 
                 // Create another custom domain on stopped endpoint should succeed
                 string customDomainName2 = TestUtilities.GenerateName("customDomain");
-                cdnMgmtClient.CustomDomains.Create(customDomainName2, endpointName, profileName, resourceGroupName, "sdk-2-5b4d5e6b9f56.azureedge-test.net");
+                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName2, "sdk-2-f3757d2a3e10.azureedge-test.net");
 
                 // List custom domains one this endpoint should return two
-                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(2, customDomains.Count());
 
-                // Update custom domain on stopped endpoint should fail
-                Assert.ThrowsAny<ErrorResponseException>(() =>
-                {
-                    cdnMgmtClient.CustomDomains.Update(customDomainName2, endpointName, profileName, resourceGroupName, "customdomain22.hello.com");
-                });
-
                 // Delete second custom domain on stopped endpoint should succeed
-                cdnMgmtClient.CustomDomains.DeleteIfExists(customDomainName2, endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName2);
 
                 // Get deleted custom domain should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.CustomDomains.Get(customDomainName2, endpointName, profileName, resourceGroupName); });
+                    cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName2); });
 
                 // List custom domains on endpoint should return one
-                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(1, customDomains.Count());
 
                 // Start endpoint
-                cdnMgmtClient.Endpoints.Start(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Start(resourceGroupName, profileName, endpointName);
 
                 // Delete first custom domain on stopped endpoint should succeed
-                cdnMgmtClient.CustomDomains.DeleteIfExists(customDomainName1, endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName1);
 
                 // Get deleted custom domain should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.CustomDomains.Get(customDomainName1, endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName1);
                 });
 
                 // List custom domains on endpoint should return none
-                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(0, customDomains.Count());
 
                 // Delete resource group

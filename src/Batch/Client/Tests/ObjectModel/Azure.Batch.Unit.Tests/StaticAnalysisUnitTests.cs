@@ -171,8 +171,8 @@
             //\\s+(?<{0}>\\w+?)\\( - find everything after the "new" in the previous part of the expression which is a
             //                       "word" character (alphanumeric), and comes before the next "(" character
             //                       and store it in the group named "ExceptionName"
-
-            string pattern = string.Format("(?<!//.*?)(throw\\s+?new\\s+(?<{0}>\\w+?)\\()", exceptionNameCaptureGroup);
+                                        
+            string pattern = string.Format("(?<!//.*?)(throw\\s+?new\\s+(\\w+\\.)*(?<{0}>\\w+?)\\()", exceptionNameCaptureGroup);
 
             return pattern;
         }

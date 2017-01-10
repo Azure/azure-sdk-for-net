@@ -1,31 +1,31 @@
 {
   "Entries": [
     {
-      "RequestUri": "/certificates/importCert03/import?api-version=2015-06-01",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDMvaW1wb3J0P2FwaS12ZXJzaW9uPTIwMTUtMDYtMDE=",
+      "RequestUri": "//certificates/importCert03/import?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvaW1wb3J0Q2VydDAzL2ltcG9ydD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"value\": \"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\",\r\n  \"pwd\": \"\",\r\n  \"policy\": {\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"value\": \"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\",\r\n  \"pwd\": \"\",\r\n  \"policy\": {\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "6116"
+          "6280"
         ],
         "x-ms-client-request-id": [
-          "1acffae3-1eca-4d10-982b-81aaf052ba21"
+          "15e6be52-7886-43ea-9f58-4537f3b61c7d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"x5t\": \"LPYms-oktdbryazXlkb-FK4has4\",\r\n  \"cer\": \"MIIDHDCCAgSgAwIBAgIQew88OTstQaGGgfzqvCu16TANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE1MTAwMTE3MzAwMFoXDTE2MTAwMTE3MzAwMFowGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtij1XbVHoi22UfXRlookhf+WTFxAMrooyfBdBU6hY+FkWxOYaisn0ENDFqdOutuxPzqQrAeObGjWmcKRp8kDIaZNUIe9LBVaFiAVJfRSsSPxvsLgUYNqlokg6VQeypJtUWmlVjyIxFx4v8mN7sgf+2WnlJLK68I6cLnTuJviZzqHZVCT1kl25ZI1i/XLmg606e9YYDBS05TVLJqlcShEm2IzW08oGUkY0425HrI1zUoqH3EwPz8IC1bFRStYNiWYtxmkG5QnM1DIl/mqFWAGtkDvbpzA8QcTePgR7egtDQ+4db5bPS0/RMoKRrH1eStkkBHhirREDCP87L+zaqQqcCAwEAAaNcMFowDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBsGA1UdEQQUMBKCEHd3dy5mYWJyaWthbS5jb20wDQYJKoZIhvcNAQELBQADggEBABwHfs4F8cNeYobqxBIGSdroHdzlS/kyBf5PagtaGJl+/SIuVDzTsB2PCL+/crPImE2+xAMoiEwy4j0pE9NZ/3raRdutuUt1+b1xouMKqxRlmrOZ7LpE0rZ4AoemQQLRZBMi0G16LWqKxhvZFvbkAPrcRQ1zOhjNiBK78IVqDQCdzq40b/Xe8vb6tQz3eewe+hmr6Zm+FiUlqRuvJCsUWxX/DJjKnFM15ifSi22sn8LOUtBGXjfX6SQc07wHB/t/1Mwqpww23h+xltnjgxF1NPXelwsFYNK4TCSNcB2GVQKkkKZ0ddO0A81E8wnEz28HQIUWvuWJRhbmcUTWMSNwEdM=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1443720600,\r\n    \"exp\": 1475343000,\r\n    \"created\": 1469645215,\r\n    \"updated\": 1469645215\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=www.fabrikam.com\",\r\n      \"sans\": {\r\n        \"emails\": [],\r\n        \"dns_names\": [\r\n          \"www.fabrikam.com\"\r\n        ],\r\n        \"upns\": []\r\n      },\r\n      \"ekus\": [\r\n        \"1.3.6.1.5.5.7.3.1\",\r\n        \"1.3.6.1.5.5.7.3.2\"\r\n      ],\r\n      \"key_usage\": [\r\n        \"digitalSignature\",\r\n        \"keyEncipherment\"\r\n      ],\r\n      \"validity_months\": 13,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1469645215,\r\n      \"updated\": 1469645215\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"kid\": \"https://testvault1020.vault.azure.net/keys/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"sid\": \"https://testvault1020.vault.azure.net/secrets/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"x5t\": \"Vi57fYNjurOccsuxs2_ltzMXPXM\",\r\n  \"cer\": \"MIIDWzCCAkOgAwIBAgIQAgSaEqRzSIWdolKzgGecDDANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE2MTAxMjIyNDIzN1oXDTM2MTAxMjIyNTIzN1owGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKpXeheFIwxCgJ1orWxAS/buUeplGl5ud6WxTfCLk9bSW1lPPdo7aypTQBpRXzoWuf5pzXGXQbO1hXMO/7kVko3G6F5FIadZrSM2lEQEhRe/xd84F0r0A9pOvx5g1o65s7q6cIUcPuHueNJ2irss5/356CLgT9pftuFV7LtyQG1RJ46d+yk2omfMAQajWd7JvRLt9ggWowhhyX5dHjugT5XSsSJUSH2H3oVzpnm0pvNr1+eXIZx6MJD15hqImx7rSj9oWIFECB+95vbVYWVFyBv1WRNXf8+EE+UyZUGi/URlKkqaK13rFHL2UUVIWiSfKa0joxSjnMt9Hr4A8Oyr0JECAwEAAaOBmjCBlzAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwGwYDVR0RBBQwEoIQd3d3LmZhYnJpa2FtLmNvbTAfBgNVHSMEGDAWgBTT8znYEZ3N+7Dxp7zTR5bi5xAPXDAdBgNVHQ4EFgQU0/M52BGdzfuw8ae800eW4ucQD1wwDQYJKoZIhvcNAQELBQADggEBAKPJSCyojWEz7EO/3OZzlF4EHcubnj2Bk5mio/kvOiWBgjU+oy0RPTK9oa2c09uU01sn6kaARs269iaGpeGzvXwFMidZKd6jAhitAVT56Te8A6TgZ1KJDSa98iYrOPf7teUpG8wEGI8KJqx1UN8oybqB7J8UBZhYuxuZHwOY5IHljR9dz4vGskT4tM/llI6+F28LkztPjChadd10GOgyazVIcbE1hT2wXEKMZAQvFvY48GAIYDoo934MMkjMMl0HXqjZWo90QKIv7f9YoBVWH3WWXpVAu5s44s2h73lo2zVQma6eLAnDcRttW79/QfdZ8DcrQ6Z4G5Cftk0njzsj3FY=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1476312157,\r\n    \"exp\": 2107464757,\r\n    \"created\": 1477082135,\r\n    \"updated\": 1477082135\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=www.fabrikam.com\",\r\n      \"sans\": {\r\n        \"emails\": [],\r\n        \"dns_names\": [\r\n          \"www.fabrikam.com\"\r\n        ],\r\n        \"upns\": []\r\n      },\r\n      \"ekus\": [\r\n        \"1.3.6.1.5.5.7.3.1\",\r\n        \"1.3.6.1.5.5.7.3.2\"\r\n      ],\r\n      \"key_usage\": [\r\n        \"digitalSignature\",\r\n        \"keyEncipherment\"\r\n      ],\r\n      \"validity_months\": 241,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1477082135,\r\n      \"updated\": 1477082135\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2220"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -37,7 +37,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 18:46:56 GMT"
+          "Fri, 21 Oct 2016 20:35:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -46,13 +46,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "East US"
+          "westus"
         ],
         "x-ms-request-id": [
-          "bcce9c78-6ccf-4642-8705-643930bc5cdc"
+          "fd3b2bae-300f-4645-be39-2475fabcacc8"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.763"
+          "1.0.0.781"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -70,25 +70,25 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/importCert03/?api-version=2015-06-01",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDMvP2FwaS12ZXJzaW9uPTIwMTUtMDYtMDE=",
+      "RequestUri": "//certificates/importCert03/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvaW1wb3J0Q2VydDAzLz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "aedb4a4f-c34f-4c4f-b2a8-52fa056fd7ab"
+          "6091d6a6-8775-46d3-a91e-f1ff06c8eb94"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"x5t\": \"LPYms-oktdbryazXlkb-FK4has4\",\r\n  \"cer\": \"MIIDHDCCAgSgAwIBAgIQew88OTstQaGGgfzqvCu16TANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE1MTAwMTE3MzAwMFoXDTE2MTAwMTE3MzAwMFowGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtij1XbVHoi22UfXRlookhf+WTFxAMrooyfBdBU6hY+FkWxOYaisn0ENDFqdOutuxPzqQrAeObGjWmcKRp8kDIaZNUIe9LBVaFiAVJfRSsSPxvsLgUYNqlokg6VQeypJtUWmlVjyIxFx4v8mN7sgf+2WnlJLK68I6cLnTuJviZzqHZVCT1kl25ZI1i/XLmg606e9YYDBS05TVLJqlcShEm2IzW08oGUkY0425HrI1zUoqH3EwPz8IC1bFRStYNiWYtxmkG5QnM1DIl/mqFWAGtkDvbpzA8QcTePgR7egtDQ+4db5bPS0/RMoKRrH1eStkkBHhirREDCP87L+zaqQqcCAwEAAaNcMFowDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBsGA1UdEQQUMBKCEHd3dy5mYWJyaWthbS5jb20wDQYJKoZIhvcNAQELBQADggEBABwHfs4F8cNeYobqxBIGSdroHdzlS/kyBf5PagtaGJl+/SIuVDzTsB2PCL+/crPImE2+xAMoiEwy4j0pE9NZ/3raRdutuUt1+b1xouMKqxRlmrOZ7LpE0rZ4AoemQQLRZBMi0G16LWqKxhvZFvbkAPrcRQ1zOhjNiBK78IVqDQCdzq40b/Xe8vb6tQz3eewe+hmr6Zm+FiUlqRuvJCsUWxX/DJjKnFM15ifSi22sn8LOUtBGXjfX6SQc07wHB/t/1Mwqpww23h+xltnjgxF1NPXelwsFYNK4TCSNcB2GVQKkkKZ0ddO0A81E8wnEz28HQIUWvuWJRhbmcUTWMSNwEdM=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1443720600,\r\n    \"exp\": 1475343000,\r\n    \"created\": 1469645215,\r\n    \"updated\": 1469645215\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=www.fabrikam.com\",\r\n      \"sans\": {\r\n        \"emails\": [],\r\n        \"dns_names\": [\r\n          \"www.fabrikam.com\"\r\n        ],\r\n        \"upns\": []\r\n      },\r\n      \"ekus\": [\r\n        \"1.3.6.1.5.5.7.3.1\",\r\n        \"1.3.6.1.5.5.7.3.2\"\r\n      ],\r\n      \"key_usage\": [\r\n        \"digitalSignature\",\r\n        \"keyEncipherment\"\r\n      ],\r\n      \"validity_months\": 13,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1469645215,\r\n      \"updated\": 1469645215\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"kid\": \"https://testvault1020.vault.azure.net/keys/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"sid\": \"https://testvault1020.vault.azure.net/secrets/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"x5t\": \"Vi57fYNjurOccsuxs2_ltzMXPXM\",\r\n  \"cer\": \"MIIDWzCCAkOgAwIBAgIQAgSaEqRzSIWdolKzgGecDDANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE2MTAxMjIyNDIzN1oXDTM2MTAxMjIyNTIzN1owGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKpXeheFIwxCgJ1orWxAS/buUeplGl5ud6WxTfCLk9bSW1lPPdo7aypTQBpRXzoWuf5pzXGXQbO1hXMO/7kVko3G6F5FIadZrSM2lEQEhRe/xd84F0r0A9pOvx5g1o65s7q6cIUcPuHueNJ2irss5/356CLgT9pftuFV7LtyQG1RJ46d+yk2omfMAQajWd7JvRLt9ggWowhhyX5dHjugT5XSsSJUSH2H3oVzpnm0pvNr1+eXIZx6MJD15hqImx7rSj9oWIFECB+95vbVYWVFyBv1WRNXf8+EE+UyZUGi/URlKkqaK13rFHL2UUVIWiSfKa0joxSjnMt9Hr4A8Oyr0JECAwEAAaOBmjCBlzAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwGwYDVR0RBBQwEoIQd3d3LmZhYnJpa2FtLmNvbTAfBgNVHSMEGDAWgBTT8znYEZ3N+7Dxp7zTR5bi5xAPXDAdBgNVHQ4EFgQU0/M52BGdzfuw8ae800eW4ucQD1wwDQYJKoZIhvcNAQELBQADggEBAKPJSCyojWEz7EO/3OZzlF4EHcubnj2Bk5mio/kvOiWBgjU+oy0RPTK9oa2c09uU01sn6kaARs269iaGpeGzvXwFMidZKd6jAhitAVT56Te8A6TgZ1KJDSa98iYrOPf7teUpG8wEGI8KJqx1UN8oybqB7J8UBZhYuxuZHwOY5IHljR9dz4vGskT4tM/llI6+F28LkztPjChadd10GOgyazVIcbE1hT2wXEKMZAQvFvY48GAIYDoo934MMkjMMl0HXqjZWo90QKIv7f9YoBVWH3WWXpVAu5s44s2h73lo2zVQma6eLAnDcRttW79/QfdZ8DcrQ6Z4G5Cftk0njzsj3FY=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1476312157,\r\n    \"exp\": 2107464757,\r\n    \"created\": 1477082135,\r\n    \"updated\": 1477082135\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=www.fabrikam.com\",\r\n      \"sans\": {\r\n        \"emails\": [],\r\n        \"dns_names\": [\r\n          \"www.fabrikam.com\"\r\n        ],\r\n        \"upns\": []\r\n      },\r\n      \"ekus\": [\r\n        \"1.3.6.1.5.5.7.3.1\",\r\n        \"1.3.6.1.5.5.7.3.2\"\r\n      ],\r\n      \"key_usage\": [\r\n        \"digitalSignature\",\r\n        \"keyEncipherment\"\r\n      ],\r\n      \"validity_months\": 241,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1477082135,\r\n      \"updated\": 1477082135\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2220"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -100,7 +100,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 18:46:56 GMT"
+          "Fri, 21 Oct 2016 20:35:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -109,13 +109,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "East US"
+          "westus"
         ],
         "x-ms-request-id": [
-          "0a622148-2dee-44be-ac00-adae971e1956"
+          "2fe33437-a05a-4791-aa6a-bc0047445fd3"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.763"
+          "1.0.0.781"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -133,25 +133,25 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/importCert03/aac652c16da641afba5fced6538a267b?api-version=2015-06-01",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDMvYWFjNjUyYzE2ZGE2NDFhZmJhNWZjZWQ2NTM4YTI2N2I/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestUri": "/certificates/importCert03/c336c5bf6428439c9c990c529ba5e679?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDMvYzMzNmM1YmY2NDI4NDM5YzljOTkwYzUyOWJhNWU2Nzk/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "53591644-0f1b-4948-a25f-03a0ed2fb2e1"
+          "66f16a42-7aec-4bee-88e9-734f46016a6d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"x5t\": \"LPYms-oktdbryazXlkb-FK4has4\",\r\n  \"cer\": \"MIIDHDCCAgSgAwIBAgIQew88OTstQaGGgfzqvCu16TANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE1MTAwMTE3MzAwMFoXDTE2MTAwMTE3MzAwMFowGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtij1XbVHoi22UfXRlookhf+WTFxAMrooyfBdBU6hY+FkWxOYaisn0ENDFqdOutuxPzqQrAeObGjWmcKRp8kDIaZNUIe9LBVaFiAVJfRSsSPxvsLgUYNqlokg6VQeypJtUWmlVjyIxFx4v8mN7sgf+2WnlJLK68I6cLnTuJviZzqHZVCT1kl25ZI1i/XLmg606e9YYDBS05TVLJqlcShEm2IzW08oGUkY0425HrI1zUoqH3EwPz8IC1bFRStYNiWYtxmkG5QnM1DIl/mqFWAGtkDvbpzA8QcTePgR7egtDQ+4db5bPS0/RMoKRrH1eStkkBHhirREDCP87L+zaqQqcCAwEAAaNcMFowDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBsGA1UdEQQUMBKCEHd3dy5mYWJyaWthbS5jb20wDQYJKoZIhvcNAQELBQADggEBABwHfs4F8cNeYobqxBIGSdroHdzlS/kyBf5PagtaGJl+/SIuVDzTsB2PCL+/crPImE2+xAMoiEwy4j0pE9NZ/3raRdutuUt1+b1xouMKqxRlmrOZ7LpE0rZ4AoemQQLRZBMi0G16LWqKxhvZFvbkAPrcRQ1zOhjNiBK78IVqDQCdzq40b/Xe8vb6tQz3eewe+hmr6Zm+FiUlqRuvJCsUWxX/DJjKnFM15ifSi22sn8LOUtBGXjfX6SQc07wHB/t/1Mwqpww23h+xltnjgxF1NPXelwsFYNK4TCSNcB2GVQKkkKZ0ddO0A81E8wnEz28HQIUWvuWJRhbmcUTWMSNwEdM=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1443720600,\r\n    \"exp\": 1475343000,\r\n    \"created\": 1469645215,\r\n    \"updated\": 1469645215\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"kid\": \"https://testvault1020.vault.azure.net/keys/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"sid\": \"https://testvault1020.vault.azure.net/secrets/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"x5t\": \"Vi57fYNjurOccsuxs2_ltzMXPXM\",\r\n  \"cer\": \"MIIDWzCCAkOgAwIBAgIQAgSaEqRzSIWdolKzgGecDDANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE2MTAxMjIyNDIzN1oXDTM2MTAxMjIyNTIzN1owGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKpXeheFIwxCgJ1orWxAS/buUeplGl5ud6WxTfCLk9bSW1lPPdo7aypTQBpRXzoWuf5pzXGXQbO1hXMO/7kVko3G6F5FIadZrSM2lEQEhRe/xd84F0r0A9pOvx5g1o65s7q6cIUcPuHueNJ2irss5/356CLgT9pftuFV7LtyQG1RJ46d+yk2omfMAQajWd7JvRLt9ggWowhhyX5dHjugT5XSsSJUSH2H3oVzpnm0pvNr1+eXIZx6MJD15hqImx7rSj9oWIFECB+95vbVYWVFyBv1WRNXf8+EE+UyZUGi/URlKkqaK13rFHL2UUVIWiSfKa0joxSjnMt9Hr4A8Oyr0JECAwEAAaOBmjCBlzAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwGwYDVR0RBBQwEoIQd3d3LmZhYnJpa2FtLmNvbTAfBgNVHSMEGDAWgBTT8znYEZ3N+7Dxp7zTR5bi5xAPXDAdBgNVHQ4EFgQU0/M52BGdzfuw8ae800eW4ucQD1wwDQYJKoZIhvcNAQELBQADggEBAKPJSCyojWEz7EO/3OZzlF4EHcubnj2Bk5mio/kvOiWBgjU+oy0RPTK9oa2c09uU01sn6kaARs269iaGpeGzvXwFMidZKd6jAhitAVT56Te8A6TgZ1KJDSa98iYrOPf7teUpG8wEGI8KJqx1UN8oybqB7J8UBZhYuxuZHwOY5IHljR9dz4vGskT4tM/llI6+F28LkztPjChadd10GOgyazVIcbE1hT2wXEKMZAQvFvY48GAIYDoo934MMkjMMl0HXqjZWo90QKIv7f9YoBVWH3WWXpVAu5s44s2h73lo2zVQma6eLAnDcRttW79/QfdZ8DcrQ6Z4G5Cftk0njzsj3FY=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1476312157,\r\n    \"exp\": 2107464757,\r\n    \"created\": 1477082135,\r\n    \"updated\": 1477082135\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1530"
+          "1605"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -163,7 +163,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 18:46:56 GMT"
+          "Fri, 21 Oct 2016 20:35:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -172,13 +172,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "East US"
+          "westus"
         ],
         "x-ms-request-id": [
-          "17c1fb2b-c557-4218-a605-8995b741b31e"
+          "acc5b02b-af0b-45a1-b724-6655696a4cc4"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.763"
+          "1.0.0.781"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -196,25 +196,25 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/secrets/importCert03/aac652c16da641afba5fced6538a267b?api-version=2015-06-01",
-      "EncodedRequestUri": "L3NlY3JldHMvaW1wb3J0Q2VydDAzL2FhYzY1MmMxNmRhNjQxYWZiYTVmY2VkNjUzOGEyNjdiP2FwaS12ZXJzaW9uPTIwMTUtMDYtMDE=",
+      "RequestUri": "/secrets/importCert03/c336c5bf6428439c9c990c529ba5e679?api-version=2016-10-01",
+      "EncodedRequestUri": "L3NlY3JldHMvaW1wb3J0Q2VydDAzL2MzMzZjNWJmNjQyODQzOWM5Yzk5MGM1MjliYTVlNjc5P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3efe6c22-33fa-46da-861a-9d17303a3bec"
+          "6fdf2afc-f0b6-4591-a40f-c7de5b19a39e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": \"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\",\r\n  \"contentType\": \"application/x-pkcs12\",\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1443720600,\r\n    \"exp\": 1475343000,\r\n    \"created\": 1469645215,\r\n    \"updated\": 1469645215\r\n  },\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert03/aac652c16da641afba5fced6538a267b\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": \"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\",\r\n  \"contentType\": \"application/x-pkcs12\",\r\n  \"id\": \"https://testvault1020.vault.azure.net/secrets/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"managed\": true,\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1476312157,\r\n    \"exp\": 2107464757,\r\n    \"created\": 1477082135,\r\n    \"updated\": 1477082135\r\n  },\r\n  \"kid\": \"https://testvault1020.vault.azure.net/keys/importCert03/c336c5bf6428439c9c990c529ba5e679\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "6309"
+          "6406"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -226,7 +226,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 18:46:56 GMT"
+          "Fri, 21 Oct 2016 20:35:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -235,13 +235,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "East US"
+          "westus"
         ],
         "x-ms-request-id": [
-          "cdb8e873-97b3-4380-bb22-1be93a92db8a"
+          "711e964d-4d51-4f86-aace-9b7595d6b6a0"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.763"
+          "1.0.0.781"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -259,25 +259,25 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/importCert03?api-version=2015-06-01",
-      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDM/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestUri": "//certificates/importCert03?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvaW1wb3J0Q2VydDAzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b582274-a4ba-44ba-8334-b401ab5d88ff"
+          "952a33bf-d2df-4124-b50f-6c2a94c4ae92"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.0-preview"
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.3-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"kid\": \"https://sdktestvault0518.vault.azure.net/keys/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"sid\": \"https://sdktestvault0518.vault.azure.net/secrets/importCert03/aac652c16da641afba5fced6538a267b\",\r\n  \"x5t\": \"LPYms-oktdbryazXlkb-FK4has4\",\r\n  \"cer\": \"MIIDHDCCAgSgAwIBAgIQew88OTstQaGGgfzqvCu16TANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE1MTAwMTE3MzAwMFoXDTE2MTAwMTE3MzAwMFowGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMtij1XbVHoi22UfXRlookhf+WTFxAMrooyfBdBU6hY+FkWxOYaisn0ENDFqdOutuxPzqQrAeObGjWmcKRp8kDIaZNUIe9LBVaFiAVJfRSsSPxvsLgUYNqlokg6VQeypJtUWmlVjyIxFx4v8mN7sgf+2WnlJLK68I6cLnTuJviZzqHZVCT1kl25ZI1i/XLmg606e9YYDBS05TVLJqlcShEm2IzW08oGUkY0425HrI1zUoqH3EwPz8IC1bFRStYNiWYtxmkG5QnM1DIl/mqFWAGtkDvbpzA8QcTePgR7egtDQ+4db5bPS0/RMoKRrH1eStkkBHhirREDCP87L+zaqQqcCAwEAAaNcMFowDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBsGA1UdEQQUMBKCEHd3dy5mYWJyaWthbS5jb20wDQYJKoZIhvcNAQELBQADggEBABwHfs4F8cNeYobqxBIGSdroHdzlS/kyBf5PagtaGJl+/SIuVDzTsB2PCL+/crPImE2+xAMoiEwy4j0pE9NZ/3raRdutuUt1+b1xouMKqxRlmrOZ7LpE0rZ4AoemQQLRZBMi0G16LWqKxhvZFvbkAPrcRQ1zOhjNiBK78IVqDQCdzq40b/Xe8vb6tQz3eewe+hmr6Zm+FiUlqRuvJCsUWxX/DJjKnFM15ifSi22sn8LOUtBGXjfX6SQc07wHB/t/1Mwqpww23h+xltnjgxF1NPXelwsFYNK4TCSNcB2GVQKkkKZ0ddO0A81E8wnEz28HQIUWvuWJRhbmcUTWMSNwEdM=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1443720600,\r\n    \"exp\": 1475343000,\r\n    \"created\": 1469645215,\r\n    \"updated\": 1469645215\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://sdktestvault0518.vault.azure.net/certificates/importCert03/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=www.fabrikam.com\",\r\n      \"sans\": {\r\n        \"emails\": [],\r\n        \"dns_names\": [\r\n          \"www.fabrikam.com\"\r\n        ],\r\n        \"upns\": []\r\n      },\r\n      \"ekus\": [\r\n        \"1.3.6.1.5.5.7.3.1\",\r\n        \"1.3.6.1.5.5.7.3.2\"\r\n      ],\r\n      \"key_usage\": [\r\n        \"digitalSignature\",\r\n        \"keyEncipherment\"\r\n      ],\r\n      \"validity_months\": 13,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1469645215,\r\n      \"updated\": 1469645215\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"kid\": \"https://testvault1020.vault.azure.net/keys/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"sid\": \"https://testvault1020.vault.azure.net/secrets/importCert03/c336c5bf6428439c9c990c529ba5e679\",\r\n  \"x5t\": \"Vi57fYNjurOccsuxs2_ltzMXPXM\",\r\n  \"cer\": \"MIIDWzCCAkOgAwIBAgIQAgSaEqRzSIWdolKzgGecDDANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDExB3d3cuZmFicmlrYW0uY29tMB4XDTE2MTAxMjIyNDIzN1oXDTM2MTAxMjIyNTIzN1owGzEZMBcGA1UEAxMQd3d3LmZhYnJpa2FtLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKpXeheFIwxCgJ1orWxAS/buUeplGl5ud6WxTfCLk9bSW1lPPdo7aypTQBpRXzoWuf5pzXGXQbO1hXMO/7kVko3G6F5FIadZrSM2lEQEhRe/xd84F0r0A9pOvx5g1o65s7q6cIUcPuHueNJ2irss5/356CLgT9pftuFV7LtyQG1RJ46d+yk2omfMAQajWd7JvRLt9ggWowhhyX5dHjugT5XSsSJUSH2H3oVzpnm0pvNr1+eXIZx6MJD15hqImx7rSj9oWIFECB+95vbVYWVFyBv1WRNXf8+EE+UyZUGi/URlKkqaK13rFHL2UUVIWiSfKa0joxSjnMt9Hr4A8Oyr0JECAwEAAaOBmjCBlzAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwGwYDVR0RBBQwEoIQd3d3LmZhYnJpa2FtLmNvbTAfBgNVHSMEGDAWgBTT8znYEZ3N+7Dxp7zTR5bi5xAPXDAdBgNVHQ4EFgQU0/M52BGdzfuw8ae800eW4ucQD1wwDQYJKoZIhvcNAQELBQADggEBAKPJSCyojWEz7EO/3OZzlF4EHcubnj2Bk5mio/kvOiWBgjU+oy0RPTK9oa2c09uU01sn6kaARs269iaGpeGzvXwFMidZKd6jAhitAVT56Te8A6TgZ1KJDSa98iYrOPf7teUpG8wEGI8KJqx1UN8oybqB7J8UBZhYuxuZHwOY5IHljR9dz4vGskT4tM/llI6+F28LkztPjChadd10GOgyazVIcbE1hT2wXEKMZAQvFvY48GAIYDoo934MMkjMMl0HXqjZWo90QKIv7f9YoBVWH3WWXpVAu5s44s2h73lo2zVQma6eLAnDcRttW79/QfdZ8DcrQ6Z4G5Cftk0njzsj3FY=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1476312157,\r\n    \"exp\": 2107464757,\r\n    \"created\": 1477082135,\r\n    \"updated\": 1477082135\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://testvault1020.vault.azure.net/certificates/importCert03/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=www.fabrikam.com\",\r\n      \"sans\": {\r\n        \"emails\": [],\r\n        \"dns_names\": [\r\n          \"www.fabrikam.com\"\r\n        ],\r\n        \"upns\": []\r\n      },\r\n      \"ekus\": [\r\n        \"1.3.6.1.5.5.7.3.1\",\r\n        \"1.3.6.1.5.5.7.3.2\"\r\n      ],\r\n      \"key_usage\": [\r\n        \"digitalSignature\",\r\n        \"keyEncipherment\"\r\n      ],\r\n      \"validity_months\": 241,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1477082135,\r\n      \"updated\": 1477082135\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2220"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -289,7 +289,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 18:46:56 GMT"
+          "Fri, 21 Oct 2016 20:35:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -298,13 +298,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "East US"
+          "westus"
         ],
         "x-ms-request-id": [
-          "fcc8ce6a-a75e-43c4-844b-a5fc8562b832"
+          "3ec0b1f4-2c59-43ff-bd43-dfd9533abeef"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.763"
+          "1.0.0.781"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -324,8 +324,8 @@
   ],
   "Names": {},
   "Variables": {
-    "VaultAddress": "https://sdktestvault0518.vault.azure.net",
+    "VaultAddress": "https://testvault1020.vault.azure.net/",
     "KeyName": "sdktestkey",
-    "KeyVersion": "23a80231e4fd4584923ef1dbc1dae1b4"
+    "KeyVersion": "b669c8bf47a940d8ac818c3831fc11b4"
   }
 }

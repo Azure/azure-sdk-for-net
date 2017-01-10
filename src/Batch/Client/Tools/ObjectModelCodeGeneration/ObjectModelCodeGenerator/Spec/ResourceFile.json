@@ -1,0 +1,47 @@
+    {
+      "Name": "ResourceFile",
+      "ProtocolName": "Models.ResourceFile",
+      "Comment": "A file to be downloaded to a compute node from Azure Blob Storage, such as task executables and task input data files.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "BlobSource",
+            "SummaryComment": "The URL of the file within Azure Blob Storage.",
+            "RemarksComment": "This URL should include a shared access signature if the blob is not publicly readable.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "FileMode",
+            "SummaryComment": "The file permission mode attribute in octal format.",
+            "RemarksComment": "<para>This property is applicable only if the resource file is downloaded to a Linux node. This property will be ignored if it is specified for a <see cref=\"ResourceFile\"/> which will be downloaded to a Windows node. If this property is not specified for a Linux node, then the default value is 0770.</para>",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional",
+            "HideSetter": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "FilePath",
+            "SummaryComment": "The location to which to download the file, relative to the task's working directory.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null
+        }
+      ]
+    }

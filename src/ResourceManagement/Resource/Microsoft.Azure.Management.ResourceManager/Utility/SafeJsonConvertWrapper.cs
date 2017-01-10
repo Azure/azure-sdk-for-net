@@ -41,10 +41,9 @@ namespace Microsoft.Azure.Management.ResourceManager
                         {
                             var templateParameters = JObject.Parse((string)deployment.Properties.Parameters);
 
-                            if (templateParameters["$schema"] != null && templateParameters["parameters"] != null)
-                            {
-                                deployment.Properties.Parameters = templateParameters["parameters"];
-                            }
+                            deployment.Properties.Parameters = templateParameters["parameters"] != null
+                                ? templateParameters["parameters"]
+                                : templateParameters;                           
                         }
                         catch (JsonException ex)
                         {

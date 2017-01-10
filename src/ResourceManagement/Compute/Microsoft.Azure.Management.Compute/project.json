@@ -1,5 +1,5 @@
 {
-  "version": "13.0.4-prerelease",
+  "version": "13.1.0-prerelease",
   "description": "Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.",
   "authors": [ "Microsoft" ],
   

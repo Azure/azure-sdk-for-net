@@ -1,0 +1,43 @@
+    {
+      "Name": "TaskConstraints",
+      "ProtocolName": "Models.TaskConstraints",
+      "Comment": "Defines the constraints on a particular Azure Batch task.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "TimeSpan?",
+            "Name": "MaxWallClockTime",
+            "SummaryComment": "The maximum elapsed time that the task may run, measured from the time the task starts.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TimeSpan?",
+            "Name": "RetentionTime",
+            "SummaryComment": "The minimum time to retain the working directory for the task on the compute node where it ran, from the time it completes execution. After this time, the Batch service may delete the working directory and all its contents.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "int?",
+            "Name": "MaxTaskRetryCount",
+            "SummaryComment": "The maximum number of retries for the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional"
+          },
+          "Value": null
+        }
+      ]
+    }

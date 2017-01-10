@@ -60,15 +60,15 @@ namespace Microsoft.Azure.Search.Models
         public bool? IsSearchTokenizer { get; set; }
 
         /// <summary>
-        /// Gets or sets the language to use. Possible values include:
-        /// 'arabic', 'bangla', 'bulgarian', 'catalan', 'croatian', 'czech',
-        /// 'danish', 'dutch', 'english', 'estonian', 'finnish', 'french',
-        /// 'german', 'greek', 'gujarati', 'hebrew', 'hindi', 'hungarian',
-        /// 'icelandic', 'indonesian', 'italian', 'kannada', 'latvian',
-        /// 'lithuanian', 'malay', 'malayalam', 'marathi',
-        /// 'norwegian_bokmaal', 'polish', 'portuguese',
-        /// 'portuguese_brazilian', 'punjabi', 'romanian', 'russian',
-        /// 'serbian_cyrillic', 'serbian_latin', 'slovak', 'slovenian',
+        /// Gets or sets the language to use. The default is English. Possible
+        /// values include: 'arabic', 'bangla', 'bulgarian', 'catalan',
+        /// 'croatian', 'czech', 'danish', 'dutch', 'english', 'estonian',
+        /// 'finnish', 'french', 'german', 'greek', 'gujarati', 'hebrew',
+        /// 'hindi', 'hungarian', 'icelandic', 'indonesian', 'italian',
+        /// 'kannada', 'latvian', 'lithuanian', 'malay', 'malayalam',
+        /// 'marathi', 'norwegianBokmaal', 'polish', 'portuguese',
+        /// 'portugueseBrazilian', 'punjabi', 'romanian', 'russian',
+        /// 'serbianCyrillic', 'serbianLatin', 'slovak', 'slovenian',
         /// 'spanish', 'swedish', 'tamil', 'telugu', 'turkish', 'ukrainian',
         /// 'urdu'
         /// </summary>
@@ -84,6 +84,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MaxTokenLength > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxTokenLength", 300);
+            }
         }
     }
 }

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource usage statistics for a job schedule.
@@ -40,20 +34,45 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobScheduleStatistics class.
         /// </summary>
         /// <param name="url">The URL of the statistics.</param>
-        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
-        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
-        /// <param name="userCPUTime">The total user mode CPU time (summed across all cores and all compute nodes) consumed by all tasks in all jobs created under the schedule.</param>
-        /// <param name="kernelCPUTime">The total kernel mode CPU time (summed across all cores and all compute nodes) consumed by all tasks in all jobs created under the schedule.</param>
-        /// <param name="wallClockTime">The total wall clock time of all the tasks in all the jobs created under the schedule.</param>
-        /// <param name="readIOps">The total number of disk read operations made by all tasks in all jobs created under the schedule.</param>
-        /// <param name="writeIOps">The total number of disk write operations made by all tasks in all jobs created under the schedule.</param>
-        /// <param name="readIOGiB">The total gibibytes read from disk by all tasks in all jobs created under the schedule.</param>
-        /// <param name="writeIOGiB">The total gibibytes written to disk by all tasks in all jobs created under the schedule.</param>
-        /// <param name="numSucceededTasks">The total number of tasks successfully completed during the given time range in jobs created under the schedule. A task completes successfully if it returns exit code 0.</param>
-        /// <param name="numFailedTasks">The total number of tasks that failed during the given time range in jobs created under the schedule. A task fails if it exhausts its maximum retry count without returning exit code 0.</param>
-        /// <param name="numTaskRetries">The total number of retries during the given time range on all tasks in all jobs created under the schedule.</param>
-        /// <param name="waitTime">The total wait time of all tasks in all jobs created under the schedule. The wait time for a task is defined as the elapsed time between the creation of the task and the start of task execution. (If the task is retried due to failures, the wait time is the time to the most recent task execution.)</param>
-        public JobScheduleStatistics(string url, DateTime startTime, DateTime lastUpdateTime, TimeSpan userCPUTime, TimeSpan kernelCPUTime, TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime)
+        /// <param name="startTime">The start time of the time range covered
+        /// by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were
+        /// last updated. All statistics are limited to the range between
+        /// startTime and lastUpdateTime.</param>
+        /// <param name="userCPUTime">The total user mode CPU time (summed
+        /// across all cores and all compute nodes) consumed by all tasks in
+        /// all jobs created under the schedule.</param>
+        /// <param name="kernelCPUTime">The total kernel mode CPU time (summed
+        /// across all cores and all compute nodes) consumed by all tasks in
+        /// all jobs created under the schedule.</param>
+        /// <param name="wallClockTime">The total wall clock time of all the
+        /// tasks in all the jobs created under the schedule.</param>
+        /// <param name="readIOps">The total number of disk read operations
+        /// made by all tasks in all jobs created under the schedule.</param>
+        /// <param name="writeIOps">The total number of disk write operations
+        /// made by all tasks in all jobs created under the schedule.</param>
+        /// <param name="readIOGiB">The total gibibytes read from disk by all
+        /// tasks in all jobs created under the schedule.</param>
+        /// <param name="writeIOGiB">The total gibibytes written to disk by
+        /// all tasks in all jobs created under the schedule.</param>
+        /// <param name="numSucceededTasks">The total number of tasks
+        /// successfully completed during the given time range in jobs
+        /// created under the schedule. A task completes successfully if it
+        /// returns exit code 0.</param>
+        /// <param name="numFailedTasks">The total number of tasks that failed
+        /// during the given time range in jobs created under the schedule. A
+        /// task fails if it exhausts its maximum retry count without
+        /// returning exit code 0.</param>
+        /// <param name="numTaskRetries">The total number of retries during
+        /// the given time range on all tasks in all jobs created under the
+        /// schedule.</param>
+        /// <param name="waitTime">The total wait time of all tasks in all
+        /// jobs created under the schedule. The wait time for a task is
+        /// defined as the elapsed time between the creation of the task and
+        /// the start of task execution. (If the task is retried due to
+        /// failures, the wait time is the time to the most recent task
+        /// execution.)</param>
+        public JobScheduleStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan userCPUTime, System.TimeSpan kernelCPUTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, System.TimeSpan waitTime)
         {
             Url = url;
             StartTime = startTime;
@@ -74,73 +93,73 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the URL of the statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the time range covered by the
         /// statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the statistics were last updated.
         /// All statistics are limited to the range between startTime and
         /// lastUpdateTime.
         /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTime")]
-        public DateTime LastUpdateTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastUpdateTime")]
+        public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total user mode CPU time (summed across all cores
         /// and all compute nodes) consumed by all tasks in all jobs created
         /// under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "userCPUTime")]
-        public TimeSpan UserCPUTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userCPUTime")]
+        public System.TimeSpan UserCPUTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total kernel mode CPU time (summed across all
         /// cores and all compute nodes) consumed by all tasks in all jobs
         /// created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "kernelCPUTime")]
-        public TimeSpan KernelCPUTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "kernelCPUTime")]
+        public System.TimeSpan KernelCPUTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total wall clock time of all the tasks in all the
         /// jobs created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "wallClockTime")]
-        public TimeSpan WallClockTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "wallClockTime")]
+        public System.TimeSpan WallClockTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk read operations made by all
         /// tasks in all jobs created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "readIOps")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "readIOps")]
         public long ReadIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk write operations made by all
         /// tasks in all jobs created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "writeIOps")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "writeIOps")]
         public long WriteIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total gibibytes read from disk by all tasks in
         /// all jobs created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "readIOGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the total gibibytes written to disk by all tasks in
         /// all jobs created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "writeIOGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
 
         /// <summary>
@@ -148,7 +167,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// during the given time range in jobs created under the schedule. A
         /// task completes successfully if it returns exit code 0.
         /// </summary>
-        [JsonProperty(PropertyName = "numSucceededTasks")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "numSucceededTasks")]
         public long NumSucceededTasks { get; set; }
 
         /// <summary>
@@ -157,14 +176,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// if it exhausts its maximum retry count without returning exit
         /// code 0.
         /// </summary>
-        [JsonProperty(PropertyName = "numFailedTasks")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "numFailedTasks")]
         public long NumFailedTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of retries during the given time
         /// range on all tasks in all jobs created under the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "numTaskRetries")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "numTaskRetries")]
         public long NumTaskRetries { get; set; }
 
         /// <summary>
@@ -174,20 +193,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task execution. (If the task is retried due to failures, the wait
         /// time is the time to the most recent task execution.)
         /// </summary>
-        [JsonProperty(PropertyName = "waitTime")]
-        public TimeSpan WaitTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "waitTime")]
+        public System.TimeSpan WaitTime { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Url == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
             }
         }
     }

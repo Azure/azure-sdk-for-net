@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The configuration for compute nodes in a pool based on the Azure
@@ -42,9 +36,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the VirtualMachineConfiguration
         /// class.
         /// </summary>
-        /// <param name="imageReference">A reference to the Azure Virtual Machines Marketplace image to use.</param>
-        /// <param name="nodeAgentSKUId">The SKU of Batch Node Agent to be provisioned on the compute node.</param>
-        /// <param name="windowsConfiguration">Windows operating system settings on the virtual machine.</param>
+        /// <param name="imageReference">A reference to the Azure Virtual
+        /// Machines Marketplace image to use.</param>
+        /// <param name="nodeAgentSKUId">The SKU of Batch Node Agent to be
+        /// provisioned on the compute node.</param>
+        /// <param name="windowsConfiguration">Windows operating system
+        /// settings on the virtual machine.</param>
         public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
             ImageReference = imageReference;
@@ -56,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace
         /// image to use.
         /// </summary>
-        [JsonProperty(PropertyName = "imageReference")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
@@ -69,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node and the Batch service. There are different implementations
         /// of the node agent, known as SKUs, for different operating systems.
         /// </remarks>
-        [JsonProperty(PropertyName = "nodeAgentSKUId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
 
         /// <summary>
@@ -80,24 +77,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property must not be specified if the imageReference property
         /// specifies a Linux OS image.
         /// </remarks>
-        [JsonProperty(PropertyName = "windowsConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (ImageReference == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ImageReference");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ImageReference");
             }
             if (NodeAgentSKUId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NodeAgentSKUId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NodeAgentSKUId");
             }
             if (this.ImageReference != null)
             {

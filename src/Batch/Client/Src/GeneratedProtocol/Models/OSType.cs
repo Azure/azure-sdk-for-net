@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OSType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum OSType
     {
-        [EnumMember(Value = "linux")]
+        [System.Runtime.Serialization.EnumMember(Value = "linux")]
         Linux,
-        [EnumMember(Value = "windows")]
+        [System.Runtime.Serialization.EnumMember(Value = "windows")]
         Windows,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

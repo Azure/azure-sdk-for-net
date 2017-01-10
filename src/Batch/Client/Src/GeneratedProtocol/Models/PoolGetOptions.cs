@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Additional parameters for the Pool_Get operation.
@@ -41,15 +35,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="select">An OData $select clause.</param>
         /// <param name="expand">An OData $expand clause.</param>
-        /// <param name="timeout">The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.</param>
-        /// <param name="clientRequestId">The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
-        /// <param name="returnClientRequestId">Whether the server should return the client-request-id identifier in the response.</param>
-        /// <param name="ocpDate">The time the request was issued. If not specified, this header will be automatically populated with the current system clock time.</param>
-        /// <param name="ifMatch">An ETag is specified. Specify this header to perform the operation only if the resource's ETag is an exact match as specified.</param>
-        /// <param name="ifNoneMatch">An ETag is specified. Specify this header to perform the operation only if the resource's ETag does not match the specified ETag.</param>
-        /// <param name="ifModifiedSince">Specify this header to perform the operation only if the resource has been modified since the specified date/time.</param>
-        /// <param name="ifUnmodifiedSince">Specify this header to perform the operation only if the resource has not been modified since the specified date/time.</param>
-        public PoolGetOptions(string select = default(string), string expand = default(string), int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), DateTime? ocpDate = default(DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), DateTime? ifModifiedSince = default(DateTime?), DateTime? ifUnmodifiedSince = default(DateTime?))
+        /// <param name="timeout">The maximum time that the server can spend
+        /// processing the request, in seconds. The default is 30
+        /// seconds.</param>
+        /// <param name="clientRequestId">The caller-generated request
+        /// identity, in the form of a GUID with no decoration such as curly
+        /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
+        /// <param name="returnClientRequestId">Whether the server should
+        /// return the client-request-id identifier in the response.</param>
+        /// <param name="ocpDate">The time the request was issued. If not
+        /// specified, this header will be automatically populated with the
+        /// current system clock time.</param>
+        /// <param name="ifMatch">An ETag is specified. Specify this header to
+        /// perform the operation only if the resource's ETag is an exact
+        /// match as specified.</param>
+        /// <param name="ifNoneMatch">An ETag is specified. Specify this
+        /// header to perform the operation only if the resource's ETag does
+        /// not match the specified ETag.</param>
+        /// <param name="ifModifiedSince">Specify this header to perform the
+        /// operation only if the resource has been modified since the
+        /// specified date/time.</param>
+        /// <param name="ifUnmodifiedSince">Specify this header to perform the
+        /// operation only if the resource has not been modified since the
+        /// specified date/time.</param>
+        public PoolGetOptions(string select = default(string), string expand = default(string), int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?))
         {
             Select = select;
             Expand = expand;
@@ -66,20 +75,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets an OData $select clause.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string Select { get; set; }
 
         /// <summary>
         /// Gets or sets an OData $expand clause.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string Expand { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum time that the server can spend processing
         /// the request, in seconds. The default is 30 seconds.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public int? Timeout { get; set; }
 
         /// <summary>
@@ -87,14 +96,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the
         /// client-request-id identifier in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
@@ -102,16 +111,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// this header will be automatically populated with the current
         /// system clock time.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "")]
-        public DateTime? OcpDate { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        public System.DateTime? OcpDate { get; set; }
 
         /// <summary>
         /// Gets or sets an ETag is specified. Specify this header to perform
         /// the operation only if the resource's ETag is an exact match as
         /// specified.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string IfMatch { get; set; }
 
         /// <summary>
@@ -119,24 +128,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the operation only if the resource's ETag does not match the
         /// specified ETag.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string IfNoneMatch { get; set; }
 
         /// <summary>
         /// Gets or sets specify this header to perform the operation only if
         /// the resource has been modified since the specified date/time.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "")]
-        public DateTime? IfModifiedSince { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        public System.DateTime? IfModifiedSince { get; set; }
 
         /// <summary>
         /// Gets or sets specify this header to perform the operation only if
         /// the resource has not been modified since the specified date/time.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "")]
-        public DateTime? IfUnmodifiedSince { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        public System.DateTime? IfUnmodifiedSince { get; set; }
 
     }
 }

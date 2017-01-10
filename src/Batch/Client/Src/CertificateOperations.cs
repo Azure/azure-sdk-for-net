@@ -29,6 +29,10 @@
     {
         private readonly BatchClient _parentBatchClient;
 
+        /// <summary>
+        /// The one and only thumbprint algorithm we support. Note that this is the thumbprint algorithm NOT the signature algorithm.
+        /// X509Certificate2 also only supports sha1 based thumbprints.
+        /// </summary>
         private const string KnownCertificateAlgorithm = "sha1";
 
 #region constructors
@@ -240,16 +244,10 @@
             Models.CertificateAddParameter cert = new Models.CertificateAddParameter();
             cert.Thumbprint = certificate.Thumbprint.ToLower();
 
-            if (certificate.SignatureAlgorithm.FriendlyName.Contains(KnownCertificateAlgorithm))
-            {
-                cert.ThumbprintAlgorithm = KnownCertificateAlgorithm;
-            }
-            else
-            {
-                cert.ThumbprintAlgorithm = certificate.SignatureAlgorithm.FriendlyName;
-            }
+            //ThumbprintAlgorithm is always SHA1 since thumbprint is dynamically generated from the cert body
+            cert.ThumbprintAlgorithm = KnownCertificateAlgorithm;
             cert.Data = Convert.ToBase64String(rawData);
-            
+
             return cert;
         }
 

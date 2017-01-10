@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains information about an application in an Azure Batch account.
@@ -39,10 +33,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationSummary class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the application within the account.</param>
-        /// <param name="displayName">The display name for the application.</param>
-        /// <param name="versions">The versions of the application which are available.</param>
-        public ApplicationSummary(string id, string displayName, IList<string> versions)
+        /// <param name="id">A string that uniquely identifies the application
+        /// within the account.</param>
+        /// <param name="displayName">The display name for the
+        /// application.</param>
+        /// <param name="versions">The versions of the application which are
+        /// available.</param>
+        public ApplicationSummary(string id, string displayName, System.Collections.Generic.IList<string> versions)
         {
             Id = id;
             DisplayName = displayName;
@@ -53,40 +50,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a string that uniquely identifies the application
         /// within the account.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the application.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the versions of the application which are available.
         /// </summary>
-        [JsonProperty(PropertyName = "versions")]
-        public IList<string> Versions { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "versions")]
+        public System.Collections.Generic.IList<string> Versions { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
             if (DisplayName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "DisplayName");
             }
             if (Versions == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Versions");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Versions");
             }
         }
     }

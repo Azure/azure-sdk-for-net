@@ -1,8 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/tagNames/csmtg9923/tagValues/csmtgv1292?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGIxZjY0NzEtMWJmMC00ZGRhLWFlYzMtY2I5MjcyZjA5NTkwL3RhZ05hbWVzL2NzbXRnOTkyMy90YWdWYWx1ZXMvY3NtdGd2MTI5Mj9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/tagNames/csmtg9923/tagValues/csmtgv1292?api-version=2016-09-01",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {

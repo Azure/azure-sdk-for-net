@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Search.Tests
                     new Field("baseRate", DataType.Double) { IsKey = false, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new Field("description", DataType.String) { IsKey = false, IsSearchable = true, IsFilterable = false, IsSortable = false, IsFacetable = false },
                     new Field("description_fr", AnalyzerName.FrLucene) { IsFilterable = false, IsSortable = false, IsFacetable = false },
+                    new Field("description_custom", DataType.String) { IsSearchable = true, IsFilterable = false, IsSortable = false, IsFacetable = false, SearchAnalyzer = AnalyzerName.Stop, IndexAnalyzer = AnalyzerName.Stop },
                     new Field("hotelName", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new Field("category", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new Field("tags", DataType.Collection(DataType.String)) { IsSearchable = true, IsFilterable = true, IsSortable = false, IsFacetable = true },

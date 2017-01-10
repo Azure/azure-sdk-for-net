@@ -7,6 +7,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// Abstract AES Key Wrap algoritm.
+    /// </summary>
     public abstract class AesKw : KeyWrapAlgorithm
     {
         const int BlockSizeInBits  = 64;

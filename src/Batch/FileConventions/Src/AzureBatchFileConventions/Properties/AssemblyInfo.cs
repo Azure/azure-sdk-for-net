@@ -19,13 +19,15 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Azure Batch File Conventions")]
 [assembly: AssemblyDescription("A convention-based library for saving and retrieving Azure Batch task output files.")]
 
-[assembly: AssemblyVersion("0.9.4.0")] 
-[assembly: AssemblyFileVersion("0.9.4.0")]
+[assembly: AssemblyVersion("1.0.0.0")] 
+[assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Azure")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Corporation. All rights reserved.")]
 
 [assembly: ComVisible(false)]
 
+#if !CODESIGN
 [assembly: InternalsVisibleTo("Microsoft.Azure.Batch.Conventions.Files.Tests")]
 [assembly: InternalsVisibleTo("Microsoft.Azure.Batch.Conventions.Files.IntegrationTests")]
+#endif

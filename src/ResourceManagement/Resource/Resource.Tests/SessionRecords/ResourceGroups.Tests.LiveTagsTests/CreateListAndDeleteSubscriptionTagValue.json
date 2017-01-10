@@ -1,8 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzL2NzbXRnNjc3Nj9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776?api-version=2016-09-01",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -55,8 +54,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776/tagValues/csmtgv5290?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzL2NzbXRnNjc3Ni90YWdWYWx1ZXMvY3NtdGd2NTI5MD9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776/tagValues/csmtgv5290?api-version=2016-09-01",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -109,8 +107,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames?api-version=2016-09-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -163,8 +160,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776/tagValues/csmtgv5290?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzL2NzbXRnNjc3Ni90YWdWYWx1ZXMvY3NtdGd2NTI5MD9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776/tagValues/csmtgv5290?api-version=2016-09-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -214,8 +210,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776?api-version=2016-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzL2NzbXRnNjc3Nj9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg6776?api-version=2016-09-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Defines headers for Delete operation.
@@ -39,8 +33,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobDeleteHeaders class.
         /// </summary>
-        /// <param name="clientRequestId">The ClientRequestId provided by the client during the request, if present and requested to be returned.</param>
-        /// <param name="requestId">The value that uniquely identifies a request.</param>
+        /// <param name="clientRequestId">The ClientRequestId provided by the
+        /// client during the request, if present and requested to be
+        /// returned.</param>
+        /// <param name="requestId">The value that uniquely identifies a
+        /// request.</param>
         public JobDeleteHeaders(string clientRequestId = default(string), string requestId = default(string))
         {
             ClientRequestId = clientRequestId;
@@ -51,13 +48,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the ClientRequestId provided by the client during the
         /// request, if present and requested to be returned.
         /// </summary>
-        [JsonProperty(PropertyName = "client-request-id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request.
         /// </summary>
-        [JsonProperty(PropertyName = "request-id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }
 
     }

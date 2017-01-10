@@ -8,12 +8,6 @@
 
 namespace Microsoft.Azure.Management.Search
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -23,15 +17,21 @@ namespace Microsoft.Azure.Management.Search
     public partial interface IAdminKeysOperations
     {
         /// <summary>
-        /// Returns the primary and secondary API keys for the given Azure
-        /// Search service.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
+        /// Gets the primary and secondary admin API keys for the specified
+        /// Azure Search service.
+        /// <see href="https://aka.ms/search-manage" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
+        /// You can obtain this value from the Azure Resource Manager API or
+        /// the portal.
         /// </param>
-        /// <param name='serviceName'>
-        /// The name of the Search service for which to list admin keys.
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Search service associated with the specified
+        /// resource group.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -39,15 +39,52 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AdminKeyResult>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AdminKeyResult>> GetWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Regenerates either the primary or secondary admin API key. You can
+        /// only regenerate one key at a time.
+        /// <see href="https://aka.ms/search-manage" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the current subscription.
+        /// You can obtain this value from the Azure Resource Manager API or
+        /// the portal.
+        /// </param>
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Search service associated with the specified
+        /// resource group.
+        /// </param>
+        /// <param name='keyKind'>
+        /// Specifies which key to regenerate. Valid values include 'primary'
+        /// and 'secondary'. Possible values include: 'primary', 'secondary'
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AdminKeyResult>> RegenerateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

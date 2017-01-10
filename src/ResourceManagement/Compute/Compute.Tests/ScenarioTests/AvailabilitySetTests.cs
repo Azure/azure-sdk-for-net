@@ -187,11 +187,7 @@ namespace Compute.Tests
                         {"testTag", "1"},
                     },
                 PlatformFaultDomainCount = nonDefaultFD,
-                PlatformUpdateDomainCount = nonDefaultUD,
-                Statuses = new List<InstanceViewStatus>()
-                {
-                    testStatus
-                }
+                PlatformUpdateDomainCount = nonDefaultUD
             };
 
             var createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(

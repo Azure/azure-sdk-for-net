@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search
 
     /// <summary>
     /// Operations for managing indexes.
-    /// <see href="https://msdn.microsoft.com/library/azure/dn798918.aspx" />
+    /// <see href="https://docs.microsoft.com/rest/api/searchservice/Index-operations" />
     /// </summary>
     public static partial class IndexesOperationsExtensions
     {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes"/>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Search
         /// service. Use this instead of List() when you only need index
         /// names. It will save bandwidth and resource utilization, especially
         /// if your Search Service has many indexes.
-        /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Indexes"/>
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.

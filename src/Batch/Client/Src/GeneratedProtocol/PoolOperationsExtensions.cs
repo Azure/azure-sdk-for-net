@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for PoolOperations.
@@ -42,9 +37,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='poolListPoolUsageMetricsOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<PoolUsageMetrics> ListPoolUsageMetrics(this IPoolOperations operations, PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions))
+            public static Microsoft.Rest.Azure.IPage<PoolUsageMetrics> ListPoolUsageMetrics(this IPoolOperations operations, PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).ListPoolUsageMetricsAsync(poolListPoolUsageMetricsOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).ListPoolUsageMetricsAsync(poolListPoolUsageMetricsOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PoolUsageMetrics>> ListPoolUsageMetricsAsync(this IPoolOperations operations, PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>> ListPoolUsageMetricsAsync(this IPoolOperations operations, PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListPoolUsageMetricsWithHttpMessagesAsync(poolListPoolUsageMetricsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -84,7 +79,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolStatistics GetAllPoolsLifetimeStatistics(this IPoolOperations operations, PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).GetAllPoolsLifetimeStatisticsAsync(poolGetAllPoolsLifetimeStatisticsOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).GetAllPoolsLifetimeStatisticsAsync(poolGetAllPoolsLifetimeStatisticsOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,7 +99,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolStatistics> GetAllPoolsLifetimeStatisticsAsync(this IPoolOperations operations, PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolStatistics> GetAllPoolsLifetimeStatisticsAsync(this IPoolOperations operations, PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetAllPoolsLifetimeStatisticsWithHttpMessagesAsync(poolGetAllPoolsLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -126,7 +121,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolAddHeaders Add(this IPoolOperations operations, PoolAddParameter pool, PoolAddOptions poolAddOptions = default(PoolAddOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).AddAsync(pool, poolAddOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).AddAsync(pool, poolAddOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -144,7 +139,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolAddHeaders> AddAsync(this IPoolOperations operations, PoolAddParameter pool, PoolAddOptions poolAddOptions = default(PoolAddOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolAddHeaders> AddAsync(this IPoolOperations operations, PoolAddParameter pool, PoolAddOptions poolAddOptions = default(PoolAddOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.AddWithHttpMessagesAsync(pool, poolAddOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -161,9 +156,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='poolListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<CloudPool> List(this IPoolOperations operations, PoolListOptions poolListOptions = default(PoolListOptions))
+            public static Microsoft.Rest.Azure.IPage<CloudPool> List(this IPoolOperations operations, PoolListOptions poolListOptions = default(PoolListOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).ListAsync(poolListOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).ListAsync(poolListOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,7 +173,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CloudPool>> ListAsync(this IPoolOperations operations, PoolListOptions poolListOptions = default(PoolListOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CloudPool>> ListAsync(this IPoolOperations operations, PoolListOptions poolListOptions = default(PoolListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(poolListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -200,7 +195,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolDeleteHeaders Delete(this IPoolOperations operations, string poolId, PoolDeleteOptions poolDeleteOptions = default(PoolDeleteOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).DeleteAsync(poolId, poolDeleteOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).DeleteAsync(poolId, poolDeleteOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -218,7 +213,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolDeleteHeaders> DeleteAsync(this IPoolOperations operations, string poolId, PoolDeleteOptions poolDeleteOptions = default(PoolDeleteOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolDeleteHeaders> DeleteAsync(this IPoolOperations operations, string poolId, PoolDeleteOptions poolDeleteOptions = default(PoolDeleteOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(poolId, poolDeleteOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -240,7 +235,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static bool Exists(this IPoolOperations operations, string poolId, PoolExistsOptions poolExistsOptions = default(PoolExistsOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).ExistsAsync(poolId, poolExistsOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).ExistsAsync(poolId, poolExistsOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -258,7 +253,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> ExistsAsync(this IPoolOperations operations, string poolId, PoolExistsOptions poolExistsOptions = default(PoolExistsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<bool> ExistsAsync(this IPoolOperations operations, string poolId, PoolExistsOptions poolExistsOptions = default(PoolExistsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ExistsWithHttpMessagesAsync(poolId, poolExistsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -280,7 +275,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CloudPool Get(this IPoolOperations operations, string poolId, PoolGetOptions poolGetOptions = default(PoolGetOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).GetAsync(poolId, poolGetOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).GetAsync(poolId, poolGetOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -298,7 +293,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CloudPool> GetAsync(this IPoolOperations operations, string poolId, PoolGetOptions poolGetOptions = default(PoolGetOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<CloudPool> GetAsync(this IPoolOperations operations, string poolId, PoolGetOptions poolGetOptions = default(PoolGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(poolId, poolGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -323,7 +318,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolPatchHeaders Patch(this IPoolOperations operations, string poolId, PoolPatchParameter poolPatchParameter, PoolPatchOptions poolPatchOptions = default(PoolPatchOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).PatchAsync(poolId, poolPatchParameter, poolPatchOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).PatchAsync(poolId, poolPatchParameter, poolPatchOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -344,7 +339,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolPatchHeaders> PatchAsync(this IPoolOperations operations, string poolId, PoolPatchParameter poolPatchParameter, PoolPatchOptions poolPatchOptions = default(PoolPatchOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolPatchHeaders> PatchAsync(this IPoolOperations operations, string poolId, PoolPatchParameter poolPatchParameter, PoolPatchOptions poolPatchOptions = default(PoolPatchOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.PatchWithHttpMessagesAsync(poolId, poolPatchParameter, poolPatchOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -366,7 +361,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolDisableAutoScaleHeaders DisableAutoScale(this IPoolOperations operations, string poolId, PoolDisableAutoScaleOptions poolDisableAutoScaleOptions = default(PoolDisableAutoScaleOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).DisableAutoScaleAsync(poolId, poolDisableAutoScaleOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).DisableAutoScaleAsync(poolId, poolDisableAutoScaleOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -384,7 +379,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolDisableAutoScaleHeaders> DisableAutoScaleAsync(this IPoolOperations operations, string poolId, PoolDisableAutoScaleOptions poolDisableAutoScaleOptions = default(PoolDisableAutoScaleOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolDisableAutoScaleHeaders> DisableAutoScaleAsync(this IPoolOperations operations, string poolId, PoolDisableAutoScaleOptions poolDisableAutoScaleOptions = default(PoolDisableAutoScaleOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DisableAutoScaleWithHttpMessagesAsync(poolId, poolDisableAutoScaleOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -409,7 +404,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolEnableAutoScaleHeaders EnableAutoScale(this IPoolOperations operations, string poolId, PoolEnableAutoScaleParameter poolEnableAutoScaleParameter, PoolEnableAutoScaleOptions poolEnableAutoScaleOptions = default(PoolEnableAutoScaleOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).EnableAutoScaleAsync(poolId, poolEnableAutoScaleParameter, poolEnableAutoScaleOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).EnableAutoScaleAsync(poolId, poolEnableAutoScaleParameter, poolEnableAutoScaleOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -430,7 +425,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolEnableAutoScaleHeaders> EnableAutoScaleAsync(this IPoolOperations operations, string poolId, PoolEnableAutoScaleParameter poolEnableAutoScaleParameter, PoolEnableAutoScaleOptions poolEnableAutoScaleOptions = default(PoolEnableAutoScaleOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolEnableAutoScaleHeaders> EnableAutoScaleAsync(this IPoolOperations operations, string poolId, PoolEnableAutoScaleParameter poolEnableAutoScaleParameter, PoolEnableAutoScaleOptions poolEnableAutoScaleOptions = default(PoolEnableAutoScaleOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.EnableAutoScaleWithHttpMessagesAsync(poolId, poolEnableAutoScaleParameter, poolEnableAutoScaleOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -455,7 +450,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static AutoScaleRun EvaluateAutoScale(this IPoolOperations operations, string poolId, string autoScaleFormula, PoolEvaluateAutoScaleOptions poolEvaluateAutoScaleOptions = default(PoolEvaluateAutoScaleOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).EvaluateAutoScaleAsync(poolId, autoScaleFormula, poolEvaluateAutoScaleOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).EvaluateAutoScaleAsync(poolId, autoScaleFormula, poolEvaluateAutoScaleOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -476,7 +471,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AutoScaleRun> EvaluateAutoScaleAsync(this IPoolOperations operations, string poolId, string autoScaleFormula, PoolEvaluateAutoScaleOptions poolEvaluateAutoScaleOptions = default(PoolEvaluateAutoScaleOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<AutoScaleRun> EvaluateAutoScaleAsync(this IPoolOperations operations, string poolId, string autoScaleFormula, PoolEvaluateAutoScaleOptions poolEvaluateAutoScaleOptions = default(PoolEvaluateAutoScaleOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.EvaluateAutoScaleWithHttpMessagesAsync(poolId, autoScaleFormula, poolEvaluateAutoScaleOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -501,7 +496,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolResizeHeaders Resize(this IPoolOperations operations, string poolId, PoolResizeParameter poolResizeParameter, PoolResizeOptions poolResizeOptions = default(PoolResizeOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).ResizeAsync(poolId, poolResizeParameter, poolResizeOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).ResizeAsync(poolId, poolResizeParameter, poolResizeOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -522,7 +517,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolResizeHeaders> ResizeAsync(this IPoolOperations operations, string poolId, PoolResizeParameter poolResizeParameter, PoolResizeOptions poolResizeOptions = default(PoolResizeOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolResizeHeaders> ResizeAsync(this IPoolOperations operations, string poolId, PoolResizeParameter poolResizeParameter, PoolResizeOptions poolResizeOptions = default(PoolResizeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ResizeWithHttpMessagesAsync(poolId, poolResizeParameter, poolResizeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -549,7 +544,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolStopResizeHeaders StopResize(this IPoolOperations operations, string poolId, PoolStopResizeOptions poolStopResizeOptions = default(PoolStopResizeOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).StopResizeAsync(poolId, poolStopResizeOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).StopResizeAsync(poolId, poolStopResizeOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -572,7 +567,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolStopResizeHeaders> StopResizeAsync(this IPoolOperations operations, string poolId, PoolStopResizeOptions poolStopResizeOptions = default(PoolStopResizeOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolStopResizeHeaders> StopResizeAsync(this IPoolOperations operations, string poolId, PoolStopResizeOptions poolStopResizeOptions = default(PoolStopResizeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.StopResizeWithHttpMessagesAsync(poolId, poolStopResizeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -597,7 +592,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolUpdatePropertiesHeaders UpdateProperties(this IPoolOperations operations, string poolId, PoolUpdatePropertiesParameter poolUpdatePropertiesParameter, PoolUpdatePropertiesOptions poolUpdatePropertiesOptions = default(PoolUpdatePropertiesOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).UpdatePropertiesAsync(poolId, poolUpdatePropertiesParameter, poolUpdatePropertiesOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).UpdatePropertiesAsync(poolId, poolUpdatePropertiesParameter, poolUpdatePropertiesOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -618,7 +613,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolUpdatePropertiesHeaders> UpdatePropertiesAsync(this IPoolOperations operations, string poolId, PoolUpdatePropertiesParameter poolUpdatePropertiesParameter, PoolUpdatePropertiesOptions poolUpdatePropertiesOptions = default(PoolUpdatePropertiesOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolUpdatePropertiesHeaders> UpdatePropertiesAsync(this IPoolOperations operations, string poolId, PoolUpdatePropertiesParameter poolUpdatePropertiesParameter, PoolUpdatePropertiesOptions poolUpdatePropertiesOptions = default(PoolUpdatePropertiesOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UpdatePropertiesWithHttpMessagesAsync(poolId, poolUpdatePropertiesParameter, poolUpdatePropertiesOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -644,7 +639,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolUpgradeOSHeaders UpgradeOS(this IPoolOperations operations, string poolId, string targetOSVersion, PoolUpgradeOSOptions poolUpgradeOSOptions = default(PoolUpgradeOSOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).UpgradeOSAsync(poolId, targetOSVersion, poolUpgradeOSOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).UpgradeOSAsync(poolId, targetOSVersion, poolUpgradeOSOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -666,7 +661,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolUpgradeOSHeaders> UpgradeOSAsync(this IPoolOperations operations, string poolId, string targetOSVersion, PoolUpgradeOSOptions poolUpgradeOSOptions = default(PoolUpgradeOSOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolUpgradeOSHeaders> UpgradeOSAsync(this IPoolOperations operations, string poolId, string targetOSVersion, PoolUpgradeOSOptions poolUpgradeOSOptions = default(PoolUpgradeOSOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UpgradeOSWithHttpMessagesAsync(poolId, targetOSVersion, poolUpgradeOSOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -691,7 +686,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static PoolRemoveNodesHeaders RemoveNodes(this IPoolOperations operations, string poolId, NodeRemoveParameter nodeRemoveParameter, PoolRemoveNodesOptions poolRemoveNodesOptions = default(PoolRemoveNodesOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).RemoveNodesAsync(poolId, nodeRemoveParameter, poolRemoveNodesOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).RemoveNodesAsync(poolId, nodeRemoveParameter, poolRemoveNodesOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -712,7 +707,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PoolRemoveNodesHeaders> RemoveNodesAsync(this IPoolOperations operations, string poolId, NodeRemoveParameter nodeRemoveParameter, PoolRemoveNodesOptions poolRemoveNodesOptions = default(PoolRemoveNodesOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolRemoveNodesHeaders> RemoveNodesAsync(this IPoolOperations operations, string poolId, NodeRemoveParameter nodeRemoveParameter, PoolRemoveNodesOptions poolRemoveNodesOptions = default(PoolRemoveNodesOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.RemoveNodesWithHttpMessagesAsync(poolId, nodeRemoveParameter, poolRemoveNodesOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -733,9 +728,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='poolListPoolUsageMetricsNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<PoolUsageMetrics> ListPoolUsageMetricsNext(this IPoolOperations operations, string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions))
+            public static Microsoft.Rest.Azure.IPage<PoolUsageMetrics> ListPoolUsageMetricsNext(this IPoolOperations operations, string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).ListPoolUsageMetricsNextAsync(nextPageLink, poolListPoolUsageMetricsNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).ListPoolUsageMetricsNextAsync(nextPageLink, poolListPoolUsageMetricsNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -754,7 +749,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PoolUsageMetrics>> ListPoolUsageMetricsNextAsync(this IPoolOperations operations, string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>> ListPoolUsageMetricsNextAsync(this IPoolOperations operations, string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListPoolUsageMetricsNextWithHttpMessagesAsync(nextPageLink, poolListPoolUsageMetricsNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -774,9 +769,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='poolListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<CloudPool> ListNext(this IPoolOperations operations, string nextPageLink, PoolListNextOptions poolListNextOptions = default(PoolListNextOptions))
+            public static Microsoft.Rest.Azure.IPage<CloudPool> ListNext(this IPoolOperations operations, string nextPageLink, PoolListNextOptions poolListNextOptions = default(PoolListNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IPoolOperations)s).ListNextAsync(nextPageLink, poolListNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPoolOperations)s).ListNextAsync(nextPageLink, poolListNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -794,7 +789,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CloudPool>> ListNextAsync(this IPoolOperations operations, string nextPageLink, PoolListNextOptions poolListNextOptions = default(PoolListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CloudPool>> ListNextAsync(this IPoolOperations operations, string nextPageLink, PoolListNextOptions poolListNextOptions = default(PoolListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, poolListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

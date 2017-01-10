@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/tenants?api-version=2015-11-01",
-      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/tenants?api-version=2016-06-01",
+      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "69724c84-9ada-4bb5-b5a8-c3968a1a8d1c"
+          "7b6327bc-21c7-475d-9cee-c77c60a43486"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.SubscriptionClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/1449d5b7-8a83-47db-ae4c-9b03e888bad0\",\r\n      \"tenantId\": \"1449d5b7-8a83-47db-ae4c-9b03e888bad0\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/dbe499da-a935-4b9f-b4e2-5377e76aaeef\",\r\n      \"tenantId\": \"dbe499da-a935-4b9f-b4e2-5377e76aaeef\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:38:08 GMT"
+          "Wed, 31 Aug 2016 22:14:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,13 +43,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "627829a6-0e1a-40f3-9520-f4c4783d220e"
+          "90bb04b6-9f3c-49d2-923c-006f08016577"
         ],
         "x-ms-correlation-request-id": [
-          "627829a6-0e1a-40f3-9520-f4c4783d220e"
+          "90bb04b6-9f3c-49d2-923c-006f08016577"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160126T223809Z:627829a6-0e1a-40f3-9520-f4c4783d220e"
+          "WESTUS2:20160831T221452Z:90bb04b6-9f3c-49d2-923c-006f08016577"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -60,6 +60,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
   }
 }

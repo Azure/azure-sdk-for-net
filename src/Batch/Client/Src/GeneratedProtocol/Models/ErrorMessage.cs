@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An error message received in an Azure Batch error response.
@@ -50,13 +44,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the language code of the error message
         /// </summary>
-        [JsonProperty(PropertyName = "lang")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lang")]
         public string Lang { get; set; }
 
         /// <summary>
         /// Gets or sets the text of the message.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

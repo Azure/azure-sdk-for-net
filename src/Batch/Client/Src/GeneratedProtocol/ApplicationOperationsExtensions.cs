@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ApplicationOperations.
@@ -41,9 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='applicationListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<ApplicationSummary> List(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions))
+            public static Microsoft.Rest.Azure.IPage<ApplicationSummary> List(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions))
             {
-                return Task.Factory.StartNew(s => ((IApplicationOperations)s).ListAsync(applicationListOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApplicationOperations)s).ListAsync(applicationListOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApplicationSummary>> ListAsync(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ApplicationSummary>> ListAsync(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(applicationListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -80,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ApplicationSummary Get(this IApplicationOperations operations, string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions))
             {
-                return Task.Factory.StartNew(s => ((IApplicationOperations)s).GetAsync(applicationId, applicationGetOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApplicationOperations)s).GetAsync(applicationId, applicationGetOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationSummary> GetAsync(this IApplicationOperations operations, string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ApplicationSummary> GetAsync(this IApplicationOperations operations, string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(applicationId, applicationGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -118,9 +113,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='applicationListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<ApplicationSummary> ListNext(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions))
+            public static Microsoft.Rest.Azure.IPage<ApplicationSummary> ListNext(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IApplicationOperations)s).ListNextAsync(nextPageLink, applicationListNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IApplicationOperations)s).ListNextAsync(nextPageLink, applicationListNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -138,7 +133,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApplicationSummary>> ListNextAsync(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ApplicationSummary>> ListNextAsync(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, applicationListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

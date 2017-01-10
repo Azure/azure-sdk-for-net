@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response to a ComputeNodeOperation.GetRemoteLoginSettings request.
@@ -41,8 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// ComputeNodeGetRemoteLoginSettingsResult class.
         /// </summary>
-        /// <param name="remoteLoginIPAddress">The IP address used for remote login to the compute node.</param>
-        /// <param name="remoteLoginPort">The port used for remote login to the compute node.</param>
+        /// <param name="remoteLoginIPAddress">The IP address used for remote
+        /// login to the compute node.</param>
+        /// <param name="remoteLoginPort">The port used for remote login to
+        /// the compute node.</param>
         public ComputeNodeGetRemoteLoginSettingsResult(string remoteLoginIPAddress, int remoteLoginPort)
         {
             RemoteLoginIPAddress = remoteLoginIPAddress;
@@ -53,26 +49,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the IP address used for remote login to the compute
         /// node.
         /// </summary>
-        [JsonProperty(PropertyName = "remoteLoginIPAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "remoteLoginIPAddress")]
         public string RemoteLoginIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the port used for remote login to the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "remoteLoginPort")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "remoteLoginPort")]
         public int RemoteLoginPort { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (RemoteLoginIPAddress == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RemoteLoginIPAddress");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "RemoteLoginIPAddress");
             }
         }
     }

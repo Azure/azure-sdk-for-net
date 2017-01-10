@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for PoolLifetimeOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum PoolLifetimeOption
     {
-        [EnumMember(Value = "jobschedule")]
+        [System.Runtime.Serialization.EnumMember(Value = "jobschedule")]
         Jobschedule,
-        [EnumMember(Value = "job")]
+        [System.Runtime.Serialization.EnumMember(Value = "job")]
         Job,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

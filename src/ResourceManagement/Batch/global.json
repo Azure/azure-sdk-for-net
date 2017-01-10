@@ -1,0 +1,3 @@
+{
+    "projects": [ "../../ClientRuntime", "../../TestFramework/", "BatchManagement", "Batch.Tests" ]
+}

@@ -1,0 +1,46 @@
+    {
+      "Name": "VirtualMachineConfiguration",
+      "ProtocolName": "Models.VirtualMachineConfiguration",
+      "Comment": "The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "ImageReference",
+            "Name": "ImageReference",
+            "SummaryComment": "A reference to the Azure Virtual Machines Marketplace image to use.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "NodeAgentSkuId",
+            "SummaryComment": "The SKU of Batch Node Agent to be provisioned on the compute node.",
+            "RemarksComment": "The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": {
+            "Type": "string",
+            "Name": "NodeAgentSKUId"
+          }
+        },
+        {
+          "Key": {
+            "Type": "WindowsConfiguration",
+            "Name": "WindowsConfiguration",
+            "SummaryComment": "Windows operating system settings on the virtual machine. This property must not be specified if the ImageReference property specifies a Linux OS image.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional"
+          },
+          "Value": null
+        }
+      ]
+    }

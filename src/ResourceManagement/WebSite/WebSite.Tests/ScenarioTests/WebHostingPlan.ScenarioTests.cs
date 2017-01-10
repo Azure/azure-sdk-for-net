@@ -49,9 +49,9 @@ namespace WebSites.Tests.ScenarioTests
                             Location = location
                         });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, webHostingPlanName, new ServerFarmWithRichSku()
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, new AppServicePlan()
                     {
-                        ServerFarmWithRichSkuName = webHostingPlanName,
+                        Name = webHostingPlanName,
                         Location = location,
                         Sku = new SkuDescription()
                         {
@@ -61,7 +61,7 @@ namespace WebSites.Tests.ScenarioTests
                         }
                     });
 
-                var webHostingPlanResponse = webSitesClient.ServerFarms.GetServerFarm(resourceGroupName, webHostingPlanName);
+                var webHostingPlanResponse = webSitesClient.AppServicePlans.Get(resourceGroupName, webHostingPlanName);
 
                 Assert.Equal(webHostingPlanName, webHostingPlanResponse.Name);
                 Assert.Equal(1, webHostingPlanResponse.Sku.Capacity);
@@ -90,9 +90,9 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName1, serverFarmEnvelope: new ServerFarmWithRichSku()
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName1, new AppServicePlan()
                 {
-                    ServerFarmWithRichSkuName = whpName1,
+                    Name = whpName1,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -101,9 +101,9 @@ namespace WebSites.Tests.ScenarioTests
                     }
                 });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName2, serverFarmEnvelope: new ServerFarmWithRichSku()
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName2, new AppServicePlan()
                 {
-                    ServerFarmWithRichSkuName = whpName2,
+                    Name = whpName2,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -113,10 +113,10 @@ namespace WebSites.Tests.ScenarioTests
                     }
                 });
 
-                var webHostingPlanResponse = webSitesClient.ServerFarms.GetServerFarms(resourceGroupName);
+                var webHostingPlanResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                var whp1 = webHostingPlanResponse.Value.First(f => f.Name == whpName1);
-                var whp2 = webHostingPlanResponse.Value.First(f => f.Name == whpName2);
+                var whp1 = webHostingPlanResponse.First(f => f.Name == whpName1);
+                var whp2 = webHostingPlanResponse.First(f => f.Name == whpName2);
                 Assert.Equal(whp1.Sku.Tier, "Shared");
                 Assert.Equal(whp2.Sku.Tier, "Basic");
             }
@@ -141,11 +141,11 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                webSitesClient.Sites.GetSites(resourceGroupName);
+                webSitesClient.WebApps.ListByResourceGroup(resourceGroupName);
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName, new ServerFarmWithRichSku() 
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan() 
                 {
-                    ServerFarmWithRichSkuName = whpName,
+                    Name = whpName,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -155,11 +155,11 @@ namespace WebSites.Tests.ScenarioTests
                     }
                 });
 
-                webSitesClient.ServerFarms.DeleteServerFarm(resourceGroupName, whpName);
+                webSitesClient.AppServicePlans.Delete(resourceGroupName, whpName);
 
-                var webHostingPlanResponse = webSitesClient.ServerFarms.GetServerFarms(resourceGroupName);
+                var webHostingPlanResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Equal(0, webHostingPlanResponse.Value.Count);
+                Assert.Equal(0, webHostingPlanResponse.Count());
             }
         }
 
@@ -184,9 +184,9 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                var serverFarm = webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, webHostingPlanName, new ServerFarmWithRichSku()
+                var serverFarm = webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, new AppServicePlan()
                 {
-                    ServerFarmWithRichSkuName = webHostingPlanName,
+                    Name = webHostingPlanName,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -196,18 +196,18 @@ namespace WebSites.Tests.ScenarioTests
                     }
                 });
 
-                webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site()
+                webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site()
                 {
-                    SiteName = webSiteName,
+                    Name = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                     ServerFarmId = serverFarmId
                 });
 
                 serverFarm.AdminSiteName = webSiteName;
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, webHostingPlanName, serverFarm);
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, serverFarm);
 
-                var webHostingPlanResponse = webSitesClient.ServerFarms.GetServerFarm(resourceGroupName, webHostingPlanName);
+                var webHostingPlanResponse = webSitesClient.AppServicePlans.Get(resourceGroupName, webHostingPlanName);
 
                 Assert.Equal(webHostingPlanName, webHostingPlanResponse.Name);
                 Assert.Equal(1, webHostingPlanResponse.Sku.Capacity);
@@ -239,10 +239,10 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName,
-                    new ServerFarmWithRichSku()
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName,
+                    new AppServicePlan()
                     {
-                        ServerFarmWithRichSkuName = whpName,
+                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -252,9 +252,9 @@ namespace WebSites.Tests.ScenarioTests
                         }
                     });
 
-                var webSite = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site
+                var webSite = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    SiteName = webSiteName,
+                    Name = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                     ServerFarmId = serverfarmId
@@ -263,22 +263,22 @@ namespace WebSites.Tests.ScenarioTests
                 var endTime = DateTime.Parse("2015-12-11T09:52:42Z");
                 var metricNames = new List<string> { "MemoryPercentage", "CpuPercentage", "DiskQueueLength", "HttpQueueLength", "BytesReceived", "BytesSent" };
                 metricNames.Sort();
-                var result = webSitesClient.ServerFarms.GetServerFarmMetrics(resourceGroupName: resourceGroupName,
+                var result = webSitesClient.AppServicePlans.ListMetrics(resourceGroupName: resourceGroupName,
                     name: whpName,
                     filter:
                         WebSitesHelper.BuildMetricFilter(startTime: endTime.AddDays(-1), endTime: endTime,
                             timeGrain: "PT1H", metricNames: metricNames), details: true);
 
-                webSitesClient.Sites.DeleteSite(resourceGroupName, webSiteName, deleteAllSlots: true.ToString(), deleteEmptyServerFarm: true.ToString());
+                webSitesClient.WebApps.Delete(resourceGroupName, webSiteName, deleteEmptyServerFarm: true);
 
-                var webHostingPlanResponse = webSitesClient.ServerFarms.GetServerFarms(resourceGroupName);
+                var webHostingPlanResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Equal(0, webHostingPlanResponse.Value.Count);
+                Assert.Equal(0, webHostingPlanResponse.Count());
 
                 // Validate response
                 Assert.NotNull(result);
                 var actualmetricNames =
-                    result.Value.Select(r => r.Name.Value).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+                    result.Select(r => r.Name.Value).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
                 actualmetricNames.Sort();
                 Assert.Equal(metricNames, actualmetricNames, StringComparer.OrdinalIgnoreCase);
 

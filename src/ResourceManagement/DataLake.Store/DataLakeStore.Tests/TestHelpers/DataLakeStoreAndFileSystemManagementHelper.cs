@@ -103,7 +103,7 @@ namespace DataLakeStore.Tests
             if (!exists)
             {
                 dataLakeStoreManagementClient.Account.Create(resourceGroupName, accountName,
-                    new DataLakeStoreAccount {Location = location, Name = accountName});
+                    new DataLakeStoreAccount {Location = location});
                 
                 accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
                     accountName);
@@ -112,9 +112,9 @@ namespace DataLakeStore.Tests
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
                 int minutesWaited = 0;
                 int timeToWaitInMinutes = 15;
-                while (accountGetResponse.Properties.ProvisioningState !=
+                while (accountGetResponse.ProvisioningState !=
                        DataLakeStoreAccountStatus.Succeeded &&
-                       accountGetResponse.Properties.ProvisioningState !=
+                       accountGetResponse.ProvisioningState !=
                        DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
@@ -126,12 +126,12 @@ namespace DataLakeStore.Tests
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.Properties.ProvisioningState !=
+                accountGetResponse.ProvisioningState !=
                 DataLakeStoreAccountStatus.Succeeded,
                 "Account failed to be provisioned into the success state. Actual State: " +
-                accountGetResponse.Properties.ProvisioningState);
+                accountGetResponse.ProvisioningState);
 
-            return accountGetResponse.Properties.Endpoint;
+            return accountGetResponse.Endpoint;
         }
 
         internal void ThrowIfTrue(bool condition, string message)

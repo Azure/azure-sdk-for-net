@@ -57,16 +57,17 @@ namespace Microsoft.Azure.Search.Models
         public bool? IsSearchTokenizer { get; set; }
 
         /// <summary>
-        /// Gets or sets the language to use. Possible values include:
-        /// 'bangla', 'bulgarian', 'catalan', 'chinese_simplified',
-        /// 'chinese_traditional', 'croatian', 'czech', 'danish', 'dutch',
-        /// 'english', 'french', 'german', 'greek', 'gujarati', 'hindi',
-        /// 'icelandic', 'indonesian', 'italian', 'japanese', 'kannada',
-        /// 'korean', 'malay', 'malayalam', 'marathi', 'norwegian_bokmaal',
-        /// 'polish', 'portuguese', 'portuguese_brazilian', 'punjabi',
-        /// 'romanian', 'russian', 'serbian_cyrillic', 'serbian_latin',
-        /// 'slovenian', 'spanish', 'swedish', 'tamil', 'telugu', 'thai',
-        /// 'ukrainian', 'urdu', 'vietnamese'
+        /// Gets or sets the language to use. The default is English. Possible
+        /// values include: 'bangla', 'bulgarian', 'catalan',
+        /// 'chineseSimplified', 'chineseTraditional', 'croatian', 'czech',
+        /// 'danish', 'dutch', 'english', 'french', 'german', 'greek',
+        /// 'gujarati', 'hindi', 'icelandic', 'indonesian', 'italian',
+        /// 'japanese', 'kannada', 'korean', 'malay', 'malayalam', 'marathi',
+        /// 'norwegianBokmaal', 'polish', 'portuguese',
+        /// 'portugueseBrazilian', 'punjabi', 'romanian', 'russian',
+        /// 'serbianCyrillic', 'serbianLatin', 'slovenian', 'spanish',
+        /// 'swedish', 'tamil', 'telugu', 'thai', 'ukrainian', 'urdu',
+        /// 'vietnamese'
         /// </summary>
         [JsonProperty(PropertyName = "language")]
         public MicrosoftTokenizerLanguage? Language { get; set; }
@@ -80,6 +81,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MaxTokenLength > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxTokenLength", 300);
+            }
         }
     }
 }

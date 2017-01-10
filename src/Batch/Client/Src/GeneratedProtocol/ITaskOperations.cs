@@ -18,12 +18,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -53,10 +47,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<TaskAddHeaders>> AddWithHttpMessagesAsync(string jobId, TaskAddParameter task, TaskAddOptions taskAddOptions = default(TaskAddOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<TaskAddHeaders>> AddWithHttpMessagesAsync(string jobId, TaskAddParameter task, TaskAddOptions taskAddOptions = default(TaskAddOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all of the tasks that are associated with the specified job.
         /// </summary>
@@ -75,13 +69,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<CloudTask>,TaskListHeaders>> ListWithHttpMessagesAsync(string jobId, TaskListOptions taskListOptions = default(TaskListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<CloudTask>,TaskListHeaders>> ListWithHttpMessagesAsync(string jobId, TaskListOptions taskListOptions = default(TaskListOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Adds a collection of tasks to the specified job.
         /// </summary>
@@ -103,13 +97,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TaskAddCollectionResult,TaskAddCollectionHeaders>> AddCollectionWithHttpMessagesAsync(string jobId, IList<TaskAddParameter> value, TaskAddCollectionOptions taskAddCollectionOptions = default(TaskAddCollectionOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<TaskAddCollectionResult,TaskAddCollectionHeaders>> AddCollectionWithHttpMessagesAsync(string jobId, System.Collections.Generic.IList<TaskAddParameter> value, TaskAddCollectionOptions taskAddCollectionOptions = default(TaskAddCollectionOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes a task from the specified job.
         /// </summary>
@@ -131,10 +125,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<TaskDeleteHeaders>> DeleteWithHttpMessagesAsync(string jobId, string taskId, TaskDeleteOptions taskDeleteOptions = default(TaskDeleteOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<TaskDeleteHeaders>> DeleteWithHttpMessagesAsync(string jobId, string taskId, TaskDeleteOptions taskDeleteOptions = default(TaskDeleteOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets information about the specified task.
         /// </summary>
@@ -156,13 +150,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CloudTask,TaskGetHeaders>> GetWithHttpMessagesAsync(string jobId, string taskId, TaskGetOptions taskGetOptions = default(TaskGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CloudTask,TaskGetHeaders>> GetWithHttpMessagesAsync(string jobId, string taskId, TaskGetOptions taskGetOptions = default(TaskGetOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates the properties of the specified task.
         /// </summary>
@@ -188,10 +182,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<TaskUpdateHeaders>> UpdateWithHttpMessagesAsync(string jobId, string taskId, TaskConstraints constraints = default(TaskConstraints), TaskUpdateOptions taskUpdateOptions = default(TaskUpdateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<TaskUpdateHeaders>> UpdateWithHttpMessagesAsync(string jobId, string taskId, TaskConstraints constraints = default(TaskConstraints), TaskUpdateOptions taskUpdateOptions = default(TaskUpdateOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all of the subtasks that are associated with the specified
         /// multi-instance task.
@@ -214,13 +208,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CloudTaskListSubtasksResult,TaskListSubtasksHeaders>> ListSubtasksWithHttpMessagesAsync(string jobId, string taskId, TaskListSubtasksOptions taskListSubtasksOptions = default(TaskListSubtasksOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CloudTaskListSubtasksResult,TaskListSubtasksHeaders>> ListSubtasksWithHttpMessagesAsync(string jobId, string taskId, TaskListSubtasksOptions taskListSubtasksOptions = default(TaskListSubtasksOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Terminates the specified task.
         /// </summary>
@@ -242,10 +236,42 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<TaskTerminateHeaders>> TerminateWithHttpMessagesAsync(string jobId, string taskId, TaskTerminateOptions taskTerminateOptions = default(TaskTerminateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<TaskTerminateHeaders>> TerminateWithHttpMessagesAsync(string jobId, string taskId, TaskTerminateOptions taskTerminateOptions = default(TaskTerminateOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Reactivates the specified task.
+        /// </summary>
+        /// <remarks>
+        /// Reactivation makes a task eligible to be retried again up to its
+        /// maximum retry count. This will fail for tasks that are not
+        /// completed or that previously completed successfully (with an exit
+        /// code of 0). Additionally, this will fail if the job has completed
+        /// (or is terminating or deleting).
+        /// </remarks>
+        /// <param name='jobId'>
+        /// The id of the job containing the task.
+        /// </param>
+        /// <param name='taskId'>
+        /// The id of the task to reactivate.
+        /// </param>
+        /// <param name='taskReactivateOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<TaskReactivateHeaders>> ReactivateWithHttpMessagesAsync(string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all of the tasks that are associated with the specified job.
         /// </summary>
@@ -264,12 +290,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<CloudTask>,TaskListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, TaskListNextOptions taskListNextOptions = default(TaskListNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<CloudTask>,TaskListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, TaskListNextOptions taskListNextOptions = default(TaskListNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

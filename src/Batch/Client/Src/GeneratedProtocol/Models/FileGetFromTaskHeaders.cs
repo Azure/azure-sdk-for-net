@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Defines headers for GetFromTask operation.
@@ -39,17 +33,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the FileGetFromTaskHeaders class.
         /// </summary>
-        /// <param name="clientRequestId">The ClientRequestId provided by the client during the request, if present and requested to be returned.</param>
-        /// <param name="requestId">The value that uniquely identifies a request.</param>
-        /// <param name="eTag">The content of the ETag HTTP response header.</param>
-        /// <param name="lastModified">The content of the Last-Modified HTTP response header.</param>
+        /// <param name="clientRequestId">The ClientRequestId provided by the
+        /// client during the request, if present and requested to be
+        /// returned.</param>
+        /// <param name="requestId">The value that uniquely identifies a
+        /// request.</param>
+        /// <param name="eTag">The content of the ETag HTTP response
+        /// header.</param>
+        /// <param name="lastModified">The content of the Last-Modified HTTP
+        /// response header.</param>
         /// <param name="ocpCreationTime">The file creation time.</param>
-        /// <param name="ocpBatchFileIsdirectory">Whether the object represents a directory.</param>
+        /// <param name="ocpBatchFileIsdirectory">Whether the object
+        /// represents a directory.</param>
         /// <param name="ocpBatchFileUrl">The URL of the file.</param>
-        /// <param name="ocpBatchFileMode">The file mode attribute in octal format.</param>
+        /// <param name="ocpBatchFileMode">The file mode attribute in octal
+        /// format.</param>
         /// <param name="contentType">The content type of the file.</param>
         /// <param name="contentLength">The length of the file.</param>
-        public FileGetFromTaskHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? ocpCreationTime = default(DateTime?), bool? ocpBatchFileIsdirectory = default(bool?), string ocpBatchFileUrl = default(string), string ocpBatchFileMode = default(string), string contentType = default(string), long? contentLength = default(long?))
+        public FileGetFromTaskHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? ocpCreationTime = default(System.DateTime?), bool? ocpBatchFileIsdirectory = default(bool?), string ocpBatchFileUrl = default(string), string ocpBatchFileMode = default(string), string contentType = default(string), long? contentLength = default(long?))
         {
             ClientRequestId = clientRequestId;
             RequestId = requestId;
@@ -67,63 +68,63 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the ClientRequestId provided by the client during the
         /// request, if present and requested to be returned.
         /// </summary>
-        [JsonProperty(PropertyName = "client-request-id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request.
         /// </summary>
-        [JsonProperty(PropertyName = "request-id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the content of the ETag HTTP response header.
         /// </summary>
-        [JsonProperty(PropertyName = "ETag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ETag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the content of the Last-Modified HTTP response header.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "Last-Modified")]
-        public DateTime? LastModified { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "Last-Modified")]
+        public System.DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Gets or sets the file creation time.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "ocp-creation-time")]
-        public DateTime? OcpCreationTime { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ocp-creation-time")]
+        public System.DateTime? OcpCreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets whether the object represents a directory.
         /// </summary>
-        [JsonProperty(PropertyName = "ocp-batch-file-isdirectory")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ocp-batch-file-isdirectory")]
         public bool? OcpBatchFileIsdirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the file.
         /// </summary>
-        [JsonProperty(PropertyName = "ocp-batch-file-url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ocp-batch-file-url")]
         public string OcpBatchFileUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the file mode attribute in octal format.
         /// </summary>
-        [JsonProperty(PropertyName = "ocp-batch-file-mode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ocp-batch-file-mode")]
         public string OcpBatchFileMode { get; set; }
 
         /// <summary>
         /// Gets or sets the content type of the file.
         /// </summary>
-        [JsonProperty(PropertyName = "Content-Type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "Content-Type")]
         public string ContentType { get; set; }
 
         /// <summary>
         /// Gets or sets the length of the file.
         /// </summary>
-        [JsonProperty(PropertyName = "Content-Length")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "Content-Length")]
         public long? ContentLength { get; set; }
 
     }

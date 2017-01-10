@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A reference to an application package to be deployed to compute nodes.
@@ -41,8 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ApplicationPackageReference
         /// class.
         /// </summary>
-        /// <param name="applicationId">The id of the application to deploy.</param>
-        /// <param name="version">The version of the application to deploy. If omitted, the default version is deployed.</param>
+        /// <param name="applicationId">The id of the application to
+        /// deploy.</param>
+        /// <param name="version">The version of the application to deploy. If
+        /// omitted, the default version is deployed.</param>
         public ApplicationPackageReference(string applicationId, string version = default(string))
         {
             ApplicationId = applicationId;
@@ -52,27 +48,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the id of the application to deploy.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the application to deploy. If omitted,
         /// the default version is deployed.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (ApplicationId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ApplicationId");
             }
         }
     }

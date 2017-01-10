@@ -18,23 +18,20 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TaskAddStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum TaskAddStatus
     {
-        [EnumMember(Value = "success")]
+        [System.Runtime.Serialization.EnumMember(Value = "success")]
         Success,
-        [EnumMember(Value = "clienterror")]
+        [System.Runtime.Serialization.EnumMember(Value = "clienterror")]
         Clienterror,
-        [EnumMember(Value = "servererror")]
+        [System.Runtime.Serialization.EnumMember(Value = "servererror")]
         Servererror,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

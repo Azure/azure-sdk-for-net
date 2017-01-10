@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
+    using System.Linq;
     using Microsoft.Azure.Management.Search;
     using Microsoft.Azure.Management.Search.Models;
     using Microsoft.Azure.Test.HttpRecorder;
@@ -31,16 +32,16 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             SearchServiceName = EnsureSearchService(client);
 
-            AdminKeyResult adminKeyResult = client.AdminKeys.List(ResourceGroupName, SearchServiceName);
+            AdminKeyResult adminKeyResult = client.AdminKeys.Get(ResourceGroupName, SearchServiceName);
             Assert.NotNull(adminKeyResult);
 
             PrimaryApiKey = adminKeyResult.PrimaryKey;
 
-            ListQueryKeysResult queryKeyResult = client.QueryKeys.List(ResourceGroupName, SearchServiceName);
-            Assert.NotNull(queryKeyResult);
-            Assert.Equal(1, queryKeyResult.Value.Count);
+            var queryKeys = client.QueryKeys.ListBySearchService(ResourceGroupName, SearchServiceName);
+            Assert.NotNull(queryKeys);
+            Assert.Equal(1, queryKeys.Count());
 
-            QueryApiKey = queryKeyResult.Value[0].Key;
+            QueryApiKey = queryKeys.First().Key;
         }
 
         public override void Cleanup()
@@ -76,14 +77,14 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             {
                 string searchServiceName = SearchTestUtilities.GenerateServiceName();
 
-                var createServiceParameters =
-                    new SearchServiceCreateOrUpdateParameters()
+                var service =
+                    new SearchService()
                     {
                         Location = Location,
-                        Properties = new SearchServiceProperties() { Sku = new Sku() { Name = SkuType.Free } }
+                        Sku = new Sku() { Name = SkuName.Free }
                     };
 
-                client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, createServiceParameters);
+                client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, service);
 
                 // In the common case, DNS propagation happens in less than 15 seconds. In the uncommon case, it can
                 // take many minutes. The timeout we use depends on the mock mode. If we're in Playback, the delay is

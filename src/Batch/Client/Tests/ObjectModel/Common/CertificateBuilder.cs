@@ -24,13 +24,17 @@
     /// </summary>
     public static class CertificateBuilder
     {
+        public static string Sha1Algorithm = "sha1";
+        public static string Sha256Algorithm = "sha256";
+
         /// <summary>
         /// Create a self signed certificate in the specified file.
         /// </summary>
         /// <param name="subjectName">The subject of the certificate to create.</param>
         /// <param name="fileName">The file name to write the certificate to.</param>
+        /// <param name="signatureAlgorithm">The signature algorithm to use</param>
         /// <param name="password">True if there is a password, false otherwise.  Note that if there is a password, PFX format is assumed.</param>
-        public static void CreateSelfSignedInFile(string subjectName, string fileName, string password = "")
+        public static void CreateSelfSignedInFile(string subjectName, string fileName, string signatureAlgorithm, string password = "")
         {
             byte[] serialNumber = GenerateSerialNumber();
             string subject = string.Format("CN={0}", subjectName);
@@ -45,7 +49,7 @@
                     NotAfter = DateTime.Now, //expiry time is now for security purposes
                     SubjectName = subject,
                     SubjectPublicKey = key,
-                    Hash = "SHA1"
+                    Hash = signatureAlgorithm
                 };
 
                 //Get the raw certificate data

@@ -1,31 +1,35 @@
 # Microsoft Azure SDK for .NET
-
+----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
 ### Target Frameworks:
 
 * .NET Framework 4.5
-* Netstandard1.5, based on the NetCore framework 
-* .NET Portable Framework(Netstandard1.1 for NetCore), using profile 111
+* Netstandard 1.5, based on the NetCore framework
 
 ### Prerequisites:
   Install .Net CoreCLR using [these steps](https://www.microsoft.com/net/core).
 
 ### To build:
 
-Using Visual Studio:
+####Full Build
 
-  - Open any solution, say, "src\ResourceManagement\Compute\Compute.sln".
-  - Invoke "build" command.
+ 1. Navigate to repository root directory
+ 2. Invoke **msbuild** build.proj
 
-Using the command line:
+####Build one nuget package
 
-  - Ensure "msbuild.exe" is under environment pathes, which you can run the command file pre-installed by Visual Studio.
-        *C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat*
-  - Under repository root, there is a "build.proj", which you can build with. For example, to build a nuget package for compute management, run:
-        *msbuild build.proj /t:build;package /p:scope=ResourceManagement\Compute*
-  - For other supported flags, check out the top comment section inside "build.proj".
+ 1. **msbuild** build.proj /t:build;package /p:scope=ResourceManagement\Compute
+
+
+####Using Visual Studio:
+
+  
+
+ 1. Open any solution, say, "src\ResourceManagement\Compute\Compute.sln"
+ 2. Invoke "build" command.
+
 
 ### To run the tests:
 
@@ -54,7 +58,7 @@ In "src\ResourceManagement", you will find projects for services that have alrea
 
 ### Branches: AutoRest vs. master
 
-The **AutoRest** branch contains the code generated from AutoRest.
+The **AutoRest** branch contains the code generated from AutoRest tool.
 
 The **master** branch contains the code generated from Hydra/Hyak.
   - Hydra/Hyak is Azure's legacy code generation technology.
@@ -68,10 +72,9 @@ The **master** branch contains the code generated from Hydra/Hyak.
  [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
  4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, 
  see the [AutoRest repository](https://github.com/Azure/autorest)
- 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have
- a project in the SDK yet, look at some of the existing projects and build one like the others. 
+ 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others. 
  6. **MANDATORY**: Add or update tests for the newly generated code.
- 7. Once added to the Azure SDK for .NET, Build your local package using command "msbuild build.proj /t:build;package /p:scope=YourService" 
+ 7. Once added to the Azure SDK for .NET, build your local package using command "msbuild build.proj /t:build;package /p:scope=YourService" 
  (Note, 'YourService' comes from the sub folder under <sdk-repo-root>\src, for example: "ResourceManagement\Compute")
  8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **AutoRest** branch, change the package version in the project.json file, as well as in the AssemblyInfo.cs file.
  9. Use this local Package for your Powershell development
@@ -86,7 +89,7 @@ Before a pull request will be considered by the Azure SDK team, the following re
 
 - Prior to issuing the pull request:
   - All code must have completed any necessary legal signoff for being publically viewable (Patent review, JSR review, etc.)
-  - The changes cannot break any existing functional /unit tests that are part of the central repository.
+  - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
     - Functional tests are encouraged, and provide teams with a way to mitigate regressions caused by other code contributions.

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An Azure Batch job.
@@ -39,30 +33,51 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudJob class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the job within the account.</param>
+        /// <param name="id">A string that uniquely identifies the job within
+        /// the account.</param>
         /// <param name="displayName">The display name for the job.</param>
-        /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
+        /// <param name="usesTaskDependencies">The flag that determines if
+        /// this job will use tasks with dependencies.</param>
         /// <param name="url">The URL of the job.</param>
         /// <param name="eTag">The ETag of the job.</param>
-        /// <param name="lastModified">The last modified time of the job.</param>
+        /// <param name="lastModified">The last modified time of the
+        /// job.</param>
         /// <param name="creationTime">The creation time of the job.</param>
         /// <param name="state">The current state of the job.</param>
-        /// <param name="stateTransitionTime">The time at which the job entered its current state.</param>
+        /// <param name="stateTransitionTime">The time at which the job
+        /// entered its current state.</param>
         /// <param name="previousState">The previous state of the job.</param>
-        /// <param name="previousStateTransitionTime">The time at which the job entered its previous state.</param>
+        /// <param name="previousStateTransitionTime">The time at which the
+        /// job entered its previous state.</param>
         /// <param name="priority">The priority of the job.</param>
-        /// <param name="constraints">The execution constraints for the job.</param>
-        /// <param name="jobManagerTask">Details of a Job Manager task to be launched when the job is started.</param>
+        /// <param name="constraints">The execution constraints for the
+        /// job.</param>
+        /// <param name="jobManagerTask">Details of a Job Manager task to be
+        /// launched when the job is started.</param>
         /// <param name="jobPreparationTask">The Job Preparation task.</param>
         /// <param name="jobReleaseTask">The Job Release task.</param>
-        /// <param name="commonEnvironmentSettings">The list of common environment variable settings. These environment variables are set for all tasks in the job (including the Job Manager, Job Preparation and Job Release tasks).</param>
-        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
-        /// <param name="onAllTasksComplete">The action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
-        /// <param name="onTaskFailure">The action the Batch service should take when any task in the job fails. A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error. Possible values include: 'noAction', 'performExitOptionsJobAction'</param>
-        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
-        /// <param name="executionInfo">The execution information for the job.</param>
-        /// <param name="stats">Resource usage statistics for the entire lifetime of the job.</param>
-        public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), JobState? state = default(JobState?), DateTime? stateTransitionTime = default(DateTime?), JobState? previousState = default(JobState?), DateTime? previousStateTransitionTime = default(DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
+        /// <param name="commonEnvironmentSettings">The list of common
+        /// environment variable settings. These environment variables are
+        /// set for all tasks in the job (including the Job Manager, Job
+        /// Preparation and Job Release tasks).</param>
+        /// <param name="poolInfo">The pool on which the Batch service runs
+        /// the job's tasks.</param>
+        /// <param name="onAllTasksComplete">The action the Batch service
+        /// should take when all tasks in the job are in the completed state.
+        /// Possible values include: 'noAction', 'terminateJob'</param>
+        /// <param name="onTaskFailure">The action the Batch service should
+        /// take when any task in the job fails. A task is considered to have
+        /// failed if it completes with a non-zero exit code and has
+        /// exhausted its retry count, or if it had a scheduling error.
+        /// Possible values include: 'noAction',
+        /// 'performExitOptionsJobAction'</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the job as metadata.</param>
+        /// <param name="executionInfo">The execution information for the
+        /// job.</param>
+        /// <param name="stats">Resource usage statistics for the entire
+        /// lifetime of the job.</param>
+        public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobState? state = default(JobState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobState? previousState = default(JobState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), System.Collections.Generic.IList<EnvironmentSetting> commonEnvironmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
         {
             Id = id;
             DisplayName = displayName;
@@ -98,45 +113,45 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the job.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the flag that determines if this job will use tasks
         /// with dependencies.
         /// </summary>
-        [JsonProperty(PropertyName = "usesTaskDependencies")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the job.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the job.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the job.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
+        public System.DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the job.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the job.
@@ -145,14 +160,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'active', 'disabling', 'disabled',
         /// 'enabling', 'terminating', 'completed', 'deleting'
         /// </remarks>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public JobState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the job entered its current state.
         /// </summary>
-        [JsonProperty(PropertyName = "stateTransitionTime")]
-        public DateTime? StateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the previous state of the job.
@@ -162,7 +177,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state. Possible values include: 'active', 'disabling',
         /// 'disabled', 'enabling', 'terminating', 'completed', 'deleting'
         /// </remarks>
-        [JsonProperty(PropertyName = "previousState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
         public JobState? PreviousState { get; set; }
 
         /// <summary>
@@ -171,8 +186,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is not set if the job is in its initial Active state.
         /// </remarks>
-        [JsonProperty(PropertyName = "previousStateTransitionTime")]
-        public DateTime? PreviousStateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
+        public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the priority of the job.
@@ -182,32 +197,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the lowest priority and 1000 being the highest priority. The
         /// default value is 0.
         /// </remarks>
-        [JsonProperty(PropertyName = "priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for the job.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets details of a Job Manager task to be launched when the
         /// job is started.
         /// </summary>
-        [JsonProperty(PropertyName = "jobManagerTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Preparation task.
         /// </summary>
-        [JsonProperty(PropertyName = "jobPreparationTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Release task.
         /// </summary>
-        [JsonProperty(PropertyName = "jobReleaseTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
@@ -216,14 +231,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// (including the Job Manager, Job Preparation and Job Release
         /// tasks).
         /// </summary>
-        [JsonProperty(PropertyName = "commonEnvironmentSettings")]
-        public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commonEnvironmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the pool on which the Batch service runs the job's
         /// tasks.
         /// </summary>
-        [JsonProperty(PropertyName = "poolInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
@@ -231,7 +246,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// tasks in the job are in the completed state. Possible values
         /// include: 'noAction', 'terminateJob'
         /// </summary>
-        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
@@ -241,33 +256,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// count, or if it had a scheduling error. Possible values include:
         /// 'noAction', 'performExitOptionsJobAction'
         /// </summary>
-        [JsonProperty(PropertyName = "onTaskFailure")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job as
         /// metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets the execution information for the job.
         /// </summary>
-        [JsonProperty(PropertyName = "executionInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "executionInfo")]
         public JobExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
         /// Gets or sets resource usage statistics for the entire lifetime of
         /// the job.
         /// </summary>
-        [JsonProperty(PropertyName = "stats")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stats")]
         public JobStatistics Stats { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

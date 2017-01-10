@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for redis import operation.
@@ -29,7 +23,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the ImportRDBParameters class.
         /// </summary>
-        public ImportRDBParameters(IList<string> files, string format = default(string))
+        /// <param name="files">files to import</param>
+        /// <param name="format">File format.</param>
+        public ImportRDBParameters(System.Collections.Generic.IList<string> files, string format = default(string))
         {
             Format = format;
             Files = files;
@@ -38,23 +34,26 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Gets or sets file format.
         /// </summary>
-        [JsonProperty(PropertyName = "format")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "format")]
         public string Format { get; set; }
 
         /// <summary>
         /// Gets or sets files to import
         /// </summary>
-        [JsonProperty(PropertyName = "files")]
-        public IList<string> Files { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "files")]
+        public System.Collections.Generic.IList<string> Files { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Files == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Files");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Files");
             }
         }
     }

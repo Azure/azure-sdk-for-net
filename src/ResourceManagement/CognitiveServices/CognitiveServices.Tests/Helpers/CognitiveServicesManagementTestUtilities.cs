@@ -47,8 +47,8 @@ namespace CognitiveServices.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? null : "westus";
-        public static SkuName DefaultSkuName = SkuName.S1;
-        public static Kind DefaultKind = Kind.TextAnalytics;
+        public const string DefaultSkuName = SkuName.S1;
+        public const string DefaultKind = Kind.TextAnalytics;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
                 {"key1","value1"},
@@ -133,17 +133,17 @@ namespace CognitiveServices.Tests.Helpers
             return rgname;
         }
 
-        public static string CreateCognitiveServicesAccount(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgname, Kind? kind = null)
+        public static string CreateCognitiveServicesAccount(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgname, string kind = null)
         {
             string accountName = TestUtilities.GenerateName("csa");
             CognitiveServicesAccountCreateParameters parameters = GetDefaultCognitiveServicesAccountParameters();
-            if (kind.HasValue) parameters.Kind = kind.Value;
+            if (!string.IsNullOrEmpty(kind)) parameters.Kind = kind;
             var createRequest2 = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, parameters);
 
             return accountName;
         }
 
-        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, SkuName skuName, Kind accountType = Kind.Recommendations)
+        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.Recommendations, string location = null)
         {
             // Create account with only required params
             var accountName = TestUtilities.GenerateName("csa");
@@ -151,18 +151,16 @@ namespace CognitiveServices.Tests.Helpers
             {
                 Sku = new Sku { Name = skuName },
                 Kind = accountType,
-                Location = CognitiveServicesManagementTestUtilities.DefaultLocation,
+                Location = location ?? DefaultLocation,
                 Properties = new object(),
             };
             var account = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgName, accountName, parameters);
-            CognitiveServicesManagementTestUtilities.VerifyAccountProperties(account, false);
-            Assert.Equal(skuName, account.Sku.Name);
-            Assert.Equal(accountType.ToString(), account.Kind);
+            VerifyAccountProperties(account, false, accountType, skuName, location ?? DefaultLocation);
 
             return account;
         }
 
-        public static void VerifyAccountProperties(CognitiveServicesAccount account, bool useDefaults)
+        public static void VerifyAccountProperties(CognitiveServicesAccount account, bool useDefaults, string kind = DefaultKind, string skuName = DefaultSkuName, string location = "westus")
         {
             Assert.NotNull(account); // verifies that the account is actually created
             Assert.NotNull(account.Id);
@@ -187,6 +185,12 @@ namespace CognitiveServices.Tests.Helpers
                 Assert.Equal(2, account.Tags.Count);
                 Assert.Equal(account.Tags["key1"], "value1");
                 Assert.Equal(account.Tags["key2"], "value2");
+            }
+            else
+            {
+                Assert.Equal(skuName, account.Sku.Name);
+                Assert.Equal(kind, account.Kind);
+                Assert.Equal(location, account.Location);
             }
         }
 

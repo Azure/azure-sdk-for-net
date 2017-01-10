@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies any dependencies of a task. Any task that is explicitly
@@ -41,9 +35,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskDependencies class.
         /// </summary>
-        /// <param name="taskIds">The list of task ids that must complete before this task can be scheduled.</param>
-        /// <param name="taskIdRanges">The list of task ranges that must complete before this task can be scheduled.</param>
-        public TaskDependencies(IList<string> taskIds = default(IList<string>), IList<TaskIdRange> taskIdRanges = default(IList<TaskIdRange>))
+        /// <param name="taskIds">The list of task ids that must complete
+        /// before this task can be scheduled.</param>
+        /// <param name="taskIdRanges">The list of task ranges that must
+        /// complete before this task can be scheduled.</param>
+        public TaskDependencies(System.Collections.Generic.IList<string> taskIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<TaskIdRange> taskIdRanges = default(System.Collections.Generic.IList<TaskIdRange>))
         {
             TaskIds = taskIds;
             TaskIdRanges = taskIdRanges;
@@ -53,15 +49,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of task ids that must complete before this
         /// task can be scheduled.
         /// </summary>
-        [JsonProperty(PropertyName = "taskIds")]
-        public IList<string> TaskIds { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskIds")]
+        public System.Collections.Generic.IList<string> TaskIds { get; set; }
 
         /// <summary>
         /// Gets or sets the list of task ranges that must complete before
         /// this task can be scheduled.
         /// </summary>
-        [JsonProperty(PropertyName = "taskIdRanges")]
-        public IList<TaskIdRange> TaskIdRanges { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskIdRanges")]
+        public System.Collections.Generic.IList<TaskIdRange> TaskIdRanges { get; set; }
 
     }
 }

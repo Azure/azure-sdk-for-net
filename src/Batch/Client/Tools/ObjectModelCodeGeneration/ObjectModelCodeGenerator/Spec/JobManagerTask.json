@@ -1,0 +1,128 @@
+    {
+      "Name": "JobManagerTask",
+      "ProtocolName": "Models.JobManagerTask",
+      "Comment": "Represents an Azure Batch JobManager task. ",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Id",
+            "SummaryComment": "The id of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CommandLine",
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "DisplayName",
+            "SummaryComment": "The display name of the JobManager task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<EnvironmentSetting>",
+            "Name": "EnvironmentSettings",
+            "SummaryComment": "A set of environment settings for the JobManager task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.EnvironmentSetting>",
+            "Name": "EnvironmentSettings"
+          }
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "KillJobOnCompletion",
+            "SummaryComment": "A value that indicates whether to terminate all tasks in the job and complete the job when the job manager task completes.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ResourceFile>",
+            "Name": "ResourceFiles",
+            "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ResourceFile>",
+            "Name": "ResourceFiles"
+          }
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RunElevated",
+            "SummaryComment": "Whether to run the task in elevated mode.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RunExclusive",
+            "SummaryComment": "whether the Job Manager task requires exclusive use of the compute node where it runs.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskConstraints",
+            "Name": "Constraints",
+            "SummaryComment": "The execution constraints for this JobManager task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+            "SummaryComment": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+          },
+        },
+      ]
+    }

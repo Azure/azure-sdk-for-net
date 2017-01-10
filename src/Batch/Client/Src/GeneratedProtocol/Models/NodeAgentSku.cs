@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A node agent SKU supported by the Batch service.
@@ -46,9 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the NodeAgentSku class.
         /// </summary>
         /// <param name="id">The node agent SKU id.</param>
-        /// <param name="verifiedImageReferences">The list of images verified to be compatible with this node agent SKU.</param>
-        /// <param name="osType">The type of operating system compatible with the node agent SKU.</param>
-        public NodeAgentSku(string id = default(string), IList<ImageReference> verifiedImageReferences = default(IList<ImageReference>), OSType? osType = default(OSType?))
+        /// <param name="verifiedImageReferences">The list of images verified
+        /// to be compatible with this node agent SKU.</param>
+        /// <param name="osType">The type of operating system compatible with
+        /// the node agent SKU.</param>
+        public NodeAgentSku(string id = default(string), System.Collections.Generic.IList<ImageReference> verifiedImageReferences = default(System.Collections.Generic.IList<ImageReference>), OSType? osType = default(OSType?))
         {
             Id = id;
             VerifiedImageReferences = verifiedImageReferences;
@@ -58,7 +54,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the node agent SKU id.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -69,8 +65,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This collection is not exhaustive (the node agent may be
         /// compatible with other images).
         /// </remarks>
-        [JsonProperty(PropertyName = "verifiedImageReferences")]
-        public IList<ImageReference> VerifiedImageReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "verifiedImageReferences")]
+        public System.Collections.Generic.IList<ImageReference> VerifiedImageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the type of operating system compatible with the node
@@ -79,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'linux', 'windows', 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "osType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osType")]
         public OSType? OsType { get; set; }
 
     }

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2-preview",
+  "version": "2.1.0-preview",
   "description": "Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.",
   "authors": [ "Microsoft" ],
 

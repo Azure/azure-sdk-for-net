@@ -1,0 +1,5 @@
+{
+  "projects": [ "Microsoft.Rest.ClientRuntime", "Microsoft.Rest.ClientRuntime.Azure.Authentication", "Microsoft.Rest.ClientRuntime.Etw", 
+                "Microsoft.Rest.ClientRuntime.Tests", "Microsoft.Rest.ClientRuntime.Azure", "Microsoft.Rest.ClientRuntime.Azure.Tests",
+                "Microsoft.Rest.ClientRuntime.Log4Net", "Microsoft.Rest.ClientRuntime.Tracing.Tests" ]
+}

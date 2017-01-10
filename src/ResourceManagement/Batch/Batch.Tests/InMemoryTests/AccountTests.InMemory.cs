@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Account.Create(null, "bar", new BatchAccountCreateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Create("foo", null, new BatchAccountCreateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Create("foo", "bar", null));
-            Assert.Throws<ValidationException>(() => client.Account.Create("invalid+", "account", new BatchAccountCreateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Create("rg", "invalid%", new BatchAccountCreateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Create("rg", "/invalid", new BatchAccountCreateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Create("rg", "s", new BatchAccountCreateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Create("rg", "account_name_that_is_too_long", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create(null, "bar", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("foo", null, new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("foo", "bar", null));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("invalid+", "account", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "invalid%", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "/invalid", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "s", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "account_name_that_is_too_long", new BatchAccountCreateParameters()));
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = Task.Factory.StartNew(() => client.Account.CreateWithHttpMessagesAsync(
+            var result = Task.Factory.StartNew(() => client.BatchAccount.CreateWithHttpMessagesAsync(
                 "foo",
                 "acctName",
                 new BatchAccountCreateParameters
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Body.Location);
             Assert.NotEmpty(result.Body.AccountEndpoint);
-            Assert.Equal(AccountProvisioningState.Succeeded, result.Body.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, result.Body.ProvisioningState);
             Assert.Equal(2, result.Body.Tags.Count);
         }
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.Account.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            var result = client.BatchAccount.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
                 AutoStorage = new AutoStorageBaseProperties()
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = client.Account.Update("foo", "acctName", new BatchAccountUpdateParameters
+            var result = client.BatchAccount.Update("foo", "acctName", new BatchAccountUpdateParameters
             {
                 Tags = tags,
             });
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Location);
             Assert.NotEmpty(result.AccountEndpoint);
-            Assert.Equal(AccountProvisioningState.Succeeded, result.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, result.ProvisioningState);
             Assert.Equal("//StorageAccountId", result.AutoStorage.StorageAccountId);
             Assert.Equal(utcNow, result.AutoStorage.LastKeySync);
             Assert.Equal(2, result.Tags.Count);
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = client.Account.Create("foo", "acctName", new BatchAccountCreateParameters
+            var result = client.BatchAccount.Create("foo", "acctName", new BatchAccountCreateParameters("westus")
             {
                 Tags = tags,
                 AutoStorage = new AutoStorageBaseProperties()
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Location);
             Assert.NotEmpty(result.AccountEndpoint);
-            Assert.Equal(result.ProvisioningState, AccountProvisioningState.Succeeded);
+            Assert.Equal(result.ProvisioningState, ProvisioningState.Succeeded);
             Assert.Equal(2, result.Tags.Count);
         }
 
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = client.Account.Update("foo", "acctName", new BatchAccountUpdateParameters
+            var result = client.BatchAccount.Update("foo", "acctName", new BatchAccountUpdateParameters
             {
                 Tags = tags,
                 AutoStorage = new AutoStorageBaseProperties()
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Location);
             Assert.NotEmpty(result.AccountEndpoint);
-            Assert.Equal(AccountProvisioningState.Succeeded, result.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, result.ProvisioningState);
 
             Assert.Equal(2, result.Tags.Count);
         }
@@ -304,12 +304,12 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Account.Update(null, null, new BatchAccountUpdateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Update("foo", null, new BatchAccountUpdateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Update("foo", "bar", null));
-            Assert.Throws<ValidationException>(() => client.Account.Update("invalid+", "account", new BatchAccountUpdateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Update("rg", "invalid%", new BatchAccountUpdateParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.Update("rg", "/invalid", new BatchAccountUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update(null, null, new BatchAccountUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update("foo", null, new BatchAccountUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update("foo", "bar", null));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update("invalid+", "account", new BatchAccountUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update("rg", "invalid%", new BatchAccountUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update("rg", "/invalid", new BatchAccountUpdateParameters()));
 
         }
 
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            client.Account.Delete("resGroup", "acctName");
+            client.BatchAccount.Delete("resGroup", "acctName");
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Requests[0].Method);
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Batch.Tests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Assert.Throws<CloudException>(() => Task.Factory.StartNew(() =>
-                client.Account.DeleteWithHttpMessagesAsync(
+                client.BatchAccount.DeleteWithHttpMessagesAsync(
                 "resGroup",
                 "acctName")).Unwrap().GetAwaiter().GetResult());
 
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(noContentResponse);
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            client.Account.Delete("resGroup", "acctName");
+            client.BatchAccount.Delete("resGroup", "acctName");
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Requests[0].Method);
@@ -393,11 +393,11 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Account.Delete("foo", null));
-            Assert.Throws<ValidationException>(() => client.Account.Delete(null, "bar"));
-            Assert.Throws<ValidationException>(() => client.Account.Delete("invalid+", "account"));
-            Assert.Throws<ValidationException>(() => client.Account.Delete("rg", "invalid%"));
-            Assert.Throws<ValidationException>(() => client.Account.Delete("rg", "/invalid"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("foo", null));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Delete(null, "bar"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("invalid+", "account"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("rg", "invalid%"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("rg", "/invalid"));
         }
 
         [Fact]
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.Account.Get("foo", "acctName");
+            var result = client.BatchAccount.Get("foo", "acctName");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -452,11 +452,11 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Account.Get("foo", null));
-            Assert.Throws<ValidationException>(() => client.Account.Get(null, "bar"));
-            Assert.Throws<ValidationException>(() => client.Account.Get("invalid+", "account"));
-            Assert.Throws<ValidationException>(() => client.Account.Get("rg", "invalid%"));
-            Assert.Throws<ValidationException>(() => client.Account.Get("rg", "/invalid"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Get("foo", null));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Get(null, "bar"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Get("invalid+", "account"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Get("rg", "invalid%"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Get("rg", "/invalid"));
         }
 
         [Fact]
@@ -604,7 +604,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(allSubsResponseEmptyNextLink) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = Task.Factory.StartNew(() => client.Account.ListWithHttpMessagesAsync())
+            var result = Task.Factory.StartNew(() => client.BatchAccount.ListWithHttpMessagesAsync())
                 .Unwrap()
                 .GetAwaiter()
                 .GetResult();
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Batch.Tests
             handler = new RecordedDelegatingHandler(allSubsResponseNonemptyNextLink) { StatusCodeToReturn = HttpStatusCode.OK };
             client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result1 = client.Account.List();
+            var result1 = client.BatchAccount.List();
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -646,7 +646,7 @@ namespace Microsoft.Azure.Batch.Tests
             handler = new RecordedDelegatingHandler(allSubsResponseNonemptyNextLink1) { StatusCodeToReturn = HttpStatusCode.OK };
             client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            result1 = client.Account.ListNext(result1.NextPageLink);
+            result1 = client.BatchAccount.ListNext(result1.NextPageLink);
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -704,7 +704,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.Account.List();
+            var result = client.BatchAccount.List();
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("acctName", account1.Name);
             Assert.Equal( @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", account1.Id);
             Assert.Equal(@"http://acctName.batch.core.windows.net/", account1.AccountEndpoint);
-            Assert.Equal(AccountProvisioningState.Succeeded, account1.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, account1.ProvisioningState);
             Assert.Equal(20, account1.CoreQuota);
             Assert.Equal(100, account1.PoolQuota);
             Assert.Equal(200, account1.ActiveJobAndJobScheduleQuota);
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("acctName1", account2.Name);
             Assert.Equal(@"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1", account2.Id);
             Assert.Equal(@"http://acctName1.batch.core.windows.net/", account2.AccountEndpoint);
-            Assert.Equal(AccountProvisioningState.Failed, account2.ProvisioningState);
+            Assert.Equal(ProvisioningState.Failed, account2.ProvisioningState);
             Assert.Equal(10, account2.CoreQuota);
             Assert.Equal(50, account2.PoolQuota);
             Assert.Equal(100, account2.ActiveJobAndJobScheduleQuota);
@@ -749,7 +749,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Account.ListNext(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.BatchAccount.ListNext(null));
         }
 
         [Fact]
@@ -770,7 +770,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.Account.ListKeys("foo", "acctName");
+            var result = client.BatchAccount.GetKeys("foo", "acctName");
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Post, handler.Method);
@@ -789,8 +789,8 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Account.ListKeys("foo", null));
-            Assert.Throws<ValidationException>(() => client.Account.ListKeys(null, "bar"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.GetKeys("foo", null));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.GetKeys(null, "bar"));
         }
 
         [Fact]
@@ -811,10 +811,10 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.Account.RegenerateKey(
+            var result = client.BatchAccount.RegenerateKey(
                 "foo",
                 "acctName",
-                new BatchAccountRegenerateKeyParameters(AccountKeyType.Primary));
+                AccountKeyType.Primary);
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Post, handler.Method);
@@ -833,11 +833,10 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Account.RegenerateKey(null, "bar", new BatchAccountRegenerateKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.RegenerateKey("foo", null, new BatchAccountRegenerateKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.RegenerateKey("foo", "bar", null));
-            Assert.Throws<ValidationException>(() => client.Account.RegenerateKey("invalid+", "account", new BatchAccountRegenerateKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.Account.RegenerateKey("rg", "invalid%", new BatchAccountRegenerateKeyParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey(null, "bar", AccountKeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("foo", null, AccountKeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("invalid+", "account", AccountKeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("rg", "invalid%", AccountKeyType.Primary));
         }
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Redis cache access keys.
@@ -29,6 +23,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the RedisAccessKeys class.
         /// </summary>
+        /// <param name="primaryKey">The current primary key that clients can
+        /// use to authenticate with redis cache.</param>
+        /// <param name="secondaryKey">The current secondary key that clients
+        /// can use to authenticate with redis cache.</param>
         public RedisAccessKeys(string primaryKey = default(string), string secondaryKey = default(string))
         {
             PrimaryKey = primaryKey;
@@ -36,18 +34,18 @@ namespace Microsoft.Azure.Management.Redis.Models
         }
 
         /// <summary>
-        /// Gets or sets the current primary key that clients can use to
-        /// authenticate with redis cache.
+        /// Gets the current primary key that clients can use to authenticate
+        /// with redis cache.
         /// </summary>
-        [JsonProperty(PropertyName = "primaryKey")]
-        public string PrimaryKey { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "primaryKey")]
+        public string PrimaryKey { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current secondary key that clients can use to
+        /// Gets the current secondary key that clients can use to
         /// authenticate with redis cache.
         /// </summary>
-        [JsonProperty(PropertyName = "secondaryKey")]
-        public string SecondaryKey { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secondaryKey")]
+        public string SecondaryKey { get; private set; }
 
     }
 }

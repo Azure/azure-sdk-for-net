@@ -16,21 +16,6 @@ namespace Microsoft.Azure.Search.Models
     public class ScoringParameter
     {
         /// <summary>
-        /// Initializes a new instance of the ScoringParameter class with the given name and string value.
-        /// </summary>
-        /// <param name="name">Name of the scoring parameter.</param>
-        /// <param name="value">Value of the scoring parameter.</param>
-        [Obsolete("This property is obsolete. Please use the constructor overload that takes a list of values instead.")]
-        public ScoringParameter(string name, string value)
-        {
-            Throw.IfArgumentNull(name, "name");
-            Throw.IfArgumentNull(value, "value");
-
-            Name = name;
-            Values = value.Split(',');
-        }
-
-        /// <summary>
         /// Initializes a new instance of the ScoringParameter class with the given name and string values.
         /// </summary>
         /// <param name="name">Name of the scoring parameter.</param>
@@ -55,18 +40,6 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the name of the scoring parameter.
         /// </summary>
         public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the value of the scoring parameter.
-        /// </summary>
-        [Obsolete("This property is obsolete. Please use the Values property or ToString() method instead.")]
-        public string Value
-        {
-            get
-            {
-                return this.Values.ToCommaSeparatedString();
-            }
-        }
 
         /// <summary>
         /// Gets the values of the scoring parameter.

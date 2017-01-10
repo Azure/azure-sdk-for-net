@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies how a job should be assigned to a pool.
@@ -39,8 +33,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolInformation class.
         /// </summary>
-        /// <param name="poolId">The id of an existing pool. All the tasks of the job will run on the specified pool.</param>
-        /// <param name="autoPoolSpecification">Characteristics for a temporary 'auto pool'. The Batch service will create this auto pool when the job is submitted.</param>
+        /// <param name="poolId">The id of an existing pool. All the tasks of
+        /// the job will run on the specified pool.</param>
+        /// <param name="autoPoolSpecification">Characteristics for a
+        /// temporary 'auto pool'. The Batch service will create this auto
+        /// pool when the job is submitted.</param>
         public PoolInformation(string poolId = default(string), AutoPoolSpecification autoPoolSpecification = default(AutoPoolSpecification))
         {
             PoolId = poolId;
@@ -55,7 +52,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// You must specify either poolId or autoPoolSpecification, but not
         /// both.
         /// </remarks>
-        [JsonProperty(PropertyName = "poolId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
@@ -67,13 +64,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// You must specify either poolId or autoPoolSpecification, but not
         /// both.
         /// </remarks>
-        [JsonProperty(PropertyName = "autoPoolSpecification")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoPoolSpecification")]
         public AutoPoolSpecification AutoPoolSpecification { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
+using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +24,7 @@ using Xunit.Abstractions;
 using System.Threading;
 using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Xunit;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.RetryPolicies;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -242,6 +243,36 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             finally
             {
                 File.Delete(file);
+            }
+        }
+
+        [Fact]
+        public async Task IfARetryPolicyIsSpecifiedInTheStorageAccountConstructor_ThenItIsUsed()
+        {
+            var taskOutputStorage = new TaskOutputStorage(StorageAccount, _jobId, _taskId, new LinearRetry(TimeSpan.FromSeconds(5), 4));
+            await taskOutputStorage.SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"), "SavedWithLinearRetry1.txt");
+
+            var output = await taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "SavedWithLinearRetry1.txt");
+            var blob = output.CloudBlob;
+            var storageClient = blob.ServiceClient;
+            Assert.IsType<LinearRetry>(storageClient.DefaultRequestOptions.RetryPolicy);
+        }
+
+        [Fact]
+        public async Task IfARetryPolicyIsSpecifiedInTheContainerUrlConstructor_ThenItIsUsed()
+        {
+            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            {
+                var job = batchClient.JobOperations.CreateJob(_jobId, null);
+                var container = job.GetOutputStorageContainerUrl(StorageAccount, TimeSpan.FromMinutes(2));
+
+                var taskOutputStorage = new TaskOutputStorage(new Uri(container), _taskId, new LinearRetry(TimeSpan.FromSeconds(5), 4));
+                await taskOutputStorage.SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"), "SavedWithLinearRetry2.txt");
+
+                var output = await taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "SavedWithLinearRetry2.txt");
+                var blob = output.CloudBlob;
+                var storageClient = blob.ServiceClient;
+                Assert.IsType<LinearRetry>(storageClient.DefaultRequestOptions.RetryPolicy);
             }
         }
     }

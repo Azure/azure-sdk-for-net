@@ -31,10 +31,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
-        public Error(string code = default(string), string message = default(string))
+        public Error(string code = default(string), string message = default(string), Error innerError = default(Error))
         {
             Code = code;
             Message = message;
+            InnerError = innerError;
         }
 
         /// <summary>
@@ -48,6 +49,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "innererror")]
+        public Error InnerError { get; private set; }
 
     }
 }

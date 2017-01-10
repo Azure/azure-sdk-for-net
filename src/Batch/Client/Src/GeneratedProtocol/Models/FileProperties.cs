@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The properties of a file on a compute node.
@@ -39,12 +33,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the FileProperties class.
         /// </summary>
-        /// <param name="lastModified">The time at which the file was last modified.</param>
+        /// <param name="lastModified">The time at which the file was last
+        /// modified.</param>
         /// <param name="contentLength">The length of the file.</param>
         /// <param name="creationTime">The file creation time.</param>
         /// <param name="contentType">The content type of the file.</param>
-        /// <param name="fileMode">The file mode attribute in octal format.</param>
-        public FileProperties(DateTime lastModified, long contentLength, DateTime? creationTime = default(DateTime?), string contentType = default(string), string fileMode = default(string))
+        /// <param name="fileMode">The file mode attribute in octal
+        /// format.</param>
+        public FileProperties(System.DateTime lastModified, long contentLength, System.DateTime? creationTime = default(System.DateTime?), string contentType = default(string), string fileMode = default(string))
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -56,25 +52,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the file creation time.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the file was last modified.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModified")]
-        public DateTime LastModified { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
+        public System.DateTime LastModified { get; set; }
 
         /// <summary>
         /// Gets or sets the length of the file.
         /// </summary>
-        [JsonProperty(PropertyName = "contentLength")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "contentLength")]
         public long ContentLength { get; set; }
 
         /// <summary>
         /// Gets or sets the content type of the file.
         /// </summary>
-        [JsonProperty(PropertyName = "contentType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "contentType")]
         public string ContentType { get; set; }
 
         /// <summary>
@@ -83,13 +79,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property will be returned only from a Linux compute node.
         /// </remarks>
-        [JsonProperty(PropertyName = "fileMode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

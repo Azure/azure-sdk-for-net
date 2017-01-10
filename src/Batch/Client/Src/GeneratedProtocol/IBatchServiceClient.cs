@@ -18,12 +18,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
@@ -31,27 +25,27 @@ namespace Microsoft.Azure.Batch.Protocol
     /// <summary>
     /// A client for issuing REST requests to the Azure Batch service.
     /// </summary>
-    public partial interface IBatchServiceClient : IDisposable
+    public partial interface IBatchServiceClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        Uri BaseUri { get; set; }
+        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        JsonSerializerSettings SerializationSettings { get; }
+        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        JsonSerializerSettings DeserializationSettings { get; }
+        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        ServiceClientCredentials Credentials { get; }
+        Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
         /// Client API Version.

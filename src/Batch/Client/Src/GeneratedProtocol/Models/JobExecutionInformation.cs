@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains information about the execution of a job in the Azure Batch
@@ -42,10 +36,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="startTime">The start time of the job.</param>
         /// <param name="endTime">The completion time of the job.</param>
-        /// <param name="poolId">The id of the pool to which this job is assigned.</param>
-        /// <param name="schedulingError">Details of any error encountered by the service in starting the job.</param>
-        /// <param name="terminateReason">A string describing the reason the job ended.</param>
-        public JobExecutionInformation(DateTime startTime, DateTime? endTime = default(DateTime?), string poolId = default(string), JobSchedulingError schedulingError = default(JobSchedulingError), string terminateReason = default(string))
+        /// <param name="poolId">The id of the pool to which this job is
+        /// assigned.</param>
+        /// <param name="schedulingError">Details of any error encountered by
+        /// the service in starting the job.</param>
+        /// <param name="terminateReason">A string describing the reason the
+        /// job ended.</param>
+        public JobExecutionInformation(System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?), string poolId = default(string), JobSchedulingError schedulingError = default(JobSchedulingError), string terminateReason = default(string))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -57,8 +54,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the start time of the job.
         /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the completion time of the job.
@@ -66,32 +63,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the job is in the completed state.
         /// </remarks>
-        [JsonProperty(PropertyName = "endTime")]
-        public DateTime? EndTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the pool to which this job is assigned.
         /// </summary>
-        [JsonProperty(PropertyName = "poolId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
         /// Gets or sets details of any error encountered by the service in
         /// starting the job.
         /// </summary>
-        [JsonProperty(PropertyName = "schedulingError")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
         public JobSchedulingError SchedulingError { get; set; }
 
         /// <summary>
         /// Gets or sets a string describing the reason the job ended.
         /// </summary>
-        [JsonProperty(PropertyName = "terminateReason")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "terminateReason")]
         public string TerminateReason { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

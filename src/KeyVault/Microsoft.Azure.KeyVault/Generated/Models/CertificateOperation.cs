@@ -30,8 +30,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateOperation class.
         /// </summary>
         /// <param name="id">The certificate id</param>
-        /// <param name="issuerReference">Reference to the issuer of the X509
-        /// component of a certificate.</param>
+        /// <param name="issuerParameters">Parameters for the issuer of the
+        /// X509 component of a certificate.</param>
         /// <param name="csr">The Certificate Signing Request (CSR) that is
         /// being used in the certificate operation.</param>
         /// <param name="cancellationRequested">Indicates if cancellation was
@@ -45,10 +45,10 @@ namespace Microsoft.Azure.KeyVault.Models
         /// certificate operation.</param>
         /// <param name="requestId">Identifier for the certificate
         /// operation.</param>
-        public CertificateOperation(string id = default(string), IssuerReference issuerReference = default(IssuerReference), byte[] csr = default(byte[]), bool? cancellationRequested = default(bool?), string status = default(string), string statusDetails = default(string), Error error = default(Error), string target = default(string), string requestId = default(string))
+        public CertificateOperation(string id = default(string), IssuerParameters issuerParameters = default(IssuerParameters), byte[] csr = default(byte[]), bool? cancellationRequested = default(bool?), string status = default(string), string statusDetails = default(string), Error error = default(Error), string target = default(string), string requestId = default(string))
         {
             Id = id;
-            IssuerReference = issuerReference;
+            IssuerParameters = issuerParameters;
             Csr = csr;
             CancellationRequested = cancellationRequested;
             Status = status;
@@ -65,11 +65,11 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets reference to the issuer of the X509 component of a
+        /// Gets or sets parameters for the issuer of the X509 component of a
         /// certificate.
         /// </summary>
         [JsonProperty(PropertyName = "issuer")]
-        public IssuerReference IssuerReference { get; set; }
+        public IssuerParameters IssuerParameters { get; set; }
 
         /// <summary>
         /// Gets or sets the Certificate Signing Request (CSR) that is being

@@ -1,0 +1,44 @@
+    {
+      "Name": "NodeAgentSku",
+      "ProtocolName": "Models.NodeAgentSku",
+      "Comment": "A node agent SKU supported by the Batch service. The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems.",
+      "IsConstructorPublic": false,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Id",
+            "SummaryComment": "The id of the node agent SKU.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IReadOnlyList<ImageReference>",
+            "Name": "VerifiedImageReferences",
+            "SummaryComment": "The list of images verified to be compatible with this node agent SKU. This collection is not exhaustive (the node agent may be compatible with other images).",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.OSType?",
+            "Name": "OSType",
+            "SummaryComment": "The type of operating system compatible with the node agent SKU.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.OSType?",
+            "Name": "OsType"
+          }
+        }
+      ]
+    }

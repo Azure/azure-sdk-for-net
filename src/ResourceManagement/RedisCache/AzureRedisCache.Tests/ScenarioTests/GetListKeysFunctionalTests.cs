@@ -131,7 +131,7 @@ namespace AzureRedisCache.Tests
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
-                RedisListKeysResult response = _client.Redis.ListKeys(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
+                var response = _client.Redis.ListKeys(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
                 Assert.NotNull(response.PrimaryKey);
                 Assert.NotNull(response.SecondaryKey);
             }
@@ -144,9 +144,9 @@ namespace AzureRedisCache.Tests
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
 
-                RedisListKeysResult beforeRegenerateResponse = _client.Redis.ListKeys(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
+                var beforeRegenerateResponse = _client.Redis.ListKeys(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
 
-                RedisListKeysResult afterRegenerateResponse = _client.Redis.RegenerateKey(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName, parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary });
+                var afterRegenerateResponse = _client.Redis.RegenerateKey(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName, parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary });
                 Assert.NotEqual(beforeRegenerateResponse.PrimaryKey, afterRegenerateResponse.PrimaryKey);
                 Assert.Equal(beforeRegenerateResponse.SecondaryKey, afterRegenerateResponse.SecondaryKey);
             }

@@ -823,6 +823,61 @@
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void FailedTaskCanBeReactivated()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+
+                    try
+                    {
+                        //Create the job
+                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                        cloudJob.PoolInformation = new PoolInformation() { PoolId = this.poolFixture.PoolId };
+                        this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                        cloudJob.Commit();
+                        
+                        //Create a task
+                        const string taskId = "T1";
+                        CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"ping 127.0.0.1 -n 20 > nul && exit /b 3\"");
+
+                        //Add the task
+                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        batchCli.JobOperations.AddTask(jobId, taskToAdd);
+
+                        CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
+                        TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
+
+                        //Wait for the task state to complete 
+                        taskStateMonitor.WaitAll(new[] { task }, TaskState.Completed, TimeSpan.FromMinutes(2));
+
+                        task.Refresh();
+                        Assert.Equal(3, task.ExecutionInformation.ExitCode);
+
+                        // If you disable the job the tasks stay in the active state.
+                        CloudJob boundJob = batchCli.JobOperations.GetJob(jobId);
+                        boundJob.Disable(DisableJobOption.Requeue);
+
+                        //Reactivate failed task
+                        task.Reactivate();
+                        task.Refresh();
+                        Assert.Equal(TaskState.Active, task.State);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1432996GetTaskOnJobOperationsAndJob()
         {
             Action test = () =>

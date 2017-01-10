@@ -31,6 +31,7 @@
     {
         private readonly ITestOutputHelper testOutputHelper;
         private const string CertificateFilePrefix = "CertificateUnitTests";
+        private const string RsaSuffix = "RSA";
 
         public CertificateUnitTests(ITestOutputHelper testOutputHelper)
         {
@@ -42,9 +43,9 @@
         public void TestCreateCerFileFromRawData()
         {
             string filePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.cer", CertificateFilePrefix));
-            CertificateBuilder.CreateSelfSignedInFile("Foo", filePath);
+            CertificateBuilder.CreateSelfSignedInFile("Foo", filePath, CertificateBuilder.Sha1Algorithm);
 
-            TestCertificateFromRawData(filePath);
+            TestCertificateFromRawData(filePath, CertificateBuilder.Sha1Algorithm);
         }
 
         [Fact]
@@ -52,13 +53,35 @@
         public void TestCreatePfxFileFromRawData()
         {
             string filePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", CertificateFilePrefix));
-            CertificateBuilder.CreateSelfSignedInFile("Foo", filePath, CommonResources.CertificatePassword);
+            CertificateBuilder.CreateSelfSignedInFile("Foo", filePath, CertificateBuilder.Sha1Algorithm, password: CommonResources.CertificatePassword);
 
-            TestCertificateFromRawData(filePath, CommonResources.CertificatePassword);
+            TestCertificateFromRawData(filePath, CertificateBuilder.Sha1Algorithm, CommonResources.CertificatePassword);
         }
 
-        private static void TestCertificateFromRawData(string certificateFileLocation, string password = null)
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestCreateSha256Cer()
         {
+            string filePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", CertificateFilePrefix));
+            CertificateBuilder.CreateSelfSignedInFile("Foo", filePath, CertificateBuilder.Sha256Algorithm);
+
+            TestCertificateFromRawData(filePath, CertificateBuilder.Sha256Algorithm);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestCreateSha256Pfx()
+        {
+            string filePath = TestCommon.GetTemporaryCertificateFilePath(string.Format("{0}.pfx", CertificateFilePrefix));
+            CertificateBuilder.CreateSelfSignedInFile("Foo", filePath, CertificateBuilder.Sha256Algorithm, password: CommonResources.CertificatePassword);
+
+            TestCertificateFromRawData(filePath, CertificateBuilder.Sha256Algorithm, CommonResources.CertificatePassword);
+        }
+
+        private static void TestCertificateFromRawData(string certificateFileLocation, string expectedSignatureAlgorithm, string password = null)
+        {
+            expectedSignatureAlgorithm += RsaSuffix; //All algorithms friendly names seem to include a commo suffix
+
             try
             {
                 using (BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient())
@@ -69,6 +92,8 @@
                     Certificate certificate = batchClient.CertificateOperations.CreateCertificate(cerBytes);
 
                     Assert.Equal(x509Certificate.Thumbprint.ToUpper(), certificate.Thumbprint.ToUpper());
+                    Assert.Equal("sha1", certificate.ThumbprintAlgorithm);
+                    Assert.Equal(expectedSignatureAlgorithm, x509Certificate.SignatureAlgorithm.FriendlyName);
                 }
             }
             finally

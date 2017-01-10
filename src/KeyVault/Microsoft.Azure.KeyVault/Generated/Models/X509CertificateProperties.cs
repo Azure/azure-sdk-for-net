@@ -31,11 +31,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         /// <param name="subject">The subject name. Should be a valid X509
         /// Distinguished Name.</param>
-        /// <param name="ekus">The enhaunced key usage.</param>
+        /// <param name="ekus">The enhanced key usage.</param>
         /// <param name="subjectAlternativeNames">The subject alternative
         /// names.</param>
         /// <param name="keyUsage">List of key usages.</param>
-        /// <param name="validityInMonths">The subject alternate names.</param>
+        /// <param name="validityInMonths">The duration that the ceritifcate
+        /// is valid in months.</param>
         public X509CertificateProperties(string subject = default(string), IList<string> ekus = default(IList<string>), SubjectAlternativeNames subjectAlternativeNames = default(SubjectAlternativeNames), IList<string> keyUsage = default(IList<string>), int? validityInMonths = default(int?))
         {
             Subject = subject;
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Subject { get; set; }
 
         /// <summary>
-        /// Gets or sets the enhaunced key usage.
+        /// Gets or sets the enhanced key usage.
         /// </summary>
         [JsonProperty(PropertyName = "ekus")]
         public IList<string> Ekus { get; set; }
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.KeyVault.Models
         public IList<string> KeyUsage { get; set; }
 
         /// <summary>
-        /// Gets or sets the subject alternate names.
+        /// Gets or sets the duration that the ceritifcate is valid in months.
         /// </summary>
         [JsonProperty(PropertyName = "validity_months")]
         public int? ValidityInMonths { get; set; }

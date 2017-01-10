@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies the execution constraints for jobs created on a schedule.
@@ -39,9 +33,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobConstraints class.
         /// </summary>
-        /// <param name="maxWallClockTime">The maximum elapsed time that the job may run, measured from the time the job starts. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running.</param>
-        /// <param name="maxTaskRetryCount">The maximum number of times each task may be retried. The Batch service retries a task if its exit code is nonzero.</param>
-        public JobConstraints(TimeSpan? maxWallClockTime = default(TimeSpan?), int? maxTaskRetryCount = default(int?))
+        /// <param name="maxWallClockTime">The maximum elapsed time that the
+        /// job may run, measured from the time the job starts. If the job
+        /// does not complete within the time limit, the Batch service
+        /// terminates it and any tasks that are still running.</param>
+        /// <param name="maxTaskRetryCount">The maximum number of times each
+        /// task may be retried. The Batch service retries a task if its exit
+        /// code is nonzero.</param>
+        public JobConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), int? maxTaskRetryCount = default(int?))
         {
             MaxWallClockTime = maxWallClockTime;
             MaxTaskRetryCount = maxTaskRetryCount;
@@ -53,14 +52,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// complete within the time limit, the Batch service terminates it
         /// and any tasks that are still running.
         /// </summary>
-        [JsonProperty(PropertyName = "maxWallClockTime")]
-        public TimeSpan? MaxWallClockTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxWallClockTime")]
+        public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of times each task may be retried.
         /// The Batch service retries a task if its exit code is nonzero.
         /// </summary>
-        [JsonProperty(PropertyName = "maxTaskRetryCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
     }

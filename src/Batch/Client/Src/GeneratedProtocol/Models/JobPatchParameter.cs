@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobOperations.Patch request.
@@ -40,11 +34,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobPatchParameter class.
         /// </summary>
         /// <param name="priority">The priority of the job.</param>
-        /// <param name="onAllTasksComplete">Specifies an action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
-        /// <param name="constraints">The execution constraints for the job.</param>
-        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
-        public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="onAllTasksComplete">Specifies an action the Batch
+        /// service should take when all tasks in the job are in the
+        /// completed state. Possible values include: 'noAction',
+        /// 'terminateJob'</param>
+        /// <param name="constraints">The execution constraints for the
+        /// job.</param>
+        /// <param name="poolInfo">The pool on which the Batch service runs
+        /// the job's tasks.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the job as metadata.</param>
+        public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Priority = priority;
             OnAllTasksComplete = onAllTasksComplete;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// lowest priority and 1000 being the highest priority. If omitted,
         /// the priority of the job is left unchanged.
         /// </remarks>
-        [JsonProperty(PropertyName = "priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// when all tasks in the job are in the completed state. Possible
         /// values include: 'noAction', 'terminateJob'
         /// </summary>
-        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the existing execution constraints are left unchanged.
         /// </remarks>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// has a poolLifetimeOption of job. If omitted, the job continues to
         /// run on its current pool.
         /// </remarks>
-        [JsonProperty(PropertyName = "poolInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
@@ -104,13 +104,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the existing job metadata is left unchanged.
         /// </remarks>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

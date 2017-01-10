@@ -1,22 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/providers/Microsoft.Cache/Redis/?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Cache/Redis/?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGIxZjY0NzEtMWJmMC00ZGRhLWFlYzMtY2I5MjcyZjA5NTkwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1ad7e893-ffda-4e9f-8df9-096b2b5f7ae7"
+          "a23639ea-7803-4f71-9199-cb3ccb679fb2"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/3.1.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/MyResourceGroup/providers/Microsoft.Cache/Redis/sunnyprimary\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"sunnyprimary\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"3.0\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"sunnyprimary.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra11029/providers/Microsoft.Cache/Redis/hydracache1\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"hydracache1\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"3.0\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"hydracache1.cache.icbbvt.windows-int.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/hydra13012/providers/Microsoft.Cache/Redis/hydracache1\",\r\n      \"location\": \"North Central US\",\r\n      \"name\": \"hydracache1\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"3.0\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"hydracache1.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 18 May 2016 22:57:19 GMT"
+          "Tue, 18 Oct 2016 07:37:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,22 +44,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "97f69e65-b59a-412f-ba34-c64b0c2fee69"
+          "c0da46cb-8d47-4f1c-84e3-116d442cc21a"
         ],
         "x-rp-server-mvid": [
-          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
+          "a10738d6-1cb8-4b83-9fbf-9de75c3d37b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14563"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "bd93415f-fea3-46c1-9610-dfb1fdb55c5d"
+          "8c5a19d3-d5c8-49b8-9ea4-5a34efcd51b6"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160518T225720Z:bd93415f-fea3-46c1-9610-dfb1fdb55c5d"
+          "WESTUS2:20161018T073755Z:8c5a19d3-d5c8-49b8-9ea4-5a34efcd51b6"
         ]
       },
       "StatusCode": 200
@@ -66,6 +67,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "19b520e4-39a7-4fac-b1da-d940f2d39a38"
+    "SubscriptionId": "0b1f6471-1bf0-4dda-aec3-cb9272f09590"
   }
 }

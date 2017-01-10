@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains information about the execution of a Job Preparation task on
@@ -42,16 +36,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobPreparationTaskExecutionInformation class.
         /// </summary>
-        /// <param name="startTime">The time at which the task started running.</param>
-        /// <param name="state">The current state of the Job Preparation task.</param>
-        /// <param name="retryCount">The number of times the task has been retried by the Batch service. Every time the task exits with a non-zero exit code, it is deemed a task failure. The Batch service will retry the task up to the limit specified by the constraints.</param>
-        /// <param name="endTime">The time at which the Job Preparation task completed.</param>
-        /// <param name="taskRootDirectory">The root directory of the Job Preparation task on the compute node. You can use this path to retrieve files created by the task, such as log files.</param>
-        /// <param name="taskRootDirectoryUrl">The URL to the root directory of the Job Preparation task on the compute node.</param>
-        /// <param name="exitCode">The exit code of the program specified on the task command line.</param>
-        /// <param name="schedulingError">The error encountered by the Batch service when starting the task.</param>
-        /// <param name="lastRetryTime">The most recent time at which a retry of the Job Preparation task started running.</param>
-        public JobPreparationTaskExecutionInformation(DateTime startTime, JobPreparationTaskState state, int retryCount, DateTime? endTime = default(DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), DateTime? lastRetryTime = default(DateTime?))
+        /// <param name="startTime">The time at which the task started
+        /// running.</param>
+        /// <param name="state">The current state of the Job Preparation
+        /// task.</param>
+        /// <param name="retryCount">The number of times the task has been
+        /// retried by the Batch service. Every time the task exits with a
+        /// non-zero exit code, it is deemed a task failure. The Batch
+        /// service will retry the task up to the limit specified by the
+        /// constraints.</param>
+        /// <param name="endTime">The time at which the Job Preparation task
+        /// completed.</param>
+        /// <param name="taskRootDirectory">The root directory of the Job
+        /// Preparation task on the compute node. You can use this path to
+        /// retrieve files created by the task, such as log files.</param>
+        /// <param name="taskRootDirectoryUrl">The URL to the root directory
+        /// of the Job Preparation task on the compute node.</param>
+        /// <param name="exitCode">The exit code of the program specified on
+        /// the task command line.</param>
+        /// <param name="schedulingError">The error encountered by the Batch
+        /// service when starting the task.</param>
+        /// <param name="lastRetryTime">The most recent time at which a retry
+        /// of the Job Preparation task started running.</param>
+        public JobPreparationTaskExecutionInformation(System.DateTime startTime, JobPreparationTaskState state, int retryCount, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), System.DateTime? lastRetryTime = default(System.DateTime?))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -70,8 +77,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Note that every time the task is restarted, this value is updated.
         /// </remarks>
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the Job Preparation task completed.
@@ -79,8 +86,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the task is in the Completed state.
         /// </remarks>
-        [JsonProperty(PropertyName = "endTime")]
-        public DateTime? EndTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the Job Preparation task.
@@ -88,7 +95,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'running', 'completed'
         /// </remarks>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public JobPreparationTaskState State { get; set; }
 
         /// <summary>
@@ -96,14 +103,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node. You can use this path to retrieve files created by
         /// the task, such as log files.
         /// </summary>
-        [JsonProperty(PropertyName = "taskRootDirectory")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskRootDirectory")]
         public string TaskRootDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to the root directory of the Job Preparation
         /// task on the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "taskRootDirectoryUrl")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskRootDirectoryUrl")]
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
@@ -120,14 +127,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// generated by the compute node operating system, such as when a
         /// process is forcibly terminated.
         /// </remarks>
-        [JsonProperty(PropertyName = "exitCode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
         /// Gets or sets the error encountered by the Batch service when
         /// starting the task.
         /// </summary>
-        [JsonProperty(PropertyName = "schedulingError")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
@@ -136,7 +143,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// code, it is deemed a task failure. The Batch service will retry
         /// the task up to the limit specified by the constraints.
         /// </summary>
-        [JsonProperty(PropertyName = "retryCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
@@ -147,13 +154,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the task was retried (i.e. retryCount
         /// is nonzero).
         /// </remarks>
-        [JsonProperty(PropertyName = "lastRetryTime")]
-        public DateTime? LastRetryTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastRetryTime")]
+        public System.DateTime? LastRetryTime { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

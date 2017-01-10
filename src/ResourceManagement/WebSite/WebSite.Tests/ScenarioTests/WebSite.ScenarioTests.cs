@@ -45,9 +45,9 @@ namespace WebSites.Tests.ScenarioTests
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var webSite = webSitesClient.Sites.GetSite(resourceGroupName, webSiteName, "SiteConfig");
+                    var webSite = webSitesClient.WebApps.Get(resourceGroupName, webSiteName, "SiteConfig");
 
-                    Assert.Equal(webSiteName, webSite.SiteName);
+                    Assert.Equal(webSiteName, webSite.Name);
                     var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
                     resourceGroupName, whpName);
                     Assert.Equal(serverfarmId, webSite.ServerFarmId, StringComparer.OrdinalIgnoreCase);
@@ -65,13 +65,13 @@ namespace WebSites.Tests.ScenarioTests
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var webSites = webSitesClient.Sites.GetSites(resourceGroupName, null, null);
+                    var webSites = webSitesClient.WebApps.ListByResourceGroup(resourceGroupName, null, null);
 
-                    Assert.Equal(1, webSites.Value.Count);
-                    Assert.Equal(webSiteName, webSites.Value[0].Name);
+                    Assert.Equal(1, webSites.Count());
+                    Assert.Equal(webSiteName, webSites.ToList()[0].Name);
                     var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
                     resourceGroupName, whpName);
-                    Assert.Equal(serverfarmId, webSites.Value[0].ServerFarmId, StringComparer.OrdinalIgnoreCase);
+                    Assert.Equal(serverfarmId, webSites.ToList()[0].ServerFarmId, StringComparer.OrdinalIgnoreCase);
                 });
         }
 
@@ -83,25 +83,24 @@ namespace WebSites.Tests.ScenarioTests
                 {
                     #region Start/Stop website
 
-                    webSitesClient.Sites.StopSite(resourceGroupName, webSiteName);
+                    webSitesClient.WebApps.Stop(resourceGroupName, webSiteName);
 
-                    var getWebSiteResponse = webSitesClient.Sites.GetSite(resourceGroupName, webSiteName);
+                    var getWebSiteResponse = webSitesClient.WebApps.Get(resourceGroupName, webSiteName);
                     Assert.NotNull(getWebSiteResponse);
                     Assert.Equal(getWebSiteResponse.State, "Stopped");
 
-                    webSitesClient.Sites.StartSite(resourceGroupName, webSiteName);
-                    getWebSiteResponse = webSitesClient.Sites.GetSite(resourceGroupName, webSiteName);
+                    webSitesClient.WebApps.Start(resourceGroupName, webSiteName);
+                    getWebSiteResponse = webSitesClient.WebApps.Get(resourceGroupName, webSiteName);
                     Assert.NotNull(getWebSiteResponse);
                     Assert.Equal(getWebSiteResponse.State, "Running");
 
                     #endregion Start/Stop website
 
-                    webSitesClient.Sites.DeleteSite(resourceGroupName, webSiteName, null,
-                        deleteAllSlots: true.ToString());
+                    webSitesClient.WebApps.Delete(resourceGroupName, webSiteName, null);
 
-                    var webSites = webSitesClient.Sites.GetSites(resourceGroupName);
+                    var webSites = webSitesClient.WebApps.ListByResourceGroup(resourceGroupName);
 
-                    Assert.Equal(0, webSites.Value.Count);
+                    Assert.Equal(0, webSites.Count());
                 });
         }
 
@@ -115,15 +114,15 @@ namespace WebSites.Tests.ScenarioTests
                     var endTime = DateTime.Parse("2015-10-05T23:49:31Z");
                     var metricNames = new List<string> {"Requests", "CPU", "MemoryWorkingSet"};
                     metricNames.Sort();
-                    var result = webSitesClient.Sites.GetSiteMetrics(resourceGroupName: resourceGroupName,
+                    var result = webSitesClient.WebApps.ListMetrics(resourceGroupName: resourceGroupName,
                         name: webSiteName, filter: WebSitesHelper.BuildMetricFilter(startTime: endTime.AddDays(-1), endTime: endTime, timeGrain: "PT1H", metricNames: metricNames), details: true);
                     
-                    webSitesClient.Sites.DeleteSite(resourceGroupName, webSiteName, deleteAllSlots: true.ToString());
+                    webSitesClient.WebApps.Delete(resourceGroupName, webSiteName);
 
                     // Validate response
                     Assert.NotNull(result);
                     var actualmetricNames =
-                        result.Value.Select(r => r.Name.Value).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+                        result.Select(r => r.Name.Value).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
                     actualmetricNames.Sort();
                     Assert.Equal(metricNames, actualmetricNames, StringComparer.OrdinalIgnoreCase);
 
@@ -143,7 +142,7 @@ namespace WebSites.Tests.ScenarioTests
                 {
                     #region Get/Set PythonVersion
 
-                    var configurationResponse = webSitesClient.Sites.GetSiteConfig(resourceGroupName,
+                    var configurationResponse = webSitesClient.WebApps.GetConfiguration(resourceGroupName,
                         siteName);
 
                     Assert.NotNull(configurationResponse);
@@ -155,10 +154,10 @@ namespace WebSites.Tests.ScenarioTests
                         PythonVersion = "3.4"
                     };
 
-                    var operationResponse = webSitesClient.Sites.UpdateSiteConfig(resourceGroupName,
+                    var operationResponse = webSitesClient.WebApps.UpdateConfiguration(resourceGroupName,
                         siteName, configurationParameters);
 
-                    configurationResponse = webSitesClient.Sites.GetSiteConfig(resourceGroupName, siteName);
+                    configurationResponse = webSitesClient.WebApps.GetConfiguration(resourceGroupName, siteName);
 
                     Assert.NotNull(configurationResponse);
                     Assert.Equal(configurationResponse.PythonVersion, configurationParameters.PythonVersion);
@@ -176,8 +175,8 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Application settings
 
                     const string settingName = "Application Setting1", settingValue = "Setting Value 1";
-                    var appSetting = new StringDictionary { Location = locationName, Properties = new Dictionary<string, string> { { settingName, settingValue} } };
-                    var appSettingsResponse = webSitesClient.Sites.UpdateSiteAppSettings(
+                    var appSetting = new StringDictionary { Name = settingName, Location = locationName, Properties = new Dictionary<string, string> { { settingName, settingValue} } };
+                    var appSettingsResponse = webSitesClient.WebApps.UpdateApplicationSettings(
                         resourceGroupName,
                         siteName,
                         appSetting);
@@ -185,7 +184,7 @@ namespace WebSites.Tests.ScenarioTests
                     Assert.NotNull(appSettingsResponse);
                     Assert.True(appSettingsResponse.Properties.Contains(new KeyValuePair<string, string>(settingName, settingValue)));
 
-                    appSettingsResponse = webSitesClient.Sites.ListSiteAppSettings(resourceGroupName, siteName);
+                    appSettingsResponse = webSitesClient.WebApps.ListApplicationSettings(resourceGroupName, siteName);
 
                     Assert.NotNull(appSettingsResponse);
                     Assert.True(appSettingsResponse.Properties.Contains(new KeyValuePair<string, string>(settingName, settingValue)));
@@ -195,8 +194,8 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Metadata
 
                     const string metadataName = "Metadata 1", metadataValue = "Metadata Value 1";
-                    var metadata = new StringDictionary { Location = locationName, Properties = new Dictionary<string, string> { { metadataName, metadataValue } } };
-                    var metadataResponse = webSitesClient.Sites.UpdateSiteMetadata(
+                    var metadata = new StringDictionary { Name = metadataName, Location = locationName, Properties = new Dictionary<string, string> { { metadataName, metadataValue } } };
+                    var metadataResponse = webSitesClient.WebApps.UpdateMetadata(
                         resourceGroupName,
                         siteName,
                         metadata);
@@ -204,7 +203,7 @@ namespace WebSites.Tests.ScenarioTests
                     Assert.NotNull(metadataResponse);
                     Assert.True(metadataResponse.Properties.Contains(new KeyValuePair<string, string>(metadataName, metadataValue)));
 
-                    metadataResponse = webSitesClient.Sites.ListSiteMetadata(resourceGroupName, siteName);
+                    metadataResponse = webSitesClient.WebApps.ListMetadata(resourceGroupName, siteName);
 
                     Assert.NotNull(metadataResponse);
                     Assert.True(metadataResponse.Properties.Contains(new KeyValuePair<string, string>(metadataName, metadataValue)));
@@ -214,22 +213,23 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Connection strings
 
                     const string connectionStringName = "ConnectionString 1",
-                        connectionStringValue = "ConnectionString Value 1";
+                        connectionStringValue = "ConnectionString Value 1",
+                        connectionStringDictionaryName = "ConnectionStringDictionary 1";
                     var connStringValueTypePair = new ConnStringValueTypePair
                     {
                         Value = connectionStringValue,
-                        Type = DatabaseServerType.MySql
+                        Type = ConnectionStringType.MySql
                     };
 
-                    var connectionStringResponse = webSitesClient.Sites.UpdateSiteConnectionStrings(
+                    var connectionStringResponse = webSitesClient.WebApps.UpdateConnectionStrings(
                         resourceGroupName,
                         siteName,
-                        new ConnectionStringDictionary { Location = locationName, Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
+                        new ConnectionStringDictionary { Name = connectionStringDictionaryName, Location = locationName, Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
 
                     Assert.NotNull(connectionStringResponse);
                     Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
 
-                    connectionStringResponse = webSitesClient.Sites.ListSiteConnectionStrings(resourceGroupName, siteName);
+                    connectionStringResponse = webSitesClient.WebApps.ListConnectionStrings(resourceGroupName, siteName);
 
                     Assert.NotNull(connectionStringResponse);
                     Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
@@ -238,7 +238,7 @@ namespace WebSites.Tests.ScenarioTests
 
                     #region Get Publishing credentials
 
-                    var credentialsResponse = webSitesClient.Sites.ListSitePublishingCredentials(resourceGroupName, siteName);
+                    var credentialsResponse = webSitesClient.WebApps.ListPublishingCredentials(resourceGroupName, siteName);
 
                     Assert.NotNull(credentialsResponse);
                     Assert.Equal("$" + siteName, credentialsResponse.PublishingUserName);
@@ -248,7 +248,7 @@ namespace WebSites.Tests.ScenarioTests
 
                     #region Get Publishing profile XML
 
-                    var publishingProfileResponse = webSitesClient.Sites.ListSitePublishingProfileXml(resourceGroupName, siteName, new CsmPublishingProfileOptions() { Format = "WebDeploy" });
+                    var publishingProfileResponse = webSitesClient.WebApps.ListPublishingProfileXmlWithSecrets(resourceGroupName, siteName, new CsmPublishingProfileOptions() { Format = "WebDeploy" });
 
                     Assert.NotNull(publishingProfileResponse);
                     var doc = XDocument.Load(publishingProfileResponse, LoadOptions.None);
@@ -256,9 +256,9 @@ namespace WebSites.Tests.ScenarioTests
 
                     #endregion Get Publishing profile XML
 
-                    webSitesClient.Sites.DeleteSite(resourceGroupName, siteName, deleteAllSlots: true.ToString(), deleteMetrics: true.ToString());
+                    webSitesClient.WebApps.Delete(resourceGroupName, siteName, deleteMetrics: true);
 
-                    webSitesClient.ServerFarms.DeleteServerFarm(resourceGroupName, whpName);
+                    webSitesClient.AppServicePlans.Delete(resourceGroupName, whpName);
                 });
         }
 
@@ -272,17 +272,19 @@ namespace WebSites.Tests.ScenarioTests
 
                     const string setting1Name = "AppSetting1", setting2Name = "AppSetting2";
                     const string connection1Name = "ConnString1", connection2Name = "ConnString2";
-                    webSitesClient.Sites.UpdateSlotConfigNames(
+                    const string SlotConfigName = "SlotConfig1";
+                    webSitesClient.WebApps.UpdateSlotConfigurationNames(
                         resourceGroupName,
                         siteName,
                         new SlotConfigNamesResource()
                         {
+                            Name = SlotConfigName,
                             Location = locationName,
                             AppSettingNames = new List<string> { setting1Name, setting2Name },
                             ConnectionStringNames = new List<string> { connection1Name, connection2Name },
                         });
 
-                    var response = webSitesClient.Sites.GetSlotConfigNames(resourceGroupName, siteName);
+                    var response = webSitesClient.WebApps.ListSlotConfigurationNames(resourceGroupName, siteName);
 
                     Assert.NotNull(response);
                     Assert.NotNull(response.AppSettingNames);
@@ -297,14 +299,15 @@ namespace WebSites.Tests.ScenarioTests
 
                     #endregion Get/Set slot settings
 
-                    webSitesClient.Sites.DeleteSite(resourceGroupName, siteName, deleteAllSlots: true.ToString(), deleteMetrics: true.ToString());
-                    webSitesClient.ServerFarms.DeleteServerFarm(resourceGroupName, whpName);
+                    webSitesClient.WebApps.Delete(resourceGroupName, siteName,  deleteMetrics: true);
+                    webSitesClient.AppServicePlans.Delete(resourceGroupName, whpName);
                 });
         }
 
         [Fact(Skip = "Failing on GitHubProxy GetWebHookInfo")]
         public void LinkAndUnlinkSourceControlToWebsiteShouldSucceed()
         {
+            /*
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
@@ -318,7 +321,7 @@ namespace WebSites.Tests.ScenarioTests
                     webSitesClient.Provider.UpdateSourceControl(gitHubSourceControl.SourceControlName, gitHubSourceControl);
 
                     var siteSourceControlUpdateResponse =
-                        webSitesClient.Sites.UpdateSiteSourceControl(
+                        webSitesClient.WebApps.UpdateSiteSourceControl(
                             resourceGroupName,
                             webSiteName,
                             new SiteSourceControl() { RepoUrl = "https://github.com/amitaptest/HelloKudu"});
@@ -326,10 +329,11 @@ namespace WebSites.Tests.ScenarioTests
                     Assert.Equal("https://github.com/amitaptest/HelloKudu", siteSourceControlUpdateResponse.RepoUrl);
 
                     var operationResponse =
-                        webSitesClient.Sites.DeleteSiteSourceControl(
+                        webSitesClient.WebApps.DeleteSiteSourceControl(
                             resourceGroupName,
                             webSiteName);
                 });
+            */
         }
 
         private void RunWebsiteTestScenario(WebsiteTestDelegate testAction, string skuTier = "Shared", string skuName = "D1",
@@ -352,10 +356,10 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                var serverFarm = webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, webHostingPlanName, 
-                    new ServerFarmWithRichSku()
+                var serverFarm = webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, 
+                    new AppServicePlan()
                     {
-                        ServerFarmWithRichSkuName = webHostingPlanName,
+                        Name = webHostingPlanName,
                         Location = location,
                         Sku = new SkuDescription()
                         {
@@ -364,9 +368,9 @@ namespace WebSites.Tests.ScenarioTests
                         }
                     });
 
-                var webSite = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, webSiteName, new Site
+                var webSite = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    SiteName = webSiteName,
+                    Name = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                     ServerFarmId = serverFarm.Id
@@ -403,9 +407,9 @@ namespace WebSites.Tests.ScenarioTests
                         Location = locationName
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, whpName, new ServerFarmWithRichSku()
+                webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan()
                 {
-                    ServerFarmWithRichSkuName = whpName,
+                    Name = whpName,
                     Location = locationName,
                     Sku = new SkuDescription
                     {
@@ -415,9 +419,9 @@ namespace WebSites.Tests.ScenarioTests
                     }
                 });
 
-                var createResponse = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, siteName, new Site
+                var createResponse = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, siteName, new Site
                 {
-                    SiteName = siteName,
+                    Name = siteName,
                     Location = locationName,
                     ServerFarmId = serverfarmId
                 });
@@ -436,12 +440,12 @@ namespace WebSites.Tests.ScenarioTests
                     Limits = expectedSitelimits
                 };
 
-                webSitesClient.Sites.UpdateSiteConfig(
+                webSitesClient.WebApps.UpdateConfiguration(
                     resourceGroupName,
                     siteName,
                     siteConfig);
 
-                var siteGetConfigResponse = webSitesClient.Sites.GetSiteConfig(resourceGroupName, siteName);
+                var siteGetConfigResponse = webSitesClient.WebApps.GetConfiguration(resourceGroupName, siteName);
 
                 Assert.NotNull(siteGetConfigResponse);
                 var limits = siteGetConfigResponse.Limits;
@@ -452,8 +456,8 @@ namespace WebSites.Tests.ScenarioTests
 
                 #endregion Get/Set Site limits
 
-                webSitesClient.Sites.DeleteSite(resourceGroupName, siteName, deleteAllSlots: true.ToString(), deleteMetrics: true.ToString());
-                webSitesClient.ServerFarms.DeleteServerFarm(resourceGroupName, whpName);
+                webSitesClient.WebApps.Delete(resourceGroupName, siteName, deleteMetrics: true);
+                webSitesClient.AppServicePlans.Delete(resourceGroupName, whpName);
             }
         }
 
@@ -469,6 +473,7 @@ namespace WebSites.Tests.ScenarioTests
                     var webAppIdFormat = "/subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.Web/sites/{2}";
                     var site = new Site()
                     {
+                        Name = targetSiteName,
                         Location = "West US",
                         CloningInfo = new CloningInfo()
                         {
@@ -477,7 +482,7 @@ namespace WebSites.Tests.ScenarioTests
                     };
 
                     ServiceClientTracing.IsEnabled = true;
-                    var operationResponse = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, targetSiteName, site);
+                    var operationResponse = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, targetSiteName, site);
                     ServiceClientTracing.IsEnabled = false;
                 }, "Premium", "P1");
         }

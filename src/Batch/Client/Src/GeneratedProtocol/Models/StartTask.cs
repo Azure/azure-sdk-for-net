@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A task which is run when a compute node joins a pool in the Azure
@@ -40,13 +34,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the StartTask class.
         /// </summary>
-        /// <param name="commandLine">The command line of the start task.</param>
-        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
-        /// <param name="environmentSettings">A list of environment variable settings for the start task.</param>
-        /// <param name="runElevated">Whether to run the start task in elevated mode. The default value is false.</param>
-        /// <param name="maxTaskRetryCount">The maximum number of times the task may be retried.</param>
-        /// <param name="waitForSuccess">Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node.</param>
-        public StartTask(string commandLine, IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), bool? runElevated = default(bool?), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
+        /// <param name="commandLine">The command line of the start
+        /// task.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service
+        /// will download to the compute node before running the command
+        /// line.</param>
+        /// <param name="environmentSettings">A list of environment variable
+        /// settings for the start task.</param>
+        /// <param name="runElevated">Whether to run the start task in
+        /// elevated mode. The default value is false.</param>
+        /// <param name="maxTaskRetryCount">The maximum number of times the
+        /// task may be retried.</param>
+        /// <param name="waitForSuccess">Whether the Batch service should wait
+        /// for the start task to complete successfully (that is, to exit
+        /// with exit code 0) before scheduling any tasks on the compute
+        /// node.</param>
+        public StartTask(string commandLine, System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), bool? runElevated = default(bool?), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
         {
             CommandLine = commandLine;
             ResourceFiles = resourceFiles;
@@ -66,34 +69,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using
         /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [JsonProperty(PropertyName = "commandLine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
         /// to the compute node before running the command line.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceFiles")]
-        public IList<ResourceFile> ResourceFiles { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
+        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the start
         /// task.
         /// </summary>
-        [JsonProperty(PropertyName = "environmentSettings")]
-        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the start task in elevated mode. The
         /// default value is false.
         /// </summary>
-        [JsonProperty(PropertyName = "runElevated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of times the task may be retried.
         /// </summary>
-        [JsonProperty(PropertyName = "maxTaskRetryCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
         /// <summary>
@@ -101,20 +104,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task to complete successfully (that is, to exit with exit code 0)
         /// before scheduling any tasks on the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "waitForSuccess")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (CommandLine == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }
             if (this.ResourceFiles != null)
             {

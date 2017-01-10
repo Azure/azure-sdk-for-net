@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies details of a Job Manager task.
@@ -39,17 +33,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobManagerTask class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the Job Manager task.</param>
-        /// <param name="commandLine">The command line of the Job Manager task.</param>
-        /// <param name="displayName">The display name of the Job Manager task.</param>
-        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
-        /// <param name="environmentSettings">A list of environment variable settings for the Job Manager task.</param>
-        /// <param name="constraints">Constraints that apply to the Job Manager task.</param>
-        /// <param name="killJobOnCompletion">Whether completion of the Job Manager task signifies completion of the entire job.</param>
-        /// <param name="runElevated">Whether to run the Job Manager task in elevated mode. The default value is false.</param>
-        /// <param name="runExclusive">Whether the Job Manager task requires exclusive use of the compute node where it runs.</param>
-        /// <param name="applicationPackageReferences">A list of application packages that the Batch service will deploy to the compute node before running the command line.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>))
+        /// <param name="id">A string that uniquely identifies the Job Manager
+        /// task.</param>
+        /// <param name="commandLine">The command line of the Job Manager
+        /// task.</param>
+        /// <param name="displayName">The display name of the Job Manager
+        /// task.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service
+        /// will download to the compute node before running the command
+        /// line.</param>
+        /// <param name="environmentSettings">A list of environment variable
+        /// settings for the Job Manager task.</param>
+        /// <param name="constraints">Constraints that apply to the Job
+        /// Manager task.</param>
+        /// <param name="killJobOnCompletion">Whether completion of the Job
+        /// Manager task signifies completion of the entire job.</param>
+        /// <param name="runElevated">Whether to run the Job Manager task in
+        /// elevated mode. The default value is false.</param>
+        /// <param name="runExclusive">Whether the Job Manager task requires
+        /// exclusive use of the compute node where it runs.</param>
+        /// <param name="applicationPackageReferences">A list of application
+        /// packages that the Batch service will deploy to the compute node
+        /// before running the command line.</param>
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
         {
             Id = id;
             DisplayName = displayName;
@@ -67,13 +73,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a string that uniquely identifies the Job Manager
         /// task.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name of the Job Manager task.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -86,41 +92,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using
         /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [JsonProperty(PropertyName = "commandLine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
         /// to the compute node before running the command line.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceFiles")]
-        public IList<ResourceFile> ResourceFiles { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
+        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
         /// Manager task.
         /// </summary>
-        [JsonProperty(PropertyName = "environmentSettings")]
-        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets constraints that apply to the Job Manager task.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets whether completion of the Job Manager task signifies
         /// completion of the entire job.
         /// </summary>
-        [JsonProperty(PropertyName = "killJobOnCompletion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "killJobOnCompletion")]
         public bool? KillJobOnCompletion { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the Job Manager task in elevated mode.
         /// The default value is false.
         /// </summary>
-        [JsonProperty(PropertyName = "runElevated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
@@ -135,31 +141,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// limit, so this is only relevant if the node allows multiple
         /// concurrent tasks.
         /// </remarks>
-        [JsonProperty(PropertyName = "runExclusive")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runExclusive")]
         public bool? RunExclusive { get; set; }
 
         /// <summary>
         /// Gets or sets a list of application packages that the Batch service
         /// will deploy to the compute node before running the command line.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationPackageReferences")]
-        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
+        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
             if (CommandLine == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }
             if (this.ResourceFiles != null)
             {

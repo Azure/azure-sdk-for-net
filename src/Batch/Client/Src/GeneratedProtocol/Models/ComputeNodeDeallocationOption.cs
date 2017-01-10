@@ -18,23 +18,20 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeDeallocationOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ComputeNodeDeallocationOption
     {
-        [EnumMember(Value = "requeue")]
+        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
         Requeue,
-        [EnumMember(Value = "terminate")]
+        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate,
-        [EnumMember(Value = "taskcompletion")]
+        [System.Runtime.Serialization.EnumMember(Value = "taskcompletion")]
         Taskcompletion,
-        [EnumMember(Value = "retaineddata")]
+        [System.Runtime.Serialization.EnumMember(Value = "retaineddata")]
         Retaineddata
     }
 }

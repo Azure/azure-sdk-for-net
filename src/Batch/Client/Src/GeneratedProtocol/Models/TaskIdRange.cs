@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A range of task ids that a task can depend on. All tasks with ids in
@@ -52,19 +46,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the first task id in the range.
         /// </summary>
-        [JsonProperty(PropertyName = "start")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "start")]
         public int Start { get; set; }
 
         /// <summary>
         /// Gets or sets the last task id in the range.
         /// </summary>
-        [JsonProperty(PropertyName = "end")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "end")]
         public int End { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

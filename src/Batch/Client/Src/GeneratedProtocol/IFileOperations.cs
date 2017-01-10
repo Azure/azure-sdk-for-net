@@ -18,12 +18,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -64,10 +58,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<FileDeleteFromTaskHeaders>> DeleteFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileDeleteFromTaskHeaders>> DeleteFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Returns the content of the specified task file.
         /// </summary>
@@ -92,13 +86,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<System.IO.Stream,FileGetFromTaskHeaders>> GetFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,FileGetFromTaskHeaders>> GetFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets the properties of the specified task file.
         /// </summary>
@@ -123,10 +117,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes the specified task file from the compute node.
         /// </summary>
@@ -158,10 +152,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<FileDeleteFromComputeNodeHeaders>> DeleteFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileDeleteFromComputeNodeHeaders>> DeleteFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Returns the content of the specified task file.
         /// </summary>
@@ -186,13 +180,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<System.IO.Stream,FileGetFromComputeNodeHeaders>> GetFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,FileGetFromComputeNodeHeaders>> GetFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets the properties of the specified compute node file.
         /// </summary>
@@ -218,10 +212,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists the files in a task's directory on its compute node.
         /// </summary>
@@ -246,13 +240,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeFile>,FileListFromTaskHeaders>> ListFromTaskWithHttpMessagesAsync(string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<NodeFile>,FileListFromTaskHeaders>> ListFromTaskWithHttpMessagesAsync(string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all of the files in task directories on the specified
         /// compute node.
@@ -278,13 +272,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeFile>,FileListFromComputeNodeHeaders>> ListFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<NodeFile>,FileListFromComputeNodeHeaders>> ListFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists the files in a task's directory on its compute node.
         /// </summary>
@@ -303,13 +297,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeFile>,FileListFromTaskHeaders>> ListFromTaskNextWithHttpMessagesAsync(string nextPageLink, FileListFromTaskNextOptions fileListFromTaskNextOptions = default(FileListFromTaskNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<NodeFile>,FileListFromTaskHeaders>> ListFromTaskNextWithHttpMessagesAsync(string nextPageLink, FileListFromTaskNextOptions fileListFromTaskNextOptions = default(FileListFromTaskNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all of the files in task directories on the specified
         /// compute node.
@@ -329,12 +323,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeFile>,FileListFromComputeNodeHeaders>> ListFromComputeNodeNextWithHttpMessagesAsync(string nextPageLink, FileListFromComputeNodeNextOptions fileListFromComputeNodeNextOptions = default(FileListFromComputeNodeNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<NodeFile>,FileListFromComputeNodeHeaders>> ListFromComputeNodeNextWithHttpMessagesAsync(string nextPageLink, FileListFromComputeNodeNextOptions fileListFromComputeNodeNextOptions = default(FileListFromComputeNodeNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

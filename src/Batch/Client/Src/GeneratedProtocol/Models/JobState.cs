@@ -18,29 +18,26 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum JobState
     {
-        [EnumMember(Value = "active")]
+        [System.Runtime.Serialization.EnumMember(Value = "active")]
         Active,
-        [EnumMember(Value = "disabling")]
+        [System.Runtime.Serialization.EnumMember(Value = "disabling")]
         Disabling,
-        [EnumMember(Value = "disabled")]
+        [System.Runtime.Serialization.EnumMember(Value = "disabled")]
         Disabled,
-        [EnumMember(Value = "enabling")]
+        [System.Runtime.Serialization.EnumMember(Value = "enabling")]
         Enabling,
-        [EnumMember(Value = "terminating")]
+        [System.Runtime.Serialization.EnumMember(Value = "terminating")]
         Terminating,
-        [EnumMember(Value = "completed")]
+        [System.Runtime.Serialization.EnumMember(Value = "completed")]
         Completed,
-        [EnumMember(Value = "deleting")]
+        [System.Runtime.Serialization.EnumMember(Value = "deleting")]
         Deleting
     }
 }

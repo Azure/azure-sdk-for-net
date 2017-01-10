@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.DataLake.StoreUploader", "Microsoft.Azure.Management.DataLake.StoreUploader\Microsoft.Azure.Management.DataLake.StoreUploader.csproj", "{AD47B1E5-3400-4ACD-8403-C29B42ED9112}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.DataLake.StoreUploader", "src\Microsoft.Azure.Management.DataLake.StoreUploader.csproj", "{AD47B1E5-3400-4ACD-8403-C29B42ED9112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStoreUploader.Tests", "DataLakeStoreUploader.Tests\DataLakeStoreUploader.Tests.csproj", "{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLakeStoreUploader.Tests", "tests\DataLakeStoreUploader.Tests.csproj", "{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,8 +19,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
 		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
@@ -29,10 +29,10 @@ Global
 		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
-		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{AD47B1E5-3400-4ACD-8403-C29B42ED9112}.Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
@@ -41,8 +41,8 @@ Global
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{F290EF7A-4C4B-49ED-A6B5-34FC781E4DCD}.Release|Any CPU.Build.0 = Net45-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

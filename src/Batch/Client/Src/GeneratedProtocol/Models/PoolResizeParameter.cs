@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudPoolOperations.Resize request.
@@ -39,10 +33,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolResizeParameter class.
         /// </summary>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
-        /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool.</param>
-        /// <param name="nodeDeallocationOption">When nodes may be removed from the pool, if the pool size is decreasing.</param>
-        public PoolResizeParameter(int targetDedicated, TimeSpan? resizeTimeout = default(TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
+        /// <param name="targetDedicated">The desired number of compute nodes
+        /// in the pool.</param>
+        /// <param name="resizeTimeout">The timeout for allocation of compute
+        /// nodes to the pool or removal of compute nodes from the
+        /// pool.</param>
+        /// <param name="nodeDeallocationOption">When nodes may be removed
+        /// from the pool, if the pool size is decreasing.</param>
+        public PoolResizeParameter(int targetDedicated, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
             TargetDedicated = targetDedicated;
             ResizeTimeout = resizeTimeout;
@@ -52,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the desired number of compute nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "targetDedicated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicated")]
         public int TargetDedicated { get; set; }
 
         /// <summary>
@@ -62,8 +60,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default value is 10 minutes.
         /// </remarks>
-        [JsonProperty(PropertyName = "resizeTimeout")]
-        public TimeSpan? ResizeTimeout { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
+        public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets when nodes may be removed from the pool, if the pool
@@ -73,13 +71,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'requeue', 'terminate', 'taskcompletion',
         /// 'retaineddata'
         /// </remarks>
-        [JsonProperty(PropertyName = "nodeDeallocationOption")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

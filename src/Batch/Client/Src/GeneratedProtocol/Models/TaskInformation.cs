@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Information about a task running on a compute node.
@@ -41,10 +35,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="taskState">The current state of the task.</param>
         /// <param name="taskUrl">The URL of the task.</param>
-        /// <param name="jobId">The id of the job to which the task belongs.</param>
+        /// <param name="jobId">The id of the job to which the task
+        /// belongs.</param>
         /// <param name="taskId">The id of the task.</param>
-        /// <param name="subtaskId">The id of the subtask if the task is a multi-instance task.</param>
-        /// <param name="executionInfo">Information about the execution of the task.</param>
+        /// <param name="subtaskId">The id of the subtask if the task is a
+        /// multi-instance task.</param>
+        /// <param name="executionInfo">Information about the execution of the
+        /// task.</param>
         public TaskInformation(TaskState taskState, string taskUrl = default(string), string jobId = default(string), string taskId = default(string), int? subtaskId = default(int?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation))
         {
             TaskUrl = taskUrl;
@@ -58,26 +55,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the URL of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "taskUrl")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskUrl")]
         public string TaskUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the job to which the task belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "jobId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobId")]
         public string JobId { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "taskId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskId")]
         public string TaskId { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the subtask if the task is a multi-instance
         /// task.
         /// </summary>
-        [JsonProperty(PropertyName = "subtaskId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subtaskId")]
         public int? SubtaskId { get; set; }
 
         /// <summary>
@@ -87,19 +84,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'active', 'preparing', 'running',
         /// 'completed'
         /// </remarks>
-        [JsonProperty(PropertyName = "taskState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskState")]
         public TaskState TaskState { get; set; }
 
         /// <summary>
         /// Gets or sets information about the execution of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "executionInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "executionInfo")]
         public TaskExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

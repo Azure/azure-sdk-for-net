@@ -67,8 +67,9 @@
             string operationVerb = method.Identifier.Text.Replace("WithHttpMessagesAsync", string.Empty);
 
             //The methods which we are examining have a return type of "IAzureOperationResponse<Foo>" -- so we are extracting the "Foo" as the return type.
-            string methodReturnTypeName = (method.ReturnType as GenericNameSyntax)?.TypeArgumentList.Arguments.Single().ToString();
-
+            TypeSyntax methodReturnSyntax = GetTaskTypeSyntax(method.ReturnType)?.TypeArgumentList.Arguments.Single();
+            string methodReturnTypeName = RemoveCommonNameSpace(methodReturnSyntax).ToString();
+            
             string optionsTypeName = method.ParameterList.Parameters.Single(parameter => parameter.Type.ToString().EndsWith("Options")).Type.ToString();
 
             //Select the parameter type based on excluding parameters which we know are not "body" types. For example we want to end up
@@ -85,6 +86,34 @@
                 parameterTypeName,
                 optionsTypeName,
                 methodReturnTypeName);
+        }
+
+        private static TypeSyntax RemoveCommonNameSpace(TypeSyntax typeSyntax)
+        {
+            var qualifiedNameSyntax = typeSyntax as QualifiedNameSyntax;
+            if(qualifiedNameSyntax != null)
+            {
+                return RemoveCommonNameSpace(qualifiedNameSyntax.Right);
+            }
+            
+            var genericNameSyntax = typeSyntax as GenericNameSyntax;
+            if (genericNameSyntax != null)
+            {
+                var  list = genericNameSyntax.TypeArgumentList.Arguments.Select(RemoveCommonNameSpace);
+                return SyntaxFactory.GenericName(genericNameSyntax.Identifier, SyntaxFactory.TypeArgumentList(SyntaxFactory.SeparatedList(list)));
+            }
+
+            return typeSyntax;
+        }
+
+        private static GenericNameSyntax GetTaskTypeSyntax(TypeSyntax typeSyntax)
+        {
+            var genericNameSyntax = typeSyntax as GenericNameSyntax;
+            if (genericNameSyntax != null)
+            {
+                return genericNameSyntax;
+            }
+            return (typeSyntax as QualifiedNameSyntax)?.Right as GenericNameSyntax;
         }
 
         private class OperationsMethodFinder : CSharpSyntaxWalker

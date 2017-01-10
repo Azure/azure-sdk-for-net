@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a ComputeNodeOperations.Remove request.
@@ -39,10 +33,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeRemoveParameter class.
         /// </summary>
-        /// <param name="nodeList">A list containing the ids of the compute nodes to be removed from the specified pool.</param>
-        /// <param name="resizeTimeout">The timeout for removal of compute nodes to the pool.</param>
-        /// <param name="nodeDeallocationOption">When compute nodes may be removed from the pool.</param>
-        public NodeRemoveParameter(IList<string> nodeList, TimeSpan? resizeTimeout = default(TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
+        /// <param name="nodeList">A list containing the ids of the compute
+        /// nodes to be removed from the specified pool.</param>
+        /// <param name="resizeTimeout">The timeout for removal of compute
+        /// nodes to the pool.</param>
+        /// <param name="nodeDeallocationOption">When compute nodes may be
+        /// removed from the pool.</param>
+        public NodeRemoveParameter(System.Collections.Generic.IList<string> nodeList, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
             NodeList = nodeList;
             ResizeTimeout = resizeTimeout;
@@ -53,8 +50,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list containing the ids of the compute nodes to be
         /// removed from the specified pool.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeList")]
-        public IList<string> NodeList { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeList")]
+        public System.Collections.Generic.IList<string> NodeList { get; set; }
 
         /// <summary>
         /// Gets or sets the timeout for removal of compute nodes to the pool.
@@ -62,8 +59,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default value is 10 minutes.
         /// </remarks>
-        [JsonProperty(PropertyName = "resizeTimeout")]
-        public TimeSpan? ResizeTimeout { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
+        public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets when compute nodes may be removed from the pool.
@@ -72,26 +69,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'requeue', 'terminate', 'taskcompletion',
         /// 'retaineddata'
         /// </remarks>
-        [JsonProperty(PropertyName = "nodeDeallocationOption")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (NodeList == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NodeList");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NodeList");
             }
             if (this.NodeList != null)
             {
                 if (this.NodeList.Count > 100)
                 {
-                    throw new ValidationException(ValidationRules.MaxItems, "NodeList", 100);
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxItems, "NodeList", 100);
                 }
             }
         }

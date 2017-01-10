@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains utilization and resource usage statistics for the lifetime of
@@ -41,11 +35,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolStatistics class.
         /// </summary>
         /// <param name="url">The URL for the statistics.</param>
-        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
-        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
-        /// <param name="usageStats">Statistics related to pool usage, such as the amount of core-time used.</param>
-        /// <param name="resourceStats">Statistics related to resource consumption by compute nodes in the pool.</param>
-        public PoolStatistics(string url, DateTime startTime, DateTime lastUpdateTime, UsageStatistics usageStats = default(UsageStatistics), ResourceStatistics resourceStats = default(ResourceStatistics))
+        /// <param name="startTime">The start time of the time range covered
+        /// by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were
+        /// last updated. All statistics are limited to the range between
+        /// startTime and lastUpdateTime.</param>
+        /// <param name="usageStats">Statistics related to pool usage, such as
+        /// the amount of core-time used.</param>
+        /// <param name="resourceStats">Statistics related to resource
+        /// consumption by compute nodes in the pool.</param>
+        public PoolStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, UsageStatistics usageStats = default(UsageStatistics), ResourceStatistics resourceStats = default(ResourceStatistics))
         {
             Url = url;
             StartTime = startTime;
@@ -57,49 +56,49 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the URL for the statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the time range covered by the
         /// statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the statistics were last updated.
         /// All statistics are limited to the range between startTime and
         /// lastUpdateTime.
         /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTime")]
-        public DateTime LastUpdateTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastUpdateTime")]
+        public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
         /// Gets or sets statistics related to pool usage, such as the amount
         /// of core-time used.
         /// </summary>
-        [JsonProperty(PropertyName = "usageStats")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "usageStats")]
         public UsageStatistics UsageStats { get; set; }
 
         /// <summary>
         /// Gets or sets statistics related to resource consumption by compute
         /// nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceStats")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceStats")]
         public ResourceStatistics ResourceStats { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Url == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
             }
             if (this.UsageStats != null)
             {

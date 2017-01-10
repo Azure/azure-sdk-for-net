@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Settings which specify how to run a multi-instance task.
@@ -42,10 +36,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the MultiInstanceSettings class.
         /// </summary>
-        /// <param name="numberOfInstances">The number of compute nodes required by the multi-instance task.</param>
-        /// <param name="coordinationCommandLine">The command to run on the compute node instances for coordinating among the subtasks.</param>
-        /// <param name="commonResourceFiles">A list of files that the Batch service will download before running the coordination command line.</param>
-        public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), IList<ResourceFile> commonResourceFiles = default(IList<ResourceFile>))
+        /// <param name="numberOfInstances">The number of compute nodes
+        /// required by the multi-instance task.</param>
+        /// <param name="coordinationCommandLine">The command to run on the
+        /// compute node instances for coordinating among the
+        /// subtasks.</param>
+        /// <param name="commonResourceFiles">A list of files that the Batch
+        /// service will download before running the coordination command
+        /// line.</param>
+        public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), System.Collections.Generic.IList<ResourceFile> commonResourceFiles = default(System.Collections.Generic.IList<ResourceFile>))
         {
             NumberOfInstances = numberOfInstances;
             CoordinationCommandLine = coordinationCommandLine;
@@ -56,14 +55,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the number of compute nodes required by the
         /// multi-instance task.
         /// </summary>
-        [JsonProperty(PropertyName = "numberOfInstances")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfInstances")]
         public int NumberOfInstances { get; set; }
 
         /// <summary>
         /// Gets or sets the command to run on the compute node instances for
         /// coordinating among the subtasks.
         /// </summary>
-        [JsonProperty(PropertyName = "coordinationCommandLine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "coordinationCommandLine")]
         public string CoordinationCommandLine { get; set; }
 
         /// <summary>
@@ -76,13 +75,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// subtasks including the primary, whereas task resource files are
         /// downloaded only for the primary.
         /// </remarks>
-        [JsonProperty(PropertyName = "commonResourceFiles")]
-        public IList<ResourceFile> CommonResourceFiles { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commonResourceFiles")]
+        public System.Collections.Generic.IList<ResourceFile> CommonResourceFiles { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

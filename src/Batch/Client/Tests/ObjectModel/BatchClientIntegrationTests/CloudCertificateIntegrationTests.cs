@@ -193,8 +193,8 @@
 
         private static List<Certificate> GenerateCertificates(BatchClient batchClient, string cerFilePath, string pfxFilePath)
         {
-            CertificateBuilder.CreateSelfSignedInFile("Foo", cerFilePath);
-            CertificateBuilder.CreateSelfSignedInFile("Foo", pfxFilePath, CommonResources.CertificatePassword);
+            CertificateBuilder.CreateSelfSignedInFile("Foo", cerFilePath, CertificateBuilder.Sha1Algorithm);
+            CertificateBuilder.CreateSelfSignedInFile("Foo", pfxFilePath, CertificateBuilder.Sha1Algorithm, password: CommonResources.CertificatePassword);
 
             Certificate cerCertificate = batchClient.CertificateOperations.CreateCertificate(cerFilePath);
             Certificate pfxCertificate = batchClient.CertificateOperations.CreateCertificate(pfxFilePath, CommonResources.CertificatePassword);

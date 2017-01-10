@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Job Preparation task to run before any tasks of the job on any given
@@ -40,15 +34,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobPreparationTask class.
         /// </summary>
-        /// <param name="commandLine">The command line of the Job Preparation task.</param>
-        /// <param name="id">A string that uniquely identifies the job preparation task within the job.</param>
-        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
-        /// <param name="environmentSettings">A list of environment variable settings for the Job Preparation task.</param>
-        /// <param name="constraints">Constraints that apply to the Job Preparation task.</param>
-        /// <param name="waitForSuccess">Whether the Batch service should wait for the Job Preparation task to complete successfully before scheduling any other tasks of the job on the compute node.</param>
-        /// <param name="runElevated">Whether to run the Job Preparation task in elevated mode. The default value is false.</param>
-        /// <param name="rerunOnNodeRebootAfterSuccess">Whether the Batch service should rerun the Job Preparation task after a compute node reboots.</param>
-        public JobPreparationTask(string commandLine, string id = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), bool? runElevated = default(bool?), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
+        /// <param name="commandLine">The command line of the Job Preparation
+        /// task.</param>
+        /// <param name="id">A string that uniquely identifies the job
+        /// preparation task within the job.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service
+        /// will download to the compute node before running the command
+        /// line.</param>
+        /// <param name="environmentSettings">A list of environment variable
+        /// settings for the Job Preparation task.</param>
+        /// <param name="constraints">Constraints that apply to the Job
+        /// Preparation task.</param>
+        /// <param name="waitForSuccess">Whether the Batch service should wait
+        /// for the Job Preparation task to complete successfully before
+        /// scheduling any other tasks of the job on the compute node.</param>
+        /// <param name="runElevated">Whether to run the Job Preparation task
+        /// in elevated mode. The default value is false.</param>
+        /// <param name="rerunOnNodeRebootAfterSuccess">Whether the Batch
+        /// service should rerun the Job Preparation task after a compute
+        /// node reboots.</param>
+        public JobPreparationTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), bool? runElevated = default(bool?), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
         {
             Id = id;
             CommandLine = commandLine;
@@ -69,7 +74,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores and cannot contain more than 64
         /// characters.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -82,27 +87,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using
         /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [JsonProperty(PropertyName = "commandLine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
         /// to the compute node before running the command line.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceFiles")]
-        public IList<ResourceFile> ResourceFiles { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
+        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
         /// Preparation task.
         /// </summary>
-        [JsonProperty(PropertyName = "environmentSettings")]
-        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets constraints that apply to the Job Preparation task.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
@@ -110,14 +115,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Preparation task to complete successfully before scheduling any
         /// other tasks of the job on the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "waitForSuccess")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the Job Preparation task in elevated
         /// mode. The default value is false.
         /// </summary>
-        [JsonProperty(PropertyName = "runElevated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
@@ -130,20 +135,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// rebooted while Job Preparation task is still running. The default
         /// value is true.
         /// </remarks>
-        [JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
         public bool? RerunOnNodeRebootAfterSuccess { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (CommandLine == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }
             if (this.ResourceFiles != null)
             {

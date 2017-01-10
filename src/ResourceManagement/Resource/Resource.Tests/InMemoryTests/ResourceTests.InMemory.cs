@@ -88,6 +88,53 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void ResourceGetByIdValidateMessage()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                  'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1',
+                  'name': 'site1',
+                  'location': 'South Central US',
+                   'properties': {
+                        'name':'site1',
+	                    'siteMode': 'Standard',
+                        'computeMode':'Dedicated',
+                        'provisioningState':'Succeeded'
+                   },
+                   'sku': {
+                        'name': 'F1',
+                        'tier': 'Free',
+                        'size': 'F1',
+                        'family': 'F',
+                        'capacity': 0
+                    }
+                }")
+            };
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            var result = client.Resources.GetById("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", "2014-01-04");
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            // Validate result
+            Assert.Equal("South Central US", result.Location);
+            Assert.Equal("site1", result.Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
+            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
+            Assert.Equal("F1", result.Sku.Name);
+            Assert.Equal("Free", result.Sku.Tier);
+            Assert.Equal("F1", result.Sku.Size);
+            Assert.Equal("F", result.Sku.Family);
+            Assert.Equal(0, result.Sku.Capacity);
+        }
+
+        [Fact]
         public void ResourceGetWorksWithoutProvisioningState()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -403,6 +450,35 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void ResourceCreateByIdForWebsiteValidatePayload()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{'location':'South Central US','tags':null,'properties':{'name':'mySite','state':'Running','hostNames':['csmr14v5efk0.antares-int.windows-int.net'],'webSpace':'csmrgqinwpwky-SouthCentralUSwebspace','selfLink':'https://antpreview1.api.admin-antares-int.windows-int.net:454/20130801/websystems/websites/web/subscriptions/abc123/webspaces/csmrgqinwpwky-SouthCentralUSwebspace/sites/csmr14v5efk0','repositorySiteName':'csmr14v5efk0','owner':null,'usageState':0,'enabled':true,'adminEnabled':true,'enabledHostNames':['csmr14v5efk0.antares-int.windows-int.net','csmr14v5efk0.scm.antares-int.windows-int.net'],'siteProperties':{'metadata':null,'properties':[],'appSettings':null},'availabilityState':0,'sslCertificates':[],'csrs':[],'cers':null,'siteMode':'Standard','hostNameSslStates':[{'name':'csmr14v5efk0.antares-int.windows-int.net','sslState':0,'ipBasedSslResult':null,'virtualIP':null,'thumbprint':null,'toUpdate':null,'toUpdateIpBasedSsl':null,'ipBasedSslState':0},{'name':'csmr14v5efk0.scm.antares-int.windows-int.net','sslState':0,'ipBasedSslResult':null,'virtualIP':null,'thumbprint':null,'toUpdate':null,'toUpdateIpBasedSsl':null,'ipBasedSslState':0}],'computeMode':1,'serverFarm':'DefaultServerFarm1','lastModifiedTimeUtc':'2014-02-21T00:49:30.477','storageRecoveryDefaultState':'Running','contentAvailabilityState':0,'runtimeAvailabilityState':0,'siteConfig':null,'deploymentId':'csmr14v5efk0','trafficManagerHostNames':[]}}")
+            };
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            var result = client.Resources.CreateOrUpdateById(
+                "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite",
+                "2014-01-04",
+                new GenericResource
+                {
+                    Location = "South Central US",
+                    Properties = @"{
+                            'name':'mySite',
+	                        'siteMode': 'Standard',
+                            'computeMode':'Dedicated'
+                        }"
+                }
+                );
+
+            // Validate result
+            Assert.Equal("South Central US", result.Location);
+        }
+
+        [Fact]
         public void ResourceGetCreateOrUpdateDeleteAndExistsThrowExceptionWithoutApiVersion()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -569,6 +645,22 @@ namespace ResourceGroups.Tests
                 identity.ResourceType,
                 identity.ResourceName,
                 identity.ResourceProviderApiVersion);
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Delete, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+        }
+
+        [Fact]
+        public void ResourceDeleteByIdValidateMessage()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            client.Resources.DeleteById("/subscriptions/12345/resourceGroups/myGroup/Microsoft.Web/sites/mySite", "2014-01-04");
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Method);

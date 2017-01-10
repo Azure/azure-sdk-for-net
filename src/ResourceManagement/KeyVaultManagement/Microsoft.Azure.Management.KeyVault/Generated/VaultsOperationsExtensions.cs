@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='top'>
             /// Maximum number of results to return.
             /// </param>
-            public static IPage<Vault> List(this IVaultsOperations operations, int? top = default(int?))
+            public static IPage<Resource> List(this IVaultsOperations operations, int? top = default(int?))
             {
                 return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListAsync(top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Vault>> ListAsync(this IVaultsOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Resource>> ListAsync(this IVaultsOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Vault> ListNext(this IVaultsOperations operations, string nextPageLink)
+            public static IPage<Resource> ListNext(this IVaultsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IVaultsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Vault>> ListNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Resource>> ListNextAsync(this IVaultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -131,7 +131,7 @@ namespace ServerManagement.Tests
             return nodes;
         }
 
-        private static async Task<NodeResource> CreateNode(ServerManagementClient client, GatewayResource gateway)
+        private static async Task<NodeResource> CreateNode(ServerManagementClient client, GatewayResource gateway, string userName, string password)
         {
             var node = await client.Node.CreateAsync(
                 ResourceGroup,
@@ -139,8 +139,8 @@ namespace ServerManagement.Tests
                 connectionName: NodeName,
                 gatewayId: gateway.Id,
                 location: Location,
-                userName: NodeUserName,
-                password: NodePassword
+                userName: userName,
+                password: password
                 );
             Assert.NotNull(node);
             return node;
@@ -153,7 +153,7 @@ namespace ServerManagement.Tests
             gateway = await client.Gateway.CreateAsync(
                 ResourceGroup,
                 GatewayName,
-                autoUpgrade: AutoUpgrade.Off,
+                upgradeMode: UpgradeMode.Automatic,
                 location: Location
                 );
             Assert.NotNull(gateway);
@@ -247,14 +247,14 @@ namespace ServerManagement.Tests
                     var gateway = await client.Gateway.CreateAsync(
                         ResourceGroup,
                         GatewayOne,
-                        autoUpgrade: AutoUpgrade.On,
+                        upgradeMode: UpgradeMode.Automatic,
                         location: Location
                         );
                     Assert.NotNull(gateway);
                     Assert.Equal(GatewayOne, gateway.Name);
                     Assert.Equal("microsoft.servermanagement/gateways", gateway.Type);
                     Assert.Equal(Location, gateway.Location);
-                    Assert.Equal(AutoUpgrade.On, gateway.AutoUpgrade);
+                    Assert.Equal(UpgradeMode.Automatic, gateway.UpgradeMode);
                     WriteLine(gateway.ToJson());
 
                     // verify that we can get the gateway again.
@@ -263,15 +263,15 @@ namespace ServerManagement.Tests
                     Assert.Equal(GatewayOne, gateway.Name);
                     Assert.Equal("microsoft.servermanagement/gateways", gateway.Type);
                     Assert.Equal(Location, gateway.Location);
-                    Assert.Equal(AutoUpgrade.On, gateway.AutoUpgrade);
+                    Assert.Equal(UpgradeMode.Automatic, gateway.UpgradeMode);
                     WriteLine(gateway.ToJson());
 
                     // update the gateway a bit.
                     gateway = await client.Gateway.UpdateAsync(ResourceGroup,
                         GatewayOne,
                         Location,
-                        autoUpgrade: AutoUpgrade.Off);
-                    Assert.Equal(AutoUpgrade.Off, gateway.AutoUpgrade);
+                        upgradeMode: UpgradeMode.Automatic);
+                    Assert.Equal(UpgradeMode.Automatic, gateway.UpgradeMode);
 
                     // get the gateway status
                     gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayOne, GatewayExpandOption.Status);
@@ -335,11 +335,15 @@ namespace ServerManagement.Tests
                 {
                     if (gateway == null)
                     {
-                        gateway = await CreateAndConfigureGateway(client, GatewayTwo);
+                        // create gateway
+                        await CreateAndConfigureGateway(client, GatewayTwo);
+
+                        // get gateway status
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Status);
                     }
 
                     WriteLine("Creating Node");
-                    var node = await CreateNode(client, gateway);
+                    var node = await CreateNode(client, gateway, string.Empty, string.Empty);
                     Assert.NotNull(node);
 
                     // get the same node again
@@ -367,7 +371,7 @@ namespace ServerManagement.Tests
                         NodePassword);
 
                     Assert.NotNull(session);
-                    Assert.Equal(NodeUserName, session.UserName);
+                    Assert.Equal(session.Name, SessionId);
 
                     // Get the same session again
                     WriteLine("Getting Session");
@@ -405,13 +409,155 @@ namespace ServerManagement.Tests
                 finally
                 {
                     // remove gateway that we've created 
-                    if (!TestingInteractively)
+                    if (ForceResetGatewayProfile)
                     {
                         RemoveGateway(client, GatewayTwo).Wait();
                     }
 
                     // regardless, always clear the nodes out.
                     RemoveAllNodes(client).Wait();
+                }
+            }
+        }
+
+        [Fact]
+        public async Task CreateSession()
+        {
+            // ensure known state before starting.
+            await EnsurePrerequisites();
+
+            using (var context = MockContext.Start("ServerManagement.Tests"))
+            {
+                var client = GetServerManagementClient(context);
+                GatewayResource gateway = null;
+
+                if (!ForceResetGatewayProfile)
+                {
+                    try
+                    {
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Status);
+
+                        // make sure the gateway service is running.
+                        StartGateway();
+                    }
+                    catch
+                    {
+                        // if it's not there, we'll create it anyway.
+                    }
+                }
+
+                try
+                {
+                    if (gateway == null)
+                    {
+                        // create gateway
+                        await CreateAndConfigureGateway(client, GatewayTwo);
+
+                        // get gateway status
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Status);
+                    }
+
+                    WriteLine("Creating Node");
+                    var node = await CreateNode(client, gateway, string.Empty, String.Empty);
+                    Assert.NotNull(node);
+
+                    // get the same node again
+                    WriteLine("Getting Node");
+                    node = await client.Node.GetAsync(ResourceGroup, NodeName);
+                    Assert.NotNull(node);
+
+                    Assert.Equal(NodeName, node.Name);
+                    Assert.Equal(NodeName, node.ConnectionName);
+
+                    // Create a session for this node.
+                    WriteLine("Creating Session");
+
+                    var username =  Utility.EncryptUsingGatewaySettings(gateway.Instances[0], NodeUserName);
+                    var password =  Utility.EncryptUsingGatewaySettings(gateway.Instances[0], NodePassword);
+
+                    var session = await client.Session.CreateAsync(ResourceGroup, node.Name, SessionIdTwo, username, password, RetentionPeriod.Session, CredentialDataFormat.RsaEncrypted);
+                    Assert.NotNull(session);
+                    Assert.Equal(session.Name, SessionIdTwo);
+
+                    // Get the same session again
+                    WriteLine("Getting Session");
+                    session = await client.Session.GetAsync(ResourceGroup, node.Name, session.Name);
+                    Assert.NotNull(session);
+                    WriteLine(string.Format("Session/Get response:{0}", session.ToJson()));
+
+                    // clean up our active SMT session.
+                    WriteLine("Delete Session");
+                    await client.Session.DeleteAsync(ResourceGroup, node.Name, session.Name);
+
+                }
+                finally
+                {
+                    // remove gateway that we've created 
+                    if (ForceResetGatewayProfile)
+                    {
+                        RemoveGateway(client, GatewayTwo).Wait();
+                    }
+
+                    // regardless, always clear the nodes out.
+                    RemoveAllNodes(client).Wait();
+                }
+            }
+        }
+
+        /// <summary>
+        /// query gateway using 'download' option; verify that the installerDownload and minimumVersion are set and valid
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task GatewayExpandOptions()
+        {
+            // ensure known state before starting.
+            await EnsurePrerequisites();
+
+            using (var context = MockContext.Start("ServerManagement.Tests"))
+            {
+                var client = GetServerManagementClient(context);
+                GatewayResource gateway = null;
+
+                if (!ForceResetGatewayProfile)
+                {
+                    try
+                    {
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Download);
+
+                        // make sure the gateway service is running.
+                        StartGateway();
+                    }
+                    catch
+                    {
+                        // if it's not there, we'll create it anyway.
+                    }
+                }
+
+                try
+                {
+                    if (gateway == null)
+                    {
+                        // create gateway
+                        await CreateAndConfigureGateway(client, GatewayTwo);
+
+                        // get gateway status
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Download);
+                    }
+
+                    Assert.NotNull(gateway);
+                    Assert.True(!string.IsNullOrEmpty(gateway.InstallerDownload));
+                    Assert.True(!string.IsNullOrEmpty(gateway.MinimumVersion));
+
+                    Assert.True(Uri.IsWellFormedUriString(gateway.InstallerDownload, UriKind.Absolute));
+                }
+                finally
+                {
+                    // remove gateway that we've created 
+                    if (ForceResetGatewayProfile)
+                    {
+                        RemoveGateway(client, GatewayTwo).Wait();
+                    }
                 }
             }
         }

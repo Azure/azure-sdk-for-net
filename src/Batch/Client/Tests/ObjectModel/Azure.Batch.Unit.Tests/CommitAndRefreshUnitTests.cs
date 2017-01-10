@@ -134,7 +134,7 @@
                 string pfxFilePath = TestCommon.GetTemporaryCertificateFilePath("unboundcertificateunittest.pfx");
                 try
                 {
-                    CertificateBuilder.CreateSelfSignedInFile("test", pfxFilePath, CommonResources.CertificatePassword);
+                    CertificateBuilder.CreateSelfSignedInFile("test", pfxFilePath, CertificateBuilder.Sha1Algorithm, password: CommonResources.CertificatePassword);
 
                     const string expectedThumbprint = "ABC";
                     var protoCertificate = new Protocol.Models.Certificate(thumbprint: expectedThumbprint);

@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ComputeNodeOperations.
@@ -52,7 +47,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeAddUserHeaders AddUser(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeUser user, ComputeNodeAddUserOptions computeNodeAddUserOptions = default(ComputeNodeAddUserOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).AddUserAsync(poolId, nodeId, user, computeNodeAddUserOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).AddUserAsync(poolId, nodeId, user, computeNodeAddUserOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -76,7 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeAddUserHeaders> AddUserAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeUser user, ComputeNodeAddUserOptions computeNodeAddUserOptions = default(ComputeNodeAddUserOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeAddUserHeaders> AddUserAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeUser user, ComputeNodeAddUserOptions computeNodeAddUserOptions = default(ComputeNodeAddUserOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.AddUserWithHttpMessagesAsync(poolId, nodeId, user, computeNodeAddUserOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -104,7 +99,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeDeleteUserHeaders DeleteUser(this IComputeNodeOperations operations, string poolId, string nodeId, string userName, ComputeNodeDeleteUserOptions computeNodeDeleteUserOptions = default(ComputeNodeDeleteUserOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).DeleteUserAsync(poolId, nodeId, userName, computeNodeDeleteUserOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).DeleteUserAsync(poolId, nodeId, userName, computeNodeDeleteUserOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,7 +123,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeDeleteUserHeaders> DeleteUserAsync(this IComputeNodeOperations operations, string poolId, string nodeId, string userName, ComputeNodeDeleteUserOptions computeNodeDeleteUserOptions = default(ComputeNodeDeleteUserOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeDeleteUserHeaders> DeleteUserAsync(this IComputeNodeOperations operations, string poolId, string nodeId, string userName, ComputeNodeDeleteUserOptions computeNodeDeleteUserOptions = default(ComputeNodeDeleteUserOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteUserWithHttpMessagesAsync(poolId, nodeId, userName, computeNodeDeleteUserOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -160,7 +155,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeUpdateUserHeaders UpdateUser(this IComputeNodeOperations operations, string poolId, string nodeId, string userName, NodeUpdateUserParameter nodeUpdateUserParameter, ComputeNodeUpdateUserOptions computeNodeUpdateUserOptions = default(ComputeNodeUpdateUserOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).UpdateUserAsync(poolId, nodeId, userName, nodeUpdateUserParameter, computeNodeUpdateUserOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).UpdateUserAsync(poolId, nodeId, userName, nodeUpdateUserParameter, computeNodeUpdateUserOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -188,7 +183,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeUpdateUserHeaders> UpdateUserAsync(this IComputeNodeOperations operations, string poolId, string nodeId, string userName, NodeUpdateUserParameter nodeUpdateUserParameter, ComputeNodeUpdateUserOptions computeNodeUpdateUserOptions = default(ComputeNodeUpdateUserOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeUpdateUserHeaders> UpdateUserAsync(this IComputeNodeOperations operations, string poolId, string nodeId, string userName, NodeUpdateUserParameter nodeUpdateUserParameter, ComputeNodeUpdateUserOptions computeNodeUpdateUserOptions = default(ComputeNodeUpdateUserOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UpdateUserWithHttpMessagesAsync(poolId, nodeId, userName, nodeUpdateUserParameter, computeNodeUpdateUserOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -213,7 +208,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNode Get(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetOptions computeNodeGetOptions = default(ComputeNodeGetOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).GetAsync(poolId, nodeId, computeNodeGetOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).GetAsync(poolId, nodeId, computeNodeGetOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -234,7 +229,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNode> GetAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetOptions computeNodeGetOptions = default(ComputeNodeGetOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNode> GetAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetOptions computeNodeGetOptions = default(ComputeNodeGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(poolId, nodeId, computeNodeGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -264,7 +259,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeRebootHeaders Reboot(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?), ComputeNodeRebootOptions computeNodeRebootOptions = default(ComputeNodeRebootOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).RebootAsync(poolId, nodeId, nodeRebootOption, computeNodeRebootOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).RebootAsync(poolId, nodeId, nodeRebootOption, computeNodeRebootOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -290,7 +285,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeRebootHeaders> RebootAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?), ComputeNodeRebootOptions computeNodeRebootOptions = default(ComputeNodeRebootOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeRebootHeaders> RebootAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?), ComputeNodeRebootOptions computeNodeRebootOptions = default(ComputeNodeRebootOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.RebootWithHttpMessagesAsync(poolId, nodeId, nodeRebootOption, computeNodeRebootOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -320,7 +315,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeReimageHeaders Reimage(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).ReimageAsync(poolId, nodeId, nodeReimageOption, computeNodeReimageOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).ReimageAsync(poolId, nodeId, nodeReimageOption, computeNodeReimageOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -346,7 +341,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeReimageHeaders> ReimageAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeReimageHeaders> ReimageAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ReimageWithHttpMessagesAsync(poolId, nodeId, nodeReimageOption, computeNodeReimageOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -376,7 +371,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeDisableSchedulingHeaders DisableScheduling(this IComputeNodeOperations operations, string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).DisableSchedulingAsync(poolId, nodeId, nodeDisableSchedulingOption, computeNodeDisableSchedulingOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).DisableSchedulingAsync(poolId, nodeId, nodeDisableSchedulingOption, computeNodeDisableSchedulingOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -402,7 +397,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeDisableSchedulingHeaders> DisableSchedulingAsync(this IComputeNodeOperations operations, string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeDisableSchedulingHeaders> DisableSchedulingAsync(this IComputeNodeOperations operations, string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DisableSchedulingWithHttpMessagesAsync(poolId, nodeId, nodeDisableSchedulingOption, computeNodeDisableSchedulingOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -427,7 +422,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeEnableSchedulingHeaders EnableScheduling(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).EnableSchedulingAsync(poolId, nodeId, computeNodeEnableSchedulingOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).EnableSchedulingAsync(poolId, nodeId, computeNodeEnableSchedulingOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -448,7 +443,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeEnableSchedulingHeaders> EnableSchedulingAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeEnableSchedulingHeaders> EnableSchedulingAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.EnableSchedulingWithHttpMessagesAsync(poolId, nodeId, computeNodeEnableSchedulingOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -473,7 +468,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ComputeNodeGetRemoteLoginSettingsResult GetRemoteLoginSettings(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).GetRemoteLoginSettingsAsync(poolId, nodeId, computeNodeGetRemoteLoginSettingsOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).GetRemoteLoginSettingsAsync(poolId, nodeId, computeNodeGetRemoteLoginSettingsOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -494,7 +489,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputeNodeGetRemoteLoginSettingsResult> GetRemoteLoginSettingsAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ComputeNodeGetRemoteLoginSettingsResult> GetRemoteLoginSettingsAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetRemoteLoginSettingsWithHttpMessagesAsync(poolId, nodeId, computeNodeGetRemoteLoginSettingsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -520,7 +515,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static System.IO.Stream GetRemoteDesktop(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).GetRemoteDesktopAsync(poolId, nodeId, computeNodeGetRemoteDesktopOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).GetRemoteDesktopAsync(poolId, nodeId, computeNodeGetRemoteDesktopOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -542,7 +537,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.IO.Stream> GetRemoteDesktopAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.IO.Stream> GetRemoteDesktopAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 var _result = await operations.GetRemoteDesktopWithHttpMessagesAsync(poolId, nodeId, computeNodeGetRemoteDesktopOptions, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
@@ -561,9 +556,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='computeNodeListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<ComputeNode> List(this IComputeNodeOperations operations, string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions))
+            public static Microsoft.Rest.Azure.IPage<ComputeNode> List(this IComputeNodeOperations operations, string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).ListAsync(poolId, computeNodeListOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).ListAsync(poolId, computeNodeListOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -581,7 +576,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ComputeNode>> ListAsync(this IComputeNodeOperations operations, string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ComputeNode>> ListAsync(this IComputeNodeOperations operations, string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(poolId, computeNodeListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -601,9 +596,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='computeNodeListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<ComputeNode> ListNext(this IComputeNodeOperations operations, string nextPageLink, ComputeNodeListNextOptions computeNodeListNextOptions = default(ComputeNodeListNextOptions))
+            public static Microsoft.Rest.Azure.IPage<ComputeNode> ListNext(this IComputeNodeOperations operations, string nextPageLink, ComputeNodeListNextOptions computeNodeListNextOptions = default(ComputeNodeListNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IComputeNodeOperations)s).ListNextAsync(nextPageLink, computeNodeListNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IComputeNodeOperations)s).ListNextAsync(nextPageLink, computeNodeListNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -621,7 +616,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ComputeNode>> ListNextAsync(this IComputeNodeOperations operations, string nextPageLink, ComputeNodeListNextOptions computeNodeListNextOptions = default(ComputeNodeListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ComputeNode>> ListNextAsync(this IComputeNodeOperations operations, string nextPageLink, ComputeNodeListNextOptions computeNodeListNextOptions = default(ComputeNodeListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, computeNodeListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

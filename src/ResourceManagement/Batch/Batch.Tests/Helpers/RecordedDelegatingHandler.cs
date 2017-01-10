@@ -108,7 +108,7 @@ namespace Batch.Tests.Helpers
             var idParts = id.Split('/');
             for (int i = 0; i < idParts.Length; i++)
             {
-                if (idParts[i].Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
+                if (idParts[i].Equals("resourceGroupName", StringComparison.OrdinalIgnoreCase))
                 {
                     return i == idParts.Length - 1 ? null : idParts[i + 1];
                 }

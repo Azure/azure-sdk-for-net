@@ -46,7 +46,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( unpadded.SequenceEqual( ED ) );
             }
 
-            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null ) )
+            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null, null ) )
             {
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( unpadded.SequenceEqual( ED ) );
             }
 
-            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null ) )
+            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null, null ) )
             {
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( unpadded.SequenceEqual( ED ) );
             }
 
-            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null ) )
+            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null, null ) )
             {
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( unpadded.SequenceEqual( ED ) );
             }
 
-            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null ) )
+            using ( var decryptor = algo.CreateDecryptor( CEK, IV, null, null ) )
             {
                 var decrypted = decryptor.TransformFinalBlock( encrypted, 0, encrypted.Length );
 

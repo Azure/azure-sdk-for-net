@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudTaskOperations.Update request.
@@ -39,7 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskUpdateParameter class.
         /// </summary>
-        /// <param name="constraints">Constraints that apply to this task.</param>
+        /// <param name="constraints">Constraints that apply to this
+        /// task.</param>
         public TaskUpdateParameter(TaskConstraints constraints = default(TaskConstraints))
         {
             Constraints = constraints;
@@ -51,7 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the task is given the default constraints.
         /// </remarks>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
     }

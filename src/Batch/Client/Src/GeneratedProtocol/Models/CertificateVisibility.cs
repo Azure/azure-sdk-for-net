@@ -18,23 +18,20 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateVisibility.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CertificateVisibility
     {
-        [EnumMember(Value = "starttask")]
+        [System.Runtime.Serialization.EnumMember(Value = "starttask")]
         Starttask,
-        [EnumMember(Value = "task")]
+        [System.Runtime.Serialization.EnumMember(Value = "task")]
         Task,
-        [EnumMember(Value = "remoteuser")]
+        [System.Runtime.Serialization.EnumMember(Value = "remoteuser")]
         Remoteuser,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

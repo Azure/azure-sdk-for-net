@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Search.Serialization
     using System;
     using System.Linq;
     using System.Reflection;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Spatial;
+    using Models;
+    using Spatial;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Search.Serialization
                     }
                     else
                     {
-                        value = array.Select(t => t.Value<string>()).ToArray();
+                        value = ConvertArray(array, serializer);
                     }
                 }
                 else if (field.Value is JObject)
@@ -91,6 +91,15 @@ namespace Microsoft.Azure.Search.Serialization
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
+        }
+
+        private static object[] ConvertArray(JArray array, JsonSerializer serializer)
+        {
+            // There are two cases to consider: Either everything is a string, or it's not. If not, don't attempt
+            // any conversions and return everything in an object array.
+            return array.All(t => t.Type == JTokenType.String || t.Type == JTokenType.Null) ? 
+                array.Select(t => t.Value<string>()).ToArray() : 
+                array.Select(t => t.ToObject(typeof(object), serializer)).ToArray();
         }
     }
 }

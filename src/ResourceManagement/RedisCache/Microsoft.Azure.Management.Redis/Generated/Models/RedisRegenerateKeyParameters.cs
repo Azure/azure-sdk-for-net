@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies which redis access keys to reset.
@@ -31,6 +25,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the RedisRegenerateKeyParameters
         /// class.
         /// </summary>
+        /// <param name="keyType">Which redis access key to reset. Possible
+        /// values include: 'Primary', 'Secondary'</param>
         public RedisRegenerateKeyParameters(RedisKeyType keyType)
         {
             KeyType = keyType;
@@ -40,12 +36,15 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Gets or sets which redis access key to reset. Possible values
         /// include: 'Primary', 'Secondary'
         /// </summary>
-        [JsonProperty(PropertyName = "keyType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyType")]
         public RedisKeyType KeyType { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
         }

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An Azure Batch job to add.
@@ -39,20 +33,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobAddParameter class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the job within the account.</param>
-        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
+        /// <param name="id">A string that uniquely identifies the job within
+        /// the account.</param>
+        /// <param name="poolInfo">The pool on which the Batch service runs
+        /// the job's tasks.</param>
         /// <param name="displayName">The display name for the job.</param>
         /// <param name="priority">The priority of the job.</param>
-        /// <param name="constraints">The execution constraints for the job.</param>
-        /// <param name="jobManagerTask">Details of a Job Manager task to be launched when the job is started.</param>
+        /// <param name="constraints">The execution constraints for the
+        /// job.</param>
+        /// <param name="jobManagerTask">Details of a Job Manager task to be
+        /// launched when the job is started.</param>
         /// <param name="jobPreparationTask">The Job Preparation task.</param>
         /// <param name="jobReleaseTask">The Job Release task.</param>
-        /// <param name="commonEnvironmentSettings">The list of common environment variable settings. These environment variables are set for all tasks in the job (including the Job Manager, Job Preparation and Job Release tasks).</param>
-        /// <param name="onAllTasksComplete">The action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
-        /// <param name="onTaskFailure">The action the Batch service should take when any task in the job fails. A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error. Possible values include: 'noAction', 'performExitOptionsJobAction'</param>
-        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
-        /// <param name="usesTaskDependencies">The flag that determines if this job will use tasks with dependencies.</param>
-        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
+        /// <param name="commonEnvironmentSettings">The list of common
+        /// environment variable settings. These environment variables are
+        /// set for all tasks in the job (including the Job Manager, Job
+        /// Preparation and Job Release tasks).</param>
+        /// <param name="onAllTasksComplete">The action the Batch service
+        /// should take when all tasks in the job are in the completed state.
+        /// Possible values include: 'noAction', 'terminateJob'</param>
+        /// <param name="onTaskFailure">The action the Batch service should
+        /// take when any task in the job fails. A task is considered to have
+        /// failed if it completes with a non-zero exit code and has
+        /// exhausted its retry count, or if it had a scheduling error.
+        /// Possible values include: 'noAction',
+        /// 'performExitOptionsJobAction'</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the job as metadata.</param>
+        /// <param name="usesTaskDependencies">The flag that determines if
+        /// this job will use tasks with dependencies.</param>
+        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), System.Collections.Generic.IList<EnvironmentSetting> commonEnvironmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
         {
             Id = id;
             DisplayName = displayName;
@@ -78,13 +88,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the job.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -95,32 +105,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the lowest priority and 1000 being the highest priority. The
         /// default value is 0.
         /// </remarks>
-        [JsonProperty(PropertyName = "priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for the job.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets details of a Job Manager task to be launched when the
         /// job is started.
         /// </summary>
-        [JsonProperty(PropertyName = "jobManagerTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobManagerTask")]
         public JobManagerTask JobManagerTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Preparation task.
         /// </summary>
-        [JsonProperty(PropertyName = "jobPreparationTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobPreparationTask")]
         public JobPreparationTask JobPreparationTask { get; set; }
 
         /// <summary>
         /// Gets or sets the Job Release task.
         /// </summary>
-        [JsonProperty(PropertyName = "jobReleaseTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobReleaseTask")]
         public JobReleaseTask JobReleaseTask { get; set; }
 
         /// <summary>
@@ -129,14 +139,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// (including the Job Manager, Job Preparation and Job Release
         /// tasks).
         /// </summary>
-        [JsonProperty(PropertyName = "commonEnvironmentSettings")]
-        public IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commonEnvironmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> CommonEnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the pool on which the Batch service runs the job's
         /// tasks.
         /// </summary>
-        [JsonProperty(PropertyName = "poolInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
@@ -144,7 +154,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// tasks in the job are in the completed state. Possible values
         /// include: 'noAction', 'terminateJob'
         /// </summary>
-        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
@@ -154,38 +164,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// count, or if it had a scheduling error. Possible values include:
         /// 'noAction', 'performExitOptionsJobAction'
         /// </summary>
-        [JsonProperty(PropertyName = "onTaskFailure")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job as
         /// metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets the flag that determines if this job will use tasks
         /// with dependencies.
         /// </summary>
-        [JsonProperty(PropertyName = "usesTaskDependencies")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
             if (PoolInfo == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolInfo");
             }
             if (this.JobManagerTask != null)
             {

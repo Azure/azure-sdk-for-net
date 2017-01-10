@@ -18,19 +18,16 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OnTaskFailure.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum OnTaskFailure
     {
-        [EnumMember(Value = "noAction")]
+        [System.Runtime.Serialization.EnumMember(Value = "noAction")]
         NoAction,
-        [EnumMember(Value = "performExitOptionsJobAction")]
+        [System.Runtime.Serialization.EnumMember(Value = "performExitOptionsJobAction")]
         PerformExitOptionsJobAction
     }
 }

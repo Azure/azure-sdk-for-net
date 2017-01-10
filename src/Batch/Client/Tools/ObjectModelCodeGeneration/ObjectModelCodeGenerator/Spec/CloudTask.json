@@ -1,0 +1,301 @@
+    {
+      "Name": "CloudTask",
+      "ProtocolName": "Models.CloudTask",
+      "TransportProtocolName": "Models.TaskAddParameter",
+      "Comment": "An Azure Batch task. A task is a piece of work that is associated with a job and runs on a compute node.",
+      "ParentPathVariables": [ "parentJobId" ],
+      "CustomIncludes": [ "FileStaging" ],
+      "IsTopLevelObject": true,
+      "IsConstructorPublic": false,
+      "HideCustomConstructor": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "AffinityInformation",
+            "Name": "AffinityInformation",
+            "SummaryComment": "A locality hint that can be used by the Batch service to select a node on which to start the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.AffinityInformation",
+            "Name": "AffinityInfo"
+          }
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CommandLine",
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "ComputeNodeInformation",
+            "Name": "ComputeNodeInformation",
+            "SummaryComment": "Information about the compute node on which the task ran.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.NodeInformation",
+            "Name": "NodeInfo"
+          }
+        },
+        {
+          "Key": {
+            "Type": "MultiInstanceSettings",
+            "Name": "MultiInstanceSettings",
+            "SummaryComment": "Information about how to run the multi-instance task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "DateTime?",
+            "Name": "CreationTime",
+            "SummaryComment": "The creation time of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskDependencies",
+            "Name": "DependsOn",
+            "SummaryComment": "Any other tasks that this <see cref=\"CloudTask\"/> depends on. The task will not be scheduled until all depended-on tasks have completed successfully.",
+            "RemarksComment": "The job must set <see cref=\"CloudJob.UsesTaskDependencies\"/> to true in order to use task dependencies. If UsesTaskDependencies is false (the default), adding a task with dependencies will fail with an error.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "DisplayName",
+            "SummaryComment": "The display name of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "ExitConditions",
+            "Name": "ExitConditions",
+            "SummaryComment": "How the Batch service should respond when the task completes.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+           },
+           "Value": {
+              "Type": "Models.ExitConditions",
+              "Name": "ExitConditions",
+            }
+         },
+         {
+          "Key": {
+            "Type": "IList<EnvironmentSetting>",
+            "Name": "EnvironmentSettings",
+            "SummaryComment": "A list of environment variable settings for the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "ETag",
+            "SummaryComment": "The ETag for the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<IFileStagingProvider>",
+            "Name": "FilesToStage",
+            "SummaryComment": "A list of files to be staged for the task.",
+            "RemarksComment": null,
+            "BoundAccess": "none",
+            "UnboundAccess": "read,write",
+            "IsClientOnly": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskExecutionInformation",
+            "Name": "ExecutionInformation",
+            "SummaryComment": "The execution information for the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskExecutionInformation",
+            "Name": "ExecutionInfo"
+          }
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Id",
+            "SummaryComment": "The id of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "DateTime?",
+            "Name": "LastModified",
+            "SummaryComment": "The last modified time of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.TaskState?",
+            "Name": "PreviousState",
+            "SummaryComment": "The previous state of the task.",
+            "RemarksComment": "If the task is in its initial <see cref=\"Common.TaskState.Active\"/> state, the PreviousState property is not defined.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskState?",
+            "Name": "PreviousState"
+          }
+        },
+        {
+          "Key": {
+            "Type": "DateTime?",
+            "Name": "PreviousStateTransitionTime",
+            "SummaryComment": "The time at which the task entered its previous state.",
+            "RemarksComment": "If the task is in its initial <see cref=\"Common.TaskState.Active\"/> state, the PreviousStateTransitionTime property is not defined.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ResourceFile>",
+            "Name": "ResourceFiles",
+            "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RunElevated",
+            "SummaryComment": "Whether to run the task in elevated mode.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.TaskState?",
+            "Name": "State",
+            "SummaryComment": "The current state of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskState?",
+            "Name": "State"
+          }
+        },
+        {
+          "Key": {
+            "Type": "DateTime?",
+            "Name": "StateTransitionTime",
+            "SummaryComment": "The time at which the task entered its current state.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskStatistics",
+            "Name": "Statistics",
+            "SummaryComment": "Resource usage statistics for the task.",
+            "RemarksComment": "This property is populated only if the <see cref=\"CloudTask\"/> was retrieved with an <see cref=\"ODATADetailLevel.ExpandClause\"/> including the 'stats' attribute; otherwise it is null.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskStatistics",
+            "Name": "Stats"
+          }
+        },
+        {
+          "Key": {
+            "Type": "TaskConstraints",
+            "Name": "Constraints",
+            "SummaryComment": "The execution constraints that apply to this task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Url",
+            "SummaryComment": "The URL of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+            "SummaryComment": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ApplicationPackageReference>",
+            "Name": "ApplicationPackageReferences",
+          },
+        },
+      ]
+    }
