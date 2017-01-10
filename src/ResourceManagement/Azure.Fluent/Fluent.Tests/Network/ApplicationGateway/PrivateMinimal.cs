@@ -30,9 +30,9 @@ namespace Azure.Tests.Network.ApplicationGateway
         {
 
             // Create an app gateway
-            resources.Define(ApplicationGatewayHelper.APP_GATEWAY_NAME)
-                .WithRegion(ApplicationGatewayHelper.REGION)
-                .WithNewResourceGroup(ApplicationGatewayHelper.GROUP_NAME)
+            resources.Define(ApplicationGatewayHelper.AppGatewayName)
+                .WithRegion(ApplicationGatewayHelper.Region)
+                .WithNewResourceGroup(ApplicationGatewayHelper.GroupName)
 
                 // Request routing rule
                 .DefineRequestRoutingRule("rule1")

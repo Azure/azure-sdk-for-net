@@ -15,34 +15,30 @@ namespace Azure.Tests.Common
 {
     public static class ApplicationGatewayHelper
     {
-        public static readonly string ID_TEMPLATE = "/subscriptions/${subId}/resourceGroups/${rgName}/providers/Microsoft.Network/applicationGateways/${resourceName}";
-        public static readonly Region REGION = Region.US_WEST;
-        public static readonly long TEST_ID = DateTime.Now.Millisecond;
-        public static readonly string GROUP_NAME = "rg" + TEST_ID;
-        public static readonly string APP_GATEWAY_NAME = "ag" + TEST_ID;
-        public static readonly string[] PIP_NAMES = { "pipa" + TEST_ID, "pipb" + TEST_ID };
-        public static readonly string[] VM_IDS = {
-                "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest1",
-                "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest3"
-        };
+        public static readonly string IdTemplate = "/subscriptions/${subId}/resourceGroups/${rgName}/providers/Microsoft.Network/applicationGateways/${resourceName}";
+        public static readonly Region Region = Region.US_WEST;
+        public static readonly long TestId = DateTime.Now.Millisecond;
+        public static readonly string GroupName = "rg" + TestId;
+        public static readonly string AppGatewayName = "ag" + TestId;
+        public static readonly string[] PipNames = { "pipa" + TestId, "pipb" + TestId };
 
         public static string CreateResourceId(string subscriptionId)
         {
-            return ID_TEMPLATE
+            return IdTemplate
                     .Replace("${subId}", subscriptionId)
-                    .Replace("${rgName}", GROUP_NAME)
-                    .Replace("${resourceName}", APP_GATEWAY_NAME);
+                    .Replace("${rgName}", GroupName)
+                    .Replace("${resourceName}", AppGatewayName);
         }
 
         // Create VNet for the LB
         public static IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i<PIP_NAMES.Length; i++)
+            for (int i = 0; i<PipNames.Length; i++)
             {
-                creatablePips.Add(pips.Define(PIP_NAMES[i])
-                                  .WithRegion(REGION)
-                                  .WithNewResourceGroup(GROUP_NAME));
+                creatablePips.Add(pips.Define(PipNames[i])
+                                  .WithRegion(Region)
+                                  .WithNewResourceGroup(GroupName));
             }
 
             return pips.Create(creatablePips.ToArray());
@@ -57,8 +53,8 @@ namespace Azure.Tests.Common
             var createdVMs = new List<IVirtualMachine>();
             INetwork network = null;
             Region region = Region.US_WEST;
-            string userName = "testuser" + TEST_ID;
-            string availabilitySetName = "as" + TEST_ID;
+            string userName = "testuser" + TestId;
+            string availabilitySetName = "as" + TestId;
 
             foreach (var vmId in vmIds)
             {
@@ -70,13 +66,13 @@ namespace Azure.Tests.Common
                 {
                     // Creating a new VM
                     vm = null;
-                    groupName = "rg" + TEST_ID;
-                    vmName = "vm" + TEST_ID;
+                    groupName = "rg" + TestId;
+                    vmName = "vm" + TestId;
 
                     if (network == null)
                     {
                         // Create a VNet for the VM
-                        network = networks.Define("net" + TEST_ID)
+                        network = networks.Define("net" + TestId)
                             .WithRegion(region)
                             .WithNewResourceGroup(groupName)
                             .WithAddressSpace("10.0.0.0/28")
