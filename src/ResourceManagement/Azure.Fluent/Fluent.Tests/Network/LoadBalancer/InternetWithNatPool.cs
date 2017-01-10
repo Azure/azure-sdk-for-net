@@ -20,15 +20,19 @@ namespace Azure.Tests.Network.LoadBalancer
     {
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
+        private IAvailabilitySets availabilitySets;
         private INetworks networks;
 
         public InternetWithNatPool(
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
-                INetworks networks)
+                INetworks networks,
+                IAvailabilitySets availabilitySets
+                )
         {
             this.pips = pips;
             this.vms = vms;
+            this.availabilitySets = availabilitySets;
             this.networks = networks;
         }
 
@@ -39,58 +43,58 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
+            var existingVMs = LoadBalancerHelper.EnsureVMs(networks, vms, availabilitySets, 2);
             var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer
             var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+                .WithRegion(LoadBalancerHelper.REGION)
+                .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
 
-                        // Frontends
-                        .WithExistingPublicIpAddress(existingPips.ElementAt(0))
-                        .DefinePublicFrontend("frontend1")
-                            .WithExistingPublicIpAddress(existingPips.ElementAt(1))
-                            .Attach()
+                // Frontends
+                .WithExistingPublicIpAddress(existingPips.ElementAt(0))
+                .DefinePublicFrontend("frontend1")
+                .WithExistingPublicIpAddress(existingPips.ElementAt(1))
+                .Attach()
 
-                        // Backends
-                        .WithExistingVirtualMachines(existingVMs.ToArray())
-                        .DefineBackend("backend1")
-                            .Attach()
+                // Backends
+                .WithExistingVirtualMachines(existingVMs.ToArray())
+                .DefineBackend("backend1")
+                .Attach()
 
-                        // Probes
-                        .DefineTcpProbe("tcpProbe1")
-                            .WithPort(25)               // Required
-                            .WithIntervalInSeconds(15)  // Optionals
-                            .WithNumberOfProbes(5)
-                            .Attach()
-                        .DefineHttpProbe("httpProbe1")
-                            .WithRequestPath("/")       // Required
-                            .WithIntervalInSeconds(13)  // Optionals
-                            .WithNumberOfProbes(4)
-                            .Attach()
+                // Probes
+                .DefineTcpProbe("tcpProbe1")
+                    .WithPort(25)               // Required
+                    .WithIntervalInSeconds(15)  // Optionals
+                    .WithNumberOfProbes(5)
+                    .Attach()
+                .DefineHttpProbe("httpProbe1")
+                    .WithRequestPath("/")       // Required
+                    .WithIntervalInSeconds(13)  // Optionals
+                    .WithNumberOfProbes(4)
+                    .Attach()
 
-                        // Load balancing rules
-                        .DefineLoadBalancingRule("rule1")
-                            .WithProtocol(TransportProtocol.Tcp)    // Required
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(81)
-                            .WithProbe("tcpProbe1")
-                            .WithBackend("backend1")
-                            .WithBackendPort(82)                    // Optionals
-                            .WithIdleTimeoutInMinutes(10)
-                            .WithLoadDistribution(LoadDistribution.SourceIP)
-                            .Attach()
+                // Load balancing rules
+                .DefineLoadBalancingRule("rule1")
+                    .WithProtocol(TransportProtocol.Tcp)    // Required
+                    .WithFrontend("frontend1")
+                    .WithFrontendPort(81)
+                    .WithProbe("tcpProbe1")
+                    .WithBackend("backend1")
+                    .WithBackendPort(82)                    // Optionals
+                    .WithIdleTimeoutInMinutes(10)
+                    .WithLoadDistribution(LoadDistribution.SourceIP)
+                    .Attach()
 
-                        // Inbound NAT pools
-                        .DefineInboundNatPool("natpool1")
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend("frontend1")
-                            .WithFrontendPortRange(2000, 2001)
-                            .WithBackendPort(8080)
-                            .Attach()
+                // Inbound NAT pools
+                .DefineInboundNatPool("natpool1")
+                    .WithProtocol(TransportProtocol.Tcp)
+                    .WithFrontend("frontend1")
+                    .WithFrontendPortRange(2000, 2001)
+                    .WithBackendPort(8080)
+                    .Attach()
 
-                        .Create();
+                .Create();
 
             // Verify frontends
             Assert.True(lb.Frontends.ContainsKey("frontend1"));
@@ -140,6 +144,18 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithTag("tag2", "value2")
                         .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+
+            // Verify frontends
+            Assert.False(resource.Frontends.ContainsKey("default"));
+
+            // Verify backends
+            Assert.False(resource.Backends.ContainsKey("default"));
+
+            // Verify rules
+            Assert.False(resource.LoadBalancingRules.ContainsKey("rule1"));
+
+            // Verify NAT pools
+            Assert.False(resource.InboundNatPools.ContainsKey("natpool1"));
 
             return resource;
         }

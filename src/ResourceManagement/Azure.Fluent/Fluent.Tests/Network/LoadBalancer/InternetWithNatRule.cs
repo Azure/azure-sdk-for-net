@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -18,15 +19,18 @@ namespace Azure.Tests.Network.LoadBalancer
     {
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
+        private IAvailabilitySets availabilitySets;
         private INetworks networks;
 
         public InternetWithNatRule(
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
-                INetworks networks)
+                INetworks networks,
+                IAvailabilitySets availabilitySets)
         {
             this.pips = pips;
             this.vms = vms;
+            this.availabilitySets = availabilitySets;
             this.networks = networks;
         }
 
@@ -37,8 +41,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
-            Assert.Equal(2, existingVMs.Count());
+            var existingVMs = LoadBalancerHelper.EnsureVMs(networks, vms, availabilitySets, 2);
             var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
@@ -148,10 +151,13 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
-            Assert.Equal(2, existingVMs.Count());
-            var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
-            var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
+            var nics = new List<INetworkInterface>();
+            foreach (string nicId in resource.Backends["backend1"].BackendNicIpConfigurationNames.Keys)
+            {
+                nics.Add(networks.Manager.NetworkInterfaces.GetById(nicId));
+            }
+            INetworkInterface nic1 = nics[0];
+            INetworkInterface nic2 = nics[1];
 
             // Remove the NIC associations
             nic1.Update()
@@ -180,6 +186,13 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithTag("tag2", "value2")
                         .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+            Assert.Equal(0, resource.InboundNatRules.Count);
+
+            // Verify frontends
+            var frontend = resource.Frontends["frontend1"];
+            Assert.True(frontend.IsPublic);
+            var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
+            Assert.True(existingPips.ElementAt(1).Id.Equals(publicFrontend.PublicIpAddressId, StringComparison.OrdinalIgnoreCase));
 
             return resource;
         }
