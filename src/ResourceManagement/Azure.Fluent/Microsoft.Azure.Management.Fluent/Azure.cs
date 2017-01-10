@@ -16,6 +16,7 @@ using Microsoft.Azure.Management.Storage.Fluent;
 using System.Linq;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent;
+using System;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -354,8 +355,8 @@ namespace Microsoft.Azure.Management.Fluent
                             .WithCredentials(restClient.Credentials).Build());
                     var subscription = resourceManager.Subscriptions.List()
                         .FirstOrDefault(s =>
-                            s.State.Equals("Enabled", System.StringComparison.OrdinalIgnoreCase) ||
-                            s.State.Equals("Warned", System.StringComparison.OrdinalIgnoreCase));
+                            StringComparer.OrdinalIgnoreCase.Equals(s.State, "Enabled") ||
+                            StringComparer.OrdinalIgnoreCase.Equals(s.State, "Warned"));
 
                     return WithSubscription(subscription?.SubscriptionId);
                 }
