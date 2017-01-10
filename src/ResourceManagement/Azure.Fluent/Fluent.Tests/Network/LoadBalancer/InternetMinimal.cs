@@ -44,9 +44,9 @@ namespace Azure.Tests.Network.LoadBalancer
             var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(LoadBalancerHelper.LoadBalancerName)
+                        .WithRegion(LoadBalancerHelper.Region)
+                        .WithExistingResourceGroup(LoadBalancerHelper.GroupName)
                         // Frontend (default)
                         .WithExistingPublicIpAddress(existingPips.ElementAt(0))
                         // Backend (default)

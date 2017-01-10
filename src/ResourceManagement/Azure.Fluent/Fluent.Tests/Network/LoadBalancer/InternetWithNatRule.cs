@@ -47,9 +47,9 @@ namespace Azure.Tests.Network.LoadBalancer
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(LoadBalancerHelper.LoadBalancerName)
+                        .WithRegion(LoadBalancerHelper.Region)
+                        .WithExistingResourceGroup(LoadBalancerHelper.GroupName)
 
                         // Frontends
                         .DefinePublicFrontend("frontend1")
