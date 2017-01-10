@@ -96,7 +96,8 @@ namespace Azure.Tests
             new Network.LoadBalancer.InternetWithNatRule(
                     azure.PublicIpAddresses,
                     azure.VirtualMachines,
-                    azure.Networks)
+                    azure.Networks,
+                    azure.AvailabilitySets)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
         }
 
@@ -106,7 +107,8 @@ namespace Azure.Tests
             new Network.LoadBalancer.InternetWithNatPool(
                     azure.PublicIpAddresses,
                     azure.VirtualMachines,
-                    azure.Networks)
+                    azure.Networks,
+                    azure.AvailabilitySets)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
         }
 
@@ -116,7 +118,8 @@ namespace Azure.Tests
             new Network.LoadBalancer.InternetMinimal(
                     azure.PublicIpAddresses,
                     azure.VirtualMachines,
-                    azure.Networks)
+                    azure.Networks,
+                    azure.AvailabilitySets)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
         }
 
@@ -125,7 +128,8 @@ namespace Azure.Tests
         {
             new Network.LoadBalancer.InternalMinimal(
                     azure.VirtualMachines,
-                    azure.Networks)
+                    azure.Networks,
+                    azure.AvailabilitySets)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
         }
     }
