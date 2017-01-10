@@ -36,7 +36,7 @@
     "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta4.1, 2.0)",
     "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta4.1, 2.0)",
     "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta4.1, 2.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.0-preview",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
     "SSH.NET": "2016.0.0"
   }
 }
