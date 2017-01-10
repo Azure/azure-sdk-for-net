@@ -193,7 +193,7 @@ namespace Fluent.Tests.Compute
             }
         }
 
-        [Fact(Skip = "Failing at 240, with error no suitable authentication method found.")]
+        [Fact]
         public void CanCreateVirtualMachineWithCustomData()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -231,10 +231,15 @@ namespace Fluent.Tests.Compute
 
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
-                    ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
-                    new AuthenticationMethod[] {
-                        new PasswordAuthenticationMethod(username, password)
-                    });
+                    ConnectionInfo connectionInfo = new ConnectionInfo(
+                        publicIpAddress.Fqdn, 
+                        22, 
+                        username,
+                        new AuthenticationMethod[] 
+                        {
+                            new PasswordAuthenticationMethod(username, password)
+                        });
+
                     using (var sshClient = new SshClient(connectionInfo))
                     {
                         sshClient.Connect();
