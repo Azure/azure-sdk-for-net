@@ -6,7 +6,7 @@ rootdir="$( cd "$base" && pwd )"
   
 dotnet restore
 
-cd $rootdir/src/ResourceManagement/Azure.Fluent
+cd $rootdir/src/ResourceManagement/Azure.Fluent/Fluent.Tests
 dotnet restore
 dotnet build --framework netcoreapp1.0
 dotnet test
