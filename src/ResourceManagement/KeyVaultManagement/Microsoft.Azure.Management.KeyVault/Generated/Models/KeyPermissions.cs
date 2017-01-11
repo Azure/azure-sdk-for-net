@@ -17,6 +17,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// </summary>
     public static class KeyPermissions
     {
+        /// <remarks>
+        /// All permission will be deprecated in a later release.
+        /// </remarks>
         public const string All = "all";
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
@@ -32,5 +35,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public const string Delete = "delete";
         public const string Backup = "backup";
         public const string Restore = "restore";
+        public const string Recover = "recover";
+        public const string Purge = "purge";
     }
 }
