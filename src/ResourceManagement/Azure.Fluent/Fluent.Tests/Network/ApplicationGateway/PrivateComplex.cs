@@ -68,7 +68,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .DefineRequestRoutingRule("rule443")
                         .FromPrivateFrontend()
                         .FromFrontendHttpsPort(443)
-                        .WithSslCertificateFromPfxFile(new FileInfo(@"Assets\myTest._pfx"))
+                        .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets","myTest._pfx")))
                         .WithSslCertificatePassword("Abc123")
                         .ToBackendHttpConfiguration("config1")
                         .ToBackend("backend1")
@@ -104,7 +104,7 @@ namespace Azure.Tests.Network.ApplicationGateway
 
                     // Additional/explicit certificates
                     .DefineSslCertificate("cert1")
-                        .WithPfxFromFile(new FileInfo(@"Assets\myTest2._pfx"))
+                        .WithPfxFromFile(new FileInfo(Path.Combine("Assets","myTest2._pfx")))
                         .WithPfxPassword("Abc123")
                         .Attach()
 

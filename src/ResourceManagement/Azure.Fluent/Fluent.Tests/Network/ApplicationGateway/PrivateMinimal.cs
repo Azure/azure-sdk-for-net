@@ -108,7 +108,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .WithPrivateFrontend()
                     .WithFrontendPort(81)
                     .WithHttps()
-                    .WithSslCertificateFromPfxFile(new FileInfo(@"Assets\myTest._pfx"))
+                    .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets", "myTest._pfx")))
                     .WithSslCertificatePassword("Abc123")
                     .Attach()
                 .DefineBackend("backend2")
