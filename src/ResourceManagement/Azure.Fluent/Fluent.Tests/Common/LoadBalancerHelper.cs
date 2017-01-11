@@ -17,22 +17,22 @@ namespace Azure.Tests.Common
 {
     public static class LoadBalancerHelper
     {
-        public static readonly long TEST_ID = DateTime.Now.Millisecond;
-        public static readonly Region REGION = Region.US_WEST;
-        public static readonly string GROUP_NAME = "rg" + TEST_ID;
-        public static readonly string LB_NAME = "lb" + TEST_ID;
-        public static readonly string[] PIP_NAMES = { "pipa" + TEST_ID, "pipb" + TEST_ID };
+        public static readonly long TestId = DateTime.Now.Millisecond;
+        public static readonly Region Region = Region.US_WEST;
+        public static readonly string GroupName = "rg" + TestId;
+        public static readonly string LoadBalancerName = "lb" + TestId;
+        public static readonly string[] PipNames = { "pipa" + TestId, "pipb" + TestId };
 
         // Create VNet for the LB
         public static IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i<PIP_NAMES.Length; i++)
+            for (int i = 0; i<PipNames.Length; i++)
             {
-                creatablePips.Add(pips.Define(PIP_NAMES[i])
-                                  .WithRegion(REGION)
-                                  .WithNewResourceGroup(GROUP_NAME)
-                                  .WithLeafDomainLabel(PIP_NAMES[i]));
+                creatablePips.Add(pips.Define(PipNames[i])
+                                  .WithRegion(Region)
+                                  .WithNewResourceGroup(GroupName)
+                                  .WithLeafDomainLabel(PipNames[i]));
             }
 
             return pips.Create(creatablePips.ToArray());
@@ -46,21 +46,21 @@ namespace Azure.Tests.Common
             int count)
         {
             // Create a network for the VMs
-            INetwork network = networks.Define("net" + TEST_ID)
-                .WithRegion(REGION)
-                .WithNewResourceGroup(GROUP_NAME)
+            INetwork network = networks.Define("net" + TestId)
+                .WithRegion(Region)
+                .WithNewResourceGroup(GroupName)
                 .WithAddressSpace("10.0.0.0/28")
                 .WithSubnet("subnet1", "10.0.0.0/29")
                 .WithSubnet("subnet2", "10.0.0.8/29")
                 .Create();
 
             // Define an availability set for the VMs
-            var availabilitySetDefinition = availabilitySets.Define("as" + TEST_ID)
-                .WithRegion(REGION)
-                .WithExistingResourceGroup(GROUP_NAME);
+            var availabilitySetDefinition = availabilitySets.Define("as" + TestId)
+                .WithRegion(Region)
+                .WithExistingResourceGroup(GroupName);
 
             // Create the requested number of VM definitions
-            string userName = "testuser" + TEST_ID;
+            string userName = "testuser" + TestId;
             List<ICreatable<IVirtualMachine>> vmDefinitions = new List<ICreatable<IVirtualMachine>>();
 
             for (int i = 0; i < count; i++)
@@ -68,8 +68,8 @@ namespace Azure.Tests.Common
                 string vmName = ResourceNamer.RandomResourceName("vm", 15);
 
                 var vm = vms.Define(vmName)
-                    .WithRegion(REGION)
-                    .WithExistingResourceGroup(GROUP_NAME)
+                    .WithRegion(Region)
+                    .WithExistingResourceGroup(GroupName)
                     .WithExistingPrimaryNetwork(network)
                     .WithSubnet(network.Subnets.Values.First().Name)
                     .WithPrimaryPrivateIpAddressDynamic()

@@ -44,9 +44,9 @@ namespace Azure.Tests.Network.LoadBalancer
             network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LB_NAME)
-                        .WithRegion(LoadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(LoadBalancerHelper.LoadBalancerName)
+                        .WithRegion(LoadBalancerHelper.Region)
+                        .WithExistingResourceGroup(LoadBalancerHelper.GroupName)
                         // Frontend (default)
                         .WithFrontendSubnet(network, "subnet1")
                         // Backend (default)

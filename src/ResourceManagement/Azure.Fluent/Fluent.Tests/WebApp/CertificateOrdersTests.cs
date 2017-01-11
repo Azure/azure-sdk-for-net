@@ -9,8 +9,8 @@ namespace Azure.Tests.WebApp
 {
     public class CertificateOrdersTests
     {
-        private static string RG_NAME = "javacsmrg9b9912262";
-        private static string CERTIFICATE_NAME = "graphdmcert7720";
+        private static string GroupName = "javacsmrg9b9912262";
+        private static string CertificateName = "graphdmcert7720";
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDCertificateOrder()
@@ -19,8 +19,8 @@ namespace Azure.Tests.WebApp
 
             // CREATE
             var certificateOrder = appServiceManager.AppServiceCertificateOrders
-                .Define(CERTIFICATE_NAME)
-                .WithExistingResourceGroup(RG_NAME)
+                .Define(CertificateName)
+                .WithExistingResourceGroup(GroupName)
                 .WithHostName("graph-dm7720.com")
                 .WithStandardSku()
                 .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com"))
@@ -29,13 +29,13 @@ namespace Azure.Tests.WebApp
                 .Create();
             Assert.NotNull(certificateOrder);
             // GET
-            Assert.NotNull(appServiceManager.AppServiceCertificateOrders.GetByGroup(RG_NAME, CERTIFICATE_NAME));
+            Assert.NotNull(appServiceManager.AppServiceCertificateOrders.GetByGroup(GroupName, CertificateName));
             // LIST
-            var certificateOrders = appServiceManager.AppServiceCertificateOrders.ListByGroup(RG_NAME);
+            var certificateOrders = appServiceManager.AppServiceCertificateOrders.ListByGroup(GroupName);
             var found = false;
             foreach (var co in certificateOrders)
             {
-                if (CERTIFICATE_NAME.Equals(co.Name))
+                if (CertificateName.Equals(co.Name))
                 {
                     found = true;
                     break;

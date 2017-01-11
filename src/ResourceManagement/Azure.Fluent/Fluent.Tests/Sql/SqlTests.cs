@@ -17,25 +17,25 @@ namespace Azure.Tests.Sql
 {
     public class SqlTests : IDisposable
     {
-        private static string RG_NAME = null;
-        private static string SQL_SERVER_NAME = null;
-        private static readonly string SQL_DATABASE_NAME = "myTestDatabase2";
-        private static readonly string COLLATION = "SQL_Latin1_General_CP1_CI_AS";
-        private static readonly string SQL_ELASTIC_POOL_NAME = "testElasticPool";
-        private static readonly string SQL_FIREWALLRULE_NAME = "firewallrule1";
-        private static readonly string START_IPADDRESS = "10.102.1.10";
-        private static readonly string END_IPADDRESS = "10.102.1.12";
+        private static string GroupName = null;
+        private static string SqlServerName = null;
+        private static readonly string SqlDatabaseName = "myTestDatabase2";
+        private static readonly string Collation = "SQL_Latin1_General_CP1_CI_AS";
+        private static readonly string SqlElasticPoolName = "testElasticPool";
+        private static readonly string SqlFirewallRuleName = "firewallrule1";
+        private static readonly string StartIPAddress = "10.102.1.10";
+        private static readonly string EndIPAddress = "10.102.1.12";
         private static ISqlManager sqlServerManager = TestHelper.CreateSqlManager();
 
         private static void  GenerateNewRGAndSqlServerNameForTest()
         {
-            RG_NAME = ResourceNamer.RandomResourceName("netsqlserver", 20);
-            SQL_SERVER_NAME = RG_NAME;
+            GroupName = ResourceNamer.RandomResourceName("netsqlserver", 20);
+            SqlServerName = GroupName;
         }
 
         public void Dispose()
         {
-            DeleteResourceGroup(RG_NAME);
+            DeleteResourceGroup(GroupName);
         }
 
         private void DeleteResourceGroup(string resourceGroup)
@@ -55,16 +55,16 @@ namespace Azure.Tests.Sql
         {
             GenerateNewRGAndSqlServerNameForTest();
             var rollUpClient = TestHelper.CreateRollupClient();
-            var sqlServer = rollUpClient.SqlServers.Define(SQL_SERVER_NAME)
+            var sqlServer = rollUpClient.SqlServers.Define(SqlServerName)
                     .WithRegion(Region.US_CENTRAL)
-                    .WithNewResourceGroup(RG_NAME)
+                    .WithNewResourceGroup(GroupName)
                     .WithAdministratorLogin("userName")
                     .WithAdministratorPassword("loepop77ejk~13@@")
                     .Create();
             Assert.NotNull(sqlServer.Databases.List());
             rollUpClient.SqlServers.DeleteById(sqlServer.Id);
 
-            DeleteResourceGroup(RG_NAME);
+            DeleteResourceGroup(GroupName);
         }
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
@@ -96,18 +96,18 @@ namespace Azure.Tests.Sql
             sqlServer.Update().WithAdministratorPassword("loepop77ejk~13@@").Apply();
 
             // List
-            var sqlServers = sqlServerManager.SqlServers.ListByGroup(RG_NAME);
+            var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
             var found = false;
             foreach (var server in sqlServers)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SQL_SERVER_NAME))
+                if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SqlServerName))
                 {
                     found = true;
                 }
             }
             Assert.True(found);
             // Get
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME);
+            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
             Assert.NotNull(sqlServer);
 
             sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
@@ -125,26 +125,26 @@ namespace Azure.Tests.Sql
             var database2InEPName = "database2InEP";
             var elasticPool2Name = "elasticPool2";
             var elasticPool3Name = "elasticPool3";
-            var elasticPool1Name = SQL_ELASTIC_POOL_NAME;
+            var elasticPool1Name = SqlElasticPoolName;
 
             // Create
-            var sqlServer = sqlServerManager.SqlServers.Define(SQL_SERVER_NAME)
+            var sqlServer = sqlServerManager.SqlServers.Define(SqlServerName)
                 .WithRegion(Region.US_CENTRAL)
-                .WithNewResourceGroup(RG_NAME)
+                .WithNewResourceGroup(GroupName)
                 .WithAdministratorLogin("userName")
                 .WithAdministratorPassword("loepopfuejk~13@@")
-                .WithNewDatabase(SQL_DATABASE_NAME)
+                .WithNewDatabase(SqlDatabaseName)
                 .WithNewDatabase(database2Name)
                 .WithNewElasticPool(elasticPool1Name, ElasticPoolEditions.Standard)
                 .WithNewElasticPool(elasticPool2Name, ElasticPoolEditions.Premium, database1InEPName, database2InEPName)
                 .WithNewElasticPool(elasticPool3Name, ElasticPoolEditions.Standard)
-                .WithNewFirewallRule(START_IPADDRESS, END_IPADDRESS, SQL_FIREWALLRULE_NAME)
-                .WithNewFirewallRule(START_IPADDRESS, END_IPADDRESS)
-                .WithNewFirewallRule(START_IPADDRESS)
+                .WithNewFirewallRule(StartIPAddress, EndIPAddress, SqlFirewallRuleName)
+                .WithNewFirewallRule(StartIPAddress, EndIPAddress)
+                .WithNewFirewallRule(StartIPAddress)
                 .Create();
 
             ValidateMultiCreation(database2Name, database1InEPName, database2InEPName, elasticPool1Name, elasticPool2Name, elasticPool3Name, sqlServer, false);
-            elasticPool1Name = SQL_ELASTIC_POOL_NAME + " U";
+            elasticPool1Name = SqlElasticPoolName + " U";
             database2Name = "database2U";
             database1InEPName = "database1InEPU";
             database2InEPName = "database2InEPU";
@@ -153,13 +153,13 @@ namespace Azure.Tests.Sql
 
             // Update
             sqlServer = sqlServer.Update()
-                .WithNewDatabase(SQL_DATABASE_NAME).WithNewDatabase(database2Name)
+                .WithNewDatabase(SqlDatabaseName).WithNewDatabase(database2Name)
                 .WithNewElasticPool(elasticPool1Name, ElasticPoolEditions.Standard)
                 .WithNewElasticPool(elasticPool2Name, ElasticPoolEditions.Premium, database1InEPName, database2InEPName)
                 .WithNewElasticPool(elasticPool3Name, ElasticPoolEditions.Standard)
-                .WithNewFirewallRule(START_IPADDRESS, END_IPADDRESS, SQL_FIREWALLRULE_NAME)
-                .WithNewFirewallRule(START_IPADDRESS, END_IPADDRESS)
-                .WithNewFirewallRule(START_IPADDRESS)
+                .WithNewFirewallRule(StartIPAddress, EndIPAddress, SqlFirewallRuleName)
+                .WithNewFirewallRule(StartIPAddress, EndIPAddress)
+                .WithNewFirewallRule(StartIPAddress)
                 .Apply();
 
             ValidateMultiCreation(database2Name, database1InEPName, database2InEPName, elasticPool1Name, elasticPool2Name, elasticPool3Name, sqlServer, true);
@@ -168,11 +168,11 @@ namespace Azure.Tests.Sql
             Assert.Equal(sqlServer.ElasticPools.List().Count(), 0);
 
             // List
-            var sqlServers = sqlServerManager.SqlServers.ListByGroup(RG_NAME);
+            var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
             var found = false;
             foreach (var server in sqlServers)
             {
-                if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SQL_SERVER_NAME))
+                if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SqlServerName))
                 {
                     found = true;
                 }
@@ -180,7 +180,7 @@ namespace Azure.Tests.Sql
 
             Assert.True(found);
             // Get
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME);
+            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
             Assert.NotNull(sqlServer);
 
             sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
@@ -199,9 +199,9 @@ namespace Azure.Tests.Sql
                 bool deleteUsingUpdate)
         {
             ValidateSqlServer(sqlServer);
-            ValidateSqlServer(sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME));
-            ValidateSqlDatabase(sqlServer.Databases.Get(SQL_DATABASE_NAME), SQL_DATABASE_NAME);
-            ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SQL_FIREWALLRULE_NAME), SQL_FIREWALLRULE_NAME);
+            ValidateSqlServer(sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName));
+            ValidateSqlDatabase(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
+            ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SqlFirewallRuleName), SqlFirewallRuleName);
 
             var firewalls = sqlServer.FirewallRules.List();
             Assert.Equal(3, firewalls.Count());
@@ -211,14 +211,14 @@ namespace Azure.Tests.Sql
 
             foreach (ISqlFirewallRule firewall in firewalls)
             {
-                if (!StringComparer.OrdinalIgnoreCase.Equals(firewall.Name, SQL_FIREWALLRULE_NAME))
+                if (!StringComparer.OrdinalIgnoreCase.Equals(firewall.Name, SqlFirewallRuleName))
                 {
-                    Assert.Equal(firewall.StartIpAddress, START_IPADDRESS);
-                    if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIpAddress, START_IPADDRESS))
+                    Assert.Equal(firewall.StartIpAddress, StartIPAddress);
+                    if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIpAddress, StartIPAddress))
                     {
                         startIpAddress++;
                     }
-                    else if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIpAddress, END_IPADDRESS))
+                    else if (StringComparer.OrdinalIgnoreCase.Equals(firewall.EndIpAddress, EndIPAddress))
                     {
                         endIpAddress++;
                     }
@@ -252,7 +252,7 @@ namespace Azure.Tests.Sql
                 sqlServer.Databases.Delete(database2Name);
                 sqlServer.Databases.Delete(database1InEPName);
                 sqlServer.Databases.Delete(database2InEPName);
-                sqlServer.Databases.Delete(SQL_DATABASE_NAME);
+                sqlServer.Databases.Delete(SqlDatabaseName);
 
                 Assert.Equal(ep1.ListDatabases().Count(), 0);
                 Assert.Equal(ep2.ListDatabases().Count(), 0);
@@ -278,9 +278,9 @@ namespace Azure.Tests.Sql
                         .WithoutElasticPool(elasticPool3Name)
                         .WithoutElasticPool(elasticPool1Name)
                         .WithoutDatabase(database1InEPName)
-                        .WithoutDatabase(SQL_DATABASE_NAME)
+                        .WithoutDatabase(SqlDatabaseName)
                         .WithoutDatabase(database2InEPName)
-                        .WithoutFirewallRule(SQL_FIREWALLRULE_NAME)
+                        .WithoutFirewallRule(SqlFirewallRuleName)
                         .Apply();
 
                 Assert.Equal(sqlServer.ElasticPools.List().Count(), 0);
@@ -307,12 +307,12 @@ namespace Azure.Tests.Sql
             var sqlServer = CreateSqlServer();
 
             var sqlDatabase = sqlServer.Databases
-                .Define(SQL_DATABASE_NAME)
-                .WithCollation(COLLATION)
+                .Define(SqlDatabaseName)
+                .WithCollation(Collation)
                 .WithEdition(DatabaseEditions.Standard)
                 .Create();
 
-            ValidateSqlDatabase(sqlDatabase, SQL_DATABASE_NAME);
+            ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
 
             // Test transparent data encryption settings.
             var transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption();
@@ -332,8 +332,8 @@ namespace Azure.Tests.Sql
             transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption().UpdateStatus(TransparentDataEncryptionStates.Disabled);
             Assert.NotNull(transparentDataEncryption);
             Assert.Equal(transparentDataEncryption.Status, TransparentDataEncryptionStates.Disabled);
-            Assert.Equal(transparentDataEncryption.SqlServerName, SQL_SERVER_NAME);
-            Assert.Equal(transparentDataEncryption.DatabaseName, SQL_DATABASE_NAME);
+            Assert.Equal(transparentDataEncryption.SqlServerName, SqlServerName);
+            Assert.Equal(transparentDataEncryption.DatabaseName, SqlDatabaseName);
             Assert.NotNull(transparentDataEncryption.Name);
             Assert.NotNull(transparentDataEncryption.Id);
             // Done testing with encryption settings.
@@ -350,12 +350,12 @@ namespace Azure.Tests.Sql
             Assert.NotNull(serviceTierAdvisors.Values.First().ServiceLevelObjectiveUsageMetrics);
             // End of testing service tier advisors.
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME);
+            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
             ValidateSqlServer(sqlServer);
 
             // Create another database with above created database as source database.
             var sqlElasticPoolCreatable = sqlServer.ElasticPools
-                .Define(SQL_ELASTIC_POOL_NAME)
+                .Define(SqlElasticPoolName)
                 .WithEdition(ElasticPoolEditions.Standard);
             var anotherDatabaseName = "anotherDatabase";
             var anotherDatabase = sqlServer.Databases
@@ -369,19 +369,19 @@ namespace Azure.Tests.Sql
             sqlServer.Databases.Delete(anotherDatabase.Name);
 
             // Get
-            ValidateSqlDatabase(sqlServer.Databases.Get(SQL_DATABASE_NAME), SQL_DATABASE_NAME);
+            ValidateSqlDatabase(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
 
             // List
             ValidateListSqlDatabase(sqlServer.Databases.List());
 
             // Delete
-            sqlServer.Databases.Delete(SQL_DATABASE_NAME);
-            ValidateSqlDatabaseNotFound(SQL_DATABASE_NAME);
+            sqlServer.Databases.Delete(SqlDatabaseName);
+            ValidateSqlDatabaseNotFound(SqlDatabaseName);
 
             // Add another database to the server
             sqlDatabase = sqlServer.Databases
                     .Define("newDatabase")
-                    .WithCollation(COLLATION)
+                    .WithCollation(Collation)
                     .WithEdition(DatabaseEditions.Standard)
                     .Create();
             sqlServer.Databases.Delete(sqlDatabase.Name);
@@ -396,19 +396,19 @@ namespace Azure.Tests.Sql
             GenerateNewRGAndSqlServerNameForTest();
 
             // Create
-            var anotherSqlServerName = SQL_SERVER_NAME + "another";
+            var anotherSqlServerName = SqlServerName + "another";
             var sqlServer1 = CreateSqlServer();
             var sqlServer2 = CreateSqlServer(anotherSqlServerName);
 
             var databaseInServer1 = sqlServer1.Databases
-                .Define(SQL_DATABASE_NAME)
-                .WithCollation(COLLATION)
+                .Define(SqlDatabaseName)
+                .WithCollation(Collation)
                 .WithEdition(DatabaseEditions.Standard)
                 .Create();
 
-            ValidateSqlDatabase(databaseInServer1, SQL_DATABASE_NAME);
+            ValidateSqlDatabase(databaseInServer1, SqlDatabaseName);
             var databaseInServer2 = sqlServer2.Databases
-                .Define(SQL_DATABASE_NAME)
+                .Define(SqlDatabaseName)
                 .WithSourceDatabase(databaseInServer1.Id)
                 .WithMode(CreateMode.OnlineSecondary)
                 .Create();
@@ -465,20 +465,20 @@ namespace Azure.Tests.Sql
             Assert.NotNull(sqlServer.ListUsages());
 
             var sqlDatabase = sqlServer.Databases
-                    .Define(SQL_DATABASE_NAME)
-                    .WithCollation(COLLATION)
+                    .Define(SqlDatabaseName)
+                    .WithCollation(Collation)
                     .WithEdition(DatabaseEditions.DataWarehouse)
                     .Create();
 
-            sqlDatabase = sqlServer.Databases.Get(SQL_DATABASE_NAME);
+            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
             Assert.NotNull(sqlDatabase);
             Assert.True(sqlDatabase.IsDataWarehouse);
 
             // Get
-            var dataWarehouse = sqlServer.Databases.Get(SQL_DATABASE_NAME).AsWarehouse();
+            var dataWarehouse = sqlServer.Databases.Get(SqlDatabaseName).AsWarehouse();
 
             Assert.NotNull(dataWarehouse);
-            Assert.Equal(dataWarehouse.Name, SQL_DATABASE_NAME);
+            Assert.Equal(dataWarehouse.Name, SqlDatabaseName);
             Assert.Equal(dataWarehouse.Edition, DatabaseEditions.DataWarehouse);
 
             // List Restore points.
@@ -492,7 +492,7 @@ namespace Azure.Tests.Sql
             // Resume warehouse
             dataWarehouse.ResumeDataWarehouse();
 
-            sqlServer.Databases.Delete(SQL_DATABASE_NAME);
+            sqlServer.Databases.Delete(SqlDatabaseName);
 
             sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
             ValidateSqlServerNotFound(sqlServer);
@@ -508,26 +508,26 @@ namespace Azure.Tests.Sql
             var sqlServer = CreateSqlServer();
 
             var sqlElasticPoolCreatable = sqlServer.ElasticPools
-                    .Define(SQL_ELASTIC_POOL_NAME)
+                    .Define(SqlElasticPoolName)
                     .WithEdition(ElasticPoolEditions.Standard);
 
             var sqlDatabase = sqlServer.Databases
-                    .Define(SQL_DATABASE_NAME)
+                    .Define(SqlDatabaseName)
                     .WithNewElasticPool(sqlElasticPoolCreatable)
-                    .WithCollation(COLLATION)
+                    .WithCollation(Collation)
                     .Create();
 
-            ValidateSqlDatabase(sqlDatabase, SQL_DATABASE_NAME);
+            ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME);
+            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
             ValidateSqlServer(sqlServer);
 
             // Get Elastic pool
-            var elasticPool = sqlServer.ElasticPools.Get(SQL_ELASTIC_POOL_NAME);
+            var elasticPool = sqlServer.ElasticPools.Get(SqlElasticPoolName);
             ValidateSqlElasticPool(elasticPool);
 
             // Get
-            ValidateSqlDatabaseWithElasticPool(sqlServer.Databases.Get(SQL_DATABASE_NAME), SQL_DATABASE_NAME);
+            ValidateSqlDatabaseWithElasticPool(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
 
             // List
             ValidateListSqlDatabase(sqlServer.Databases.List());
@@ -538,7 +538,7 @@ namespace Azure.Tests.Sql
                     .WithEdition(DatabaseEditions.Standard)
                     .WithServiceObjective(ServiceObjectiveName.S3)
                 .Apply();
-            sqlDatabase = sqlServer.Databases.Get(SQL_DATABASE_NAME);
+            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
             Assert.Null(sqlDatabase.ElasticPoolName);
 
             // Update edition of the SQL database
@@ -546,13 +546,13 @@ namespace Azure.Tests.Sql
                     .WithEdition(DatabaseEditions.Premium)
                     .WithServiceObjective(ServiceObjectiveName.P1)
                     .Apply();
-            sqlDatabase = sqlServer.Databases.Get(SQL_DATABASE_NAME);
+            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
             Assert.Equal(sqlDatabase.Edition, DatabaseEditions.Premium);
             Assert.Equal(sqlDatabase.ServiceLevelObjective, ServiceObjectiveName.P1);
 
             // Update just the service level objective for database.
             sqlDatabase.Update().WithServiceObjective(ServiceObjectiveName.P2).Apply();
-            sqlDatabase = sqlServer.Databases.Get(SQL_DATABASE_NAME);
+            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
             Assert.Equal(sqlDatabase.ServiceLevelObjective, ServiceObjectiveName.P2);
             Assert.Equal(sqlDatabase.RequestedServiceObjectiveName, ServiceObjectiveName.P2);
 
@@ -561,16 +561,16 @@ namespace Azure.Tests.Sql
                     .WithMaxSizeBytes(268435456000L)
                     .Apply();
 
-            sqlDatabase = sqlServer.Databases.Get(SQL_DATABASE_NAME);
+            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
             Assert.Equal(sqlDatabase.MaxSizeBytes, 268435456000L);
 
             // Put the database back in elastic pool.
             sqlDatabase.Update()
-                    .WithExistingElasticPool(SQL_ELASTIC_POOL_NAME)
+                    .WithExistingElasticPool(SqlElasticPoolName)
                     .Apply();
 
-            sqlDatabase = sqlServer.Databases.Get(SQL_DATABASE_NAME);
-            Assert.Equal(sqlDatabase.ElasticPoolName, SQL_ELASTIC_POOL_NAME);
+            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+            Assert.Equal(sqlDatabase.ElasticPoolName, SqlElasticPoolName);
 
             // List Activity in elastic pool
             Assert.NotNull(elasticPool.ListActivities());
@@ -584,8 +584,8 @@ namespace Azure.Tests.Sql
             Assert.Equal(databasesInElasticPool.Count(), 1);
 
             // Get a particular database in elastic pool.
-            var databaseInElasticPool = elasticPool.GetDatabase(SQL_DATABASE_NAME);
-            ValidateSqlDatabase(databaseInElasticPool, SQL_DATABASE_NAME);
+            var databaseInElasticPool = elasticPool.GetDatabase(SqlDatabaseName);
+            ValidateSqlDatabase(databaseInElasticPool, SqlDatabaseName);
 
             // Refresh works on the database got from elastic pool.
             databaseInElasticPool.Refresh();
@@ -601,21 +601,21 @@ namespace Azure.Tests.Sql
             }
 
             // Delete
-            sqlServer.Databases.Delete(SQL_DATABASE_NAME);
-            ValidateSqlDatabaseNotFound(SQL_DATABASE_NAME);
+            sqlServer.Databases.Delete(SqlDatabaseName);
+            ValidateSqlDatabaseNotFound(SqlDatabaseName);
 
-            var sqlElasticPool = sqlServer.ElasticPools.Get(SQL_ELASTIC_POOL_NAME);
+            var sqlElasticPool = sqlServer.ElasticPools.Get(SqlElasticPoolName);
 
             // Add another database to the server and pool.
             sqlDatabase = sqlServer.Databases
                     .Define("newDatabase")
                     .WithExistingElasticPool(sqlElasticPool)
-                    .WithCollation(COLLATION)
+                    .WithCollation(Collation)
                     .Create();
             sqlServer.Databases.Delete(sqlDatabase.Name);
             ValidateSqlDatabaseNotFound("newDatabase");
 
-            sqlServer.ElasticPools.Delete(SQL_ELASTIC_POOL_NAME);
+            sqlServer.ElasticPools.Delete(SqlElasticPoolName);
             sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
             ValidateSqlServerNotFound(sqlServer);
             DeleteResourceGroup(sqlServer.ResourceGroupName);
@@ -629,11 +629,11 @@ namespace Azure.Tests.Sql
             // Create
             var sqlServer = CreateSqlServer();
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME);
+            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
             ValidateSqlServer(sqlServer);
 
             var sqlElasticPool = sqlServer.ElasticPools
-                    .Define(SQL_ELASTIC_POOL_NAME)
+                    .Define(SqlElasticPoolName)
                     .WithEdition(ElasticPoolEditions.Standard)
                     .Create();
             ValidateSqlElasticPool(sqlElasticPool);
@@ -644,22 +644,22 @@ namespace Azure.Tests.Sql
                     .WithDatabaseDtuMax(20)
                     .WithDatabaseDtuMin(10)
                     .WithStorageCapacity(102400)
-                    .WithNewDatabase(SQL_DATABASE_NAME)
+                    .WithNewDatabase(SqlDatabaseName)
                     .Apply();
 
             ValidateSqlElasticPool(sqlElasticPool);
             Assert.Equal(sqlElasticPool.ListDatabases().Count(), 1);
 
             // Get
-            ValidateSqlElasticPool(sqlServer.ElasticPools.Get(SQL_ELASTIC_POOL_NAME));
+            ValidateSqlElasticPool(sqlServer.ElasticPools.Get(SqlElasticPoolName));
 
             // List
             ValidateListSqlElasticPool(sqlServer.ElasticPools.List());
 
             // Delete
-            sqlServer.Databases.Delete(SQL_DATABASE_NAME);
-            sqlServer.ElasticPools.Delete(SQL_ELASTIC_POOL_NAME);
-            ValidateSqlElasticPoolNotFound(sqlServer, SQL_ELASTIC_POOL_NAME);
+            sqlServer.Databases.Delete(SqlDatabaseName);
+            sqlServer.ElasticPools.Delete(SqlElasticPoolName);
+            ValidateSqlElasticPoolNotFound(sqlServer, SqlElasticPoolName);
 
             // Add another database to the server
             sqlElasticPool = sqlServer.ElasticPools
@@ -683,43 +683,43 @@ namespace Azure.Tests.Sql
             // Create
             var sqlServer = CreateSqlServer();
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME);
+            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
             ValidateSqlServer(sqlServer);
 
             var sqlFirewallRule = sqlServer.FirewallRules
-                    .Define(SQL_FIREWALLRULE_NAME)
-                    .WithIpAddressRange(START_IPADDRESS, END_IPADDRESS)
+                    .Define(SqlFirewallRuleName)
+                    .WithIpAddressRange(StartIPAddress, EndIPAddress)
                     .Create();
 
-            ValidateSqlFirewallRule(sqlFirewallRule, SQL_FIREWALLRULE_NAME);
-            ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SQL_FIREWALLRULE_NAME), SQL_FIREWALLRULE_NAME);
+            ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
+            ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SqlFirewallRuleName), SqlFirewallRuleName);
 
             var secondFirewallRuleName = "secondFireWallRule";
             var secondFirewallRule = sqlServer.FirewallRules
                     .Define(secondFirewallRuleName)
-                    .WithIpAddress(START_IPADDRESS)
+                    .WithIpAddress(StartIPAddress)
                     .Create();
 
             secondFirewallRule = sqlServer.FirewallRules.Get(secondFirewallRuleName);
 
             Assert.NotNull(secondFirewallRule);
-            Assert.Equal(START_IPADDRESS, secondFirewallRule.EndIpAddress);
+            Assert.Equal(StartIPAddress, secondFirewallRule.EndIpAddress);
 
-            secondFirewallRule = secondFirewallRule.Update().WithEndIpAddress(END_IPADDRESS).Apply();
+            secondFirewallRule = secondFirewallRule.Update().WithEndIpAddress(EndIPAddress).Apply();
 
             ValidateSqlFirewallRule(secondFirewallRule, secondFirewallRuleName);
             sqlServer.FirewallRules.Delete(secondFirewallRuleName);
             AssertIfFound(() => sqlServer.FirewallRules.Get(secondFirewallRuleName));
 
             // Get
-            sqlFirewallRule = sqlServer.FirewallRules.Get(SQL_FIREWALLRULE_NAME);
-            ValidateSqlFirewallRule(sqlFirewallRule, SQL_FIREWALLRULE_NAME);
+            sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
+            ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
 
             // Update
             // Making start and end IP address same.
-            sqlFirewallRule.Update().WithEndIpAddress(START_IPADDRESS).Apply();
-            sqlFirewallRule = sqlServer.FirewallRules.Get(SQL_FIREWALLRULE_NAME);
-            Assert.Equal(sqlFirewallRule.EndIpAddress, START_IPADDRESS);
+            sqlFirewallRule.Update().WithEndIpAddress(StartIPAddress).Apply();
+            sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
+            Assert.Equal(sqlFirewallRule.EndIpAddress, StartIPAddress);
 
             // List
             ValidateListSqlFirewallRule(sqlServer.FirewallRules.List());
@@ -736,7 +736,7 @@ namespace Azure.Tests.Sql
 
         private static void ValidateSqlFirewallRuleNotFound()
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME).FirewallRules.Get(SQL_FIREWALLRULE_NAME));
+            AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName).FirewallRules.Get(SqlFirewallRuleName));
         }
 
         private static void ValidateSqlElasticPoolNotFound(ISqlServer sqlServer, string elasticPoolName)
@@ -746,7 +746,7 @@ namespace Azure.Tests.Sql
 
         private static void ValidateSqlDatabaseNotFound(String newDatabase)
         {
-            AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(RG_NAME, SQL_SERVER_NAME).Databases.Get(newDatabase));
+            AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName).Databases.Get(newDatabase));
         }
 
         private static void ValidateSqlServerNotFound(ISqlServer sqlServer)
@@ -775,7 +775,7 @@ namespace Azure.Tests.Sql
 
         private static ISqlServer CreateSqlServer()
         {
-            return CreateSqlServer(SQL_SERVER_NAME);
+            return CreateSqlServer(SqlServerName);
         }
 
         private static ISqlServer CreateSqlServer(String SQL_SERVER_NAME)
@@ -783,7 +783,7 @@ namespace Azure.Tests.Sql
             return sqlServerManager.SqlServers
                     .Define(SQL_SERVER_NAME)
                     .WithRegion(Region.US_CENTRAL)
-                    .WithNewResourceGroup(RG_NAME)
+                    .WithNewResourceGroup(GroupName)
                     .WithAdministratorLogin("userName")
                     .WithAdministratorPassword("loepopfuejk~13@@")
                     .Create();
@@ -791,37 +791,37 @@ namespace Azure.Tests.Sql
 
         private static void ValidateListSqlFirewallRule(IList<ISqlFirewallRule> sqlFirewallRules)
         {
-            Assert.True(sqlFirewallRules.Any(firewallRule => StringComparer.OrdinalIgnoreCase.Equals(firewallRule.Name, SQL_FIREWALLRULE_NAME)));
+            Assert.True(sqlFirewallRules.Any(firewallRule => StringComparer.OrdinalIgnoreCase.Equals(firewallRule.Name, SqlFirewallRuleName)));
         }
 
         private static void ValidateSqlFirewallRule(ISqlFirewallRule sqlFirewallRule, string firewallName)
         {
             Assert.NotNull(sqlFirewallRule);
             Assert.Equal(firewallName, sqlFirewallRule.Name);
-            Assert.Equal(SQL_SERVER_NAME, sqlFirewallRule.SqlServerName);
-            Assert.Equal(START_IPADDRESS, sqlFirewallRule.StartIpAddress);
-            Assert.Equal(END_IPADDRESS, sqlFirewallRule.EndIpAddress);
-            Assert.Equal(RG_NAME, sqlFirewallRule.ResourceGroupName);
-            Assert.Equal(SQL_SERVER_NAME, sqlFirewallRule.SqlServerName);
+            Assert.Equal(SqlServerName, sqlFirewallRule.SqlServerName);
+            Assert.Equal(StartIPAddress, sqlFirewallRule.StartIpAddress);
+            Assert.Equal(EndIPAddress, sqlFirewallRule.EndIpAddress);
+            Assert.Equal(GroupName, sqlFirewallRule.ResourceGroupName);
+            Assert.Equal(SqlServerName, sqlFirewallRule.SqlServerName);
             Assert.Equal(Region.US_CENTRAL, sqlFirewallRule.Region);
         }
 
         private static void ValidateListSqlElasticPool(IList<ISqlElasticPool> sqlElasticPools)
         {
-            Assert.True(sqlElasticPools.Any(elasticPool => StringComparer.OrdinalIgnoreCase.Equals(elasticPool.Name, SQL_ELASTIC_POOL_NAME)));
+            Assert.True(sqlElasticPools.Any(elasticPool => StringComparer.OrdinalIgnoreCase.Equals(elasticPool.Name, SqlElasticPoolName)));
         }
 
         private static void ValidateSqlElasticPool(ISqlElasticPool sqlElasticPool)
         {
-            ValidateSqlElasticPool(sqlElasticPool, SQL_ELASTIC_POOL_NAME);
+            ValidateSqlElasticPool(sqlElasticPool, SqlElasticPoolName);
         }
 
         private static void ValidateSqlElasticPool(ISqlElasticPool sqlElasticPool, string elasticPoolName)
         {
             Assert.NotNull(sqlElasticPool);
-            Assert.Equal(RG_NAME, sqlElasticPool.ResourceGroupName);
+            Assert.Equal(GroupName, sqlElasticPool.ResourceGroupName);
             Assert.Equal(elasticPoolName, sqlElasticPool.Name);
-            Assert.Equal(SQL_SERVER_NAME, sqlElasticPool.SqlServerName);
+            Assert.Equal(SqlServerName, sqlElasticPool.SqlServerName);
             Assert.Equal(ElasticPoolEditions.Standard, sqlElasticPool.Edition);
             Assert.NotNull(sqlElasticPool.CreationDate);
             Assert.NotEqual(0, sqlElasticPool.DatabaseDtuMax);
@@ -830,13 +830,13 @@ namespace Azure.Tests.Sql
 
         private static void ValidateListSqlDatabase(IList<ISqlDatabase> sqlDatabases)
         {
-            Assert.True(sqlDatabases.Any(database => StringComparer.OrdinalIgnoreCase.Equals(database.Name, SQL_DATABASE_NAME)));
+            Assert.True(sqlDatabases.Any(database => StringComparer.OrdinalIgnoreCase.Equals(database.Name, SqlDatabaseName)));
         }
 
         private static void ValidateSqlServer(ISqlServer sqlServer)
         {
             Assert.NotNull(sqlServer);
-            Assert.Equal(RG_NAME, sqlServer.ResourceGroupName);
+            Assert.Equal(GroupName, sqlServer.ResourceGroupName);
             Assert.NotNull(sqlServer.FullyQualifiedDomainName);
             Assert.Equal(ServerVersion.OneTwoFullStopZero, sqlServer.Version);
             Assert.Equal("userName", sqlServer.AdministratorLogin);
@@ -846,15 +846,15 @@ namespace Azure.Tests.Sql
         {
             Assert.NotNull(sqlDatabase);
             Assert.Equal(sqlDatabase.Name, databaseName);
-            Assert.Equal(SQL_SERVER_NAME, sqlDatabase.SqlServerName);
-            Assert.Equal(sqlDatabase.Collation, COLLATION);
+            Assert.Equal(SqlServerName, sqlDatabase.SqlServerName);
+            Assert.Equal(sqlDatabase.Collation, Collation);
             Assert.Equal(sqlDatabase.Edition, DatabaseEditions.Standard);
         }
 
         private static void ValidateSqlDatabaseWithElasticPool(ISqlDatabase sqlDatabase, string databaseName)
         {
             ValidateSqlDatabase(sqlDatabase, databaseName);
-            Assert.Equal(SQL_ELASTIC_POOL_NAME, sqlDatabase.ElasticPoolName);
+            Assert.Equal(SqlElasticPoolName, sqlDatabase.ElasticPoolName);
         }
     }
 }

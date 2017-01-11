@@ -33,9 +33,9 @@ namespace Azure.Tests.Network.ApplicationGateway
 
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
-            INetwork vnet = networks.Define("net" + ApplicationGatewayHelper.TEST_ID)
-                .WithRegion(ApplicationGatewayHelper.REGION)
-                .WithNewResourceGroup(ApplicationGatewayHelper.GROUP_NAME)
+            INetwork vnet = networks.Define("net" + ApplicationGatewayHelper.TestId)
+                .WithRegion(ApplicationGatewayHelper.Region)
+                .WithNewResourceGroup(ApplicationGatewayHelper.GroupName)
                 .WithAddressSpace("10.0.0.0/28")
                 .WithSubnet("subnet1", "10.0.0.0/29")
                 .WithSubnet("subnet2", "10.0.0.8/29")
@@ -46,9 +46,9 @@ namespace Azure.Tests.Network.ApplicationGateway
                 Thread.CurrentThread.IsBackground = true;
                 // Create an application gateway
                 try {
-                    resources.Define(ApplicationGatewayHelper.APP_GATEWAY_NAME)
-                        .WithRegion(ApplicationGatewayHelper.REGION)
-                        .WithExistingResourceGroup(ApplicationGatewayHelper.GROUP_NAME)
+                    resources.Define(ApplicationGatewayHelper.AppGatewayName)
+                        .WithRegion(ApplicationGatewayHelper.Region)
+                        .WithExistingResourceGroup(ApplicationGatewayHelper.GroupName)
 
                         // Request routing rules
                         .DefineRequestRoutingRule("rule80")
