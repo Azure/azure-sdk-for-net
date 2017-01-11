@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Search.Models
         {
             Throw.IfArgumentNull(name, "name");
 
-            T analyzerName;
-            return _nameMap.Value.TryGetValue(name, out analyzerName) ? analyzerName : null;
+            T enumValue;
+            return _nameMap.Value.TryGetValue(name, out enumValue) ? enumValue : null;
         }
 
         /// <summary>

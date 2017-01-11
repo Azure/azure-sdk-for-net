@@ -93,8 +93,8 @@ namespace Microsoft.Azure.Search.Models
         public static IndexingParameters SkipContent(this IndexingParameters parameters)
         { 
             return parameters.SetBlobExtractionMode(BlobExtractionMode.AllMetadata); 
-        } 
- 
+        }
+
         /// <summary>
         /// Specifies which parts of a blob will be indexed by the blob storage indexer. 
         /// </summary>
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Search.Models
         /// <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" />
         /// </remarks>
         /// <param name="parameters">IndexingParameters to configure.</param>
-        /// <param name="extractionMode">A <c cref="BlobExtractionMode" /> value specifying what to index.</param>
+        /// <param name="extractionMode">A <c cref="BlobExtractionMode">BlobExtractionMode</c> value specifying what to index.</param>
         /// <returns>The IndexingParameters instance.</returns>
         public static IndexingParameters SetBlobExtractionMode(this IndexingParameters parameters, BlobExtractionMode extractionMode)
         {
@@ -111,8 +111,8 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata"/> blob extraction mode will be automatically used for blobs of unsupported content types.  
-        /// The default is false. 
+        /// Specifies that <c cref="BlobExtractionMode.StorageMetadata">BlobExtractionMode.StorageMetadata</c> blob extraction mode will be
+        /// automatically used for blobs of unsupported content types. The default is false.
         /// </summary>
         /// <remarks>
         /// This option only applies to indexers that index Azure Blob Storage.
