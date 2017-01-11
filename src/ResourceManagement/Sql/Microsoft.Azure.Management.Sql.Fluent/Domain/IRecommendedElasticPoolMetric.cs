@@ -12,16 +12,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     public interface IRecommendedElasticPoolMetric  :
         IWrapper<Models.RecommendedElasticPoolMetric>
     {
-        /// <return>The size in gigabytes.</return>
+        /// <summary>
+        /// Gets the size in gigabytes.
+        /// </summary>
         double SizeGB { get; }
 
-        /// <return>The time of metric (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time of metric (ISO8601 format).
+        /// </summary>
         System.DateTime DateTimeProperty { get; }
 
-        /// <return>
-        /// The DTUs (Database Transaction Units)
+        /// <summary>
+        /// Gets the DTUs (Database Transaction Units)
         /// See  https://azure.microsoft.com/en-us/documentation/articles/sql-database-what-is-a-dtu/.
-        /// </return>
+        /// </summary>
         double Dtu { get; }
     }
 }

@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             this.databasesInner = databasesInner;
             this.recommendedElasticPoolsInner = recommendedElasticPoolsInner;
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
         }
 
         ///GENMHASH:88F495E6170B34BE98D7ECF345A40578:945958DE33096D51BB9DD38A7F3CDAD0

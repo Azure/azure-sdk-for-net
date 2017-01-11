@@ -80,8 +80,6 @@ namespace ManageWebAppSqlConnection
                     Console.WriteLine("Creating SQL database " + sqlDbName + "...");
 
                     ISqlDatabase db = server.Databases.Define(sqlDbName)
-                            .WithoutElasticPool()
-                            .WithoutSourceDatabaseId()
                             .Create();
 
                     Console.WriteLine("Created SQL database " + db.Name);

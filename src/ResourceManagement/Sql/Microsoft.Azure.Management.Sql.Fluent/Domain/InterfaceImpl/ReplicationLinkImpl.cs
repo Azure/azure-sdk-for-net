@@ -2,20 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using Models;
     using System;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-
 
     internal partial class ReplicationLinkImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
@@ -28,25 +30,31 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.IReplicationLink;
         }
 
-        /// <return>The replication state for the replication link.</return>
+        /// <summary>
+        /// Gets the replication state for the replication link.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.ReplicationState
         {
             get
             {
-                return this.ReplicationState() as string;
+                return this.ReplicationState();
             }
         }
 
-        /// <return>The Azure Region of the partner Azure SQL Database.</return>
+        /// <summary>
+        /// Gets the Azure Region of the partner Azure SQL Database.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.PartnerLocation
         {
             get
             {
-                return this.PartnerLocation() as string;
+                return this.PartnerLocation();
             }
         }
 
-        /// <return>The role of the partner SQL Database in the replication link.</return>
+        /// <summary>
+        /// Gets the role of the partner SQL Database in the replication link.
+        /// </summary>
         Models.ReplicationRole Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.PartnerRole
         {
             get
@@ -64,7 +72,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.Failover();
         }
 
-        /// <return>Start time for the replication link (ISO8601 format).</return>
+        /// <summary>
+        /// Gets start time for the replication link (ISO8601 format).
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.StartTime
         {
             get
@@ -73,21 +83,25 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The name of the partner Azure SQL Database.</return>
+        /// <summary>
+        /// Gets the name of the partner Azure SQL Database.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.PartnerDatabase
         {
             get
             {
-                return this.PartnerDatabase() as string;
+                return this.PartnerDatabase();
             }
         }
 
-        /// <return>Name of the SQL Server to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.SqlServerName
         {
             get
             {
-                return this.SqlServerName() as string;
+                return this.SqlServerName();
             }
         }
 
@@ -100,7 +114,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.Delete();
         }
 
-        /// <return>The percentage of the seeding completed for the replication link.</return>
+        /// <summary>
+        /// Gets the percentage of the seeding completed for the replication link.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.PercentComplete
         {
             get
@@ -109,25 +125,31 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Name of the SQL Database to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Database to which this replication belongs.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.DatabaseName
         {
             get
             {
-                return this.DatabaseName() as string;
+                return this.DatabaseName();
             }
         }
 
-        /// <return>The name of the Azure SQL Server hosting the partner Azure SQL Database.</return>
+        /// <summary>
+        /// Gets the name of the Azure SQL Server hosting the partner Azure SQL Database.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.PartnerServer
         {
             get
             {
-                return this.PartnerServer() as string;
+                return this.PartnerServer();
             }
         }
 
-        /// <return>The role of the SQL Database in the replication link.</return>
+        /// <summary>
+        /// Gets the role of the SQL Database in the replication link.
+        /// </summary>
         Models.ReplicationRole Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.Role
         {
             get
@@ -145,21 +167,25 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.ForceFailoverAllowDataLoss();
         }
 
-        /// <return>The resource ID string.</return>
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
 
-        /// <return>The name of the resource group.</return>
+        /// <summary>
+        /// Gets the name of the resource group.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasResourceGroup.ResourceGroupName
         {
             get
             {
-                return this.ResourceGroupName() as string;
+                return this.ResourceGroupName();
             }
         }
     }

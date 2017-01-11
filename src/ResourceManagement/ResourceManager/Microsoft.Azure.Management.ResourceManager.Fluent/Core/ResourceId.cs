@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using System;
+
 namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     /// <summary>
@@ -8,33 +10,129 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     public sealed partial class ResourceId
     {
-        private string subscriptionId;
-        private string resourceGroupName;
-        private string name;
-        private ResourceId parent;
-        private string providerNamespace;
-        private string resourceType;
-        private string id;
+        private string subscriptionId = null;
+        private string resourceGroupName = null;
+        private string name = null;
+        private string providerNamespace = null;
+        private string resourceType = null;
+        private string id = null;
+        private string parentId = null;
 
-        /// <return>Name of the provider.</return>
-        public string ProviderNamespace
+        private static string badIdErrorText(string id)
         {
-            get
+            return string.Format("The specified ID {0} is not a valid Azure resource ID.", id);
+        }
+
+        private ResourceId(string id)
+        {
+            if (id == null)
             {
-                return this.providerNamespace;
+                // Protect against NPEs from null IDs, preserving legacy behavior for null IDs
+                return;
+            }
+            else
+            {
+                // Skip the first '/' if any, and then split using '/'
+                string[] splits = (id.StartsWith("/")) ? id.Substring(1).Split('/') : id.Split('/');
+                if (splits.Length % 2 == 1)
+                {
+                    throw new ArgumentException(badIdErrorText(id));
+                }
+
+                // Save the ID itself
+                this.id = id;
+
+                // Format of id:
+                // /subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/<providerNamespace>(/<parentResourceType>/<parentName>)*/<resourceType>/<name>
+                //  0             1                2              3                   4         5                                                        N-2            N-1
+
+                // Extract resource type and name
+                if (splits.Length < 2)
+                {
+                    throw new ArgumentException(badIdErrorText(id));
+                }
+                else
+                {
+                    name = splits[splits.Length - 1];
+                    resourceType = splits[splits.Length - 2];
+                }
+
+                // Extract parent ID
+                if (splits.Length < 10)
+                {
+                    parentId = null;
+                }
+                else
+                {
+                    string[] parentSplits = new string[splits.Length - 2];
+                    Array.Copy(splits, parentSplits, splits.Length - 2);
+                    parentId = "/" + string.Join("/", parentSplits);
+                }
+
+                for (int i = 0; i < splits.Length && i < 6; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            // Ensure "subscriptions"
+                            if (string.Compare(splits[i], "subscriptions", StringComparison.OrdinalIgnoreCase) != 0)
+                            {
+                                throw new ArgumentException(badIdErrorText(id));
+                            }
+                            break;
+                        case 1:
+                            // Extract subscription ID
+                            subscriptionId = splits[i];
+                            break;
+                        case 2:
+                            // Ensure "resourceGroups"
+                            if (string.Compare(splits[i], "resourceGroups", StringComparison.OrdinalIgnoreCase) != 0)
+                            {
+                                throw new ArgumentException(badIdErrorText(id));
+                            }
+                            break;
+                        case 3:
+                            // Extract resource group name
+                            resourceGroupName = splits[i];
+                            break;
+                        case 4:
+                            // Ensure "providers"
+                            if (string.Compare(splits[i], "providers", StringComparison.OrdinalIgnoreCase) != 0)
+                            {
+                                throw new ArgumentException(badIdErrorText(id));
+                            }
+                            break;
+                        case 5:
+                            // Extract provider namespace
+                            providerNamespace = splits[i];
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         }
 
-        /// <return>Parent resource id of the resource if any, otherwise null.</return>
-        public ResourceId Parent
+        /// <summary>
+        /// Returns parsed ResourceId object for a given resource id.
+        /// </summary>
+        /// <param name="id">of the resource.</param>
+        /// <return>ResourceId object</return>
+        public static ResourceId FromString(string id)
+        {
+            return new ResourceId(id);
+        }
+
+        /// <return>Subscription id of the resource.</return>
+        public string SubscriptionId
         {
             get
             {
-                return parent;
+                return subscriptionId;
             }
         }
 
-        /// <return>ResourceGroupName of the resource.</return>
+        /// <return>Resource group name of the resource.</return>
         public string ResourceGroupName
         {
             get
@@ -43,70 +141,63 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             }
         }
 
-        /// <return>Full type of the resource.</return>
-        public string FullResourceType
-        {
-            get
-            {
-                if (parent == null)
-                {
-                    return providerNamespace + "/" + resourceType;
-                }
-                return parent.FullResourceType + "/" + resourceType;
-            }
-        }
-
         /// <return>Name of the resource.</return>
         public string Name
         {
             get
             {
-                return this.name;
+                return name;
             }
         }
 
-        /// <summary>
-        /// Returns parsed ResourceId object for a given resource id.
-        /// </summary>
-        /// <param name="id">Of the resource.</param>
-        /// <return>ResourceId object.</return>
-        public static ResourceId ParseResourceId(string id)
+        /// <return>Parent resource id of the resource if any, otherwise null.</return>
+        public ResourceId Parent
         {
-            // Example of id is id=/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/ans/providers/Microsoft.Network/applicationGateways/something
-            // Remove the first '/' and then split using '/'
-            string[] splits = id.Substring(1).Split('/');
-
-            if (splits.Length % 2 == 1)
+            get
             {
-                throw new System.ArgumentException();
+                if (id == null || parentId == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return FromString(parentId);
+                }
             }
-            ResourceId resourceId = new ResourceId();
+        }
 
-            resourceId.id = id;
-            resourceId.subscriptionId = splits[1];
-            resourceId.resourceGroupName = splits[3];
-
-            // In case of a resource group Id is passed, then name is resource group name.
-            if (splits.Length == 4)
+        /// <return>Name of the provider.</return>
+        public string ProviderNamespace
+        {
+            get
             {
-                resourceId.name = resourceId.resourceGroupName;
-                return resourceId;
+                return providerNamespace;
             }
+        }
 
-            resourceId.providerNamespace = splits[5];
-            resourceId.name = splits[splits.Length - 1];
-            resourceId.resourceType = splits[splits.Length - 2];
-
-            int numberOfParents = splits.Length / 2 - 4;
-            if (numberOfParents == 0)
+        /// <return>Type of the resource.</return>
+        public string ResourceType
+        {
+            get
             {
-                return resourceId;
+                return resourceType;
             }
-            string resourceType = splits[splits.Length - 2];
+        }
 
-            resourceId.parent = ResourceId.ParseResourceId(id.Substring(0, id.Length - ("/" + resourceType + "/" + resourceId.Name).Length));
-
-            return resourceId;
+        /// <return>Full type of the resource.</return>
+        public string FullResourceType
+        {
+            get
+            {
+                if (parentId == null)
+                {
+                    return providerNamespace + "/" + resourceType;
+                }
+                else
+                {
+                    return this.Parent.FullResourceType + "/" + resourceType;
+                }
+            }
         }
 
         /// <return>The id of the resource.</return>
@@ -117,23 +208,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
                 return id;
             }
         }
-
-        /// <return>SubscriptionId of the resource.</return>
-        public string SubscriptionId
-        {
-            get
-            {
-                return this.subscriptionId;
-            }
-        }
-
-        /// <return>Type of the resource.</return>
-        public string ResourceType
-        {
-            get
-            {
-                return this.resourceType;
-            }
-        }
     }
 }
+ 

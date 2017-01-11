@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Service Objective.
@@ -16,25 +16,35 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasName,
         IHasId
     {
-        /// <return>Whether the service level objective is a system service objective.</return>
+        /// <summary>
+        /// Gets whether the service level objective is a system service objective.
+        /// </summary>
         bool IsSystem { get; }
 
-        /// <return>
-        /// Whether the service level objective is the default service
+        /// <summary>
+        /// Gets whether the service level objective is the default service
         /// objective.
-        /// </return>
+        /// </summary>
         bool IsDefault { get; }
 
-        /// <return>Name of the SQL Server to which this replication belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
         string SqlServerName { get; }
 
-        /// <return>The name for the service objective.</return>
+        /// <summary>
+        /// Gets the name for the service objective.
+        /// </summary>
         string ServiceObjectiveName { get; }
 
-        /// <return>The description for the service level objective.</return>
+        /// <summary>
+        /// Gets the description for the service level objective.
+        /// </summary>
         string Description { get; }
 
-        /// <return>Whether the service level objective is enabled.</return>
+        /// <summary>
+        /// Gets whether the service level objective is enabled.
+        /// </summary>
         bool Enabled { get; }
     }
 }

@@ -68,10 +68,8 @@ namespace ManageSqlDatabase
                     // Create a Database in SQL server created above.
                     Console.WriteLine("Creating a database");
 
-                    var database = sqlServer.Databases.Define(databaseName)
-                            .WithoutElasticPool()
-                            .WithoutSourceDatabaseId()
-                            .WithEdition(DatabaseEditions.Basic)
+                    var database = sqlServer.Databases
+                            .Define(databaseName)
                             .Create();
                     Utilities.PrintDatabase(database);
 

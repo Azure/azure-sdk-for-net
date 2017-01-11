@@ -9,18 +9,18 @@ namespace Azure.Tests.Common
     {
         public NetworkTestHelperBase(string testId)
         {
-            this.TEST_ID = testId;
-            PIP_NAMES = new[] { "pipa" + TEST_ID, "pipb" + TEST_ID };
-            GROUP_NAME = "rg" + TEST_ID;
+            this.TestId = testId;
+            PipNames = new[] { "pipa" + TestId, "pipb" + TestId };
+            GroupName = "rg" + TestId;
         }
 
-        public Region REGION = Region.US_WEST;
+        public Region Region = Region.US_WEST;
 
-        public string TEST_ID { get; private set; }
+        public string TestId { get; private set; }
 
-        public string GROUP_NAME { get; private set; }
+        public string GroupName { get; private set; }
 
 
-        public string[] PIP_NAMES { get; private set; }
+        public string[] PipNames { get; private set; }
     }
 }

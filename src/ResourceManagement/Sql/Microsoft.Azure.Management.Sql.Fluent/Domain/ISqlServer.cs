@@ -4,12 +4,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using SqlServer.FirewallRules;
-    using System.Collections.Generic;
-    using Models;
-    using SqlServer.Update;
-    using SqlServer.ElasticPools;
     using SqlServer.Databases;
+    using SqlServer.ElasticPools;
+    using SqlServer.FirewallRules;
+    using SqlServer.Update;
+    using Models;
+    using System.Collections.Generic;
 
     /// <summary>
     /// An immutable client-side representation of an Azure SQL Server.
@@ -18,13 +18,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         IUpdatable<SqlServer.Update.IUpdate>,
-        IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>,
+        IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>,
         IWrapper<Models.ServerInner>
     {
-        /// <return>The administrator login user name for the SQL Server.</return>
+        /// <summary>
+        /// Gets the administrator login user name for the SQL Server.
+        /// </summary>
         string AdministratorLogin { get; }
 
-        /// <return>Entry point to manage Databases in SqlServer.</return>
+        /// <summary>
+        /// Gets entry point to manage Databases in SqlServer.
+        /// </summary>
         SqlServer.Databases.IDatabases Databases { get; }
 
         /// <summary>
@@ -37,10 +41,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>Returns the list of usages (ServerMetric) of Azure SQL Server.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IServerMetric> ListUsages();
 
-        /// <return>Fully qualified name of the SQL Server.</return>
+        /// <summary>
+        /// Gets fully qualified name of the SQL Server.
+        /// </summary>
         string FullyQualifiedDomainName { get; }
 
-        /// <return>Returns entry point to manage ElasticPools in SqlServer.</return>
+        /// <summary>
+        /// Gets returns entry point to manage ElasticPools in SqlServer.
+        /// </summary>
         SqlServer.ElasticPools.IElasticPools ElasticPools { get; }
 
         /// <summary>
@@ -52,10 +60,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>The list of information on all service objectives.</return>
         System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IServiceObjective> ListServiceObjectives();
 
-        /// <return>The version of the SQL Server.</return>
+        /// <summary>
+        /// Gets the version of the SQL Server.
+        /// </summary>
         string Version { get; }
 
-        /// <return>Returns entry point to manage FirewallRules in SqlServer.</return>
+        /// <summary>
+        /// Gets returns entry point to manage FirewallRules in SqlServer.
+        /// </summary>
         SqlServer.FirewallRules.IFirewallRules FirewallRules { get; }
     }
 }

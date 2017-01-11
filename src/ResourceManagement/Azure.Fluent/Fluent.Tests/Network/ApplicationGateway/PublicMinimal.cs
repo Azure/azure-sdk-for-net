@@ -35,9 +35,9 @@ namespace Azure.Tests.Network.ApplicationGateway
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
 
-            resources.Define(applicationGatewayHelper.APP_GATEWAY_NAME)
-                .WithRegion(applicationGatewayHelper.REGION)
-                .WithNewResourceGroup(applicationGatewayHelper.GROUP_NAME)
+            resources.Define(applicationGatewayHelper.AppGatewayName)
+                .WithRegion(applicationGatewayHelper.Region)
+                .WithNewResourceGroup(applicationGatewayHelper.GroupName)
 
                 // Request routing rules
                 .DefineRequestRoutingRule("rule1")

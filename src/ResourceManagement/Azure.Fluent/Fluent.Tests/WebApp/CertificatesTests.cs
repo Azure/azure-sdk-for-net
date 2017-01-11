@@ -11,8 +11,8 @@ namespace Azure.Tests.WebApp
 {
     public class CertificatesTests
     {
-        private static readonly string RG_NAME = "javacsmrg319";
-        private static readonly string CERTIFICATE_NAME = "javagoodcert319";
+        private static readonly string GroupName = "javacsmrg319";
+        private static readonly string CertificateName = "javagoodcert319";
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRDCertificate()
@@ -22,18 +22,18 @@ namespace Azure.Tests.WebApp
                 var keyVaultManager = TestHelper.CreateKeyVaultManager();
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
-                var vault = keyVaultManager.Vaults.GetByGroup(RG_NAME, "bananagraphwebapp319com");
+                var vault = keyVaultManager.Vaults.GetByGroup(GroupName, "bananagraphwebapp319com");
                 var certificate = appServiceManager.AppServiceCertificates.Define("bananacert")
                     .WithRegion(Region.US_WEST)
-                    .WithExistingResourceGroup(RG_NAME)
-                    .WithExistingCertificateOrder(appServiceManager.AppServiceCertificateOrders.GetByGroup(RG_NAME, "graphwebapp319"))
+                    .WithExistingResourceGroup(GroupName)
+                    .WithExistingCertificateOrder(appServiceManager.AppServiceCertificateOrders.GetByGroup(GroupName, "graphwebapp319"))
                     .Create();
                 Assert.NotNull(certificate);
 
                 // CREATE
-                certificate = appServiceManager.AppServiceCertificates.Define(CERTIFICATE_NAME)
+                certificate = appServiceManager.AppServiceCertificates.Define(CertificateName)
                     .WithRegion(Region.US_EAST)
-                    .WithExistingResourceGroup(RG_NAME)
+                    .WithExistingResourceGroup(GroupName)
                     .WithPfxFile("/Users/jianghlu/Documents/code/certs/myserver.Pfx")
                     .WithPfxPassword("StrongPass!123")
                     .Create();

@@ -2,41 +2,49 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using System;
-    using Models;
+    
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-
+    using Models;
+    using System;
 
     internal partial class ElasticPoolActivityImpl 
     {
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasName.Name
         {
             get
             {
-                return this.Name() as string;
+                return this.Name();
             }
         }
 
-        /// <return>The resource ID string.</return>
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
         {
             get
             {
-                return this.Id() as string;
+                return this.Id();
             }
         }
 
-        /// <return>The name of the resource group.</return>
+        /// <summary>
+        /// Gets the name of the resource group.
+        /// </summary>
         string Microsoft.Azure.Management.Resource.Fluent.Core.IHasResourceGroup.ResourceGroupName
         {
             get
             {
-                return this.ResourceGroupName() as string;
+                return this.ResourceGroupName();
             }
         }
 
-        /// <return>The requested min DTU per database if available.</return>
+        /// <summary>
+        /// Gets the requested min DTU per database if available.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.RequestedDatabaseDtuMin
         {
             get
@@ -45,7 +53,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The requested DTU for the pool if available.</return>
+        /// <summary>
+        /// Gets the requested DTU for the pool if available.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.RequestedDtu
         {
             get
@@ -54,7 +64,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The requested max DTU per database if available.</return>
+        /// <summary>
+        /// Gets the requested max DTU per database if available.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.RequestedDatabaseDtuMax
         {
             get
@@ -63,7 +75,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The time the operation finished (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time the operation finished (ISO8601 format).
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.EndTime
         {
             get
@@ -72,25 +86,31 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The current state of the operation.</return>
+        /// <summary>
+        /// Gets the current state of the operation.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.State
         {
             get
             {
-                return this.State() as string;
+                return this.State();
             }
         }
 
-        /// <return>The name of the Azure SQL Server the Elastic Pool is in.</return>
+        /// <summary>
+        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.ServerName
         {
             get
             {
-                return this.ServerName() as string;
+                return this.ServerName();
             }
         }
 
-        /// <return>The error code if available.</return>
+        /// <summary>
+        /// Gets the error code if available.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.ErrorCode
         {
             get
@@ -99,34 +119,42 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The operation name.</return>
+        /// <summary>
+        /// Gets the operation name.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.Operation
         {
             get
             {
-                return this.Operation() as string;
+                return this.Operation();
             }
         }
 
-        /// <return>The requested name for the Elastic Pool if available.</return>
+        /// <summary>
+        /// Gets the requested name for the Elastic Pool if available.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.RequestedElasticPoolName
         {
             get
             {
-                return this.RequestedElasticPoolName() as string;
+                return this.RequestedElasticPoolName();
             }
         }
 
-        /// <return>The name of the Elastic Pool.</return>
+        /// <summary>
+        /// Gets the name of the Elastic Pool.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.ElasticPoolName
         {
             get
             {
-                return this.ElasticPoolName() as string;
+                return this.ElasticPoolName();
             }
         }
 
-        /// <return>The time the operation started (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time the operation started (ISO8601 format).
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.StartTime
         {
             get
@@ -135,16 +163,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The error message if available.</return>
+        /// <summary>
+        /// Gets the error message if available.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.ErrorMessage
         {
             get
             {
-                return this.ErrorMessage() as string;
+                return this.ErrorMessage();
             }
         }
 
-        /// <return>The requested storage limit for the pool in GB if available.</return>
+        /// <summary>
+        /// Gets the requested storage limit for the pool in GB if available.
+        /// </summary>
         long Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.RequestedStorageLimitInGB
         {
             get
@@ -153,7 +185,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The error severity if available.</return>
+        /// <summary>
+        /// Gets the error severity if available.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.ErrorSeverity
         {
             get
@@ -162,7 +196,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The percentage complete if available.</return>
+        /// <summary>
+        /// Gets the percentage complete if available.
+        /// </summary>
         int Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.PercentComplete
         {
             get
@@ -171,12 +207,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The unique operation ID.</return>
+        /// <summary>
+        /// Gets the unique operation ID.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity.OperationId
         {
             get
             {
-                return this.OperationId() as string;
+                return this.OperationId();
             }
         }
     }

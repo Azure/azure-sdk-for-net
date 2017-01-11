@@ -18,25 +18,25 @@ namespace Azure.Tests.Common
         public ApplicationGatewayHelper (string testId)
             : base(testId)
         {
-            APP_GATEWAY_NAME = "ag" + TEST_ID;
+            AppGatewayName = "ag" + TestId;
         }
 
-        public string APP_GATEWAY_NAME { get; private set; }
+        public string AppGatewayName { get; private set; }
 
         public string CreateResourceId(string subscriptionId)
         {
-            return $"/subscriptions/{subscriptionId}/resourceGroups/{GROUP_NAME}/providers/Microsoft.Network/applicationGateways/{APP_GATEWAY_NAME}";
+            return $"/subscriptions/{subscriptionId}/resourceGroups/{GroupName}/providers/Microsoft.Network/applicationGateways/{AppGatewayName}";
         }
 
         // Create VNet for the LB
         public IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i < PIP_NAMES.Length; i++)
+            for (int i = 0; i < PipNames.Length; i++)
             {
-                creatablePips.Add(pips.Define(PIP_NAMES[i])
-                                  .WithRegion(REGION)
-                                  .WithNewResourceGroup(GROUP_NAME));
+                creatablePips.Add(pips.Define(PipNames[i])
+                                  .WithRegion(Region)
+                                  .WithNewResourceGroup(GroupName));
             }
 
             return pips.Create(creatablePips.ToArray());
@@ -51,8 +51,8 @@ namespace Azure.Tests.Common
             var createdVMs = new List<IVirtualMachine>();
             INetwork network = null;
             Region region = Region.US_WEST;
-            string userName = "testuser" + TEST_ID;
-            string availabilitySetName = "as" + TEST_ID;
+            string userName = "testuser" + TestId;
+            string availabilitySetName = "as" + TestId;
 
             foreach (var vmId in vmIds)
             {
@@ -64,13 +64,13 @@ namespace Azure.Tests.Common
                 {
                     // Creating a new VM
                     vm = null;
-                    groupName = "rg" + TEST_ID;
-                    vmName = "vm" + TEST_ID;
+                    groupName = "rg" + TestId;
+                    vmName = "vm" + TestId;
 
                     if (network == null)
                     {
                         // Create a VNet for the VM
-                        network = networks.Define("net" + TEST_ID)
+                        network = networks.Define("net" + TestId)
                             .WithRegion(region)
                             .WithNewResourceGroup(groupName)
                             .WithAddressSpace("10.0.0.0/28")

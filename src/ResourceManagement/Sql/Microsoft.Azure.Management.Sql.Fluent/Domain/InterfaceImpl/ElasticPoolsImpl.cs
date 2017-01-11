@@ -2,14 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Collections.Generic;
-    using SqlServer.ElasticPools;
-    using System.Threading.Tasks;
     using System.Threading;
-    using SqlElasticPools.SqlElasticPoolsCreatable;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using SqlElasticPool.Definition;
+    using SqlElasticPools.SqlElasticPoolsCreatable;
+    using SqlServer.ElasticPools;
+    using Models;
+    using System.Collections.Generic;
 
     internal partial class ElasticPoolsImpl 
     {
@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Delete specified elastic pool in the server.
         /// </summary>
         /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
+        /// <return>Observable for the delete operation.</return>
         async Task SqlServer.ElasticPools.IElasticPools.DeleteAsync(string elasticPoolName, CancellationToken cancellationToken)
         {
  

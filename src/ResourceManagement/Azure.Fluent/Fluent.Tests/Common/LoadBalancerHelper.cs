@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Azure.Tests.Common
 {
@@ -18,27 +19,21 @@ namespace Azure.Tests.Common
         public LoadBalancerHelper(string testId)
             : base(testId)
         {
-            this.LB_NAME = "lb" + TEST_ID; ;
+            this.LoadBalancerName = "lb" + TestId; ;
         }
 
-        public string LB_NAME { get; private set; }
-
-        public string[] VM_IDS =
-            {
-                "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest1",
-                "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest3"
-        };
+        public string LoadBalancerName { get; private set; }
 
         // Create VNet for the LB
         public  IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i < PIP_NAMES.Length; i++)
+            for (int i = 0; i < PipNames.Length; i++)
             {
-                creatablePips.Add(pips.Define(PIP_NAMES[i])
-                                  .WithRegion(REGION)
-                                  .WithNewResourceGroup(GROUP_NAME)
-                                  .WithLeafDomainLabel(PIP_NAMES[i]));
+                creatablePips.Add(pips.Define(PipNames[i])
+                                  .WithRegion(Region)
+                                  .WithNewResourceGroup(GroupName)
+                                  .WithLeafDomainLabel(PipNames[i]));
             }
 
             return pips.Create(creatablePips.ToArray());
@@ -48,69 +43,48 @@ namespace Azure.Tests.Common
         public IEnumerable<IVirtualMachine> EnsureVMs(
             INetworks networks,
             IVirtualMachines vms,
-            params string[] vmIds)
+            IAvailabilitySets availabilitySets,
+            int count)
         {
-            var createdVMs = new List<IVirtualMachine>();
-            INetwork network = null;
-            Region region = Region.US_WEST;
-            string userName = "testuser" + TEST_ID;
-            string availabilitySetName = "as" + TEST_ID;
+            // Create a network for the VMs
+            INetwork network = networks.Define("net" + TestId)
+                .WithRegion(Region)
+                .WithNewResourceGroup(GroupName)
+                .WithAddressSpace("10.0.0.0/28")
+                .WithSubnet("subnet1", "10.0.0.0/29")
+                .WithSubnet("subnet2", "10.0.0.8/29")
+                .Create();
 
-            foreach (var vmId in vmIds)
+            // Define an availability set for the VMs
+            var availabilitySetDefinition = availabilitySets.Define("as" + TestId)
+                .WithRegion(Region)
+                .WithExistingResourceGroup(GroupName);
+
+            // Create the requested number of VM definitions
+            string userName = "testuser" + TestId;
+            List<ICreatable<IVirtualMachine>> vmDefinitions = new List<ICreatable<IVirtualMachine>>();
+
+            for (int i = 0; i < count; i++)
             {
-                string groupName = ResourceUtils.GroupFromResourceId(vmId);
-                string vmName = ResourceUtils.NameFromResourceId(vmId);
-                IVirtualMachine vm = null;
+                string vmName = ResourceUtils.NameFromResourceId("vm");
 
-                if (groupName == null)
-                {
-                    // Creating a new VM
-                    vm = null;
-                    groupName = "rg" + TEST_ID;
-                    vmName = "vm" + TEST_ID;
+                var vm = vms.Define(vmName)
+                    .WithRegion(Region)
+                    .WithExistingResourceGroup(GroupName)
+                    .WithExistingPrimaryNetwork(network)
+                    .WithSubnet(network.Subnets.Values.First().Name)
+                    .WithPrimaryPrivateIpAddressDynamic()
+                    .WithoutPrimaryPublicIpAddress()
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
+                    .WithRootUsername(userName)
+                    .WithRootPassword("Abcdef.123456")
+                    .WithNewAvailabilitySet(availabilitySetDefinition)
+                    .WithSize(VirtualMachineSizeTypes.StandardA1);
 
-                    if (network == null)
-                    {
-                        // Create a VNet for the VM
-                        network = networks.Define("net" + TEST_ID)
-                            .WithRegion(region)
-                            .WithNewResourceGroup(groupName)
-                            .WithAddressSpace("10.0.0.0/28")
-                            .Create();
-                    }
-
-                    vm = vms.Define(vmName)
-                            .WithRegion(Region.US_WEST)
-                            .WithNewResourceGroup(groupName)
-                            .WithExistingPrimaryNetwork(network)
-                            .WithSubnet("subnet1")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
-                            .WithRootUsername(userName)
-                            .WithRootPassword("Abcdef.123456")
-                            .WithNewAvailabilitySet(availabilitySetName)
-                            .WithSize(VirtualMachineSizeTypes.StandardA1)
-                            .Create();
-                }
-                else
-                {
-                    // Getting an existing VM
-                    try
-                    {
-                        vm = vms.GetById(vmId);
-                    }
-                    catch (Exception)
-                    {
-                        vm = null;
-                    }
-                }
-
-                if (vm != null)
-                {
-                    createdVMs.Add(vm);
-                }
+                vmDefinitions.Add(vm);
             }
+
+            var createdVMs = vms.Create(vmDefinitions.ToArray()); 
 
             return createdVMs;
         }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         internal DeploymentOperationImpl(DeploymentOperationInner innerModel, IDeploymentOperationsOperations client) : base(innerModel.Id, innerModel)
         {
             this.client = client;
-            var resourceId = ResourceId.ParseResourceId(innerModel.Id);
+            var resourceId = ResourceId.FromString(innerModel.Id);
 
             resourceGroupName = resourceId.ResourceGroupName;
             deploymentName = resourceId.Name;

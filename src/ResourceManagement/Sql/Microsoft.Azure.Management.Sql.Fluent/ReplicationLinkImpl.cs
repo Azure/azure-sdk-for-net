@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal ReplicationLinkImpl(ReplicationLinkInner innerObject, IDatabasesOperations innerCollection)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
             this.innerCollection = innerCollection;
         }
 

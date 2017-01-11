@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using SqlFirewallRules.SqlFirewallRulesCreatable;
     using Models;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using System.Collections.Generic;
-    using System.Threading;
 
     internal partial class SqlFirewallRulesImpl 
     {

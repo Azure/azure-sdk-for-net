@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Xunit;
@@ -19,6 +20,7 @@ namespace Azure.Tests.Network.LoadBalancer
     {
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
+        private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
@@ -26,6 +28,7 @@ namespace Azure.Tests.Network.LoadBalancer
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
                 INetworks networks,
+                IAvailabilitySets availabilitySets,
                 [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
@@ -33,6 +36,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
             this.pips = pips;
             this.vms = vms;
+            this.availabilitySets = availabilitySets;
             this.networks = networks;
         }
 
@@ -43,16 +47,16 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
             Assert.Equal(2, existingVMs.Count());
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
 
             // Create a load balancer
-            var lb = resources.Define(loadBalancerHelper.LB_NAME)
-                        .WithRegion(loadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(loadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
+                        .WithRegion(loadBalancerHelper.Region)
+                        .WithExistingResourceGroup(loadBalancerHelper.GroupName)
 
                         // Frontends
                         .DefinePublicFrontend("frontend1")
@@ -154,10 +158,13 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
-            Assert.Equal(2, existingVMs.Count());
-            var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
-            var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
+            var nics = new List<INetworkInterface>();
+            foreach (string nicId in resource.Backends["backend1"].BackendNicIpConfigurationNames.Keys)
+            {
+                nics.Add(networks.Manager.NetworkInterfaces.GetById(nicId));
+            }
+            INetworkInterface nic1 = nics[0];
+            INetworkInterface nic2 = nics[1];
 
             // Remove the NIC associations
             nic1.Update()
@@ -186,6 +193,13 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithTag("tag2", "value2")
                         .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+            Assert.Equal(0, resource.InboundNatRules.Count);
+
+            // Verify frontends
+            var frontend = resource.Frontends["frontend1"];
+            Assert.True(frontend.IsPublic);
+            var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
+            Assert.True(existingPips.ElementAt(1).Id.Equals(publicFrontend.PublicIpAddressId, StringComparison.OrdinalIgnoreCase));
 
             return resource;
         }

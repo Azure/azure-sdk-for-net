@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     using Microsoft.Azure.Management.Resource.Fluent;
     using System.Threading.Tasks;
     /// <summary>
-    /// The implementation for {@link GroupableResource}.
+    /// The implementation for GroupableResource.
     /// (Internal use only)
     /// 
     /// @param <FluentModelT> The fluent model type
