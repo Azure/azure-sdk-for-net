@@ -42,14 +42,16 @@ namespace Microsoft.Azure.Management.Analysis
         public AnalysisServicesManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets details about the specified Analysis Services server
+        /// Gets details about the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be a minimum of 3
+        /// characters, and a maximum of 63.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -265,17 +267,19 @@ namespace Microsoft.Azure.Management.Analysis
 
         /// <summary>
         /// Provisions the specified Analysis Services server based on the
-        /// configuration specified in the request
+        /// configuration specified in the request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be a minimum of 3
+        /// characters, and a maximum of 63.
         /// </param>
         /// <param name='serverParameters'>
-        /// Request body for provisioning
+        /// Contains the information used to provision the Analysis Services server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -295,17 +299,19 @@ namespace Microsoft.Azure.Management.Analysis
 
         /// <summary>
         /// Provisions the specified Analysis Services server based on the
-        /// configuration specified in the request
+        /// configuration specified in the request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be a minimum of 3
+        /// characters, and a maximum of 63.
         /// </param>
         /// <param name='serverParameters'>
-        /// Request body for provisioning
+        /// Contains the information used to provision the Analysis Services server.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -556,11 +562,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// Deletes the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -580,11 +588,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// Deletes the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -770,17 +780,19 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Updates the current state of the specified Analysis Services server
+        /// Updates the current state of the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='serverUpdateParameters'>
-        /// Request object for updating the server
+        /// Request object that contains the updated information for the server.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1006,14 +1018,16 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Supends the specified Analysis Services server instance
+        /// Supends operation of the specified Analysis Services server instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1030,14 +1044,16 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Supends the specified Analysis Services server instance
+        /// Supends operation of the specified Analysis Services server instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1223,14 +1239,16 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Resumes the specified Analysis Services server instance
+        /// Resumes operation of the specified Analysis Services server instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1247,14 +1265,16 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Resumes the specified Analysis Services server instance
+        /// Resumes operation of the specified Analysis Services server instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3 characters
+        /// in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1440,11 +1460,12 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Gets all the Analysis Services servers for the given resource group
+        /// Gets all the Analysis Services servers for the given resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services server is
-        /// part of.
+        /// The name of the Azure Resource group of which a given Analysis Services
+        /// server is part. This name must be at least 1 character in length, and no
+        /// more than 90.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1638,7 +1659,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// List all the Analysis Services servers for the given subscription
+        /// Lists all the Analysis Services servers for the given subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

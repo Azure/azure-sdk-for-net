@@ -71,7 +71,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
+           
+            Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
         }
 
@@ -109,7 +110,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
+            Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
         }
 
@@ -160,7 +161,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
+            Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
         }
 
@@ -284,7 +285,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
-                                        'provisioningState': 'Succeeded',
+                                        'state': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server1',
                                         'asAdministrators': {
                                             'members': [
@@ -308,7 +309,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
-                                        'provisioningState': 'Succeeded',
+                                        'state': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server2',
                                         'asAdministrators': {
                                             'members': [
@@ -373,7 +374,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
-                                        'provisioningState': 'Succeeded',
+                                        'state': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server1',
                                         'asAdministrators': {
                                             'members': [
@@ -397,7 +398,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                         'Key2': 'Value2'
                                     },
                                     'properties': {
-                                        'provisioningState': 'Succeeded',
+                                        'state': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server2',
                                         'asAdministrators': {
                                             'members': [
@@ -449,7 +450,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(createdResource.Name, referenceResource.Name);
             Assert.Equal(createdResource.Id, referenceResource.Id);
             Assert.Equal(createdResource.Type, referenceResource.Type);
-            Assert.Equal(createdResource.ProvisioningState, referenceResource.ProvisioningState);
+            Assert.Equal(createdResource.State, referenceResource.State);
             Assert.Equal(createdResource.ServerFullName, referenceResource.ServerFullName);
             Assert.Equal(createdResource.AsAdministrators, referenceResource.AsAdministrators);
         }
