@@ -30,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
@@ -822,6 +823,34 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
                     virtualIPNameElement.Value = parameters.VirtualIPName;
                     reservedIPElement.Add(virtualIPNameElement);
+                }
+                
+                if (parameters.IPTags != null)
+                {
+                    if (parameters.IPTags is ILazyCollection == false || ((ILazyCollection)parameters.IPTags).IsInitialized)
+                    {
+                        XElement iPTagsSequenceElement = new XElement(XName.Get("IPTags", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (IPTag iPTagsItem in parameters.IPTags)
+                        {
+                            XElement iPTagElement = new XElement(XName.Get("IPTag", "http://schemas.microsoft.com/windowsazure"));
+                            iPTagsSequenceElement.Add(iPTagElement);
+                            
+                            if (iPTagsItem.TagType != null)
+                            {
+                                XElement tagTypeElement = new XElement(XName.Get("TagType", "http://schemas.microsoft.com/windowsazure"));
+                                tagTypeElement.Value = iPTagsItem.TagType;
+                                iPTagElement.Add(tagTypeElement);
+                            }
+                            
+                            if (iPTagsItem.Value != null)
+                            {
+                                XElement valueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                valueElement.Value = iPTagsItem.Value;
+                                iPTagElement.Add(valueElement);
+                            }
+                        }
+                        reservedIPElement.Add(iPTagsSequenceElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -1875,6 +1904,30 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 string virtualIPNameInstance = virtualIPNameElement.Value;
                                 result.VirtualIPName = virtualIPNameInstance;
                             }
+                            
+                            XElement iPTagsSequenceElement = reservedIPElement.Element(XName.Get("IPTags", "http://schemas.microsoft.com/windowsazure"));
+                            if (iPTagsSequenceElement != null)
+                            {
+                                foreach (XElement iPTagsElement in iPTagsSequenceElement.Elements(XName.Get("IPTag", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    IPTag iPTagInstance = new IPTag();
+                                    result.IPTags.Add(iPTagInstance);
+                                    
+                                    XElement tagTypeElement = iPTagsElement.Element(XName.Get("TagType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (tagTypeElement != null)
+                                    {
+                                        string tagTypeInstance = tagTypeElement.Value;
+                                        iPTagInstance.TagType = tagTypeInstance;
+                                    }
+                                    
+                                    XElement valueElement = iPTagsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                    if (valueElement != null)
+                                    {
+                                        string valueInstance = valueElement.Value;
+                                        iPTagInstance.Value = valueInstance;
+                                    }
+                                }
+                            }
                         }
                         
                     }
@@ -2079,6 +2132,30 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 {
                                     string virtualIPNameInstance = virtualIPNameElement.Value;
                                     reservedIPInstance.VirtualIPName = virtualIPNameInstance;
+                                }
+                                
+                                XElement iPTagsSequenceElement = reservedIPsElement.Element(XName.Get("IPTags", "http://schemas.microsoft.com/windowsazure"));
+                                if (iPTagsSequenceElement != null)
+                                {
+                                    foreach (XElement iPTagsElement in iPTagsSequenceElement.Elements(XName.Get("IPTag", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        IPTag iPTagInstance = new IPTag();
+                                        reservedIPInstance.IPTags.Add(iPTagInstance);
+                                        
+                                        XElement tagTypeElement = iPTagsElement.Element(XName.Get("TagType", "http://schemas.microsoft.com/windowsazure"));
+                                        if (tagTypeElement != null)
+                                        {
+                                            string tagTypeInstance = tagTypeElement.Value;
+                                            iPTagInstance.TagType = tagTypeInstance;
+                                        }
+                                        
+                                        XElement valueElement = iPTagsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                        if (valueElement != null)
+                                        {
+                                            string valueInstance = valueElement.Value;
+                                            iPTagInstance.Value = valueInstance;
+                                        }
+                                    }
                                 }
                             }
                         }
