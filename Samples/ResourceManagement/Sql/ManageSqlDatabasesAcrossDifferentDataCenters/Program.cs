@@ -76,8 +76,6 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     Console.WriteLine("Creating a database");
 
                     var masterDatabase = masterSqlServer.Databases.Define(databaseName)
-                            .WithoutElasticPool()
-                            .WithoutSourceDatabaseId()
                             .WithEdition(DatabaseEditions.Basic)
                             .Create();
                     Utilities.PrintDatabase(masterDatabase);
@@ -94,7 +92,6 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                     Console.WriteLine("Creating database in slave SQL Server.");
                     var secondaryDatabase = sqlServerInSecondaryLocation.Databases.Define(databaseName)
-                            .WithoutElasticPool()
                             .WithSourceDatabase(masterDatabase)
                             .WithMode(CreateMode.OnlineSecondary)
                             .Create();
@@ -111,7 +108,6 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                     Console.WriteLine("Creating database in second slave SQL Server.");
                     var secondaryDatabaseInEurope = sqlServerInEurope.Databases.Define(databaseName)
-                            .WithoutElasticPool()
                             .WithSourceDatabase(masterDatabase)
                             .WithMode(CreateMode.OnlineSecondary)
                             .Create();

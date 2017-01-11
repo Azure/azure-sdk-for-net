@@ -18,6 +18,7 @@ namespace Azure.Tests.Network.LoadBalancer
     public class InternalMinimal : TestTemplate<ILoadBalancer, ILoadBalancers>
     {
         private IVirtualMachines vms;
+        private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private INetwork network;
         private LoadBalancerHelper loadBalancerHelper;
@@ -25,12 +26,14 @@ namespace Azure.Tests.Network.LoadBalancer
         public InternalMinimal(
             IVirtualMachines vms,
             INetworks networks,
+			IAvailabilitySets availabilitySets,
             [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(methodName);
             this.vms = vms;
             this.networks = networks;
+			this.availabilitySets = availabilitySets;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -40,19 +43,15 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
-            this.network = this.networks.Define("net" + loadBalancerHelper.TEST_ID)
-                    .WithRegion(loadBalancerHelper.REGION)
-                    .WithNewResourceGroup(loadBalancerHelper.GROUP_NAME)
-                    .WithAddressSpace("10.0.0.0/28")
-                    .WithSubnet("subnet1", "10.0.0.0/29")
-                    .WithSubnet("subnet2", "10.0.0.8/29")
-                    .Create();
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            
+            // Must use the same VNet as the VMs
+            this.network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
 
             // Create a load balancer
-            var lb = resources.Define(loadBalancerHelper.LB_NAME)
-                        .WithRegion(loadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(loadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
+                        .WithRegion(loadBalancerHelper.Region)
+                        .WithExistingResourceGroup(loadBalancerHelper.GroupName)
                         // Frontend (default)
                         .WithFrontendSubnet(network, "subnet1")
                         // Backend (default)
@@ -65,15 +64,58 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithLoadBalancingRule(80, TransportProtocol.Tcp)
                         .Create();
 
-            //TODO Assert.True(lb.backends.ContainsKey("default"));
+            // Verify frontends
             Assert.True(lb.Frontends.ContainsKey("default"));
+            var frontend = lb.Frontends["default"];
+            Assert.Equal(1, frontend.LoadBalancingRules.Count);
+            Assert.True("default".Equals(frontend.LoadBalancingRules.Values.First().Name, StringComparison.OrdinalIgnoreCase));
+            Assert.False(frontend.IsPublic);
+            var privateFrontend = (ILoadBalancerPrivateFrontend)frontend;
+            Assert.True(network.Id.Equals(privateFrontend.NetworkId, StringComparison.OrdinalIgnoreCase));
+            Assert.NotNull(privateFrontend.PrivateIpAddress);
+            Assert.True("subnet1".Equals(privateFrontend.SubnetName, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(IPAllocationMethod.Dynamic, privateFrontend.PrivateIpAllocationMethod);
+
+            // Verify TCP probes
             Assert.True(lb.TcpProbes.ContainsKey("default"));
+            Assert.Equal(1, lb.TcpProbes.Count);
+            var tcpProbe = lb.TcpProbes["default"];
+            Assert.True(tcpProbe.LoadBalancingRules.ContainsKey("default"));
+            Assert.Equal(1, tcpProbe.LoadBalancingRules.Count);
+            Assert.Equal(22, tcpProbe.Port);
+            Assert.Equal(ProbeProtocol.Tcp, tcpProbe.Protocol);
+
+            // Verify rules
+            Assert.Equal(1, lb.LoadBalancingRules.Count);
             Assert.True(lb.LoadBalancingRules.ContainsKey("default"));
 
             var lbrule = lb.LoadBalancingRules["default"];
-            Assert.True(lbrule.Frontend.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
-            //TODO Assert.True(lbrule.backend.Name.Equals("default",  StringComparison.OrdinalIgnoreCase));
-            Assert.True(lbrule.Probe.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
+            Assert.True("default".Equals(lbrule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.True("default".Equals(lbrule.Probe.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(80, lbrule.BackendPort);
+            Assert.NotNull(lbrule.Frontend);
+            Assert.True("default".Equals(lbrule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(80, lbrule.FrontendPort);
+            Assert.NotNull(lbrule.Probe);
+            Assert.True("default".Equals(lbrule.Probe.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(TransportProtocol.Tcp.ToString(), lbrule.Protocol);
+            Assert.NotNull(lbrule.Backend);
+            Assert.True("default".Equals(lbrule.Backend.Name, StringComparison.OrdinalIgnoreCase));
+
+            // Verify backends
+            Assert.Equal(2, lb.Backends.Count);
+
+            var backend = lb.Backends["foo"];
+            Assert.NotNull(backend);
+            Assert.Equal(0, backend.BackendNicIpConfigurationNames.Count);
+
+            backend = lb.Backends["default"];
+            Assert.NotNull(backend);
+            Assert.Equal(2, backend.BackendNicIpConfigurationNames.Count);
+            foreach (IVirtualMachine vm in existingVMs)
+            {
+                Assert.True(backend.BackendNicIpConfigurationNames.ContainsKey(vm.PrimaryNetworkInterfaceId));
+            }
 
             return lb;
         }
@@ -111,24 +153,49 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithTag("tag2", "value2")
                         .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
-            Assert.Equal(resource.TcpProbes["default"].Port, 22);
-            Assert.Equal(resource.HttpProbes["httpprobe"].NumberOfProbes, 3);
+
+            // Verify frontends
+            Assert.Equal(1, resource.Frontends.Count);
+            var frontend = resource.Frontends["default"];
+            Assert.False(frontend.IsPublic);
+            var privateFrontend = (ILoadBalancerPrivateFrontend)frontend;
+            Assert.True("subnet2".Equals(privateFrontend.SubnetName, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(IPAllocationMethod.Static, privateFrontend.PrivateIpAllocationMethod);
+            Assert.True("10.0.0.13".Equals(privateFrontend.PrivateIpAddress, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(2, privateFrontend.LoadBalancingRules.Count);
+
+            // Verify probes
+            var tcpProbe = resource.TcpProbes["default"];
+            Assert.NotNull(tcpProbe);
+            Assert.Equal(22, tcpProbe.Port);
+
+            var httpProbe = resource.HttpProbes["httpprobe"];
+            Assert.NotNull(httpProbe);
+            Assert.Equal(3, httpProbe.NumberOfProbes);
+            Assert.True("/foo".Equals(httpProbe.RequestPath, StringComparison.OrdinalIgnoreCase));
+            Assert.True(httpProbe.LoadBalancingRules.ContainsKey("lbrule2"));
+
+            // Verify backends
             Assert.True(resource.Backends.ContainsKey("backend2"));
             Assert.True(!resource.Backends.ContainsKey("default"));
 
+            // Verify load balancing rules
             var lbRule = resource.LoadBalancingRules["default"];
             Assert.NotNull(lbRule);
-            Assert.Equal(lbRule.Backend, null);
-            Assert.Equal(lbRule.BackendPort, 8080);
-            Assert.True(lbRule.Frontend.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
-
-            var frontend = resource.Frontends["default"];
-            Assert.True(!frontend.IsPublic);
-            Assert.True(lbRule.Probe.Name.Equals("default", StringComparison.OrdinalIgnoreCase));
+            Assert.Null(lbRule.Backend);
+            Assert.Equal(8080, lbRule.BackendPort);
+            Assert.True("default".Equals(lbRule.Frontend.Name));
+            Assert.Equal(11, lbRule.IdleTimeoutInMinutes);
 
             lbRule = resource.LoadBalancingRules["lbrule2"];
             Assert.NotNull(lbRule);
-            Assert.Equal(lbRule.FrontendPort, 22);
+            Assert.Equal(22, lbRule.FrontendPort);
+            Assert.NotNull(lbRule.Frontend);
+            Assert.True("default".Equals(lbRule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.True("httpprobe".Equals(lbRule.Probe.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.True(TransportProtocol.Udp.ToString().Equals(lbRule.Protocol, StringComparison.OrdinalIgnoreCase));
+            Assert.NotNull(lbRule.Backend);
+            Assert.True("backend2".Equals(lbRule.Backend.Name, StringComparison.OrdinalIgnoreCase));
 
             return resource;
         }

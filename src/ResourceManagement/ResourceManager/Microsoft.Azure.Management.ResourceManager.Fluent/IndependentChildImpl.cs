@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         {
             if (this.Id != null)
             {
-                this.parentName = ResourceId.ParseResourceId(this.Id).Parent.Name;
+                this.parentName = ResourceId.FromString(this.Id).Parent.Name;
             }
         }
 

@@ -16,21 +16,21 @@ namespace Azure.Tests.WebApp
 {
     public class SourceControlTests
     {
-        [Fact(Skip ="Failing at 31")]
+        [Fact(Skip = "Failing at 31")]
         public async Task CanDeploySourceControl()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                var rgName = TestUtilities.GenerateName("javacsmrg");
-                var webAppName = TestUtilities.GenerateName("java-webapp-");
-                var appServicePlanName = TestUtilities.GenerateName("java-asp-");
+                var GroupName = TestUtilities.GenerateName("javacsmrg");
+                var WebAppName = TestUtilities.GenerateName("java-webapp-");
+                var AppServicePlanName = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
                 // Create web app
-                var webApp = appServiceManager.WebApps.Define(webAppName)
-                    .WithNewResourceGroup(rgName)
-                    .WithNewAppServicePlan(appServicePlanName)
+                var webApp = appServiceManager.WebApps.Define(WebAppName)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.US_WEST)
                     .WithPricingTier(AppServicePricingTier.Standard_S1)
                     .DefineSourceControl()
@@ -39,7 +39,7 @@ namespace Azure.Tests.WebApp
                         .Attach()
                     .Create();
                 Assert.NotNull(webApp);
-                var response = await CheckAddress($"http://{webAppName}.azurewebsites.Net");
+                var response = await CheckAddress("http://" + WebAppName + "." + "azurewebsites.Net");
                 Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
 
                 var body = await response.Content.ReadAsStringAsync();

@@ -20,11 +20,11 @@ namespace Azure.Tests.Redis
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                var rgName = TestUtilities.GenerateName("javacsmrg");
-                var rgNameSecond = rgName + "Second";
-                var rrName = TestUtilities.GenerateName("javacsmrc");
-                var rrNameSecond = rrName + "Second";
-                var rrNameThird = rrName + "Third";
+                var GroupName = TestUtilities.GenerateName("javacsmrg");
+                var GroupName2 = GroupName + "Second";
+                var CacheName = TestUtilities.GenerateName("javacsmrc");
+                var CacheName2 = CacheName + "Second";
+                var CacheName3 = CacheName + "Third";
                 var storageAccountName = TestUtilities.GenerateName("javacsmsa");
 
                 try
@@ -33,19 +33,19 @@ namespace Azure.Tests.Redis
                     
                     // Create
                     var resourceGroup = redisManager.ResourceManager.ResourceGroups
-                                            .Define(rgNameSecond)
+                                            .Define(GroupName2)
                                             .WithRegion(Region.US_CENTRAL)
                                             .Create();
 
                     var redisCacheDefinition1 = redisManager.RedisCaches
-                            .Define(rrName)
+                            .Define(CacheName)
                             .WithRegion(Region.ASIA_EAST)
-                            .WithNewResourceGroup(rgName)
+                            .WithNewResourceGroup(GroupName)
                             .WithBasicSku()
                             .Create();
 
                     var redisCacheDefinition2 = redisManager.RedisCaches
-                            .Define(rrNameSecond)
+                            .Define(CacheName2)
                             .WithRegion(Region.US_CENTRAL)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithPremiumSku()
@@ -54,7 +54,7 @@ namespace Azure.Tests.Redis
                             .Create();
 
                     var redisCacheDefinition3 = redisManager.RedisCaches
-                            .Define(rrNameThird)
+                            .Define(CacheName3)
                             .WithRegion(Region.US_CENTRAL)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithPremiumSku(2)
@@ -64,13 +64,13 @@ namespace Azure.Tests.Redis
 
                     var redisCache = redisCacheDefinition1;
                     var redisCachePremium = redisCacheDefinition3;
-                    Assert.Equal(rgName, redisCache.ResourceGroupName);
+                    Assert.Equal(GroupName, redisCache.ResourceGroupName);
                     Assert.Equal(SkuName.Basic, redisCache.Sku.Name);
 
                     // List by Resource Group
-                    var redisCaches = redisManager.RedisCaches.ListByGroup(rgName);
+                    var redisCaches = redisManager.RedisCaches.ListByGroup(GroupName);
 
-                    if (!redisCaches.Any(r => r.Name.Equals(rrName, StringComparison.OrdinalIgnoreCase)))
+                    if (!redisCaches.Any(r => r.Name.Equals(CacheName, StringComparison.OrdinalIgnoreCase)))
                     {
                         Assert.True(false);
                     }
@@ -79,14 +79,14 @@ namespace Azure.Tests.Redis
                     // List all Redis resources
                     redisCaches = redisManager.RedisCaches.List();
 
-                    if (!redisCaches.Any(r => r.Name.Equals(rrName, StringComparison.OrdinalIgnoreCase)))
+                    if (!redisCaches.Any(r => r.Name.Equals(CacheName, StringComparison.OrdinalIgnoreCase)))
                     {
                         Assert.True(false);
                     }
                     Assert.Equal(3, redisCaches.Count);
 
                     // Get
-                    var redisCacheGet = redisManager.RedisCaches.GetByGroup(rgName, rrName);
+                    var redisCacheGet = redisManager.RedisCaches.GetByGroup(GroupName, CacheName);
                     Assert.NotNull(redisCacheGet);
                     Assert.Equal(redisCache.Id, redisCacheGet.Id);
                     Assert.Equal(redisCache.ProvisioningState, redisCacheGet.ProvisioningState);
@@ -195,13 +195,13 @@ namespace Azure.Tests.Redis
                 {
                     try
                     {
-                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(GroupName);
                     }
                     catch
                     { }
                     try
                     {
-                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgNameSecond);
+                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(GroupName2);
                     }
                     catch
                     { }

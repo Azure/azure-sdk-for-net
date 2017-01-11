@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:7FD5A8D2A26E9E6B12E7585A7DBE1CE3:9055AAEF8F9A4DFD881586C59581634F
-        public IEnumerable<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISloUsageMetric> ServiceLevelObjectiveUsageMetrics()
         {
             if (sloUsageMetrics == null)
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         internal ServiceTierAdvisorImpl(ServiceTierAdvisorInner innerObject, IDatabasesOperations databasesInner)
             : base(innerObject)
         {
-            this.resourceId = ResourceId.ParseResourceId(this.Inner.Id);
+            this.resourceId = ResourceId.FromString(this.Inner.Id);
             this.databasesInner = databasesInner;
         }
 

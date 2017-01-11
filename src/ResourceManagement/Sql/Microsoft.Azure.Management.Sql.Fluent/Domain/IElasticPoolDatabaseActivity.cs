@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
     using System;
 
     /// <summary>
@@ -15,49 +15,79 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IHasName,
         IHasId
     {
-        /// <return>The database name.</return>
+        /// <summary>
+        /// Gets the database name.
+        /// </summary>
         string DatabaseName { get; }
 
-        /// <return>The name of the current Elastic Pool the database is in if available.</return>
+        /// <summary>
+        /// Gets the name of the current Elastic Pool the database is in if available.
+        /// </summary>
         string CurrentElasticPoolName { get; }
 
-        /// <return>The error message if available.</return>
+        /// <summary>
+        /// Gets the error message if available.
+        /// </summary>
         string ErrorMessage { get; }
 
-        /// <return>The error severity if available.</return>
+        /// <summary>
+        /// Gets the error severity if available.
+        /// </summary>
         int ErrorSeverity { get; }
 
-        /// <return>The error code if available.</return>
+        /// <summary>
+        /// Gets the error code if available.
+        /// </summary>
         int ErrorCode { get; }
 
-        /// <return>The name of the Azure SQL Server the Elastic Pool is in.</return>
+        /// <summary>
+        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
+        /// </summary>
         string ServerName { get; }
 
-        /// <return>The percentage complete if available.</return>
+        /// <summary>
+        /// Gets the percentage complete if available.
+        /// </summary>
         int PercentComplete { get; }
 
-        /// <return>The name of the current service objective if available.</return>
+        /// <summary>
+        /// Gets the name of the current service objective if available.
+        /// </summary>
         string CurrentServiceObjective { get; }
 
-        /// <return>The name for the Elastic Pool the database is moving into if available.</return>
+        /// <summary>
+        /// Gets the name for the Elastic Pool the database is moving into if available.
+        /// </summary>
         string RequestedElasticPoolName { get; }
 
-        /// <return>The name of the requested service objective if available.</return>
+        /// <summary>
+        /// Gets the name of the requested service objective if available.
+        /// </summary>
         string RequestedServiceObjective { get; }
 
-        /// <return>The unique operation ID.</return>
+        /// <summary>
+        /// Gets the unique operation ID.
+        /// </summary>
         string OperationId { get; }
 
-        /// <return>The time the operation started (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time the operation started (ISO8601 format).
+        /// </summary>
         System.DateTime StartTime { get; }
 
-        /// <return>The time the operation finished (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the time the operation finished (ISO8601 format).
+        /// </summary>
         System.DateTime EndTime { get; }
 
-        /// <return>The current state of the operation.</return>
+        /// <summary>
+        /// Gets the current state of the operation.
+        /// </summary>
         string State { get; }
 
-        /// <return>The operation name.</return>
+        /// <summary>
+        /// Gets the operation name.
+        /// </summary>
         string Operation { get; }
     }
 }

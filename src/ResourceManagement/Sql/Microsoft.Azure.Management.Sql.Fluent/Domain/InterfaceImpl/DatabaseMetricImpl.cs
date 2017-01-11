@@ -2,13 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
     using System;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     internal partial class DatabaseMetricImpl 
     {
-        /// <return>The current limit of the metric.</return>
+        /// <summary>
+        /// Gets the current limit of the metric.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.Limit
         {
             get
@@ -17,25 +19,31 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The metric display name.</return>
+        /// <summary>
+        /// Gets the metric display name.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.DisplayName
         {
             get
             {
-                return this.DisplayName() as string;
+                return this.DisplayName();
             }
         }
 
-        /// <return>The name of the resource.</return>
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.ResourceName
         {
             get
             {
-                return this.ResourceName() as string;
+                return this.ResourceName();
             }
         }
 
-        /// <return>The current value of the metric.</return>
+        /// <summary>
+        /// Gets the current value of the metric.
+        /// </summary>
         double Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.CurrentValue
         {
             get
@@ -44,16 +52,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>The units of the metric.</return>
+        /// <summary>
+        /// Gets the units of the metric.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.Unit
         {
             get
             {
-                return this.Unit() as string;
+                return this.Unit();
             }
         }
 
-        /// <return>The next reset time for the metric (ISO8601 format).</return>
+        /// <summary>
+        /// Gets the next reset time for the metric (ISO8601 format).
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Sql.Fluent.IDatabaseMetric.NextResetTime
         {
             get

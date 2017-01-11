@@ -21,15 +21,15 @@ namespace Fluent.Tests.Compute
 {
     public class VirtualMachineTests
     {
-        private const string LOCATION = "southcentralus";
-        private const string VMNAME = "chashvm";
+        private const string Location = "southcentralus";
+        private const string VMName = "chashvm";
 
         [Fact]
         public void CanCreateVirtualMachine()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var rgName = TestUtilities.GenerateName("rgfluentchash-");
+                var GroupName = TestUtilities.GenerateName("rgfluentchash-");
                 var computeManager = TestHelper.CreateComputeManager();
                 var resourceManager = TestHelper.CreateResourceManager();
 
@@ -37,9 +37,9 @@ namespace Fluent.Tests.Compute
                 {
                     // Create
                     var vm = computeManager.VirtualMachines
-                        .Define(VMNAME)
-                        .WithRegion(LOCATION)
-                        .WithNewResourceGroup(rgName)
+                        .Define(VMName)
+                        .WithRegion(Location)
+                        .WithNewResourceGroup(GroupName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
@@ -51,15 +51,15 @@ namespace Fluent.Tests.Compute
                         .WithOsDiskName("javatest")
                         .Create();
 
-                    var foundedVM = computeManager.VirtualMachines.ListByGroup(rgName)
-                        .FirstOrDefault(v => v.Name.Equals(VMNAME, StringComparison.OrdinalIgnoreCase));
+                    var foundedVM = computeManager.VirtualMachines.ListByGroup(GroupName)
+                        .FirstOrDefault(v => v.Name.Equals(VMName, StringComparison.OrdinalIgnoreCase));
 
                     Assert.NotNull(foundedVM);
-                    Assert.Equal(LOCATION, foundedVM.RegionName);
+                    Assert.Equal(Location, foundedVM.RegionName);
                     // Get
-                    foundedVM = computeManager.VirtualMachines.GetByGroup(rgName, VMNAME);
+                    foundedVM = computeManager.VirtualMachines.GetByGroup(GroupName, VMName);
                     Assert.NotNull(foundedVM);
-                    Assert.Equal(LOCATION, foundedVM.RegionName);
+                    Assert.Equal(Location, foundedVM.RegionName);
 
                     // Fetch instance view
                     PowerState powerState = foundedVM.PowerState;
@@ -71,7 +71,7 @@ namespace Fluent.Tests.Compute
                     // Capture the VM [Requires VM to be Poweroff and generalized]
                     foundedVM.PowerOff();
                     foundedVM.Generalize();
-                    var jsonResult = foundedVM.Capture("capturedvhds", "cpt", true);
+                    var jsonResult = foundedVM.Capture("capturedVhds", "cpt", true);
                     Assert.NotNull(jsonResult);
 
                     // Delete VM
@@ -79,7 +79,7 @@ namespace Fluent.Tests.Compute
                 }
                 finally
                 {
-                    resourceManager.ResourceGroups.DeleteByName(rgName);
+                    resourceManager.ResourceGroups.DeleteByName(GroupName);
                 }
             }
         }

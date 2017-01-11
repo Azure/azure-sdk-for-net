@@ -6,6 +6,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
     using Microsoft.Azure.Management.Sql.Fluent;
 
     /// <summary>
+    /// The template for a SQLServer update operation, containing all the settings that can be modified.
+    /// </summary>
+    public interface IUpdate  :
+        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
+        IWithAdministratorPassword,
+        IWithElasticPool,
+        IWithDatabase,
+        IWithFirewallRule
+    {
+    }
+
+    /// <summary>
     /// A SQL Server definition for specifying the firewall rule.
     /// </summary>
     public interface IWithFirewallRule 
@@ -40,6 +52,26 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
         /// <param name="firewallRuleName">Name for the firewall rule.</param>
         /// <return>Next stage of the SQL Server update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string startIpAddress, string endIpAddress, string firewallRuleName);
+    }
+
+    /// <summary>
+    /// A SQL Server definition for specifying the databases.
+    /// </summary>
+    public interface IWithDatabase 
+    {
+        /// <summary>
+        /// Remove database from the SQL Server.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to be removed.</param>
+        /// <return>Next stage of the SQL Server update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutDatabase(string databaseName);
+
+        /// <summary>
+        /// Create new database in the SQL Server.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to be created.</param>
+        /// <return>Next stage of the SQL Server update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewDatabase(string databaseName);
     }
 
     /// <summary>
@@ -83,37 +115,5 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
         /// <param name="administratorLoginPassword">Password for administrator login.</param>
         /// <return>Next stage of the update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithAdministratorPassword(string administratorLoginPassword);
-    }
-
-    /// <summary>
-    /// A SQL Server definition for specifying the databases.
-    /// </summary>
-    public interface IWithDatabase 
-    {
-        /// <summary>
-        /// Remove database from the SQL Server.
-        /// </summary>
-        /// <param name="databaseName">Name of the database to be removed.</param>
-        /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutDatabase(string databaseName);
-
-        /// <summary>
-        /// Create new database in the SQL Server.
-        /// </summary>
-        /// <param name="databaseName">Name of the database to be created.</param>
-        /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewDatabase(string databaseName);
-    }
-
-    /// <summary>
-    /// The template for a SQLServer update operation, containing all the settings that can be modified.
-    /// </summary>
-    public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        IWithAdministratorPassword,
-        IWithElasticPool,
-        IWithDatabase,
-        IWithFirewallRule
-    {
     }
 }

@@ -23,49 +23,49 @@ namespace Azure.Tests.WebApp
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                string RG_NAME = TestUtilities.GenerateName("javacsmrg");
-                string WEBAPP_NAME = TestUtilities.GenerateName("java-webapp-");
-                string APP_SERVICE_PLAN_NAME = TestUtilities.GenerateName("java-asp-");
+                string GroupName = TestUtilities.GenerateName("javacsmrg");
+                string WebAppName = TestUtilities.GenerateName("java-webapp-");
+                string AppServicePlanName = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
                 var domain = appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com");
                 var certificateOrder = appServiceManager.AppServiceCertificateOrders.GetByGroup("javacsmrg9b9912262", "graphdmcert7720");
 
                 // hostname binding
-                appServiceManager.WebApps.Define(WEBAPP_NAME)
-                    .WithNewResourceGroup(RG_NAME)
-                    .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
+                appServiceManager.WebApps.Define(WebAppName)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.US_WEST)
                     .WithPricingTier(AppServicePricingTier.Basic_B1)
                     .DefineHostnameBinding()
                         .WithAzureManagedDomain(domain)
-                        .WithSubDomain(WEBAPP_NAME)
+                        .WithSubDomain(WebAppName)
                         .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
                         .Attach()
                     .Create();
 
-                var webApp = appServiceManager.WebApps.GetByGroup(RG_NAME, WEBAPP_NAME);
+                var webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
                 Assert.NotNull(webApp);
 
-                var response = await CheckAddress("http://" + WEBAPP_NAME + "." + domain.Name);
+                var response = await CheckAddress("http://" + WebAppName + "." + domain.Name);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
 
                 // hostname binding shortcut
                 webApp.Update()
-                        .WithManagedHostnameBindings(domain, WEBAPP_NAME + "-1", WEBAPP_NAME + "-2")
+                        .WithManagedHostnameBindings(domain, WebAppName + "-1", WebAppName + "-2")
                         .Apply();
-                response = await CheckAddress("http://" + WEBAPP_NAME + "-1." + domain.Name);
+                response = await CheckAddress("http://" + WebAppName + "-1." + domain.Name);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
-                response = await CheckAddress("http://" + WEBAPP_NAME + "-2." + domain.Name);
+                response = await CheckAddress("http://" + WebAppName + "-2." + domain.Name);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(await response.Content.ReadAsStringAsync());
 
                 // SSL binding
                 webApp.Update()
                         .DefineSslBinding()
-                            .ForHostname(WEBAPP_NAME + "." + domain.Name)
+                            .ForHostname(WebAppName + "." + domain.Name)
                             .WithExistingAppServiceCertificateOrder(certificateOrder)
                             .WithSniBasedSsl()
                             .Attach()
@@ -76,7 +76,7 @@ namespace Azure.Tests.WebApp
                 {
                     try
                     {
-                        response = await CheckAddress("https://" + WEBAPP_NAME + "." + domain.Name);
+                        response = await CheckAddress("https://" + WebAppName + "." + domain.Name);
                     }
                     catch (Exception)
                     {

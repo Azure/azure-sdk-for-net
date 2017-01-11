@@ -17,16 +17,16 @@ namespace Azure.Tests.WebApp
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                string RG_NAME = TestUtilities.GenerateName("javacsmrg");
-                string APP_SERVICE_PLAN_NAME = TestUtilities.GenerateName("java-asp-");
+                string GroupName = TestUtilities.GenerateName("javacsmrg");
+                string AppServicePlanName = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
                 // CREATE
                 var appServicePlan = appServiceManager.AppServicePlans
-                    .Define(APP_SERVICE_PLAN_NAME)
+                    .Define(AppServicePlanName)
                     .WithRegion(Region.US_WEST)
-                    .WithNewResourceGroup(RG_NAME)
+                    .WithNewResourceGroup(GroupName)
                     .WithPricingTier(AppServicePricingTier.Premium_P1)
                     .WithPerSiteScaling(false)
                     .WithCapacity(2)
@@ -38,13 +38,13 @@ namespace Azure.Tests.WebApp
                 Assert.Equal(0, appServicePlan.NumberOfWebApps);
                 Assert.Equal(20, appServicePlan.MaxInstances);
                 // GET
-                Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(RG_NAME, APP_SERVICE_PLAN_NAME));
+                Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(GroupName, AppServicePlanName));
                 // LIST
-                var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(RG_NAME);
+                var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(GroupName);
                 var found = false;
                 foreach (var asp in appServicePlans)
                 {
-                    if (APP_SERVICE_PLAN_NAME.Equals(asp.Name))
+                    if (AppServicePlanName.Equals(asp.Name))
                     {
                         found = true;
                         break;

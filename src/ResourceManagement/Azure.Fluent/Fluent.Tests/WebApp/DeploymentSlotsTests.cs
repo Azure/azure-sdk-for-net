@@ -17,19 +17,19 @@ namespace Azure.Tests.WebApp
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                string RG_NAME = TestUtilities.GenerateName("javacsmrg");
-                string WEBAPP_NAME = TestUtilities.GenerateName("java-webapp-");
-                string SLOT_NAME_1 = TestUtilities.GenerateName("java-slot-");
-                string SLOT_NAME_2 = TestUtilities.GenerateName("java-slot-");
-                string SLOT_NAME_3 = TestUtilities.GenerateName("java-slot-");
-                string APP_SERVICE_PLAN_NAME = TestUtilities.GenerateName("java-asp-");
+                string GroupName = TestUtilities.GenerateName("javacsmrg");
+                string WebAppName = TestUtilities.GenerateName("java-webapp-");
+                string SlotName1 = TestUtilities.GenerateName("java-slot-");
+                string SlotName2 = TestUtilities.GenerateName("java-slot-");
+                string SlotName3 = TestUtilities.GenerateName("java-slot-");
+                string AppServicePlanName = TestUtilities.GenerateName("java-asp-");
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
                 // Create web app
-                var webApp = appServiceManager.WebApps.Define(WEBAPP_NAME)
-                    .WithNewResourceGroup(RG_NAME)
-                    .WithNewAppServicePlan(APP_SERVICE_PLAN_NAME)
+                var webApp = appServiceManager.WebApps.Define(WebAppName)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.US_WEST)
                     .WithPricingTier(AppServicePricingTier.Standard_S2)
                     .WithAppSetting("appkey", "appvalue")
@@ -43,7 +43,7 @@ namespace Azure.Tests.WebApp
                 Assert.Equal(Region.US_WEST, webApp.Region);
 
                 // Create a deployment slot with empty config
-                var slot1 = webApp.DeploymentSlots.Define(SLOT_NAME_1)
+                var slot1 = webApp.DeploymentSlots.Define(SlotName1)
                     .WithBrandNewConfiguration()
                     .WithPythonVersion(PythonVersion.Python_27)
                     .Create();
@@ -58,7 +58,7 @@ namespace Azure.Tests.WebApp
                 Assert.False(connectionStringMap.ContainsKey("stickyName"));
 
                 // Create a deployment slot with web app's config
-                var slot2 = webApp.DeploymentSlots.Define(SLOT_NAME_2)
+                var slot2 = webApp.DeploymentSlots.Define(SlotName2)
                     .WithConfigurationFromParent()
                     .Create();
                 Assert.NotNull(slot2);
@@ -88,7 +88,7 @@ namespace Azure.Tests.WebApp
                 Assert.Equal("slot2value", appSettingMap["slot2key"].Value);
 
                 // Create 3rd deployment slot with configuration from slot 2
-                var slot3 = webApp.DeploymentSlots.Define(SLOT_NAME_3)
+                var slot3 = webApp.DeploymentSlots.Define(SlotName3)
                         .WithConfigurationFromDeploymentSlot(slot2)
                         .Create();
                 Assert.NotNull(slot3);
@@ -98,7 +98,7 @@ namespace Azure.Tests.WebApp
                 Assert.Equal("slot2value", appSettingMap["slot2key"].Value);
 
                 // Get
-                var deploymentSlot = webApp.DeploymentSlots.GetByName(SLOT_NAME_3);
+                var deploymentSlot = webApp.DeploymentSlots.GetByName(SlotName3);
                 Assert.Equal(slot3.Id, deploymentSlot.Id);
 
                 // List
@@ -107,7 +107,7 @@ namespace Azure.Tests.WebApp
 
                 // Swap
                 slot3.Swap(slot1.Name);
-                slot1 = webApp.DeploymentSlots.GetByName(SLOT_NAME_1);
+                slot1 = webApp.DeploymentSlots.GetByName(SlotName1);
                 Assert.Equal(JavaVersion.Off, slot1.JavaVersion);
                 Assert.Equal(PythonVersion.Python_34, slot1.PythonVersion);
                 Assert.Equal(PythonVersion.Python_27, slot3.PythonVersion);

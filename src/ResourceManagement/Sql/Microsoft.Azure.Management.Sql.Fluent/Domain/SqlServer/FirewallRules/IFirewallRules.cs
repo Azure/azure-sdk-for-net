@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.FirewallRules
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Sql.Fluent;
-    using System.Threading;
     using Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition;
     using System.Collections.Generic;
 
@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.FirewallRules
         /// Delete specified firewall rule in the server.
         /// </summary>
         /// <param name="firewallRuleName">Name of the firewall rule to delete.</param>
+        /// <return>Observable for the delete operation.</return>
         Task DeleteAsync(string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

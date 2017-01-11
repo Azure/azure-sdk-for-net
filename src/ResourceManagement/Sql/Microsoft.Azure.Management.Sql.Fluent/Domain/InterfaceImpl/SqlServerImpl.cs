@@ -2,21 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using System.Threading.Tasks;
-    using Models;
-    using SqlServer.Definition;
-    using SqlFirewallRule.Definition;
-    using System.Collections.Generic;
-    using SqlServer.ElasticPools;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using SqlServer.Databases;
     using System.Threading;
-    using SqlServer.Update;
-    using SqlServer.FirewallRules;
-    
-    using SqlDatabase.Definition;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using SqlDatabase.Definition;
     using SqlElasticPool.Definition;
+    using SqlFirewallRule.Definition;
+    using SqlServer.Databases;
+    using SqlServer.Definition;
+    using SqlServer.ElasticPools;
+    using SqlServer.FirewallRules;
+    using SqlServer.Update;
+    using Models;
+    using System.Collections.Generic;
 
     internal partial class SqlServerImpl 
     {
@@ -135,12 +135,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.WithNewElasticPool(elasticPoolName, elasticPoolEdition) as SqlServer.Update.IUpdate;
         }
 
-        /// <return>Fully qualified name of the SQL Server.</return>
+        /// <summary>
+        /// Gets fully qualified name of the SQL Server.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlServer.FullyQualifiedDomainName
         {
             get
             {
-                return this.FullyQualifiedDomainName() as string;
+                return this.FullyQualifiedDomainName();
             }
         }
 
@@ -154,16 +156,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.GetServiceObjective(serviceObjectiveName) as Microsoft.Azure.Management.Sql.Fluent.IServiceObjective;
         }
 
-        /// <return>The version of the SQL Server.</return>
+        /// <summary>
+        /// Gets the version of the SQL Server.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlServer.Version
         {
             get
             {
-                return this.Version() as string;
+                return this.Version();
             }
         }
 
-        /// <return>Returns entry point to manage ElasticPools in SqlServer.</return>
+        /// <summary>
+        /// Gets returns entry point to manage ElasticPools in SqlServer.
+        /// </summary>
         SqlServer.ElasticPools.IElasticPools Microsoft.Azure.Management.Sql.Fluent.ISqlServer.ElasticPools
         {
             get
@@ -193,16 +199,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.ListRecommendedElasticPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool>;
         }
 
-        /// <return>The administrator login user name for the SQL Server.</return>
+        /// <summary>
+        /// Gets the administrator login user name for the SQL Server.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlServer.AdministratorLogin
         {
             get
             {
-                return this.AdministratorLogin() as string;
+                return this.AdministratorLogin();
             }
         }
 
-        /// <return>Entry point to manage Databases in SqlServer.</return>
+        /// <summary>
+        /// Gets entry point to manage Databases in SqlServer.
+        /// </summary>
         SqlServer.Databases.IDatabases Microsoft.Azure.Management.Sql.Fluent.ISqlServer.Databases
         {
             get
@@ -211,7 +221,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
-        /// <return>Returns entry point to manage FirewallRules in SqlServer.</return>
+        /// <summary>
+        /// Gets returns entry point to manage FirewallRules in SqlServer.
+        /// </summary>
         SqlServer.FirewallRules.IFirewallRules Microsoft.Azure.Management.Sql.Fluent.ISqlServer.FirewallRules
         {
             get
@@ -294,6 +306,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         SqlServer.Update.IUpdate SqlServer.Update.IWithFirewallRule.WithNewFirewallRule(string startIpAddress, string endIpAddress, string firewallRuleName)
         {
             return this.WithNewFirewallRule(startIpAddress, endIpAddress, firewallRuleName) as SqlServer.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        Microsoft.Azure.Management.Sql.Fluent.SqlManager Microsoft.Azure.Management.Resource.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>.Manager
+        {
+            get
+            {
+                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.SqlManager;
+            }
         }
 
         /// <summary>

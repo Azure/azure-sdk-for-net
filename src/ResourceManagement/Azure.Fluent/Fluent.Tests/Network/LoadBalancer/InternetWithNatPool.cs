@@ -21,6 +21,7 @@ namespace Azure.Tests.Network.LoadBalancer
     {
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
+        private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
@@ -28,6 +29,7 @@ namespace Azure.Tests.Network.LoadBalancer
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
                 INetworks networks,
+                IAvailabilitySets availabilitySets,
                 [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
@@ -35,6 +37,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
             this.pips = pips;
             this.vms = vms;
+            this.availabilitySets = availabilitySets;
             this.networks = networks;
         }
 
@@ -45,13 +48,13 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, loadBalancerHelper.VM_IDS);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer
-            var lb = resources.Define(loadBalancerHelper.LB_NAME)
-                        .WithRegion(loadBalancerHelper.REGION)
-                        .WithExistingResourceGroup(loadBalancerHelper.GROUP_NAME)
+            var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
+                        .WithRegion(loadBalancerHelper.Region)
+                        .WithExistingResourceGroup(loadBalancerHelper.GroupName)
 
                         // Frontends
                         .WithExistingPublicIpAddress(existingPips.ElementAt(0))
@@ -146,6 +149,18 @@ namespace Azure.Tests.Network.LoadBalancer
                         .WithTag("tag2", "value2")
                         .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+
+            // Verify frontends
+            Assert.False(resource.Frontends.ContainsKey("default"));
+
+            // Verify backends
+            Assert.False(resource.Backends.ContainsKey("default"));
+
+            // Verify rules
+            Assert.False(resource.LoadBalancingRules.ContainsKey("rule1"));
+
+            // Verify NAT pools
+            Assert.False(resource.InboundNatPools.ContainsKey("natpool1"));
 
             return resource;
         }

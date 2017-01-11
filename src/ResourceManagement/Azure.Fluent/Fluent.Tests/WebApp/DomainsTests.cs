@@ -10,8 +10,8 @@ namespace Azure.Tests.WebApp
 {
     public class DomainsTests
     {
-        private static readonly string RG_NAME = "javacsmrg9b9912262";
-        private static readonly string DOMAIN_NAME = "graph-dm7720.com";
+        private static readonly string GroupName = "javacsmrg9b9912262";
+        private static readonly string DomainName = "graph-dm7720.com";
 
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCRUDDomain()
@@ -21,8 +21,8 @@ namespace Azure.Tests.WebApp
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 
                 // CREATE
-                var domain = appServiceManager.AppServiceDomains.Define(DOMAIN_NAME)
-                    .WithExistingResourceGroup(RG_NAME)
+                var domain = appServiceManager.AppServiceDomains.Define(DomainName)
+                    .WithExistingResourceGroup(GroupName)
                     .DefineRegistrantContact()
                         .WithFirstName("Jianghao")
                         .WithLastName("Lu")

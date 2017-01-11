@@ -2,14 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Threading;
     using System.Threading.Tasks;
-    using Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using SqlDatabase.Definition;
     using SqlDatabases.SqlDatabaseCreatable;
     using SqlServer.Databases;
-    using SqlDatabase.Definition;
+    using Models;
     using System.Collections.Generic;
-    using System.Threading;
 
     internal partial class DatabasesImpl 
     {
@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Delete specified database in the server.
         /// </summary>
         /// <param name="databaseName">Name of the database to delete.</param>
+        /// <return>Observable for the delete operation.</return>
         async Task SqlServer.Databases.IDatabases.DeleteAsync(string databaseName, CancellationToken cancellationToken)
         {
  

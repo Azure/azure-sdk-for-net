@@ -2,59 +2,69 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    using Models;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using SqlFirewallRule.Definition;
-    using SqlFirewallRule.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core.IndependentChild.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using SqlFirewallRule.Definition;
+    using SqlFirewallRule.Update;
+    using Models;
 
     internal partial class SqlFirewallRuleImpl 
     {
-        /// <return>Kind of SQL Server that contains this firewall rule.</return>
+        /// <summary>
+        /// Gets kind of SQL Server that contains this firewall rule.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.Kind
         {
             get
             {
-                return this.Kind() as string;
+                return this.Kind();
             }
         }
 
-        /// <return>Name of the SQL Server to which this firewall rule belongs.</return>
+        /// <summary>
+        /// Gets name of the SQL Server to which this firewall rule belongs.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.SqlServerName
         {
             get
             {
-                return this.SqlServerName() as string;
+                return this.SqlServerName();
             }
         }
 
-        /// <return>The end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.</return>
+        /// <summary>
+        /// Gets the end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.EndIpAddress
         {
             get
             {
-                return this.EndIpAddress() as string;
+                return this.EndIpAddress();
             }
         }
 
-        /// <return>Region of SQL Server that contains this firewall rule.</return>
+        /// <summary>
+        /// Gets region of SQL Server that contains this firewall rule.
+        /// </summary>
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.Region
         {
             get
             {
-                return this.Region();
+                return this.Region() as Microsoft.Azure.Management.Resource.Fluent.Core.Region;
             }
         }
 
-        /// <return>The start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.</return>
+        /// <summary>
+        /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
+        /// </summary>
         string Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule.StartIpAddress
         {
             get
             {
-                return this.StartIpAddress() as string;
+                return this.StartIpAddress();
             }
         }
 
@@ -105,6 +115,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIpAddressRange.WithIpAddressRange(string startIpAddress, string endIpAddress)
         {
             return this.WithIpAddressRange(startIpAddress, endIpAddress) as SqlFirewallRule.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Gets the resource ID string.
+        /// </summary>
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IHasId.Id
+        {
+            get
+            {
+                return this.Id;
+            }
         }
 
         /// <summary>
