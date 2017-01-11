@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2-preview",
+  "version": "1.0.3",
   "description": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -9,7 +9,8 @@
     "tags": [ "Microsoft Azure Data Lake Store management", "DataLakeStore", "Data Lake Store management", "REST HTTP client", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "See https://github.com/azure/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/DataLake.Store/changelog.md for release notes."
   },
 
   "buildOptions": {

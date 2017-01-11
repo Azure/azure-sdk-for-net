@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static StorageAccountInfo Get(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).GetAsync(resourceGroupName, accountName, storageAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, storageAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void Delete(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
-                Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).DeleteAsync(resourceGroupName, accountName, storageAccountName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, storageAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void Update(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters))
             {
-                Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).UpdateAsync(resourceGroupName, accountName, storageAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, accountName, storageAccountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void Add(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).AddAsync(resourceGroupName, accountName, storageAccountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.AddAsync(resourceGroupName, accountName, storageAccountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static StorageContainer GetStorageContainer(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).GetStorageContainerAsync(resourceGroupName, accountName, storageAccountName, containerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetStorageContainerAsync(resourceGroupName, accountName, storageAccountName, containerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<StorageContainer> ListStorageContainers(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListStorageContainersAsync(resourceGroupName, accountName, storageAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListStorageContainersAsync(resourceGroupName, accountName, storageAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<SasTokenInfo> ListSasTokens(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListSasTokensAsync(resourceGroupName, accountName, storageAccountName, containerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListSasTokensAsync(resourceGroupName, accountName, storageAccountName, containerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<StorageAccountInfo> ListByAccount(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccountInfo> odataQuery = default(ODataQuery<StorageAccountInfo>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListByAccountAsync(resourceGroupName, accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -500,7 +500,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<StorageContainer> ListStorageContainersNext(this IStorageAccountsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListStorageContainersNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListStorageContainersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<SasTokenInfo> ListSasTokensNext(this IStorageAccountsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListSasTokensNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListSasTokensNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<StorageAccountInfo> ListByAccountNext(this IStorageAccountsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IStorageAccountsOperations)s).ListByAccountNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -77,11 +77,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public async Task<AzureOperationResponse<DataLakeStoreAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeStoreAccount parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DataLakeStoreAccount> _response = await BeginCreateWithHttpMessagesAsync(
-                resourceGroupName, name, parameters, customHeaders, cancellationToken);
-            return await Client.GetPutOrPatchOperationResultAsync(_response,
-                customHeaders,
-                cancellationToken);
+            AzureOperationResponse<DataLakeStoreAccount> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,11 +103,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public async Task<AzureOperationResponse<DataLakeStoreAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DataLakeStoreAccount> _response = await BeginUpdateWithHttpMessagesAsync(
-                resourceGroupName, name, parameters, customHeaders, cancellationToken);
-            return await Client.GetPutOrPatchOperationResultAsync(_response,
-                customHeaders,
-                cancellationToken);
+            AzureOperationResponse<DataLakeStoreAccount> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,9 +126,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(
-                resourceGroupName, name, customHeaders, cancellationToken);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

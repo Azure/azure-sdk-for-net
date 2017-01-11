@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static DataLakeStoreAccount Create(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static DataLakeStoreAccount Update(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Delete(this IAccountOperations operations, string resourceGroupName, string name)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).DeleteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static DataLakeStoreAccount Get(this IAccountOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void EnableKeyVault(this IAccountOperations operations, string resourceGroupName, string accountName)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).EnableKeyVaultAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.EnableKeyVaultAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<DataLakeStoreAccount> ListByResourceGroup(this IAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<DataLakeStoreAccount> List(this IAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListAsync(odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -380,7 +380,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static DataLakeStoreAccount BeginCreate(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static DataLakeStoreAccount BeginUpdate(this IAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccountUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void BeginDelete(this IAccountOperations operations, string resourceGroupName, string name)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).BeginDeleteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<DataLakeStoreAccount> ListByResourceGroupNext(this IAccountOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<DataLakeStoreAccount> ListNext(this IAccountOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

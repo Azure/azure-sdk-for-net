@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// on.</param>
         /// <param name="message">the error message.</param>
         /// <param name="severity">the severity of the error. Possible values
-        /// include: 'Warning', 'Error', 'Info'</param>
+        /// include: 'Warning', 'Error', 'Info', 'SevereWarning', 'Deprecated',
+        /// 'UserWarning'</param>
         /// <param name="start">the starting index of the error.</param>
         public Diagnostics(int? columnNumber = default(int?), int? end = default(int?), int? lineNumber = default(int?), string message = default(string), SeverityTypes? severity = default(SeverityTypes?), int? start = default(int?))
         {
@@ -77,7 +78,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the severity of the error. Possible values include: 'Warning',
-        /// 'Error', 'Info'
+        /// 'Error', 'Info', 'SevereWarning', 'Deprecated', 'UserWarning'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public SeverityTypes? Severity { get; protected set; }

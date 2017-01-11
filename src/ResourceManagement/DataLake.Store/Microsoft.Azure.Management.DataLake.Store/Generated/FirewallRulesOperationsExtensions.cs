@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Delete(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
             {
-                Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).DeleteAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).GetAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).ListByAccountAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<FirewallRule> ListByAccountNext(this IFirewallRulesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IFirewallRulesOperations)s).ListByAccountNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

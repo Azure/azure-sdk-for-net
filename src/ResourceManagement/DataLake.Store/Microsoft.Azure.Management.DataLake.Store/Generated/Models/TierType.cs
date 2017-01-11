@@ -6,39 +6,41 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DataLake.Analytics.Models
+namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Analytics;
     using Azure;
     using DataLake;
     using Management;
     using Azure;
     using Management;
     using DataLake;
-    using Analytics;
+    using Store;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using Store;
     using System.Runtime;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SeverityTypes.
+    /// Defines values for TierType.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum SeverityTypes
+    public enum TierType
     {
-        [EnumMember(Value = "Warning")]
-        Warning,
-        [EnumMember(Value = "Error")]
-        Error,
-        [EnumMember(Value = "Info")]
-        Info,
-        [EnumMember(Value = "SevereWarning")]
-        SevereWarning,
-        [EnumMember(Value = "Deprecated")]
-        Deprecated,
-        [EnumMember(Value = "UserWarning")]
-        UserWarning
+        [EnumMember(Value = "Consumption")]
+        Consumption,
+        [EnumMember(Value = "Commitment_1TB")]
+        Commitment1TB,
+        [EnumMember(Value = "Commitment_10TB")]
+        Commitment10TB,
+        [EnumMember(Value = "Commitment_100TB")]
+        Commitment100TB,
+        [EnumMember(Value = "Commitment_500TB")]
+        Commitment500TB,
+        [EnumMember(Value = "Commitment_1PB")]
+        Commitment1PB,
+        [EnumMember(Value = "Commitment_5PB")]
+        Commitment5PB
     }
 }
 
