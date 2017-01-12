@@ -5,7 +5,6 @@ using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Newtonsoft.Json.Linq;
@@ -26,11 +25,11 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
      */
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOMV", 10);
-        private static readonly string linuxVmName1 = ResourceNamer.RandomResourceName("VM1", 10);
-        private static readonly string linuxVmName2 = ResourceNamer.RandomResourceName("VM2", 10);
-        private static readonly string linuxVmName3 = ResourceNamer.RandomResourceName("VM3", 10);
-        private static readonly string publicIpDnsLabel = ResourceNamer.RandomResourceName("pip", 10);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgCOMV", 10);
+        private static readonly string linuxVmName1 = SharedSettings.RandomResourceName("VM1", 10);
+        private static readonly string linuxVmName2 = SharedSettings.RandomResourceName("VM2", 10);
+        private static readonly string linuxVmName3 = SharedSettings.RandomResourceName("VM3", 10);
+        private static readonly string publicIpDnsLabel = SharedSettings.RandomResourceName("pip", 10);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
         private readonly static List<string> apacheInstallScriptUris = new List<string>()
@@ -45,7 +44,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

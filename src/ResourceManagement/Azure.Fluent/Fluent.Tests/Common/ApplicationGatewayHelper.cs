@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
@@ -13,28 +13,26 @@ using System.Text;
 
 namespace Azure.Tests.Common
 {
-    public static class ApplicationGatewayHelper
+    public class ApplicationGatewayHelper : NetworkTestHelperBase
     {
-        public static readonly string IdTemplate = "/subscriptions/${subId}/resourceGroups/${rgName}/providers/Microsoft.Network/applicationGateways/${resourceName}";
-        public static readonly Region Region = Region.US_WEST;
-        public static readonly long TestId = DateTime.Now.Millisecond;
-        public static readonly string GroupName = "rg" + TestId;
-        public static readonly string AppGatewayName = "ag" + TestId;
-        public static readonly string[] PipNames = { "pipa" + TestId, "pipb" + TestId };
-
-        public static string CreateResourceId(string subscriptionId)
+        public ApplicationGatewayHelper (string testId)
+            : base(testId)
         {
-            return IdTemplate
-                    .Replace("${subId}", subscriptionId)
-                    .Replace("${rgName}", GroupName)
-                    .Replace("${resourceName}", AppGatewayName);
+            AppGatewayName = "ag" + TestId;
+        }
+
+        public string AppGatewayName { get; private set; }
+
+        public string CreateResourceId(string subscriptionId)
+        {
+            return $"/subscriptions/{subscriptionId}/resourceGroups/{GroupName}/providers/Microsoft.Network/applicationGateways/{AppGatewayName}";
         }
 
         // Create VNet for the LB
-        public static IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
+        public IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
-            for (int i = 0; i<PipNames.Length; i++)
+            for (int i = 0; i < PipNames.Length; i++)
             {
                 creatablePips.Add(pips.Define(PipNames[i])
                                   .WithRegion(Region)
@@ -45,9 +43,9 @@ namespace Azure.Tests.Common
         }
 
         // Ensure VMs for the LB
-        public static IEnumerable<IVirtualMachine> EnsureVMs(
-            INetworks networks, 
-            IVirtualMachines vms, 
+        public IEnumerable<IVirtualMachine> EnsureVMs(
+            INetworks networks,
+            IVirtualMachines vms,
             params string[] vmIds)
         {
             var createdVMs = new List<IVirtualMachine>();

@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Azure.Tests.Network.LoadBalancer
@@ -20,15 +21,19 @@ namespace Azure.Tests.Network.LoadBalancer
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private INetwork network;
+        private LoadBalancerHelper loadBalancerHelper;
 
         public InternalMinimal(
             IVirtualMachines vms,
             INetworks networks,
-            IAvailabilitySets availabilitySets)
+			IAvailabilitySets availabilitySets,
+            [CallerMemberName] string methodName = "testframework_failed")
+            : base(methodName)
         {
+            loadBalancerHelper = new LoadBalancerHelper(methodName);
             this.vms = vms;
             this.networks = networks;
-            this.availabilitySets = availabilitySets;
+			this.availabilitySets = availabilitySets;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -38,15 +43,15 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(networks, vms, availabilitySets, 2);
-
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            
             // Must use the same VNet as the VMs
-            network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
+            this.network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LoadBalancerName)
-                        .WithRegion(LoadBalancerHelper.Region)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GroupName)
+            var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
+                        .WithRegion(loadBalancerHelper.Region)
+                        .WithExistingResourceGroup(loadBalancerHelper.GroupName)
                         // Frontend (default)
                         .WithFrontendSubnet(network, "subnet1")
                         // Backend (default)
@@ -83,6 +88,7 @@ namespace Azure.Tests.Network.LoadBalancer
             // Verify rules
             Assert.Equal(1, lb.LoadBalancingRules.Count);
             Assert.True(lb.LoadBalancingRules.ContainsKey("default"));
+
             var lbrule = lb.LoadBalancingRules["default"];
             Assert.True("default".Equals(lbrule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
             Assert.True("default".Equals(lbrule.Probe.Name, StringComparison.OrdinalIgnoreCase));

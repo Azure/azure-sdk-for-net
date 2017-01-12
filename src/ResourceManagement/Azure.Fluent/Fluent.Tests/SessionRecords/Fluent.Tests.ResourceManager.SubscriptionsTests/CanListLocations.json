@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ee29ade6-8d8a-471d-bb36-5f5590ee1803"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.SubscriptionClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n      \"subscriptionId\": \"9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n      \"displayName\": \"Java Tests - MS Open Tech Eng\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\",\r\n        \"spendingLimit\": \"Off\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 07 Jan 2017 05:50:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "64872220-33aa-4984-a729-f1e08e5d3555"
+        ],
+        "x-ms-correlation-request-id": [
+          "64872220-33aa-4984-a729-f1e08e5d3555"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170107T055032Z:64872220-33aa-4984-a729-f1e08e5d3555"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
+  }
+}

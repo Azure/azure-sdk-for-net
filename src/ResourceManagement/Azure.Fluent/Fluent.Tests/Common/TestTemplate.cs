@@ -5,6 +5,7 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;
 
@@ -14,10 +15,17 @@ namespace Azure.Tests.Common
         where T : IGroupableResource
         where C : ISupportsListing<T>, ISupportsGettingByGroup<T>, ISupportsDeletingById, ISupportsGettingById<T>
     {
-        protected string testId = "" + DateTime.Now.Ticks % 100000L;
+        protected string TestId { get; private set; }
         private T resource;
         private C collection;
         private IResourceGroups resourceGroups;
+        protected string MethodName { get; set; }
+
+        protected TestTemplate(string methodName)
+        {
+            this.MethodName = methodName;
+            TestId = TestUtilities.GenerateName("");
+        }
 
         /*Resource creation logic.
         @param resources collection of resources

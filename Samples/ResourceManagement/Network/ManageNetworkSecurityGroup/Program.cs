@@ -25,15 +25,15 @@ namespace ManageNetworkSecurityGroup
 
     public class Program
     {
-        private static readonly string frontEndNSGName = ResourceNamer.RandomResourceName("fensg", 24);
-        private static readonly string backEndNSGName = ResourceNamer.RandomResourceName("bensg", 24);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMS", 24);
-        private static readonly string vnetName = ResourceNamer.RandomResourceName("vnet", 24);
-        private static readonly string networkInterfaceName1 = ResourceNamer.RandomResourceName("nic1", 24);
-        private static readonly string networkInterfaceName2 = ResourceNamer.RandomResourceName("nic2", 24);
-        private static readonly string publicIpAddressLeafDNS1 = ResourceNamer.RandomResourceName("pip1", 24);
-        private static readonly string frontEndVMName = ResourceNamer.RandomResourceName("fevm", 24);
-        private static readonly string backEndVMName = ResourceNamer.RandomResourceName("bevm", 24);
+        private static readonly string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
+        private static readonly string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMS", 24);
+        private static readonly string vnetName = SharedSettings.RandomResourceName("vnet", 24);
+        private static readonly string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
+        private static readonly string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
+        private static readonly string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 24);
+        private static readonly string frontEndVMName = SharedSettings.RandomResourceName("fevm", 24);
+        private static readonly string backEndVMName = SharedSettings.RandomResourceName("bevm", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
         private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
@@ -44,7 +44,7 @@ namespace ManageNetworkSecurityGroup
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

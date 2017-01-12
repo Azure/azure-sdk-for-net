@@ -3,7 +3,6 @@
 
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Newtonsoft.Json.Linq;
 using System;
@@ -20,14 +19,14 @@ namespace DeployUsingARMTemplate
         {
             try
             {
-                var rgName = ResourceNamer.RandomResourceName("rgRSAT", 24);
-                var deploymentName = ResourceNamer.RandomResourceName("dpRSAT", 24);
+                var rgName = SharedSettings.RandomResourceName("rgRSAT", 24);
+                var deploymentName = SharedSettings.RandomResourceName("dpRSAT", 24);
 
                 try
                 {
                     //=================================================================
                     // Authenticate
-                    var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                    var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                     var azure = Azure
                         .Configure()
@@ -96,8 +95,8 @@ namespace DeployUsingARMTemplate
 
         private static string GetTemplate()
         {
-            var hostingPlanName = ResourceNamer.RandomResourceName("hpRSAT", 24);
-            var webAppName = ResourceNamer.RandomResourceName("wnRSAT", 24);
+            var hostingPlanName = SharedSettings.RandomResourceName("hpRSAT", 24);
+            var webAppName = SharedSettings.RandomResourceName("wnRSAT", 24);
             var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
 
             var parsedTemplate = JObject.Parse(armTemplateString);

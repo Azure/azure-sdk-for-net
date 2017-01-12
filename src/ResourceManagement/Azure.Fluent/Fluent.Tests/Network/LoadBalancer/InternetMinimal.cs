@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Azure.Tests.Network.LoadBalancer
@@ -19,14 +21,18 @@ namespace Azure.Tests.Network.LoadBalancer
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;
         private INetworks networks;
+        private LoadBalancerHelper loadBalancerHelper;
         private IAvailabilitySets availabilitySets;
 
         public InternetMinimal(
                 IPublicIpAddresses pips,
                 IVirtualMachines vms,
                 INetworks networks,
-                IAvailabilitySets availabilitySets)
+                IAvailabilitySets availabilitySets,
+                [CallerMemberName] string methodName = "testframework_failed")
+            : base(methodName)
         {
+            loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
             this.pips = pips;
             this.vms = vms;
             this.availabilitySets = availabilitySets;
@@ -40,13 +46,13 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            var existingVMs = LoadBalancerHelper.EnsureVMs(networks, vms, availabilitySets, 2);
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer
-            var lb = resources.Define(LoadBalancerHelper.LoadBalancerName)
-                        .WithRegion(LoadBalancerHelper.Region)
-                        .WithExistingResourceGroup(LoadBalancerHelper.GroupName)
+            var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
+                        .WithRegion(loadBalancerHelper.Region)
+                        .WithExistingResourceGroup(loadBalancerHelper.GroupName)
                         // Frontend (default)
                         .WithExistingPublicIpAddress(existingPips.ElementAt(0))
                         // Backend (default)
@@ -107,7 +113,7 @@ namespace Azure.Tests.Network.LoadBalancer
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
-            var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
+            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var pip = existingPips.ElementAt(1);
             resource = resource.Update()
                     .WithExistingPublicIpAddress(pip)

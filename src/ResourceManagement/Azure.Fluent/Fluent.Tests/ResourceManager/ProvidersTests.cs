@@ -3,53 +3,45 @@
 
 using Microsoft.Azure.Management.Resource.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
-using Microsoft.Azure.Management.Resource.Fluent.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
+using Fluent.Tests.Common;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
 
 namespace Fluent.Tests.ResourceManager
 {
     public class ProvidersTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanRegisterAndUnRegisterProvider()
         {
-            var resourceManager = CreateResourceManager();
-            var providers = resourceManager.Providers.List();
-            IProvider provider = providers.FirstOrDefault();
-            Assert.NotNull(provider);
-
-            provider = resourceManager.Providers.Unregister(provider.Namespace);
-            while (provider.RegistrationState.Equals("Unregistering"))
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                Thread.Sleep(5000);
-                provider = resourceManager.Providers.GetByName(provider.Namespace);
-            }
+                var resourceManager = TestHelper.CreateResourceManager();
+                var providers = resourceManager.Providers.List();
+                IProvider provider = providers.FirstOrDefault();
+                Assert.NotNull(provider);
 
-            provider = resourceManager.Providers.Register(provider.Namespace);
-            while (provider.RegistrationState.Equals("Registering"))
-            {
-                Thread.Sleep(5000);
-                provider = resourceManager.Providers.GetByName(provider.Namespace);
-            }
-            Assert.True(string.Equals(provider.RegistrationState, "Registered"));
-            IList<ProviderResourceType> resourceTypes = provider.ResourceTypes;
-            Assert.True(resourceTypes.Count > 0);
-        }
+                provider = resourceManager.Providers.Unregister(provider.Namespace);
+                while (provider.RegistrationState.Equals("Unregistering"))
+                {
+                    TestHelper.Delay(5000);
+                    provider = resourceManager.Providers.GetByName(provider.Namespace);
+                }
 
-        private IResourceManager CreateResourceManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials)
-                .WithSubscription(credentials.DefaultSubscriptionId);
-            return resourceManager;
+                provider = resourceManager.Providers.Register(provider.Namespace);
+                while (provider.RegistrationState.Equals("Registering"))
+                {
+                    TestHelper.Delay(5000);
+                    provider = resourceManager.Providers.GetByName(provider.Namespace);
+                }
+                Assert.True(string.Equals(provider.RegistrationState, "Registered"));
+                IList<ProviderResourceType> resourceTypes = provider.ResourceTypes;
+                Assert.True(resourceTypes.Count > 0);
+            }
         }
     }
 }

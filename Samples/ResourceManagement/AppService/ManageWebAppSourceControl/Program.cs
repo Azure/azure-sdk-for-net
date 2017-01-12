@@ -31,16 +31,16 @@ namespace ManageWebAppSourceControl
     public class Program
     {
         private static readonly string suffix = ".azurewebsites.net";
-        private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = ResourceNamer.RandomResourceName("webapp3-", 20);
-        private static readonly string app4Name = ResourceNamer.RandomResourceName("webapp4-", 20);
+        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+        private static readonly string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
         private static readonly string app1Url = app1Name + suffix;
         private static readonly string app2Url = app2Name + suffix;
         private static readonly string app3Url = app3Name + suffix;
         private static readonly string app4Url = app4Name + suffix;
-        private static readonly string planName = ResourceNamer.RandomResourceName("jplan_", 15);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rg1NEMV_", 24);
+        private static readonly string planName = SharedSettings.RandomResourceName("jplan_", 15);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
 
         public static void Main(string[] args)
         {
@@ -48,7 +48,7 @@ namespace ManageWebAppSourceControl
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

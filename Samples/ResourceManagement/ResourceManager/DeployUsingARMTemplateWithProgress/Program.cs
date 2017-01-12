@@ -19,8 +19,8 @@ namespace DeployUsingARMTemplateWithProgress
 
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgRSAP", 24);
-        private static readonly string deploymentName = ResourceNamer.RandomResourceName("dpRSAP", 24);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgRSAP", 24);
+        private static readonly string deploymentName = SharedSettings.RandomResourceName("dpRSAP", 24);
 
         public static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace DeployUsingARMTemplateWithProgress
                 {
                     //=================================================================
                     // Authenticate
-                    var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                    var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                     var azure = Azure
                         .Configure()
@@ -114,8 +114,8 @@ namespace DeployUsingARMTemplateWithProgress
 
         private static string GetTemplate()
         {
-            var hostingPlanName = ResourceNamer.RandomResourceName("hpRSAT", 24);
-            var webAppName = ResourceNamer.RandomResourceName("wnRSAT", 24);
+            var hostingPlanName = SharedSettings.RandomResourceName("hpRSAT", 24);
+            var webAppName = SharedSettings.RandomResourceName("wnRSAT", 24);
             var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
 
             var parsedTemplate = JObject.Parse(armTemplateString);

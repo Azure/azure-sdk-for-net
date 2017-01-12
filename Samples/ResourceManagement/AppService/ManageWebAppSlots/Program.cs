@@ -23,11 +23,11 @@ namespace ManageWebAppSlots
      */
     public class Program
     {
-        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("rg1NEMV_", 24);
+        private static readonly string RG_NAME = SharedSettings.RandomResourceName("rg1NEMV_", 24);
         private static readonly string SUFFIX = ".azurewebsites.net";
-        private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = ResourceNamer.RandomResourceName("webapp3-", 20);
+        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
         private static readonly string slotName = "staging";
 
         public static void Main(string[] args)
@@ -36,7 +36,7 @@ namespace ManageWebAppSlots
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -111,7 +111,7 @@ namespace ManageWebAppSlots
 
         private static IWebApp CreateWebApp(IAzure azure, string appName, Region region)
         {
-            var planName = ResourceNamer.RandomResourceName("jplan_", 15);
+            var planName = SharedSettings.RandomResourceName("jplan_", 15);
             var appUrl = appName + SUFFIX;
 
             Console.WriteLine("Creating web app " + appName + " with master branch...");

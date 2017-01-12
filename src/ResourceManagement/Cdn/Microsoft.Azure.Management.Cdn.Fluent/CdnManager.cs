@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     public class CdnManager : ManagerBase, ICdnManager
     {
         #region SDK clients
-        private ICdnManagementClient client;
+        private CdnManagementClient client;
         #endregion
 
         #region Fluent private collections

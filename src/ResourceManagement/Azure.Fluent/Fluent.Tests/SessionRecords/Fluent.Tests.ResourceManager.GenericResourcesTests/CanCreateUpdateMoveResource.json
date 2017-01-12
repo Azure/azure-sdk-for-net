@@ -1,0 +1,951 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/csmrg1568?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2NzbXJnMTU2OD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "134a4455-d700-4b2d-8b89-3e817d74466e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568\",\r\n  \"name\": \"csmrg1568\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "171"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:39:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "221c48f2-8fac-44c8-9f87-7d109dbf17f7"
+        ],
+        "x-ms-correlation-request-id": [
+          "221c48f2-8fac-44c8-9f87-7d109dbf17f7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T193951Z:221c48f2-8fac-44c8-9f87-7d109dbf17f7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/csmrg1568/providers/Microsoft.Web//sites/rgweb585?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2NzbXJnMTU2OC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvcmd3ZWI1ODU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"SiteMode\": \"Limited\",\r\n    \"ComputeMode\": \"Shared\"\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "125"
+        ],
+        "x-ms-client-request-id": [
+          "005f1e8b-4583-492d-87f9-4ed15a519799"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/sites/rgweb585\",\r\n  \"name\": \"rgweb585\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"rgweb585\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"rgweb585.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg1568-EastUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-blu-061.api.azurewebsites.windows.net:454/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/webspaces/csmrg1568-EastUSwebspace/sites/rgweb585\",\r\n    \"repositorySiteName\": \"rgweb585\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"rgweb585.azurewebsites.net\",\r\n      \"rgweb585.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"rgweb585.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      },\r\n      {\r\n        \"name\": \"rgweb585.scm.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/serverfarms/Default1\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-01-09T19:39:56.8166667\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"rgweb585\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.76.8.18,40.76.14.229,40.76.3.87,40.76.2.232\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-blu-061\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"csmrg1568\",\r\n    \"defaultHostName\": \"rgweb585.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:39:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "70c23ed7-3dc8-46d3-81fc-ddee59c8c4a3"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "416278d0-7dcb-4111-90a4-78b2e42974bd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T193958Z:416278d0-7dcb-4111-90a4-78b2e42974bd"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resources?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlcz9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0e8ce1cc-8355-4a59-826c-8253e833da5b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/6334ded9e5/providers/Microsoft.Network/publicIPAddresses/pip56872040a3\",\r\n      \"name\": \"pip56872040a3\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/6334ded9e5/providers/Microsoft.Network/virtualNetworks/vnet7f237001764a\",\r\n      \"name\": \"vnet7f237001764a\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/aaaaaaaaaaa/providers/Microsoft.Storage/storageAccounts/lenatestqwerty\",\r\n      \"name\": \"lenatestqwerty\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc594group/providers/Microsoft.Compute/virtualMachines/vm18\",\r\n      \"name\": \"vm18\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc594group/providers/Microsoft.Network/networkInterfaces/nicvm18df65612508\",\r\n      \"name\": \"nicvm18df65612508\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc594group/providers/Microsoft.Network/publicIPAddresses/abc594\",\r\n      \"name\": \"abc594\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc594group/providers/Microsoft.Network/virtualNetworks/vnet4e278414dccf\",\r\n      \"name\": \"vnet4e278414dccf\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc594group/providers/Microsoft.Storage/storageAccounts/stgvm18df623321d69e\",\r\n      \"name\": \"stgvm18df623321d69e\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc6655group/providers/Microsoft.Compute/virtualMachines/vm6784\",\r\n      \"name\": \"vm6784\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc6655group/providers/Microsoft.Network/networkInterfaces/nicvm6784855299424\",\r\n      \"name\": \"nicvm6784855299424\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc6655group/providers/Microsoft.Network/publicIPAddresses/abc6655\",\r\n      \"name\": \"abc6655\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc6655group/providers/Microsoft.Network/virtualNetworks/vnetaf67679189fb\",\r\n      \"name\": \"vnetaf67679189fb\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abc6655group/providers/Microsoft.Storage/storageAccounts/stgvm678485578499787\",\r\n      \"name\": \"stgvm678485578499787\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/alertrules/proactive diagnostics - deletetest\",\r\n      \"name\": \"proactive diagnostics - deletetest\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/abtestfileservicerg/providers/microsoft.insights/components/deletetest\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/alertrules/proactive diagnostics - deletethis\",\r\n      \"name\": \"proactive diagnostics - deletethis\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/abtestfileservicerg/providers/microsoft.insights/components/deletethis\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/alertrules/proactive diagnostics - newtests\",\r\n      \"name\": \"proactive diagnostics - newtests\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/abtestfileservicerg/providers/microsoft.insights/components/newtests\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/components/basictest\",\r\n      \"name\": \"basictest\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/components/deletetest\",\r\n      \"name\": \"deletetest\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/components/deletethis\",\r\n      \"name\": \"deletethis\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/microsoft.insights/components/newtests\",\r\n      \"name\": \"newtests\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/Microsoft.Network/publicIPAddresses/pip86631505\",\r\n      \"name\": \"pip86631505\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/Microsoft.Sql/servers/webapplication120161117100442dbserver\",\r\n      \"name\": \"webapplication120161117100442dbserver\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/Microsoft.Sql/servers/webapplication120161117100442dbserver/databases/WebApplication120161117100442_db\",\r\n      \"name\": \"webapplication120161117100442dbserver/WebApplication120161117100442_db\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/Microsoft.Storage/storageAccounts/abtestfileservice\",\r\n      \"name\": \"abtestfileservice\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_RAGRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/abtestfileservicerg/providers/Microsoft.Web/sites/WebApplication120161117100442\",\r\n      \"name\": \"WebApplication120161117100442\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"webApp\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"hidden-related:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Web/serverfarms/barneytestplan\": \"empty\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/acstestname0012/providers/Microsoft.Storage/storageAccounts/006mpaq6rqhoepeagntpri0\",\r\n      \"name\": \"006mpaq6rqhoepeagntpri0\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/azchat/providers/Microsoft.ClassicCompute/domainNames/azchat\",\r\n      \"name\": \"azchat\",\r\n      \"type\": \"Microsoft.ClassicCompute/domainNames\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkInterfaces/barneytest132\",\r\n      \"name\": \"barneytest132\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkInterfaces/barneytest2219\",\r\n      \"name\": \"barneytest2219\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkInterfaces/barneytest2242\",\r\n      \"name\": \"barneytest2242\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkInterfaces/barneytest5\",\r\n      \"name\": \"barneytest5\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkInterfaces/barneytest699\",\r\n      \"name\": \"barneytest699\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkSecurityGroups/barneytest2-nsg\",\r\n      \"name\": \"barneytest2-nsg\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkSecurityGroups/barneytest2nsg466\",\r\n      \"name\": \"barneytest2nsg466\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkSecurityGroups/Barneytest-nsg\",\r\n      \"name\": \"Barneytest-nsg\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkSecurityGroups/Barneytestnsg813\",\r\n      \"name\": \"Barneytestnsg813\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/networkSecurityGroups/barneytestnsg971\",\r\n      \"name\": \"barneytestnsg971\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/publicIPAddresses/barneytest2-ip\",\r\n      \"name\": \"barneytest2-ip\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/publicIPAddresses/barneytest2ip248\",\r\n      \"name\": \"barneytest2ip248\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/publicIPAddresses/Barneytest-ip\",\r\n      \"name\": \"Barneytest-ip\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/publicIPAddresses/Barneytestip345\",\r\n      \"name\": \"Barneytestip345\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/publicIPAddresses/barneytestip852\",\r\n      \"name\": \"barneytestip852\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Network/virtualNetworks/barneytest-vnet\",\r\n      \"name\": \"barneytest-vnet\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Storage/storageAccounts/barneytestdisks591\",\r\n      \"name\": \"barneytestdisks591\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/barneytest/providers/Microsoft.Web/serverFarms/barneytestplan\",\r\n      \"name\": \"barneytestplan\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/cloudguest/providers/Microsoft.ClassicStorage/storageAccounts/marcinstest\",\r\n      \"name\": \"marcinstest\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastasia\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/sites/rgweb585\",\r\n      \"name\": \"rgweb585\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg189/providers/Microsoft.Web/sites/rgweb955\",\r\n      \"name\": \"rgweb955\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg720/providers/Microsoft.Web/serverFarms/Default1\",\r\n      \"name\": \"Default1\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/webapplication1\",\r\n      \"name\": \"webapplication1\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApplication2\",\r\n      \"name\": \"WebApplication2\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApplication3\",\r\n      \"name\": \"WebApplication3\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApplication4\",\r\n      \"name\": \"WebApplication4\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApplication5\",\r\n      \"name\": \"WebApplication5\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Networking/providers/Microsoft.ClassicNetwork/virtualNetworks/sureshtest\",\r\n      \"name\": \"sureshtest\",\r\n      \"type\": \"Microsoft.ClassicNetwork/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ServiceBus-SouthCentralUS/providers/Microsoft.ServiceBus/namespaces/bus240\",\r\n      \"name\": \"bus240\",\r\n      \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Messaging\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ServiceBus-WestUS/providers/Microsoft.ServiceBus/namespaces/NEWBUStest\",\r\n      \"name\": \"NEWBUStest\",\r\n      \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Messaging\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ServiceBus-WestUS/providers/Microsoft.ServiceBus/namespaces/snallami\",\r\n      \"name\": \"snallami\",\r\n      \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Messaging\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-ServiceBus-WestUS/providers/Microsoft.ServiceBus/namespaces/sureshtest\",\r\n      \"name\": \"sureshtest\",\r\n      \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Messaging\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-SQL-EastUS2/providers/Microsoft.Sql/servers/thbgs10hl4\",\r\n      \"name\": \"thbgs10hl4\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"eastus2\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-SQL-EastUS2/providers/Microsoft.Sql/servers/thbgs10hl4/databases/azurechat3\",\r\n      \"name\": \"thbgs10hl4/azurechat3\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"eastus2\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-SQL-WestUS/providers/Microsoft.Sql/servers/b8cxr2hi2e\",\r\n      \"name\": \"b8cxr2hi2e\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-SQL-WestUS/providers/Microsoft.Sql/servers/b8cxr2hi2e/databases/ansSQL\",\r\n      \"name\": \"b8cxr2hi2e/ansSQL\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-SQL-WestUS/providers/Microsoft.Sql/servers/npjwc9g506\",\r\n      \"name\": \"npjwc9g506\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-CentralUS/providers/Microsoft.ClassicStorage/storageAccounts/eclipsetelmetryanalytics\",\r\n      \"name\": \"eclipsetelmetryanalytics\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"centralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-CentralUS/providers/Microsoft.ClassicStorage/storageAccounts/eclipsetoolkitelemetry\",\r\n      \"name\": \"eclipsetoolkitelemetry\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"centralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-CentralUS/providers/Microsoft.ClassicStorage/storageAccounts/intellijtoolkitelemetry\",\r\n      \"name\": \"intellijtoolkitelemetry\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"centralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-CentralUS/providers/Microsoft.ClassicStorage/storageAccounts/portalvhdsyd4f2gjw3sjjj\",\r\n      \"name\": \"portalvhdsyd4f2gjw3sjjj\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"centralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastAsia/providers/Microsoft.ClassicStorage/storageAccounts/portalvhds1zv3p57hd4sbb\",\r\n      \"name\": \"portalvhds1zv3p57hd4sbb\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastasia\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/azuretoolkit4java\",\r\n      \"name\": \"azuretoolkit4java\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/barneystorage12\",\r\n      \"name\": \"barneystorage12\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest12345\",\r\n      \"name\": \"lenatest12345\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest2\",\r\n      \"name\": \"lenatest2\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest7777\",\r\n      \"name\": \"lenatest7777\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest88888\",\r\n      \"name\": \"lenatest88888\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatestlinux\",\r\n      \"name\": \"lenatestlinux\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS/providers/Microsoft.ClassicStorage/storageAccounts/portalvhds11vcb7kvhph9j\",\r\n      \"name\": \"portalvhds11vcb7kvhph9j\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS2/providers/Microsoft.ClassicStorage/storageAccounts/azchat2\",\r\n      \"name\": \"azchat2\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus2\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-EastUS2/providers/Microsoft.ClassicStorage/storageAccounts/portalvhds28j4sxhvmv6bl\",\r\n      \"name\": \"portalvhds28j4sxhvmv6bl\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus2\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-NorthCentralUS/providers/Microsoft.ClassicStorage/storageAccounts/sureshtest\",\r\n      \"name\": \"sureshtest\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"northcentralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-SouthCentralUS/providers/Microsoft.ClassicStorage/storageAccounts/intellijplugins\",\r\n      \"name\": \"intellijplugins\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"southcentralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-SouthCentralUS/providers/Microsoft.ClassicStorage/storageAccounts/portalvhds1ws2qsvzymmfp\",\r\n      \"name\": \"portalvhds1ws2qsvzymmfp\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"southcentralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/azuredownloads\",\r\n      \"name\": \"azuredownloads\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/azuresdk\",\r\n      \"name\": \"azuresdk\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/hudsonzlao0802010628\",\r\n      \"name\": \"hudsonzlao0802010628\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/imagetesting\",\r\n      \"name\": \"imagetesting\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/intellijpriv\",\r\n      \"name\": \"intellijpriv\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/jenkinsjmgp1017122542\",\r\n      \"name\": \"jenkinsjmgp1017122542\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/jenkinsonol1106044136\",\r\n      \"name\": \"jenkinsonol1106044136\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest\",\r\n      \"name\": \"lenatest\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest222\",\r\n      \"name\": \"lenatest222\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatest7\",\r\n      \"name\": \"lenatest7\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/lenatestnew\",\r\n      \"name\": \"lenatestnew\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/livetest1\",\r\n      \"name\": \"livetest1\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/phoenixbits\",\r\n      \"name\": \"phoenixbits\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/portalvhdsgw4byt35x31gc\",\r\n      \"name\": \"portalvhdsgw4byt35x31gc\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/prajtestaccount\",\r\n      \"name\": \"prajtestaccount\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445560117968\",\r\n      \"name\": \"store1445560117968\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445560195903\",\r\n      \"name\": \"store1445560195903\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445560303665\",\r\n      \"name\": \"store1445560303665\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445697492041\",\r\n      \"name\": \"store1445697492041\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445702643572\",\r\n      \"name\": \"store1445702643572\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445702856020\",\r\n      \"name\": \"store1445702856020\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445725917541\",\r\n      \"name\": \"store1445725917541\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445726416069\",\r\n      \"name\": \"store1445726416069\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445726614893\",\r\n      \"name\": \"store1445726614893\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445726720418\",\r\n      \"name\": \"store1445726720418\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1445726865704\",\r\n      \"name\": \"store1445726865704\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1448465588114\",\r\n      \"name\": \"store1448465588114\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1448465680356\",\r\n      \"name\": \"store1448465680356\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1448980890951\",\r\n      \"name\": \"store1448980890951\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1448981117704\",\r\n      \"name\": \"store1448981117704\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1449132420784\",\r\n      \"name\": \"store1449132420784\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1449132516115\",\r\n      \"name\": \"store1449132516115\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1449132645682\",\r\n      \"name\": \"store1449132645682\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1449770177792\",\r\n      \"name\": \"store1449770177792\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452106448231\",\r\n      \"name\": \"store1452106448231\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452106527306\",\r\n      \"name\": \"store1452106527306\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452106638462\",\r\n      \"name\": \"store1452106638462\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452108043743\",\r\n      \"name\": \"store1452108043743\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109006015\",\r\n      \"name\": \"store1452109006015\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109082896\",\r\n      \"name\": \"store1452109082896\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109191430\",\r\n      \"name\": \"store1452109191430\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109259900\",\r\n      \"name\": \"store1452109259900\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109723338\",\r\n      \"name\": \"store1452109723338\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109830348\",\r\n      \"name\": \"store1452109830348\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452109935894\",\r\n      \"name\": \"store1452109935894\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452110159066\",\r\n      \"name\": \"store1452110159066\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452110245415\",\r\n      \"name\": \"store1452110245415\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452110350044\",\r\n      \"name\": \"store1452110350044\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452210235112\",\r\n      \"name\": \"store1452210235112\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/store1452210309327\",\r\n      \"name\": \"store1452210309327\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/sureshtest434\",\r\n      \"name\": \"sureshtest434\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/sureshtesta1\",\r\n      \"name\": \"sureshtesta1\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/testdndaccount\",\r\n      \"name\": \"testdndaccount\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/tulasistorage\",\r\n      \"name\": \"tulasistorage\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Storage-WestUS/providers/microsoft.insights/components/appinrctest1\",\r\n      \"name\": \"appinrctest1\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Default-Web-WestUS/providers/Microsoft.Web/serverFarms/Default1\",\r\n      \"name\": \"Default1\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"sku\": {\r\n        \"name\": \"F1\",\r\n        \"tier\": \"Free\",\r\n        \"size\": \"F1\",\r\n        \"family\": \"F\",\r\n        \"capacity\": 0\r\n      },\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/DefaultResourceGroup/providers/Microsoft.Cdn/profiles/DefaultProfile\",\r\n      \"name\": \"DefaultProfile\",\r\n      \"type\": \"Microsoft.Cdn/profiles\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"Source\": \"AzurePortal-Classic\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/DefaultResourceGroup/providers/Microsoft.Cdn/profiles/DefaultProfile/endpoints/az802211\",\r\n      \"name\": \"DefaultProfile/az802211\",\r\n      \"type\": \"Microsoft.Cdn/profiles/endpoints\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Group-20/providers/microsoft.insights/components/eclipse toolkit telemetry prod\",\r\n      \"name\": \"eclipse toolkit telemetry prod\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Group-22/providers/microsoft.insights/components/intellij toolkit telemetry prod\",\r\n      \"name\": \"intellij toolkit telemetry prod\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Group-23/providers/microsoft.insights/components/azure vm creation shortcut\",\r\n      \"name\": \"azure vm creation shortcut\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"java\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Group-24/providers/Microsoft.ClassicStorage/storageAccounts/marcinsclassic\",\r\n      \"name\": \"marcinsclassic\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/Group-8/providers/Microsoft.ClassicStorage/storageAccounts/sureshtest123\",\r\n      \"name\": \"sureshtest123\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg1004/providers/Microsoft.Compute/virtualMachineScaleSets/vmss7137\",\r\n      \"name\": \"vmss7137\",\r\n      \"type\": \"Microsoft.Compute/virtualMachineScaleSets\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_A0\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 2\r\n      },\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg1004/providers/Microsoft.Network/loadBalancers/extlb1-5878\",\r\n      \"name\": \"extlb1-5878\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg1004/providers/Microsoft.Network/publicIPAddresses/pip-extlb1-5878\",\r\n      \"name\": \"pip-extlb1-5878\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg1004/providers/Microsoft.Network/virtualNetworks/vmssvnet8686\",\r\n      \"name\": \"vmssvnet8686\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg1004/providers/Microsoft.Storage/storageAccounts/stg21963\",\r\n      \"name\": \"stg21963\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg1004/providers/Microsoft.Storage/storageAccounts/stg9736\",\r\n      \"name\": \"stg9736\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Compute/virtualMachineScaleSets/vmss4264\",\r\n      \"name\": \"vmss4264\",\r\n      \"type\": \"Microsoft.Compute/virtualMachineScaleSets\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_A0\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 2\r\n      },\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Network/loadBalancers/extlb1-3262\",\r\n      \"name\": \"extlb1-3262\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Network/loadBalancers/InternalLb1-1489\",\r\n      \"name\": \"InternalLb1-1489\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Network/publicIPAddresses/pip-extlb1-3262\",\r\n      \"name\": \"pip-extlb1-3262\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Network/virtualNetworks/vmssvnet\",\r\n      \"name\": \"vmssvnet\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Storage/storageAccounts/stg1677\",\r\n      \"name\": \"stg1677\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg4607/providers/Microsoft.Storage/storageAccounts/stg392\",\r\n      \"name\": \"stg392\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Compute/virtualMachineScaleSets/vmss4002\",\r\n      \"name\": \"vmss4002\",\r\n      \"type\": \"Microsoft.Compute/virtualMachineScaleSets\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_A0\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 2\r\n      },\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Network/loadBalancers/extlb1-6712\",\r\n      \"name\": \"extlb1-6712\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Network/loadBalancers/InternalLb1-9871\",\r\n      \"name\": \"InternalLb1-9871\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Network/publicIPAddresses/pip-extlb1-6712\",\r\n      \"name\": \"pip-extlb1-6712\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Network/virtualNetworks/vmssvnet\",\r\n      \"name\": \"vmssvnet\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Storage/storageAccounts/stg3209\",\r\n      \"name\": \"stg3209\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5767/providers/Microsoft.Storage/storageAccounts/stg4267\",\r\n      \"name\": \"stg4267\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg5965/providers/Microsoft.Web/serverFarms/java-asp-6049\",\r\n      \"name\": \"java-asp-6049\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"size\": \"S1\",\r\n        \"family\": \"S\",\r\n        \"capacity\": 3\r\n      },\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg6078/providers/Microsoft.Web/serverFarms/java-asp-569\",\r\n      \"name\": \"java-asp-569\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"sku\": {\r\n        \"name\": \"S2\",\r\n        \"tier\": \"Standard\",\r\n        \"size\": \"S2\",\r\n        \"family\": \"S\",\r\n        \"capacity\": 1\r\n      },\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg6078/providers/Microsoft.Web/sites/java-webapp-5756\",\r\n      \"name\": \"java-webapp-5756\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg6078/providers/Microsoft.Web/sites/java-webapp-5756/slots/java-slot-1619\",\r\n      \"name\": \"java-webapp-5756/java-slot-1619\",\r\n      \"type\": \"Microsoft.Web/sites/slots\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg6078/providers/Microsoft.Web/sites/java-webapp-5756/slots/java-slot-6177\",\r\n      \"name\": \"java-webapp-5756/java-slot-6177\",\r\n      \"type\": \"Microsoft.Web/sites/slots\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg6078/providers/Microsoft.Web/sites/java-webapp-5756/slots/java-slot-9335\",\r\n      \"name\": \"java-webapp-5756/java-slot-9335\",\r\n      \"type\": \"Microsoft.Web/sites/slots\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg8149/providers/Microsoft.Compute/virtualMachineScaleSets/vmss4436\",\r\n      \"name\": \"vmss4436\",\r\n      \"type\": \"Microsoft.Compute/virtualMachineScaleSets\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_A0\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 2\r\n      },\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg8149/providers/Microsoft.Network/loadBalancers/extlb1-7158\",\r\n      \"name\": \"extlb1-7158\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg8149/providers/Microsoft.Network/publicIPAddresses/pip-extlb1-7158\",\r\n      \"name\": \"pip-extlb1-7158\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg8149/providers/Microsoft.Network/virtualNetworks/vmssvnet7969\",\r\n      \"name\": \"vmssvnet7969\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg8149/providers/Microsoft.Storage/storageAccounts/stg22728\",\r\n      \"name\": \"stg22728\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg8149/providers/Microsoft.Storage/storageAccounts/stg526\",\r\n      \"name\": \"stg526\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9251/providers/Microsoft.Web/serverFarms/java-asp-8133\",\r\n      \"name\": \"java-asp-8133\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"sku\": {\r\n        \"name\": \"B1\",\r\n        \"tier\": \"Basic\",\r\n        \"size\": \"B1\",\r\n        \"family\": \"B\",\r\n        \"capacity\": 1\r\n      },\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9251/providers/Microsoft.Web/sites/java-webapp-1268\",\r\n      \"name\": \"java-webapp-1268\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9457/providers/Microsoft.Compute/virtualMachineScaleSets/vmss3423\",\r\n      \"name\": \"vmss3423\",\r\n      \"type\": \"Microsoft.Compute/virtualMachineScaleSets\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_A0\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 2\r\n      },\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9457/providers/Microsoft.Network/loadBalancers/extlb1-2401\",\r\n      \"name\": \"extlb1-2401\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9457/providers/Microsoft.Network/publicIPAddresses/pip-extlb1-2401\",\r\n      \"name\": \"pip-extlb1-2401\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9457/providers/Microsoft.Network/virtualNetworks/vmssvnet4027\",\r\n      \"name\": \"vmssvnet4027\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9457/providers/Microsoft.Storage/storageAccounts/stg27687\",\r\n      \"name\": \"stg27687\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9457/providers/Microsoft.Storage/storageAccounts/stg6431\",\r\n      \"name\": \"stg6431\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/serverFarms/java-asp-9179\",\r\n      \"name\": \"java-asp-9179\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"size\": \"S1\",\r\n        \"family\": \"S\",\r\n        \"capacity\": 3\r\n      },\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javacsmrg9723/providers/Microsoft.Web/sites/java-webapp-1488\",\r\n      \"name\": \"java-webapp-1488\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/microsoft.insights/alertrules/ForbiddenRequests ABJavaTestApp1\",\r\n      \"name\": \"ForbiddenRequests ABJavaTestApp1\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/ABJavaTestApp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/microsoft.insights/alertrules/ForbiddenRequests abjavatestwebapp1\",\r\n      \"name\": \"ForbiddenRequests abjavatestwebapp1\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/abjavatestwebapp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/javatestapp/providers/microsoft.insights/alertrules/proactive diagnostics - abjavatestapp1\",\r\n      \"name\": \"proactive diagnostics - abjavatestapp1\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/javatestapp/providers/microsoft.insights/components/abjavatestapp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/microsoft.insights/alertrules/ServerErrors ABJavaTestApp1\",\r\n      \"name\": \"ServerErrors ABJavaTestApp1\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/ABJavaTestApp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/microsoft.insights/alertrules/ServerErrors abjavatestwebapp1\",\r\n      \"name\": \"ServerErrors abjavatestwebapp1\",\r\n      \"type\": \"microsoft.insights/alertrules\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/abjavatestwebapp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/microsoft.insights/components/abjavatestapp1\",\r\n      \"name\": \"abjavatestapp1\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/ABJavaTestApp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/microsoft.insights/components/abjavatestwebapp1\",\r\n      \"name\": \"abjavatestwebapp1\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/abjavatestwebapp1\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/serverFarms/lenatest\",\r\n      \"name\": \"lenatest\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/ABJavaTestApp1\",\r\n      \"name\": \"ABJavaTestApp1\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-related:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/Default-Web-WestUS/providers/Microsoft.Web/serverfarms/Default1\": \"empty\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/abjavatestwebapp1\",\r\n      \"name\": \"abjavatestwebapp1\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-related:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/Default-Web-WestUS/providers/Microsoft.Web/serverfarms/Default1\": \"empty\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/JavaTestApp/providers/Microsoft.Web/sites/lenatest\",\r\n      \"name\": \"lenatest\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Compute/virtualMachines/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Compute/virtualMachines/jenkins/extensions/Microsoft.Insights.VMDiagnosticsSettings\",\r\n      \"name\": \"jenkins/Microsoft.Insights.VMDiagnosticsSettings\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Network/networkInterfaces/jenkins967\",\r\n      \"name\": \"jenkins967\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Network/networkSecurityGroups/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Network/publicIPAddresses/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Network/virtualNetworks/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jenkins/providers/Microsoft.Storage/storageAccounts/jenkinsaccount\",\r\n      \"name\": \"jenkinsaccount\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Compute/virtualMachines/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Compute/virtualMachines/jenkins/extensions/Microsoft.Insights.VMDiagnosticsSettings\",\r\n      \"name\": \"jenkins/Microsoft.Insights.VMDiagnosticsSettings\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Network/networkInterfaces/jenkins452\",\r\n      \"name\": \"jenkins452\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Network/networkSecurityGroups/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Network/publicIPAddresses/jenkins\",\r\n      \"name\": \"jenkins\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Network/virtualNetworks/jerkins-build\",\r\n      \"name\": \"jerkins-build\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Storage/storageAccounts/azuretools4java\",\r\n      \"name\": \"azuretools4java\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"BlobStorage\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/jerkins-build/providers/Microsoft.Storage/storageAccounts/jerkinsbuild3360\",\r\n      \"name\": \"jerkinsbuild3360\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenaqqq/providers/Microsoft.Storage/storageAccounts/lenaqqqq\",\r\n      \"name\": \"lenaqqqq\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenaqqq/providers/Microsoft.Storage/storageAccounts/lenatest202\",\r\n      \"name\": \"lenatest202\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Premium_LRS\",\r\n        \"tier\": \"Premium\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenatestsa22/providers/Microsoft.Storage/storageAccounts/lenatestsa2\",\r\n      \"name\": \"lenatestsa2\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenatestvmrg/providers/Microsoft.Network/networkInterfaces/nic1155607aafa\",\r\n      \"name\": \"nic1155607aafa\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenatestvmrg/providers/Microsoft.Network/networkInterfaces/nic734234a6c54\",\r\n      \"name\": \"nic734234a6c54\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenatestvmrg/providers/Microsoft.Network/publicIPAddresses/pip595736cf\",\r\n      \"name\": \"pip595736cf\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenatestvmrg/providers/Microsoft.Storage/storageAccounts/lenatestsa\",\r\n      \"name\": \"lenatestsa\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/lenatestvmrg/providers/Microsoft.Storage/storageAccounts/lenatestvm\",\r\n      \"name\": \"lenatestvm\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/LINUX1204/providers/Microsoft.ClassicCompute/domainNames/LINUX1204\",\r\n      \"name\": \"LINUX1204\",\r\n      \"type\": \"Microsoft.ClassicCompute/domainNames\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/LINUX1204/providers/Microsoft.ClassicCompute/virtualMachines/LINUX1204\",\r\n      \"name\": \"LINUX1204\",\r\n      \"type\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/linux15/providers/Microsoft.ClassicCompute/domainNames/linux15\",\r\n      \"name\": \"linux15\",\r\n      \"type\": \"Microsoft.ClassicCompute/domainNames\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/linux15/providers/Microsoft.ClassicCompute/virtualMachines/linux15\",\r\n      \"name\": \"linux15\",\r\n      \"type\": \"Microsoft.ClassicCompute/virtualMachines\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/availabilitySets/marcinslbtest\",\r\n      \"name\": \"marcinslbtest\",\r\n      \"type\": \"Microsoft.Compute/availabilitySets\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest1\",\r\n      \"name\": \"marcinslbtest1\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Compute/virtualMachines/marcinslbtest3\",\r\n      \"name\": \"marcinslbtest3\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/networkInterfaces/marcinslbtest1519\",\r\n      \"name\": \"marcinslbtest1519\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/networkInterfaces/marcinslbtest2503\",\r\n      \"name\": \"marcinslbtest2503\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/networkInterfaces/marcinslbtest2865\",\r\n      \"name\": \"marcinslbtest2865\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/networkInterfaces/marcinslbtest3102\",\r\n      \"name\": \"marcinslbtest3102\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/networkSecurityGroups/marcinslbtest3-nsg\",\r\n      \"name\": \"marcinslbtest3-nsg\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/publicIPAddresses/marcinslbtest3-ip\",\r\n      \"name\": \"marcinslbtest3-ip\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/routeTables/marcinstest\",\r\n      \"name\": \"marcinstest\",\r\n      \"type\": \"Microsoft.Network/routeTables\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Network/virtualNetworks/marcinslbtest\",\r\n      \"name\": \"marcinslbtest\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinslbtest/providers/Microsoft.Storage/storageAccounts/marcinslbtest8949\",\r\n      \"name\": \"marcinslbtest8949\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.ClassicCompute/domainNames/marcinstest\",\r\n      \"name\": \"marcinstest\",\r\n      \"type\": \"Microsoft.ClassicCompute/domainNames\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/microsoft.insights/components/marcinstest222\",\r\n      \"name\": \"marcinstest222\",\r\n      \"type\": \"microsoft.insights/components\",\r\n      \"kind\": \"web\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"hidden-link:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Web/sites/marcinstest222\": \"Resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Network/networkInterfaces/dhdhdhd715\",\r\n      \"name\": \"dhdhdhd715\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Network/networkSecurityGroups/dhdhdhd-nsg\",\r\n      \"name\": \"dhdhdhd-nsg\",\r\n      \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Network/publicIPAddresses/dhdhdhd-ip\",\r\n      \"name\": \"dhdhdhd-ip\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Network/virtualNetworks/marcinstest-vnet\",\r\n      \"name\": \"marcinstest-vnet\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Storage/storageAccounts/marcinstestdiag844\",\r\n      \"name\": \"marcinstestdiag844\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Storage/storageAccounts/marcinstestdisks447\",\r\n      \"name\": \"marcinstestdisks447\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Premium_LRS\",\r\n        \"tier\": \"Premium\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/marcinstest/providers/Microsoft.Web/sites/marcinstest222\",\r\n      \"name\": \"marcinstest222\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"hidden-related:/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/Default-Web-WestUS/providers/Microsoft.Web/serverfarms/Default1\": \"empty\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/availabilitySets/monavm22as\",\r\n      \"name\": \"monavm22as\",\r\n      \"type\": \"Microsoft.Compute/availabilitySets\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/availabilitySets/monavm2as\",\r\n      \"name\": \"monavm2as\",\r\n      \"type\": \"Microsoft.Compute/availabilitySets\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/availabilitySets/monavm3as\",\r\n      \"name\": \"monavm3as\",\r\n      \"type\": \"Microsoft.Compute/availabilitySets\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/availabilitySets/monavm4as\",\r\n      \"name\": \"monavm4as\",\r\n      \"type\": \"Microsoft.Compute/availabilitySets\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/availabilitySets/monavm6as\",\r\n      \"name\": \"monavm6as\",\r\n      \"type\": \"Microsoft.Compute/availabilitySets\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/virtualMachines/mona\",\r\n      \"name\": \"mona\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/virtualMachines/monavm22\",\r\n      \"name\": \"monavm22\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/virtualMachines/monavm5\",\r\n      \"name\": \"monavm5\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Compute/virtualMachines/monavm8\",\r\n      \"name\": \"monavm8\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/networkInterfaces/nicmona7ca876896e\",\r\n      \"name\": \"nicmona7ca876896e\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/networkInterfaces/nicmonavm2213538882\",\r\n      \"name\": \"nicmonavm2213538882\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/networkInterfaces/nicmonavm5661770676\",\r\n      \"name\": \"nicmonavm5661770676\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/networkInterfaces/nicmonavm83bd4631a\",\r\n      \"name\": \"nicmonavm83bd4631a\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/publicIPAddresses/pip3843221d\",\r\n      \"name\": \"pip3843221d\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/publicIPAddresses/pip87699a54\",\r\n      \"name\": \"pip87699a54\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/publicIPAddresses/pip995196fc\",\r\n      \"name\": \"pip995196fc\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/virtualNetworks/monanetworkeast\",\r\n      \"name\": \"monanetworkeast\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Network/virtualNetworks/monanetworkwest\",\r\n      \"name\": \"monanetworkwest\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm1ac\",\r\n      \"name\": \"monavm1ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm22ac\",\r\n      \"name\": \"monavm22ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm2ac\",\r\n      \"name\": \"monavm2ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm4ac\",\r\n      \"name\": \"monavm4ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm5ac\",\r\n      \"name\": \"monavm5ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm7ac\",\r\n      \"name\": \"monavm7ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/monatest/providers/Microsoft.Storage/storageAccounts/monavm8ac\",\r\n      \"name\": \"monavm8ac\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver288199/providers/Microsoft.Sql/servers/netsqlserver288199\",\r\n      \"name\": \"netsqlserver288199\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver288199/providers/Microsoft.Sql/servers/netsqlserver288199/databases/myTestDatabase2\",\r\n      \"name\": \"netsqlserver288199/myTestDatabase2\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver29531a/providers/Microsoft.Sql/servers/netsqlserver29531a\",\r\n      \"name\": \"netsqlserver29531a\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver29531a/providers/Microsoft.Sql/servers/netsqlserver29531a/databases/myTestDatabase2\",\r\n      \"name\": \"netsqlserver29531a/myTestDatabase2\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver29531a/providers/Microsoft.Sql/servers/netsqlserver29531a/elasticpools/testElasticPool\",\r\n      \"name\": \"netsqlserver29531a/testElasticPool\",\r\n      \"type\": \"Microsoft.Sql/servers/elasticpools\",\r\n      \"sku\": {\r\n        \"name\": \"StandardPool\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 100\r\n      },\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver354/providers/Microsoft.Sql/servers/netsqlserver354\",\r\n      \"name\": \"netsqlserver354\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver354/providers/Microsoft.Sql/servers/netsqlserver354/databases/myTestDatabase2\",\r\n      \"name\": \"netsqlserver354/myTestDatabase2\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver354/providers/Microsoft.Sql/servers/netsqlserver354another\",\r\n      \"name\": \"netsqlserver354another\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver354/providers/Microsoft.Sql/servers/netsqlserver354another/databases/myTestDatabase2\",\r\n      \"name\": \"netsqlserver354another/myTestDatabase2\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver5cf76175/providers/Microsoft.Sql/servers/netsqlserver5cf76175\",\r\n      \"name\": \"netsqlserver5cf76175\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver90860b/providers/Microsoft.Sql/servers/netsqlserver90860b\",\r\n      \"name\": \"netsqlserver90860b\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver90860b/providers/Microsoft.Sql/servers/netsqlserver90860b/databases/myTestDatabase2\",\r\n      \"name\": \"netsqlserver90860b/myTestDatabase2\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user,datawarehouse\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserverbe926092/providers/Microsoft.Sql/servers/netsqlserverbe926092\",\r\n      \"name\": \"netsqlserverbe926092\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserverbe926092/providers/Microsoft.Sql/servers/netsqlserverbe926092/databases/myTestDatabase2\",\r\n      \"name\": \"netsqlserverbe926092/myTestDatabase2\",\r\n      \"type\": \"Microsoft.Sql/servers/databases\",\r\n      \"kind\": \"v12.0,user,datawarehouse\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlservere3069546/providers/Microsoft.Sql/servers/netsqlservere3069546\",\r\n      \"name\": \"netsqlservere3069546\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"kind\": \"v12.0\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlservere3069546/providers/Microsoft.Sql/servers/netsqlservere3069546/elasticpools/testElasticPool\",\r\n      \"name\": \"netsqlservere3069546/testElasticPool\",\r\n      \"type\": \"Microsoft.Sql/servers/elasticpools\",\r\n      \"location\": \"centralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/redis28417group/providers/Microsoft.Cache/Redis/redis28417\",\r\n      \"name\": \"redis28417\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"mytag\": \"testtag\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/redis37094group/providers/Microsoft.Cache/Redis/redis37094\",\r\n      \"name\": \"redis37094\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"mytag\": \"testtag\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/redis58851group/providers/Microsoft.Cache/Redis/redis58851\",\r\n      \"name\": \"redis58851\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"mytag\": \"testtag\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/redis68713group/providers/Microsoft.Cache/Redis/redis68713\",\r\n      \"name\": \"redis68713\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"mytag\": \"testtag\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg1481157400602/providers/Microsoft.Network/loadBalancers/lb1481157400602\",\r\n      \"name\": \"lb1481157400602\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg1481157400602/providers/Microsoft.Network/publicIPAddresses/pipa1481157400602\",\r\n      \"name\": \"pipa1481157400602\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg1481157964268/providers/Microsoft.Network/loadBalancers/lb1481157964268\",\r\n      \"name\": \"lb1481157964268\",\r\n      \"type\": \"Microsoft.Network/loadBalancers\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg1481157964268/providers/Microsoft.Network/publicIPAddresses/pipa1481157964268\",\r\n      \"name\": \"pipa1481157964268\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg301/providers/Microsoft.Network/publicIPAddresses/pipa301\",\r\n      \"name\": \"pipa301\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg301/providers/Microsoft.Network/publicIPAddresses/pipb301\",\r\n      \"name\": \"pipb301\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg3468/providers/Microsoft.Network/publicIPAddresses/pipa3468\",\r\n      \"name\": \"pipa3468\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg3468/providers/Microsoft.Network/publicIPAddresses/pipb3468\",\r\n      \"name\": \"pipb3468\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg3468/providers/Microsoft.Network/virtualNetworks/net3468\",\r\n      \"name\": \"net3468\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg3734/providers/Microsoft.Network/applicationGateways/ag3734\",\r\n      \"name\": \"ag3734\",\r\n      \"type\": \"Microsoft.Network/applicationGateways\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg3734/providers/Microsoft.Network/publicIPAddresses/pip13949\",\r\n      \"name\": \"pip13949\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg3734/providers/Microsoft.Network/virtualNetworks/vnet62232\",\r\n      \"name\": \"vnet62232\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg4360/providers/Microsoft.Network/publicIPAddresses/pipa4360\",\r\n      \"name\": \"pipa4360\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg4360/providers/Microsoft.Network/publicIPAddresses/pipb4360\",\r\n      \"name\": \"pipb4360\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg4360/providers/Microsoft.Network/virtualNetworks/net4360\",\r\n      \"name\": \"net4360\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg4804/providers/Microsoft.Network/applicationGateways/ag4804\",\r\n      \"name\": \"ag4804\",\r\n      \"type\": \"Microsoft.Network/applicationGateways\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg4804/providers/Microsoft.Network/virtualNetworks/vnet24388\",\r\n      \"name\": \"vnet24388\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg5074/providers/Microsoft.Network/publicIPAddresses/pip1bf3051352\",\r\n      \"name\": \"pip1bf3051352\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg5074/providers/Microsoft.Network/virtualNetworks/vnet993420324abb\",\r\n      \"name\": \"vnet993420324abb\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg6112/providers/Microsoft.Network/publicIPAddresses/pip45235163e9\",\r\n      \"name\": \"pip45235163e9\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg6112/providers/Microsoft.Network/virtualNetworks/vnet13b36051476a\",\r\n      \"name\": \"vnet13b36051476a\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg6504/providers/Microsoft.Network/applicationGateways/ag6504\",\r\n      \"name\": \"ag6504\",\r\n      \"type\": \"Microsoft.Network/applicationGateways\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg6504/providers/Microsoft.Network/virtualNetworks/vnet17598\",\r\n      \"name\": \"vnet17598\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg656/providers/Microsoft.Network/publicIPAddresses/pipa656\",\r\n      \"name\": \"pipa656\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg656/providers/Microsoft.Network/publicIPAddresses/pipb656\",\r\n      \"name\": \"pipb656\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg656/providers/Microsoft.Network/virtualNetworks/net656\",\r\n      \"name\": \"net656\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg7072/providers/Microsoft.Network/virtualNetworks/vnet85881\",\r\n      \"name\": \"vnet85881\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg708/providers/Microsoft.Network/applicationGateways/ag708\",\r\n      \"name\": \"ag708\",\r\n      \"type\": \"Microsoft.Network/applicationGateways\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg708/providers/Microsoft.Network/virtualNetworks/vnet17553\",\r\n      \"name\": \"vnet17553\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg75/providers/Microsoft.Network/publicIPAddresses/pipa75\",\r\n      \"name\": \"pipa75\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg75/providers/Microsoft.Network/publicIPAddresses/pipb75\",\r\n      \"name\": \"pipb75\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg75/providers/Microsoft.Network/virtualNetworks/net75\",\r\n      \"name\": \"net75\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg777/providers/Microsoft.Network/publicIPAddresses/pipa777\",\r\n      \"name\": \"pipa777\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg777/providers/Microsoft.Network/publicIPAddresses/pipb777\",\r\n      \"name\": \"pipb777\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg8426/providers/Microsoft.Network/applicationGateways/ag8426\",\r\n      \"name\": \"ag8426\",\r\n      \"type\": \"Microsoft.Network/applicationGateways\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg8426/providers/Microsoft.Network/publicIPAddresses/pip24370\",\r\n      \"name\": \"pip24370\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rg8426/providers/Microsoft.Network/virtualNetworks/vnet48791\",\r\n      \"name\": \"vnet48791\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgchash12/providers/Microsoft.Network/virtualNetworks/VNet1\",\r\n      \"name\": \"VNet1\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgstg9672/providers/Microsoft.Storage/storageAccounts/stgbnc2169\",\r\n      \"name\": \"stgbnc2169\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_LRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"t1\": \"v1\",\r\n        \"t2\": \"v2\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/publicIPAddresses/pip-6720-0\",\r\n      \"name\": \"pip-6720-0\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/publicIPAddresses/pip-6720-1\",\r\n      \"name\": \"pip-6720-1\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/publicIPAddresses/pip-6720-2\",\r\n      \"name\": \"pip-6720-2\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/publicIPAddresses/pip-6720-3\",\r\n      \"name\": \"pip-6720-3\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/publicIPAddresses/pip-6720-4\",\r\n      \"name\": \"pip-6720-4\",\r\n      \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/virtualNetworks/vnet-9190-0\",\r\n      \"name\": \"vnet-9190-0\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/virtualNetworks/vnet-9190-1\",\r\n      \"name\": \"vnet-9190-1\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/virtualNetworks/vnet-9190-2\",\r\n      \"name\": \"vnet-9190-2\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/virtualNetworks/vnet-9190-3\",\r\n      \"name\": \"vnet-9190-3\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Network/virtualNetworks/vnet-9190-4\",\r\n      \"name\": \"vnet-9190-4\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/rgvmtest-3601/providers/Microsoft.Storage/storageAccounts/stg1821\",\r\n      \"name\": \"stg1821\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/sdkpriv/providers/Microsoft.Storage/storageAccounts/sdkpriv\",\r\n      \"name\": \"sdkpriv\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/shch-rg-mp/providers/Microsoft.ClassicNetwork/virtualNetworks/shch-rg-mp\",\r\n      \"name\": \"shch-rg-mp\",\r\n      \"type\": \"Microsoft.ClassicNetwork/virtualNetworks\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/shch-rg-mp/providers/Microsoft.ClassicStorage/storageAccounts/shchrgmp6593\",\r\n      \"name\": \"shchrgmp6593\",\r\n      \"type\": \"Microsoft.ClassicStorage/storageAccounts\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/shch-rg-mp/providers/Microsoft.Storage/storageAccounts/shchstorageacc\",\r\n      \"name\": \"shchstorageacc\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"BlobStorage\",\r\n      \"location\": \"westus2\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/StreamAnalytics-Default-Central-US/providers/Microsoft.StreamAnalytics/streamingjobs/eclipseTelemetryProcessor\",\r\n      \"name\": \"eclipseTelemetryProcessor\",\r\n      \"type\": \"Microsoft.StreamAnalytics/streamingjobs\",\r\n      \"location\": \"centralus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/toolkitbuilds/providers/Microsoft.Storage/storageAccounts/toolkitbuilds\",\r\n      \"name\": \"toolkitbuilds\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest1094/providers/Microsoft.Compute/virtualMachines/javavm\",\r\n      \"name\": \"javavm\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest1094/providers/Microsoft.Network/networkInterfaces/nicjavavmda3053854\",\r\n      \"name\": \"nicjavavmda3053854\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest1094/providers/Microsoft.Network/virtualNetworks/vnet07404162d2b1\",\r\n      \"name\": \"vnet07404162d2b1\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest1094/providers/Microsoft.Storage/storageAccounts/stgjavavmda388792f9d\",\r\n      \"name\": \"stgjavavmda388792f9d\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest2310/providers/Microsoft.Compute/virtualMachines/javavm\",\r\n      \"name\": \"javavm\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest2310/providers/Microsoft.Compute/virtualMachines/javavm/extensions/VMAccessForLinux\",\r\n      \"name\": \"javavm/VMAccessForLinux\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest2310/providers/Microsoft.Network/networkInterfaces/nicjavavm217167777\",\r\n      \"name\": \"nicjavavm217167777\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest2310/providers/Microsoft.Network/virtualNetworks/vnet1d998141d9f0\",\r\n      \"name\": \"vnet1d998141d9f0\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest2310/providers/Microsoft.Storage/storageAccounts/stgjavavm21785359f1c\",\r\n      \"name\": \"stgjavavm21785359f1c\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest4909/providers/Microsoft.Compute/virtualMachines/javavm\",\r\n      \"name\": \"javavm\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest4909/providers/Microsoft.Compute/virtualMachines/javavm/extensions/VMAccessForLinux\",\r\n      \"name\": \"javavm/VMAccessForLinux\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest4909/providers/Microsoft.Network/networkInterfaces/nicjavavm49a95780d\",\r\n      \"name\": \"nicjavavm49a95780d\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest4909/providers/Microsoft.Network/virtualNetworks/vnetc49823395602\",\r\n      \"name\": \"vnetc49823395602\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest4909/providers/Microsoft.Storage/storageAccounts/stgjavavm49a2732404b\",\r\n      \"name\": \"stgjavavm49a2732404b\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7469/providers/Microsoft.Compute/virtualMachines/javavm\",\r\n      \"name\": \"javavm\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7469/providers/Microsoft.Network/networkInterfaces/nicjavavm6fd601927\",\r\n      \"name\": \"nicjavavm6fd601927\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7469/providers/Microsoft.Network/virtualNetworks/vnetaf520322235f\",\r\n      \"name\": \"vnetaf520322235f\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7469/providers/Microsoft.Storage/storageAccounts/stgjavavm6fd450963d8\",\r\n      \"name\": \"stgjavavm6fd450963d8\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7627/providers/Microsoft.Compute/virtualMachines/javavm\",\r\n      \"name\": \"javavm\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7627/providers/Microsoft.Compute/virtualMachines/javavm/extensions/VMAccessForLinux\",\r\n      \"name\": \"javavm/VMAccessForLinux\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7627/providers/Microsoft.Network/networkInterfaces/nicjavavm4d770719a\",\r\n      \"name\": \"nicjavavm4d770719a\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7627/providers/Microsoft.Network/virtualNetworks/vnet9e15039052ab\",\r\n      \"name\": \"vnet9e15039052ab\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest7627/providers/Microsoft.Storage/storageAccounts/stgjavavm4d727078cba\",\r\n      \"name\": \"stgjavavm4d727078cba\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest8035/providers/Microsoft.Compute/virtualMachines/javavm\",\r\n      \"name\": \"javavm\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest8035/providers/Microsoft.Compute/virtualMachines/javavm/extensions/VMAccessForLinux\",\r\n      \"name\": \"javavm/VMAccessForLinux\",\r\n      \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest8035/providers/Microsoft.Network/networkInterfaces/nicjavavma59938977\",\r\n      \"name\": \"nicjavavma59938977\",\r\n      \"type\": \"Microsoft.Network/networkInterfaces\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest8035/providers/Microsoft.Network/virtualNetworks/vnet0df181559954\",\r\n      \"name\": \"vnet0df181559954\",\r\n      \"type\": \"Microsoft.Network/virtualNetworks\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/vmexttest8035/providers/Microsoft.Storage/storageAccounts/stgjavavma5900999733\",\r\n      \"name\": \"stgjavavma5900999733\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"sku\": {\r\n        \"name\": \"Standard_GRS\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"kind\": \"Storage\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {}\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:39:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14962"
+        ],
+        "x-ms-request-id": [
+          "c6384ca0-8402-4589-a2da-95244623e8b2"
+        ],
+        "x-ms-correlation-request-id": [
+          "c6384ca0-8402-4589-a2da-95244623e8b2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T193958Z:c6384ca0-8402-4589-a2da-95244623e8b2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/csmrg1568/providers/Microsoft.Web//sites/rgweb585?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2NzbXJnMTU2OC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvcmd3ZWI1ODU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8b3f5f32-0f71-4138-854a-ae2a948b76b7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/sites/rgweb585\",\r\n  \"name\": \"rgweb585\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"rgweb585\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"rgweb585.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg1568-EastUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-blu-061.api.azurewebsites.windows.net:454/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/webspaces/csmrg1568-EastUSwebspace/sites/rgweb585\",\r\n    \"repositorySiteName\": \"rgweb585\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"rgweb585.azurewebsites.net\",\r\n      \"rgweb585.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"rgweb585.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      },\r\n      {\r\n        \"name\": \"rgweb585.scm.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/serverfarms/Default1\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-01-09T19:39:57.0966667\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"rgweb585\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.76.8.18,40.76.14.229,40.76.3.87,40.76.2.232\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-blu-061\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"csmrg1568\",\r\n    \"defaultHostName\": \"rgweb585.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:39:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "\"1D26AB0285A648B\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "9be7f925-0586-41ee-bc6d-f2e6b5967b2d"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14961"
+        ],
+        "x-ms-correlation-request-id": [
+          "211daeae-61c7-4029-9400-4946bb9bc07a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T193958Z:211daeae-61c7-4029-9400-4946bb9bc07a"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/csmrg8231?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2NzbXJnODIzMT9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "3842e06a-29a8-468f-815c-7a685247c0b6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg8231\",\r\n  \"name\": \"csmrg8231\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "171"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:39:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "46d838c8-79fe-4523-9644-dfb2a20cb399"
+        ],
+        "x-ms-correlation-request-id": [
+          "46d838c8-79fe-4523-9644-dfb2a20cb399"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T193959Z:46d838c8-79fe-4523-9644-dfb2a20cb399"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/moveResources?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlR3JvdXBzL2NzbXJnMTU2OC9tb3ZlUmVzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"resources\": [\r\n    \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/sites/rgweb585\"\r\n  ],\r\n  \"targetResourceGroup\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg8231\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "256"
+        ],
+        "x-ms-client-request-id": [
+          "6edb4469-dab4-4011-83a4-8de52ab1342c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:40:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "ae2cd06b-eeba-436a-a55c-d210495693f0"
+        ],
+        "x-ms-correlation-request-id": [
+          "ae2cd06b-eeba-436a-a55c-d210495693f0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194000Z:ae2cd06b-eeba-436a-a55c-d210495693f0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:40:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-request-id": [
+          "7feac61f-b021-45ff-937d-4091c9ac562b"
+        ],
+        "x-ms-correlation-request-id": [
+          "7feac61f-b021-45ff-937d-4091c9ac562b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194030Z:7feac61f-b021-45ff-937d-4091c9ac562b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:40:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14959"
+        ],
+        "x-ms-request-id": [
+          "620d9eb5-4b37-4557-89ce-5413a79fe282"
+        ],
+        "x-ms-correlation-request-id": [
+          "620d9eb5-4b37-4557-89ce-5413a79fe282"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194100Z:620d9eb5-4b37-4557-89ce-5413a79fe282"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:41:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-request-id": [
+          "5c1f89db-dfd8-4b01-8498-2bf860188863"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c1f89db-dfd8-4b01-8498-2bf860188863"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194131Z:5c1f89db-dfd8-4b01-8498-2bf860188863"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:42:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14972"
+        ],
+        "x-ms-request-id": [
+          "6f8ca7d1-e31f-4869-a0ee-d50728dcf5a5"
+        ],
+        "x-ms-correlation-request-id": [
+          "6f8ca7d1-e31f-4869-a0ee-d50728dcf5a5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194201Z:6f8ca7d1-e31f-4869-a0ee-d50728dcf5a5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:42:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14963"
+        ],
+        "x-ms-request-id": [
+          "008725d3-2b39-4dbe-99c0-c92138b78041"
+        ],
+        "x-ms-correlation-request-id": [
+          "008725d3-2b39-4dbe-99c0-c92138b78041"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194231Z:008725d3-2b39-4dbe-99c0-c92138b78041"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:43:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14962"
+        ],
+        "x-ms-request-id": [
+          "21c2d1f0-50e3-40e4-92a9-18f89c761fdf"
+        ],
+        "x-ms-correlation-request-id": [
+          "21c2d1f0-50e3-40e4-92a9-18f89c761fdf"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194301Z:21c2d1f0-50e3-40e4-92a9-18f89c761fdf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:43:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-request-id": [
+          "64ab2935-cf2c-46ea-8b21-fa7a5483e3ba"
+        ],
+        "x-ms-correlation-request-id": [
+          "64ab2935-cf2c-46ea-8b21-fa7a5483e3ba"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194331Z:64ab2935-cf2c-46ea-8b21-fa7a5483e3ba"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/operationresults/eyJqb2JJZCI6IlJFU09VUkNFQkFUQ0hNT1ZFSk9CLUNTTVJHMTU2OC1FQVNUVVMtTU9WRSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUWtGVVEwaE5UMVpGU2s5Q0xVTlRUVkpITVRVMk9DMUZRVk5VVlZNdFRVOVdSU0lzSW1wdllreHZZMkYwYVc5dUlqb2laV0Z6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:44:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-request-id": [
+          "5bb0cdfd-519b-478a-a902-f909d7be78bc"
+        ],
+        "x-ms-correlation-request-id": [
+          "5bb0cdfd-519b-478a-a902-f909d7be78bc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194401Z:5bb0cdfd-519b-478a-a902-f909d7be78bc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/csmrg8231/providers/Microsoft.Web//sites/rgweb585?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2NzbXJnODIzMS9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvcmd3ZWI1ODU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "901716c3-f8d9-450d-b44a-5d0e84063bd1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg8231/providers/Microsoft.Web/sites/rgweb585\",\r\n  \"name\": \"rgweb585\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"rgweb585\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"rgweb585.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg1568-EastUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-blu-061.api.azurewebsites.windows.net:454/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/webspaces/csmrg1568-EastUSwebspace/sites/rgweb585\",\r\n    \"repositorySiteName\": \"rgweb585\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"rgweb585.azurewebsites.net\",\r\n      \"rgweb585.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"rgweb585.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      },\r\n      {\r\n        \"name\": \"rgweb585.scm.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/serverfarms/Default1\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-01-09T19:39:57.0966667\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"rgweb585\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.76.8.18,40.76.14.229,40.76.3.87,40.76.2.232\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-blu-061\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"csmrg8231\",\r\n    \"defaultHostName\": \"rgweb585.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:44:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "\"1D26AB0285A648B\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c3aaa79d-2291-4928-b746-35ae5656a3c8"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14957"
+        ],
+        "x-ms-correlation-request-id": [
+          "4b9a2272-55e1-4efa-9b5f-be31986af0c3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194401Z:4b9a2272-55e1-4efa-9b5f-be31986af0c3"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourcegroups/csmrg8231/providers/Microsoft.Web//sites/rgweb585?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmL3Jlc291cmNlZ3JvdXBzL2NzbXJnODIzMS9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvcmd3ZWI1ODU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"SiteMode\": \"Limited\",\r\n    \"ComputeMode\": \"Dynamic\"\r\n  },\r\n  \"kind\": \"app\",\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg8231/providers/Microsoft.Web/sites/rgweb585\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "273"
+        ],
+        "x-ms-client-request-id": [
+          "8c38757d-c232-4c37-97ef-dd2cbd96bcfc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg8231/providers/Microsoft.Web/sites/rgweb585\",\r\n  \"name\": \"rgweb585\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"name\": \"rgweb585\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"rgweb585.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg1568-EastUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-blu-061.api.azurewebsites.windows.net:454/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/webspaces/csmrg1568-EastUSwebspace/sites/rgweb585\",\r\n    \"repositorySiteName\": \"rgweb585\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"rgweb585.azurewebsites.net\",\r\n      \"rgweb585.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"rgweb585.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      },\r\n      {\r\n        \"name\": \"rgweb585.scm.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/csmrg1568/providers/Microsoft.Web/serverfarms/Default1\",\r\n    \"reserved\": false,\r\n    \"lastModifiedTimeUtc\": \"2017-01-09T19:44:03.0233333\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"rgweb585\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.76.8.18,40.76.14.229,40.76.3.87,40.76.2.232\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-blu-061\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {},\r\n    \"resourceGroup\": \"csmrg8231\",\r\n    \"defaultHostName\": \"rgweb585.azurewebsites.net\",\r\n    \"slotSwapStatus\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 09 Jan 2017 19:44:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "\"1D26AB0BAEFD2F5\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6cb12e26-b605-48e6-a468-c5462bb2b7d3"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "e0800346-2193-45e9-95cf-fbc9e34b6279"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170109T194402Z:e0800346-2193-45e9-95cf-fbc9e34b6279"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateUpdateMoveResource": [
+      "rgweb585",
+      "csmrg1568",
+      "csmrg8231"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
+  }
+}

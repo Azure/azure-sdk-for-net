@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:73C84BBD3D307731A80C2DAF5F9B5EB0:591AFF02B37C91A947B66FA2CFEFFB51
         internal NicIpConfigurationImpl WithNewNetwork(string addressSpaceCidr)
         {
-            return WithNewNetwork(ResourceNamer.RandomResourceName("vnet", 20), addressSpaceCidr);
+            return WithNewNetwork(SharedSettings.RandomResourceName("vnet", 20), addressSpaceCidr);
         }
 
         ///GENMHASH:B54CAD7C3DE0D3C50B8DCF3D902BFB18:84C60D2881F3475627D1A9FAE46DA4DD
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:9865456A38EDF249959594524980AA77:7B29468CDC459656909C083DB3E8BC68
         internal NicIpConfigurationImpl WithNewPublicIpAddress()
         {
-            string name = ResourceNamer.RandomResourceName("pip", 15);
+            string name = SharedSettings.RandomResourceName("pip", 15);
             return WithNewPublicIpAddress(PrepareCreatablePublicIp(name, name));
         }
 
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal NicIpConfigurationImpl WithNewPublicIpAddress(string leafDnsLabel)
         {
             return WithNewPublicIpAddress(
-                PrepareCreatablePublicIp(ResourceNamer.RandomResourceName("pip", 15), leafDnsLabel));
+                PrepareCreatablePublicIp(SharedSettings.RandomResourceName("pip", 15), leafDnsLabel));
         }
 
         ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:1D98EE3582EA8AC346853CFC679265D2

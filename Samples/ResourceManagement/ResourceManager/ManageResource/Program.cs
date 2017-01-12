@@ -22,15 +22,15 @@ namespace ManageResource
     {
         public static void Main(string[] args)
         {
-            var rgName = ResourceNamer.RandomResourceName("rgRSMR", 24);
-            var resourceName1 = ResourceNamer.RandomResourceName("rn1", 24);
-            var resourceName2 = ResourceNamer.RandomResourceName("rn2", 24);
+            var rgName = SharedSettings.RandomResourceName("rgRSMR", 24);
+            var resourceName1 = SharedSettings.RandomResourceName("rn1", 24);
+            var resourceName2 = SharedSettings.RandomResourceName("rn2", 24);
 
             try
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

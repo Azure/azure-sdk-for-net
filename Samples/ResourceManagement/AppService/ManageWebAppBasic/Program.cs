@@ -23,12 +23,12 @@ namespace ManageWebAppBasic
 
     public class Program
     {
-        private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = ResourceNamer.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = ResourceNamer.RandomResourceName("webapp3-", 20);
-        private static readonly string planName = ResourceNamer.RandomResourceName("jplan_", 15);
-        private static readonly string rg1Name = ResourceNamer.RandomResourceName("rg1NEMV_", 24);
-        private static readonly string rg2Name = ResourceNamer.RandomResourceName("rg2NEMV_", 24);
+        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+        private static readonly string planName = SharedSettings.RandomResourceName("jplan_", 15);
+        private static readonly string rg1Name = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+        private static readonly string rg2Name = SharedSettings.RandomResourceName("rg2NEMV_", 24);
 
         public static void Main(string[] args)
         {
@@ -36,7 +36,7 @@ namespace ManageWebAppBasic
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
