@@ -82,9 +82,10 @@ namespace AnalysisServices.Tests.Helpers
                             'tags':{5},
                             'properties':{{
                                 'state':'{6}',
+                                'provisioningState':'{7}', 
                                 'serverFullName':'asazure://wcus.asazure-int.windows.net/{2}',
                                 'asAdministrators':{{
-                                'members':{7}
+                                'members':{8}
                                 }}
                             }}
                             }}";
@@ -99,6 +100,7 @@ namespace AnalysisServices.Tests.Helpers
                 DefaultLocation,
                 DefaultSku.Name,
                 tags,
+                state,
                 state,
                 admins);
         }

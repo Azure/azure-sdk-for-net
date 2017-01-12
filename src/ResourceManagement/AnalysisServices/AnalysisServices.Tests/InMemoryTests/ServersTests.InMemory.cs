@@ -286,6 +286,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                     },
                                     'properties': {
                                         'state': 'Succeeded',
+                                        'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server1',
                                         'asAdministrators': {
                                             'members': [
@@ -310,6 +311,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                     },
                                     'properties': {
                                         'state': 'Succeeded',
+                                        'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server2',
                                         'asAdministrators': {
                                             'members': [
@@ -375,6 +377,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                     },
                                     'properties': {
                                         'state': 'Succeeded',
+                                        'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server1',
                                         'asAdministrators': {
                                             'members': [
@@ -399,6 +402,7 @@ namespace AnalysisServices.Tests.InMemoryTests
                                     },
                                     'properties': {
                                         'state': 'Succeeded',
+                                        'provisioningState': 'Succeeded',
                                         'serverFullName': 'asazure://stabletest.asazure-int.windows.net/server2',
                                         'asAdministrators': {
                                             'members': [
@@ -450,6 +454,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(createdResource.Name, referenceResource.Name);
             Assert.Equal(createdResource.Id, referenceResource.Id);
             Assert.Equal(createdResource.Type, referenceResource.Type);
+            Assert.Equal(createdResource.ProvisioningState, referenceResource.ProvisioningState);
             Assert.Equal(createdResource.State, referenceResource.State);
             Assert.Equal(createdResource.ServerFullName, referenceResource.ServerFullName);
             Assert.Equal(createdResource.AsAdministrators, referenceResource.AsAdministrators);
