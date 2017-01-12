@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> PostWithHttpMessagesAsync(string resourceGroupName, string webServiceName, string region, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> CreateRegionalWebServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string webServiceName, string region, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Modifies an existing web service resource. The PATCH API call is
         /// an asynchronous operation. To determine whether it has completed

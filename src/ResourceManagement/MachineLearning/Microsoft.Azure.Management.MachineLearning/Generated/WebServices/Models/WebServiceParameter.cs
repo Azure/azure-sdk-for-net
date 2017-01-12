@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Initializes a new instance of the WebServiceParameter class.
         /// </summary>
         /// <param name="value">The parameter value</param>
-        /// <param name="credential">If the parameter value in 'value' field
-        /// is encrypted, the thumbprint of the certificate should be put
-        /// here.</param>
-        public WebServiceParameter(object value = default(object), string credential = default(string))
+        /// <param name="certificateThumbprint">If the parameter value in
+        /// 'value' field is encrypted, the thumbprint of the certificate
+        /// should be put here.</param>
+        public WebServiceParameter(object value = default(object), string certificateThumbprint = default(string))
         {
             Value = value;
-            Credential = credential;
+            CertificateThumbprint = certificateThumbprint;
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// Gets or sets if the parameter value in 'value' field is encrypted,
         /// the thumbprint of the certificate should be put here.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "credential")]
-        public string Credential { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateThumbprint")]
+        public string CertificateThumbprint { get; set; }
 
     }
 }
