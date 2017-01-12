@@ -244,13 +244,13 @@
           "startTime":"2015-05-15T18:02:00Z",
           "endTime":"2015-05-25T18:02:00Z",
           "tableName":"WDEvent20150515",
-          "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+          "sasToken":"token"
         },
         {
           "startTime":"2015-05-25T18:02:00Z",
           "endTime":"2015-06-05T18:02:00Z",
           "tableName":"WDEvent20150525",
-          "sasToken":"sv=2014-02-14&amp;sr=b&amp;sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+          "sasToken":"token"
         }]}
     }
   }
@@ -264,13 +264,13 @@
         "startTime":"2015-05-15T18:02:00Z",
         "endTime":"2015-05-25T18:02:00Z",
         "tableName":"WDEvent20150515",
-        "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        "sasToken":"token"
     },
     {
         "startTime":"2015-05-25T18:02:00Z",
         "endTime":"2015-06-05T18:02:00Z",
         "tableName":"WDEvent20150525",
-        "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+        "sasToken":"token"
     }
   ]}</value>
   </data>
@@ -374,13 +374,13 @@
           "startTime":"2015-05-15T18:02:00Z",
           "endTime":"2015-05-25T18:02:00Z",
           "tableName":"WDEvent20150515",
-          "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+          "sasToken":"token"
         },
         {
           "startTime":"2015-05-25T18:02:00Z",
           "endTime":"2015-06-05T18:02:00Z",
           "tableName":"WDEvent20150525",
-          "sasToken":"sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r"
+          "sasToken":"token"
         }]}
     }
   },

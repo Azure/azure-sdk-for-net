@@ -10,6 +10,11 @@
    * Added support for Azure Data Lake Store as default file system. 
    * The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) now accept an AzureDataLakeStoreAccess object for clusters with Azure Data Lake Store as default file system.
    
+2.0.5
+
+  * Added support for running queries with large size.
+  * Fixed network timeout error which occurs intermittently when HDinsight service is loaded.
+  
 2.0.4
 
   * Added support for new environments. 

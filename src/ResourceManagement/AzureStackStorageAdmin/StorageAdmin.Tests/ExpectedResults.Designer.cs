@@ -140,12 +140,15 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests {
         ///        &quot;startTime&quot;:&quot;2015-05-15T18:02:00Z&quot;,
         ///        &quot;endTime&quot;:&quot;2015-05-25T18:02:00Z&quot;,
         ///        &quot;tableName&quot;:&quot;WDEvent20150515&quot;,
-        ///        &quot;sasToken&quot;:&quot;sv=2014-02-14&amp;sr=b&amp;st=2015-01-02T01%3A40%3A51Z&amp;se=2015-01-02T02%3A00%3A51Z&amp;sp=r&quot;
+        ///        &quot;sasToken&quot;:&quot;token&quot;
         ///    },
         ///    {
         ///        &quot;startTime&quot;:&quot;2015-05-25T18:02:00Z&quot;,
         ///        &quot;endTime&quot;:&quot;2015-06-05T18:02:00Z&quot;,
-        ///        &quot;tableName&quot;:&quot;WDEvent20 [rest of string was truncated]&quot;;.
+        ///        &quot;tableName&quot;:&quot;WDEvent20150525&quot;,
+        ///        &quot;sasToken&quot;:&quot;token&quot;
+        ///    }
+        ///  ]}.
         /// </summary>
         internal static string EventQueryResponse {
             get {
@@ -166,8 +169,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests {
         ///      &quot;hostStyleHttpsPort&quot;: 443,
         ///      &quot;corsAllowedOriginsList&quot;: &quot;http://manage.wossportal.com;http://www.example.com&quot;,
         ///      &quot;dataCenterUriHostSuffixes&quot;: &quot;contoso.com&quot;
-        ///    },
-        /// [rest of string was truncated]&quot;;.
+        ///    },        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FarmGetResponse {
             get {
@@ -463,8 +465,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests {
         ///        &quot;Key2&quot;: &quot;Value2&quot;
         ///      },
         ///      &quot;properties&quot;: {
-        ///        &quot;provisioningState&quot;: &quot;Succeeded&quot;,
-        /// [rest of string was truncated]&quot;;.
+        ///        &quot;provisioningState&quot;: &quot;Succeeded&quot;,        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string StorageAccountListResponseFull {
             get {

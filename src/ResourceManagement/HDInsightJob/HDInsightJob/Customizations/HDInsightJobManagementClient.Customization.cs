@@ -68,7 +68,11 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 // If No retry policy is provided then use default retry policy
                 retryPolicy = HDInsightJobManagementClient.HDInsightRetryPolicy;
-                this.HttpClient.Timeout = MaxBackOff;
+
+                // Having Http client time same as MaxBackOff seems to be not sufficient. This is still
+                // raising TaskCancellation Exception. Setting value MaxBackOff + 2 mins for HDinsight
+                // gateway time and having 1 min extra buffer.
+                this.HttpClient.Timeout = MaxBackOff.Add(TimeSpan.FromMinutes(3));
             }
 
             this.SetRetryPolicy(retryPolicy);
