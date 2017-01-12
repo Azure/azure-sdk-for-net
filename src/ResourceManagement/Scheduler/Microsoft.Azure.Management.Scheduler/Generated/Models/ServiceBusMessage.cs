@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the authentication.
+        /// Gets or sets the Service Bus authentication.
         /// </summary>
         [JsonProperty(PropertyName = "authentication")]
         public ServiceBusAuthentication Authentication { get; set; }
