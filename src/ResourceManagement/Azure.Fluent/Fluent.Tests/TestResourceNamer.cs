@@ -21,16 +21,19 @@ namespace Azure.Tests
 
         public override string RandomName(string prefix, int maxLen)
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            lock (assetNames)
             {
-                return assetNames[testName].Dequeue();
+                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    return assetNames[testName].Dequeue();
+                }
+
+                var randomName = base.RandomName(prefix, maxLen);
+
+                assetNames.Enqueue(testName, randomName);
+
+                return randomName;
             }
-
-            var randomName = base.RandomName(prefix, maxLen);
-
-            assetNames.Enqueue(testName, randomName);
-
-            return randomName;
         }
     }
 }

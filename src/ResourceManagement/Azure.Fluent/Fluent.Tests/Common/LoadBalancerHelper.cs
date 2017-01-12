@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using System;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace Azure.Tests.Common
 
             for (int i = 0; i < count; i++)
             {
-                string vmName = ResourceUtils.NameFromResourceId("vm");
+                string vmName = TestUtilities.GenerateName("vm");
 
                 var vm = vms.Define(vmName)
                     .WithRegion(Region)
