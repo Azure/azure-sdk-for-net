@@ -173,9 +173,6 @@ Then, you can create a SQL database instance by using another `define() … crea
 
 ```csharp
 var database = sqlServer.Databases.Define(databaseName)
-    .WithoutElasticPool()
-    .WithoutSourceDatabaseId()
-    .WithEdition(DatabaseEditions.Basic)
     .Create();
 ```
 
