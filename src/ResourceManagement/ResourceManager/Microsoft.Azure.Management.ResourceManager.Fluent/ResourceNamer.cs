@@ -13,32 +13,38 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public ResourceNamer(string name)
         {
-            this.randName = name.ToLower() + Guid.NewGuid().ToString("N").Substring(0, 3).ToLower();
+            lock (random)
+            {
+                this.randName = name.ToLower() + Guid.NewGuid().ToString("N").Substring(0, 3).ToLower();
+            }
         }
 
         public virtual string RandomName(string prefix, int maxLen)
         {
-            prefix = prefix.ToLower();
-            int minRandomnessLength = 5;
-            if (maxLen <= minRandomnessLength)
+            lock (random)
             {
-                return RandomString(maxLen);
-            }
+                prefix = prefix.ToLower();
+                int minRandomnessLength = 5;
+                if (maxLen <= minRandomnessLength)
+                {
+                    return RandomString(maxLen);
+                }
 
-            if (maxLen < prefix.Length + minRandomnessLength)
-            {
-                return RandomString(maxLen);
-            }
-            string minRandomString = random.Next(0, 100000).ToString("D5");
+                if (maxLen < prefix.Length + minRandomnessLength)
+                {
+                    return RandomString(maxLen);
+                }
+                string minRandomString = random.Next(0, 100000).ToString("D5");
 
-            if (maxLen < (prefix.Length + randName.Length + minRandomnessLength))
-            {
-                var str1 = prefix + minRandomString;
-                return str1 + RandomString((maxLen - str1.Length) / 2);
-            }
+                if (maxLen < (prefix.Length + randName.Length + minRandomnessLength))
+                {
+                    var str1 = prefix + minRandomString;
+                    return str1 + RandomString((maxLen - str1.Length) / 2);
+                }
 
-            string str = prefix + randName + minRandomString;
-            return str + RandomString((maxLen - str.Length) / 2);
+                string str = prefix + randName + minRandomString;
+                return str + RandomString((maxLen - str.Length) / 2);
+            }
         }
 
         private string RandomString(int length)

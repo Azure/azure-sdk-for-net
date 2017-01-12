@@ -17,7 +17,7 @@ namespace Azure.Tests
             TestHelper.TestLogger = output;
         }
 
-        [Fact(Skip = "Failing with conflict while deleting resource group")]
+        [Fact]
         public void TestAppGatewaysPrivateMinimal()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -68,7 +68,7 @@ namespace Azure.Tests
             }
         }
 
-        [Fact(Skip = "Enable once Martin's changes are in")]
+        [Fact]
         public void TestLoadBalancersNatRules()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -84,7 +84,7 @@ namespace Azure.Tests
             }
         }
 
-        [Fact(Skip = "Enable once Martin's changes are in")]
+        [Fact]
         public void TestLoadBalancersNatPools()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -100,7 +100,7 @@ namespace Azure.Tests
             }
         }
 
-        [Fact(Skip = "Enable once Martin's changes are in")]
+        [Fact]
         public void TestLoadBalancersInternetMinimum()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -116,7 +116,7 @@ namespace Azure.Tests
             }
         }
 
-        [Fact(Skip = "Enable once Martin's changes are in")]
+        [Fact]
         public void TestLoadBalancersInternalMinimum()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))

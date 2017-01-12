@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
@@ -31,7 +32,7 @@ namespace Azure.Tests.Network.LoadBalancer
                 [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
-            loadBalancerHelper = new LoadBalancerHelper(methodName);
+            loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
             this.pips = pips;
             this.vms = vms;
             this.availabilitySets = availabilitySets;
