@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta4.1",
+  "version": "1.0.0-beta4-1",
   "title": "Microsoft Azure Resource Management Library",
   "description": "Provides resource group and resource management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
