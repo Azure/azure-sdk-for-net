@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="enabledForTemplateDeployment">Property to specify
         /// whether Azure Resource Manager is permitted to retrieve secrets
         /// from the key vault.</param>
-        public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?))
+        /// <param name="enableSoftDelete">Property to specify whether the
+        /// 'soft delete' functionality is enabled for this key vault.</param>
+        public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?))
         {
             Sku = new Sku();
             VaultUri = vaultUri;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             EnabledForDeployment = enabledForDeployment;
             EnabledForDiskEncryption = enabledForDiskEncryption;
             EnabledForTemplateDeployment = enabledForTemplateDeployment;
+            EnableSoftDelete = enableSoftDelete;
         }
 
         /// <summary>
@@ -111,6 +114,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "enabledForTemplateDeployment")]
         public bool? EnabledForTemplateDeployment { get; set; }
+
+        /// <summary>
+        /// Gets or sets property to specify whether the 'soft delete'
+        /// functionality is enabled for this key vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableSoftDelete")]
+        public bool? EnableSoftDelete { get; set; }
 
         /// <summary>
         /// Validate the object.

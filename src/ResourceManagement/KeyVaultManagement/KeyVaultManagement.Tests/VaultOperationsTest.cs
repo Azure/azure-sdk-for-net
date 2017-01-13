@@ -56,6 +56,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
+                            EnableSoftDelete = true,
                             Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
@@ -75,6 +76,7 @@ namespace KeyVault.Management.Tests
                     testBase.location,
                     "A",
                     SkuName.Standard,
+                    true,
                     true,
                     true,
                     true,
@@ -110,6 +112,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
+                    true,
                     new[] { accPol },
                     tags);
 
@@ -125,6 +128,7 @@ namespace KeyVault.Management.Tests
                     testBase.location,
                     "A",
                     SkuName.Premium,
+                    true,
                     true,
                     true,
                     true,
@@ -207,6 +211,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
+                    null,
                     new[] { accPol },
                     tags);
 
@@ -226,6 +231,7 @@ namespace KeyVault.Management.Tests
                     true,
                     true,
                     true,
+                    null,
                     new[] { accPol },
                     tags);
 
@@ -256,6 +262,7 @@ namespace KeyVault.Management.Tests
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
+            bool? expectedEnableSoftDelete,
             AccessPolicyEntry[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
@@ -273,6 +280,7 @@ namespace KeyVault.Management.Tests
             Assert.Equal(expectedEnabledForDeployment, vault.Properties.EnabledForDeployment);
             Assert.Equal(expectedEnabledForTemplateDeployment, vault.Properties.EnabledForTemplateDeployment);
             Assert.Equal(expectedEnabledForDiskEncryption, vault.Properties.EnabledForDiskEncryption);
+            Assert.Equal(expectedEnableSoftDelete, vault.Properties.EnableSoftDelete);
             Assert.True(expectedTags.DictionaryEqual(vault.Tags));
             Assert.True(CompareAccessPolicies(expectedPolicies, vault.Properties.AccessPolicies.ToArray()));
         }

@@ -42,7 +42,7 @@ namespace KeyVault.Management.Tests
                 this.subscriptionId = testEnv.SubscriptionId;
                 var graphClient = context.GetServiceClient<GraphRbacManagementClient>();
                 graphClient.TenantID = this.tenantId;
-                graphClient.BaseUri = new Uri("https://graph.windows.net");
+                graphClient.BaseUri = testEnv.Endpoints.GraphUri;
                 this.objectId = graphClient.User.Get(testEnv.UserName).ObjectId;
                 this.applicationId = Guid.NewGuid().ToString();
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
