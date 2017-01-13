@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.Storage
             StorageAccounts = new StorageAccountsOperations(this);
             Usage = new UsageOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2016-05-01";
+            ApiVersion = "2016-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

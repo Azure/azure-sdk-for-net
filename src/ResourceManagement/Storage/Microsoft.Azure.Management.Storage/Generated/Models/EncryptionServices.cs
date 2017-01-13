@@ -29,9 +29,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="blob">The encryption function of the blob storage
         /// service.</param>
-        public EncryptionServices(EncryptionService blob = default(EncryptionService))
+        /// <param name="file">The encryption function of the file storage
+        /// service.</param>
+        /// <param name="table">The encryption function of the table storage
+        /// service.</param>
+        /// <param name="queue">The encryption function of the queue storage
+        /// service.</param>
+        public EncryptionServices(EncryptionService blob = default(EncryptionService), EncryptionService file = default(EncryptionService), EncryptionService table = default(EncryptionService), EncryptionService queue = default(EncryptionService))
         {
             Blob = blob;
+            File = file;
+            Table = table;
+            Queue = queue;
         }
 
         /// <summary>
@@ -39,6 +48,24 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "blob")]
         public EncryptionService Blob { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption function of the file storage service.
+        /// </summary>
+        [JsonProperty(PropertyName = "file")]
+        public EncryptionService File { get; set; }
+
+        /// <summary>
+        /// Gets the encryption function of the table storage service.
+        /// </summary>
+        [JsonProperty(PropertyName = "table")]
+        public EncryptionService Table { get; protected set; }
+
+        /// <summary>
+        /// Gets the encryption function of the queue storage service.
+        /// </summary>
+        [JsonProperty(PropertyName = "queue")]
+        public EncryptionService Queue { get; protected set; }
 
     }
 }
