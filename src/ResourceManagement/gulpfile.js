@@ -33,10 +33,11 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
     },
     'network': {
-        'dir': 'Network/Microsoft.Azure.Management.Fluent.Network',
-        'source': 'arm-network/2016-06-01/swagger/network.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Network',
-        'args': '-FT 1'
+        'dir': 'Network/Microsoft.Azure.Management.Network.Fluent',
+        'source': 'arm-network/compositeNetworkClient.json',
+        'package': 'Microsoft.Azure.Management.Network.Fluent',
+        'args': '-FT 1',
+        'composite': true,
     },
     'batch': {
         'dir': 'Batch/Microsoft.Azure.Management.Fluent.Batch',
@@ -107,7 +108,7 @@ gulp.task('default', function() {
 
 var specRoot = args['spec-root'] || "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master";
 var projects = args['projects'];
-var autoRestVersion = '0.17.0-Nightly20160706'; // default
+var autoRestVersion = '1.0.0-Nightly20170111'; // default
 if (args['autorest'] !== undefined) {
     autoRestVersion = args['autorest'];
 }
