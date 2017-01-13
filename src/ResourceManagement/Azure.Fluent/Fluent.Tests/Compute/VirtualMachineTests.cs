@@ -71,7 +71,7 @@ namespace Fluent.Tests.Compute
                     // Capture the VM [Requires VM to be Poweroff and generalized]
                     foundedVM.PowerOff();
                     foundedVM.Generalize();
-                    var jsonResult = foundedVM.Capture("capturedVhds", "cpt", true);
+                    var jsonResult = foundedVM.Capture("captured-vhds", "cpt", true);
                     Assert.NotNull(jsonResult);
 
                     // Delete VM
