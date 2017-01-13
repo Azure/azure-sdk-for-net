@@ -20,7 +20,7 @@ namespace Fluent.Tests.Common
     {
         public static ITestOutputHelper TestLogger { get; set; }
 
-        private static string authFilePath = @"C:\my2.azureauth";
+        private static string authFilePath = @"C:\my.azureauth";
 
         public static void WriteLine(string format, params string[] parameters)
         {

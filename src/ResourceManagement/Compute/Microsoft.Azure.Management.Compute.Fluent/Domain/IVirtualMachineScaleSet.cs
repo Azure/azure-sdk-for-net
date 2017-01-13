@@ -162,6 +162,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus();
 
         /// <summary>
+        /// List the network interface associated with a specific virtual machine instance in the scale set.
+        /// </summary>
+        /// <param name="virtualMachineInstanceId">The instance id.</param>
+        /// <return>The network interfaces.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId);
+
+        /// <return>
+        /// the network interfaces associated with all virtual machine instances in a scale set
+        /// </return>
+        PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
+
+        /// <summary>
+        /// Gets a network interface associated with a virtual machine scale set instance.
+        /// </summary>
+        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
+        /// <param name="name">The network interface name.</param>
+        /// <return>The network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface GetNetworkInterfaceByInstanceId(string instanceId, string name);
+
+        /// <summary>
         /// Gets the extensions attached to the virtual machines in the scale set.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Extensions { get; }

@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using NetworkInterface.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to network interface management.
@@ -18,5 +19,38 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>
     {
+        /// <summary>
+        /// Gets a network interface associated with a virtual machine scale set instance.
+        /// </summary>
+        /// <param name="resourceGroupName">irtual machine scale set resource group name</param>
+        /// <param name="scaleSetName">scale set name</param>
+        /// <param name="instanceId">the virtual machine scale set vm instance id</param>
+        /// <param name="name">the network interface name</param>
+        /// <returns>network interface</returns>
+        IVirtualMachineScaleSetNetworkInterface GetByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId, string name);
+
+        /// <summary>
+        /// List the network interfaces associated with a virtual machine scale set.
+        /// </summary>
+        /// <param name="resourceGroupName">virtual machine scale set resource group name</param>
+        /// <param name="scaleSetName">scale set name</param>
+        /// <returns>list of network interfaces</returns>
+        PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName);
+
+        /// <summary>
+        /// List the network interfaces associated with a virtual machine scale set.
+        /// </summary>
+        /// <param name="id">id virtual machine scale set resource id</param>
+        /// <returns>list of network interfaces</returns>
+        PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetId(string id);
+
+        /// <summary>
+        /// List the network interfaces associated with a specific virtual machine instance in a scale set.
+        /// </summary>
+        /// <param name="resourceGroupName">virtual machine scale set resource group name</param>
+        /// <param name="scaleSetName">scale set name</param>
+        /// <param name="instanceId">the virtual machine scale set vm instance id</param>
+        /// <returns>list of network interfaces</returns>
+        PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId);
     }
 }

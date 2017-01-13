@@ -10,6 +10,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Threading.Tasks;
     using Management.Network;
     using System.Collections.Generic;
+    using System;
+    using Fluent;
 
     /// <summary>
     /// Implementation for NetworkInterfaces.
@@ -84,6 +86,42 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             var data = await InnerCollection.GetAsync(groupName, name, null, cancellationToken);
             return WrapModel(data);
+        }
+
+        ///GENMHASH:CF1C887C1688AB525BA63FD7B4469714:30A2B5D56CBF3A353B0D9EAE1884CE80
+        public IVirtualMachineScaleSetNetworkInterface GetByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId, string name)
+        {
+            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
+                scaleSetName,
+                this.InnerCollection,
+                this.Manager);
+            return scaleSetNetworkInterfaces.GetByVirtualMachineInstanceId(instanceId, name);
+        }
+
+        ///GENMHASH:BA50DA09E1FC76012780D58EFCE9A237:FCFAC84F49E66F1F4CEB39A2A782719B
+        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSet(string resourceGroupName, string scaleSetName)
+        {
+            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
+                scaleSetName,
+                this.InnerCollection,
+                this.Manager);
+            return scaleSetNetworkInterfaces.List();
+        }
+
+        ///GENMHASH:BA50DA09E1FC76012780D58EFCE9A237:FCFAC84F49E66F1F4CEB39A2A782719B
+        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetId(string id)
+        {
+            return this.ListByVirtualMachineScaleSet(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+        }
+
+        ///GENMHASH:DD375F4600A4F5AA88A87C271E21CBDB:77581D23FE59229EE53313A9B4816975
+        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineScaleSetInstanceId(string resourceGroupName, string scaleSetName, string instanceId)
+        {
+            VirtualMachineScaleSetNetworkInterfacesImpl scaleSetNetworkInterfaces = new VirtualMachineScaleSetNetworkInterfacesImpl(resourceGroupName,
+                scaleSetName,
+                this.InnerCollection,
+                this.Manager);
+            return scaleSetNetworkInterfaces.ListByVirtualMachineInstanceId(instanceId);
         }
     }
 }
