@@ -81,8 +81,7 @@ namespace Fluent.Tests.Compute
             Assert.True(response.IsSuccessStatusCode);
         }
 
-        // [Fact(Skip = "TODO: Convert to recorded tests")]
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateUpdateVirtualMachineScaleSet()
         {
             string vmss_name = ResourceNamer.RandomResourceName("vmss", 10);
