@@ -118,12 +118,12 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                     //=============================================================
                     // Create a Linux VM using captured image (Generalized image)
                     JObject o = JObject.Parse(capturedResultJson);
-                    JToken resourceToken = o.SelectToken("$.resources[?(@.properties.storageprofile.osDisk.image.uri != null)]");
+                    JToken resourceToken = o.SelectToken("$.resources[?(@.properties.storageProfile.osDisk.image.uri != null)]");
                     if (resourceToken == null)
                     {
                         throw new Exception("Could not locate image uri under expected section in the capture result -" + capturedResultJson);
                     }
-                    string capturedImageUri = (string)(resourceToken["properties"]["storageprofile"]["osDisk"]["image"]["uri"]);
+                    string capturedImageUri = (string)(resourceToken["properties"]["storageProfile"]["osDisk"]["image"]["uri"]);
 
                     Console.WriteLine("Creating a Linux VM using captured image - " + capturedImageUri);
 
