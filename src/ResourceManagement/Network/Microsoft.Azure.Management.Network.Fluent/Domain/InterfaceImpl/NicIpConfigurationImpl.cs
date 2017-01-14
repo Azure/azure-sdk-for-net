@@ -46,19 +46,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.ListAssociatedLoadBalancerInboundNatRules()
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.ListAssociatedLoadBalancerInboundNatRules()
         {
             return this.ListAssociatedLoadBalancerInboundNatRules() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule>;
         }
 
         /// <return>The load balancer backends associated with this network interface IP configuration.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.ListAssociatedLoadBalancerBackends()
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.ListAssociatedLoadBalancerBackends()
         {
             return this.ListAssociatedLoadBalancerBackends() as System.Collections.Generic.IList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
         /// <return>The virtual network associated with this IP configuration.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetwork Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.GetNetwork()
+        Microsoft.Azure.Management.Network.Fluent.INetwork Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.GetNetwork()
         {
             return this.GetNetwork() as Microsoft.Azure.Management.Network.Fluent.INetwork;
         }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
-        IPVersion Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration.PrivateIpAddressVersion
+        IPVersion Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.PrivateIpAddressVersion
         {
             get
             {

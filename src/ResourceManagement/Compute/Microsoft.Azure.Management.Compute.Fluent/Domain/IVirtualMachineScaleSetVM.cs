@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using Network.Fluent;
 
     /// <summary>
     /// An immutable client-side representation of a virtual machine instance in an Azure virtual machine scale set.
@@ -248,5 +249,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the operating system profile of an virtual machine instance.
         /// </summary>
         Models.OSProfile OsProfile { get; }
+
+        /// <summary>
+        /// Gets a network interface associated with this virtual machine instance.
+        /// </summary>
+        /// <param name="name">the name of the network interface</param>
+        /// <returns>the network interface</returns>
+        IVirtualMachineScaleSetNetworkInterface GetNetworkInterface(string name);
+
+        /// <return>
+        /// the network interfaces associated with this virtual machine instance.
+        /// </return>
+        PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
     }
 }
