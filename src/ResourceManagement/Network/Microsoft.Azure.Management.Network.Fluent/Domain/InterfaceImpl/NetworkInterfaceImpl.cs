@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the private IP addresses.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIp
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIp
         {
             get
             {
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the resource ID of the associated virtual machine, or null if none.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.VirtualMachineId
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.VirtualMachineId
         {
             get
             {
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets IP addresses of this network interface's DNS servers.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.DnsServers
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.DnsServers
         {
             get
             {
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the qualified domain name.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.InternalFqdn
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.InternalFqdn
         {
             get
             {
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
         /// </summary>
-        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterface.IsIpForwardingEnabled
+        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIpForwardingEnabled
         {
             get
             {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the MAC Address of the network interface.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.MacAddress
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.MacAddress
         {
             get
             {
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets applied DNS servers.
         /// </summary>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkInterface.AppliedDnsServers
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.AppliedDnsServers
         {
             get
             {
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// This method makes a rest API call to fetch the Network Security Group resource.
         /// </summary>
         /// <return>The network security group associated with this network interface.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.INetworkInterface.GetNetworkSecurityGroup()
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.GetNetworkSecurityGroup()
         {
             return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
         }
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the internal domain name suffix.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.InternalDomainNameSuffix
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.InternalDomainNameSuffix
         {
             get
             {
@@ -407,7 +407,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
         /// primary IP configuration.
         /// </summary>
-        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterface.PrimaryPrivateIpAllocationMethod
+        IPAllocationMethod Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.PrimaryPrivateIpAllocationMethod
         {
             get
             {
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the Internal DNS name assigned to this network interface.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.InternalDnsNameLabel
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.InternalDnsNameLabel
         {
             get
             {
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the network security group resource id or null if there is no network security group
         /// associated with this network interface.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.INetworkInterface.NetworkSecurityGroupId
+        string Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.NetworkSecurityGroupId
         {
             get
             {

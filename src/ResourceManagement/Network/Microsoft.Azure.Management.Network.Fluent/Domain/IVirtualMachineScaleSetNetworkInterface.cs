@@ -2,30 +2,28 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using NetworkInterface.Update;
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     /// <summary>
-    /// Network interface.
+    /// Virtual machine scale set network interface.
     /// </summary>
-    public interface INetworkInterface  :
+    public interface IVirtualMachineScaleSetNetworkInterface  :
         INetworkInterfaceBase,
-        IGroupableResource,
-        IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        IWrapper<Models.NetworkInterfaceInner>,
-        IUpdatable<NetworkInterface.Update.IUpdate>
+        IResource,
+        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
+        IWrapper<Models.NetworkInterfaceInner>
     {
         /// <summary>
         /// Gets the IP configurations of this network interface, indexed by their names.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration> IpConfigurations { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNicIpConfiguration> IpConfigurations { get; }
 
         /// <summary>
         /// Gets the primary IP configuration of this network interface.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration PrimaryIpConfiguration { get; }
+        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNicIpConfiguration PrimaryIpConfiguration { get; }
     }
 }
