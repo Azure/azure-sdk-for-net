@@ -4,17 +4,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Collections.Generic;
 
     /// <summary>
-    /// An IP configuration in a network interface.
+    /// An IP configuration in a network interface associated with a virtual machine
+    /// scale set.
     /// </summary>
-    public interface INicIpConfiguration  :
+    public interface IVirtualMachineScaleSetNicIpConfiguration  :
         INicIpConfigurationBase,
         IWrapper<Models.NetworkInterfaceIPConfigurationInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        IChildResource<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
         IHasPrivateIpAddress,
-        IHasPublicIpAddress,
         IHasSubnet
     {
     }

@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Linq;
+    using Network.Fluent;
 
     /// <summary>
     /// Implementation of VirtualMachineScaleSetVM.
@@ -441,6 +442,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
             return null;
+        }
+
+        ///GENMHASH:64B3F905C424321AAFB3CED53B9B0373:667F07E3E31D781648C2DE0A45C7BB8A
+        public IVirtualMachineScaleSetNetworkInterface GetNetworkInterface(string name)
+        {
+            return this.Parent.GetNetworkInterfaceByInstanceId(this.InstanceId(), name);
+        }
+
+        ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:3CE987DC17F24091C30F014BD1CD86EC
+        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
+        {
+            return this.Parent.ListNetworkInterfacesByInstanceId(this.InstanceId());
         }
     }
 }
