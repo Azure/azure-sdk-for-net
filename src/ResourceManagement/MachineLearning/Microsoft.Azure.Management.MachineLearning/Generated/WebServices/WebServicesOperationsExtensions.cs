@@ -174,51 +174,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Generate regional web service properties. This is especially important to
-            /// encrypted credential information in parameters.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='region'>
-            /// The region of the web service
-            /// </param>
-            public static void CreateRegionalWebServiceProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateRegionalWebServicePropertiesAsync(resourceGroupName, webServiceName, region), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Generate regional web service properties. This is especially important to
-            /// encrypted credential information in parameters.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='region'>
-            /// The region of the web service
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task CreateRegionalWebServicePropertiesAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.CreateRegionalWebServicePropertiesWithHttpMessagesAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
             /// Modifies an existing web service resource. The PATCH API call is an
             /// asynchronous operation. To determine whether it has completed
             /// successfully, you must perform a Get operation.
@@ -390,6 +345,51 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             public static async System.Threading.Tasks.Task BeginRemoveAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginRemoveWithHttpMessagesAsync(resourceGroupName, webServiceName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Generate regional web service properties. This is especially important to
+            /// encrypted credential information in parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group in which the web service is located.
+            /// </param>
+            /// <param name='webServiceName'>
+            /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region of the web service
+            /// </param>
+            public static void CreateRegionalWebServiceProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateRegionalWebServicePropertiesAsync(resourceGroupName, webServiceName, region), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate regional web service properties. This is especially important to
+            /// encrypted credential information in parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group in which the web service is located.
+            /// </param>
+            /// <param name='webServiceName'>
+            /// The name of the web service.
+            /// </param>
+            /// <param name='region'>
+            /// The region of the web service
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task CreateRegionalWebServicePropertiesAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.CreateRegionalWebServicePropertiesWithHttpMessagesAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
