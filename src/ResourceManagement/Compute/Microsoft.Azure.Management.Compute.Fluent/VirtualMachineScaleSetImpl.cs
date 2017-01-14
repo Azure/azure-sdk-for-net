@@ -314,6 +314,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
         }
 
+        ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:48A72DF34AA591EEC3FD96876F4C2258
+        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
+        {
+            return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSet(this.ResourceGroupName, this.Name);
+        }
+
+        ///GENMHASH:42E5559F93A5ECA057CA5F045A1C8057:C9C1A747426C7D8AEF7280B613F858AE
+        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        {
+            return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(this.ResourceGroupName, this.Name, virtualMachineInstanceId);
+        }
+
+        ///GENMHASH:9E11BB028D83D0EF7340685F19FBA340:E9A91314DAD8267710EFDE4AAE671CCF
+        public Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface GetNetworkInterfaceByInstanceId(string instanceId, string name)
+        {
+            return this.networkManager.NetworkInterfaces.GetByVirtualMachineScaleSetInstanceId(this.ResourceGroupName,
+                this.Name,
+                instanceId,
+                name);
+        }
+
         #endregion
 
         #region Withers

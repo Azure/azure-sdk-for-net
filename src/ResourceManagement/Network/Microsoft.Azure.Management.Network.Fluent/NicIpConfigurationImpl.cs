@@ -12,13 +12,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Resource.Fluent.Core.ChildResourceActions;
     using System;
     using Resource.Fluent;
+    using Management.Fluent.Network;
 
     /// <summary>
     /// Implementation for NicIpConfiguration and its create and update interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmljSXBDb25maWd1cmF0aW9uSW1wbA==
     internal partial class NicIpConfigurationImpl :
-        ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl, INetworkInterface>,
+        NicIpConfigurationBaseImpl<NetworkInterfaceImpl, INetworkInterface>,
         INicIpConfiguration,
         IDefinition<NetworkInterface.Definition.IWithCreate>,
         IUpdateDefinition<NetworkInterface.Update.IUpdate>,
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkInterfaceIPConfigurationInner inner,
             NetworkInterfaceImpl parent,
             NetworkManager networkManager,
-            bool isInCreateMode) : base(inner, parent)
+            bool isInCreateMode) : base(inner, parent, networkManager)
         {
             this.isInCreateMode = isInCreateMode;
             this.networkManager = networkManager;
@@ -57,12 +58,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:EE78F7961283D288F33B68D99551BF42:D53CEB54EB83B4CD2AFB7B489DE5E4E6
-        internal IPVersion PrivateIpAddressVersion()
-        {
-            return IPVersion.Parse(Inner.PrivateIPAddressVersion);
-        }
-
         ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:40A9660FDDD1BECDBEBCD406933EBC9B
         internal string PublicIpAddressId()
         {
@@ -74,38 +69,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             string id = PublicIpAddressId();
             return (id != null) ? Parent.Manager.PublicIpAddresses.GetById(id) : null;
-        }
-
-        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:AF6B5F15AE40A0AA08ADA331F3C75492
-        internal string SubnetName()
-        {
-            SubResource subnetRef = Inner.Subnet;
-            return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
-        }
-
-        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:3754C39D8D71152A51C88CC271F478A1
-        internal string NetworkId()
-        {
-            SubResource subnetRef = Inner.Subnet;
-            return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
-        }
-
-        ///GENMHASH:09E2C45F8481740F588302FB0C7A7C68:383AA1065DD1AAE9C8AF1CD90DB1CFA4
-        internal INetwork GetNetwork()
-        {
-            return (NetworkId() != null) ? Parent.Manager.Networks.GetById(NetworkId()) : null;
-        }
-
-        ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:516B6A004CB15A757AC222DE49CEC6EC
-        internal string PrivateIpAddress()
-        {
-            return Inner.PrivateIPAddress;
-        }
-
-        ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:925E8594616C741FD699EF2269B3D731
-        internal IPAllocationMethod PrivateIpAllocationMethod()
-        {
-            return IPAllocationMethod.Parse(Inner.PrivateIPAllocationMethod);
         }
 
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:4652AD8DEBE2130BB62A479BB6FEAD47
@@ -420,66 +383,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:744A3724C9A3248553B33B2939CE091A:8290E83F29058BFB7602A4E1B2AF6A23
-        internal IList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
-        {
-            IList<InboundNatRuleInner> refs = Inner.LoadBalancerInboundNatRules;
-            Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
-            List<ILoadBalancerInboundNatRule> rules = new List<ILoadBalancerInboundNatRule>();
-
-            if (refs != null)
-            {
-                foreach (var reference in refs)
-                {
-                    string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(reference.Id);
-                    ILoadBalancer loadBalancer;
-                    if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
-                    {
-                        loadBalancer = Parent.Manager.LoadBalancers.GetById(loadBalancerId);
-                        loadBalancers[loadBalancerId] = loadBalancer;
-                    }
-
-                    string ruleName = ResourceUtils.NameFromResourceId(reference.Id);
-                    rules.Add(loadBalancer.InboundNatRules[ruleName]);
-                }
-            }
-
-            return rules;
-        }
-
-        ///GENMHASH:D5259819D030517B66106CDFA84D3219:8B7D2308FAEB96F5D9F8C9A539686941
-        internal IList<ILoadBalancerBackend> ListAssociatedLoadBalancerBackends()
-        {
-            var backendRefs = Inner.LoadBalancerBackendAddressPools;
-            var loadBalancers = new Dictionary<string, ILoadBalancer>();
-            var backends = new List<ILoadBalancerBackend>();
-
-            if (backendRefs != null)
-            {
-                foreach (BackendAddressPoolInner backendRef in backendRefs)
-                {
-                    string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id);
-                    ILoadBalancer loadBalancer;
-                    if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
-                    {
-                        loadBalancer = Parent.Manager.LoadBalancers.GetById(loadBalancerId);
-                        loadBalancers[loadBalancerId] = loadBalancer;
-                    }
-
-                    string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
-
-                    ILoadBalancerBackend backend;
-                    if (loadBalancer.Backends.TryGetValue(backendName, out backend))
-                        backends.Add(backend);
-                }
-            }
-
-            return backends;
-        }
-
         NetworkInterface.Update.IUpdate ISettable<NetworkInterface.Update.IUpdate>.Parent()
         {
             return Parent;
+        }
+
+        /// <summary>
+        /// true if this is the primary ip configuration.
+        /// </summary>
+        bool Microsoft.Azure.Management.Network.Fluent.INicIpConfigurationBase.IsPrimary
+        {
+            get
+            {
+                return this.IsPrimary();
+            }
         }
     }
 }
