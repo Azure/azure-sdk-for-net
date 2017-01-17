@@ -6,7 +6,6 @@ using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using System;
@@ -23,7 +22,7 @@ namespace CreateVirtualMachinesInParallel
      */
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOMV", 10);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgCOMV", 10);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
         private static readonly IDictionary<Region, int> virtualMachinesByLocation = new Dictionary<Region, int>();
@@ -37,7 +36,7 @@ namespace CreateVirtualMachinesInParallel
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -72,7 +71,7 @@ namespace CreateVirtualMachinesInParallel
                         // Create 1 network creatable per region
                         // Prepare Creatable Network definition (Where all the virtual machines get added to)
                         //
-                        var networkName = ResourceNamer.RandomResourceName("vnetCOPD-", 20);
+                        var networkName = SharedSettings.RandomResourceName("vnetCOPD-", 20);
                         var networkCreatable = azure.Networks
                                 .Define(networkName)
                                 .WithRegion(region)
@@ -83,13 +82,13 @@ namespace CreateVirtualMachinesInParallel
                         //=============================================================
                         // Create 1 storage creatable per region (For storing VMs disk)
                         //
-                        var storageAccountName = ResourceNamer.RandomResourceName("stgcopd", 20);
+                        var storageAccountName = SharedSettings.RandomResourceName("stgcopd", 20);
                         var storageAccountCreatable = azure.StorageAccounts
                                 .Define(storageAccountName)
                                 .WithRegion(region)
                                 .WithExistingResourceGroup(resourceGroup);
 
-                        var linuxVMNamePrefix = ResourceNamer.RandomResourceName("vm-", 15);
+                        var linuxVMNamePrefix = SharedSettings.RandomResourceName("vm-", 15);
                         for (int i = 1; i <= vmCount; i++)
                         {
                             //=============================================================
@@ -149,7 +148,7 @@ namespace CreateVirtualMachinesInParallel
                     //=============================================================
                     // Create 1 Traffic Manager Profile
                     //
-                    var trafficManagerName = ResourceNamer.RandomResourceName("tra", 15);
+                    var trafficManagerName = SharedSettings.RandomResourceName("tra", 15);
                     var profileWithEndpoint = azure.TrafficManagerProfiles.Define(trafficManagerName)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithLeafDomainLabel(trafficManagerName)

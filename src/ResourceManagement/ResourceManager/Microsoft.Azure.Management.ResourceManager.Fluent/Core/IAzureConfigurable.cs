@@ -11,6 +11,9 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         T WithUserAgent(string product, string version);
         T WithRetryPolicy(RetryPolicy retryPolicy);
         T WithDelegatingHandler(DelegatingHandler delegatingHandler);
+
+        T WithDelegatingHandlers(params DelegatingHandler[] delegatingHandlers);
+
         T WithLogLevel(HttpLoggingDelegatingHandler.Level level);
     }
 }

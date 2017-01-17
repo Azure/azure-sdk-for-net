@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 
             do
             {
-                endpointName = ResourceNamer.RandomResourceName(endpointNamePrefix, 50);
+                endpointName = SharedSettings.RandomResourceName(endpointNamePrefix, 50);
                 result = this.Parent.CheckEndpointNameAvailability(endpointName);
             } while (!result.NameAvailable);
 

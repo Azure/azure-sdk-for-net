@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,33 +16,36 @@ namespace Azure.Tests.WebApp
 {
     public class SourceControlTests
     {
-        private static readonly string GroupName = ResourceNamer.RandomResourceName("javacsmrg", 20);
-        private static readonly string WebAppName = ResourceNamer.RandomResourceName("java-webapp-", 20);
-        private static readonly string AppServicePlanName = ResourceNamer.RandomResourceName("java-asp-", 20);
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact(Skip = "Failing at 31")]
         public async Task CanDeploySourceControl()
         {
-            var appServiceManager = TestHelper.CreateAppServiceManager();
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var GroupName = TestUtilities.GenerateName("javacsmrg");
+                var WebAppName = TestUtilities.GenerateName("java-webapp-");
+                var AppServicePlanName = TestUtilities.GenerateName("java-asp-");
 
-            // Create web app
-            var webApp = appServiceManager.WebApps.Define(WebAppName)
-                .WithNewResourceGroup(GroupName)
-                .WithNewAppServicePlan(AppServicePlanName)
-                .WithRegion(Region.US_WEST)
-                .WithPricingTier(AppServicePricingTier.Standard_S1)
-                .DefineSourceControl()
-                    .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test")
-                    .WithBranch("master")
-                    .Attach()
-                .Create();
-            Assert.NotNull(webApp);
-            var response = await CheckAddress("http://" + WebAppName + "." + "azurewebsites.Net");
-            Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
+                var appServiceManager = TestHelper.CreateAppServiceManager();
 
-            var body = await response.Content.ReadAsStringAsync();
-            Assert.NotNull(body);
-            Assert.True(body.Contains("Hello world from linux 4"));
+                // Create web app
+                var webApp = appServiceManager.WebApps.Define(WebAppName)
+                    .WithNewResourceGroup(GroupName)
+                    .WithNewAppServicePlan(AppServicePlanName)
+                    .WithRegion(Region.US_WEST)
+                    .WithPricingTier(AppServicePricingTier.Standard_S1)
+                    .DefineSourceControl()
+                        .WithPublicGitRepository("https://github.Com/jianghaolu/azure-site-test")
+                        .WithBranch("master")
+                        .Attach()
+                    .Create();
+                Assert.NotNull(webApp);
+                var response = await CheckAddress("http://" + WebAppName + "." + "azurewebsites.Net");
+                Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
+
+                var body = await response.Content.ReadAsStringAsync();
+                Assert.NotNull(body);
+                Assert.True(body.Contains("Hello world from linux 4"));
+            }
         }
 
         private static async Task<HttpResponseMessage> CheckAddress(string url)

@@ -16,6 +16,7 @@ using Microsoft.Azure.Management.Storage.Fluent;
 using System.Linq;
 using Microsoft.Azure.Management.Trafficmanager.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent;
+using System;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -271,7 +272,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         public static IAuthenticated Authenticate(string authFile)
         {
-            AzureCredentials credentials = AzureCredentials.FromFile(authFile);
+            AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(authFile);
             return Authenticate(credentials);
         }
 
@@ -352,7 +353,10 @@ namespace Microsoft.Azure.Management.Fluent
                         RestClient.Configure()
                             .WithBaseUri(restClient.BaseUri)
                             .WithCredentials(restClient.Credentials).Build());
-                    var subscription = resourceManager.Subscriptions.List().FirstOrDefault();
+                    var subscription = resourceManager.Subscriptions.List()
+                        .FirstOrDefault(s =>
+                            StringComparer.OrdinalIgnoreCase.Equals(s.State, "Enabled") ||
+                            StringComparer.OrdinalIgnoreCase.Equals(s.State, "Warned"));
 
                     return WithSubscription(subscription?.SubscriptionId);
                 }

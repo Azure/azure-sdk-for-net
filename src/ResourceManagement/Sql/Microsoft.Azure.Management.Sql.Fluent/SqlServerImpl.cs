@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:B586503226700C805360D5B6E3725EF6:E505BA6DA6C53CDACAB31669A8BAC1D2
         public SqlServerImpl WithNewFirewallRule(string startIpAddress, string endIpAddress)
         {
-            return this.WithNewFirewallRule(startIpAddress, endIpAddress, ResourceNamer.RandomResourceName("firewall_", 15));
+            return this.WithNewFirewallRule(startIpAddress, endIpAddress, SharedSettings.RandomResourceName("firewall_", 15));
         }
 
         ///GENMHASH:69FD06084D43219AA18CD7D3D99C1279:4CFE3B40F5F4B89B4325AA4C436DF8EE

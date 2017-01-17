@@ -26,11 +26,19 @@
 
   "frameworks": {
     "net45": {
+      "buildOptions": {
+        "define": [ "NET45" ],
+        "debugType": "portable"
+      },
       "dependencies": {
       }
     },
     "netstandard1.5": {
       "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "define": [ "NETSTANDARD15" ],
+        "debugType": "portable"
+      },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Diagnostics.Tools": "4.0.1",
@@ -41,6 +49,10 @@
     },
     "netstandard1.1": {
       "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "define": [ "NETSTANDARD11" ],
+        "debugType": "portable"
+      },
       "dependencies": {
         "System.Runtime.Serialization.Primitives": "4.1.1"
       }

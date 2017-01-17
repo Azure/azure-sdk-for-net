@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace ManageBatchAccount
 {
@@ -46,7 +47,7 @@ namespace ManageBatchAccount
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

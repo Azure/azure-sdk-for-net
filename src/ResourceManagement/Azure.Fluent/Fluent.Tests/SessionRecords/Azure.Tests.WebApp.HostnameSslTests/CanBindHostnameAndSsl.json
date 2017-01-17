@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/javacsmrg9b9912262/providers/Microsoft.DomainRegistration/domains/graph-dm7720.com?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL2phdmFjc21yZzliOTkxMjI2Mi9wcm92aWRlcnMvTWljcm9zb2Z0LkRvbWFpblJlZ2lzdHJhdGlvbi9kb21haW5zL2dyYXBoLWRtNzcyMC5jb20/YXBpLXZlcnNpb249MjAxNS0wNC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1df97c93-2b99-457d-b306-3b0ed0a929b7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.AppService.Fluent.WebSiteManagementClient/1.0.0-beta4.1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'javacsmrg9b9912262' could not be found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "110"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Jan 2017 02:13:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "2828b4d9-9058-467c-b264-53f144446c2d"
+        ],
+        "x-ms-correlation-request-id": [
+          "2828b4d9-9058-467c-b264-53f144446c2d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170106T021314Z:2828b4d9-9058-467c-b264-53f144446c2d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {
+    "CanBindHostnameAndSsl": [
+      "javacsmrg2165",
+      "java-webapp-3856",
+      "java-asp-5061"
+    ]
+  },
+"Variables": {
+    "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
+  }
+}

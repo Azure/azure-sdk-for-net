@@ -5,7 +5,6 @@ using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
@@ -23,12 +22,12 @@ namespace ManageIpAddress
 
     public class Program
     {
-        private static readonly string publicIpAddressName1 = ResourceNamer.RandomResourceName("pip1", 20);
-        private static readonly string publicIpAddressName2 = ResourceNamer.RandomResourceName("pip2", 20);
-        private static readonly string publicIpAddressLeafDNS1 = ResourceNamer.RandomResourceName("pip1", 20);
-        private static readonly string publicIpAddressLeafDNS2 = ResourceNamer.RandomResourceName("pip2", 20);
-        private static readonly string vmName = ResourceNamer.RandomResourceName("vm", 8);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMP", 24);
+        private static readonly string publicIpAddressName1 = SharedSettings.RandomResourceName("pip1", 20);
+        private static readonly string publicIpAddressName2 = SharedSettings.RandomResourceName("pip2", 20);
+        private static readonly string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 20);
+        private static readonly string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 20);
+        private static readonly string vmName = SharedSettings.RandomResourceName("vm", 8);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMP", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
 
@@ -38,7 +37,7 @@ namespace ManageIpAddress
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

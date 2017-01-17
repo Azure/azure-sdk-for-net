@@ -5,17 +5,13 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Redis.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace ManageRedis
 {
@@ -32,7 +28,7 @@ namespace ManageRedis
          * - Create CDN profile using Standard Verizon SKU with endpoints in each region of Web apps.
          * - Load some content (referenced by Web Apps) to the CDN endpoints.
          */
-        private static readonly string RG_NAME = ResourceNamer.RandomResourceName("rgCDN_", 24);
+        private static readonly string RG_NAME = SharedSettings.RandomResourceName("rgCDN_", 24);
         private static readonly string SUFFIX = ".azurewebsites.net";
 
         public static void Main(string[] args)
@@ -44,7 +40,7 @@ namespace ManageRedis
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -66,7 +62,7 @@ namespace ManageRedis
                     // Create 8 websites
                     for (int i = 0; i < 8; i++)
                     {
-                        appNames[i] = ResourceNamer.RandomResourceName("webapp" + (i + 1) + "-", 20);
+                        appNames[i] = SharedSettings.RandomResourceName("webapp" + (i + 1) + "-", 20);
                     }
 
                     // 2 in US
@@ -153,7 +149,7 @@ namespace ManageRedis
 
         private static IWebApp CreateWebApp(IAzure azure, string appName, Region region)
         {
-            var planName = ResourceNamer.RandomResourceName("jplan_", 15);
+            var planName = SharedSettings.RandomResourceName("jplan_", 15);
             var appUrl = appName + SUFFIX;
 
             Console.WriteLine("Creating web app " + appName + " with master branch...");

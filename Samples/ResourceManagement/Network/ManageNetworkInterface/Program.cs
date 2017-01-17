@@ -22,17 +22,17 @@ namespace ManageNetworkInterface
 
     public class Program
     {
-        private static readonly string vnetName = ResourceNamer.RandomResourceName("vnet", 24);
-        private static readonly string networkInterfaceName1 = ResourceNamer.RandomResourceName("nic1", 24);
-        private static readonly string networkInterfaceName2 = ResourceNamer.RandomResourceName("nic2", 24);
-        private static readonly string networkInterfaceName3 = ResourceNamer.RandomResourceName("nic3", 24);
-        private static readonly string publicIpAddressLeafDNS1 = ResourceNamer.RandomResourceName("pip1", 24);
-        private static readonly string publicIpAddressLeafDNS2 = ResourceNamer.RandomResourceName("pip2", 24);
+        private static readonly string vnetName = SharedSettings.RandomResourceName("vnet", 24);
+        private static readonly string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
+        private static readonly string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
+        private static readonly string networkInterfaceName3 = SharedSettings.RandomResourceName("nic3", 24);
+        private static readonly string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 24);
+        private static readonly string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 24);
 
         // TODO adjust the length of vm name from 8 to 24
-        private static readonly string vmName = ResourceNamer.RandomResourceName("vm", 8);
+        private static readonly string vmName = SharedSettings.RandomResourceName("vm", 8);
 
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMI", 24);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMI", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
 
@@ -42,7 +42,7 @@ namespace ManageNetworkInterface
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

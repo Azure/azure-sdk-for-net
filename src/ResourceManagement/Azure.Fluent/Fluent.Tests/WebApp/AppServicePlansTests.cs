@@ -5,59 +5,63 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 namespace Azure.Tests.WebApp
 {
     public class AppServicePlansTests
     {
-        private static readonly string GroupName = ResourceNamer.RandomResourceName("javacsmrg", 20);
-        private static readonly string AppServicePlanName = ResourceNamer.RandomResourceName("java-asp-", 20);
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDAppServicePlan()
         {
-            var appServiceManager = TestHelper.CreateAppServiceManager();
-
-            // CREATE
-            var appServicePlan = appServiceManager.AppServicePlans
-                .Define(AppServicePlanName)
-                .WithRegion(Region.US_WEST)
-                .WithNewResourceGroup(GroupName)
-                .WithPricingTier(AppServicePricingTier.Premium_P1)
-                .WithPerSiteScaling(false)
-                .WithCapacity(2)
-                .Create();
-            Assert.NotNull(appServicePlan);
-            Assert.Equal(AppServicePricingTier.Premium_P1, appServicePlan.PricingTier);
-            Assert.Equal(false, appServicePlan.PerSiteScaling);
-            Assert.Equal(2, appServicePlan.Capacity);
-            Assert.Equal(0, appServicePlan.NumberOfWebApps);
-            Assert.Equal(20, appServicePlan.MaxInstances);
-            // GET
-            Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(GroupName, AppServicePlanName));
-            // LIST
-            var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(GroupName);
-            var found = false;
-            foreach (var asp in appServicePlans)
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                if (AppServicePlanName.Equals(asp.Name))
+                string GroupName = TestUtilities.GenerateName("javacsmrg");
+                string AppServicePlanName = TestUtilities.GenerateName("java-asp-");
+
+                var appServiceManager = TestHelper.CreateAppServiceManager();
+
+                // CREATE
+                var appServicePlan = appServiceManager.AppServicePlans
+                    .Define(AppServicePlanName)
+                    .WithRegion(Region.US_WEST)
+                    .WithNewResourceGroup(GroupName)
+                    .WithPricingTier(AppServicePricingTier.Premium_P1)
+                    .WithPerSiteScaling(false)
+                    .WithCapacity(2)
+                    .Create();
+                Assert.NotNull(appServicePlan);
+                Assert.Equal(AppServicePricingTier.Premium_P1, appServicePlan.PricingTier);
+                Assert.Equal(false, appServicePlan.PerSiteScaling);
+                Assert.Equal(2, appServicePlan.Capacity);
+                Assert.Equal(0, appServicePlan.NumberOfWebApps);
+                Assert.Equal(20, appServicePlan.MaxInstances);
+                // GET
+                Assert.NotNull(appServiceManager.AppServicePlans.GetByGroup(GroupName, AppServicePlanName));
+                // LIST
+                var appServicePlans = appServiceManager.AppServicePlans.ListByGroup(GroupName);
+                var found = false;
+                foreach (var asp in appServicePlans)
                 {
-                    found = true;
-                    break;
+                    if (AppServicePlanName.Equals(asp.Name))
+                    {
+                        found = true;
+                        break;
+                    }
                 }
+                Assert.True(found);
+                // UPDATE
+                appServicePlan = appServicePlan.Update()
+                    .WithPricingTier(AppServicePricingTier.Standard_S1)
+                    .WithPerSiteScaling(true)
+                    .WithCapacity(3)
+                    .Apply();
+                Assert.NotNull(appServicePlan);
+                Assert.Equal(AppServicePricingTier.Standard_S1, appServicePlan.PricingTier);
+                Assert.Equal(true, appServicePlan.PerSiteScaling);
+                Assert.Equal(3, appServicePlan.Capacity);
             }
-            Assert.True(found);
-            // UPDATE
-            appServicePlan = appServicePlan.Update()
-                .WithPricingTier(AppServicePricingTier.Standard_S1)
-                .WithPerSiteScaling(true)
-                .WithCapacity(3)
-                .Apply();
-            Assert.NotNull(appServicePlan);
-            Assert.Equal(AppServicePricingTier.Standard_S1, appServicePlan.PricingTier);
-            Assert.Equal(true, appServicePlan.PerSiteScaling);
-            Assert.Equal(3, appServicePlan.Capacity);
         }
     }
 }
