@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Analysis
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// A unique identifier of a Microsoft Azure subscription. The
-        /// subscription id forms part of the URI for every service call.
+        /// A unique identifier for a Microsoft Azure subscription. The
+        /// subscription ID forms part of the URI for every service call.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API Version.
+        /// The client API version.
         /// </summary>
         string ApiVersion { get; }
 

@@ -53,7 +53,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                     Console.WriteLine(ex.ToString());
                 }
 
-                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
+                Assert.Equal(resultCreate.State, "Succeeded");
 
                 // get the server and ensure that all the values are properly set.
                 var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
@@ -68,7 +68,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
                 // Confirm that the server creation did succeed
-                Assert.True(resultGet.ProvisioningState == "Succeeded");
+                Assert.True(resultGet.State == "Succeeded");
 
                 // Update the server and confirm the updates make it in.
                 Dictionary<string, string> updatedTags = new Dictionary<string, string>
@@ -91,7 +91,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                                 updateParameters
                                 );
 
-                Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                Assert.Equal("Succeeded", resultUpdate.State);
 
                 // get the server and ensure that all the values are properly set.
                 resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);

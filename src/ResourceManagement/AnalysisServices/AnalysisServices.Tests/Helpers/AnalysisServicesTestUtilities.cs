@@ -69,7 +69,7 @@ namespace AnalysisServices.Tests.Helpers
             "aztest1@stabletest.ccsctp.net"
         };
 
-        public static string GetDefaultCreatedResponse(string provisioningState)
+        public static string GetDefaultCreatedResponse(string state)
         {
             string responseFormat = @"{{
                             'id':'/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.AnalysisServices/servers/{2}',
@@ -81,7 +81,7 @@ namespace AnalysisServices.Tests.Helpers
                             }},
                             'tags':{5},
                             'properties':{{
-                                'provisioningState':'{6}',
+                                'state':'{6}',
                                 'serverFullName':'asazure://wcus.asazure-int.windows.net/{2}',
                                 'asAdministrators':{{
                                 'members':{7}
@@ -99,7 +99,7 @@ namespace AnalysisServices.Tests.Helpers
                 DefaultLocation,
                 DefaultSku.Name,
                 tags,
-                provisioningState,
+                state,
                 admins);
         }
 

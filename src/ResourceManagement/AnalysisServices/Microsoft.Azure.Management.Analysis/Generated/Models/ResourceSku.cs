@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the SKU name and tier for Analysis Services resource
+    /// Represents the SKU name and Azure pricing tier for Analysis Services
+    /// resource.
     /// </summary>
     public partial class ResourceSku
     {
@@ -23,10 +24,11 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSku class.
         /// </summary>
-        /// <param name="name">Name of the Sku level for the server being
-        /// provisioned. Possible values include: 'S1', 'S2', 'S4',
-        /// 'D1'</param>
-        /// <param name="tier">Name of the tier to which the Sku applies.
+        /// <param name="name">Name of the SKU level for the server being
+        /// provisioned. Possible values are: 'S1', 'S2', 'S4', and 'D1'.
+        /// Possible values include: 'S1', 'S2', 'S4', 'D1'</param>
+        /// <param name="tier">The name of the Azure pricing tier to which the
+        /// SKU applies. Possible values are: 'Development' and 'Standard'.
         /// Possible values include: 'Development', 'Standard'</param>
         public ResourceSku(string name, string tier = default(string))
         {
@@ -35,15 +37,17 @@ namespace Microsoft.Azure.Management.Analysis.Models
         }
 
         /// <summary>
-        /// Gets or sets name of the Sku level for the server being
-        /// provisioned. Possible values include: 'S1', 'S2', 'S4', 'D1'
+        /// Gets or sets name of the SKU level for the server being
+        /// provisioned. Possible values are: 'S1', 'S2', 'S4', and 'D1'.
+        /// Possible values include: 'S1', 'S2', 'S4', 'D1'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the tier to which the Sku applies. Possible
-        /// values include: 'Development', 'Standard'
+        /// Gets or sets the name of the Azure pricing tier to which the SKU
+        /// applies. Possible values are: 'Development' and 'Standard'.
+        /// Possible values include: 'Development', 'Standard'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
