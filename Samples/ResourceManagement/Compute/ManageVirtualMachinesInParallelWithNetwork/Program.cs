@@ -29,11 +29,11 @@ namespace ManageVirtualMachinesInParallelWithNetwork
     {
         private static readonly int frontendVmCount = 10;
         private static readonly int backendVmCount = 10;
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEPP", 24);
-        private static readonly string frontEndNSGName = ResourceNamer.RandomResourceName("fensg", 24);
-        private static readonly string backEndNSGName = ResourceNamer.RandomResourceName("bensg", 24);
-        private static readonly string networkName = ResourceNamer.RandomResourceName("vnetCOMV", 24);
-        private static readonly string storageAccountName = ResourceNamer.RandomResourceName("stgCOMV", 20);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEPP", 24);
+        private static readonly string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
+        private static readonly string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
+        private static readonly string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
+        private static readonly string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
 
@@ -43,7 +43,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

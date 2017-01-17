@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 // If no listener exists for the requested port number yet and the name, create one
                 if (name == null)
                 {
-                    name = ResourceNamer.RandomResourceName("listener", 13);
+                    name = SharedSettings.RandomResourceName("listener", 13);
                 }
 
                 listenerByPort = this.Parent.DefineListener(name)
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:3E9C9108A0B9643E9C6CCF35D944BFF5:1284C4FFCBC626062213718CF44C586A
         public ApplicationGatewayRequestRoutingRuleImpl ToBackendHttpPort(int portNumber)
         {
-            string name = ResourceNamer.RandomResourceName("backcfg", 12);
+            string name = SharedSettings.RandomResourceName("backcfg", 12);
             Parent.DefineBackendHttpConfiguration(name)
                .WithPort(portNumber)
                .Attach();
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             var config = BackendHttpConfiguration();
             if (config == null)
             {
-                string name = ResourceNamer.RandomResourceName("bckcfg", 11);
+                string name = SharedSettings.RandomResourceName("bckcfg", 11);
                 config = Parent.DefineBackendHttpConfiguration(name);
                 config.Attach();
                 ToBackendHttpConfiguration(name);
@@ -408,7 +408,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             var listener = Listener();
             if (listener == null)
             {
-                string name = ResourceNamer.RandomResourceName("listener", 13);
+                string name = SharedSettings.RandomResourceName("listener", 13);
                 listener = Parent.DefineListener(name);
                 listener.Attach();
                 FromListener(name);
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             ApplicationGatewayBackendImpl backend = (ApplicationGatewayBackendImpl) Backend();
             if (backend == null)
             {
-                string name = ResourceNamer.RandomResourceName("backend", 12);
+                string name = SharedSettings.RandomResourceName("backend", 12);
                 backend = Parent.DefineBackend(name);
                 backend.Attach();
                 ToBackend(name);

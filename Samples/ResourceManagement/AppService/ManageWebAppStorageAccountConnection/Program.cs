@@ -31,12 +31,12 @@ namespace ManageWebAppStorageAccountConnection
     public class Program
     {
         private static readonly string suffix = ".azurewebsites.net";
-        private static readonly string app1Name = ResourceNamer.RandomResourceName("webapp1-", 20);
+        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
         private static readonly string app1Url = app1Name + suffix;
-        private static readonly string storageName = ResourceNamer.RandomResourceName("jsdkstore", 20);
-        private static readonly string containerName = ResourceNamer.RandomResourceName("jcontainer", 20);
-        private static readonly string planName = ResourceNamer.RandomResourceName("jplan_", 15);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rg1NEMV_", 24);
+        private static readonly string storageName = SharedSettings.RandomResourceName("jsdkstore", 20);
+        private static readonly string containerName = SharedSettings.RandomResourceName("jcontainer", 20);
+        private static readonly string planName = SharedSettings.RandomResourceName("jplan_", 15);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
 
         public static void Main(string[] args)
         {
@@ -44,7 +44,7 @@ namespace ManageWebAppStorageAccountConnection
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

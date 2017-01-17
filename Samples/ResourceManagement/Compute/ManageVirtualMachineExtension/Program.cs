@@ -25,11 +25,11 @@ namespace ManageVirtualMachineExtension
 
     public class Program
     {
-        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOVE", 15);
-        readonly static string linuxVmName = ResourceNamer.RandomResourceName("lVM", 10);
-        readonly static string windowsVmName = ResourceNamer.RandomResourceName("wVM", 10);
-        readonly static string pipDnsLabelLinuxVM = ResourceNamer.RandomResourceName("rgPip1", 25);
-        readonly static string pipDnsLabelWindowsVM = ResourceNamer.RandomResourceName("rgPip2", 25);
+        readonly static string rgName = SharedSettings.RandomResourceName("rgCOVE", 15);
+        readonly static string linuxVmName = SharedSettings.RandomResourceName("lVM", 10);
+        readonly static string windowsVmName = SharedSettings.RandomResourceName("wVM", 10);
+        readonly static string pipDnsLabelLinuxVM = SharedSettings.RandomResourceName("rgPip1", 25);
+        readonly static string pipDnsLabelWindowsVM = SharedSettings.RandomResourceName("rgPip2", 25);
 
         // Linux configurations
         //
@@ -96,7 +96,7 @@ namespace ManageVirtualMachineExtension
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

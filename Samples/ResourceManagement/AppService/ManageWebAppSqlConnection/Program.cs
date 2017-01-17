@@ -33,14 +33,14 @@ namespace ManageWebAppSqlConnection
     public class Program
     {
         private static readonly string suffix = ".azurewebsites.net";
-        private static readonly string appName = ResourceNamer.RandomResourceName("webapp1-", 20);
+        private static readonly string appName = SharedSettings.RandomResourceName("webapp1-", 20);
         private static readonly string appUrl = appName + suffix;
-        private static readonly string sqlServerName = ResourceNamer.RandomResourceName("jsdkserver", 20);
-        private static readonly string sqlDbName = ResourceNamer.RandomResourceName("jsdkdb", 20);
+        private static readonly string sqlServerName = SharedSettings.RandomResourceName("jsdkserver", 20);
+        private static readonly string sqlDbName = SharedSettings.RandomResourceName("jsdkdb", 20);
         private static readonly string admin = "jsdkadmin";
         private static readonly string password = "StrongPass!123";
-        private static readonly string planName = ResourceNamer.RandomResourceName("jplan_", 15);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rg1NEMV_", 24);
+        private static readonly string planName = SharedSettings.RandomResourceName("jplan_", 15);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
 
         public static void Main(string[] args)
         {
@@ -48,7 +48,7 @@ namespace ManageWebAppSqlConnection
             {
                 //=================================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

@@ -3,12 +3,16 @@
 
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.KeyVault.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.KeyVault.Fluent.Models;
 using System.Linq;
 using Xunit;
+using System;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Azure.Tests;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace Fluent.Tests.KeyVault
 {
@@ -19,81 +23,89 @@ namespace Fluent.Tests.KeyVault
          * Main entry point.
          * @param args the parameters
          */
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void Test()
+        [Fact]
+        public void CanCRUDKeyVault()
         {
-            string vaultName1 = ResourceNamer.RandomResourceName("vault1", 20);
-            string vaultName2 = ResourceNamer.RandomResourceName("vault2", 20);
-            string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
-
-            IKeyVaultManager manager = TestHelper.CreateKeyVaultManager();
-
-            try
+            using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                IVault vault1 = manager.Vaults
-                        .Define(vaultName1)
-                        .WithRegion(Region.US_WEST)
-                        .WithNewResourceGroup(rgName)
-                        .WithEmptyAccessPolicy()
-                        .Create();
+                string vaultName1 = TestUtilities.GenerateName("vault1");
+                string vaultName2 = TestUtilities.GenerateName("vault2");
+                string rgName = TestUtilities.GenerateName("rgNEMV");
+                
+                IKeyVaultManager manager = TestHelper.CreateKeyVaultManager();
 
-                Assert.NotNull(vault1);
-                Assert.Equal(vaultName1, vault1.Name);
-                Assert.Equal(0, vault1.AccessPolicies.Count);
+                var spnCredentialsClientId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];
 
-                vault1 = vault1.Update()
-                        .DefineAccessPolicy()
-                            .ForServicePrincipal(AzureCredentials.FromFile(@"C:\my.azureauth").ClientId)
-                            .AllowKeyAllPermissions()
-                            .AllowSecretPermissions(SecretPermissions.Get)
-                            .AllowSecretPermissions(SecretPermissions.List)
-                            .Attach()
-                        .Apply();
+                try
+                {
+                    IVault vault1 = manager.Vaults
+                            .Define(vaultName1)
+                            .WithRegion(Region.US_WEST)
+                            .WithNewResourceGroup(rgName)
+                            .WithEmptyAccessPolicy()
+                            .Create();
 
-                Assert.NotNull(vault1);
-                Assert.Equal(1, vault1.AccessPolicies.Count);
-                Assert.Equal(KeyPermissions.All.ToString(), vault1.AccessPolicies[0].Permissions.Keys[0]);
-                Assert.Equal(2, vault1.AccessPolicies[0].Permissions.Secrets.Count);
+                    Assert.NotNull(vault1);
+                    Assert.Equal(vaultName1, vault1.Name);
+                    Assert.Equal(0, vault1.AccessPolicies.Count);
+                    vault1 = vault1.Update()
+                            .DefineAccessPolicy()
+                                .ForServicePrincipal(spnCredentialsClientId)
+                                .AllowKeyAllPermissions()
+                                .AllowSecretPermissions(SecretPermissions.Get)
+                                .AllowSecretPermissions(SecretPermissions.List)
+                                .Attach()
+                            .Apply();
 
-                vault1 = vault1.Update()
-                        .WithDeploymentEnabled()
-                        .WithTemplateDeploymentEnabled()
-                        .UpdateAccessPolicy(vault1.AccessPolicies.First().ObjectId)
-                            .AllowSecretAllPermissions()
-                            .Parent()
-                        .Apply();
+                    Assert.NotNull(vault1);
+                    Assert.Equal(1, vault1.AccessPolicies.Count);
+                    Assert.Equal(KeyPermissions.All.ToString(), vault1.AccessPolicies[0].Permissions.Keys[0]);
+                    Assert.Equal(2, vault1.AccessPolicies[0].Permissions.Secrets.Count);
 
-                Assert.Equal(1, vault1.AccessPolicies.Count);
-                Assert.Equal(3, vault1.AccessPolicies[0].Permissions.Secrets.Count);
+                    vault1 = vault1.Update()
+                            .WithDeploymentEnabled()
+                            .WithTemplateDeploymentEnabled()
+                            .UpdateAccessPolicy(vault1.AccessPolicies.First().ObjectId)
+                                .AllowSecretAllPermissions()
+                                .Parent()
+                            .Apply();
 
-                IVault vault2 = manager.Vaults
-                        .Define(vaultName2)
-                        .WithRegion(Region.US_EAST)
-                        .WithExistingResourceGroup(rgName)
-                        .DefineAccessPolicy()
-                            .ForServicePrincipal(AzureCredentials.FromFile(@"C:\my.azureauth").ClientId)
-                            .AllowKeyPermissions(KeyPermissions.Get)
-                            .AllowKeyPermissions(KeyPermissions.List)
-                            .AllowKeyPermissions(KeyPermissions.Decrypt)
-                            .AllowSecretPermissions(SecretPermissions.Get)
-                            .Attach()
-                        .Create();
+                    Assert.Equal(1, vault1.AccessPolicies.Count);
+                    Assert.Equal(3, vault1.AccessPolicies[0].Permissions.Secrets.Count);
 
-                Assert.Equal(1, vault2.AccessPolicies.Count);
-                Assert.Equal(3, vault2.AccessPolicies[0].Permissions.Keys.Count);
+                    IVault vault2 = manager.Vaults
+                            .Define(vaultName2)
+                            .WithRegion(Region.US_EAST)
+                            .WithExistingResourceGroup(rgName)
+                            .DefineAccessPolicy()
+                                .ForServicePrincipal(spnCredentialsClientId)
+                                .AllowKeyPermissions(KeyPermissions.Get)
+                                .AllowKeyPermissions(KeyPermissions.List)
+                                .AllowKeyPermissions(KeyPermissions.Decrypt)
+                                .AllowSecretPermissions(SecretPermissions.Get)
+                                .Attach()
+                            .Create();
 
-                var vaults = manager.Vaults.ListByGroup(rgName);
-                Assert.Equal(2, vaults.Count);
+                    Assert.Equal(1, vault2.AccessPolicies.Count);
+                    Assert.Equal(3, vault2.AccessPolicies[0].Permissions.Keys.Count);
 
-                manager.Vaults.DeleteById(vault1.Id);
-                manager.Vaults.DeleteById(vault2.Id);
+                    var vaults = manager.Vaults.ListByGroup(rgName);
+                    Assert.Equal(2, vaults.Count);
 
-                vaults = manager.Vaults.ListByGroup(rgName);
-                Assert.Equal(0, vaults.Count);
-            }
-            finally
-            {
-                TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    manager.Vaults.DeleteById(vault1.Id);
+                    manager.Vaults.DeleteById(vault2.Id);
+
+                    vaults = manager.Vaults.ListByGroup(rgName);
+                    Assert.Equal(0, vaults.Count);
+                }
+                finally
+                {
+                    try
+                    {
+                        TestHelper.CreateResourceManager().ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch { }
+                }
             }
         }
 

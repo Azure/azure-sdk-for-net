@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             }
             graphRbacManager = GraphRbacManager.Authenticate(RestClient.Configure()
                 .WithBaseUri(graphEndpoint)
+                .WithDelegatingHandlers(restClient.Handlers.ToArray())
                 .WithCredentials(restClient.Credentials)
                 .Build(), subscriptionId, tenantId);
             this.tenantId = tenantId;

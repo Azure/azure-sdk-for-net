@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (portName == null)
             {
                 // Existing frontend port with this number not found so create one
-                portName = ResourceNamer.RandomResourceName("port", 9);
+                portName = SharedSettings.RandomResourceName("port", 9);
                 Parent.WithFrontendPort(portNumber, portName);
             }
 
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             if (name == null)
             {
-                name = ResourceNamer.RandomResourceName("cert", 10);
+                name = SharedSettings.RandomResourceName("cert", 10);
             }
             Parent.DefineSslCertificate(name)
                 .WithPfxFromFile(pfxFile)

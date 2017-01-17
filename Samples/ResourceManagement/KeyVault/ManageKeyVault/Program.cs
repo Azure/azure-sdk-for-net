@@ -25,9 +25,9 @@ namespace ManageKeyVault
 
     public class Program
     {
-        private static readonly string vaultName1 = ResourceNamer.RandomResourceName("vault1", 20);
-        private static readonly string vaultName2 = ResourceNamer.RandomResourceName("vault2", 20);
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
+        private static readonly string vaultName1 = SharedSettings.RandomResourceName("vault1", 20);
+        private static readonly string vaultName2 = SharedSettings.RandomResourceName("vault2", 20);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
 
         public static void Main(string[] args)
         {
@@ -35,7 +35,7 @@ namespace ManageKeyVault
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -70,7 +70,7 @@ namespace ManageKeyVault
 
                     vault1 = vault1.Update()
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                                .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
                                 .AllowKeyAllPermissions()
                                 .AllowSecretPermissions(SecretPermissions.Get)
                                 .AllowSecretPermissions(SecretPermissions.List)
@@ -105,7 +105,7 @@ namespace ManageKeyVault
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .DefineAccessPolicy()
-                                .ForServicePrincipal(AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                                .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
                                 .AllowKeyPermissions(KeyPermissions.List)
                                 .AllowKeyPermissions(KeyPermissions.Get)
                                 .AllowKeyPermissions(KeyPermissions.Decrypt)

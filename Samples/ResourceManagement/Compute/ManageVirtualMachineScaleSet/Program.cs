@@ -26,9 +26,9 @@ namespace ManageVirtualMachineScaleSet
 
     public class Program
     {
-        private readonly static string rgName = ResourceNamer.RandomResourceName("rgCOVS", 15);
-        private readonly static string vnetName = ResourceNamer.RandomResourceName("vnet", 24);
-        private readonly static string loadBalancerName1 = ResourceNamer.RandomResourceName("intlb" + "-", 18);
+        private readonly static string rgName = SharedSettings.RandomResourceName("rgCOVS", 15);
+        private readonly static string vnetName = SharedSettings.RandomResourceName("vnet", 24);
+        private readonly static string loadBalancerName1 = SharedSettings.RandomResourceName("intlb" + "-", 18);
         private readonly static string publicIpName = "pip-" + loadBalancerName1;
         private readonly static string frontendName = loadBalancerName1 + "-FE1";
         private readonly static string backendPoolName1 = loadBalancerName1 + "-BAP1";
@@ -39,10 +39,10 @@ namespace ManageVirtualMachineScaleSet
         private readonly static string httpsLoadBalancingRule = "httpsRule";
         private readonly static string natPool50XXto22 = "natPool50XXto22";
         private readonly static string natPool60XXto23 = "natPool60XXto23";
-        private readonly static string vmssName = ResourceNamer.RandomResourceName("vmss", 24);
-        private readonly static string storageAccountName1 = ResourceNamer.RandomResourceName("stg1", 24);
-        private readonly static string storageAccountName2 = ResourceNamer.RandomResourceName("stg2", 24);
-        private readonly static string storageAccountName3 = ResourceNamer.RandomResourceName("stg3", 24);
+        private readonly static string vmssName = SharedSettings.RandomResourceName("vmss", 24);
+        private readonly static string storageAccountName1 = SharedSettings.RandomResourceName("stg1", 24);
+        private readonly static string storageAccountName2 = SharedSettings.RandomResourceName("stg2", 24);
+        private readonly static string storageAccountName3 = SharedSettings.RandomResourceName("stg3", 24);
         private readonly static string userName = "tirekicker";
         private readonly static string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
         private readonly static string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/Samples/ResourceManagement/Compute/ManageVirtualMachineScaleSet/Resources/install_apache.sh";
@@ -54,7 +54,7 @@ namespace ManageVirtualMachineScaleSet
             {
                 //=============================================================
                 // Authenticate
-                var credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

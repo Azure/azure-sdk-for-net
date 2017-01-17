@@ -1,5 +1,9 @@
 {
   "version": "1.0.0-*",
+  
+  "buildOptions": {
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
 
   "testRunner": "xunit",
   "frameworks": {
@@ -17,7 +21,7 @@
       "version": "1.0.0"
     },
     "NETStandard.Library": "1.6.0",
-    "xunit": "2.2.0-beta2-build3300",
+    "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.9-preview, 3.0)",
     "Microsoft.Azure.Management.Fluent": "[1.0.0-beta4-1, 2.0)",
@@ -32,6 +36,7 @@
     "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta4-1, 2.0)",
     "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta4-1, 2.0)",
     "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta4-1, 2.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
     "SSH.NET": "2016.0.0"
   }
 }

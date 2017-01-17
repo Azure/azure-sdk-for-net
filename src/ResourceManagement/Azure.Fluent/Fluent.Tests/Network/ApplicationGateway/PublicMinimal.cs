@@ -4,7 +4,9 @@
 using Azure.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Azure.Tests.Network.ApplicationGateway
@@ -15,9 +17,13 @@ namespace Azure.Tests.Network.ApplicationGateway
     public class PublicMinimal : TestTemplate<IApplicationGateway, IApplicationGateways>
     {
         private INetworks networks;
+        private ApplicationGatewayHelper applicationGatewayHelper;
 
-        public PublicMinimal(INetworks networks)
+        public PublicMinimal(INetworks networks, [CallerMemberName] string methodName = "testframework_failed")
+            : base(methodName)
         {
+            applicationGatewayHelper = new ApplicationGatewayHelper(TestUtilities.GenerateName("", methodName));
+
             this.networks = networks;
         }
 
@@ -28,75 +34,70 @@ namespace Azure.Tests.Network.ApplicationGateway
 
         public override IApplicationGateway CreateResource(IApplicationGateways resources)
         {
-            try
-            {
-                resources.Define(ApplicationGatewayHelper.AppGatewayName)
-                    .WithRegion(ApplicationGatewayHelper.Region)
-                    .WithNewResourceGroup(ApplicationGatewayHelper.GroupName)
 
-                    // Request routing rules
-                    .DefineRequestRoutingRule("rule1")
-                        .FromPublicFrontend()
-                        .FromFrontendHttpsPort(443)
-                        .WithSslCertificateFromPfxFile(new FileInfo("c:\\automation\\myTest.pfx"))
-                        .WithSslCertificatePassword("Abc123")
-                        .ToBackendHttpPort(8080)
-                        .ToBackendIpAddress("11.1.1.1")
-                        .ToBackendIpAddress("11.1.1.2")
-                        .Attach()
-                    .Create();
-            }
-            catch
-            {
-            }
+            resources.Define(applicationGatewayHelper.AppGatewayName)
+                .WithRegion(applicationGatewayHelper.Region)
+                .WithNewResourceGroup(applicationGatewayHelper.GroupName)
+
+                // Request routing rules
+                .DefineRequestRoutingRule("rule1")
+                    .FromPublicFrontend()
+                    .FromFrontendHttpsPort(443)
+                    .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets", "myTest._pfx")))
+                    .WithSslCertificatePassword("Abc123")
+                    .ToBackendHttpPort(8080)
+                    .ToBackendIpAddress("11.1.1.1")
+                    .ToBackendIpAddress("11.1.1.2")
+                    .Attach()
+                .Create();
 
             // Get the resource as created so far
-            string resourceId = ApplicationGatewayHelper.CreateResourceId(resources.Manager.SubscriptionId);
+            string resourceId = applicationGatewayHelper.CreateResourceId(resources.Manager.SubscriptionId);
             var appGateway = resources.GetById(resourceId);
-            Assert.True(appGateway != null);
-            Assert.True(ApplicationGatewayTier.Standard == appGateway.Tier);
-            Assert.True(ApplicationGatewaySkuName.StandardSmall == appGateway.Size);
-            Assert.True(appGateway.InstanceCount == 1);
+            Assert.NotNull(appGateway);
+            Assert.Equal(ApplicationGatewayTier.Standard, appGateway.Tier);
+            Assert.Equal(ApplicationGatewaySkuName.StandardSmall, appGateway.Size);
+            Assert.Equal(appGateway.InstanceCount, 1);
 
             // Verify frontend ports
-            Assert.True(appGateway.FrontendPorts.Count == 1);
-            Assert.True(appGateway.FrontendPortNameFromNumber(443) != null);
+            Assert.Equal(appGateway.FrontendPorts.Count, 1);
+            Assert.NotNull(appGateway.FrontendPortNameFromNumber(443));
 
             // Verify frontends
             Assert.True(!appGateway.IsPrivate);
             Assert.True(appGateway.IsPublic);
-            Assert.True(appGateway.Frontends.Count == 1);
+            Assert.Equal(appGateway.Frontends.Count, 1);
 
             // Verify listeners
-            Assert.True(appGateway.Listeners.Count == 1);
-            Assert.True(appGateway.ListenerByPortNumber(443) != null);
+            Assert.Equal(appGateway.Listeners.Count, 1);
+            Assert.NotNull(appGateway.ListenerByPortNumber(443));
 
             // Verify backends
-            Assert.True(appGateway.Backends.Count == 1);
+            Assert.Equal(appGateway.Backends.Count, 1);
 
             // Verify backend HTTP configs
-            Assert.True(appGateway.BackendHttpConfigurations.Count == 1);
+            Assert.Equal(appGateway.BackendHttpConfigurations.Count, 1);
 
             // Verify rules
-            Assert.True(appGateway.RequestRoutingRules.Count == 1);
+            Assert.Equal(appGateway.RequestRoutingRules.Count, 1);
             var rule = appGateway.RequestRoutingRules["rule1"];
-            Assert.True(rule != null);
-            Assert.True(rule.FrontendPort == 443);
-            Assert.True(ApplicationGatewayProtocol.Https == rule.FrontendProtocol);
-            Assert.True(rule.Listener != null);
-            Assert.True(rule.Listener.Frontend != null);
+            Assert.NotNull(rule);
+            Assert.Equal(rule.FrontendPort, 443);
+            Assert.Equal(ApplicationGatewayProtocol.Https, rule.FrontendProtocol);
+            Assert.NotNull(rule.Listener);
+            Assert.NotNull(rule.Listener.Frontend);
             Assert.True(rule.Listener.Frontend.IsPublic);
             Assert.True(!rule.Listener.Frontend.IsPrivate);
-            Assert.True(rule.Listener.SubnetName == null);
-            Assert.True(rule.Listener.NetworkId == null);
-            Assert.True(rule.BackendPort == 8080);
-            Assert.True(rule.BackendAddresses.Count == 2);
-            Assert.True(rule.Backend != null);
+            Assert.Equal(rule.Listener.SubnetName, null);
+            Assert.Equal(rule.Listener.NetworkId, null);
+            Assert.Equal(rule.BackendPort, 8080);
+            Assert.Equal(rule.BackendAddresses.Count, 2);
+            Assert.NotNull(rule.Backend);
             Assert.True(rule.Backend.ContainsIpAddress("11.1.1.1"));
             Assert.True(rule.Backend.ContainsIpAddress("11.1.1.2"));
 
             // Verify certificates
-            Assert.True(appGateway.SslCertificates.Count == 1);
+            Assert.Equal(appGateway.SslCertificates.Count, 1);
 
             return appGateway;
         }
@@ -132,48 +133,48 @@ namespace Azure.Tests.Network.ApplicationGateway
 
             Assert.True(resource.Tags.ContainsKey("tag1"));
             Assert.True(resource.Tags.ContainsKey("tag2"));
-            Assert.True(ApplicationGatewaySkuName.StandardMedium == resource.Size);
-            Assert.True(resource.InstanceCount == 2);
+            Assert.Equal(ApplicationGatewaySkuName.StandardMedium, resource.Size);
+            Assert.Equal(resource.InstanceCount, 2);
 
             // Verify frontend ports
-            Assert.True(resource.FrontendPorts.Count == 2);
+            Assert.Equal(resource.FrontendPorts.Count, 2);
             Assert.True(null != resource.FrontendPortNameFromNumber(80));
 
             // Verify listeners
-            Assert.True(resource.Listeners.Count == 2);
+            Assert.Equal(resource.Listeners.Count, 2);
             IApplicationGatewayListener listener = resource.Listeners["listener2"];
-            Assert.True(listener != null);
+            Assert.NotNull(listener);
             Assert.True(!listener.Frontend.IsPrivate);
             Assert.True(listener.Frontend.IsPublic);
-            Assert.True(listener.FrontendPortNumber == 80);
-            Assert.True(ApplicationGatewayProtocol.Http == listener.Protocol);
-            Assert.True(listener.SslCertificate == null);
+            Assert.Equal(listener.FrontendPortNumber, 80);
+            Assert.Equal(ApplicationGatewayProtocol.Http, listener.Protocol);
+            Assert.Equal(listener.SslCertificate, null);
 
             // Verify backends
-            Assert.True(resource.Backends.Count == 2);
+            Assert.Equal(resource.Backends.Count, 2);
             IApplicationGatewayBackend backend = resource.Backends["backend2"];
-            Assert.True(backend != null);
-            Assert.True(backend.Addresses.Count == 1);
+            Assert.NotNull(backend);
+            Assert.Equal(backend.Addresses.Count, 1);
             Assert.True(backend.ContainsIpAddress("11.1.1.3"));
 
             // Verify HTTP configs
-            Assert.True(resource.BackendHttpConfigurations.Count == 2);
+            Assert.Equal(resource.BackendHttpConfigurations.Count, 2);
             IApplicationGatewayBackendHttpConfiguration config = resource.BackendHttpConfigurations["config2"];
-            Assert.True(config != null);
+            Assert.NotNull(config);
             Assert.True(config.CookieBasedAffinity);
-            Assert.True(config.Port == 8081);
-            Assert.True(config.RequestTimeout == 33);
+            Assert.Equal(config.Port, 8081);
+            Assert.Equal(config.RequestTimeout, 33);
 
             // Verify request routing rules
-            Assert.True(resource.RequestRoutingRules.Count == 2);
+            Assert.Equal(resource.RequestRoutingRules.Count, 2);
             IApplicationGatewayRequestRoutingRule rule = resource.RequestRoutingRules["rule2"];
-            Assert.True(rule != null);
-            Assert.True(rule.Listener != null);
-            Assert.True("listener2" == rule.Listener.Name);
-            Assert.True(rule.BackendHttpConfiguration != null);
-            Assert.True("config2" == rule.BackendHttpConfiguration.Name);
-            Assert.True(rule.Backend != null);
-            Assert.True("backend2" == rule.Backend.Name);
+            Assert.NotNull(rule);
+            Assert.NotNull(rule.Listener);
+            Assert.Equal("listener2", rule.Listener.Name);
+            Assert.NotNull(rule.BackendHttpConfiguration);
+            Assert.Equal("config2", rule.BackendHttpConfiguration.Name);
+            Assert.NotNull(rule.Backend);
+            Assert.Equal("backend2", rule.Backend.Name);
 
             return resource;
         }

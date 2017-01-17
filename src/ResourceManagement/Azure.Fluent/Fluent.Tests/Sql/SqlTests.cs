@@ -2,14 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent.Models;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Xunit;
 
@@ -25,11 +26,10 @@ namespace Azure.Tests.Sql
         private static readonly string SqlFirewallRuleName = "firewallrule1";
         private static readonly string StartIPAddress = "10.102.1.10";
         private static readonly string EndIPAddress = "10.102.1.12";
-        private static ISqlManager sqlServerManager = TestHelper.CreateSqlManager();
 
-        private static void  GenerateNewRGAndSqlServerNameForTest()
+        private static void GenerateNewRGAndSqlServerNameForTest([CallerMemberName] string methodName = "testframework_failed")
         {
-            GroupName = ResourceNamer.RandomResourceName("netsqlserver", 20);
+            GroupName = TestUtilities.GenerateName("netsqlserver", methodName);
             SqlServerName = GroupName;
         }
 
@@ -50,145 +50,181 @@ namespace Azure.Tests.Sql
             }
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanOperateSqlFromRollUpClient()
         {
-            GenerateNewRGAndSqlServerNameForTest();
-            var rollUpClient = TestHelper.CreateRollupClient();
-            var sqlServer = rollUpClient.SqlServers.Define(SqlServerName)
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                GenerateNewRGAndSqlServerNameForTest();
+                var rollUpClient = TestHelper.CreateRollupClient();
+                var sqlServer = rollUpClient.SqlServers.Define(SqlServerName)
+                        .WithRegion(Region.US_CENTRAL)
+                        .WithNewResourceGroup(GroupName)
+                        .WithAdministratorLogin("userName")
+                        .WithAdministratorPassword("loepop77ejk~13@@")
+                        .Create();
+                Assert.NotNull(sqlServer.Databases.List());
+                rollUpClient.SqlServers.DeleteById(sqlServer.Id);
+
+                DeleteResourceGroup(GroupName);
+            }
+        }
+
+        [Fact(Skip = "This test require existing SQL server so that there can be recommended elastic pools")]
+        public void CanListRecommendedElasticPools()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
+                var sqlServer = sqlServerManager.SqlServers.GetByGroup("ans", "ans-secondary");
+                var usages = sqlServer.Databases.List().First().ListServiceTierAdvisors().Values.FirstOrDefault().ServiceLevelObjectiveUsageMetrics;
+                var recommendedElasticPools = sqlServer.ListRecommendedElasticPools();
+                Assert.NotNull(recommendedElasticPools);
+                Assert.NotNull(sqlServer.Databases.List().FirstOrDefault().GetUpgradeHint());
+            }
+        }
+
+        [Fact]
+        public void CanCRUDSqlServer()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
+
+                GenerateNewRGAndSqlServerNameForTest();
+
+                // Create
+                var sqlServer = CreateSqlServer(sqlServerManager);
+
+                ValidateSqlServer(sqlServer);
+
+                var serviceObjectives = sqlServer.ListServiceObjectives();
+
+                Assert.NotEqual(serviceObjectives.Count(), 0);
+                Assert.NotNull(serviceObjectives.FirstOrDefault().Refresh());
+                Assert.NotNull(sqlServer.GetServiceObjective("d1737d22-a8ea-4de7-9bd0-33395d2a7419"));
+
+                sqlServer.Update().WithAdministratorPassword("loepop77ejk~13@@").Apply();
+
+                // List
+                var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
+                var found = false;
+                foreach (var server in sqlServers)
+                {
+                    if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SqlServerName))
+                    {
+                        found = true;
+                    }
+                }
+                Assert.True(found);
+                // Get
+                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                Assert.NotNull(sqlServer);
+
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
+                DeleteResourceGroup(sqlServer.ResourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void CanUseCoolShortcutsForResourceCreation()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
+
+                GenerateNewRGAndSqlServerNameForTest();
+
+                var database2Name = "database2";
+                var database1InEPName = "database1InEP";
+                var database2InEPName = "database2InEP";
+                var elasticPool2Name = "elasticPool2";
+                var elasticPool3Name = "elasticPool3";
+                var elasticPool1Name = SqlElasticPoolName;
+
+                // Create
+                var sqlServer = sqlServerManager.SqlServers.Define(SqlServerName)
                     .WithRegion(Region.US_CENTRAL)
                     .WithNewResourceGroup(GroupName)
                     .WithAdministratorLogin("userName")
-                    .WithAdministratorPassword("loepop77ejk~13@@")
+                    .WithAdministratorPassword("loepopfuejk~13@@")
+                    .WithNewDatabase(SqlDatabaseName)
+                    .WithNewDatabase(database2Name)
+                    .WithNewElasticPool(elasticPool1Name, ElasticPoolEditions.Standard)
+                    .WithNewElasticPool(elasticPool2Name, ElasticPoolEditions.Premium, database1InEPName, database2InEPName)
+                    .WithNewElasticPool(elasticPool3Name, ElasticPoolEditions.Standard)
+                    .WithNewFirewallRule(StartIPAddress, EndIPAddress, SqlFirewallRuleName)
+                    .WithNewFirewallRule(StartIPAddress, EndIPAddress)
+                    .WithNewFirewallRule(StartIPAddress)
                     .Create();
-            Assert.NotNull(sqlServer.Databases.List());
-            rollUpClient.SqlServers.DeleteById(sqlServer.Id);
 
-            DeleteResourceGroup(GroupName);
-        }
+                ValidateMultiCreation(
+                    sqlServerManager,
+                    database2Name,
+                    database1InEPName,
+                    database2InEPName,
+                    elasticPool1Name,
+                    elasticPool2Name,
+                    elasticPool3Name,
+                    sqlServer,
+                    false);
+                elasticPool1Name = SqlElasticPoolName + " U";
+                database2Name = "database2U";
+                database1InEPName = "database1InEPU";
+                database2InEPName = "database2InEPU";
+                elasticPool2Name = "elasticPool2U";
+                elasticPool3Name = "elasticPool3U";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanListRecommendedElasticPools()
-        {
-            var sqlServer = sqlServerManager.SqlServers.GetByGroup("ans", "ans-secondary");
-            var usages = sqlServer.Databases.List().First().ListServiceTierAdvisors().Values.FirstOrDefault().ServiceLevelObjectiveUsageMetrics;
-            var recommendedElasticPools = sqlServer.ListRecommendedElasticPools();
-            Assert.NotNull(recommendedElasticPools);
-            Assert.NotNull(sqlServer.Databases.List().FirstOrDefault().GetUpgradeHint());
-        }
+                // Update
+                sqlServer = sqlServer.Update()
+                    .WithNewDatabase(SqlDatabaseName).WithNewDatabase(database2Name)
+                    .WithNewElasticPool(elasticPool1Name, ElasticPoolEditions.Standard)
+                    .WithNewElasticPool(elasticPool2Name, ElasticPoolEditions.Premium, database1InEPName, database2InEPName)
+                    .WithNewElasticPool(elasticPool3Name, ElasticPoolEditions.Standard)
+                    .WithNewFirewallRule(StartIPAddress, EndIPAddress, SqlFirewallRuleName)
+                    .WithNewFirewallRule(StartIPAddress, EndIPAddress)
+                    .WithNewFirewallRule(StartIPAddress)
+                    .Apply();
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanCRUDSqlServer()
-        {
-            GenerateNewRGAndSqlServerNameForTest();
+                ValidateMultiCreation(
+                    sqlServerManager,
+                    database2Name,
+                    database1InEPName,
+                    database2InEPName,
+                    elasticPool1Name,
+                    elasticPool2Name,
+                    elasticPool3Name,
+                    sqlServer,
+                    true);
 
-            // Create
-            var sqlServer = CreateSqlServer();
+                sqlServer.Refresh();
+                Assert.Equal(sqlServer.ElasticPools.List().Count(), 0);
 
-            ValidateSqlServer(sqlServer);
-
-            var serviceObjectives = sqlServer.ListServiceObjectives();
-
-            Assert.NotEqual(serviceObjectives.Count(), 0);
-            Assert.NotNull(serviceObjectives.FirstOrDefault().Refresh());
-            Assert.NotNull(sqlServer.GetServiceObjective("d1737d22-a8ea-4de7-9bd0-33395d2a7419"));
-
-            sqlServer.Update().WithAdministratorPassword("loepop77ejk~13@@").Apply();
-
-            // List
-            var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
-            var found = false;
-            foreach (var server in sqlServers)
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SqlServerName))
+                // List
+                var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
+                var found = false;
+                foreach (var server in sqlServers)
                 {
-                    found = true;
+                    if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SqlServerName))
+                    {
+                        found = true;
+                    }
                 }
+
+                Assert.True(found);
+                // Get
+                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                Assert.NotNull(sqlServer);
+
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
+                DeleteResourceGroup(sqlServer.ResourceGroupName);
             }
-            Assert.True(found);
-            // Get
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
-            Assert.NotNull(sqlServer);
-
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-            DeleteResourceGroup(sqlServer.ResourceGroupName);
-        }
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanUseCoolShortcutsForResourceCreation()
-        {
-            GenerateNewRGAndSqlServerNameForTest();
-
-            var database2Name = "database2";
-            var database1InEPName = "database1InEP";
-            var database2InEPName = "database2InEP";
-            var elasticPool2Name = "elasticPool2";
-            var elasticPool3Name = "elasticPool3";
-            var elasticPool1Name = SqlElasticPoolName;
-
-            // Create
-            var sqlServer = sqlServerManager.SqlServers.Define(SqlServerName)
-                .WithRegion(Region.US_CENTRAL)
-                .WithNewResourceGroup(GroupName)
-                .WithAdministratorLogin("userName")
-                .WithAdministratorPassword("loepopfuejk~13@@")
-                .WithNewDatabase(SqlDatabaseName)
-                .WithNewDatabase(database2Name)
-                .WithNewElasticPool(elasticPool1Name, ElasticPoolEditions.Standard)
-                .WithNewElasticPool(elasticPool2Name, ElasticPoolEditions.Premium, database1InEPName, database2InEPName)
-                .WithNewElasticPool(elasticPool3Name, ElasticPoolEditions.Standard)
-                .WithNewFirewallRule(StartIPAddress, EndIPAddress, SqlFirewallRuleName)
-                .WithNewFirewallRule(StartIPAddress, EndIPAddress)
-                .WithNewFirewallRule(StartIPAddress)
-                .Create();
-
-            ValidateMultiCreation(database2Name, database1InEPName, database2InEPName, elasticPool1Name, elasticPool2Name, elasticPool3Name, sqlServer, false);
-            elasticPool1Name = SqlElasticPoolName + " U";
-            database2Name = "database2U";
-            database1InEPName = "database1InEPU";
-            database2InEPName = "database2InEPU";
-            elasticPool2Name = "elasticPool2U";
-            elasticPool3Name = "elasticPool3U";
-
-            // Update
-            sqlServer = sqlServer.Update()
-                .WithNewDatabase(SqlDatabaseName).WithNewDatabase(database2Name)
-                .WithNewElasticPool(elasticPool1Name, ElasticPoolEditions.Standard)
-                .WithNewElasticPool(elasticPool2Name, ElasticPoolEditions.Premium, database1InEPName, database2InEPName)
-                .WithNewElasticPool(elasticPool3Name, ElasticPoolEditions.Standard)
-                .WithNewFirewallRule(StartIPAddress, EndIPAddress, SqlFirewallRuleName)
-                .WithNewFirewallRule(StartIPAddress, EndIPAddress)
-                .WithNewFirewallRule(StartIPAddress)
-                .Apply();
-
-            ValidateMultiCreation(database2Name, database1InEPName, database2InEPName, elasticPool1Name, elasticPool2Name, elasticPool3Name, sqlServer, true);
-
-            sqlServer.Refresh();
-            Assert.Equal(sqlServer.ElasticPools.List().Count(), 0);
-
-            // List
-            var sqlServers = sqlServerManager.SqlServers.ListByGroup(GroupName);
-            var found = false;
-            foreach (var server in sqlServers)
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals(server.Name, SqlServerName))
-                {
-                    found = true;
-                }
-            }
-
-            Assert.True(found);
-            // Get
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
-            Assert.NotNull(sqlServer);
-
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-            DeleteResourceGroup(sqlServer.ResourceGroupName);
         }
 
         private static void ValidateMultiCreation(
+                ISqlManager sqlServerManager,
                 string database2Name,
                 string database1InEPName,
                 string database2InEPName,
@@ -298,443 +334,473 @@ namespace Azure.Tests.Sql
             Assert.Equal(sqlServer.Databases.List().Count(), 1);
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDSqlDatabase()
         {
-            GenerateNewRGAndSqlServerNameForTest();
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
 
-            // Create
-            var sqlServer = CreateSqlServer();
+                GenerateNewRGAndSqlServerNameForTest();
 
-            var sqlDatabase = sqlServer.Databases
-                .Define(SqlDatabaseName)
-                .WithCollation(Collation)
-                .WithEdition(DatabaseEditions.Standard)
-                .Create();
+                // Create
+                var sqlServer = CreateSqlServer(sqlServerManager);
 
-            ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
-
-            // Test transparent data encryption settings.
-            var transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption();
-            Assert.NotNull(transparentDataEncryption.Status);
-
-            var transparentDataEncryptionActivities = transparentDataEncryption.ListActivities();
-            Assert.NotNull(transparentDataEncryptionActivities);
-
-            transparentDataEncryption = transparentDataEncryption.UpdateStatus(TransparentDataEncryptionStates.Enabled);
-            Assert.NotNull(transparentDataEncryption);
-            Assert.Equal(transparentDataEncryption.Status, TransparentDataEncryptionStates.Enabled);
-
-            transparentDataEncryptionActivities = transparentDataEncryption.ListActivities();
-            Assert.NotNull(transparentDataEncryptionActivities);
-
-            Thread.Sleep(10000);
-            transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption().UpdateStatus(TransparentDataEncryptionStates.Disabled);
-            Assert.NotNull(transparentDataEncryption);
-            Assert.Equal(transparentDataEncryption.Status, TransparentDataEncryptionStates.Disabled);
-            Assert.Equal(transparentDataEncryption.SqlServerName, SqlServerName);
-            Assert.Equal(transparentDataEncryption.DatabaseName, SqlDatabaseName);
-            Assert.NotNull(transparentDataEncryption.Name);
-            Assert.NotNull(transparentDataEncryption.Id);
-            // Done testing with encryption settings.
-
-            Assert.NotNull(sqlDatabase.GetUpgradeHint());
-
-            // Test Service tier advisors.
-            var serviceTierAdvisors = sqlDatabase.ListServiceTierAdvisors();
-            Assert.NotNull(serviceTierAdvisors);
-            Assert.NotNull(serviceTierAdvisors.Values.First().ServiceLevelObjectiveUsageMetrics);
-            Assert.NotEqual(serviceTierAdvisors.Count(), 0);
-
-            Assert.NotNull(serviceTierAdvisors.Values.First().Refresh());
-            Assert.NotNull(serviceTierAdvisors.Values.First().ServiceLevelObjectiveUsageMetrics);
-            // End of testing service tier advisors.
-
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
-            ValidateSqlServer(sqlServer);
-
-            // Create another database with above created database as source database.
-            var sqlElasticPoolCreatable = sqlServer.ElasticPools
-                .Define(SqlElasticPoolName)
-                .WithEdition(ElasticPoolEditions.Standard);
-            var anotherDatabaseName = "anotherDatabase";
-            var anotherDatabase = sqlServer.Databases
-                .Define(anotherDatabaseName)
-                .WithNewElasticPool(sqlElasticPoolCreatable)
-                .WithSourceDatabase(sqlDatabase.Id)
-                .WithMode(CreateMode.Copy)
-                .Create();
-
-            ValidateSqlDatabaseWithElasticPool(anotherDatabase, anotherDatabaseName);
-            sqlServer.Databases.Delete(anotherDatabase.Name);
-
-            // Get
-            ValidateSqlDatabase(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
-
-            // List
-            ValidateListSqlDatabase(sqlServer.Databases.List());
-
-            // Delete
-            sqlServer.Databases.Delete(SqlDatabaseName);
-            ValidateSqlDatabaseNotFound(SqlDatabaseName);
-
-            // Add another database to the server
-            sqlDatabase = sqlServer.Databases
-                    .Define("newDatabase")
+                var sqlDatabase = sqlServer.Databases
+                    .Define(SqlDatabaseName)
                     .WithCollation(Collation)
                     .WithEdition(DatabaseEditions.Standard)
                     .Create();
-            sqlServer.Databases.Delete(sqlDatabase.Name);
 
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-        }
+                ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanManageReplicationLinks()
-        {
-            GenerateNewRGAndSqlServerNameForTest();
+                // Test transparent data encryption settings.
+                var transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption();
+                Assert.NotNull(transparentDataEncryption.Status);
 
-            // Create
-            var anotherSqlServerName = SqlServerName + "another";
-            var sqlServer1 = CreateSqlServer();
-            var sqlServer2 = CreateSqlServer(anotherSqlServerName);
+                var transparentDataEncryptionActivities = transparentDataEncryption.ListActivities();
+                Assert.NotNull(transparentDataEncryptionActivities);
 
-            var databaseInServer1 = sqlServer1.Databases
-                .Define(SqlDatabaseName)
-                .WithCollation(Collation)
-                .WithEdition(DatabaseEditions.Standard)
-                .Create();
+                transparentDataEncryption = transparentDataEncryption.UpdateStatus(TransparentDataEncryptionStates.Enabled);
+                Assert.NotNull(transparentDataEncryption);
+                Assert.Equal(transparentDataEncryption.Status, TransparentDataEncryptionStates.Enabled);
 
-            ValidateSqlDatabase(databaseInServer1, SqlDatabaseName);
-            var databaseInServer2 = sqlServer2.Databases
-                .Define(SqlDatabaseName)
-                .WithSourceDatabase(databaseInServer1.Id)
-                .WithMode(CreateMode.OnlineSecondary)
-                .Create();
-            Thread.Sleep(2000);
-            var replicationLinksInDb1 = new List<IReplicationLink>(databaseInServer1.ListReplicationLinks().Values);
+                transparentDataEncryptionActivities = transparentDataEncryption.ListActivities();
+                Assert.NotNull(transparentDataEncryptionActivities);
 
-            Assert.Equal(replicationLinksInDb1.Count(), 1);
-            Assert.Equal(replicationLinksInDb1.FirstOrDefault().PartnerDatabase, databaseInServer2.Name);
-            Assert.Equal(replicationLinksInDb1.FirstOrDefault().PartnerServer, databaseInServer2.SqlServerName);
+                TestHelper.Delay(10000);
+                transparentDataEncryption = sqlDatabase.GetTransparentDataEncryption().UpdateStatus(TransparentDataEncryptionStates.Disabled);
+                Assert.NotNull(transparentDataEncryption);
+                Assert.Equal(transparentDataEncryption.Status, TransparentDataEncryptionStates.Disabled);
+                Assert.Equal(transparentDataEncryption.SqlServerName, SqlServerName);
+                Assert.Equal(transparentDataEncryption.DatabaseName, SqlDatabaseName);
+                Assert.NotNull(transparentDataEncryption.Name);
+                Assert.NotNull(transparentDataEncryption.Id);
+                // Done testing with encryption settings.
 
-            var replicationLinksInDb2 = new List<IReplicationLink>(databaseInServer2.ListReplicationLinks().Values);
+                Assert.NotNull(sqlDatabase.GetUpgradeHint());
 
-            Assert.Equal(replicationLinksInDb2.Count(), 1);
-            Assert.Equal(replicationLinksInDb2.FirstOrDefault().PartnerDatabase, databaseInServer1.Name);
-            Assert.Equal(replicationLinksInDb2.FirstOrDefault().PartnerServer, databaseInServer1.SqlServerName);
+                // Test Service tier advisors.
+                var serviceTierAdvisors = sqlDatabase.ListServiceTierAdvisors();
+                Assert.NotNull(serviceTierAdvisors);
+                Assert.NotNull(serviceTierAdvisors.Values.First().ServiceLevelObjectiveUsageMetrics);
+                Assert.NotEqual(serviceTierAdvisors.Count(), 0);
 
-            Assert.NotNull(replicationLinksInDb1.FirstOrDefault().Refresh());
+                Assert.NotNull(serviceTierAdvisors.Values.First().Refresh());
+                Assert.NotNull(serviceTierAdvisors.Values.First().ServiceLevelObjectiveUsageMetrics);
+                // End of testing service tier advisors.
 
-            // Failover
-            replicationLinksInDb2.FirstOrDefault().Failover();
-            replicationLinksInDb2.FirstOrDefault().Refresh();
-            Thread.Sleep(30000);
-            // Force failover
-            replicationLinksInDb1.FirstOrDefault().ForceFailoverAllowDataLoss();
-            replicationLinksInDb1.FirstOrDefault().Refresh();
+                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                ValidateSqlServer(sqlServer);
 
-            Thread.Sleep(30000);
-
-            replicationLinksInDb2.FirstOrDefault().Delete();
-            Assert.Equal(databaseInServer2.ListReplicationLinks().Count(), 0);
-
-            sqlServer1.Databases.Delete(databaseInServer1.Name);
-            sqlServer2.Databases.Delete(databaseInServer2.Name);
-
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer2.ResourceGroupName, sqlServer2.Name);
-            ValidateSqlServerNotFound(sqlServer2);
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer1.ResourceGroupName, sqlServer1.Name);
-            ValidateSqlServerNotFound(sqlServer1);
-            DeleteResourceGroup(sqlServer1.ResourceGroupName);
-            DeleteResourceGroup(sqlServer2.ResourceGroupName);
-        }
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanDoOperationsOnDataWarehouse()
-        {
-            GenerateNewRGAndSqlServerNameForTest();
-
-            // Create
-            var sqlServer = CreateSqlServer();
-
-            ValidateSqlServer(sqlServer);
-
-            // List usages for the server.
-            Assert.NotNull(sqlServer.ListUsages());
-
-            var sqlDatabase = sqlServer.Databases
-                    .Define(SqlDatabaseName)
-                    .WithCollation(Collation)
-                    .WithEdition(DatabaseEditions.DataWarehouse)
-                    .Create();
-
-            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
-            Assert.NotNull(sqlDatabase);
-            Assert.True(sqlDatabase.IsDataWarehouse);
-
-            // Get
-            var dataWarehouse = sqlServer.Databases.Get(SqlDatabaseName).AsWarehouse();
-
-            Assert.NotNull(dataWarehouse);
-            Assert.Equal(dataWarehouse.Name, SqlDatabaseName);
-            Assert.Equal(dataWarehouse.Edition, DatabaseEditions.DataWarehouse);
-
-            // List Restore points.
-            Assert.NotNull(dataWarehouse.ListRestorePoints());
-            // Get usages.
-            Assert.NotNull(dataWarehouse.ListUsages());
-
-            // Pause warehouse
-            dataWarehouse.PauseDataWarehouse();
-
-            // Resume warehouse
-            dataWarehouse.ResumeDataWarehouse();
-
-            sqlServer.Databases.Delete(SqlDatabaseName);
-
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-            DeleteResourceGroup(sqlServer.ResourceGroupName);
-        }
-
-        [Fact(Skip = "TODO: Convert to recorded tests")]
-        public void CanCRUDSqlDatabaseWithElasticPool()
-        {
-            GenerateNewRGAndSqlServerNameForTest();
-
-            // Create
-            var sqlServer = CreateSqlServer();
-
-            var sqlElasticPoolCreatable = sqlServer.ElasticPools
+                // Create another database with above created database as source database.
+                var sqlElasticPoolCreatable = sqlServer.ElasticPools
                     .Define(SqlElasticPoolName)
                     .WithEdition(ElasticPoolEditions.Standard);
-
-            var sqlDatabase = sqlServer.Databases
-                    .Define(SqlDatabaseName)
+                var anotherDatabaseName = "anotherDatabase";
+                var anotherDatabase = sqlServer.Databases
+                    .Define(anotherDatabaseName)
                     .WithNewElasticPool(sqlElasticPoolCreatable)
-                    .WithCollation(Collation)
+                    .WithSourceDatabase(sqlDatabase.Id)
+                    .WithMode(CreateMode.Copy)
                     .Create();
 
-            ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
+                ValidateSqlDatabaseWithElasticPool(anotherDatabase, anotherDatabaseName);
+                sqlServer.Databases.Delete(anotherDatabase.Name);
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
-            ValidateSqlServer(sqlServer);
+                // Get
+                ValidateSqlDatabase(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
 
-            // Get Elastic pool
-            var elasticPool = sqlServer.ElasticPools.Get(SqlElasticPoolName);
-            ValidateSqlElasticPool(elasticPool);
+                // List
+                ValidateListSqlDatabase(sqlServer.Databases.List());
 
-            // Get
-            ValidateSqlDatabaseWithElasticPool(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
+                // Delete
+                sqlServer.Databases.Delete(SqlDatabaseName);
+                ValidateSqlDatabaseNotFound(sqlServerManager, SqlDatabaseName);
 
-            // List
-            ValidateListSqlDatabase(sqlServer.Databases.List());
+                // Add another database to the server
+                sqlDatabase = sqlServer.Databases
+                        .Define("newDatabase")
+                        .WithCollation(Collation)
+                        .WithEdition(DatabaseEditions.Standard)
+                        .Create();
+                sqlServer.Databases.Delete(sqlDatabase.Name);
 
-            // Remove database from elastic pools.
-            sqlDatabase.Update()
-                    .WithoutElasticPool()
-                    .WithEdition(DatabaseEditions.Standard)
-                    .WithServiceObjective(ServiceObjectiveName.S3)
-                .Apply();
-            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
-            Assert.Null(sqlDatabase.ElasticPoolName);
-
-            // Update edition of the SQL database
-            sqlDatabase.Update()
-                    .WithEdition(DatabaseEditions.Premium)
-                    .WithServiceObjective(ServiceObjectiveName.P1)
-                    .Apply();
-            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
-            Assert.Equal(sqlDatabase.Edition, DatabaseEditions.Premium);
-            Assert.Equal(sqlDatabase.ServiceLevelObjective, ServiceObjectiveName.P1);
-
-            // Update just the service level objective for database.
-            sqlDatabase.Update().WithServiceObjective(ServiceObjectiveName.P2).Apply();
-            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
-            Assert.Equal(sqlDatabase.ServiceLevelObjective, ServiceObjectiveName.P2);
-            Assert.Equal(sqlDatabase.RequestedServiceObjectiveName, ServiceObjectiveName.P2);
-
-            // Update max size bytes of the database.
-            sqlDatabase.Update()
-                    .WithMaxSizeBytes(268435456000L)
-                    .Apply();
-
-            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
-            Assert.Equal(sqlDatabase.MaxSizeBytes, 268435456000L);
-
-            // Put the database back in elastic pool.
-            sqlDatabase.Update()
-                    .WithExistingElasticPool(SqlElasticPoolName)
-                    .Apply();
-
-            sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
-            Assert.Equal(sqlDatabase.ElasticPoolName, SqlElasticPoolName);
-
-            // List Activity in elastic pool
-            Assert.NotNull(elasticPool.ListActivities());
-
-            // List Database activity in elastic pool.
-            Assert.NotNull(elasticPool.ListDatabaseActivities());
-
-            // List databases in elastic pool.
-            var databasesInElasticPool = elasticPool.ListDatabases();
-            Assert.NotNull(databasesInElasticPool);
-            Assert.Equal(databasesInElasticPool.Count(), 1);
-
-            // Get a particular database in elastic pool.
-            var databaseInElasticPool = elasticPool.GetDatabase(SqlDatabaseName);
-            ValidateSqlDatabase(databaseInElasticPool, SqlDatabaseName);
-
-            // Refresh works on the database got from elastic pool.
-            databaseInElasticPool.Refresh();
-
-            // Validate that trying to get an invalid database from elastic pool returns null.
-            try
-            {
-                elasticPool.GetDatabase("does_not_exist");
-                Assert.NotNull(null);
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
             }
-            catch
-            {
-            }
-
-            // Delete
-            sqlServer.Databases.Delete(SqlDatabaseName);
-            ValidateSqlDatabaseNotFound(SqlDatabaseName);
-
-            var sqlElasticPool = sqlServer.ElasticPools.Get(SqlElasticPoolName);
-
-            // Add another database to the server and pool.
-            sqlDatabase = sqlServer.Databases
-                    .Define("newDatabase")
-                    .WithExistingElasticPool(sqlElasticPool)
-                    .WithCollation(Collation)
-                    .Create();
-            sqlServer.Databases.Delete(sqlDatabase.Name);
-            ValidateSqlDatabaseNotFound("newDatabase");
-
-            sqlServer.ElasticPools.Delete(SqlElasticPoolName);
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-            DeleteResourceGroup(sqlServer.ResourceGroupName);
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
+        public void CanManageReplicationLinks()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
+
+                GenerateNewRGAndSqlServerNameForTest();
+
+                // Create
+                var anotherSqlServerName = SqlServerName + "another";
+                var sqlServer1 = CreateSqlServer(sqlServerManager);
+                var sqlServer2 = CreateSqlServer(sqlServerManager, anotherSqlServerName);
+
+                var databaseInServer1 = sqlServer1.Databases
+                    .Define(SqlDatabaseName)
+                    .WithCollation(Collation)
+                    .WithEdition(DatabaseEditions.Standard)
+                    .Create();
+
+                ValidateSqlDatabase(databaseInServer1, SqlDatabaseName);
+                var databaseInServer2 = sqlServer2.Databases
+                    .Define(SqlDatabaseName)
+                    .WithSourceDatabase(databaseInServer1.Id)
+                    .WithMode(CreateMode.OnlineSecondary)
+                    .Create();
+                TestHelper.Delay(2000);
+                var replicationLinksInDb1 = new List<IReplicationLink>(databaseInServer1.ListReplicationLinks().Values);
+
+                Assert.Equal(replicationLinksInDb1.Count(), 1);
+                Assert.Equal(replicationLinksInDb1.FirstOrDefault().PartnerDatabase, databaseInServer2.Name);
+                Assert.Equal(replicationLinksInDb1.FirstOrDefault().PartnerServer, databaseInServer2.SqlServerName);
+
+                var replicationLinksInDb2 = new List<IReplicationLink>(databaseInServer2.ListReplicationLinks().Values);
+
+                Assert.Equal(replicationLinksInDb2.Count(), 1);
+                Assert.Equal(replicationLinksInDb2.FirstOrDefault().PartnerDatabase, databaseInServer1.Name);
+                Assert.Equal(replicationLinksInDb2.FirstOrDefault().PartnerServer, databaseInServer1.SqlServerName);
+
+                Assert.NotNull(replicationLinksInDb1.FirstOrDefault().Refresh());
+
+                // Failover
+                replicationLinksInDb2.FirstOrDefault().Failover();
+                replicationLinksInDb2.FirstOrDefault().Refresh();
+                TestHelper.Delay(30000);
+                // Force failover
+                replicationLinksInDb1.FirstOrDefault().ForceFailoverAllowDataLoss();
+                replicationLinksInDb1.FirstOrDefault().Refresh();
+
+                TestHelper.Delay(30000);
+
+                replicationLinksInDb2.FirstOrDefault().Delete();
+                Assert.Equal(databaseInServer2.ListReplicationLinks().Count(), 0);
+
+                sqlServer1.Databases.Delete(databaseInServer1.Name);
+                sqlServer2.Databases.Delete(databaseInServer2.Name);
+
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer2.ResourceGroupName, sqlServer2.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer2);
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer1.ResourceGroupName, sqlServer1.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer1);
+                DeleteResourceGroup(sqlServer1.ResourceGroupName);
+                DeleteResourceGroup(sqlServer2.ResourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void CanDoOperationsOnDataWarehouse()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
+
+                GenerateNewRGAndSqlServerNameForTest();
+
+                // Create
+                var sqlServer = CreateSqlServer(sqlServerManager);
+
+                ValidateSqlServer(sqlServer);
+
+                // List usages for the server.
+                Assert.NotNull(sqlServer.ListUsages());
+
+                var sqlDatabase = sqlServer.Databases
+                        .Define(SqlDatabaseName)
+                        .WithCollation(Collation)
+                        .WithEdition(DatabaseEditions.DataWarehouse)
+                        .Create();
+
+                sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+                Assert.NotNull(sqlDatabase);
+                Assert.True(sqlDatabase.IsDataWarehouse);
+
+                // Get
+                var dataWarehouse = sqlServer.Databases.Get(SqlDatabaseName).AsWarehouse();
+
+                Assert.NotNull(dataWarehouse);
+                Assert.Equal(dataWarehouse.Name, SqlDatabaseName);
+                Assert.Equal(dataWarehouse.Edition, DatabaseEditions.DataWarehouse);
+
+                // List Restore points.
+                Assert.NotNull(dataWarehouse.ListRestorePoints());
+                // Get usages.
+                Assert.NotNull(dataWarehouse.ListUsages());
+
+                // Pause warehouse
+                dataWarehouse.PauseDataWarehouse();
+
+                // Resume warehouse
+                dataWarehouse.ResumeDataWarehouse();
+
+                sqlServer.Databases.Delete(SqlDatabaseName);
+
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
+                DeleteResourceGroup(sqlServer.ResourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void CanCRUDSqlDatabaseWithElasticPool()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
+
+                GenerateNewRGAndSqlServerNameForTest();
+
+                // Create
+                var sqlServer = CreateSqlServer(sqlServerManager);
+
+                var sqlElasticPoolCreatable = sqlServer.ElasticPools
+                        .Define(SqlElasticPoolName)
+                        .WithEdition(ElasticPoolEditions.Standard);
+
+                var sqlDatabase = sqlServer.Databases
+                        .Define(SqlDatabaseName)
+                        .WithNewElasticPool(sqlElasticPoolCreatable)
+                        .WithCollation(Collation)
+                        .Create();
+
+                ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
+
+                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                ValidateSqlServer(sqlServer);
+
+                // Get Elastic pool
+                var elasticPool = sqlServer.ElasticPools.Get(SqlElasticPoolName);
+                ValidateSqlElasticPool(elasticPool);
+
+                // Get
+                ValidateSqlDatabaseWithElasticPool(sqlServer.Databases.Get(SqlDatabaseName), SqlDatabaseName);
+
+                // List
+                ValidateListSqlDatabase(sqlServer.Databases.List());
+
+                // Remove database from elastic pools.
+                sqlDatabase.Update()
+                        .WithoutElasticPool()
+                        .WithEdition(DatabaseEditions.Standard)
+                        .WithServiceObjective(ServiceObjectiveName.S3)
+                    .Apply();
+                sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+                Assert.Null(sqlDatabase.ElasticPoolName);
+
+                // Update edition of the SQL database
+                sqlDatabase.Update()
+                        .WithEdition(DatabaseEditions.Premium)
+                        .WithServiceObjective(ServiceObjectiveName.P1)
+                        .Apply();
+                sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+                Assert.Equal(sqlDatabase.Edition, DatabaseEditions.Premium);
+                Assert.Equal(sqlDatabase.ServiceLevelObjective, ServiceObjectiveName.P1);
+
+                // Update just the service level objective for database.
+                sqlDatabase.Update().WithServiceObjective(ServiceObjectiveName.P2).Apply();
+                sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+                Assert.Equal(sqlDatabase.ServiceLevelObjective, ServiceObjectiveName.P2);
+                Assert.Equal(sqlDatabase.RequestedServiceObjectiveName, ServiceObjectiveName.P2);
+
+                // Update max size bytes of the database.
+                sqlDatabase.Update()
+                        .WithMaxSizeBytes(268435456000L)
+                        .Apply();
+
+                sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+                Assert.Equal(sqlDatabase.MaxSizeBytes, 268435456000L);
+
+                // Put the database back in elastic pool.
+                sqlDatabase.Update()
+                        .WithExistingElasticPool(SqlElasticPoolName)
+                        .Apply();
+
+                sqlDatabase = sqlServer.Databases.Get(SqlDatabaseName);
+                Assert.Equal(sqlDatabase.ElasticPoolName, SqlElasticPoolName);
+
+                // List Activity in elastic pool
+                Assert.NotNull(elasticPool.ListActivities());
+
+                // List Database activity in elastic pool.
+                Assert.NotNull(elasticPool.ListDatabaseActivities());
+
+                // List databases in elastic pool.
+                var databasesInElasticPool = elasticPool.ListDatabases();
+                Assert.NotNull(databasesInElasticPool);
+                Assert.Equal(databasesInElasticPool.Count(), 1);
+
+                // Get a particular database in elastic pool.
+                var databaseInElasticPool = elasticPool.GetDatabase(SqlDatabaseName);
+                ValidateSqlDatabase(databaseInElasticPool, SqlDatabaseName);
+
+                // Refresh works on the database got from elastic pool.
+                databaseInElasticPool.Refresh();
+
+                // Validate that trying to get an invalid database from elastic pool returns null.
+                try
+                {
+                    elasticPool.GetDatabase("does_not_exist");
+                    Assert.NotNull(null);
+                }
+                catch
+                {
+                }
+
+                // Delete
+                sqlServer.Databases.Delete(SqlDatabaseName);
+                ValidateSqlDatabaseNotFound(sqlServerManager, SqlDatabaseName);
+
+                var sqlElasticPool = sqlServer.ElasticPools.Get(SqlElasticPoolName);
+
+                // Add another database to the server and pool.
+                sqlDatabase = sqlServer.Databases
+                        .Define("newDatabase")
+                        .WithExistingElasticPool(sqlElasticPool)
+                        .WithCollation(Collation)
+                        .Create();
+                sqlServer.Databases.Delete(sqlDatabase.Name);
+                ValidateSqlDatabaseNotFound(sqlServerManager, "newDatabase");
+
+                sqlServer.ElasticPools.Delete(SqlElasticPoolName);
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
+                DeleteResourceGroup(sqlServer.ResourceGroupName);
+            }
+        }
+
+        [Fact]
         public void CanCRUDSqlElasticPool()
         {
-            GenerateNewRGAndSqlServerNameForTest();
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
 
-            // Create
-            var sqlServer = CreateSqlServer();
+                GenerateNewRGAndSqlServerNameForTest();
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
-            ValidateSqlServer(sqlServer);
+                // Create
+                var sqlServer = CreateSqlServer(sqlServerManager);
 
-            var sqlElasticPool = sqlServer.ElasticPools
-                    .Define(SqlElasticPoolName)
-                    .WithEdition(ElasticPoolEditions.Standard)
-                    .Create();
-            ValidateSqlElasticPool(sqlElasticPool);
-            Assert.Equal(sqlElasticPool.ListDatabases().Count(), 0);
+                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                ValidateSqlServer(sqlServer);
 
-            sqlElasticPool = sqlElasticPool.Update()
-                    .WithDtu(100)
-                    .WithDatabaseDtuMax(20)
-                    .WithDatabaseDtuMin(10)
-                    .WithStorageCapacity(102400)
-                    .WithNewDatabase(SqlDatabaseName)
-                    .Apply();
+                var sqlElasticPool = sqlServer.ElasticPools
+                        .Define(SqlElasticPoolName)
+                        .WithEdition(ElasticPoolEditions.Standard)
+                        .Create();
+                ValidateSqlElasticPool(sqlElasticPool);
+                Assert.Equal(sqlElasticPool.ListDatabases().Count(), 0);
 
-            ValidateSqlElasticPool(sqlElasticPool);
-            Assert.Equal(sqlElasticPool.ListDatabases().Count(), 1);
+                sqlElasticPool = sqlElasticPool.Update()
+                        .WithDtu(100)
+                        .WithDatabaseDtuMax(20)
+                        .WithDatabaseDtuMin(10)
+                        .WithStorageCapacity(102400)
+                        .WithNewDatabase(SqlDatabaseName)
+                        .Apply();
 
-            // Get
-            ValidateSqlElasticPool(sqlServer.ElasticPools.Get(SqlElasticPoolName));
+                ValidateSqlElasticPool(sqlElasticPool);
+                Assert.Equal(sqlElasticPool.ListDatabases().Count(), 1);
 
-            // List
-            ValidateListSqlElasticPool(sqlServer.ElasticPools.List());
+                // Get
+                ValidateSqlElasticPool(sqlServer.ElasticPools.Get(SqlElasticPoolName));
 
-            // Delete
-            sqlServer.Databases.Delete(SqlDatabaseName);
-            sqlServer.ElasticPools.Delete(SqlElasticPoolName);
-            ValidateSqlElasticPoolNotFound(sqlServer, SqlElasticPoolName);
+                // List
+                ValidateListSqlElasticPool(sqlServer.ElasticPools.List());
 
-            // Add another database to the server
-            sqlElasticPool = sqlServer.ElasticPools
-                    .Define("newElasticPool")
-                    .WithEdition(ElasticPoolEditions.Standard)
-                    .Create();
+                // Delete
+                sqlServer.Databases.Delete(SqlDatabaseName);
+                sqlServer.ElasticPools.Delete(SqlElasticPoolName);
+                ValidateSqlElasticPoolNotFound(sqlServer, SqlElasticPoolName);
 
-            sqlServer.ElasticPools.Delete(sqlElasticPool.Name);
-            ValidateSqlElasticPoolNotFound(sqlServer, "newElasticPool");
+                // Add another database to the server
+                sqlElasticPool = sqlServer.ElasticPools
+                        .Define("newElasticPool")
+                        .WithEdition(ElasticPoolEditions.Standard)
+                        .Create();
 
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-            DeleteResourceGroup(sqlServer.ResourceGroupName);
+                sqlServer.ElasticPools.Delete(sqlElasticPool.Name);
+                ValidateSqlElasticPoolNotFound(sqlServer, "newElasticPool");
+
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
+                DeleteResourceGroup(sqlServer.ResourceGroupName);
+            }
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDSqlFirewallRule()
         {
-            GenerateNewRGAndSqlServerNameForTest();
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var sqlServerManager = TestHelper.CreateSqlManager();
 
-            // Create
-            var sqlServer = CreateSqlServer();
+                GenerateNewRGAndSqlServerNameForTest();
 
-            sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
-            ValidateSqlServer(sqlServer);
+                // Create
+                var sqlServer = CreateSqlServer(sqlServerManager);
 
-            var sqlFirewallRule = sqlServer.FirewallRules
-                    .Define(SqlFirewallRuleName)
-                    .WithIpAddressRange(StartIPAddress, EndIPAddress)
-                    .Create();
+                sqlServer = sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName);
+                ValidateSqlServer(sqlServer);
 
-            ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
-            ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SqlFirewallRuleName), SqlFirewallRuleName);
+                var sqlFirewallRule = sqlServer.FirewallRules
+                        .Define(SqlFirewallRuleName)
+                        .WithIpAddressRange(StartIPAddress, EndIPAddress)
+                        .Create();
 
-            var secondFirewallRuleName = "secondFireWallRule";
-            var secondFirewallRule = sqlServer.FirewallRules
-                    .Define(secondFirewallRuleName)
-                    .WithIpAddress(StartIPAddress)
-                    .Create();
+                ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
+                ValidateSqlFirewallRule(sqlServer.FirewallRules.Get(SqlFirewallRuleName), SqlFirewallRuleName);
 
-            secondFirewallRule = sqlServer.FirewallRules.Get(secondFirewallRuleName);
+                var secondFirewallRuleName = "secondFireWallRule";
+                var secondFirewallRule = sqlServer.FirewallRules
+                        .Define(secondFirewallRuleName)
+                        .WithIpAddress(StartIPAddress)
+                        .Create();
 
-            Assert.NotNull(secondFirewallRule);
-            Assert.Equal(StartIPAddress, secondFirewallRule.EndIpAddress);
+                secondFirewallRule = sqlServer.FirewallRules.Get(secondFirewallRuleName);
 
-            secondFirewallRule = secondFirewallRule.Update().WithEndIpAddress(EndIPAddress).Apply();
+                Assert.NotNull(secondFirewallRule);
+                Assert.Equal(StartIPAddress, secondFirewallRule.EndIpAddress);
 
-            ValidateSqlFirewallRule(secondFirewallRule, secondFirewallRuleName);
-            sqlServer.FirewallRules.Delete(secondFirewallRuleName);
-            AssertIfFound(() => sqlServer.FirewallRules.Get(secondFirewallRuleName));
+                secondFirewallRule = secondFirewallRule.Update().WithEndIpAddress(EndIPAddress).Apply();
 
-            // Get
-            sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
-            ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
+                ValidateSqlFirewallRule(secondFirewallRule, secondFirewallRuleName);
+                sqlServer.FirewallRules.Delete(secondFirewallRuleName);
+                AssertIfFound(() => sqlServer.FirewallRules.Get(secondFirewallRuleName));
 
-            // Update
-            // Making start and end IP address same.
-            sqlFirewallRule.Update().WithEndIpAddress(StartIPAddress).Apply();
-            sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
-            Assert.Equal(sqlFirewallRule.EndIpAddress, StartIPAddress);
+                // Get
+                sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
+                ValidateSqlFirewallRule(sqlFirewallRule, SqlFirewallRuleName);
 
-            // List
-            ValidateListSqlFirewallRule(sqlServer.FirewallRules.List());
+                // Update
+                // Making start and end IP address same.
+                sqlFirewallRule.Update().WithEndIpAddress(StartIPAddress).Apply();
+                sqlFirewallRule = sqlServer.FirewallRules.Get(SqlFirewallRuleName);
+                Assert.Equal(sqlFirewallRule.EndIpAddress, StartIPAddress);
 
-            // Delete
-            sqlServer.FirewallRules.Delete(sqlFirewallRule.Name);
-            ValidateSqlFirewallRuleNotFound();
+                // List
+                ValidateListSqlFirewallRule(sqlServer.FirewallRules.List());
 
-            // Delete server
-            sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
-            ValidateSqlServerNotFound(sqlServer);
-            DeleteResourceGroup(sqlServer.ResourceGroupName);
+                // Delete
+                sqlServer.FirewallRules.Delete(sqlFirewallRule.Name);
+                ValidateSqlFirewallRuleNotFound(sqlServerManager);
+
+                // Delete server
+                sqlServerManager.SqlServers.DeleteByGroup(sqlServer.ResourceGroupName, sqlServer.Name);
+                ValidateSqlServerNotFound(sqlServerManager, sqlServer);
+                DeleteResourceGroup(sqlServer.ResourceGroupName);
+            }
         }
 
-        private static void ValidateSqlFirewallRuleNotFound()
+        private static void ValidateSqlFirewallRuleNotFound(ISqlManager sqlServerManager)
         {
             AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName).FirewallRules.Get(SqlFirewallRuleName));
         }
@@ -744,12 +810,12 @@ namespace Azure.Tests.Sql
             AssertIfFound(() => sqlServer.ElasticPools.Get(elasticPoolName));
         }
 
-        private static void ValidateSqlDatabaseNotFound(String newDatabase)
+        private static void ValidateSqlDatabaseNotFound(ISqlManager sqlServerManager, String newDatabase)
         {
             AssertIfFound(() => sqlServerManager.SqlServers.GetByGroup(GroupName, SqlServerName).Databases.Get(newDatabase));
         }
 
-        private static void ValidateSqlServerNotFound(ISqlServer sqlServer)
+        private static void ValidateSqlServerNotFound(ISqlManager sqlServerManager, ISqlServer sqlServer)
         {
             AssertIfFound(() => sqlServerManager.SqlServers.GetById("/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef/resourceGroups/netsqlserver284556/providers/Microsoft.Sql/servers/netsqlserver284556"));
         }
@@ -773,15 +839,15 @@ namespace Azure.Tests.Sql
             Assert.True(false);
         }
 
-        private static ISqlServer CreateSqlServer()
+        private static ISqlServer CreateSqlServer(ISqlManager sqlServerManager)
         {
-            return CreateSqlServer(SqlServerName);
+            return CreateSqlServer(sqlServerManager, SqlServerName);
         }
 
-        private static ISqlServer CreateSqlServer(String SQL_SERVER_NAME)
+        private static ISqlServer CreateSqlServer(ISqlManager sqlServerManager, string sqlServerName)
         {
             return sqlServerManager.SqlServers
-                    .Define(SQL_SERVER_NAME)
+                    .Define(sqlServerName)
                     .WithRegion(Region.US_CENTRAL)
                     .WithNewResourceGroup(GroupName)
                     .WithAdministratorLogin("userName")

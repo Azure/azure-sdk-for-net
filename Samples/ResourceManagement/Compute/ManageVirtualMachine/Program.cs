@@ -30,9 +30,9 @@ namespace ManageVirtualMachine
 
     public class Program
     {
-        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
-        private static readonly string windowsVMName = ResourceNamer.RandomResourceName("wVM", 24);
-        private static readonly string linuxVMName = ResourceNamer.RandomResourceName("lVM", 24);
+        private static readonly string rgName = SharedSettings.RandomResourceName("rgCOMV", 24);
+        private static readonly string windowsVMName = SharedSettings.RandomResourceName("wVM", 24);
+        private static readonly string linuxVMName = SharedSettings.RandomResourceName("lVM", 24);
         private static readonly string userName = "tirekicker";
         private static readonly string password = "12NewPA$$w0rd!";
         private static readonly string dataDiskName = "disk2";
@@ -43,7 +43,7 @@ namespace ManageVirtualMachine
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

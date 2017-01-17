@@ -24,16 +24,16 @@ namespace ManageResourceGroup
         {
             try
             {
-                var rgName = ResourceNamer.RandomResourceName("rgRSMA", 24);
-                var rgName2 = ResourceNamer.RandomResourceName("rgRSMA", 24);
-                var resourceTagName = ResourceNamer.RandomResourceName("rgRSTN", 24);
-                var resourceTagValue = ResourceNamer.RandomResourceName("rgRSTV", 24);
+                var rgName = SharedSettings.RandomResourceName("rgRSMA", 24);
+                var rgName2 = SharedSettings.RandomResourceName("rgRSMA", 24);
+                var resourceTagName = SharedSettings.RandomResourceName("rgRSTN", 24);
+                var resourceTagValue = SharedSettings.RandomResourceName("rgRSTV", 24);
 
                 try
                 {
                     //=================================================================
                     // Authenticate
-                    AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                    AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                     var azure = Azure
                         .Configure()

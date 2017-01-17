@@ -35,8 +35,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private INetworkInterfacesOperations innerCollection;
         // the name of the network interface.
         private string nicName;
-        // used to generate unique name for any dependency resources.
-        protected ResourceNamer namer;
         // reference to the primary ip configuration.
         private NicIpConfigurationImpl nicPrimaryIpConfiguration;
         // references to all ip configuration.
@@ -47,6 +45,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private INetworkSecurityGroup existingNetworkSecurityGroupToAssociate;
         // cached related resources.
         private INetworkSecurityGroup networkSecurityGroup;
+        // used to generate unique name for any dependency resources.
+        protected IResourceNamer namer;
 
         internal NetworkInterfaceImpl(
             string name,
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             innerCollection = client;
             nicName = name;
-            namer = new ResourceNamer(nicName);
+            namer = SharedSettings.CreateResourceNamer(nicName);
             InitializeChildrenFromInner();
         }
 

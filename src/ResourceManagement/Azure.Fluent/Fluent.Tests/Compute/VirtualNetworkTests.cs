@@ -4,8 +4,9 @@
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Fluent.Tests.Common;
+using Xunit;
 
 namespace Fluent.Tests.Compute
 {
@@ -15,21 +16,23 @@ namespace Fluent.Tests.Compute
          * Main entry point.
          * @param args the parameters
          */
+        // TODO - ans - Does not look like a test. Check with Author and see.
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void Test()
         {
-            string vnetName1 = ResourceNamer.RandomResourceName("vnet1", 20);
-            string vnetName2 = ResourceNamer.RandomResourceName("vnet2", 20);
+            string vnetName1 = SharedSettings.RandomResourceName("vnet1", 20);
+            string vnetName2 = SharedSettings.RandomResourceName("vnet2", 20);
             string vnet1FrontEndSubnetName = "frontend";
             string vnet1BackEndSubnetName = "backend";
             string vnet1FrontEndSubnetNsgName = "frontendnsg";
             string vnet1BackEndSubnetNsgName = "backendnsg";
-            string frontEndVMName = ResourceNamer.RandomResourceName("fevm", 24);
-            string backEndVMName = ResourceNamer.RandomResourceName("bevm", 24);
-            string publicIpAddressLeafDNSForFrontEndVM = ResourceNamer.RandomResourceName("pip1", 24);
+            string frontEndVMName = SharedSettings.RandomResourceName("fevm", 24);
+            string backEndVMName = SharedSettings.RandomResourceName("bevm", 24);
+            string publicIpAddressLeafDNSForFrontEndVM = SharedSettings.RandomResourceName("pip1", 24);
 
-            INetworkManager manager = this.CreateNetworkManager();
+            INetworkManager manager = TestHelper.CreateNetworkManager();
 
-            string rgName = ResourceNamer.RandomResourceName("rgNEMV", 24);
+            string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
             INetworkSecurityGroup backEndSubnetNsg = manager.NetworkSecurityGroups
                     .Define(vnet1BackEndSubnetNsgName)
                     .WithRegion(Region.US_EAST)
@@ -105,15 +108,6 @@ namespace Fluent.Tests.Compute
 
 
             manager.Networks.DeleteById(virtualNetwork2.Id);
-        }
-
-        public INetworkManager CreateNetworkManager()
-        {
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            return NetworkManager
-                .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }
 }

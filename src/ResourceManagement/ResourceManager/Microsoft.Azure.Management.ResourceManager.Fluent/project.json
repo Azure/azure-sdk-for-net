@@ -26,11 +26,18 @@
 
   "frameworks": {
     "net45": {
+      "buildOptions": {
+        "define": [ "NET45" ],
+        "debugType": "portable"
+      },
       "dependencies": {
       }
     },
     "netstandard1.5": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
       "imports": [ "dnxcore50" ],
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
@@ -42,7 +49,10 @@
       }
     },
     "netstandard1.1": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
       "imports": [ "dnxcore50" ],
       "dependencies": {
         "System.Runtime.Serialization.Primitives": "4.1.1",
