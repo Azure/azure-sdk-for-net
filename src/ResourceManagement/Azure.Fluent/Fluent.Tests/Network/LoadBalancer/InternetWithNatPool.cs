@@ -125,6 +125,7 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.True(rule.Backend.Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
             Assert.True(rule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
             Assert.True(rule.Probe.Name.Equals("tcpProbe1", StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(TransportProtocol.Tcp, rule.Protocol);
 
             // Verify inbound NAT pools
             Assert.True(lb.InboundNatPools.ContainsKey("natpool1"));

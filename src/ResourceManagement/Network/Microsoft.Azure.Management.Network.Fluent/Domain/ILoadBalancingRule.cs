@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IHasBackendPort,
         IHasFrontend,
         IHasFloatingIp,
-        IHasProtocol<string>,
+        IHasProtocol<TransportProtocol>,
         IHasFrontendPort
     {
         /// <summary>

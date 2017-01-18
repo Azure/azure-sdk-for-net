@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             foreach (var rule in loadBalancer.LoadBalancingRules.Values)
             {
                 info.Append("\n\t\tLB rule name: ").Append(rule.Name)
-                        .Append("\n\t\t\tProtocol: ").Append(rule.Protocol)
+                        .Append("\n\t\t\tProtocol: ").Append(rule.Protocol.ToString())
                         .Append("\n\t\t\tFloating IP enabled? ").Append(rule.FloatingIpEnabled)
                         .Append("\n\t\t\tIdle timeout in minutes: ").Append(rule.IdleTimeoutInMinutes)
                         .Append("\n\t\t\tLoad distribution method: ").Append(rule.LoadDistribution.ToString());
