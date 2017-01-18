@@ -29,13 +29,13 @@ namespace HDInsightJob.Tests
 
         // ADL store access details like default storage root, application Id and certificate details to access storage
         public static string DefaultStorageRoot = "/clusters/pattipakaadls";
-        public static string ApplicationId = "3c2353d0-f61d-4368-9dc3-5e213fa8a5d3";
+        public static string ApplicationId = "";
         public static string AdlCertificatePath = @"D:\ADLS\pattipakalinuxadls.pfx";
-        public static string AdlCertificatePassword = "H@d00pcluster";
+        public static string AdlCertificatePassword = "";
 
         public static string ClusterName = "pattipakaadls.azurehdinsight.net";
         public static string UserName = "admin";
-        public static string Password = "H@d00pcluster";
+        public static string Password = "";
 
         public static string StorageAccountName = "";
         public static string StorageAccountKey = "";

@@ -726,10 +726,9 @@ namespace HDInsightJob.Tests
                 return new AzureDataLakeStoreAccess(dataLakeClient, TestUtils.AdlAccountName, TestUtils.DefaultStorageRoot);
             }
 
-                return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
-                                        IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
-                                        IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
-           
+            return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
+                                    IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
+                                    IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
         }
 
         // Gets access token to access Azure data Lake Storage.
