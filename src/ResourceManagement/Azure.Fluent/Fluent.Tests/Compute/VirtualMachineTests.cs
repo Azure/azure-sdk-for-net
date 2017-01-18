@@ -231,16 +231,7 @@ namespace Fluent.Tests.Compute
 
                 if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
-                    ConnectionInfo connectionInfo = new ConnectionInfo(
-                        publicIpAddress.Fqdn, 
-                        22, 
-                        username,
-                        new AuthenticationMethod[] 
-                        {
-                            new PasswordAuthenticationMethod(username, password)
-                        });
-
-                    using (var sshClient = new SshClient(connectionInfo))
+                    using (var sshClient = new SshClient(publicIpAddress.Fqdn, 22, username, password))
                     {
                         sshClient.Connect();
                         var commandToExecute = "pwgen;";
@@ -286,21 +277,10 @@ namespace Fluent.Tests.Compute
 
                     if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                     {
-                        ConnectionInfo connectionInfo = new ConnectionInfo(publicIpAddress.Fqdn, 22, username,
-                            new AuthenticationMethod[] {
-                            new PasswordAuthenticationMethod(username, password)
-                            });
-                        using (var sshClient = new SshClient(connectionInfo))
+                        using (var sshClient = new SshClient(publicIpAddress.Fqdn, 22, username, password))
                         {
-                            try
-                            {
-                                sshClient.Connect();
-                                sshClient.Disconnect();
-                            }
-                            catch (Exception exception)
-                            {
-                                Assert.False(true, $"Ssh connection failure to {publicIpAddress.Fqdn}, {exception.Message}");
-                            }
+                            sshClient.Connect();
+                            sshClient.Disconnect();
                         }
                     }
                 }
