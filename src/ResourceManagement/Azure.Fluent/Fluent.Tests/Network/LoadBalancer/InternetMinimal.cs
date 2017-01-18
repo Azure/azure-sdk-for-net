@@ -93,7 +93,7 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.Equal(80, lbrule.FrontendPort);
             Assert.NotNull(lbrule.Probe);
             Assert.True("default".Equals(lbrule.Probe.Name, StringComparison.OrdinalIgnoreCase));
-            Assert.True(TransportProtocol.Tcp.ToString().Equals(lbrule.Protocol, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(TransportProtocol.Tcp, lbrule.Protocol);
             Assert.NotNull(lbrule.Backend);
             Assert.True("default".Equals(lbrule.Backend.Name, StringComparison.OrdinalIgnoreCase));
 
@@ -181,7 +181,7 @@ namespace Azure.Tests.Network.LoadBalancer
             Assert.NotNull(lbRule.Frontend);
             Assert.True("default".Equals(lbRule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
             Assert.True("httpprobe".Equals(lbRule.Probe.Name, StringComparison.OrdinalIgnoreCase));
-            Assert.True(TransportProtocol.Udp.ToString().Equals(lbRule.Protocol, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(TransportProtocol.Udp, lbRule.Protocol);
             Assert.NotNull(lbRule.Backend);
             Assert.True("backend2".Equals(lbRule.Backend.Name, StringComparison.OrdinalIgnoreCase));
 
