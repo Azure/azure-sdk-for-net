@@ -4,7 +4,6 @@
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
@@ -23,13 +22,6 @@ namespace ManageWebAppBasic
 
     public class Program
     {
-        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-        private static readonly string planName = SharedSettings.RandomResourceName("jplan_", 15);
-        private static readonly string rg1Name = SharedSettings.RandomResourceName("rg1NEMV_", 24);
-        private static readonly string rg2Name = SharedSettings.RandomResourceName("rg2NEMV_", 24);
-
         public static void Main(string[] args)
         {
             try
@@ -45,135 +37,144 @@ namespace ManageWebAppBasic
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
-                try
-                {
-                    //============================================================
-                    // Create a web app with a new app service plan
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                    Console.WriteLine("Creating web app " + app1Name + " in resource group " + rg1Name + "...");
-
-                    var app1 = azure.WebApps
-                            .Define(app1Name)
-                            .WithNewResourceGroup(rg1Name)
-                            .WithNewAppServicePlan(planName)
-                            .WithRegion(Region.US_WEST)
-                            .WithPricingTier(AppServicePricingTier.Standard_S1)
-                            .Create();
-
-                    Console.WriteLine("Created web app " + app1.Name);
-                    Utilities.Print(app1);
-
-                    //============================================================
-                    // Create a second web app with the same app service plan
-
-                    Console.WriteLine("Creating another web app " + app2Name + " in resource group " + rg1Name + "...");
-                    var plan = azure.AppServices.AppServicePlans.GetByGroup(rg1Name, planName);
-                    var app2 = azure.WebApps
-                            .Define(app2Name)
-                            .WithExistingResourceGroup(rg1Name)
-                            .WithExistingAppServicePlan(plan)
-                            .Create();
-
-                    Console.WriteLine("Created web app " + app2.Name);
-                    Utilities.Print(app2);
-
-                    //============================================================
-                    // Create a third web app with the same app service plan, but
-                    // in a different resource group
-
-                    Console.WriteLine("Creating another web app " + app3Name + " in resource group " + rg2Name + "...");
-                    var app3 = azure.WebApps
-                            .Define(app3Name)
-                            .WithNewResourceGroup(rg2Name)
-                            .WithExistingAppServicePlan(plan)
-                            .Create();
-
-                    Console.WriteLine("Created web app " + app3.Name);
-                    Utilities.Print(app3);
-
-                    //============================================================
-                    // stop and start app1, restart app 2
-                    Console.WriteLine("Stopping web app " + app1.Name);
-                    app1.Stop();
-                    Console.WriteLine("Stopped web app " + app1.Name);
-                    Utilities.Print(app1);
-                    Console.WriteLine("Starting web app " + app1.Name);
-                    app1.Start();
-                    Console.WriteLine("Started web app " + app1.Name);
-                    Utilities.Print(app1);
-                    Console.WriteLine("Restarting web app " + app2.Name);
-                    app2.Restart();
-                    Console.WriteLine("Restarted web app " + app2.Name);
-                    Utilities.Print(app2);
-
-                    //============================================================
-                    // Configure app 3 to have Java 8 enabled
-                    Console.WriteLine("Adding Java support to web app " + app3Name + "...");
-                    app3.Update()
-                            .WithJavaVersion(JavaVersion.Java_8_Newest)
-                            .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
-                            .Apply();
-                    Console.WriteLine("Java supported on web app " + app3Name + "...");
-
-                    //=============================================================
-                    // List web apps
-
-                    Console.WriteLine("Printing list of web apps in resource group " + rg1Name + "...");
-
-                    foreach (var webApp in azure.WebApps.ListByGroup(rg1Name))
-                    {
-                        Utilities.Print(webApp);
-                    }
-
-                    Console.WriteLine("Printing list of web apps in resource group " + rg2Name + "...");
-
-                    foreach (var webApp in azure.WebApps.ListByGroup(rg2Name))
-                    {
-                        Utilities.Print(webApp);
-                    }
-
-                    //=============================================================
-                    // Delete a web app
-
-                    Console.WriteLine("Deleting web app " + app1Name + "...");
-                    azure.WebApps.DeleteByGroup(rg1Name, app1Name);
-                    Console.WriteLine("Deleted web app " + app1Name + "...");
-
-                    Console.WriteLine("Printing list of web apps in resource group " + rg1Name + " again...");
-                    foreach (var webApp in azure.WebApps.ListByGroup(rg1Name))
-                    {
-                        Utilities.Print(webApp);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    try
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + rg1Name);
-                        azure.ResourceGroups.DeleteByName(rg1Name);
-                        Console.WriteLine("Deleted Resource Group: " + rg1Name);
-                        Console.WriteLine("Deleting Resource Group: " + rg2Name);
-                        azure.ResourceGroups.DeleteByName(rg2Name);
-                        Console.WriteLine("Deleted Resource Group: " + rg2Name);
-                    }
-                    catch (NullReferenceException)
-                    {
-                        Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                    }
-                    catch (Exception g)
-                    {
-                        Console.WriteLine(g);
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Utilities.Log(e);
+            }
+        }
+
+        public static void RunSample(IAzure azure)
+        {
+            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+            string planName = SharedSettings.RandomResourceName("jplan_", 15);
+            string rg1Name = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string rg2Name = SharedSettings.RandomResourceName("rg2NEMV_", 24);
+
+            try
+            {
+                //============================================================
+                // Create a web app with a new app service plan
+
+                Utilities.Log("Creating web app " + app1Name + " in resource group " + rg1Name + "...");
+
+                var app1 = azure.WebApps
+                        .Define(app1Name)
+                        .WithNewResourceGroup(rg1Name)
+                        .WithNewAppServicePlan(planName)
+                        .WithRegion(Region.US_WEST)
+                        .WithPricingTier(AppServicePricingTier.Standard_S1)
+                        .Create();
+
+                Utilities.Log("Created web app " + app1.Name);
+                Utilities.Print(app1);
+
+                //============================================================
+                // Create a second web app with the same app service plan
+
+                Utilities.Log("Creating another web app " + app2Name + " in resource group " + rg1Name + "...");
+                var plan = azure.AppServices.AppServicePlans.GetByGroup(rg1Name, planName);
+                var app2 = azure.WebApps
+                        .Define(app2Name)
+                        .WithExistingResourceGroup(rg1Name)
+                        .WithExistingAppServicePlan(plan)
+                        .Create();
+
+                Utilities.Log("Created web app " + app2.Name);
+                Utilities.Print(app2);
+
+                //============================================================
+                // Create a third web app with the same app service plan, but
+                // in a different resource group
+
+                Utilities.Log("Creating another web app " + app3Name + " in resource group " + rg2Name + "...");
+                var app3 = azure.WebApps
+                        .Define(app3Name)
+                        .WithNewResourceGroup(rg2Name)
+                        .WithExistingAppServicePlan(plan)
+                        .Create();
+
+                Utilities.Log("Created web app " + app3.Name);
+                Utilities.Print(app3);
+
+                //============================================================
+                // stop and start app1, restart app 2
+                Utilities.Log("Stopping web app " + app1.Name);
+                app1.Stop();
+                Utilities.Log("Stopped web app " + app1.Name);
+                Utilities.Print(app1);
+                Utilities.Log("Starting web app " + app1.Name);
+                app1.Start();
+                Utilities.Log("Started web app " + app1.Name);
+                Utilities.Print(app1);
+                Utilities.Log("Restarting web app " + app2.Name);
+                app2.Restart();
+                Utilities.Log("Restarted web app " + app2.Name);
+                Utilities.Print(app2);
+
+                //============================================================
+                // Configure app 3 to have Java 8 enabled
+                Utilities.Log("Adding Java support to web app " + app3Name + "...");
+                app3.Update()
+                        .WithJavaVersion(JavaVersion.Java_8_Newest)
+                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .Apply();
+                Utilities.Log("Java supported on web app " + app3Name + "...");
+
+                //=============================================================
+                // List web apps
+
+                Utilities.Log("Printing list of web apps in resource group " + rg1Name + "...");
+
+                foreach (var webApp in azure.WebApps.ListByGroup(rg1Name))
+                {
+                    Utilities.Print(webApp);
+                }
+
+                Utilities.Log("Printing list of web apps in resource group " + rg2Name + "...");
+
+                foreach (var webApp in azure.WebApps.ListByGroup(rg2Name))
+                {
+                    Utilities.Print(webApp);
+                }
+
+                //=============================================================
+                // Delete a web app
+
+                Utilities.Log("Deleting web app " + app1Name + "...");
+                azure.WebApps.DeleteByGroup(rg1Name, app1Name);
+                Utilities.Log("Deleted web app " + app1Name + "...");
+
+                Utilities.Log("Printing list of web apps in resource group " + rg1Name + " again...");
+                foreach (var webApp in azure.WebApps.ListByGroup(rg1Name))
+                {
+                    Utilities.Print(webApp);
+                }
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rg1Name);
+                    azure.ResourceGroups.DeleteByName(rg1Name);
+                    Utilities.Log("Deleted Resource Group: " + rg1Name);
+                    Utilities.Log("Deleting Resource Group: " + rg2Name);
+                    azure.ResourceGroups.DeleteByName(rg2Name);
+                    Utilities.Log("Deleted Resource Group: " + rg2Name);
+                }
+                catch (NullReferenceException)
+                {
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
+                }
+                catch (Exception g)
+                {
+                    Utilities.Log(g.ToString());
+                }
             }
         }
     }

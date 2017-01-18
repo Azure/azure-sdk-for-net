@@ -8,10 +8,10 @@ using System.Runtime.CompilerServices;
 
 namespace Azure.Tests
 {
-    internal class FluentMockContext : IDisposable
+    public class FluentMockContext : IDisposable
     {
         public MockContext mockContext { get; private set; }
-        internal static FluentMockContext Start(string className, [CallerMemberName] string methodName = "testframework_failed")
+        public static FluentMockContext Start(string className, [CallerMemberName] string methodName = "testframework_failed")
         {
             var fluentMockContext = new FluentMockContext();
             fluentMockContext.mockContext = MockContext.Start(className, methodName);

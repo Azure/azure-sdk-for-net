@@ -22,6 +22,23 @@ namespace Microsoft.Azure.Management.Samples.Common
 {
     public static class Utilities
     {
+        public static Action<string> LoggerMethod { get; set; }
+
+        static Utilities()
+        {
+            LoggerMethod = Utilities.Log;
+        }
+
+        public static void Log(string message)
+        {
+            LoggerMethod.Invoke(message);
+        }
+
+        public static void Log(object obj)
+        {
+            LoggerMethod.Invoke(obj.ToString());
+        }
+
         // Print app gateway info
         public static void PrintAppGateway(IApplicationGateway resource)
         {
@@ -204,7 +221,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            Console.WriteLine(info.ToString());
+            Utilities.Log(info.ToString());
         }
 
         public static void PrintVirtualMachine(IVirtualMachine virtualMachine)
@@ -300,7 +317,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 networkProfile.Append("\n\t\tId:").Append(networkInterfaceId);
             }
 
-            Console.WriteLine(new StringBuilder().Append("Virtual Machine: ").Append(virtualMachine.Id)
+            Utilities.Log(new StringBuilder().Append("Virtual Machine: ").Append(virtualMachine.Id)
                     .Append("Name: ").Append(virtualMachine.Name)
                     .Append("\n\tResource group: ").Append(virtualMachine.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(virtualMachine.Region)
@@ -317,13 +334,13 @@ namespace Microsoft.Azure.Management.Samples.Common
         {
             foreach (var storageAccountKey in storageAccountKeys)
             {
-                Console.WriteLine($"Key {storageAccountKey.KeyName} = {storageAccountKey.Value}");
+                Utilities.Log($"Key {storageAccountKey.KeyName} = {storageAccountKey.Value}");
             }
         }
 
         public static void PrintStorageAccount(IStorageAccount storageAccount)
         {
-            Console.WriteLine($"{storageAccount.Name} created @ {storageAccount.CreationTime}");
+            Utilities.Log($"{storageAccount.Name} created @ {storageAccount.CreationTime}");
         }
 
         public static string CreateRandomName(string namePrefix)
@@ -334,7 +351,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintAvailabilitySet(IAvailabilitySet resource)
         {
-            Console.WriteLine(new StringBuilder().Append("Availability Set: ").Append(resource.Id)
+            Utilities.Log(new StringBuilder().Append("Availability Set: ").Append(resource.Id)
                 .Append("Name: ").Append(resource.Name)
                 .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                 .Append("\n\tRegion: ").Append(resource.Region)
@@ -374,7 +391,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            Console.WriteLine(new StringBuilder().Append("BatchAccount: ").Append(batchAccount.Id)
+            Utilities.Log(new StringBuilder().Append("BatchAccount: ").Append(batchAccount.Id)
                     .Append("Name: ").Append(batchAccount.Name)
                     .Append("\n\tResource group: ").Append(batchAccount.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(batchAccount.Region)
@@ -389,7 +406,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void PrintBatchAccountKey(BatchAccountKeys batchAccountKeys)
         {
-            Console.WriteLine("Primary Key (" + batchAccountKeys.Primary + ") Secondary key = ("
+            Utilities.Log("Primary Key (" + batchAccountKeys.Primary + ") Secondary key = ("
                     + batchAccountKeys.Secondary + ")");
         }
 
@@ -415,7 +432,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tProtocol: ").Append(rule.Protocol)
                         .Append("\n\t\tPriority: ").Append(rule.Priority);
             }
-            Console.WriteLine(nsgOutput.ToString());
+            Utilities.Log(nsgOutput.ToString());
         }
 
         public static void PrintVirtualNetwork(INetwork network)
@@ -441,12 +458,12 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            Console.WriteLine(info.ToString());
+            Utilities.Log(info.ToString());
         }
 
         public static void PrintIpAddress(IPublicIpAddress publicIpAddress)
         {
-            Console.WriteLine(new StringBuilder().Append("Public IP Address: ").Append(publicIpAddress.Id)
+            Utilities.Log(new StringBuilder().Append("Public IP Address: ").Append(publicIpAddress.Id)
                 .Append("Name: ").Append(publicIpAddress.Name)
                 .Append("\n\tResource group: ").Append(publicIpAddress.ResourceGroupName)
                 .Append("\n\tRegion: ").Append(publicIpAddress.Region)
@@ -488,7 +505,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tPrimary virtual network ID: ").Append(resource.PrimaryIpConfiguration.NetworkId)
                     .Append("\n\tPrimary subnet name:").Append(resource.PrimaryIpConfiguration.SubnetName);
 
-            Console.WriteLine(info.ToString());
+            Utilities.Log(info.ToString());
         }
 
         public static void PrintLoadBalancer(ILoadBalancer loadBalancer)
@@ -702,7 +719,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append(FormatCollection(backend.LoadBalancingRules.Keys));
             }
 
-            Console.WriteLine(info.ToString());
+            Utilities.Log(info.ToString());
         }
 
         public static void PrintVault(IVault vault)
@@ -721,7 +738,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tSecret permissions: ").Append(FormatCollection(accessPolicy.Permissions.Secrets));
             }
 
-            Console.WriteLine(info.ToString());
+            Utilities.Log(info.ToString());
         }
 
         public static void PrintRedisCache(IRedisCache redisCache)
@@ -761,7 +778,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
 
-            Console.WriteLine(redisInfo.ToString());
+            Utilities.Log(redisInfo.ToString());
         }
 
         public static void PrintRedisAccessKeys(IRedisAccessKeys redisAccessKeys)
@@ -771,7 +788,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                      .Append("\tPrimary Key: '").Append(redisAccessKeys.PrimaryKey).AppendLine("', ")
                      .Append("\tSecondary Key: '").Append(redisAccessKeys.SecondaryKey).AppendLine("', ");
 
-            Console.WriteLine(redisKeys.ToString());
+            Utilities.Log(redisKeys.ToString());
         }
 
         public static void Print(IAppServiceDomain resource)
@@ -797,7 +814,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 builder = builder.Append("\n\t\t" + nameServer);
             }
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(IAppServiceCertificateOrder resource)
@@ -812,7 +829,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tStatus: ").Append(resource.Status)
                     .Append("\n\tIssuance time: ").Append(resource.LastCertificateIssuanceTime)
                     .Append("\n\tSigned certificate: ").Append(resource.SignedCertificate == null ? null : resource.SignedCertificate.Thumbprint);
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(IAppServicePlan resource)
@@ -822,7 +839,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.Region)
                     .Append("\n\tPricing tier: ").Append(resource.PricingTier);
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(IWebAppBase resource)
@@ -858,7 +875,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 builder = builder.Append("\n\t\t" + conn.Name + ": " + conn.Value + " - " + conn.Type + (conn.Sticky ? " - slot setting" : ""));
             }
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         private static string FormatDictionary(IReadOnlyDictionary<string, string> dictionary)
@@ -891,7 +908,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tRegion: ").Append(sqlServer.Region)
                     .Append("\n\tSqlServer version: ").Append(sqlServer.Version)
                     .Append("\n\tFully qualified name for Sql Server: ").Append(sqlServer.FullyQualifiedDomainName);
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void PrintDatabase(ISqlDatabase database)
@@ -910,7 +927,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tMax size bytes of SQL database: ").Append(database.MaxSizeBytes)
                     .Append("\n\tDefault secondary location of SQL database: ").Append(database.DefaultSecondaryLocation);
 
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void PrintFirewallRule(ISqlFirewallRule firewallRule)
@@ -923,7 +940,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tStart IP Address of the firewall rule: ").Append(firewallRule.StartIpAddress)
                     .Append("\n\tEnd IP Address of the firewall rule: ").Append(firewallRule.EndIpAddress);
 
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void PrintElasticPool(ISqlElasticPool elasticPool)
@@ -941,7 +958,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tState of the elastic pool: ").Append(elasticPool.State)
                     .Append("\n\tStorage capacity in MBs for the elastic pool: ").Append(elasticPool.StorageMB);
 
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void PrintElasticPoolActivity(IElasticPoolActivity elasticPoolActivity)
@@ -962,7 +979,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tRequested DTU min limit in activity: ").Append(elasticPoolActivity.RequestedDatabaseDtuMin)
                     .Append("\n\tRequested DTU limit in activity: ").Append(elasticPoolActivity.RequestedDtu);
 
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
 
         }
 
@@ -982,7 +999,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tError message of activity: ").Append(databaseActivity.ErrorMessage)
                     .Append("\n\tError severity of activity: ").Append(databaseActivity.ErrorSeverity);
 
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(ITrafficManagerProfile profile)
@@ -1059,7 +1076,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                             .Append("\n\t\t\tRouting weight: ").Append(endpoint.RoutingWeight);
                 }
             }
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(IDnsZone dnsZone)
@@ -1206,7 +1223,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     }
                 }
             }
-            Console.WriteLine(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
     }
 }

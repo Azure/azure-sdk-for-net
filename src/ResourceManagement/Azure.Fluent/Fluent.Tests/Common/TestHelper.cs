@@ -184,6 +184,7 @@ namespace Fluent.Tests.Common
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
+                // In Playback mode set all the LongRunning timeouts to 0 
                 var managersList = new List<object>();
                 var managerTraversalStack = new Stack<object>();
 
