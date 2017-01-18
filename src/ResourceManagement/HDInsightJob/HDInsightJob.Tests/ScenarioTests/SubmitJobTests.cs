@@ -193,9 +193,8 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient();
 
-                // The default Http client time out would be MaxBackOff (8min) + 2 mins for HDinsight gateway
-                // time out and having 1 min extra buffer.
-                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(11)) == 0);
+                // The default Http client time out would be 2 * MaxBackOff (8min) + having 2 min extra buffer.
+                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(18)) == 0);
             }
         }
 
