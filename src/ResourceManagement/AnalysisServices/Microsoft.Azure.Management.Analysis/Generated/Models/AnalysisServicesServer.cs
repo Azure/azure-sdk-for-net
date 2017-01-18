@@ -37,10 +37,16 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <param name="tags">Key-value pairs of additional resource
         /// provisioning properties.</param>
         /// <param name="state">The current state of Analysis Services
-        /// resource. It allows more custom terminal state like
-        /// Paused.</param>
+        /// resource. The state is to indicate more states outside of
+        /// resource provisioning. Possible values include: 'Deleting',
+        /// 'Succeeded', 'Failed', 'Paused', 'Suspended', 'Provisioning',
+        /// 'Updating', 'Suspending', 'Pausing', 'Resuming', 'Preparing',
+        /// 'Scaling'</param>
         /// <param name="provisioningState">The current deployment state of
-        /// Analysis Services resource.</param>
+        /// Analysis Services resource. Possible values include: 'Deleting',
+        /// 'Succeeded', 'Failed', 'Paused', 'Suspended', 'Provisioning',
+        /// 'Updating', 'Suspending', 'Pausing', 'Resuming', 'Preparing',
+        /// 'Scaling'</param>
         /// <param name="serverFullName">The full name of the Analysis
         /// Services resource.</param>
         public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string state = default(string), string provisioningState = default(string), string serverFullName = default(string))
@@ -58,14 +64,20 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public ServerAdministrators AsAdministrators { get; set; }
 
         /// <summary>
-        /// Gets the current state of Analysis Services resource. It allows
-        /// more custom terminal state like Paused.
+        /// Gets the current state of Analysis Services resource. The state is
+        /// to indicate more states outside of resource provisioning.
+        /// Possible values include: 'Deleting', 'Succeeded', 'Failed',
+        /// 'Paused', 'Suspended', 'Provisioning', 'Updating', 'Suspending',
+        /// 'Pausing', 'Resuming', 'Preparing', 'Scaling'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.state")]
         public string State { get; private set; }
 
         /// <summary>
         /// Gets the current deployment state of Analysis Services resource.
+        /// Possible values include: 'Deleting', 'Succeeded', 'Failed',
+        /// 'Paused', 'Suspended', 'Provisioning', 'Updating', 'Suspending',
+        /// 'Pausing', 'Resuming', 'Preparing', 'Scaling'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

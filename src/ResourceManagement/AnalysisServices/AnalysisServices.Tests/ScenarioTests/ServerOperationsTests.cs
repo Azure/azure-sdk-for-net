@@ -53,6 +53,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                     Console.WriteLine(ex.ToString());
                 }
 
+                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
                 Assert.Equal(resultCreate.State, "Succeeded");
 
                 // get the server and ensure that all the values are properly set.
@@ -68,6 +69,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
                 // Confirm that the server creation did succeed
+                Assert.True(resultGet.ProvisioningState == "Succeeded");
                 Assert.True(resultGet.State == "Succeeded");
 
                 // Update the server and confirm the updates make it in.
@@ -77,7 +79,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                     };
 
                 var updatedAdministrators = AnalysisServicesTestUtilities.DefaultAdministrators;
-                updatedAdministrators.Add("aztest2@aspaastestloop1.ccsctp.net");
+                updatedAdministrators.Add("aztest2@aspaas.ccsctp.net");
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
                     {
                         Sku = resultGet.Sku,
@@ -91,6 +93,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                                 updateParameters
                                 );
 
+                Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
                 Assert.Equal("Succeeded", resultUpdate.State);
 
                 // get the server and ensure that all the values are properly set.
@@ -143,7 +146,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 listResponse = client.Servers.ListByResourceGroup(AnalysisServicesTestUtilities.DefaultResourceGroup);
 
                 // Assert that there are at least two accounts in the list
-                Assert.True(listResponse.Count() > 0);
+                Assert.True(listResponse.Count() >= 0);
             }
         }
     }
