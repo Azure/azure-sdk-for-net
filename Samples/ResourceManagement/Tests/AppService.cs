@@ -19,7 +19,7 @@ namespace Samples.Tests
             Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageWebAppBasicTest()
         {
