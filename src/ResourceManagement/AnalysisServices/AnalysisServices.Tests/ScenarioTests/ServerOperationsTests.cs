@@ -129,8 +129,20 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // Suspend the server and confirm that it is deleted.
                 client.Servers.Suspend(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
+                // get the server and ensure that all the values are properly set.
+                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
+
+                Assert.Equal("Paused", resultGet.ProvisioningState);
+                Assert.Equal("Paused", resultGet.State);
+
                 // Suspend the server and confirm that it is deleted.
                 client.Servers.Resume(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
+
+                // get the server and ensure that all the values are properly set.
+                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
+
+                Assert.Equal("Succeeded", resultGet.ProvisioningState);
+                Assert.Equal("Succeeded", resultGet.State);
 
                 // Delete the server and confirm that it is deleted.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
