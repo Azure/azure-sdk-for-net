@@ -14,8 +14,9 @@
 // limitations under the License.
 // 
 
+#if NET45
+using System;
 using System.IO;
-using Microsoft.Rest;
 using Microsoft.Azure.Management.DataLake.Store;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
@@ -38,13 +39,22 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// Required. The Data Lake Store management client.
         /// </param>
         /// <param name='storageAccountName'>
-        /// Required. The Data Lake Store storage account name.
+        /// Required. The Data Lake Store account name without suffix. E.g., 'myaccount' instead of 'myaccount.azuredatalakestore.net'.
         /// </param>
         /// <param name='defaultStorageRootPath'>
         /// Required. The default storage root path in Data Lake Store for the cluster.
         /// </param>
         public AzureDataLakeStoreAccess(DataLakeStoreFileSystemManagementClient client, string storageAccountName, string defaultStorageRootPath)
         {
+            if (string.IsNullOrEmpty(storageAccountName))
+            {
+                throw new ArgumentNullException(storageAccountName);
+            }
+            else if (storageAccountName.Contains("."))
+            {
+                throw new InvalidDataException("When providing a Data Lake Store storageAccountName, provide just the account name, which cannot contain the '.' character. E.g., use 'myaccount', not 'myaccount.azuredatalakestore.net'.");
+            }
+
             this.AccountName = storageAccountName;
             this.ManagementClient = client;
             this.DefaultStorageRootPath = defaultStorageRootPath;
@@ -67,3 +77,4 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         }
     }
 }
+#endif

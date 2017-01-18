@@ -44,7 +44,17 @@ namespace HDInsightJob.Tests
                 MockSupport.RunningMocked = true;
             }
 
-            var _credentials = GetAccessTokenUsingHDIADLServicePrincipal();
+            TokenCredentials _credentials = null;
+
+            if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
+            {
+                _credentials = GetAccessTokenUsingHDIADLServicePrincipal();
+            }
+            else
+            {
+                _credentials = new TokenCredentials("foo");
+            }
+
             dataLakeClient = new DataLakeStoreFileSystemManagementClient(_credentials);
         }
 
@@ -193,9 +203,8 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient();
 
-                // The default Http client time out would be MaxBackOff (8min) + 2 mins for HDinsight gateway
-                // time out and having 1 min extra buffer.
-                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(11)) == 0);
+                // The default Http client time out would be 2 * MaxBackOff (8min) + having 2 min extra buffer.
+                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(18)) == 0);
             }
         }
 
@@ -727,10 +736,9 @@ namespace HDInsightJob.Tests
                 return new AzureDataLakeStoreAccess(dataLakeClient, TestUtils.AdlAccountName, TestUtils.DefaultStorageRoot);
             }
 
-                return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
-                                        IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
-                                        IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
-           
+            return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
+                                    IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
+                                    IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
         }
 
         // Gets access token to access Azure data Lake Storage.

@@ -24,25 +24,25 @@ namespace HDInsightJob.Tests
     public static class TestUtils
     {
         // ADL clusters are supported only for Linux. This flag is to configure ADL clusters.
-        public static bool AdlCluster = false;
-        public static string AdlAccountName = "";
+        public static bool AdlCluster = true;
+        public static string AdlAccountName = "pattipakaadls2";
 
         // ADL store access details like default storage root, application Id and certificate details to access storage
-        public static string DefaultStorageRoot = "";
+        public static string DefaultStorageRoot = "/clusters/pattipakaadls";
         public static string ApplicationId = "";
-        public static string AdlCertificatePath = "";
+        public static string AdlCertificatePath = @"D:\ADLS\pattipakalinuxadls.pfx";
         public static string AdlCertificatePassword = "";
 
-        public static string ClusterName = "";
-        public static string UserName = "";
+        public static string ClusterName = "pattipakaadls.azurehdinsight.net";
+        public static string UserName = "admin";
         public static string Password = "";
 
         public static string StorageAccountName = "";
         public static string StorageAccountKey = "";
         public static string DefaultContainer = "";
 
-        public static string WinClusterName = "";
-        public static string WinUserName = "";
+        public static string WinClusterName = "pattipakwin33.azurehdinsight.net";
+        public static string WinUserName = "admin";
         public static string WinPassword = "";
         //set storage account suffix appropriately for different environments, for example:core.chinacloudapi.cn
         public static string storageAccountSuffix = "";
@@ -51,10 +51,10 @@ namespace HDInsightJob.Tests
         public static string WinStorageAccountKey = "";
         public static string WinDefaultContainer = "";
 
-        public static string SQLServerUserName = "";
+        public static string SQLServerUserName = "hdiquerytest";
         public static string SQLServerPassword = "";
-        public static string SQLServerConnectionString = "";
-        public static string SQLServerTableName = "";
+        public static string SQLServerConnectionString = "jdbc:sqlserver://hdiquerytest.database.windows.net:1433;database=hdiquerytest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
+        public static string SQLServerTableName = "dept";
 
         public static TimeSpan JobPollInterval = TimeSpan.FromSeconds(30);
         public static TimeSpan JobWaitInterval = TimeSpan.FromMinutes(30);
