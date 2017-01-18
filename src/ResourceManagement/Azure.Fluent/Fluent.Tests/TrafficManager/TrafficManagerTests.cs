@@ -252,10 +252,6 @@ namespace Azure.Tests.TrafficManager
                     }
                     Assert.Equal(1, c);
                 }
-                catch (Exception exception)
-                {
-                    Assert.True(false, exception.Message);
-                }
                 finally
                 {
                     azure.ResourceGroups.DeleteByName(groupName);
