@@ -25,7 +25,7 @@ namespace HDInsightJob.Tests
     {
         // ADL clusters are supported only for Linux. This flag is to configure ADL clusters.
         public static bool AdlCluster = true;
-        public static string AdlAccountName = "pattipakaadls2.azuredatalakestore.net";
+        public static string AdlAccountName = "pattipakaadls2";
 
         // ADL store access details like default storage root, application Id and certificate details to access storage
         public static string DefaultStorageRoot = "/clusters/pattipakaadls";
