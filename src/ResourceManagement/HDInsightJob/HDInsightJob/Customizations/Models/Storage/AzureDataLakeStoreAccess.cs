@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// Required. The Data Lake Store management client.
         /// </param>
         /// <param name='storageAccountName'>
-        /// Required. The Data Lake Store storage account name.
+        /// Required. The Data Lake Store account name without suffix. E.g., 'myaccount' instead of 'myaccount.azuredatalakestore.net'.
         /// </param>
         /// <param name='defaultStorageRootPath'>
         /// Required. The default storage root path in Data Lake Store for the cluster.

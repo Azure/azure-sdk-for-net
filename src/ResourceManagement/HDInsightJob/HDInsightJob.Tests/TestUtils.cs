@@ -52,7 +52,7 @@ namespace HDInsightJob.Tests
         public static string WinDefaultContainer = "";
 
         public static string SQLServerUserName = "hdiquerytest";
-        public static string SQLServerPassword = "HdpCli123!";
+        public static string SQLServerPassword = "";
         public static string SQLServerConnectionString = "jdbc:sqlserver://hdiquerytest.database.windows.net:1433;database=hdiquerytest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
         public static string SQLServerTableName = "dept";
 
