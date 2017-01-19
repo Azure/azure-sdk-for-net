@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT> WithLoadDistribution(string loadDistribution);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IWithAttach<ParentT> WithLoadDistribution(LoadDistribution loadDistribution);
     }
 
     /// <summary>
