@@ -1,3 +1,19 @@
 {
-    "projects": []
+    "projects": [ 
+      "src/ResourceManagement/Azure.Fluent", 
+      "src/ResourceManagement/AppService",
+      "src/ResourceManagement/Batch",
+      "src/ResourceManagement/Cdn",
+      "src/ResourceManagement/Compute",
+      "src/ResourceManagement/Dns",
+      "src/ResourceManagement/Graph.RBAC",
+      "src/ResourceManagement/KeyVault",
+      "src/ResourceManagement/Network",
+      "src/ResourceManagement/RedisCache",
+      "src/ResourceManagement/ResourceManager",
+      "src/ResourceManagement/Sql",
+      "src/ResourceManagement/Storage",
+      "src/ResourceManagement/TrafficManager",
+      "Samples/ResourceManagement/Common"
+    ]
 }
