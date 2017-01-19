@@ -99,16 +99,20 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                Assert.NotNull(account.Encryption.Services.Table);
-                if (account.Encryption.Services.Table.Enabled.HasValue)
+                if (null != account.Encryption.Services.Table)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
                 }
 
-                Assert.NotNull(account.Encryption.Services.Queue);
-                if (account.Encryption.Services.Queue.Enabled.HasValue)
+                if (null != account.Encryption.Services.Queue)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
                 }
             }
         }
@@ -312,7 +316,7 @@ namespace Storage.Tests
 
                 // Create and get a Premium LRS storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                parameters.Sku.Name = SkuName.PremiumLRS;
+                parameters.Sku.Name = SkuName.StandardLRS;
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
@@ -384,16 +388,20 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                Assert.NotNull(account.Encryption.Services.Table);
-                if (account.Encryption.Services.Table.Enabled.HasValue)
+                if (null != account.Encryption.Services.Table)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
                 }
 
-                Assert.NotNull(account.Encryption.Services.Queue);
-                if (account.Encryption.Services.Queue.Enabled.HasValue)
+                if (null != account.Encryption.Services.Queue)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
                 }
             }
         }
@@ -611,16 +619,20 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                Assert.NotNull(account.Encryption.Services.Table);
-                if (account.Encryption.Services.Table.Enabled.HasValue)
+                if (null != account.Encryption.Services.Table)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
                 }
 
-                Assert.NotNull(account.Encryption.Services.Queue);
-                if (account.Encryption.Services.Queue.Enabled.HasValue)
+                if (null != account.Encryption.Services.Queue)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
                 }
 
                 // Update storage custom domains
@@ -718,16 +730,20 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                Assert.NotNull(account.Encryption.Services.Table);
-                if (account.Encryption.Services.Table.Enabled.HasValue)
+                if (null != account.Encryption.Services.Table)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Table.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    }
                 }
 
-                Assert.NotNull(account.Encryption.Services.Queue);
-                if (account.Encryption.Services.Queue.Enabled.HasValue)
+                if (null != account.Encryption.Services.Queue)
                 {
-                    Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    if (account.Encryption.Services.Queue.Enabled.HasValue)
+                    {
+                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    }
                 }
 
                 // Update storage custom domains
@@ -1147,9 +1163,7 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
-                // Assert.NotNull(account.Encryption.Services.File);
-                // Assert.Equal(true, account.Encryption.Services.File.Enabled);
-                // Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+                Assert.Null(account.Encryption.Services.File);
 
                 // 3. Restore storage encryption
                 parameters = new StorageAccountUpdateParameters
