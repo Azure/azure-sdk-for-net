@@ -1,18 +1,18 @@
 {
     "projects": [ 
       "../src/ResourceManagement/Azure.Fluent", 
-      "ResourceManagement",
-      "ResourceManagement/AppService",
-      "ResourceManagement/Batch",
-      "ResourceManagement/Cdn",
-      "ResourceManagement/Compute",
-      "ResourceManagement/Dns",
-      "ResourceManagement/KeyVault",
-      "ResourceManagement/Network",
-      "ResourceManagement/RedisCache",
-      "ResourceManagement/ResourceManager",
-      "ResourceManagement/Sql",
-      "ResourceManagement/Storage",
-      "ResourceManagement/TrafficManager"
+      "../src/ResourceManagement/AppService",
+      "../src/ResourceManagement/Batch",
+      "../src/ResourceManagement/Cdn",
+      "../src/ResourceManagement/Compute",
+      "../src/ResourceManagement/Dns",
+      "../src/ResourceManagement/KeyVault",
+      "../src/ResourceManagement/Graph.RBAC",
+      "../src/ResourceManagement/Network",
+      "../src/ResourceManagement/RedisCache",
+      "../src/ResourceManagement/ResourceManager",
+      "../src/ResourceManagement/Sql",
+      "../src/ResourceManagement/Storage",
+      "../src/ResourceManagement/TrafficManager"
     ]
 }

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         static Utilities()
         {
-            LoggerMethod = Utilities.Log;
+            LoggerMethod = Console.WriteLine;
         }
 
         public static void Log(string message)

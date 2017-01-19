@@ -21,24 +21,63 @@
       "version": "1.0.0"
     },
     "NETStandard.Library": "1.6.0",
+    "SSH.NET": "2016.0.0",
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.9-preview, 3.0)",
-    "Microsoft.Azure.Management.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Graph.RBAC.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Sql.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta4-1, 2.0)",
-    "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta4-1, 2.0)",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
-    "SSH.NET": "2016.0.0",
-    "Fluent.Tests": "1.0.0-*",
+    "Microsoft.Azure.Management.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.ResourceManager.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Storage.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Compute.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Network.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Graph.RBAC.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.KeyVault.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Batch.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Sql.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Cdn.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Redis.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.AppService.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Fluent.Tests": {
+      "target": "project",
+      "type": "build"
+    },
     "ManageWebAppBasic": "1.0.0-*",
     "ManageWebAppSlots": "1.0.0-*"
   }
