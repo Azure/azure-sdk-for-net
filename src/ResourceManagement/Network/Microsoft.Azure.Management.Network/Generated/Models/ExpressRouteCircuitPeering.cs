@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'MicrosoftPeering'. Possible values include: 'AzurePublicPeering',
         /// 'AzurePrivatePeering', 'MicrosoftPeering'</param>
         /// <param name="state">The state of peering. Possible values are:
-        /// 'Disabled' and 'Enbaled'. Possible values include: 'Disabled',
+        /// 'Disabled' and 'Enabled'. Possible values include: 'Disabled',
         /// 'Enabled'</param>
         /// <param name="azureASN">The Azure ASN.</param>
         /// <param name="peerASN">The peer ASN.</param>
@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vlanId">The VLAN ID.</param>
         /// <param name="microsoftPeeringConfig">The Microsoft peering
         /// configuration.</param>
+        /// <param name="routeFilter">The reference of the RouteFilter
+        /// resource.</param>
         /// <param name="stats">Gets peering stats.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
@@ -62,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
+        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), RouteFilter routeFilter = default(RouteFilter), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PeeringType = peeringType;
@@ -76,6 +78,7 @@ namespace Microsoft.Azure.Management.Network.Models
             SharedKey = sharedKey;
             VlanId = vlanId;
             MicrosoftPeeringConfig = microsoftPeeringConfig;
+            RouteFilter = routeFilter;
             Stats = stats;
             ProvisioningState = provisioningState;
             GatewayManagerEtag = gatewayManagerEtag;
@@ -95,7 +98,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the state of peering. Possible values are: 'Disabled'
-        /// and 'Enbaled'. Possible values include: 'Disabled', 'Enabled'
+        /// and 'Enabled'. Possible values include: 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public string State { get; set; }
@@ -153,6 +156,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.microsoftPeeringConfig")]
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the RouteFilter resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeFilter")]
+        public RouteFilter RouteFilter { get; set; }
 
         /// <summary>
         /// Gets peering stats.
