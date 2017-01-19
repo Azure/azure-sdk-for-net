@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+#if NET45
 using System;
 using System.IO;
 using Microsoft.Azure.Management.DataLake.Store;
@@ -76,3 +77,4 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         }
     }
 }
+#endif
