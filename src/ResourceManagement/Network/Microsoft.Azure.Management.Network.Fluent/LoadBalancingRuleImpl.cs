@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:178F3E3CE98D4024826A091913F44F62:266824FDF79AEA8AE608736C3BC62D2D
-        internal string LoadDistribution()
+        internal LoadDistribution LoadDistribution()
         {
-            return Inner.LoadDistribution;
+            return Models.LoadDistribution.Parse(Inner.LoadDistribution);
         }
 
         ///GENMHASH:B206A6556439FF2D98365C5283836AD5:B2B11D940759A460CF199E58286B6C80
@@ -169,9 +169,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:129F1484DB6983FA49EB300EBE8BB614:4E4D7CE935C5CC210DA1EEB68CB3F817
-        internal LoadBalancingRuleImpl WithLoadDistribution (string loadDistribution)
+        internal LoadBalancingRuleImpl WithLoadDistribution (LoadDistribution loadDistribution)
         {
-            Inner.LoadDistribution = loadDistribution;
+            Inner.LoadDistribution = loadDistribution.ToString();
             return this;
         }
 
