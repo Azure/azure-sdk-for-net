@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Resource Manager Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Resource Manager management APIs.")]
 
-[assembly: AssemblyVersion("1.0.0.41")]
-[assembly: AssemblyFileVersion("1.0.0.41")]
+[assembly: AssemblyVersion("1.0.0.50")]
+[assembly: AssemblyFileVersion("1.0.0.50")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta4-1",
+  "version": "1.0.0-beta50",
   "title": "Microsoft Azure Resource Management Library",
   "description": "Provides resource group and resource management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
@@ -40,12 +40,12 @@
       },
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.Net.Http": "4.1.0",
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Threading.Tasks": "4.0.11",
-        "System.IO.FileSystem": "4.0.1"
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "System.Diagnostics.Tools": "4.3.0",
+        "System.Net.Http": "4.3.0",
+        "System.Runtime.Serialization.Primitives": "4.3.0",
+        "System.Threading.Tasks": "4.3.0",
+        "System.IO.FileSystem": "4.3.0"
       }
     },
     "netstandard1.1": {
@@ -55,8 +55,8 @@
       },
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.IO.FileSystem": "4.0.1"
+        "System.Runtime.Serialization.Primitives": "4.3.0",
+        "System.IO.FileSystem": "4.3.0"
       }
     }
   }
