@@ -4,7 +4,6 @@
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
@@ -12,45 +11,20 @@ using System.Net.Http;
 
 namespace ManageWebAppSlots
 {
-    /**
-     * Azure App Service basic sample for managing web apps.
-     *  - Create 3 web apps in 3 different regions
-     *  - Deploy to all 3 web apps
-     *  - For each of the web apps, create a staging slot
-     *  - For each of the web apps, deploy to staging slot
-     *  - For each of the web apps, auto-swap to production slot is triggered
-     *  - For each of the web apps, swap back (something goes wrong)
-     */
     public class Program
     {
         private const string SUFFIX = ".azurewebsites.net";
         private const string SLOT_NAME = "staging";
 
-        public static void Main(string[] args)
-        {
-            try
-            {
-                //=================================================================
-                // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
-
-                var azure = Azure
-                    .Configure()
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
-                    .Authenticate(credentials)
-                    .WithDefaultSubscription();
-
-                // Print selected subscription
-                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
-
-                RunSample(azure);
-            }
-            catch (Exception e)
-            {
-                Utilities.Log(e);
-            }
-        }
-
+        /**
+         * Azure App Service basic sample for managing web apps.
+         *  - Create 3 web apps in 3 different regions
+         *  - Deploy to all 3 web apps
+         *  - For each of the web apps, create a staging slot
+         *  - For each of the web apps, deploy to staging slot
+         *  - For each of the web apps, auto-swap to production slot is triggered
+         *  - For each of the web apps, swap back (something goes wrong)
+         */
         public static void RunSample(IAzure azure)
         {
             string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
@@ -111,6 +85,31 @@ namespace ManageWebAppSlots
             }
         }
 
+        public static void Main(string[] args)
+        {
+            try
+            {
+                //=================================================================
+                // Authenticate
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+
+                var azure = Azure
+                    .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .Authenticate(credentials)
+                    .WithDefaultSubscription();
+
+                // Print selected subscription
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
+
+                RunSample(azure);
+            }
+            catch (Exception e)
+            {
+                Utilities.Log(e);
+            }
+        }
+        
         private static IWebApp CreateWebApp(IAzure azure, string rgName, string appName, Region region)
         {
             var planName = SharedSettings.RandomResourceName("jplan_", 15);

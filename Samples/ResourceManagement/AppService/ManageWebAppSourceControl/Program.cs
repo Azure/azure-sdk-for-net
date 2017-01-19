@@ -5,60 +5,32 @@ using CoreFtp;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ManageWebAppSourceControl
 {
-    /**
-     * Azure App Service basic sample for managing web apps.
-     * Note: you need to have the Git command line available on your PATH. The sample makes a direct call to 'git'.
-     *  - Create 4 web apps under the same new app service plan:
-     *    - Deploy to 1 using FTP
-     *    - Deploy to 2 using local Git repository
-     *    - Deploy to 3 using a publicly available Git repository
-     *    - Deploy to 4 using a GitHub repository with continuous integration
-     */
-
     public class Program
     {
         private const string SUFFIX = ".azurewebsites.net";
 
-        public static void Main(string[] args)
-        {
-            try
-            {
-                //=================================================================
-                // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
-
-                var azure = Azure
-                    .Configure()
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
-                    .Authenticate(credentials)
-                    .WithDefaultSubscription();
-
-                // Print selected subscription
-                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
-
-                RunSample(azure);
-            }
-            catch (Exception e)
-            {
-                Utilities.Log(e);
-            }
-        }
-
+        /**
+         * Azure App Service basic sample for managing web apps.
+         * Note: you need to have the Git command line available on your PATH. The sample makes a direct call to 'git'.
+         *  - Create 4 web apps under the same new app service plan:
+         *    - Deploy to 1 using FTP
+         *    - Deploy to 2 using local Git repository
+         *    - Deploy to 3 using a publicly available Git repository
+         *    - Deploy to 4 using a GitHub repository with continuous integration
+         */
         public static void RunSample(IAzure azure)
-        {        
+        {
             string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
             string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
             string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
@@ -229,6 +201,31 @@ namespace ManageWebAppSourceControl
             }
         }
 
+        public static void Main(string[] args)
+        {
+            try
+            {
+                //=================================================================
+                // Authenticate
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+
+                var azure = Azure
+                    .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .Authenticate(credentials)
+                    .WithDefaultSubscription();
+
+                // Print selected subscription
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
+
+                RunSample(azure);
+            }
+            catch (Exception e)
+            {
+                Utilities.Log(e);
+            }
+        }
+        
         private static HttpResponseMessage CheckAddress(string url)
         {
             using (var client = new HttpClient())

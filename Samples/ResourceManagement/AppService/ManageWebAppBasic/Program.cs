@@ -10,42 +10,17 @@ using System;
 
 namespace ManageWebAppBasic
 {
-    /**
-     * Azure App Service basic sample for managing web apps.
-     *  - Create 3 web apps under the same new app service plan:
-     *    - 1, 2 are in the same resource group, 3 in a different one
-     *    - Stop and start 1, restart 2
-     *    - Add Java support to app 3
-     *  - List web apps
-     *  - Delete a web app
-     */
-
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            try
-            {
-                //=================================================================
-                // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
-
-                var azure = Azure
-                    .Configure()
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
-                    .Authenticate(credentials)
-                    .WithDefaultSubscription();
-
-                // Print selected subscription
-                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
-
-                RunSample(azure);
-            }
-            catch (Exception e)
-            {
-                Utilities.Log(e);
-            }
-        }
+        /**
+         * Azure App Service basic sample for managing web apps.
+         *  - Create 3 web apps under the same new app service plan:
+         *    - 1, 2 are in the same resource group, 3 in a different one
+         *    - Stop and start 1, restart 2
+         *    - Add Java support to app 3
+         *  - List web apps
+         *  - Delete a web app
+         */
 
         public static void RunSample(IAzure azure)
         {
@@ -173,8 +148,33 @@ namespace ManageWebAppBasic
                 }
                 catch (Exception g)
                 {
-                    Utilities.Log(g.ToString());
+                    Utilities.Log(g);
                 }
+            }
+        }
+
+        public static void Main(string[] args)
+        {
+            try
+            {
+                //=================================================================
+                // Authenticate
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+
+                var azure = Azure
+                    .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .Authenticate(credentials)
+                    .WithDefaultSubscription();
+
+                // Print selected subscription
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
+
+                RunSample(azure);
+            }
+            catch (Exception e)
+            {
+                Utilities.Log(e);
             }
         }
     }
