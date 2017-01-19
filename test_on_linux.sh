@@ -11,7 +11,7 @@ dotnet restore
 dotnet build --framework netcoreapp1.0
 dotnet test
 
-cd $rootdir/Samples/ResourceManagement/Tests
+cd $rootdir/Samples/Tests
 dotnet restore
 dotnet build --framework netcoreapp1.0
 dotnet test

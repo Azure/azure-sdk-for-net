@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Samples.Common", "ResourceManagement\Microsoft.Azure.Management.Samples.Common\Microsoft.Azure.Management.Samples.Common.xproj", "{674645AE-B061-421E-AEFF-EBC8A881635E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Common", "Common\Common.xproj", "{674645AE-B061-421E-AEFF-EBC8A881635E}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent", "..\src\ResourceManagement\Azure.Fluent\Microsoft.Azure.Management.Fluent\Microsoft.Azure.Management.Fluent.xproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
 EndProject
@@ -143,7 +143,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageSimpleApplicationGate
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1934D06C-FFF2-4BB0-A5CF-0C18A45C253D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Samples.Tests", "ResourceManagement\Tests\Samples.Tests.xproj", "{6665C8D8-40F3-4B9B-BE22-1562A4424A9B}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Samples.Tests", "Tests\Samples.Tests.xproj", "{6665C8D8-40F3-4B9B-BE22-1562A4424A9B}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Fluent.Tests", "..\src\ResourceManagement\Azure.Fluent\Fluent.Tests\Fluent.Tests.xproj", "{BF7B919F-53F0-4216-84BC-722786A3AEA0}"
 EndProject

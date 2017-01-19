@@ -79,6 +79,7 @@
       "type": "build"
     },
     "ManageWebAppBasic": "1.0.0-*",
-    "ManageWebAppSlots": "1.0.0-*"
+    "ManageWebAppSlots": "1.0.0-*",
+    "ManageWebAppSourceControl": "1.0.0-*"
   }
 }

@@ -14,7 +14,7 @@
       "src/ResourceManagement/Sql",
       "src/ResourceManagement/Storage",
       "src/ResourceManagement/TrafficManager",
-      "Samples/ResourceManagement",
+      "Samples",
       "Samples/ResourceManagement/AppService"
     ]
 }

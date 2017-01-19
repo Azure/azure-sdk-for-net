@@ -47,7 +47,7 @@
     <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
     <SamplesFolder>$(LibraryRoot)Samples</SamplesFolder>
-    <SamplesTestsFolder>$(LibraryRoot)Samples\ResourceManagement\Tests</SamplesTestsFolder>
+    <SamplesTestsFolder>$(LibraryRoot)Samples\Tests</SamplesTestsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>

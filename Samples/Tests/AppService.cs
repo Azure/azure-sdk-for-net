@@ -30,6 +30,17 @@ namespace Samples.Tests
             }
         }
 
+        [Fact]
+        [Trait("Samples", "AppService")]
+        public void ManageWebAppSourceControlTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageWebAppSourceControl.Program.RunSample(rollUpClient);
+            }
+        }
+
         [Fact(Skip = "TODO: convert to recorded tests")]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSlotsTest()
