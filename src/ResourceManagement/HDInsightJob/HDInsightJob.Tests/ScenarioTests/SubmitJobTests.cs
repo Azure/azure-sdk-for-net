@@ -44,7 +44,17 @@ namespace HDInsightJob.Tests
                 MockSupport.RunningMocked = true;
             }
 
-            var _credentials = GetAccessTokenUsingHDIADLServicePrincipal();
+            TokenCredentials _credentials = null;
+
+            if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
+            {
+                _credentials = GetAccessTokenUsingHDIADLServicePrincipal();
+            }
+            else
+            {
+                _credentials = new TokenCredentials("foo");
+            }
+
             dataLakeClient = new DataLakeStoreFileSystemManagementClient(_credentials);
         }
 
