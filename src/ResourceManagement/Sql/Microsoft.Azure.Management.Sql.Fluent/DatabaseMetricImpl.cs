@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IDatabaseMetric
     {
 
+        ///GENMHASH:3EADBB8B27E3AB4011D392CA1A677417:C0C35E00AF4E17F141675A2C05C7067B
         internal DatabaseMetricImpl(DatabaseMetric innerObject) : base(innerObject)
         {
         }
@@ -48,7 +49,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             return this.Inner.ResourceName;
         }
-
 
         ///GENMHASH:4CC577A7C618816C07F6CE452B96D1E6:BCA058B402E352FDC59FCF5FE6EA162B
         public double CurrentValue()

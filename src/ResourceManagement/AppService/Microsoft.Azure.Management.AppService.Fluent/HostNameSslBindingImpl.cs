@@ -127,6 +127,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
+        ///GENMHASH:040FCD0915B61247DC4493834E39F655:A419F25EF828A0B88F2F3CAA051C4F14
         internal HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent, AppServiceManager manager)
                     : base(inner)
         {

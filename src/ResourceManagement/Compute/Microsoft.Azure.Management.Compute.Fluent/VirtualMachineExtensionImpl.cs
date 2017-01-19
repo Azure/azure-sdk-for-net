@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;
         private IDictionary<string, object> protectedSettings;
+        ///GENMHASH:90947EC118BF5E99153E929733992E3D:2B5D1133EDB84DA652C7CF5DCF2A8534
         internal VirtualMachineExtensionImpl(string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner, IVirtualMachineExtensionsOperations client) : base(name, parent, inner)
         {
             this.client = client;
@@ -304,6 +305,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <returns>An extension will present as a reference when the parent virtual machine was fetched using</returns>
         /// <returns>VM list, a GET on a specific VM will return fully expanded extension details.</returns>
         /// <returns></p></returns>
+
         ///GENMHASH:5034C466FD077AE4C3BB0E8BB3EBEFB3:6AC48AA816918FEA6040CB47074973FD
         public bool IsReference()
         {

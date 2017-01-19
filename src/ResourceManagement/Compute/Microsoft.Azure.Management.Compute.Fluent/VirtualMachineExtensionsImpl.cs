@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="client">The client to perform REST calls on extensions.</param>
         /// <param name="parent">The parent virtual machine of the extensions.</param>
+        ///GENMHASH:5FE619A4E78C738ABAB49088366D56E9:A3B8391A0D11DA58771A04AD80F595FB
         internal VirtualMachineExtensionsImpl(IVirtualMachineExtensionsOperations client, VirtualMachineImpl parent) 
             : base(parent, "VirtualMachineExtension")
         {
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>The extension as a map indexed by name.</return>
+
         ///GENMHASH:310B2185D2F2431DF2BBDBC06E585C74:F003E4397C7BD6AC051C07C6076BF2D5
         public IDictionary<string, IVirtualMachineExtension> AsMap()
         {
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="name">The reference name of the extension to be added.</param>
         /// <return>The extension.</return>
+
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:E3D9E623E212362C450DC90E92DF3FCC
         public VirtualMachineExtensionImpl Define(string name)
         {
@@ -65,6 +68,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="name">The reference name of the extension to be updated.</param>
         /// <return>The extension.</return>
+
         ///GENMHASH:C45CF357E710B1EC18EFF0A7FCD36915:3FB710926B53C5FC505B69CE66B544B2
         public VirtualMachineExtensionImpl Update(string name)
         {
@@ -75,6 +79,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Mark the extension with given name as to be removed.
         /// </summary>
         /// <param name="name">The reference name of the extension to be removed.</param>
+
         ///GENMHASH:FC8ECF797E9AF86E82C3899A3D5C00BB:97028F0C4A32755497D72429D22C1125
         public void Remove(string name)
         {
@@ -85,6 +90,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Adds the extension to the collection.
         /// </summary>
         /// <param name="extension">The extension.</param>
+
         ///GENMHASH:A699C0E0CB5117B44B60B8BA5AB70E0D:C26A95D3106CF566351D42FA65A89642
         public void AddExtension(VirtualMachineExtensionImpl extension)
         {

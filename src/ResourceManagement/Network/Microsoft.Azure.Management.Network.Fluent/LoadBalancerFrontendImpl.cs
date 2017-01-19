@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancerPublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerPublicFrontend.Update.IUpdate
     {
+        ///GENMHASH:32D1F31BA9FAB04B1476820FFBDE1B7F:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal LoadBalancerFrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
             : base(inner, parent)
         {

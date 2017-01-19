@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// The implementation for VirtualMachines.
     /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldFZNc0ltcGw=
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVzSW1wbA==
     internal partial class VirtualMachinesImpl :
         GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl, Models.VirtualMachineInner, IVirtualMachinesOperations, IComputeManager>,
         IVirtualMachines
@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private readonly INetworkManager networkManager;
         private readonly VirtualMachineSizesImpl vmSizes;
         private readonly IVirtualMachineExtensionsOperations virtualMachineExtensionsClient;
+        ///GENMHASH:CF74C66AC4A6B06C41B8E9D08F5D5F4B:DB478B04CDDECD11BE9F5F93E71FB984
         internal VirtualMachinesImpl(IVirtualMachinesOperations client, IVirtualMachineExtensionsOperations virtualMachineExtensionsClient, IVirtualMachineSizesOperations virtualMachineSizesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) :
             base(client, computeManager)
         {

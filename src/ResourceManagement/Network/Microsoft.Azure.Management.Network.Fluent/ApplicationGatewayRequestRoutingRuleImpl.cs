@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     {
         private bool? associateWithPublicFrontend;
 
+        ///GENMHASH:BF497059E01321BD53A7DF19D85F4D8E:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayRequestRoutingRuleImpl(ApplicationGatewayRequestRoutingRuleInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }

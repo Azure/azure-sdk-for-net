@@ -16,10 +16,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private Region location;
         private ImageReference imageReference;
+        ///GENMHASH:3037DFCA1BCDE07672005B139B094F10:0578F9D5B08EF1856822AB6B7B18110E
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version)
             : base(null)
         {
             this.location = location;
+            ///GENMHASH:FD3E0F0AD8E30CCC81844784FA2869A4:5B94A718C46B69AD383734512FB0562D
             this.imageReference = new ImageReference
             {
                 Publisher = publisher,
@@ -29,6 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             };
         }
 
+        ///GENMHASH:CAB6054620B9FCCB39E850FA6DA1DC9E:D5C70E9798250262CE50A31D1767529C
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
             : base(inner)
         {
@@ -48,7 +51,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Inner.DataDiskImages;
         }
 
-        ///GENMHASH:FD3E0F0AD8E30CCC81844784FA2869A4:5B94A718C46B69AD383734512FB0562D
         public ImageReference ImageReference()
         {
             return this.imageReference;

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         INsRecordSet
     {
+
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:E6E1BF61694F9FB722424D294C6DFFA4
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
@@ -52,6 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return resource;
         }
 
+        ///GENMHASH:901E189AE86408AC3D4B4FC4B66B4701:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  NsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

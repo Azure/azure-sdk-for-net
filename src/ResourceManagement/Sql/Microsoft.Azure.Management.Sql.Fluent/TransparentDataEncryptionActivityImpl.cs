@@ -8,13 +8,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for TransparentDataEncryptionActivity.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5UcmFuc3BhcmVudERhdGFFbmNyeXB0aW9uQWN0aXZpdHlJbXBs
     internal partial class TransparentDataEncryptionActivityImpl :
         Wrapper<Models.TransparentDataEncryptionActivity>,
         ITransparentDataEncryptionActivity
     {
         private ResourceId resourceId;
 
-        ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5UcmFuc3BhcmVudERhdGFFbmNyeXB0aW9uQWN0aXZpdHlJbXBs
+        ///GENMHASH:EBE49FE507369AC7A8F4328AF938B32D:95FDB4476A86D2D89C844159139FF9F4
         internal TransparentDataEncryptionActivityImpl(TransparentDataEncryptionActivity innerObject) : base(innerObject)
         {
             this.resourceId = ResourceId.FromString(this.Inner.Id);

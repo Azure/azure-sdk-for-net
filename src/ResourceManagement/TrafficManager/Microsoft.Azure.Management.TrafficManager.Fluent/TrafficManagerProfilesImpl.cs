@@ -103,6 +103,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
                 this.Manager);
         }
 
+        ///GENMHASH:84B6E84F790DD3CF43388254CEEE3609:519A2844AD55FAC6990427C640AC9D4B
         internal  TrafficManagerProfilesImpl(ITrafficManagerManagementClient trafficManagementClient, TrafficManager trafficManager) : base(trafficManagementClient.Profiles, trafficManager)
         {
             this.endpointsClient = trafficManagementClient.Endpoints;

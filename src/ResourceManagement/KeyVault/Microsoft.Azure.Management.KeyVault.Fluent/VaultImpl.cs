@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         private IVaultsOperations client;
         private IGraphRbacManager graphRbacManager;
         private IList<AccessPolicyImpl> accessPolicies;
+        ///GENMHASH:E75D6B887F703BA75910BF996B59E45B:30C9A572991D1AB6921DBD5E8344AFAF
         internal VaultImpl (string name, VaultInner innerObject, IVaultsOperations client, IKeyVaultManager manager, IGraphRbacManager graphRbacManager)
             : base(name, innerObject, manager)
         {
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 return Inner.Properties.TenantId.ToString();
             }
         }
-        
+
         ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:DCCE63C0590230B4CFE00D1B7646DFE9
         public Sku Sku
         {
@@ -95,7 +96,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 return Inner.Properties.Sku;
             }
         }
-       
+
         ///GENMHASH:A4B5C79524255870A60CFDA07E865BBC:A881A75678053A99DDDBBD7F4D918F27
         public IList<IAccessPolicy> AccessPolicies
         {
@@ -130,7 +131,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 return Inner.Properties.EnabledForDiskEncryption.Value;
             }
         }
-        
+
         ///GENMHASH:FB8FAE6C8DE1A864EF1BD60C4764B792:D453188CD9BA7FAB6F7075EADC992BFC
         public bool EnabledForTemplateDeployment
         {
@@ -143,6 +144,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 return Inner.Properties.EnabledForTemplateDeployment.Value;
             }
         }
+
         ///GENMHASH:577E5E9CE0B513EB5189E6F44BB732C7:3949CE4CBC4994E8C88DF2E4815A8696
         public VaultImpl WithEmptyAccessPolicy ()
         {

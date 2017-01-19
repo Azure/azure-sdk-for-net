@@ -71,6 +71,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.Id;
         }
 
+        ///GENMHASH:1AB678115EC14BC6A56602D164114315:BE55E38683913BEF23106A037A3E9F1C
         internal ServiceObjectiveImpl(ServiceObjectiveInner innerObject, IServersOperations serversInner)
             : base(innerObject)
         {

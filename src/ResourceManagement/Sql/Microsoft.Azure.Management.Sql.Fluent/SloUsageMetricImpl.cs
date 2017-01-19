@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Wrapper<SloUsageMetric>,
         ISloUsageMetric
     {
+        ///GENMHASH:298C815F4D2EB576C32862C86A0F98CB:C0C35E00AF4E17F141675A2C05C7067B
         internal SloUsageMetricImpl(SloUsageMetric innerObject)
             : base(innerObject)
         {

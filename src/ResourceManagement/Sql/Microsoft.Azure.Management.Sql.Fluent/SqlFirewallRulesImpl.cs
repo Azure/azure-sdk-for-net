@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         ISqlFirewallRulesCreatable
     {
+        ///GENMHASH:94CD9D1734A2AA402A84D7B04BE4E08E:0FCD47CBCD9128C3D4A03458C5796741
         internal SqlFirewallRulesImpl(IServersOperations innerCollection, ISqlManager manager)
             : base(innerCollection, manager)
         {

@@ -51,6 +51,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Creates ProfileDnsNameUnavailableReason.
         /// </summary>
         /// <param name="value">The reason.</param>
+        ///GENMHASH:B4E5B9E5C1234A0BC22C0581DC36CF3E:030291F3BFD74EABE095743C12CD3AEA
         public  ProfileDnsNameUnavailableReason(string value)
         {
             this.value = value;

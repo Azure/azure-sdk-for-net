@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IndexableWrapper<CertificateDetailsInner>,
         ICertificateDetails
     {
+
         ///GENMHASH:1B172487E6EF67B78787A37894F473FD:8E4007E7DA9D157B87035BF90C065ED0
         public DateTime NotBefore()
         {
@@ -62,6 +63,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.NotAfter.GetValueOrDefault();
         }
 
+        ///GENMHASH:7272D744FF80A0EC280B6D4DB5A4682F:C0C35E00AF4E17F141675A2C05C7067B
         internal CertificateDetailsImpl(CertificateDetailsInner innerObject)
             : base(innerObject)
         {

@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private ICreatable<INetwork> creatableNetwork;
         private ICreatable<IPublicIpAddress> creatablePip;
 
+        ///GENMHASH:E348AD1CD59015734202262D2BA6F046:55E548B15E635A8197D52049D3FAB8D3
         internal ApplicationGatewayImpl(
             string name,
             ApplicationGatewayInner innerModel,
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()
         {
             Dictionary<string, IApplicationGatewayFrontend> publicFrontends = new Dictionary<string, IApplicationGatewayFrontend>();
+            ///GENMHASH:3BF87DE2E0C9BBAA60FEF8B345571B0D:78DEDBCE9849DD9B71BA61C7FBEA3261
             foreach (var frontend in Frontends().Values)
             {
                 if (frontend.IsPublic)
@@ -88,6 +90,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public string FrontendPortNameFromNumber(int portNumber)
         {
             string portName = null;
+            ///GENMHASH:F0126379A1F65359204BD22C7CF55E7C:BE15CAD584433DEAF8B46C62642E8728
             foreach (var portEntry in FrontendPorts())
             {
                 if (portNumber == portEntry.Value)
@@ -103,6 +106,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:F756CBB3F13EF6198269C107AED6F9A2:F819A402FF29D3234FF975971868AD05
         public ApplicationGatewayTier Tier()
         {
+            ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:43E446F640DC3345BDBD9A3378F2018A
             if (Sku() != null && Sku().Tier != null)
             {
                 return ApplicationGatewayTier.Parse(Sku().Tier);
@@ -231,7 +235,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return backends;
         }
 
-        ///GENMHASH:F0126379A1F65359204BD22C7CF55E7C:BE15CAD584433DEAF8B46C62642E8728
         public IReadOnlyDictionary<string, int> FrontendPorts()
         {
             Dictionary<string, int> ports = new Dictionary<string, int>();
@@ -275,7 +278,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
         }
 
-        ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:43E446F640DC3345BDBD9A3378F2018A
         public ApplicationGatewaySku Sku()
         {
             return Inner.Sku;
@@ -287,7 +289,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return ipConfigs;
         }
 
-        ///GENMHASH:3BF87DE2E0C9BBAA60FEF8B345571B0D:78DEDBCE9849DD9B71BA61C7FBEA3261
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> Frontends()
         {
             return frontends;
@@ -1025,6 +1026,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIpAddressId() == null)
             {
                 // If default public frontend requested but no PIP specified, create one
+                ///GENMHASH:D232B3BB0D86D13CC0B242F4000DBF07:97DF71BC11CE54F5F4736C975A273A63
                 Task pipTask = EnsureDefaultPipDefinition().CreateAsync().ContinueWith(
                     antecedent => {
                         var publicIp = antecedent.Result;
@@ -1051,6 +1053,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 // But if default IP config does not have a subnet specified, then create a default VNet
+                ///GENMHASH:378C5280A44231F5593B789FF6A1BF16:24E45B50AE0887B03C04922FC3F414DC
                 Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync().ContinueWith(antecedent =>
                 {
                     //... and assign the created VNet to the default IP config
@@ -1086,6 +1089,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="byPort">Object found by port.</param>
         /// <param name="name">The desired name of the object.</param>
         /// <return>True if already found, false if ok to create, null if conflict.</return>
+
         ///GENMHASH:644A3298215000D78F5173C9BC6F440E:9BEBC7254CB4CA864A9951088E837542
         internal bool? NeedToCreate<T>(T byName, T byPort, string name)
         {
@@ -1309,7 +1313,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return enumerator.Current;
         }
 
-        ///GENMHASH:D232B3BB0D86D13CC0B242F4000DBF07:97DF71BC11CE54F5F4736C975A273A63
         private ICreatable<IPublicIpAddress> EnsureDefaultPipDefinition()
         {
             if (creatablePip == null)
@@ -1402,7 +1405,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return ipConfig;
         }
 
-        ///GENMHASH:378C5280A44231F5593B789FF6A1BF16:24E45B50AE0887B03C04922FC3F414DC
         private ICreatable<INetwork> EnsureDefaultNetworkDefinition()
         {
             if (creatableNetwork == null)

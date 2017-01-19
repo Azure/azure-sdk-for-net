@@ -40,31 +40,37 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             return Inner.ObjectId;
         }
+
         ///GENMHASH:29024ACA1EA67366DE27F7A1B972E458:75852A31ACA71709FD61BA0195203BFF
         public string ObjectType()
         {
             return Inner.ObjectType; 
         }
+
         ///GENMHASH:EFC2DDE75F20FD4EAFECA334A50B3D22:5BCCB61C94FA98FEF1E7D90DCFADBDAC
         public string UserPrincipalName()
         {
             return Inner.UserPrincipalName;
         }
+
         ///GENMHASH:19FB5490B29F08AC39628CD5F893E975:54FC41D8034FD612C7047E2055BC6E48
         public string DisplayName()
         {
             return Inner.DisplayName;
         }
+
         ///GENMHASH:A150E806D025822AB5DF5438B386C9F2:B9161EACDBFE5F3F7DD00C6D41D6BAD9
         public string SignInName()
         {
             return Inner.SignInName;
         }
+
         ///GENMHASH:16EBDFC8CC602D680E0E32486328D684:D10E9C733A0AA33D44CE2D08891F4EBE
         public string Mail()
         {
             return Inner.Mail;
         }
+
         ///GENMHASH:EE18A3AEA61BB82949B949BE68947AEF:63DB386E96A2AED639FF5547DC1C798C
         public string MailNickname()
         {

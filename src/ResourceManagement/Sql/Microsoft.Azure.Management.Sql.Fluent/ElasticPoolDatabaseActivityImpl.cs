@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.DatabaseName;
         }
 
+        ///GENMHASH:74C9D5DC3ACFA63AE72099D3501E3D70:95FDB4476A86D2D89C844159139FF9F4
         internal ElasticPoolDatabaseActivityImpl(ElasticPoolDatabaseActivityInner innerObject) : base(innerObject)
         {
             this.resourceId = ResourceId.FromString(this.Inner.Id);

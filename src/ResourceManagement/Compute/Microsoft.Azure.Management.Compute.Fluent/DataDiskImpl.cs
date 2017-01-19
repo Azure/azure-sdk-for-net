@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     IUpdateDefinition<VirtualMachine.Update.IUpdate>,
     VirtualMachineDataDisk.Update.IUpdate
     {
+        ///GENMHASH:24F96ABA39A27B68AD45A8C3AFC1BEB0:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) : base(inner, parent)
         {
         }
@@ -126,7 +127,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             return this;
         }
-        
+
         ///GENMHASH:51D4B59B71DF10B44776B4681F73B529:D3A7D61EDBE1631F4C5B0CD3CCDF840C
         public DataDiskImpl WithLun(int lun)
         {

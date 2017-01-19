@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private ISqlDatabaseCreatable databases;
         private Region region;
 
+        ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:714B63AADC1377917C498035051A9621
         internal ISqlDatabases Databases
         {
             get
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             await this.databases.DeleteByParentAsync(this.resourceGroupName, this.sqlServerName, databaseName, cancellationToken);
         }
 
-        ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:714B63AADC1377917C498035051A9621
+        ///GENMHASH:C991D14C4C20226EA0EEFFB24D7747A7:245AF9C01FA00285C2B11293A70D2F1B
         internal DatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager, string resourceGroupName, string sqlServerName, Region region)
         {
             this.resourceGroupName = resourceGroupName;

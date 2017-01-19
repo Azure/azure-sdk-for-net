@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private INetworkSecurityGroupsOperations innerCollection;
         private IDictionary<string, INetworkSecurityRule> rules;
         private IDictionary<string, INetworkSecurityRule> defaultRules;
+        ///GENMHASH:EF8FBA50FA03F1FE4888F19050CEDBB9:55E548B15E635A8197D52049D3FAB8D3
         internal  NetworkSecurityGroupImpl(
             string name,
             NetworkSecurityGroupInner innerModel,
@@ -38,6 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         #region Helpers
+
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
         override protected Task<NetworkSecurityGroupInner> CreateInnerAsync()
         {
@@ -90,6 +92,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Public Withers
+
         ///GENMHASH:0E516034DD6EAC0154C689EE19E8DACC:3B3673F8DAFFB5EAAA6DA437C687075E
         internal NetworkSecurityRuleImpl UpdateRule (string name)
         {
@@ -119,6 +122,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Actions
+
         ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:062BFEFE0393BE2C1D9F8B1A963FDE23
         internal IList<ISubnet> ListAssociatedSubnets()
         {
@@ -135,6 +139,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Accessors
+
         ///GENMHASH:F8F85F9267133B95FDDB0B6F1F27E816:FC8B3AE517369B64F33F8DC475426F01
         internal IDictionary<string, INetworkSecurityRule> SecurityRules ()
         {

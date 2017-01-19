@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IVirtualMachinePublishers publishers;
         private IVirtualMachineImagesOperations client;
+        ///GENMHASH:ACE7DB5EC4859832FCAB3D9EEA5A3085:F45A4D9C421A9195D289FED2F4D6740A
         internal VirtualMachineImagesImpl(IVirtualMachinePublishers publishers, IVirtualMachineImagesOperations client)
         {
             this.publishers = publishers;

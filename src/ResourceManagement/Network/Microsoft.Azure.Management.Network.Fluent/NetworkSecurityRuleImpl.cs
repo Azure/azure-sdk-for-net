@@ -17,11 +17,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         NetworkSecurityRule.UpdateDefinition.IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
         NetworkSecurityRule.Update.IUpdate
     {
+        ///GENMHASH:F6CF73FF4B137FB1F39A4CF3F1978CDB:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner, parent)
         {
         }
 
         #region Accessors
+
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public override string Name()
         {
@@ -90,6 +92,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Public Withers
         #region Direction and Access
+
         ///GENMHASH:EBD9F5344656ED7BFFEC14FA40BC4C60:0E729F6D2F3925C7E3F46085CE5D9937
         internal NetworkSecurityRuleImpl AllowInbound ()
         {
@@ -120,6 +123,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Protocol
+
         ///GENMHASH:0F15C8D59C688FCCC302100A25E672D1:8E47A7551FAA8958BCB5314D0E665506
         internal NetworkSecurityRuleImpl WithProtocol (string protocol)
         {
@@ -135,6 +139,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Source Address
+
         ///GENMHASH:C1E378F412808239D4A5BB26E8D5CA12:74481C12C10AFB05A682DED5138ECA04
         internal NetworkSecurityRuleImpl FromAddress (string cidr)
         {
@@ -151,6 +156,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Source Port
+
         ///GENMHASH:26CDEE809D8919D602C63114F968DABC:88EAE031F41464BBE725DE1B7EBADFF7
         internal NetworkSecurityRuleImpl FromPort (int port)
         {
@@ -174,6 +180,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Destination Address
+
         ///GENMHASH:234D30A848ED7DBF5520AFC69AD995C7:733165F73A26B926B324E02146D2875B
         internal NetworkSecurityRuleImpl ToAddress (string cidr)
         {
@@ -190,6 +197,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Destination Port
+
         ///GENMHASH:8EE0D22E3AAADFBD66DAE5FE476E2B15:5609309CD3B8E96F439BCD8A267CB260
         internal NetworkSecurityRuleImpl ToPort (int port)
         {
@@ -213,6 +221,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Priority
+
         ///GENMHASH:6AE4B78366B0EED73067DA623DDF384C:67BE1FE1F2956D83F058540CA2267669
         internal NetworkSecurityRuleImpl WithPriority (int priority)
         {
@@ -222,6 +231,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Description
+
         ///GENMHASH:016764F09D1966D691B5DE3A7FD47AC9:5D67BF1D9DA1008F878F13C112FF5F35
         internal NetworkSecurityRuleImpl WithDescription (string description)
         {
@@ -232,6 +242,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Helpers
+
         ///GENMHASH:14771CE9D31356489E7AB40C9C8F2695:68114EBD3902CF391D25CC7FD0C082C1
         private NetworkSecurityRuleImpl WithDirection (string direction)
         {
@@ -248,6 +259,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #endregion
 
         #region Actions
+
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:5D4BF21E49789459EF95BA820BF19FF2
         internal NetworkSecurityGroupImpl Attach ()
         {

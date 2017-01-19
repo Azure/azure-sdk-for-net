@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     /// <summary>
     /// The implementation for AppServicePlan.
-    /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlSW1wbA==
+    /// </summary>    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlSW1wbA==
     internal partial class AppServiceCertificateImpl :
         GroupableResource<
             IAppServiceCertificate,
@@ -140,6 +139,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WithPfxByteArray(fileContent);
         }
 
+        ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
         internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, ICertificatesOperations client, AppServiceManager manager)
                     : base(Name, innerObject, manager)
         {

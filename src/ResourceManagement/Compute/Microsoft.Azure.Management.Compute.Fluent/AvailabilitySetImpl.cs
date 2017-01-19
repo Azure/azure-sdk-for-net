@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IAvailabilitySetsOperations client;
         private List<string> idOfVMsInSet;
 
+        ///GENMHASH:8C96B0BDC54BDF41F3FC5BCCAA028C8D:113A819FAF18DEACEC4BCC60120F8166
         internal AvailabilitySetImpl(string name, AvailabilitySetInner innerModel,
             IAvailabilitySetsOperations client,
             IComputeManager computeManager) : base(name, innerModel, computeManager)
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             idOfVMsInSet = null;
             return this;
         }
-        
+
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:031612B4E8FDCD8F07810CE8D68580BA
         public override IAvailabilitySet Refresh()
         {

@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineImagesOperations innerCollection;
         private IVirtualMachineOffer offer;
 
+        ///GENMHASH:ED50A527AC3F81E2B0A03610C839FCF2:406B910E6447842DDB38F6122DEB7673
         internal VirtualMachineSkusImpl(IVirtualMachineOffer offer, IVirtualMachineImagesOperations innerCollection)
         {
             this.offer = offer;

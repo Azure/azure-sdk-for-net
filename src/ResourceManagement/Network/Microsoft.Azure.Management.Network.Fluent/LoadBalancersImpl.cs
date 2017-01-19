@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkManager>,
         ILoadBalancers
     {
+        ///GENMHASH:DC62D974883C70D83DDB9D5F4637868C:C8672EF40558C709D72F2EABF261037D
         internal LoadBalancersImpl(NetworkManagementClient networkClient, NetworkManager networkManager)
             : base(networkClient.LoadBalancers, networkManager)
         {

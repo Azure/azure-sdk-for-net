@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this;
         }
 
+        ///GENMHASH:A6DA29F5B33635B6B2AB7A6DA20A0B2B:FC20F8BEAA0D65FFE9DA4206313524DE
         internal SqlFirewallRuleImpl(string name, ServerFirewallRuleInner innerObject, IServersOperations innerCollection)
             : base(name, innerObject)
         {
@@ -109,6 +110,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <return>The resource ID string.</return>
+
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:B4BB65C5F3DFF22971E61FCC898DE88C
         public override string Id
         {

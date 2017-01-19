@@ -97,6 +97,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.Name());
         }
 
+        ///GENMHASH:EE0BD4E72D19A69170DA4CD2D7DA10B4:271A8BBAC31D775322091915FE56A406
         internal ReplicationLinkImpl(ReplicationLinkInner innerObject, IDatabasesOperations innerCollection)
             : base(innerObject)
         {

@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
     using Resource.Fluent.Core.ChildResourceActions;
     using Resource.Fluent;
-
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTG9hZEJhbGFuY2VyUHJvYmVJbXBs
     internal partial class LoadBalancerProbeImpl :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,
@@ -20,6 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancerHttpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerHttpProbe.Update.IUpdate
     {
+        ///GENMHASH:10DF065A3AFBF3A48B39C711B19A71DB:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal LoadBalancerProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
         }

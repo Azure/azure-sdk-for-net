@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         Wrapper<Microsoft.Azure.Management.AppService.Fluent.Models.TldLegalAgreement>,
         IDomainLegalAgreement
     {
+
         ///GENMHASH:572D526CD350879469DD5291DB304490:6693A56144125388FB927D6F7E6E38C5
         public string Content()
         {
@@ -25,6 +26,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.Title;
         }
 
+        ///GENMHASH:BECE963A57EABFCEDD1F16F10621E4B7:BEEF63965B869F3B5972C1D6DFCD1A03
         internal DomainLegalAgreementImpl(TldLegalAgreement innerModel)
             : base(innerModel)
         {

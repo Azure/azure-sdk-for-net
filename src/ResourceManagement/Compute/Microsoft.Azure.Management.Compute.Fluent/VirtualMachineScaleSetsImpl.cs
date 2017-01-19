@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IVirtualMachineScaleSetVMsOperations vmInstanceClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
+        ///GENMHASH:D153EE3A7098DCC0FDE502B79387242D:20D58C6F0677BACCE2BBFE4994C6C570
         internal VirtualMachineScaleSetsImpl (
             IVirtualMachineScaleSetsOperations client,
             IVirtualMachineScaleSetVMsOperations vmInstanceClient,

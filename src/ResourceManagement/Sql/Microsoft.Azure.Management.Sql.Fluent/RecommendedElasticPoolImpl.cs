@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.resourceId.ResourceGroupName;
         }
 
+        ///GENMHASH:3C9B0CE07C64DBB8CF2AEF14E330501A:2E8B0A743655F7A17FCDF72496CA11B0
         internal RecommendedElasticPoolImpl(RecommendedElasticPoolInner innerObject,
             IDatabasesOperations databasesInner,
             IRecommendedElasticPoolsOperations recommendedElasticPoolsInner)

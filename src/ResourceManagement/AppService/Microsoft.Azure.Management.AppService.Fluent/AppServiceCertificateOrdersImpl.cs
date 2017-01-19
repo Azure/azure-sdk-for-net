@@ -20,13 +20,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             AppServiceManager>,
         IAppServiceCertificateOrders
     {
+
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public AppServiceCertificateOrderImpl Define(string name)
         {
             return WrapModel(name);
         }
 
-        ///GENMHASH:D505D44BBE5A66C92A4176DBA1DD5891:68BABEE90E833AD1BFA7F46A8C19127A
+        ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:AB5235085FE852FA939C192DC80C9EEF
         public override async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var appServiceCertificateOrderInner = await InnerCollection.GetAsync(resourceGroupName, name);
@@ -34,6 +35,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapModel(appServiceCertificateOrderInner);
         }
 
+        ///GENMHASH:FCA66BA6767E2497E23A1AF83D62F9F0:0FCD47CBCD9128C3D4A03458C5796741
         internal AppServiceCertificateOrdersImpl(IAppServiceCertificateOrdersOperations innerCollection, AppServiceManager manager)
             : base(innerCollection, manager)
         {

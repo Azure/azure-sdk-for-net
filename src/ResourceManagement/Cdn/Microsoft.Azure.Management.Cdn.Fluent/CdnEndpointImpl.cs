@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             return this.WithOrigin("origin", hostname);
         }
-		
+
         ///GENMHASH:18D91A64C4BA864D24E2DE4DD2523297:08F121BA4E95C8CA8A60DE2B6D8A259A
         public CdnEndpointImpl WithQueryStringCachingBehavior(QueryStringCachingBehavior cachingBehavior)
         {
@@ -510,6 +510,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     this.Inner.IsCompressionEnabled.Value : false;
         }
 
+        ///GENMHASH:D3FBCD749DB493DA3ADF137746D72E03:9DBDBE523213D7A819804C9FDF7A21BF
         internal CdnEndpointImpl(
             string name,
             CdnProfileImpl parent,
@@ -543,7 +544,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             this.Inner.OriginPath = originPath;
             return this;
         }
-		
+
         ///GENMHASH:79A840C9F24220C8EF02C0B73BAD3C0F:3586CFD7AEFDBFA89168B9EFC6A2C18C
         private GeoFilter CreateGeoFiltersObject(string relativePath, GeoFilterActions action)
         {

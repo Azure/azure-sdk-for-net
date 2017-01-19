@@ -86,6 +86,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.resourceId.ResourceGroupName;
         }
 
+        ///GENMHASH:51288492BC30C9FE517ADAF1E48564C7:A677B0C455E56513C192E43F117D71E1
         internal ServiceTierAdvisorImpl(ServiceTierAdvisorInner innerObject, IDatabasesOperations databasesInner)
             : base(innerObject)
         {

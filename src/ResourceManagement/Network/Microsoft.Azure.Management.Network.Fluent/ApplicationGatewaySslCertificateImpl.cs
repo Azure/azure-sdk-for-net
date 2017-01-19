@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewaySslCertificate.Update.IUpdate
     {
+        ///GENMHASH:10A46E6A29805F84C3DCA9670AF5A0BC:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewaySslCertificateImpl(ApplicationGatewaySslCertificateInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }

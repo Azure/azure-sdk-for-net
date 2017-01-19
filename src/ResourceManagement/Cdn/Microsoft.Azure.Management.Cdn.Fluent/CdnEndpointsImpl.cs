@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         private IEndpointsOperations client;
         private IOriginsOperations originsClient;
         private ICustomDomainsOperations customDomainsClient;
+
         ///GENMHASH:6A122C62EB559D6E6E53725061B422FB:8A24BA59C4D80CD9D76FF994C7632585
         protected override IList<Microsoft.Azure.Management.Cdn.Fluent.CdnEndpointImpl> ListChildResources()
         {
@@ -52,6 +53,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Adds the endpoint to the collection.
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
+
         ///GENMHASH:139ABD17A00CA3DF7EF66D0D82CA9A22:31C08CE442572994D91AB64D5DB46CB3
         public void AddEndpoint(CdnEndpointImpl endpoint)
         {
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         /// <return>The azure endpoints as a map indexed by name.</return>
+
         ///GENMHASH:B9E22CF70550E9F6850854C8E614BD8A:0B2B1F221703C7AE9B8FCB1CA33B02DE
         internal IReadOnlyDictionary<string,Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint> EndpointsAsMap()
         {
@@ -85,6 +88,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this.PrepareUpdate(name);
         }
 
+        ///GENMHASH:0E17135F576ED293506D3C5D4AB3CC33:0A9C82E8F2ECF2EDFD1BDEA306B57C31
         internal  CdnEndpointsImpl(
             IEndpointsOperations client, 
             IOriginsOperations originsClient, 
@@ -168,6 +172,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Mark the endpoint with given name as to be removed.
         /// </summary>
         /// <param name="name">The name of the endpoint to be removed.</param>
+
         ///GENMHASH:FC8ECF797E9AF86E82C3899A3D5C00BB:97028F0C4A32755497D72429D22C1125
         public void Remove(string name)
         {

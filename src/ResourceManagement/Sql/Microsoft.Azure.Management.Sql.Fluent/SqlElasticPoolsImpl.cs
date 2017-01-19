@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private IDatabasesOperations databasesInner;
         private DatabasesImpl databasesImpl;
 
+        ///GENMHASH:6158E90616ED656250810DD9EA3AF43D:FC3289EBFE181908C7E255B60F92AE02
         internal SqlElasticPoolsImpl(IElasticPoolsOperations innerCollection, ISqlManager manager, IDatabasesOperations databasesInner, DatabasesImpl databasesImpl)
             : base(innerCollection, manager)
         {

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         private IDeploymentSlots deploymentSlots;
         private AppServicePlanImpl appServicePlan;
-        
+
         ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:66A6C8EDFAA0E618EA9FC53E296A637E
         internal override async Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -249,6 +249,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             client.Start(ResourceGroupName, Name);
         }
 
+        ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
         internal WebAppImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, configObject, client, manager, serviceClient)
         {

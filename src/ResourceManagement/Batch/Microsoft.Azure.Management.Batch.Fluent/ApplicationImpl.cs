@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         private IApplicationOperations client;
         private ApplicationPackagesImpl applicationPackages;
 
+        ///GENMHASH:E599FB9EB31E9A9D449368FB30F00A12:AE61E46F25E32E41F3889C4B879C0A37
         internal ApplicationImpl(string name,
             BatchAccountImpl batchAccount,
             ApplicationInner inner,
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             applicationPackages = new ApplicationPackagesImpl(applicationPackagesClient, this);
         }
 
-        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
+///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
 public string Id
         {
             get

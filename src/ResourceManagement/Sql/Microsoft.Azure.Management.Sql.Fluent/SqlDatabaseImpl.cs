@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.Edition;
         }
 
-        ///GENMHASH:F046F9D4961504E7A52F5995CDC5EE6D:67E0D89B9ED5BC9ECD83BA032F54BCDD
+        ///GENMHASH:7B6933FD706B12808B9D39A178094149:67E0D89B9ED5BC9ECD83BA032F54BCDD
         public ISqlWarehouse AsWarehouse()
         {
             if (this.IsDataWarehouse())
@@ -102,7 +102,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.WithExistingElasticPool(sqlElasticPool.Name);
         }
 
-        ///GENMHASH:CABEF6AACFE4EF17DB8E66C804F54F4A:40A980295F5EA8FF8304DA8C06E899BF
         public SqlDatabaseImpl WithoutSourceDatabaseId()
         {
             return this;
@@ -288,6 +287,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.ServiceLevelObjective;
         }
 
+        ///GENMHASH:0F0FD44A3D87F875885456FD45CEE6DF:FC20F8BEAA0D65FFE9DA4206313524DE
         internal SqlDatabaseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection)
                : base(name, innerObject)
         {

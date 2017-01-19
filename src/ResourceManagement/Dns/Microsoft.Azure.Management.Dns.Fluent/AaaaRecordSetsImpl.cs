@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.GetByNameAsync(name, CancellationToken.None).Result;
         }
 
+        ///GENMHASH:DA1A37E97601F129EF3AF921419B0A9C:93DD647D9AB0DB30D017785882D88829
         internal  AaaaRecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
         {
             this.dnsZone = dnsZone;

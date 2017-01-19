@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     {
         private IApplicationPackageOperations client;
 
+        ///GENMHASH:5ABE0C6DFAB9C84B944D4C1A59824C2F:6759EA313F94C96A4A66A7653ACEA8F0
         internal ApplicationPackageImpl(string name, ApplicationImpl parent, ApplicationPackageInner inner, IApplicationPackageOperations client)
             : base(name, parent, inner)
         {
@@ -121,6 +122,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1A5A27E52191D0AB303947147157C578
         public IApplicationPackage Refresh()
         {
+            ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:583937857C93CEEDEFD65D6B38E46ADD
             ApplicationPackageInner inner = client.Get(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name());
             SetInner(inner);
             return this;

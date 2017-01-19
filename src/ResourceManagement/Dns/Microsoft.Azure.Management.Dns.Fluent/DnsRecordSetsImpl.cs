@@ -58,6 +58,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="client">The client to perform REST calls on record sets.</param>
         /// <param name="parent">The parent Dns zone of the record set.</param>
+        ///GENMHASH:F9E2D3727D66DFA1253AB4BD2195C4B1:824964281DB07BCB6FFFF714E2A80FA0
         internal  DnsRecordSetsImpl(IRecordSetsOperations client, DnsZoneImpl parent) : base(parent, "RecordSet")
         {
             this.client = client;

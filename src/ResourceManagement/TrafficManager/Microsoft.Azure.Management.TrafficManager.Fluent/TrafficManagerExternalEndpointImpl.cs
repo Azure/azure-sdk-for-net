@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         TrafficManagerEndpointImpl,
         ITrafficManagerExternalEndpoint
     {
+
         ///GENMHASH:FE4BD2ACA7E297312697D10EB6E88C35:F1D888A0B0ADA9B0BB01B024FD2C692B
         public Region SourceTrafficLocation()
         {
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return Inner.Target;
         }
 
+        ///GENMHASH:3D7D84BE9718103D55B181E59FCB60F7:2682BD2661D3A018D6E09706819D354F
         internal  TrafficManagerExternalEndpointImpl(string name, TrafficManagerProfileImpl parent, EndpointInner inner, IEndpointsOperations client) : base(name, parent, inner, client)
         {
         }
