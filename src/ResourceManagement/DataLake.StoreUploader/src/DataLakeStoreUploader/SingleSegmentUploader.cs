@@ -15,6 +15,7 @@
 // 
 
 using Microsoft.Azure.Management.DataLake.Store.Models;
+using Microsoft.Rest;
 using System;
 using System.IO;
 using System.Text;
@@ -44,7 +45,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private readonly CancellationToken _token;
         private UploadSegmentMetadata _segmentMetadata;
         private UploadMetadata _metadata;
-
         #endregion
 
         #region Constructor
@@ -104,7 +104,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (!File.Exists(_metadata.InputFilePath))
             {
-                throw new FileNotFoundException("Unable to locate input file", _metadata.InputFilePath);
+                var ex = new FileNotFoundException("Unable to locate input file", _metadata.InputFilePath);
+                TracingHelper.LogError(ex);
+
+                throw ex;
             }
 
             if (_token.IsCancellationRequested)
@@ -118,7 +121,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 long endPosition = _segmentMetadata.Offset + _segmentMetadata.Length;
                 if (endPosition > inputStream.Length)
                 {
-                    throw new InvalidOperationException("StartOffset+UploadLength is beyond the end of the input file");
+                    var ex = new InvalidOperationException("StartOffset+UploadLength is beyond the end of the input file");
+                    TracingHelper.LogError(ex);
+
+                    throw ex;
                 }
 
                 UploadSegmentContents(inputStream, endPosition);
@@ -146,21 +152,31 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     remoteLength = _frontEnd.GetStreamLength(_segmentMetadata.Path, _metadata.IsDownload);
                     break;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     _token.ThrowIfCancellationRequested();
                     if (retryCount >= MaxBufferUploadAttemptCount)
                     {
-                        throw;
+                        TracingHelper.LogError(e);
+
+                        throw e;
                     }
 
-                    WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
+                    var waitTime= WaitForRetry(retryCount, this.UseBackOffRetryStrategy, _token);
+                    TracingHelper.LogInfo("VerifyUploadedStream: GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                        _segmentMetadata.Path,
+                        retryCount,
+                        e,
+                        waitTime);
                 }
             }
 
             if (_segmentMetadata.Length != remoteLength)
             {
-                throw new UploadFailedException(string.Format("Post-upload stream verification failed: target stream has a length of {0}, expected {1}", remoteLength, _segmentMetadata.Length));
+                var ex = new UploadFailedException(string.Format("Post-upload stream verification failed: target stream has a length of {0}, expected {1}", remoteLength, _segmentMetadata.Length));
+                TracingHelper.LogError(ex);
+
+                throw ex;
             }
         }
 
@@ -223,7 +239,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             int uploadCutoff = StringExtensions.FindNewline(buffer, bufferDataLength - 1, bufferDataLength, true, encoding, _metadata.Delimiter) + 1;
             if (uploadCutoff <= 0 && (_metadata.SegmentCount > 1 || bufferDataLength >= MaxRecordLength))
             {
-                throw new UploadFailedException(string.Format("Found a record that exceeds the maximum allowed record length around offset {0}", inputStream.Position));
+                var ex = new UploadFailedException(string.Format("Found a record that exceeds the maximum allowed record length around offset {0}", inputStream.Position));
+                TracingHelper.LogError(ex);
+
+                throw ex;
             }
 
             //a corner case here is when the newline is 2 chars long, and the first of those lands on the last byte of the buffer. If so, let's try to find another 
@@ -289,11 +308,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             if (attemptCount >= MaxBufferUploadAttemptCount)
                             {
                                 ReportProgress(targetStreamOffset, true);
+                                TracingHelper.LogError(e);
+
                                 throw e;
                             }
                             else
                             {
-                                WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                
+                                var waitTime= WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                    targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                    _segmentMetadata.Path,
+                                    attemptCount,
+                                    e,
+                                    waitTime);
                             }
                         }
                     }
@@ -303,11 +331,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         if (attemptCount >= MaxBufferUploadAttemptCount)
                         {
                             ReportProgress(targetStreamOffset, true);
+                            TracingHelper.LogError(e);
+
                             throw e;
                         }
                         else
                         {
-                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                _segmentMetadata.Path,
+                                attemptCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -326,11 +362,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         if (attemptCount >= MaxBufferUploadAttemptCount)
                         {
                             ReportProgress(targetStreamOffset, true);
+                            TracingHelper.LogError(e);
+
                             throw e;
                         }
                         else
                         {
-                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                                targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                                _segmentMetadata.Path,
+                                attemptCount,
+                                e,
+                                waitTime);
                         }
                     }
                 }
@@ -340,11 +384,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     if (attemptCount >= MaxBufferUploadAttemptCount)
                     {
                         ReportProgress(targetStreamOffset, true);
+                        TracingHelper.LogError(ex);
+
                         throw ex;
                     }
                     else
                     {
-                        WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                        var waitTime = WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                        TracingHelper.LogInfo("{0} at path:{1} failed on try: {2} with exception: {3}. Wait time in ms before retry: {4}",
+                            targetStreamOffset == 0 ? "CREATE" : "APPEND",
+                            _segmentMetadata.Path,
+                            attemptCount,
+                            ex,
+                            waitTime);
                     }
                 }
             }
@@ -388,13 +440,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// Waits for retry.
         /// </summary>
         /// <param name="attemptCount">The attempt count.</param>
-        internal static void WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
+        internal static int WaitForRetry(int attemptCount, bool useBackOffRetryStrategy, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             if (!useBackOffRetryStrategy)
             {
                 //no need to wait
-                return;
+                return -1;
             }
 
             int intervalMs = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount)) * 1000;
@@ -403,6 +455,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             var randomMS = new Random();
             intervalMs += randomMS.Next((int)Math.Ceiling(intervalMs * .1));
             Thread.Sleep(TimeSpan.FromMilliseconds(intervalMs));
+            return intervalMs;
         }
 
         /// <summary>

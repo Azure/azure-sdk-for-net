@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+using Microsoft.Rest;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -37,7 +38,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private readonly int _maxThreadCount;
         private readonly IProgress<SegmentUploadProgress> _progressTracker;
         private readonly CancellationToken _token;
-
         #endregion
 
         #region Constructor
@@ -116,7 +116,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // aggregate any exceptions and throw them back at our caller
             if (exceptions.Count > 0 && !_token.IsCancellationRequested)
             {
-                throw new AggregateException("One or more segments could not be downloaded. Review the Download Metadata to determine which segments failed", exceptions);
+                var ex = new AggregateException("One or more segments could not be downloaded. Review the Download Metadata to determine which segments failed", exceptions);
+                TracingHelper.LogError(ex);
+
+                throw ex;
             }
 
             // Finally, throw the cancellation exception if the task was actually cancelled.
@@ -195,11 +198,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 //if we reach this point, the download was successful; mark it as such 
                 UpdateSegmentMetadataStatus(metadata, segmentNumber, SegmentUploadStatus.Complete);
             }
-            catch
+            catch(Exception ex)
             {
                 //something horrible happened, mark the segment as failed and throw the original exception (the caller will handle it)
                 UpdateSegmentMetadataStatus(metadata, segmentNumber, SegmentUploadStatus.Failed);
-                throw;
+                TracingHelper.LogError(ex);
+
+                throw ex;
             }
         }
 

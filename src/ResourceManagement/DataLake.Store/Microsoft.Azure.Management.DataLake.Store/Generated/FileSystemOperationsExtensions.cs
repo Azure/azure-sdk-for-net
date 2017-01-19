@@ -26,12 +26,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class FileSystemOperationsExtensions
     {
             /// <summary>
-            /// Appends to the specified file. This method supports multiple concurrent
-            /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
-            /// CANNOT be used interchangeably; once a file has been appended to using
-            /// either of these append options, it can only be appended to using that
-            /// append option. ConcurrentAppend DOES NOT guarantee order and can result in
-            /// duplicated data landing in the target file.
+            /// Appends to the specified file, optionally first creating the file if it
+            /// does not yet exist. This method supports multiple concurrent appends to the
+            /// file. NOTE: The target must not contain data added by Create or normal
+            /// (serial) Append. ConcurrentAppend and Append cannot be used
+            /// interchangeably; once a target file has been modified using either of these
+            /// append options, the other append option cannot be used on the target file.
+            /// ConcurrentAppend does not guarantee order and can result in duplicated data
+            /// landing in the target file.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,16 +62,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void ConcurrentAppend(this IFileSystemOperations operations, string accountName, string filePath, Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), SyncFlag? syncFlag = default(SyncFlag?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(accountName, filePath, streamContents, appendMode, syncFlag), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.ConcurrentAppendAsync(accountName, filePath, streamContents, appendMode, syncFlag).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Appends to the specified file. This method supports multiple concurrent
-            /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
-            /// CANNOT be used interchangeably; once a file has been appended to using
-            /// either of these append options, it can only be appended to using that
-            /// append option. ConcurrentAppend DOES NOT guarantee order and can result in
-            /// duplicated data landing in the target file.
+            /// Appends to the specified file, optionally first creating the file if it
+            /// does not yet exist. This method supports multiple concurrent appends to the
+            /// file. NOTE: The target must not contain data added by Create or normal
+            /// (serial) Append. ConcurrentAppend and Append cannot be used
+            /// interchangeably; once a target file has been modified using either of these
+            /// append options, the other append option cannot be used on the target file.
+            /// ConcurrentAppend does not guarantee order and can result in duplicated data
+            /// landing in the target file.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -134,7 +138,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetFileExpiry(this IFileSystemOperations operations, string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetFileExpiryAsync(accountName, filePath, expiryOption, expireTime), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.SetFileExpiryAsync(accountName, filePath, expiryOption, expireTime).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -192,7 +196,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void CheckAccess(this IFileSystemOperations operations, string accountName, string path, string fsaction = default(string))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CheckAccessAsync(accountName, path, fsaction), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.CheckAccessAsync(accountName, path, fsaction).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -234,7 +238,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileOperationResult Mkdirs(this IFileSystemOperations operations, string accountName, string path)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).MkdirsAsync(accountName, path), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.MkdirsAsync(accountName, path).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -280,7 +284,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Concat(this IFileSystemOperations operations, string accountName, string destinationPath, IList<string> sources)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcatAsync(accountName, destinationPath, sources), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.ConcatAsync(accountName, destinationPath, sources).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,7 +344,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void MsConcat(this IFileSystemOperations operations, string accountName, string msConcatDestinationPath, Stream streamContents, bool? deleteSourceDirectory = default(bool?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(accountName, msConcatDestinationPath, streamContents, deleteSourceDirectory), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.MsConcatAsync(accountName, msConcatDestinationPath, streamContents, deleteSourceDirectory).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -409,7 +413,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileStatusesResult ListFileStatus(this IFileSystemOperations operations, string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(accountName, listFilePath, listSize, listAfter, listBefore), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListFileStatusAsync(accountName, listFilePath, listSize, listAfter, listBefore).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -465,7 +469,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static ContentSummaryResult GetContentSummary(this IFileSystemOperations operations, string accountName, string getContentSummaryFilePath)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetContentSummaryAsync(accountName, getContentSummaryFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetContentSummaryAsync(accountName, getContentSummaryFilePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -507,7 +511,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileStatusResult GetFileStatus(this IFileSystemOperations operations, string accountName, string getFilePath)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileStatusAsync(accountName, getFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetFileStatusAsync(accountName, getFilePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -535,12 +539,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Appends to the specified file. This method does not support multiple
-            /// concurrent appends to the file. NOTE: Concurrent append and normal (serial)
-            /// append CANNOT be used interchangeably. Once a file has been appended to
-            /// using either append option, it can only be appended to using that append
-            /// option. Use the ConcurrentAppend option if you would like support for
-            /// concurrent appends.
+            /// Appends to the specified file. NOTE: The target must not contain data added
+            /// by ConcurrentAppend. ConcurrentAppend and Append cannot be used
+            /// interchangeably; once a target file has been modified using either of these
+            /// append options, the other append option cannot be used on the target file.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -568,16 +570,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Append(this IFileSystemOperations operations, string accountName, string directFilePath, Stream streamContents, long? offset = default(long?), SyncFlag? syncFlag = default(SyncFlag?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents, offset, syncFlag), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.AppendAsync(accountName, directFilePath, streamContents, offset, syncFlag).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Appends to the specified file. This method does not support multiple
-            /// concurrent appends to the file. NOTE: Concurrent append and normal (serial)
-            /// append CANNOT be used interchangeably. Once a file has been appended to
-            /// using either append option, it can only be appended to using that append
-            /// option. Use the ConcurrentAppend option if you would like support for
-            /// concurrent appends.
+            /// Appends to the specified file. NOTE: The target must not contain data added
+            /// by ConcurrentAppend. ConcurrentAppend and Append cannot be used
+            /// interchangeably; once a target file has been modified using either of these
+            /// append options, the other append option cannot be used on the target file.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -612,7 +612,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Creates a file with optionally specified content.
+            /// Creates a file with optionally specified content. NOTE: If content is
+            /// provided, the resulting file cannot be modified using ConcurrentAppend.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -639,11 +640,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Create(this IFileSystemOperations operations, string accountName, string directFilePath, Stream streamContents = default(Stream), bool? overwrite = default(bool?), SyncFlag? syncFlag = default(SyncFlag?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateAsync(accountName, directFilePath, streamContents, overwrite, syncFlag), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.CreateAsync(accountName, directFilePath, streamContents, overwrite, syncFlag).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a file with optionally specified content.
+            /// Creates a file with optionally specified content. NOTE: If content is
+            /// provided, the resulting file cannot be modified using ConcurrentAppend.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -697,7 +699,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static Stream Open(this IFileSystemOperations operations, string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).OpenAsync(accountName, directFilePath, length, offset), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.OpenAsync(accountName, directFilePath, length, offset).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -748,7 +750,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetAcl(this IFileSystemOperations operations, string accountName, string setAclFilePath, string aclspec)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetAclAsync(accountName, setAclFilePath, aclspec), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.SetAclAsync(accountName, setAclFilePath, aclspec).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -795,7 +797,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void ModifyAclEntries(this IFileSystemOperations operations, string accountName, string modifyAclFilePath, string aclspec)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ModifyAclEntriesAsync(accountName, modifyAclFilePath, aclspec), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.ModifyAclEntriesAsync(accountName, modifyAclFilePath, aclspec).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -842,7 +844,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void RemoveAclEntries(this IFileSystemOperations operations, string accountName, string removeAclFilePath, string aclspec)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclEntriesAsync(accountName, removeAclFilePath, aclspec), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.RemoveAclEntriesAsync(accountName, removeAclFilePath, aclspec).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -886,7 +888,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void RemoveDefaultAcl(this IFileSystemOperations operations, string accountName, string defaultAclFilePath)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveDefaultAclAsync(accountName, defaultAclFilePath), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.RemoveDefaultAclAsync(accountName, defaultAclFilePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -927,7 +929,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void RemoveAcl(this IFileSystemOperations operations, string accountName, string aclFilePath)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(accountName, aclFilePath), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.RemoveAclAsync(accountName, aclFilePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -967,7 +969,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static AclStatusResult GetAclStatus(this IFileSystemOperations operations, string accountName, string aclFilePath)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetAclStatusAsync(accountName, aclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAclStatusAsync(accountName, aclFilePath).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1012,7 +1014,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileOperationResult Delete(this IFileSystemOperations operations, string accountName, string filePath, bool? recursive = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DeleteAsync(accountName, filePath, recursive), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.DeleteAsync(accountName, filePath, recursive).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1060,7 +1062,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileOperationResult Rename(this IFileSystemOperations operations, string accountName, string renameFilePath, string destination)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).RenameAsync(accountName, renameFilePath, destination), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.RenameAsync(accountName, renameFilePath, destination).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1113,7 +1115,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetOwner(this IFileSystemOperations operations, string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetOwnerAsync(accountName, setOwnerFilePath, owner, group), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.SetOwnerAsync(accountName, setOwnerFilePath, owner, group).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1164,7 +1166,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetPermission(this IFileSystemOperations operations, string accountName, string setPermissionFilePath, string permission = default(string))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetPermissionAsync(accountName, setPermissionFilePath, permission), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.SetPermissionAsync(accountName, setPermissionFilePath, permission).GetAwaiter().GetResult();
             }
 
             /// <summary>

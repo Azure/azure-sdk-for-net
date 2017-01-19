@@ -52,7 +52,8 @@ namespace DataLakeStore.Tests
                             {
                                 Type = EncryptionConfigType.ServiceManaged
                             },
-                            EncryptionState = EncryptionState.Enabled
+                            EncryptionState = EncryptionState.Enabled,
+                            NewTier = TierType.Commitment1TB
                         });
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
@@ -69,6 +70,8 @@ namespace DataLakeStore.Tests
                 Assert.Equal(commonData.Location, responseGet.Location);
                 Assert.Equal(commonData.DataLakeStoreAccountName, responseGet.Name);
                 Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.Type);
+                Assert.Equal(TierType.Commitment1TB, responseGet.CurrentTier);
+                Assert.Equal(TierType.Commitment1TB, responseGet.NewTier);
 
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -103,7 +106,8 @@ namespace DataLakeStore.Tests
                     Tags = new Dictionary<string, string>
                     {
                         {"updatedKey", "updatedValue"}
-                    }
+                    },
+                    NewTier = TierType.Consumption
                 });
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, updateResponse.ProvisioningState);
@@ -119,11 +123,16 @@ namespace DataLakeStore.Tests
                 // verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
                 Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
 
+                Assert.Equal(TierType.Commitment1TB, updateResponseGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
+
                 // Create another account and ensure that list account returns both
                 var accountToChange = updateResponseGet;
                 var newAcctName = accountToChange.Name + "acct2";
-
-                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, accountToChange);
+                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, new DataLakeStoreAccount
+                {
+                    Location = accountToChange.Location
+                });
 
                 var listResponse = clientToUse.Account.List();
 

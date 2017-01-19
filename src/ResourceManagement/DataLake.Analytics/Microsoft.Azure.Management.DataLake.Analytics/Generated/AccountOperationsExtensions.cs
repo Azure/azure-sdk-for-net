@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<DataLakeAnalyticsAccount> ListByResourceGroup(this IAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<DataLakeAnalyticsAccount> List(this IAccountOperations operations, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListAsync(odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static DataLakeAnalyticsAccount Get(this IAccountOperations operations, string resourceGroupName, string accountName)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void Delete(this IAccountOperations operations, string resourceGroupName, string accountName)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).DeleteAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static DataLakeAnalyticsAccount Create(this IAccountOperations operations, string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).CreateAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static DataLakeAnalyticsAccount Update(this IAccountOperations operations, string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).UpdateAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void BeginDelete(this IAccountOperations operations, string resourceGroupName, string accountName)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).BeginDeleteAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static DataLakeAnalyticsAccount BeginCreate(this IAccountOperations operations, string resourceGroupName, string accountName, DataLakeAnalyticsAccount parameters)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).BeginCreateAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static DataLakeAnalyticsAccount BeginUpdate(this IAccountOperations operations, string resourceGroupName, string accountName, DataLakeAnalyticsAccountUpdateParameters parameters = default(DataLakeAnalyticsAccountUpdateParameters))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).BeginUpdateAsync(resourceGroupName, accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<DataLakeAnalyticsAccount> ListByResourceGroupNext(this IAccountOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<DataLakeAnalyticsAccount> ListNext(this IAccountOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

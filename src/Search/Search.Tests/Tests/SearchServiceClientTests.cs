@@ -46,6 +46,20 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void IndexClientHasSameTimeoutAsSearchClient()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+                serviceClient.HttpClient.Timeout = TimeSpan.FromMinutes(30);
+
+                SearchIndexClient indexClient = (SearchIndexClient)serviceClient.Indexes.GetClient("test");
+
+                Assert.Equal(serviceClient.HttpClient.Timeout, indexClient.HttpClient.Timeout);
+            });
+        }
+
+        [Fact]
         public void CanGetAnIndexClientAfterUsingServiceClient()
         {
             Run(() =>

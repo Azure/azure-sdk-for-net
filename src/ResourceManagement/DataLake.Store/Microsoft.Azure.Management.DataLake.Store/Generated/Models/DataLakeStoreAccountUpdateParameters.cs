@@ -52,12 +52,17 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// re-enabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="defaultGroup">the default owner group for all new
         /// folders and files created in the Data Lake Store account.</param>
-        public DataLakeStoreAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FirewallState? firewallState = default(FirewallState?), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), string defaultGroup = default(string))
+        /// <param name="newTier">the commitment tier to use for next month.
+        /// Possible values include: 'Consumption', 'Commitment_1TB',
+        /// 'Commitment_10TB', 'Commitment_100TB', 'Commitment_500TB',
+        /// 'Commitment_1PB', 'Commitment_5PB'</param>
+        public DataLakeStoreAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FirewallState? firewallState = default(FirewallState?), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), string defaultGroup = default(string), TierType? newTier = default(TierType?))
         {
             Tags = tags;
             FirewallState = firewallState;
             TrustedIdProviderState = trustedIdProviderState;
             DefaultGroup = defaultGroup;
+            NewTier = newTier;
         }
 
         /// <summary>
@@ -91,6 +96,15 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultGroup")]
         public string DefaultGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets the commitment tier to use for next month. Possible
+        /// values include: 'Consumption', 'Commitment_1TB', 'Commitment_10TB',
+        /// 'Commitment_100TB', 'Commitment_500TB', 'Commitment_1PB',
+        /// 'Commitment_5PB'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.newTier")]
+        public TierType? NewTier { get; set; }
 
     }
 }

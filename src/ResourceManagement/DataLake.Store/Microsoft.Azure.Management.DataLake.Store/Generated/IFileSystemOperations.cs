@@ -26,11 +26,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public partial interface IFileSystemOperations
     {
         /// <summary>
-        /// Appends to the specified file. This method supports multiple
-        /// concurrent appends to the file. NOTE: ConcurrentAppend and normal
-        /// (serial) Append CANNOT be used interchangeably; once a file has
-        /// been appended to using either of these append options, it can only
-        /// be appended to using that append option. ConcurrentAppend DOES NOT
+        /// Appends to the specified file, optionally first creating the file
+        /// if it does not yet exist. This method supports multiple concurrent
+        /// appends to the file. NOTE: The target must not contain data added
+        /// by Create or normal (serial) Append. ConcurrentAppend and Append
+        /// cannot be used interchangeably; once a target file has been
+        /// modified using either of these append options, the other append
+        /// option cannot be used on the target file. ConcurrentAppend does not
         /// guarantee order and can result in duplicated data landing in the
         /// target file.
         /// </summary>
@@ -338,12 +340,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </exception>
         Task<AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string accountName, string getFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Appends to the specified file. This method does not support
-        /// multiple concurrent appends to the file. NOTE: Concurrent append
-        /// and normal (serial) append CANNOT be used interchangeably. Once a
-        /// file has been appended to using either append option, it can only
-        /// be appended to using that append option. Use the ConcurrentAppend
-        /// option if you would like support for concurrent appends.
+        /// Appends to the specified file. NOTE: The target must not contain
+        /// data added by ConcurrentAppend. ConcurrentAppend and Append cannot
+        /// be used interchangeably; once a target file has been modified using
+        /// either of these append options, the other append option cannot be
+        /// used on the target file.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations
@@ -382,7 +383,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </exception>
         Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, Stream streamContents, long? offset = default(long?), SyncFlag? syncFlag = default(SyncFlag?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a file with optionally specified content.
+        /// Creates a file with optionally specified content. NOTE: If content
+        /// is provided, the resulting file cannot be modified using
+        /// ConcurrentAppend.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations

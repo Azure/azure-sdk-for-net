@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="innerError">the inner error of this specific job error
         /// message, if any.</param>
         /// <param name="severity">the severity level of the failure. Possible
-        /// values include: 'Warning', 'Error', 'Info'</param>
+        /// values include: 'Warning', 'Error', 'Info', 'SevereWarning',
+        /// 'Deprecated', 'UserWarning'</param>
         /// <param name="source">the ultimate source of the failure (usually
         /// either SYSTEM or USER).</param>
         /// <param name="startOffset">the start offset in the job where the
@@ -149,7 +150,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
-        /// 'Warning', 'Error', 'Info'
+        /// 'Warning', 'Error', 'Info', 'SevereWarning', 'Deprecated',
+        /// 'UserWarning'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public SeverityTypes? Severity { get; protected set; }

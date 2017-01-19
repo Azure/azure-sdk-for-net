@@ -75,7 +75,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// time.</param>
         /// <param name="endpoint">the full CName endpoint for this
         /// account.</param>
-        public DataLakeAnalyticsAccount(string location, string defaultDataLakeStoreAccount, IList<DataLakeStoreAccountInfo> dataLakeStoreAccounts, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? systemMaxJobCount = default(int?), IList<StorageAccountInfo> storageAccounts = default(IList<StorageAccountInfo>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string))
+        /// <param name="newTier">the commitment tier for the next month.
+        /// Possible values include: 'Consumption', 'Commitment_100AUHours',
+        /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
+        /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
+        /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
+        /// 'Commitment_500000AUHours'</param>
+        /// <param name="currentTier">the commitment tier in use for the
+        /// current month. Possible values include: 'Consumption',
+        /// 'Commitment_100AUHours', 'Commitment_500AUHours',
+        /// 'Commitment_1000AUHours', 'Commitment_5000AUHours',
+        /// 'Commitment_10000AUHours', 'Commitment_50000AUHours',
+        /// 'Commitment_100000AUHours', 'Commitment_500000AUHours'</param>
+        public DataLakeAnalyticsAccount(string location, string defaultDataLakeStoreAccount, IList<DataLakeStoreAccountInfo> dataLakeStoreAccounts, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? systemMaxJobCount = default(int?), IList<StorageAccountInfo> storageAccounts = default(IList<StorageAccountInfo>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -91,6 +103,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             Endpoint = endpoint;
+            NewTier = newTier;
+            CurrentTier = currentTier;
         }
 
         /// <summary>
@@ -183,6 +197,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the commitment tier for the next month. Possible
+        /// values include: 'Consumption', 'Commitment_100AUHours',
+        /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
+        /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
+        /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
+        /// 'Commitment_500000AUHours'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.newTier")]
+        public TierType? NewTier { get; set; }
+
+        /// <summary>
+        /// Gets the commitment tier in use for the current month. Possible
+        /// values include: 'Consumption', 'Commitment_100AUHours',
+        /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
+        /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
+        /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
+        /// 'Commitment_500000AUHours'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.currentTier")]
+        public TierType? CurrentTier { get; protected set; }
 
         /// <summary>
         /// Validate the object.

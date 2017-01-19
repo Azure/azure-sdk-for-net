@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static TrustedIdProvider CreateOrUpdate(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters)
             {
-                return Task.Factory.StartNew(s => ((ITrustedIdProvidersOperations)s).CreateOrUpdateAsync(resourceGroupName, accountName, trustedIdProviderName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, trustedIdProviderName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Delete(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName)
             {
-                Task.Factory.StartNew(s => ((ITrustedIdProvidersOperations)s).DeleteAsync(resourceGroupName, accountName, trustedIdProviderName), operations, CancellationToken.None, TaskCreationOptions.None,  TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, trustedIdProviderName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static TrustedIdProvider Get(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName)
             {
-                return Task.Factory.StartNew(s => ((ITrustedIdProvidersOperations)s).GetAsync(resourceGroupName, accountName, trustedIdProviderName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, trustedIdProviderName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<TrustedIdProvider> ListByAccount(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName)
             {
-                return Task.Factory.StartNew(s => ((ITrustedIdProvidersOperations)s).ListByAccountAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static IPage<TrustedIdProvider> ListByAccountNext(this ITrustedIdProvidersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ITrustedIdProvidersOperations)s).ListByAccountNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
