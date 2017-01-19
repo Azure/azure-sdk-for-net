@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Common", "ResourceManagement\Common\Common.xproj", "{674645AE-B061-421E-AEFF-EBC8A881635E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Samples.Common", "ResourceManagement\Microsoft.Azure.Management.Samples.Common\Microsoft.Azure.Management.Samples.Common.xproj", "{674645AE-B061-421E-AEFF-EBC8A881635E}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent", "..\src\ResourceManagement\Azure.Fluent\Microsoft.Azure.Management.Fluent\Microsoft.Azure.Management.Fluent.xproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
 EndProject

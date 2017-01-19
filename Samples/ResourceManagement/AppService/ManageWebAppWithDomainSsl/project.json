@@ -5,7 +5,7 @@
   },
 
   "dependencies": {
-    "Common": "1.0.0-*",
+    "Microsoft.Azure.Management.Samples.Common": "1.0.0-*",
     "Mono.Security": "3.2.3",
     "System.Security.Cryptography.Cng": "4.2.0",
     "Microsoft.NETCore.App": {
