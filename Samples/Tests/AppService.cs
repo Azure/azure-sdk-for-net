@@ -30,7 +30,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSourceControlTest()
         {

@@ -47,13 +47,13 @@ namespace ManageWebAppSourceControl
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
                 RunSample(azure);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Utilities.Log(e);
             }
         }
 
@@ -75,7 +75,7 @@ namespace ManageWebAppSourceControl
                 //============================================================
                 // Create a web app with a new app service plan
 
-                Console.WriteLine("Creating web app " + app1Name + " in resource group " + rgName + "...");
+                Utilities.Log("Creating web app " + app1Name + " in resource group " + rgName + "...");
 
                 var app1 = azure.WebApps
                         .Define(app1Name)
@@ -87,30 +87,30 @@ namespace ManageWebAppSourceControl
                         .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
                         .Create();
 
-                Console.WriteLine("Created web app " + app1.Name);
+                Utilities.Log("Created web app " + app1.Name);
                 Utilities.Print(app1);
 
                 //============================================================
                 // Deploy to app 1 through FTP
 
-                Console.WriteLine("Deploying helloworld.War to " + app1Name + " through FTP...");
+                Utilities.Log("Deploying helloworld.War to " + app1Name + " through FTP...");
 
                 UploadFileToFtp(app1.GetPublishingProfile(), "helloworld.war", "Asset/helloworld.war").GetAwaiter().GetResult();
 
-                Console.WriteLine("Deployment helloworld.War to web app " + app1.Name + " completed");
+                Utilities.Log("Deployment helloworld.War to web app " + app1.Name + " completed");
                 Utilities.Print(app1);
 
                 // warm up
-                Console.WriteLine("Warming up " + app1Url + "/helloworld...");
+                Utilities.Log("Warming up " + app1Url + "/helloworld...");
                 CheckAddress("http://" + app1Url + "/helloworld");
                 SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
-                Console.WriteLine("CURLing " + app1Url + "/helloworld...");
-                Console.WriteLine(CheckAddress("http://" + app1Url + "/helloworld"));
+                Utilities.Log("CURLing " + app1Url + "/helloworld...");
+                Utilities.Log(CheckAddress("http://" + app1Url + "/helloworld"));
 
                 //============================================================
                 // Create a second web app with local git source control
 
-                Console.WriteLine("Creating another web app " + app2Name + " in resource group " + rgName + "...");
+                Utilities.Log("Creating another web app " + app2Name + " in resource group " + rgName + "...");
                 var plan = azure.AppServices.AppServicePlans.GetByGroup(rgName, planName);
                 var app2 = azure.WebApps
                         .Define(app2Name)
@@ -121,13 +121,13 @@ namespace ManageWebAppSourceControl
                         .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
                         .Create();
 
-                Console.WriteLine("Created web app " + app2.Name);
+                Utilities.Log("Created web app " + app2.Name);
                 Utilities.Print(app2);
 
                 //============================================================
                 // Deploy to app 2 through local Git
 
-                Console.WriteLine("Deploying a local Tomcat source to " + app2Name + " through Git...");
+                Utilities.Log("Deploying a local Tomcat source to " + app2Name + " through Git...");
 
                 var profile = app2.GetPublishingProfile();
                 string gitCommand = "git";
@@ -146,20 +146,20 @@ namespace ManageWebAppSourceControl
                 info.Arguments = gitPushArgument;
                 Process.Start(info).WaitForExit();
 
-                Console.WriteLine("Deployment to web app " + app2.Name + " completed");
+                Utilities.Log("Deployment to web app " + app2.Name + " completed");
                 Utilities.Print(app2);
 
                 // warm up
-                Console.WriteLine("Warming up " + app2Url + "/helloworld...");
+                Utilities.Log("Warming up " + app2Url + "/helloworld...");
                 CheckAddress("http://" + app2Url + "/helloworld");
                 SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
-                Console.WriteLine("CURLing " + app2Url + "/helloworld...");
-                Console.WriteLine(CheckAddress("http://" + app2Url + "/helloworld"));
+                Utilities.Log("CURLing " + app2Url + "/helloworld...");
+                Utilities.Log(CheckAddress("http://" + app2Url + "/helloworld"));
 
                 //============================================================
                 // Create a 3rd web app with a public GitHub repo in Azure-Samples
 
-                Console.WriteLine("Creating another web app " + app3Name + "...");
+                Utilities.Log("Creating another web app " + app3Name + "...");
                 var app3 = azure.WebApps
                         .Define(app3Name)
                         .WithNewResourceGroup(rgName)
@@ -170,20 +170,20 @@ namespace ManageWebAppSourceControl
                             .Attach()
                         .Create();
 
-                Console.WriteLine("Created web app " + app3.Name);
+                Utilities.Log("Created web app " + app3.Name);
                 Utilities.Print(app3);
 
                 // warm up
-                Console.WriteLine("Warming up " + app3Url + "...");
+                Utilities.Log("Warming up " + app3Url + "...");
                 CheckAddress("http://" + app3Url);
                 SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
-                Console.WriteLine("CURLing " + app3Url + "...");
-                Console.WriteLine(CheckAddress("http://" + app3Url));
+                Utilities.Log("CURLing " + app3Url + "...");
+                Utilities.Log(CheckAddress("http://" + app3Url));
 
                 //============================================================
                 // Create a 4th web app with a personal GitHub repo and turn on continuous integration
 
-                Console.WriteLine("Creating another web app " + app4Name + "...");
+                Utilities.Log("Creating another web app " + app4Name + "...");
                 var app4 = azure.WebApps
                         .Define(app4Name)
                         .WithExistingResourceGroup(rgName)
@@ -196,39 +196,35 @@ namespace ManageWebAppSourceControl
                         //    .Attach()
                         .Create();
 
-                Console.WriteLine("Created web app " + app4.Name);
+                Utilities.Log("Created web app " + app4.Name);
                 Utilities.Print(app4);
 
                 // warm up
-                Console.WriteLine("Warming up " + app4Url + "...");
+                Utilities.Log("Warming up " + app4Url + "...");
                 CheckAddress("http://" + app4Url);
                 SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
-                Console.WriteLine("CURLing " + app4Url + "...");
-                Console.WriteLine(CheckAddress("http://" + app4Url));
+                Utilities.Log("CURLing " + app4Url + "...");
+                Utilities.Log(CheckAddress("http://" + app4Url));
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("Cannot find 'git' command line. Make sure Git is installed and the directory of git.exe is included in your PATH environment variable.");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                Utilities.Log("Cannot find 'git' command line. Make sure Git is installed and the directory of git.exe is included in your PATH environment variable.");
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.DeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {
-                    Console.WriteLine(g);
+                    Utilities.Log(g);
                 }
             }
         }
