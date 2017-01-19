@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the method of load distribution.
         /// </summary>
-        string LoadDistribution { get; }
+        LoadDistribution LoadDistribution { get; }
 
         /// <summary>
         /// Gets the number of minutes before an inactive connection is closed.

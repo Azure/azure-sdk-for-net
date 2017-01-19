@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> LoadBalancingRule.Definition.IWithLoadDistribution<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>.WithLoadDistribution(string loadDistribution)
+        LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> LoadBalancingRule.Definition.IWithLoadDistribution<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>.WithLoadDistribution(LoadDistribution loadDistribution)
         {
             return this.WithLoadDistribution(loadDistribution) as LoadBalancingRule.Definition.IWithAttach<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancingRule.UpdateDefinition.IWithLoadDistribution<LoadBalancer.Update.IUpdate>.WithLoadDistribution(string loadDistribution)
+        LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancingRule.UpdateDefinition.IWithLoadDistribution<LoadBalancer.Update.IUpdate>.WithLoadDistribution(LoadDistribution loadDistribution)
         {
             return this.WithLoadDistribution(loadDistribution) as LoadBalancingRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="loadDistribution">A supported load distribution mode.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Update.IUpdate LoadBalancingRule.Update.IWithLoadDistribution.WithLoadDistribution(string loadDistribution)
+        LoadBalancingRule.Update.IUpdate LoadBalancingRule.Update.IWithLoadDistribution.WithLoadDistribution(LoadDistribution loadDistribution)
         {
             return this.WithLoadDistribution(loadDistribution) as LoadBalancingRule.Update.IUpdate;
         }
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the method of load distribution.
         /// </summary>
-        string Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule.LoadDistribution
+        LoadDistribution Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule.LoadDistribution
         {
             get
             {
