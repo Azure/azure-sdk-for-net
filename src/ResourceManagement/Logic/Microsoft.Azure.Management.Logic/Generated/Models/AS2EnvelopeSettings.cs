@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to suspend message on
         /// file name generation error.
         /// </summary>
-        [JsonProperty(PropertyName = "SuspendMessageOnFileNameGenerationError")]
+        [JsonProperty(PropertyName = "suspendMessageOnFileNameGenerationError")]
         public bool? SuspendMessageOnFileNameGenerationError { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to auto generate file
         /// name.
         /// </summary>
-        [JsonProperty(PropertyName = "AutogenerateFileName")]
+        [JsonProperty(PropertyName = "autogenerateFileName")]
         public bool? AutogenerateFileName { get; set; }
 
     }

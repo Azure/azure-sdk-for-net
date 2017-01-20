@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource id.
+        /// Gets or sets the resource id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Composite Swagger for Logic Management Client
+    /// REST API for Azure Logic Apps.
     /// </summary>
     public partial class LogicManagementClient : ServiceClient<LogicManagementClient>, ILogicManagementClient, IAzureClient
     {
@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.Logic
         /// The subscription id.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -346,6 +351,7 @@ namespace Microsoft.Azure.Management.Logic
             this.IntegrationAccountAgreements = new IntegrationAccountAgreementsOperations(this);
             this.IntegrationAccountCertificates = new IntegrationAccountCertificatesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
+            this.ApiVersion = "2016-06-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

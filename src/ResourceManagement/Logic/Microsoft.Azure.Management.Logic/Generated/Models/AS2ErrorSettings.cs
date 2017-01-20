@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to suspend duplicate
         /// message.
         /// </summary>
-        [JsonProperty(PropertyName = "SuspendDuplicateMessage")]
+        [JsonProperty(PropertyName = "suspendDuplicateMessage")]
         public bool? SuspendDuplicateMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to resend message If MDN
         /// is not received.
         /// </summary>
-        [JsonProperty(PropertyName = "ResendIfMdnNotReceived")]
+        [JsonProperty(PropertyName = "resendIfMdnNotReceived")]
         public bool? ResendIfMdnNotReceived { get; set; }
 
     }

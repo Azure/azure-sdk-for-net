@@ -14,7 +14,8 @@
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk",
-    "compile": "../../../../tools/DisableTestRunParallel.cs"
+    "compile": "../../../../tools/DisableTestRunParallel.cs",
+    "define": []
   },
 
   "testRunner": "xunit",

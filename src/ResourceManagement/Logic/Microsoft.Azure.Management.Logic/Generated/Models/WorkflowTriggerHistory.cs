@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string TrackingId { get; private set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the run correlation.
+        /// Gets or sets the run correlation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlation")]
         public Correlation Correlation { get; set; }

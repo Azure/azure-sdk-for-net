@@ -27,6 +27,7 @@ namespace Test.Azure.Management.Logic
 
         /// <summary>
         /// Tests the create and delete operations of the integration account agreement.
+        /// https://msazure.visualstudio.com/One/_workitems/edit/587947
         /// </summary>
         [Fact]
         public void CreateAndDeleteIntegrationAccountAgreement()
@@ -42,11 +43,20 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
 
-                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName));
+                var instance = CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,AgreementType.AS2);
+                instance.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.MD5;
+                instance.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.MD5;
 
-                Assert.Equal(agreement.Name, integrationAccountAgreementName);
+                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName, integrationAccountAgreementName, instance);
+
+                var getAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                integrationAccountName,
+                integrationAccountAgreementName);
+
+                Assert.Equal(getAgreement.Name, integrationAccountAgreementName);
+                Assert.Equal(getAgreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
+                Assert.Equal(getAgreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
 
                 client.IntegrationAccountAgreements.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountAgreementName);
@@ -94,6 +104,7 @@ namespace Test.Azure.Management.Logic
 
         /// <summary>
         /// Tests the create and get operations of the integration account agreement.
+        /// https://msazure.visualstudio.com/One/_workitems/edit/587947
         /// </summary>
         [Fact]
         public void CreateAndGetIntegrationAccountAgreement()
@@ -109,18 +120,73 @@ namespace Test.Azure.Management.Logic
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,
-                        AgreementType.Edifact));
+                var instance = CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,
+                        AgreementType.AS2);
 
-                Assert.Equal(partner.Name, integrationAccountAgreementName);
+                instance.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.SHA1;
+                instance.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.SHA1;
 
-                var getPartner = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                var agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName, integrationAccountAgreementName, instance);
+
+                Assert.Equal(agreement.Name, integrationAccountAgreementName);
+
+                var getAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
                     integrationAccountName,
                     integrationAccountAgreementName);
 
-                Assert.Equal(partner.Name, getPartner.Name);
+                Assert.Equal(agreement.Name, getAgreement.Name);
+                Assert.Equal(agreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.SHA1);
+                Assert.Equal(agreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.SHA1);
+
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        /// <summary>
+        /// Tests the create operations of the integration account agreement with envelope override settings for X12.
+        /// https://msazure.visualstudio.com/One/_workitems/edit/700874
+        /// </summary>
+        [Fact]
+        public void CreateIntegrationAccountAgreementWithEnvelopeOverride()
+        {
+            using (
+                MockContext context = MockContext.Start(TestClass))
+            {
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+
+                var integrationX12AccountAgreementName =
+                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+
+                var client = context.GetServiceClient<LogicManagementClient>();
+
+                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName, CreateIntegrationAccountInstance(integrationAccountName));
+
+                var instance = CreateIntegrationAccountAgreementInstanceFromFile(integrationX12AccountAgreementName,
+                        integrationAccountName, AgreementType.X12);
+                instance.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides = new List<X12EnvelopeOverride>();
+                X12EnvelopeOverride overrideSetting = new X12EnvelopeOverride();
+                overrideSetting.HeaderVersion = "1";
+                overrideSetting.MessageId = "100";
+                overrideSetting.ProtocolVersion = "1";
+                overrideSetting.ReceiverApplicationId = "93494";
+                overrideSetting.ResponsibleAgencyCode = "X";
+                overrideSetting.SenderApplicationId = "89459";
+                overrideSetting.TargetNamespace = "test";
+                overrideSetting.FunctionalIdentifierCode = "x";
+                overrideSetting.DateFormat = X12DateFormat.CCYYMMDD;
+                overrideSetting.TimeFormat = X12TimeFormat.HHMM;
+                instance.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides.Add(overrideSetting);
+
+                var x12Agreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName, integrationX12AccountAgreementName, instance );
+
+                var fetchedAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName, integrationX12AccountAgreementName);
+
+                Assert.Equal(fetchedAgreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides[0].ResponsibleAgencyCode,"X");
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -255,7 +321,7 @@ namespace Test.Azure.Management.Logic
             }
         }
 
-        #region Private        
+        #region Private
 
         /// <summary>
         /// Creates an Integration account agreement
@@ -649,12 +715,10 @@ namespace Test.Azure.Management.Logic
                                     ProcessingPriorityCode = "0",
                                     ReceiverInternalIdentification = "0",
                                     ReceiverInternalSubIdentification = "0",
-                                    ReceiverReverseRoutingAddress = "0",
                                     RecipientReferencePasswordQualifier = "ZZ",
                                     RecipientReferencePasswordValue = "AA",
                                     SenderInternalIdentification = "AA",
-                                    SenderInternalSubIdentification = "AA",
-                                    SenderReverseRoutingAddress = "ZZ"
+                                    SenderInternalSubIdentification = "AA"
                                 },
                                 MessageFilter = new EdifactMessageFilter
                                 {
@@ -662,17 +726,16 @@ namespace Test.Azure.Management.Logic
                                 },
                                 FramingSettings = new EdifactFramingSettings
                                 {
-                                    ComponentSeparator = 0,
-                                    DataElementSeparator = 0,
-                                    SegmentTerminator = 0,
-                                    SegmentTerminatorSuffix = SegmentTerminatorSuffix.CR,
-                                    CharacterSet = EdifactCharacterSet.KECA,
-                                    CharacterEncoding = "0",
+                                    DataElementSeparator = 53,
+                                    ComponentSeparator = 58,
+                                    SegmentTerminator = 39,
+                                    CharacterSet = EdifactCharacterSet.UNOC,
+                                    SegmentTerminatorSuffix = SegmentTerminatorSuffix.None,
+                                    ProtocolVersion = 4,
                                     DecimalPointIndicator = EdifactDecimalIndicator.Comma,
-                                    ProtocolVersion = 0,
-                                    ReleaseIndicator = 0,
-                                    RepetitionSeparator = 0,
-                                    ServiceCodeListDirectoryVersion = "0"
+                                    ReleaseIndicator = 63,
+                                    CharacterEncoding = "UTF",
+                                    RepetitionSeparator = 42
                                 },
                                 ProcessingSettings = new EdifactProcessingSettings
                                 {
@@ -765,12 +828,10 @@ namespace Test.Azure.Management.Logic
                                     ProcessingPriorityCode = "0",
                                     ReceiverInternalIdentification = "0",
                                     ReceiverInternalSubIdentification = "0",
-                                    ReceiverReverseRoutingAddress = "0",
                                     RecipientReferencePasswordQualifier = "ZZ",
                                     RecipientReferencePasswordValue = "AA",
                                     SenderInternalIdentification = "AA",
-                                    SenderInternalSubIdentification = "AA",
-                                    SenderReverseRoutingAddress = "XX"
+                                    SenderInternalSubIdentification = "AA"
                                 },
                                 MessageFilter = new EdifactMessageFilter
                                 {
@@ -778,17 +839,16 @@ namespace Test.Azure.Management.Logic
                                 },
                                 FramingSettings = new EdifactFramingSettings
                                 {
-                                    ComponentSeparator = 0,
-                                    DataElementSeparator = 0,
-                                    SegmentTerminator = 0,
-                                    SegmentTerminatorSuffix = SegmentTerminatorSuffix.CR,
-                                    CharacterSet = EdifactCharacterSet.KECA,
-                                    CharacterEncoding = "0",
+                                    DataElementSeparator = 53,
+                                    ComponentSeparator = 58,
+                                    SegmentTerminator = 39,
+                                    CharacterSet = EdifactCharacterSet.UNOC,
+                                    SegmentTerminatorSuffix = SegmentTerminatorSuffix.None,
+                                    ProtocolVersion = 4,
                                     DecimalPointIndicator = EdifactDecimalIndicator.Comma,
-                                    ProtocolVersion = 0,
-                                    ReleaseIndicator = 0,
-                                    RepetitionSeparator = 0,
-                                    ServiceCodeListDirectoryVersion = "0"
+                                    ReleaseIndicator = 63,
+                                    CharacterEncoding = "UTF",
+                                    RepetitionSeparator = 42
                                 },
                                 ProcessingSettings = new EdifactProcessingSettings
                                 {

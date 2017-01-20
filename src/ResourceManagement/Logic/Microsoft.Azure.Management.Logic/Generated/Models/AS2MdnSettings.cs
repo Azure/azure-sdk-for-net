@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.Logic.Models
 
         /// <summary>
         /// Gets or sets the signing or hashing algorithm. Possible values
-        /// include: 'NotSpecified', 'None', 'SHA2256', 'SHA2384', 'SHA2512'
+        /// include: 'NotSpecified', 'None', 'MD5', 'SHA1', 'SHA2256',
+        /// 'SHA2384', 'SHA2512'
         /// </summary>
         [JsonProperty(PropertyName = "micHashingAlgorithm")]
         public HashingAlgorithm? MicHashingAlgorithm { get; set; }

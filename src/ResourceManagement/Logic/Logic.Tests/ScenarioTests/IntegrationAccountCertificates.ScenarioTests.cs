@@ -83,7 +83,7 @@ namespace Test.Azure.Management.Logic
                 var certificateInstance = new IntegrationAccountCertificate
                 {
                     Name = integrationAccountCertificateName,
-                    Location = "brazilsouth",                    
+                    Location = "brazilsouth",
                     PublicCertificate = Convert.ToBase64String(cert.RawData)
                 };
 
@@ -197,7 +197,7 @@ namespace Test.Azure.Management.Logic
                         integrationAccountName));
 
                 var certificate2 = CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                    integrationAccountName);                
+                    integrationAccountName);
 
                 client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
@@ -207,7 +207,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccountName,
                     integrationAccountCertificateName);
 
-                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);                
+                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -305,10 +305,10 @@ namespace Test.Azure.Management.Logic
                     {
                         Id =
                             string.Format(CultureInfo.InvariantCulture,
-                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/IntegrationAccountVault",
+                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault",
                                 Constants.DefaultSubscription, Constants.DefaultResourceGroup)
                     },
-                    KeyVersion = "a71cf67368fc473f8d2a40cd8804ac85"
+                    KeyVersion = "87d9764197604449b9b8eb7bd8710868"
                 },
                 PublicCertificate = Convert.ToBase64String(cert.RawData)
             };

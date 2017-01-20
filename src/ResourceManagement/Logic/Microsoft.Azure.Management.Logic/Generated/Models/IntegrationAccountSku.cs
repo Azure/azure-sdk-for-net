@@ -26,17 +26,17 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountSku class.
         /// </summary>
-        public IntegrationAccountSku(SkuName? name = default(SkuName?))
+        public IntegrationAccountSku(IntegrationAccountSkuName? name = default(IntegrationAccountSkuName?))
         {
             Name = name;
         }
 
         /// <summary>
         /// Gets or sets the sku name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
+        /// 'NotSpecified', 'Free', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName? Name { get; set; }
+        public IntegrationAccountSkuName? Name { get; set; }
 
     }
 }

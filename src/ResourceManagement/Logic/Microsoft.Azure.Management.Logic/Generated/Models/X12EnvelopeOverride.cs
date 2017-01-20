@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the X12EnvelopeOverride class.
         /// </summary>
-        public X12EnvelopeOverride(string targetNamespace = default(string), string protocolVersion = default(string), string messageId = default(string), int? responsibleAgencyCode = default(int?), string headerVersion = default(string), string senderApplicationId = default(string), string receiverApplicationId = default(string), string functionalIdentifierCode = default(string), X12DateFormat? dateFormat = default(X12DateFormat?), X12TimeFormat? timeFormat = default(X12TimeFormat?))
+        public X12EnvelopeOverride(string targetNamespace = default(string), string protocolVersion = default(string), string messageId = default(string), string responsibleAgencyCode = default(string), string headerVersion = default(string), string senderApplicationId = default(string), string receiverApplicationId = default(string), string functionalIdentifierCode = default(string), X12DateFormat? dateFormat = default(X12DateFormat?), X12TimeFormat? timeFormat = default(X12TimeFormat?))
         {
             TargetNamespace = targetNamespace;
             ProtocolVersion = protocolVersion;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the responsible agency code.
         /// </summary>
         [JsonProperty(PropertyName = "responsibleAgencyCode")]
-        public int? ResponsibleAgencyCode { get; set; }
+        public string ResponsibleAgencyCode { get; set; }
 
         /// <summary>
         /// Gets or sets the header version.

@@ -27,17 +27,19 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountSchema class.
         /// </summary>
-        public IntegrationAccountSchema(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SchemaType? schemaType = default(SchemaType?), string targetNamespace = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink), object metadata = default(object))
+        public IntegrationAccountSchema(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SchemaType? schemaType = default(SchemaType?), string targetNamespace = default(string), string documentName = default(string), string fileName = default(string), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object metadata = default(object), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink))
             : base(id, name, type, location, tags)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
+            DocumentName = documentName;
+            FileName = fileName;
             CreatedTime = createdTime;
             ChangedTime = changedTime;
+            Metadata = metadata;
             Content = content;
             ContentType = contentType;
             ContentLink = contentLink;
-            Metadata = metadata;
         }
 
         /// <summary>
@@ -54,6 +56,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string TargetNamespace { get; set; }
 
         /// <summary>
+        /// Gets or sets the document name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.documentName")]
+        public string DocumentName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fileName")]
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Gets the created time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdTime")]
@@ -64,6 +78,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.changedTime")]
         public DateTime? ChangedTime { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the metadata.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public object Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets the content.
@@ -82,12 +102,6 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentLink")]
         public IntegrationAccountContentLink ContentLink { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the metadata.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.metadata")]
-        public object Metadata { get; set; }
 
     }
 }

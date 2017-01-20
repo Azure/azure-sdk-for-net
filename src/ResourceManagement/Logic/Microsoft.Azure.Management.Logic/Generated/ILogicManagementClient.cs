@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
-    /// Composite Swagger for Logic Management Client
+    /// REST API for Azure Logic Apps.
     /// </summary>
     public partial interface ILogicManagementClient : IDisposable
     {
@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.Logic
         /// The subscription id.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.

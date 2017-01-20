@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the client tracking id.
+        /// Gets or sets the client tracking id.
         /// </summary>
         [JsonProperty(PropertyName = "clientTrackingId")]
         public string ClientTrackingId { get; set; }

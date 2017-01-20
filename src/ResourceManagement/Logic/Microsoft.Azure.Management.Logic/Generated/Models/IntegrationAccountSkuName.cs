@@ -13,24 +13,16 @@ namespace Microsoft.Azure.Management.Logic.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for HashingAlgorithm.
+    /// Defines values for IntegrationAccountSkuName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum HashingAlgorithm
+    public enum IntegrationAccountSkuName
     {
         [EnumMember(Value = "NotSpecified")]
         NotSpecified,
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "MD5")]
-        MD5,
-        [EnumMember(Value = "SHA1")]
-        SHA1,
-        [EnumMember(Value = "SHA2256")]
-        SHA2256,
-        [EnumMember(Value = "SHA2384")]
-        SHA2384,
-        [EnumMember(Value = "SHA2512")]
-        SHA2512
+        [EnumMember(Value = "Free")]
+        Free,
+        [EnumMember(Value = "Standard")]
+        Standard
     }
 }

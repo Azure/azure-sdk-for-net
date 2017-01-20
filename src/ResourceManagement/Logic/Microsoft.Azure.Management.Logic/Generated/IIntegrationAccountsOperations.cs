@@ -181,8 +181,8 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='integrationAccountName'>
         /// The integration account name.
         /// </param>
-        /// <param name='notAfter'>
-        /// The expiry time.
+        /// <param name='parameters'>
+        /// The callback URL parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CallbackUrl>> ListCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, DateTime? notAfter = default(DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CallbackUrl>> ListCallbackUrlWithHttpMessagesAsync(string resourceGroupName, string integrationAccountName, ListCallbackUrlParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of integration accounts by subscription.
         /// </summary>
