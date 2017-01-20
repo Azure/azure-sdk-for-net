@@ -19,10 +19,10 @@
           "type": "platform",
           "version": "1.0.0"
         },
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.3,4.0.0)",
-        "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.9-preview,3.0.0)",
-        "xunit": "2.2.0-beta2-build3300",
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10,3.0.0)",
+        "xunit": "2.2.0-beta4-build3444",
         "dotnet-test-xunit": "2.2.0-preview2-build1029"
       }
     },
@@ -32,11 +32,11 @@
         "debugType": "portable"
       },
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "xunit": "2.2.0-beta3-build3402",
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "xunit": "2.2.0-beta4-build3444",
         "dotnet-test-xunit": "2.2.0-preview2-build1029",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.3,4.0.0)",
-        "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.9-preview,3.0.0)"
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10,3.0.0)"
       },
       "frameworkAssemblies": {
         "System": "",
