@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private string publisher;
         private IVirtualMachineOffers offers;
         private IVirtualMachineExtensionImageTypes extensionTypes;
+        ///GENMHASH:2545F15E7242CF7DFF52ABD27674BC68:0CC035167100F57523060A76A803AC57
         internal VirtualMachinePublisherImpl(Region location, string publisher, IVirtualMachineImagesOperations vmImagesClient, IVirtualMachineExtensionImagesOperations extensionsClient)
         {
             this.location = location;

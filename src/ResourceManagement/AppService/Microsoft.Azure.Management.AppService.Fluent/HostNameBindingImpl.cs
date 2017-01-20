@@ -163,6 +163,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.AzureResourceType.GetValueOrDefault();
         }
 
+        ///GENMHASH:405D133ADB31FC54FCFE6E63CC7CE6DF:528163E8A39CE260ED65B356ABCB872C
         internal HostNameBindingImpl(HostNameBindingInner innerObject, FluentImplT parent, IWebAppsOperations client)
                 : base(innerObject)
         {

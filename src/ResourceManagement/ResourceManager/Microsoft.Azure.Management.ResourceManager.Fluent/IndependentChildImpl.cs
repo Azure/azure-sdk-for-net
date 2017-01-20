@@ -14,9 +14,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     /// <typeparam name="FluentModel">The fluent model type.</typeparam>
     /// <typeparam name="FluentParentModel">The fluent model for parent resource.</typeparam>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5tb2RlbHMuaW1wbGVtZW50YXRpb24uSW5kZXBlbmRlbnRDaGlsZEltcGw=
     /// <typeparam name="InnerModel">Azure inner resource class type.</typeparam>
     /// <typeparam name="FluentModelImpl">The implementation type of the fluent model type.</typeparam>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5tb2RlbHMuaW1wbGVtZW50YXRpb24uSW5kZXBlbmRlbnRDaGlsZEltcGw=
+
     public abstract class IndependentChildImpl<IFluentResourceT, FluentParentModelT, InnerResourceT, FluentResourceT, IResourceT, IUpdatableT>  :
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT, IUpdatableT>,
         IIndependentChild,
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return><tt>true</tt> if currently in define..create mode.</return>
+
         ///GENMHASH:76EDE6DBF107009D2B06F19698F6D5DB:03A19677BFD2A2B4663A9345FE12C501
         public bool IsInCreateMode()
         {
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ///GENMHASH:B2EB74D988CD2A7EFC551E57BE9B48BB:27E486AB74A10242FF421C0798DDC450
         protected abstract Task<IFluentResourceT> CreateChildResourceAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        ///GENMHASH:E0086A72B4AEDDC8DA00BE9AF9B4C9F4:C4A562F786B0A39A4E03ADCFFA1A1FD8
+        ///GENMHASH:E0086A72B4AEDDC8DA00BE9AF9B4C9F4:438BA83BD85CA5E6770B626B6BCFBFCD
         protected virtual void SetParentName(InnerResourceT inner)
         {
             if (this.Id != null)
@@ -97,6 +99,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// </summary>
         /// <param name="name">The name of the resource.</param>
         /// <param name="innerObject">The inner object.</param>
+        ///GENMHASH:58893D0094BDB88102F94E73ED2B35FA:2572719AB7F9FA6EF015164D8E50629B
         protected  IndependentChildImpl(string name, InnerResourceT innerObject)
             : base(name, innerObject)
         {

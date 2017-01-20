@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya0ltcGw=
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Models;
@@ -12,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Network
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya0ltcGw=
     internal partial class NetworkImpl :
         GroupableParentResource<INetwork,
             VirtualNetworkInner,
@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     {
         private IVirtualNetworksOperations innerCollection;
         private IDictionary<string, ISubnet> subnets;
+        ///GENMHASH:3D0F0C9DA19FF797EAF5133A38664022:55E548B15E635A8197D52049D3FAB8D3
         internal NetworkImpl(
             string name,
             VirtualNetworkInner innerModel,

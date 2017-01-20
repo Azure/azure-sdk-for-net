@@ -66,6 +66,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.resourceId.Name;
         }
 
+        ///GENMHASH:1777CD6BECD021A68EC284951D197658:A677B0C455E56513C192E43F117D71E1
         internal TransparentDataEncryptionImpl(TransparentDataEncryptionInner innerObject, IDatabasesOperations databasesInner)
             : base(innerObject)
         {

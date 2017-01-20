@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         PublicIpAddress.Update.IUpdate
     {
         private IPublicIPAddressesOperations client;
+        ///GENMHASH:A0911D017083345CFF1600AF047515EF:A09FFAE271F481C05A45DEAA5B766366
         internal PublicIpAddressImpl(
             string name,
             PublicIPAddressInner innerModel,

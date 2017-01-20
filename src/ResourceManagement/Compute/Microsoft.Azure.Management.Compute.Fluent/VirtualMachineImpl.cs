@@ -51,6 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
+        ///GENMHASH:0A331C2401291DF824493E64F2798884:AEA9DF2AAC2CFE9730BD7A00060D84F9
         internal VirtualMachineImpl(string name,
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
@@ -131,7 +132,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 });
         }
 
-        ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:5016B72EA4E673B81B58BB9DC0B517E0
+        ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC
         public string Capture(string containerName, string vhdPreifx, bool overwriteVhd)
         {
             VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
@@ -774,6 +775,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return Inner.StorageProfile.OsDisk.OsType.Value;
         }
+
         ///GENMHASH:D97CA4262C0C853895BFF5AD2FE910FE:75A04C61F19354FB4BFDE8310A43BE22
         public string OsDiskVhdUri()
         {
@@ -1247,6 +1249,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="osDisk">The osDisk value in the storage profile.</param>
         /// <return>True if the OS disk is attached to a VHD, false otherwise.</return>
+
         ///GENMHASH:0ED4CA225B0A1048DF1630BBB905CABF:E131DE14687B0FC1C69A169BDE13FE68
         private bool IsOSDiskAttached(OSDisk osDisk)
         {
@@ -1258,6 +1261,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="osDisk">The osDisk value in the storage profile.</param>
         /// <return>True if the OS disk is configured to use image from PIR or custom image.</return>
+
         ///GENMHASH:2BC5DC58EDF7989592189AD8B4E29C17:4CD85EE98AD4F7CBC33994D722986AE5
         private bool IsOSDiskFromImage(OSDisk osDisk)
         {
@@ -1269,6 +1273,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="storageProfile">The storage profile.</param>
         /// <return>True if the OS disk is configured to be based on platform image.</return>
+
         ///GENMHASH:78EB0F392606FADDDAFE3E594B6F4E7F:EC985B78EECA34D134228416A96997F8
         private bool IsOSDiskFromPlatformImage(StorageProfile storageProfile)
         {
@@ -1280,6 +1285,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="osDisk">The osDisk value in the storage profile.</param>
         /// <return>True if the OS disk is configured to use custom image ('captured' or 'bring your own feature').</return>
+
         ///GENMHASH:6ECB87AED370EEF376897E9E3C4BE1C9:9ED794F35129AD9597F3C0434390D657
         private bool IsOSDiskFromCustomImage(OSDisk osDisk)
         {

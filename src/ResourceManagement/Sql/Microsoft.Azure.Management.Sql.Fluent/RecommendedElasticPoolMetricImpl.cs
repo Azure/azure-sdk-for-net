@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Wrapper<Models.RecommendedElasticPoolMetric>,
         IRecommendedElasticPoolMetric
     {
+        ///GENMHASH:3B2B57F3F82A2B134183801EB152CB9A:C0C35E00AF4E17F141675A2C05C7067B
         internal RecommendedElasticPoolMetricImpl(RecommendedElasticPoolMetric innerObject) : base(innerObject)
         {
         }

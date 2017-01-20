@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         IARecordSet
     {
+
         ///GENMHASH:04586DB2C8D9E7DB2F3AB47785D5A15A:F328364702E41F21DD4388BDA9FC5770
         public IList<string> Ipv4Addresses()
         {
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
              return resource;
         }
 
+        ///GENMHASH:E1426F341AA03829F8336FF9716A3A8D:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  ARecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

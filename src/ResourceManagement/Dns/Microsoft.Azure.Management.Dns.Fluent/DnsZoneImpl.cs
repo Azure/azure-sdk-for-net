@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         private ISrvRecordSets srvRecordSets;
         private ITxtRecordSets txtRecordSets;
         private DnsRecordSetsImpl recordSetsImpl;
+
         ///GENMHASH:33CE6A50234E86DD2006E428BDBB63DF:FFB0399D38F75C513DB4745F5D8C0E9F
         public DnsRecordSetImpl DefinePtrRecordSet(string name)
         {
@@ -218,6 +219,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return recordSetsImpl.DefineMxRecordSet(name);
         }
 
+        ///GENMHASH:132875C15861A92E60F93E154E091602:F70AB38B6FDE85737888182B48E6B611
         internal  DnsZoneImpl(string name, ZoneInner innerModel, IZonesOperations innerCollection, IRecordSetsOperations recordSetsClient, IDnsZoneManager dnsZoneManager) : base(name, innerModel, dnsZoneManager)
         {
             this.innerCollection = innerCollection;

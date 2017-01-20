@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayIpConfiguration.Update.IUpdate
     {
+        ///GENMHASH:309BFD95E2855ABD94CC4CEB845632F5:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayIpConfigurationImpl(ApplicationGatewayIPConfigurationInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }

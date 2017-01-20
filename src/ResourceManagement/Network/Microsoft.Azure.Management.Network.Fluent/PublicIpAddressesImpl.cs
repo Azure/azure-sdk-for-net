@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkManager>,
         IPublicIpAddresses
     {
+        ///GENMHASH:053A36D2D2F106CA9668224DB2C96180:5AC88BA549EC2FB48FFEA9A94BE29B89
         internal PublicIpAddressesImpl(NetworkManagementClient client, NetworkManager networkManager)
             : base(client.PublicIPAddresses, networkManager)
         {
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         //$TODO: shoudl return PublicIpAddressImpl
+
         ///GENMHASH:B52B92D4359429345BB9A526A6320669:90C57C05A1A9A5C6A7F2A81DCB266191
         override protected IPublicIpAddress WrapModel(PublicIPAddressInner inner)
         {

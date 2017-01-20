@@ -23,8 +23,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public static readonly AppServicePricingTier Premium_P2 = new AppServicePricingTier("Premium", "P2");
         public static readonly AppServicePricingTier Premium_P3 = new AppServicePricingTier("Premium", "P3");
 
+        ///GENMHASH:B9CFE16F1B01DA31969DCEB63534EB1A:B18BAF7D223AB29E75CD572030AABDBC
         public SkuDescription SkuDescription { get; private set; }
 
+        ///GENMHASH:577161D2DAB431E91C429EBDA0A3812F:48ACBDFB047C8D6CF117E277F4C203CC
         private AppServicePricingTier()
         {
         }

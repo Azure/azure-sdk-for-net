@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancerInboundNatPool.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerInboundNatPool.Update.IUpdate
     {
+        ///GENMHASH:8B165FB10D00FDA08609F56F3BB16BB8:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal LoadBalancerInboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent)
             : base(inner, parent)
         {

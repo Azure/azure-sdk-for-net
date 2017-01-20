@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private string subnetToAssociate;
         private bool removePrimaryPublicIPAssociation;
 
+        ///GENMHASH:92E4980351E0DE705DF924453E21E605:E7EEE1F7AB5D4421115C2BD2252C5E0D
         internal NicIpConfigurationImpl(
             NetworkInterfaceIPConfigurationInner inner,
             NetworkInterfaceImpl parent,
@@ -52,7 +53,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return new NicIpConfigurationImpl(ipConfigurationInner, parent, networkManager, true);
         }
 
-        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:0EDBC6F12844C2F2056BFF916F51853B
         public override string Name()
         {
             return Inner.Name;
@@ -283,6 +283,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// as the current one.
         /// </summary>
         /// <returns>the subnet resource</returns>
+
         ///GENMHASH:D14BFB60D59198612CF4649F7C5412EA:CB9711B0085B05FCA1A439986E7C8A08
         private SubnetInner SubnetToAssociate()
         {
@@ -331,6 +332,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// not specified then existing associated (if any) public IP will be returned.
         /// </summary>
         /// <returns>public ip SubResource</returns>
+
         ///GENMHASH:8D4DC1646027B23F9B0747B303606F35:FB5ABEA0B3E44F5F78C6CEF057F7B8BD
         private PublicIPAddressInner PublicIpToAssociate()
         {

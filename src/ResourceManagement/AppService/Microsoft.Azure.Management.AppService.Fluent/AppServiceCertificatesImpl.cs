@@ -20,12 +20,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             AppServiceManager>,
         IAppServiceCertificates
     {
+
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public AppServiceCertificateImpl Define(string name)
         {
             return WrapModel(name);
         }
 
+        ///GENMHASH:A19C6C0AD2220AD90153C8EBDA3FD2D2:0FCD47CBCD9128C3D4A03458C5796741
         internal AppServiceCertificatesImpl(ICertificatesOperations InnerCollection, AppServiceManager manager)
             : base(InnerCollection, manager)
         {

@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return ftpPassword;
         }
 
+        ///GENMHASH:B45CFC79F53C364F2AEFC729C0B13791:9A0D9C09A1A3DECF7680944A69354DF1
         internal PublishingProfileImpl(string publishingProfileXml)
         {
             var matcher = gitRegex.Match(publishingProfileXml);

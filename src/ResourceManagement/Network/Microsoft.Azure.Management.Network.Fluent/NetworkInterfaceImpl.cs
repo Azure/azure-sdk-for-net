@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         // used to generate unique name for any dependency resources.
         protected IResourceNamer namer;
 
+        ///GENMHASH:5C85B818743A5F30E309A5379B6A9A34:C0C9B388307AE67BE8D9EE6E90296330
         internal NetworkInterfaceImpl(
             string name,
             NetworkInterfaceInner innerModel,
@@ -134,6 +135,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6CB02C98B1D9201E95334813294DA523:F2BACBE27F5D505AA71F0FE676EF5720
         internal IUpdate WithoutLoadBalancerBackends()
         {
+            ///GENMHASH:8535B0E23E6704558262509B5A55B45D:CE76D91B778968B2CC0465313DF6F3F6
             foreach (var ipConfig in IpConfigurations().Values)
             {
                 UpdateIpConfiguration(ipConfig.Name)
@@ -343,7 +345,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return PrimaryIpConfiguration().PrivateIpAllocationMethod();
         }
 
-        ///GENMHASH:8535B0E23E6704558262509B5A55B45D:CE76D91B778968B2CC0465313DF6F3F6
         internal IDictionary<string, INicIpConfiguration> IpConfigurations()
         {
             return nicIpConfigurations;
@@ -369,6 +370,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the primary IP configuration of the network interface</returns>
+
         ///GENMHASH:3112993FF79864659400569FD226EA9E:267DFA5CED90051075D45C55F7FC0ABD
         internal NicIpConfigurationImpl PrimaryIpConfiguration()
         {
@@ -396,6 +398,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <returns>the list of DNS server IPs from the DNS settings</returns>
+
         ///GENMHASH:08B7E1E5C1AFE7A46CE9F049D5CDA430:C8A1E211AE92B97C661E3D7541994267
         private IList<string> DnsServerIps
         {
@@ -431,6 +434,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">name the name for the new ip configuration</param>
         /// <returns>NicIpConfiguration</returns>
+
         ///GENMHASH:C2E275E9E7942CEA349C5BB45AC39F3F:680A69F57A8E292A1C8AEE72C51E4DAA
         private NicIpConfigurationImpl PrepareNewNicIpConfiguration(string name)
         {
@@ -499,6 +503,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (networkSecurityGroup != null)
             {
                 Inner.NetworkSecurityGroup =
+                    ///GENMHASH:B6961E0C7CB3A9659DE0E1489F44A936:0B871D5CC01C5634C2C9305DF6429EF2
                     Manager.NetworkSecurityGroups.GetById(networkSecurityGroup.Id).Inner;
             }
 

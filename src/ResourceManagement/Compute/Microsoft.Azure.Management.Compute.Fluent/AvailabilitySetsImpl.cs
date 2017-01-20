@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet, Microsoft.Azure.Management.Compute.Fluent.AvailabilitySetImpl, Models.AvailabilitySetInner, IAvailabilitySetsOperations, IComputeManager>,
         IAvailabilitySets
     {
+        ///GENMHASH:8CC9050C7F8D33DF867D6102B6152B2E:872A681ED7AE386A7C237A1C77E3E12A
         internal AvailabilitySetsImpl(IAvailabilitySetsOperations client, IComputeManager computeManager) : base(client, computeManager)
         {}
 
@@ -74,6 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Fluent model helpers.
         /// </summary>
+
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0BFDE6A0F400FA3705EAC9170F74F0CB
         protected override AvailabilitySetImpl WrapModel(string name)
         {

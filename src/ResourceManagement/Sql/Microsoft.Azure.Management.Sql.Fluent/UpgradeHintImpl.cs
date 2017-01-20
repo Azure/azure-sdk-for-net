@@ -14,12 +14,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Wrapper<Models.UpgradeHint>,
         IUpgradeHint
     {
+
         ///GENMHASH:47B0CCFDDE32BC2E26AB51DB1F9DA342:507DFB69022C36CEE10273849AA5004C
         public Guid TargetServiceLevelObjectiveId()
         {
             return this.Inner.TargetServiceLevelObjectiveId.GetValueOrDefault();
         }
 
+        ///GENMHASH:D5C9144F34CDE74E76FA4B029FD4C6BF:C0C35E00AF4E17F141675A2C05C7067B
         internal UpgradeHintImpl(UpgradeHint innerObject)
             : base(innerObject)
         {

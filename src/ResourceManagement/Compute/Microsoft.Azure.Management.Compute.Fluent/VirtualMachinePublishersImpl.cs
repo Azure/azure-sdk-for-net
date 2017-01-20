@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private readonly IVirtualMachineImagesOperations innerCollection;
         private readonly IVirtualMachineExtensionImagesOperations extensionsInnerCollection;
 
+        ///GENMHASH:FAE60D4985B6939A3E27850EF50CF159:020EAF2CEFD87F9DC43CFF189FE7ABA9
         internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection, IVirtualMachineExtensionImagesOperations extensionsInnerCollection)
         {
             this.innerCollection = innerCollection;

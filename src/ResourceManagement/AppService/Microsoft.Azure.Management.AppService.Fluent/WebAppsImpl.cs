@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IWebApps
     {
         private WebSiteManagementClient serviceClient;
+
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public WebAppImpl Define(string name)
         {
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return webApp;
         }
 
+        ///GENMHASH:9CF36554B675F661BFEE8D1C53C27496:E373401BADB43C440BA3AAFA9214451D
         internal WebAppsImpl(IWebAppsOperations innerCollection, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base(innerCollection, manager)
         {

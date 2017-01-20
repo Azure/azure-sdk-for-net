@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             await InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
+        ///GENMHASH:C2F15BEB23386D8534B400C08B468649:2DA21496DE2BD6513C1C418114ACEF97
         internal RedisCachesImpl(IRedisOperations client, IPatchSchedulesOperations patchClient, RedisManager redisManager)
             : base(client, redisManager)
         {

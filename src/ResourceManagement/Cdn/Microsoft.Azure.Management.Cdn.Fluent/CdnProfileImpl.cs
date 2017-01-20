@@ -85,6 +85,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return null;
         }
 
+///GENMHASH:354CBBDA97F05BB45365CF6ACDACFE6A:8FB5265E82D3754CF30BC19DF6A29958
 		internal  CdnProfileImpl(
             string name, 
             ProfileInner innerModel, 

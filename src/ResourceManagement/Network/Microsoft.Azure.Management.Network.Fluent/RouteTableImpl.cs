@@ -81,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             InitializeChildrenFromInner();
         }
 
+        ///GENMHASH:7D06021127F5495854C63204B8AC2801:55E548B15E635A8197D52049D3FAB8D3
         internal RouteTableImpl(string name, RouteTableInner innerModel, IRouteTablesOperations innerCollection, INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;

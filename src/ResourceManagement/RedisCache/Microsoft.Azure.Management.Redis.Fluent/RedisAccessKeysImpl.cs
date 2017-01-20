@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// Creates an instance of the Redis Access keys result object.
         /// </summary>
         /// <param name="inner">The inner object.</param>
+        ///GENMHASH:C452582DCEC9B97DA6C301BBFC245AB7:BC4B1282CA708DC220050F834F17A184
         internal  RedisAccessKeysImpl(RedisAccessKeysInner inner)
         {
             this.inner = inner;

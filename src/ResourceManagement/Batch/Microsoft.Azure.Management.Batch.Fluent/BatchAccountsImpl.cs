@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         private IApplicationPackageOperations applicationPackagesClient;
         private ILocationOperations locationClient;
 
+        ///GENMHASH:704C7023D5B3E401D9747BB082F479BF:B46F5BAEB07AD00DFC9E48403D627ACE
         internal BatchAccountsImpl(
                 IBatchAccountOperations batchAccountOperations,
                 BatchManager manager,

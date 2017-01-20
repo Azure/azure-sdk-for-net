@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         private const string profileStatusDisabled = "Disabled";
         private const string profileStatusEnabled = "Enabled";
         private TrafficManagerEndpointsImpl endpoints;
+
         ///GENMHASH:C7D63CAAB4D5C78DCBABA455FA741326:50737CF16CD493FD8BB7A09EF461690C
         public string MonitoringPath()
         {
@@ -72,6 +73,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
             return this;
         }
 
+        ///GENMHASH:C5CC2EE74F2176AA6473857322F7C248:4D37314EF7F75B745F5D65EF257C1402
         internal  TrafficManagerProfileImpl(string name, ProfileInner innerModel, IProfilesOperations innerCollection, IEndpointsOperations endpointsClient, TrafficManager trafficManager) : base(name, innerModel, trafficManager)
         {
             this.innerCollection = innerCollection;

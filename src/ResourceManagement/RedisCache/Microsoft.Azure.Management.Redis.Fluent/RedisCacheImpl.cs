@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         private RedisCreateParametersInner createParameters;
         private RedisUpdateParametersInner updateParameters;
         private IDictionary<Models.DayOfWeek, ScheduleEntry> scheduleEntries;
+
         ///GENMHASH:A46525F44B70758E2EDBD761F1C43440:CDCB954FF16DBA73112F76E0FBD05F88
         public string SubnetId()
         {
@@ -105,6 +106,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:8D7485C72B719CA5E190D69B6FF75F54:EF1EAF9D3B229FCBEC276D19464D4B8C
         public RedisCacheImpl WithBasicSku()
         {
+            ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:43E446F640DC3345BDBD9A3378F2018A
             var newSku = new Sku
             {
                 Name = SkuName.Basic,
@@ -258,13 +260,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:43E446F640DC3345BDBD9A3378F2018A
         public Sku Sku()
         {
             return this.Inner.Sku;
         }
 
-        ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:3CE7182EA5FA9FC9A51CCA1F6E590546
+        ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:C4C75685A8644A15C4342387354A58BB
         public async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> UpdateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await client.UpdateAsync(this.ResourceGroupName, this.Name, updateParameters, cancellationToken);
@@ -531,6 +532,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
+        ///GENMHASH:1CA727C3FD99D6E28A9659CD7F1CF091:4E78F5B0D0A013537A5A89F07D0A88AD
         internal RedisCacheImpl(
             string name,
             RedisResourceInner innerModel,

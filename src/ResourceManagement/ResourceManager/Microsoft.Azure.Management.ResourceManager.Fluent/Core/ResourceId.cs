@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// Instantiate itself from a resource id, and give easy access to resource information like subscription, resourceGroup,
     /// resource name.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5SZXNvdXJjZUlk
     public sealed partial class ResourceId
     {
         private string subscriptionId = null;
@@ -18,11 +19,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         private string id = null;
         private string parentId = null;
 
+        ///GENMHASH:B70D6F6BA20797441C0D5C0B0242CAD5:AC79278EB6C329B8058928B3B6E10DDE
         private static string badIdErrorText(string id)
         {
             return string.Format("The specified ID {0} is not a valid Azure resource ID.", id);
         }
 
+        ///GENMHASH:B3F84178E98FD024C51BD0808983A7FD:292C69501E9130E0BF7366C3B6D23CFE
         private ResourceId(string id)
         {
             if (id == null)
@@ -118,12 +121,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// </summary>
         /// <param name="id">of the resource.</param>
         /// <return>ResourceId object</return>
+        ///GENMHASH:9716C5DFA259044737E756C8AC3056E1:344B4D5F59338530C5B0E76F0C6A5F45
         public static ResourceId FromString(string id)
         {
             return new ResourceId(id);
         }
 
         /// <return>Subscription id of the resource.</return>
+        ///GENMHASH:561EEE43F415BCC5A5C6A30A1481AA8F:A3EF4727161FD92A5C3223C68024FB22
         public string SubscriptionId
         {
             get
@@ -133,6 +138,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>Resource group name of the resource.</return>
+        ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:72046A7721B0FDB28FEFB6DE190C3DA2
         public string ResourceGroupName
         {
             get
@@ -142,6 +148,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>Name of the resource.</return>
+        ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:9DFC3C722BEBD17B99B0AB691D43FC18
         public string Name
         {
             get
@@ -151,6 +158,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>Parent resource id of the resource if any, otherwise null.</return>
+        ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:B5C3D5D089935CE04104F835B60237C6
         public ResourceId Parent
         {
             get
@@ -167,6 +175,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>Name of the provider.</return>
+        ///GENMHASH:D9D849D8C16B3DA934C69A95A1DDDB51:423582EDA5B1F4E232FE4036B6D476AA
         public string ProviderNamespace
         {
             get
@@ -176,6 +185,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>Type of the resource.</return>
+        ///GENMHASH:EC2A5EE0E9C0A186CA88677B91632991:EC34A1788A024AA626A6DA489C78DC7D
         public string ResourceType
         {
             get
@@ -185,6 +195,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>Full type of the resource.</return>
+        ///GENMHASH:59B5C5F8B8F571E387358FC7DB0134FF:7D81E6B7DE551A7F8C0A7A24B55F4E2F
         public string FullResourceType
         {
             get
@@ -201,6 +212,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         /// <return>The id of the resource.</return>
+        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:B865F40D3CB1A8C2252FEDBC45724D15
         public string Id
         {
             get

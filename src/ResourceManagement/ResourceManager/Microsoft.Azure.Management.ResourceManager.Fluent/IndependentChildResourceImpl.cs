@@ -13,9 +13,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// </summary>
     /// <typeparam name="FluentModel">The fluent model type.</typeparam>
     /// <typeparam name="FluentParentModel">The fluent model for parent resource.</typeparam>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5tb2RlbHMuaW1wbGVtZW50YXRpb24uSW5kZXBlbmRlbnRDaGlsZFJlc291cmNlSW1wbA==
     /// <typeparam name="InnerModel">Azure inner resource class type.</typeparam>
     /// <typeparam name="FluentModelImpl">The implementation type of the fluent model type.</typeparam>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5tb2RlbHMuaW1wbGVtZW50YXRpb24uSW5kZXBlbmRlbnRDaGlsZFJlc291cmNlSW1wbA==
+
     public abstract class IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT> :
         IndependentChildImpl<IFluentResourceT,FluentParentModelT,InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT>,
         IIndependentChildResource
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// </summary>
         /// <param name="key">The key of the tag to remove.</param>
         /// <return>The next stage of the resource definition/update.</return>
+
         ///GENMHASH:2345D3E100BA4B78504A2CC57A361F1E:F09D7F392261B6225D607D71947E5D4D
         public  FluentResourceT WithoutTag(string key)
         {
@@ -43,6 +45,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// </summary>
         /// <param name="name">The name of the resource.</param>
         /// <param name="innerObject">The inner object.</param>
+        ///GENMHASH:E0523E7DBA50D933E82FB55AEF0FEEE3:2572719AB7F9FA6EF015164D8E50629B
         protected  IndependentChildResourceImpl(string name, InnerModelT innerObject) : base(name, innerObject)
         {
             if (Inner.Tags == null)
@@ -84,6 +87,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// <param name="key">The key for the tag.</param>
         /// <param name="value">The value for the tag.</param>
         /// <return>The next stage of the resource definition/update.</return>
+
         ///GENMHASH:FF80DD5A8C82E021759350836BD2FAD1:3F40906A9FA52509037F6BFCDD20BF33
         public FluentResourceT WithTag(string key, string value)
         {
@@ -99,6 +103,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// </summary>
         /// <param name="tags">A Map of tags.</param>
         /// <return>The next stage of the resource definition/update.</return>
+
         ///GENMHASH:32E35A609CF1108D0FC5FAAF9277C1AA:44AB506D9A8E5CFFF51BB0ADBE880CDD
         public FluentResourceT WithTags(IDictionary<string, string> tags)
         {

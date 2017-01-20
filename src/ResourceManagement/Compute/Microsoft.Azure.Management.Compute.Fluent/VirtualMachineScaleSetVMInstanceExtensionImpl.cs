@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IDictionary<string, object> publicSettings;
         private IDictionary<string, object> protectedSettings;
+
         ///GENMHASH:E21E3E6E61153DDD23E28BC18B49F1AC:6FB4182F747416C98B49B59F74185782
         public VirtualMachineExtensionInstanceView InstanceView()
         {
@@ -57,6 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return JsonConvert.SerializeObject(this.publicSettings);
         }
 
+        ///GENMHASH:0016636B1947D033B76D88F9E31C3165:815BF11DE6127502A0AFCB14BE98F20E
         internal VirtualMachineScaleSetVMInstanceExtensionImpl(VirtualMachineExtensionInner inner,
             VirtualMachineScaleSetVMImpl parent) : base(inner, parent)
         {

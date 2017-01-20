@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
         ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
     {
+        ///GENMHASH:810ADAE06099EC51B2E3C858F502369C:0FCD47CBCD9128C3D4A03458C5796741
         internal SqlDatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager)
             : base(innerCollection, manager)
         {

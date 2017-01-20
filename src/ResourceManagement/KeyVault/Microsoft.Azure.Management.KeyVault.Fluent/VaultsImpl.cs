@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     {
         private IGraphRbacManager graphRbacManager;
         private string tenantId;
+        ///GENMHASH:CDB7D4D816159A58F5240A4C88E5241C:4E00EDDBAADBA44B155253E3B63448A4
         internal VaultsImpl (IVaultsOperations client, IKeyVaultManager keyVaultManager, IGraphRbacManager graphRbacManager, string tenantId)
             : base(client, keyVaultManager)
         {

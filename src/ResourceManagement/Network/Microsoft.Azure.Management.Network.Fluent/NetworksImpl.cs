@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkManager>,
         INetworks
     {
+        ///GENMHASH:99AB116FA6B60A0F95DB5F2163F9ADFA:B5BDA251123B955B743DF55108166660
         internal  NetworksImpl (NetworkManagementClient networkClient, NetworkManager networkManager)
             : base(networkClient.VirtualNetworks, networkManager)
         {
@@ -106,6 +107,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         //$TODO: this should return NetworkImpl
+
         ///GENMHASH:95C9E8EAF4F740DFFF516E71ABF00C42:E81780AEFA4C9F41FD95A65101672DF8
         override protected INetwork WrapModel (VirtualNetworkInner inner)
         {

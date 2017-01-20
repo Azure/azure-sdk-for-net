@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         ISoaRecordSet
     {
+
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:352DEB81080973F0DD8A640958597C6B
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {

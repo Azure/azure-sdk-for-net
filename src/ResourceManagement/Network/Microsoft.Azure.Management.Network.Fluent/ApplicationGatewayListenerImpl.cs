@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayListener.Update.IUpdate
     {
+        ///GENMHASH:FDD79F9F4A54F00F3D88A305BD6E4101:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayListenerImpl(ApplicationGatewayHttpListenerInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
         }

@@ -55,6 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             }
         }
 
+        ///GENMHASH:1D60743D6610D89F39BC74DA9C2B8F8B:E99F7FD0EF35FEF2A4996B397160B70D
         internal SqlElasticPoolImpl(string name, ElasticPoolInner innerObject, IElasticPoolsOperations innerCollection, IDatabasesOperations databasesInner, DatabasesImpl databasesImpl)
             : base(name, innerObject)
         {
@@ -134,7 +135,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             this.innerCollection.Delete(this.ResourceGroupName, this.SqlServerName(), this.Name);
         }
 
-        ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:F01D6FF97E40E88626C9C874F2B4B251
+        ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:D78C4C70C8A28CECCD68CF0E66EED127
         public SqlElasticPoolImpl WithNewDatabase(string databaseName)
         {
             this.databaseCreatableMap.Add(databaseName,

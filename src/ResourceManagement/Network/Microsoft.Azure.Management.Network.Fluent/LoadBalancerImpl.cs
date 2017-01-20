@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, ILoadBalancerInboundNatRule> inboundNatRules;
         private IDictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
 
+        ///GENMHASH:A5942A0C76A5AF979ACC449D61F54472:55E548B15E635A8197D52049D3FAB8D3
         internal  LoadBalancerImpl (
             string name,
             LoadBalancerInner innerModel,
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             InitializeInboundNatPoolsFromInner();
         }
 
-        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:3061E90D07E191545E5CD32EB1ADE404
+        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:A2B77D58139C0FC91365D685293E8053
         override protected void BeforeCreating ()
         {
             // Account for the newly created public IPs
@@ -161,7 +162,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:F91F57741BB7E185BF012523964DEED0:3651242660180F80ED31BB69FF7A531C
+        ///GENMHASH:F91F57741BB7E185BF012523964DEED0:913EF94ED897E3845748DD6CF160D61F
         override protected void AfterCreating ()
         {
             // Update the NICs to point to the backend pool

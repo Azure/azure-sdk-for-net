@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         private IApplicationPackageOperations client;
         private ApplicationImpl parent;
 
+        ///GENMHASH:1E4CA209B0AD4710E5C7F91ECC84511C:5B3AB401341688B60693658520A75514
         internal ApplicationPackagesImpl(IApplicationPackageOperations client, ApplicationImpl parent)
             : base(parent, "ApplicationPackage")
         {

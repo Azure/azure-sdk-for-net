@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachineExtensionImageType type;
+        ///GENMHASH:D2BFC73D89DA81F8725869BCA7B43486:885573F98652685D1517794C6009732F
         internal VirtualMachineExtensionImageVersionImpl(IVirtualMachineExtensionImagesOperations client, IVirtualMachineExtensionImageType extensionImageType, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.client = client;
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return this.Inner.Name;
         }
-        
+
         ///GENMHASH:F340B9C68B7C557DDB54F615FEF67E89:3054A3D10ED7865B89395E7C007419C9
         public string RegionName()
         {

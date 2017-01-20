@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         public static readonly ProfileMonitorStatus CheckingEndpoint = new ProfileMonitorStatus("CheckingEndpoint");
 
         private string value;
+
         ///GENMHASH:0A2A1204F2A167AF288B2FBF2A490437:7E40CAD8AD46FC64A58AAA73BDA0A301
         public override int GetHashCode()
         {
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Creates ProfileMonitorStatus.
         /// </summary>
         /// <param name="value">The status.</param>
+        ///GENMHASH:ECD4398EA2EC7FEB4CC1A0B1DD1DE3CF:030291F3BFD74EABE095743C12CD3AEA
         public  ProfileMonitorStatus(string value)
         {
             this.value = value;

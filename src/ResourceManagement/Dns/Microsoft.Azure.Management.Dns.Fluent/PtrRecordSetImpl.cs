@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         IPtrRecordSet
     {
+
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:8254A32ABF739B147B00EFE318330056
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return targetDomainNames;
         }
 
+        ///GENMHASH:626ADA7635E8C9E10AE63FDF8E70C4FE:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  PtrRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

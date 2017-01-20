@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IAppServiceDomains
     {
         private ITopLevelDomainsOperations topLevelDomainsInner;
+
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public AppServiceDomainImpl Define(string name)
         {
@@ -75,6 +76,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WrapList(innerPagedList);
         }
 
+        ///GENMHASH:9303C19C6745E77DCF648A0A5F603980:6058FD68A2D3CB7431C37FFF30958B5E
         internal  AppServiceDomainsImpl(IDomainsOperations InnerCollection, ITopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
             : base (InnerCollection, manager)
         {

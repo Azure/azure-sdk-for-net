@@ -45,26 +45,31 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             return Inner.ObjectId;
         }
+
         ///GENMHASH:29024ACA1EA67366DE27F7A1B972E458:75852A31ACA71709FD61BA0195203BFF
         public string ObjectType()
         {
                 return Inner.ObjectType;
         }
+
         ///GENMHASH:19FB5490B29F08AC39628CD5F893E975:54FC41D8034FD612C7047E2055BC6E48
         public string DisplayName()
         {
                 return Inner.DisplayName;
         }
+
         ///GENMHASH:CF00964037C1AADDCC0C25C134168C6E:DBDA3E40337A88C78112F81653959508
         public string AppId()
         {
                 return Inner.AppId;
         }
+
         ///GENMHASH:3190BDAA4917D0479F1E9EBBDAC6590C:9C7DB50BD87DDC349B690C1F34C49A26
         public IList<string> ServicePrincipalNames()
         {
                 return Inner.ServicePrincipalNames;
         }
+
         ///GENMHASH:8B8E171AB3970DFD7516F84B8C19861C:4549C714DB7AE421B3ED125CD30CFEF9
         public ServicePrincipalImpl WithAccountEnabled(bool enabled)
         {
