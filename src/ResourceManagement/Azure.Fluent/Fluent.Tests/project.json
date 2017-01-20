@@ -10,7 +10,6 @@
     "netcoreapp1.0": {
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "System.Diagnostics.Tracing": "4.1.0"
       }
     }
   },
@@ -20,10 +19,11 @@
       "type": "platform",
       "version": "1.0.0"
     },
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.9-preview, 3.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10, 3.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
     "Microsoft.Azure.Management.Fluent": "[1.0.0-beta50, 2.0)",
     "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta50, 2.0)",
     "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta50, 2.0)",
@@ -36,7 +36,6 @@
     "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0-beta50, 2.0)",
     "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0-beta50, 2.0)",
     "Microsoft.Azure.Management.AppService.Fluent": "[1.0.0-beta50, 2.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
     "SSH.NET": "2016.0.0"
   }
 }

@@ -50,11 +50,7 @@
       },
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.1.0",
-        "System.Diagnostics.Tools": "4.3.0",
-        "System.Net.Http": "4.3.0",
-        "System.Runtime.Serialization.Primitives": "4.3.0",
-        "System.Threading.Tasks": "4.3.0"
+        "NETStandard.Library": "1.6.1"
       }
     },
     "netstandard1.1": {
@@ -64,7 +60,7 @@
       },
       "imports": [ "dnxcore50" ],
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.3.0"
+        "NETStandard.Library": "1.6.1"
       }
     }
   }
