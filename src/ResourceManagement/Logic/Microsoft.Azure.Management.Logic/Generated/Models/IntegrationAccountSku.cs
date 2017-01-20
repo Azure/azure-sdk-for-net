@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Logic.Models
 
         /// <summary>
         /// Gets or sets the sku name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
+        /// 'NotSpecified', 'Free', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public IntegrationAccountSkuName? Name { get; set; }

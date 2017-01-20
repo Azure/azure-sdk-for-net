@@ -22,13 +22,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         NotSpecified,
         [EnumMember(Value = "Free")]
         Free,
-        [EnumMember(Value = "Shared")]
-        Shared,
-        [EnumMember(Value = "Basic")]
-        Basic,
         [EnumMember(Value = "Standard")]
-        Standard,
-        [EnumMember(Value = "Premium")]
-        Premium
+        Standard
     }
 }
