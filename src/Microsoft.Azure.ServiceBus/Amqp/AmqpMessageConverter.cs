@@ -7,7 +7,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Runtime.Serialization;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
@@ -34,43 +33,57 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static AmqpMessage BrokeredMessagesToAmqpMessage(IEnumerable<BrokeredMessage> brokeredMessages, bool batchable)
         {
-            AmqpMessage amqpMessage;
-            if (brokeredMessages.Count() == 1)
+            AmqpMessage amqpMessage = null;
+            BrokeredMessage firstBrokeredMessage = null;
+            List<Data> dataList = null;
+            int messageCount = 0;
+            foreach (var brokeredMessage in brokeredMessages)
             {
-                BrokeredMessage singleBrokeredMessage = brokeredMessages.Single();
-                amqpMessage = AmqpMessageConverter.ClientGetMessage(singleBrokeredMessage);
+                if (firstBrokeredMessage == null)
+                {
+                    firstBrokeredMessage = brokeredMessage;
+                }
+
+                if (messageCount == 1)
+                {
+                    dataList = new List<Data> { ToData(amqpMessage) };
+                }
+
+                amqpMessage = AmqpMessageConverter.ClientGetMessage(brokeredMessage);
+
+                if (messageCount > 1)
+                {
+                    // ReSharper disable once PossibleNullReferenceException
+                    dataList.Add(ToData(amqpMessage));
+                }
+
+                messageCount++;
             }
-            else
+
+            if (messageCount == 1)
             {
-                List<Data> dataList = new List<Data>();
-                foreach (BrokeredMessage brokeredMessage in brokeredMessages)
-                {
-                    AmqpMessage amqpMessageItem = AmqpMessageConverter.ClientGetMessage(brokeredMessage);
-                    ArraySegment<byte>[] payload = amqpMessageItem.GetPayload();
-                    BufferListStream buffer = new BufferListStream(payload);
-                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
-                    dataList.Add(new Data() { Value = value });
-                }
+                amqpMessage.Batchable = batchable;
+                return amqpMessage;
+            }
 
-                BrokeredMessage firstBrokeredMessage = brokeredMessages.First();
+            amqpMessage = AmqpMessage.Create(dataList);
+            amqpMessage.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
 
-                amqpMessage = AmqpMessage.Create(dataList);
-                amqpMessage.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
+            // ReSharper disable once PossibleNullReferenceException
+            if (firstBrokeredMessage.MessageId != null)
+            {
+                amqpMessage.Properties.MessageId = firstBrokeredMessage.MessageId;
+            }
 
-                if (firstBrokeredMessage.MessageId != null)
-                {
-                    amqpMessage.Properties.MessageId = firstBrokeredMessage.MessageId;
-                }
+            if (firstBrokeredMessage.SessionId != null)
+            {
+                amqpMessage.Properties.GroupId = firstBrokeredMessage.SessionId;
+            }
 
-                if (firstBrokeredMessage.SessionId != null)
-                {
-                    amqpMessage.Properties.GroupId = firstBrokeredMessage.SessionId;
-                }
-
-                if (firstBrokeredMessage.PartitionKey != null)
-                {
-                    amqpMessage.MessageAnnotations.Map[AmqpMessageConverter.PartitionKeyName] = firstBrokeredMessage.PartitionKey;
-                }
+            if (firstBrokeredMessage.PartitionKey != null)
+            {
+                amqpMessage.MessageAnnotations.Map[AmqpMessageConverter.PartitionKeyName] =
+                    firstBrokeredMessage.PartitionKey;
             }
 
             amqpMessage.Batchable = batchable;
@@ -519,7 +532,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return buffer;
         }
 
-        static Stream GetMessageBodyStream(AmqpMessage message)
+        private static Stream GetMessageBodyStream(AmqpMessage message)
         {
             if ((message.BodyType & SectionFlag.Data) != 0 &&
                 message.DataBody != null)
@@ -534,6 +547,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return null;
+        }
+
+        private static Data ToData(AmqpMessage message)
+        {
+            ArraySegment<byte>[] payload = message.GetPayload();
+            BufferListStream buffer = new BufferListStream(payload);
+            ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+            return new Data { Value = value };
         }
     }
 }
