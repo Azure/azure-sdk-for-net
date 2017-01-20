@@ -74,17 +74,26 @@ namespace Microsoft.Azure.ServiceBus
 
         internal QueueClient CreateQueueClient(string entityPath, ReceiveMode mode)
         {
-            return new AmqpQueueClient(this, entityPath, mode);
+            MessagingEventSource.Log.QueueClientCreateStart(this.Endpoint.Host, entityPath, mode.ToString());
+            AmqpQueueClient queueClient = new AmqpQueueClient(this, entityPath, mode);
+            MessagingEventSource.Log.QueueClientCreateStop(this.Endpoint.Host, entityPath, queueClient.ClientId);
+            return queueClient;
         }
 
         internal TopicClient CreateTopicClient(string topicPath)
         {
-            return new AmqpTopicClient(this, topicPath);
+            MessagingEventSource.Log.TopicClientCreateStart(this.Endpoint.Host, topicPath);
+            AmqpTopicClient topicClient = new AmqpTopicClient(this, topicPath);
+            MessagingEventSource.Log.TopicClientCreateStop(this.Endpoint.Host, topicPath, topicClient.ClientId);
+            return topicClient;
         }
 
         internal SubscriptionClient CreateSubscriptionClient(string topicPath, string subscriptionName, ReceiveMode mode)
         {
-            return new AmqpSubscriptionClient(this, topicPath, subscriptionName, mode);
+            MessagingEventSource.Log.SubscriptionClientCreateStart(this.Endpoint.Host, topicPath, subscriptionName, mode.ToString());
+            AmqpSubscriptionClient subscriptionClient = new AmqpSubscriptionClient(this, topicPath, subscriptionName, mode);
+            MessagingEventSource.Log.SubscriptionClientCreateStop(this.Endpoint.Host, topicPath, subscriptionName, subscriptionClient.ClientId);
+            return subscriptionClient;
         }
 
         protected void InitializeConnection(ServiceBusConnectionStringBuilder builder)

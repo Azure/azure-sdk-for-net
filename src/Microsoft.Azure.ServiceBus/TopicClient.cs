@@ -101,17 +101,9 @@ namespace Microsoft.Azure.ServiceBus
             return this.SendAsync(new[] { brokeredMessage });
         }
 
-        public async Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
+        public Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
         {
-            try
-            {
-                await this.InnerSender.SendAsync(brokeredMessages).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Send Exception
-                throw;
-            }
+            return this.InnerSender.SendAsync(brokeredMessages);
         }
 
         protected MessageSender CreateMessageSender()

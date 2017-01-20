@@ -152,17 +152,9 @@ namespace Microsoft.Azure.ServiceBus
             return this.SendAsync(new BrokeredMessage[] { brokeredMessage });
         }
 
-        public async Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
+        public Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
         {
-            try
-            {
-                await this.InnerSender.SendAsync(brokeredMessages).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Send Exception
-                throw;
-            }
+            return this.InnerSender.SendAsync(brokeredMessages);
         }
 
         public async Task<BrokeredMessage> ReceiveAsync()
@@ -176,17 +168,9 @@ namespace Microsoft.Azure.ServiceBus
             return null;
         }
 
-        public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
+        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
         {
-            try
-            {
-                return await this.InnerReceiver.ReceiveAsync(maxMessageCount).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Receive Exception
-                throw;
-            }
+            return this.InnerReceiver.ReceiveAsync(maxMessageCount);
         }
 
         public async Task<BrokeredMessage> ReceiveBySequenceNumberAsync(long sequenceNumber)
@@ -200,17 +184,9 @@ namespace Microsoft.Azure.ServiceBus
             return null;
         }
 
-        public async Task<IList<BrokeredMessage>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
+        public Task<IList<BrokeredMessage>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
         {
-            try
-            {
-                return await this.InnerReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Receive Exception
-                throw;
-            }
+            return this.InnerReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
         }
 
         /// <summary>
@@ -219,15 +195,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
         public Task<BrokeredMessage> PeekAsync()
         {
-            try
-            {
-                return this.innerReceiver.PeekAsync();
-            }
-            catch (Exception)
-            {
-                // TODO: Log Peek Exception
-                throw;
-            }
+            return this.innerReceiver.PeekAsync();
         }
 
         /// <summary>
@@ -237,15 +205,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The asynchronous operation that returns a list of <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> to be read.</returns>
         public Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
         {
-            try
-            {
-                return this.innerReceiver.PeekAsync(maxMessageCount);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Receive Exception
-                throw;
-            }
+            return this.innerReceiver.PeekAsync(maxMessageCount);
         }
 
         /// <summary>
@@ -255,15 +215,16 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
         public Task<BrokeredMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
         {
-            try
-            {
-                return this.innerReceiver.PeekBySequenceNumberAsync(fromSequenceNumber);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Receive Exception
-                throw;
-            }
+            return this.innerReceiver.PeekBySequenceNumberAsync(fromSequenceNumber);
+        }
+
+        /// <summary>Peeks a batch of messages.</summary>
+        /// <param name="fromSequenceNumber">The starting point from which to browse a batch of messages.</param>
+        /// <param name="messageCount">The number of messages.</param>
+        /// <returns>A batch of messages peeked.</returns>
+        public Task<IList<BrokeredMessage>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
+        {
+            return this.innerReceiver.PeekBySequenceNumberAsync(fromSequenceNumber, messageCount);
         }
 
         public Task CompleteAsync(Guid lockToken)
@@ -271,35 +232,14 @@ namespace Microsoft.Azure.ServiceBus
             return this.CompleteAsync(new Guid[] { lockToken });
         }
 
-        public async Task CompleteAsync(IEnumerable<Guid> lockTokens)
+        public Task CompleteAsync(IEnumerable<Guid> lockTokens)
         {
-            try
-            {
-                await this.InnerReceiver.CompleteAsync(lockTokens).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Complete Exception
-                throw;
-            }
+            return this.InnerReceiver.CompleteAsync(lockTokens);
         }
 
         public Task AbandonAsync(Guid lockToken)
         {
-            return this.AbandonAsync(new Guid[] { lockToken });
-        }
-
-        public async Task AbandonAsync(IEnumerable<Guid> lockTokens)
-        {
-            try
-            {
-                await this.InnerReceiver.AbandonAsync(lockTokens).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Complete Exception
-                throw;
-            }
+            return this.InnerReceiver.AbandonAsync(new Guid[] { lockToken });
         }
 
         public Task<MessageSession> AcceptMessageSessionAsync()
@@ -310,66 +250,36 @@ namespace Microsoft.Azure.ServiceBus
         public async Task<MessageSession> AcceptMessageSessionAsync(string sessionId)
         {
             MessageSession session = null;
+
+            MessagingEventSource.Log.AcceptMessageSessionStart(this.ClientId, sessionId);
+
             try
             {
                 session = await this.OnAcceptMessageSessionAsync(sessionId).ConfigureAwait(false);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                // TODO: Log Complete Exception
+                MessagingEventSource.Log.AcceptMessageSessionException(this.ClientId, exception);
                 throw;
             }
 
+            MessagingEventSource.Log.AcceptMessageSessionStop(this.ClientId);
             return session;
         }
 
         public Task DeferAsync(Guid lockToken)
         {
-            return this.DeferAsync(new Guid[] { lockToken });
-        }
-
-        public async Task DeferAsync(IEnumerable<Guid> lockTokens)
-        {
-            try
-            {
-                await this.InnerReceiver.DeferAsync(lockTokens).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Complete Exception
-                throw;
-            }
+            return this.InnerReceiver.DeferAsync(new Guid[] { lockToken });
         }
 
         public Task DeadLetterAsync(Guid lockToken)
         {
-            return this.DeadLetterAsync(new Guid[] { lockToken });
+            return this.InnerReceiver.DeadLetterAsync(new Guid[] { lockToken });
         }
 
-        public async Task DeadLetterAsync(IEnumerable<Guid> lockTokens)
+        public Task<DateTime> RenewMessageLockAsync(Guid lockToken)
         {
-            try
-            {
-                await this.InnerReceiver.DeadLetterAsync(lockTokens).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Complete Exception
-                throw;
-            }
-        }
-
-        public async Task<DateTime> RenewMessageLockAsync(Guid lockToken)
-        {
-            try
-            {
-                return await this.InnerReceiver.RenewLockAsync(lockToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                // TODO: Log Complete Exception
-                throw;
-            }
+            return this.InnerReceiver.RenewLockAsync(lockToken);
         }
 
         protected MessageSender CreateMessageSender()

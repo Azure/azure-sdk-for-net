@@ -73,6 +73,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
+            MessagingEventSource.Log.AmqpSendLinkCreateStart(this.ClientId, this.EntityType, this.Path);
+
             AmqpLinkSettings linkSettings = new AmqpLinkSettings
             {
                 Role = false,
@@ -84,6 +86,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             AmqpSendReceiveLinkCreator sendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.Path, this.ServiceBusConnection, new[] { ClaimConstants.Send }, this.CbsTokenProvider, linkSettings);
             SendingAmqpLink sendingAmqpLink = (SendingAmqpLink)await sendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+
+            MessagingEventSource.Log.AmqpSendLinkCreateStop(this.ClientId);
             return sendingAmqpLink;
         }
 

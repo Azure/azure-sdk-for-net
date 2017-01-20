@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Amqp;
 
@@ -81,54 +82,146 @@ namespace Microsoft.Azure.ServiceBus
             return null;
         }
 
-        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
+        public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
         {
-            return this.OnReceiveAsync(maxMessageCount);
+            MessagingEventSource.Log.MessageReceiveStart(this.ClientId, maxMessageCount);
+
+            IList<BrokeredMessage> messages = null;
+            try
+            {
+                 messages = await this.OnReceiveAsync(maxMessageCount).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageReceiveException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageReceiveStop(this.ClientId, messages?.Count ?? 0);
+            return messages;
         }
 
-        public Task<IList<BrokeredMessage>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
-        {
-            return this.OnReceiveBySequenceNumberAsync(sequenceNumbers);
-        }
-
-        public Task CompleteAsync(IEnumerable<Guid> lockTokens)
+        public async Task<IList<BrokeredMessage>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
         {
             this.ThrowIfNotPeekLockMode();
-            MessageReceiver.ValidateLockTokens(lockTokens);
+            int count = MessageReceiver.ValidateSequenceNumbers(sequenceNumbers);
 
-            return this.OnCompleteAsync(lockTokens);
+            MessagingEventSource.Log.MessageReceiveBySequenceNumberStart(this.ClientId, count, sequenceNumbers);
+
+            IList<BrokeredMessage> messages = null;
+            try
+            {
+                messages = await this.OnReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageReceiveBySequenceNumberException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageReceiveBySequenceNumberStop(this.ClientId, messages?.Count ?? 0);
+
+            return messages;
         }
 
-        public Task AbandonAsync(IEnumerable<Guid> lockTokens)
+        public async Task CompleteAsync(IEnumerable<Guid> lockTokens)
         {
             this.ThrowIfNotPeekLockMode();
-            MessageReceiver.ValidateLockTokens(lockTokens);
+            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            return this.OnAbandonAsync(lockTokens);
+            MessagingEventSource.Log.MessageCompleteStart(this.ClientId, count, lockTokens);
+
+            try
+            {
+                await this.OnCompleteAsync(lockTokens).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageCompleteException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageCompleteStop(this.ClientId);
         }
 
-        public Task DeferAsync(IEnumerable<Guid> lockTokens)
+        public async Task AbandonAsync(IEnumerable<Guid> lockTokens)
         {
             this.ThrowIfNotPeekLockMode();
-            MessageReceiver.ValidateLockTokens(lockTokens);
+            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            return this.OnDeferAsync(lockTokens);
+            MessagingEventSource.Log.MessageAbandonStart(this.ClientId, count, lockTokens);
+            try
+            {
+                await this.OnAbandonAsync(lockTokens).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageAbandonException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageAbandonStop(this.ClientId);
         }
 
-        public Task DeadLetterAsync(IEnumerable<Guid> lockTokens)
+        public async Task DeferAsync(IEnumerable<Guid> lockTokens)
         {
             this.ThrowIfNotPeekLockMode();
-            MessageReceiver.ValidateLockTokens(lockTokens);
+            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            return this.OnDeadLetterAsync(lockTokens);
+            MessagingEventSource.Log.MessageDeferStart(this.ClientId, count, lockTokens);
+
+            try
+            {
+                await this.OnDeferAsync(lockTokens).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageDeferException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageDeferStop(this.ClientId);
         }
 
-        public Task<DateTime> RenewLockAsync(Guid lockToken)
+        public async Task DeadLetterAsync(IEnumerable<Guid> lockTokens)
         {
             this.ThrowIfNotPeekLockMode();
-            MessageReceiver.ValidateLockTokens(new Guid[] { lockToken });
+            int count = MessageReceiver.ValidateLockTokens(lockTokens);
 
-            return this.OnRenewLockAsync(lockToken);
+            MessagingEventSource.Log.MessageDeadLetterStart(this.ClientId, count, lockTokens);
+
+            try
+            {
+                await this.OnDeadLetterAsync(lockTokens).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageDeadLetterException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageDeadLetterStop(this.ClientId);
+        }
+
+        public async Task<DateTime> RenewLockAsync(Guid lockToken)
+        {
+            this.ThrowIfNotPeekLockMode();
+
+            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, new Guid[] { lockToken });
+
+            DateTime lockedUntilUtc = DateTime.MinValue;
+            try
+            {
+                lockedUntilUtc = await this.OnRenewLockAsync(lockToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessageRenewLockException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessageRenewLockStop(this.ClientId);
+            return lockedUntilUtc;
         }
 
         /// <summary>
@@ -145,9 +238,9 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="maxMessageCount">The number of messages.</param>
         /// <returns>The asynchronous operation that returns a list of <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> to be read.</returns>
-        public async Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
+        public Task<IList<BrokeredMessage>> PeekAsync(int maxMessageCount)
         {
-            return await this.OnPeekAsync(this.lastPeekedSequenceNumber + 1, maxMessageCount).ConfigureAwait(false);
+            return this.PeekBySequenceNumberAsync(this.lastPeekedSequenceNumber + 1, maxMessageCount);
         }
 
         /// <summary>
@@ -157,8 +250,32 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The asynchronous operation that returns the <see cref="Microsoft.Azure.ServiceBus.BrokeredMessage" /> that represents the next message to be read.</returns>
         public async Task<BrokeredMessage> PeekBySequenceNumberAsync(long fromSequenceNumber)
         {
-            var messages = await this.OnPeekAsync(fromSequenceNumber, messageCount: 1).ConfigureAwait(false);
+            var messages = await this.PeekBySequenceNumberAsync(fromSequenceNumber, 1).ConfigureAwait(false);
             return messages?.FirstOrDefault();
+        }
+
+        /// <summary>Peeks a batch of messages.</summary>
+        /// <param name="fromSequenceNumber">The starting point from which to browse a batch of messages.</param>
+        /// <param name="messageCount">The number of messages.</param>
+        /// <returns>A batch of messages peeked.</returns>
+        public async Task<IList<BrokeredMessage>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
+        {
+            IList<BrokeredMessage> messages = null;
+
+            MessagingEventSource.Log.MessagePeekStart(this.ClientId, fromSequenceNumber, messageCount);
+            try
+            {
+                messages = await this.OnPeekAsync(fromSequenceNumber, messageCount).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.MessagePeekException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.MessagePeekStop(this.ClientId, messages?.Count ?? 0);
+
+            return messages;
         }
 
         protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount);
@@ -177,12 +294,26 @@ namespace Microsoft.Azure.ServiceBus
 
         protected abstract Task<IList<BrokeredMessage>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1);
 
-        static void ValidateLockTokens(IEnumerable<Guid> lockTokens)
+        static int ValidateLockTokens(IEnumerable<Guid> lockTokens)
         {
-            if (lockTokens == null || !lockTokens.Any())
+            int count;
+            if (lockTokens == null || (count = lockTokens.Count()) == 0)
             {
                 throw Fx.Exception.ArgumentNull(nameof(lockTokens));
             }
+
+            return count;
+        }
+
+        static int ValidateSequenceNumbers(IEnumerable<long> sequenceNumbers)
+        {
+            int count;
+            if (sequenceNumbers == null || (count = sequenceNumbers.Count()) == 0)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(sequenceNumbers));
+            }
+
+            return count;
         }
 
         void ThrowIfNotPeekLockMode()

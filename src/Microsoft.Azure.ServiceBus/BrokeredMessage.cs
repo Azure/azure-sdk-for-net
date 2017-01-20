@@ -401,24 +401,6 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        ///// <summary> Gets or sets a context for the receive. </summary>
-        ///// <value> The receive context. </value>
-        ///// TODO
-        ////internal ReceiveContext ReceiveContext
-        ////{
-        ////    get
-        ////    {
-        ////        this.ThrowIfDisposed();
-        ////        return this.receiveContext;
-        ////    }
-
-        ////    set
-        ////    {
-        ////        this.ThrowIfDisposed();
-        ////        this.receiveContext = value;
-        ////    }
-        ////}
-
         /// <summary>Gets or sets the type of the content.</summary>
         /// <value>The type of the content of the message body. This is a
         /// content type identifier utilized by the sender and receiver for application specific logic.</value>

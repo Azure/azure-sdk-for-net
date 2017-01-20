@@ -28,14 +28,20 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public async Task<AmqpObject> CreateAndOpenAmqpLinkAsync()
         {
             TimeoutHelper timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout);
+
+            MessagingEventSource.Log.AmqpGetOrCreateConnectionStart();
             AmqpConnection connection = await this.serviceBusConnection.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            MessagingEventSource.Log.AmqpGetOrCreateConnectionStop();
 
             // Authenticate over CBS
             AmqpCbsLink cbsLink = connection.Extensions.Find<AmqpCbsLink>();
             Uri address = new Uri(this.serviceBusConnection.Endpoint, this.entityPath);
             string audience = address.AbsoluteUri;
             string resource = address.AbsoluteUri;
+
+            MessagingEventSource.Log.AmqpSendAuthenticanTokenStart(address, audience, resource, this.requiredClaims);
             await cbsLink.SendTokenAsync(this.cbsTokenProvider, address, audience, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            MessagingEventSource.Log.AmqpSendAuthenticanTokenStop();
 
             AmqpSession session = null;
             try
