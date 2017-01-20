@@ -28,17 +28,17 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the IntegrationAccountMapFilter
         /// class.
         /// </summary>
-        public IntegrationAccountMapFilter(MapType? schemaType = default(MapType?))
+        public IntegrationAccountMapFilter(MapType? mapType = default(MapType?))
         {
-            SchemaType = schemaType;
+            MapType = mapType;
         }
 
         /// <summary>
         /// Gets or sets the map type of integration account map. Possible
         /// values include: 'NotSpecified', 'Xslt'
         /// </summary>
-        [JsonProperty(PropertyName = "schemaType")]
-        public MapType? SchemaType { get; set; }
+        [JsonProperty(PropertyName = "mapType")]
+        public MapType? MapType { get; set; }
 
     }
 }

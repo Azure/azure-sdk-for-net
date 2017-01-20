@@ -51,7 +51,7 @@ namespace Test.Azure.Management.Logic
         /// <summary>
         /// Creates an Integartion account.
         /// </summary>
-        /// <param name="integrationAccountName">Integration AccountName</param>        
+        /// <param name="integrationAccountName">Integration AccountName</param>
         /// <returns>IntegrationAccount instance</returns>
         protected IntegrationAccount CreateIntegrationAccountInstance(string integrationAccountName)
         {
@@ -59,7 +59,7 @@ namespace Test.Azure.Management.Logic
             {                
                 Sku = new IntegrationAccountSku()
                 {
-                    Name = SkuName.Standard
+                    Name = IntegrationAccountSkuName.Standard
                 },                
                 Properties = new JObject(),
                 Name = integrationAccountName,

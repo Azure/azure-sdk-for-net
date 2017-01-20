@@ -33,14 +33,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the name. Possible values include:
-        /// 'NotSpecified', 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
+        /// Gets or sets the name. Possible values include: 'NotSpecified',
+        /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public SkuName? Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the reference to plan.
+        /// Gets or sets the reference to plan.
         /// </summary>
         [JsonProperty(PropertyName = "plan")]
         public ResourceReference Plan { get; set; }

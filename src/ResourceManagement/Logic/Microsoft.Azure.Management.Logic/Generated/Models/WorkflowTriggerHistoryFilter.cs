@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the status of workflow trigger history.
-        /// Possible values include: 'NotSpecified', 'Paused', 'Running',
-        /// 'Waiting', 'Succeeded', 'Skipped', 'Suspended', 'Cancelled',
-        /// 'Failed', 'Faulted', 'TimedOut', 'Aborted', 'Ignored'
+        /// Gets or sets the status of workflow trigger history. Possible
+        /// values include: 'NotSpecified', 'Paused', 'Running', 'Waiting',
+        /// 'Succeeded', 'Skipped', 'Suspended', 'Cancelled', 'Failed',
+        /// 'Faulted', 'TimedOut', 'Aborted', 'Ignored'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public WorkflowStatus? Status { get; set; }

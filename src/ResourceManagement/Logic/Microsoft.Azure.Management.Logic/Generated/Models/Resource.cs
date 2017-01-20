@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource id.
+        /// Gets or sets the resource id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource location.
+        /// Gets or sets the resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the resource tags.
+        /// Gets or sets the resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

@@ -16,29 +16,28 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class WorkflowRunFilter
+    public partial class IntegrationAccountMapPropertiesParametersSchema
     {
         /// <summary>
-        /// Initializes a new instance of the WorkflowRunFilter class.
+        /// Initializes a new instance of the
+        /// IntegrationAccountMapPropertiesParametersSchema class.
         /// </summary>
-        public WorkflowRunFilter() { }
+        public IntegrationAccountMapPropertiesParametersSchema() { }
 
         /// <summary>
-        /// Initializes a new instance of the WorkflowRunFilter class.
+        /// Initializes a new instance of the
+        /// IntegrationAccountMapPropertiesParametersSchema class.
         /// </summary>
-        public WorkflowRunFilter(WorkflowStatus? status = default(WorkflowStatus?))
+        public IntegrationAccountMapPropertiesParametersSchema(string refProperty = default(string))
         {
-            Status = status;
+            RefProperty = refProperty;
         }
 
         /// <summary>
-        /// Gets or sets the status of workflow run. Possible values include:
-        /// 'NotSpecified', 'Paused', 'Running', 'Waiting', 'Succeeded',
-        /// 'Skipped', 'Suspended', 'Cancelled', 'Failed', 'Faulted',
-        /// 'TimedOut', 'Aborted', 'Ignored'
+        /// Gets or sets the reference name.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public WorkflowStatus? Status { get; set; }
+        [JsonProperty(PropertyName = "ref")]
+        public string RefProperty { get; set; }
 
     }
 }

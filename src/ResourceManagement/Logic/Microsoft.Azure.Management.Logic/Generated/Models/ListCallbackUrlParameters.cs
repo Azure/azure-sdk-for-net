@@ -26,9 +26,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the ListCallbackUrlParameters class.
         /// </summary>
-        public ListCallbackUrlParameters(DateTime? notAfter = default(DateTime?))
+        public ListCallbackUrlParameters(DateTime? notAfter = default(DateTime?), KeyType? keyType = default(KeyType?))
         {
             NotAfter = notAfter;
+            KeyType = keyType;
         }
 
         /// <summary>
@@ -36,6 +37,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "NotAfter")]
         public DateTime? NotAfter { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key type. Possible values include:
+        /// 'NotSpecified', 'Primary', 'Secondary'
+        /// </summary>
+        [JsonProperty(PropertyName = "keyType")]
+        public KeyType? KeyType { get; set; }
 
     }
 }

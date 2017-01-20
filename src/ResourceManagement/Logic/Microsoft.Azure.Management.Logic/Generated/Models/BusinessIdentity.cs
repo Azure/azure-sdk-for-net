@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets or sets the business identity qualifier.
         /// </summary>
-        [JsonProperty(PropertyName = "Qualifier")]
+        [JsonProperty(PropertyName = "qualifier")]
         public string Qualifier { get; set; }
 
         /// <summary>
         /// Gets or sets the business identity value.
         /// </summary>
-        [JsonProperty(PropertyName = "Value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

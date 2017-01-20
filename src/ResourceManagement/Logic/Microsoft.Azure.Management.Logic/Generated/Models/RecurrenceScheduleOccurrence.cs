@@ -35,15 +35,15 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets gets or sets the day of the week. Possible values
-        /// include: 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-        /// 'Friday', 'Saturday'
+        /// Gets or sets the day of the week. Possible values include:
+        /// 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+        /// 'Saturday'
         /// </summary>
         [JsonProperty(PropertyName = "day")]
         public DayOfWeek? Day { get; set; }
 
         /// <summary>
-        /// Gets or sets gets or sets the occurrence.
+        /// Gets or sets the occurrence.
         /// </summary>
         [JsonProperty(PropertyName = "occurrence")]
         public int? Occurrence { get; set; }

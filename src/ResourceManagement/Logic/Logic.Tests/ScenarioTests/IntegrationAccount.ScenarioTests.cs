@@ -80,7 +80,7 @@ namespace Test.Azure.Management.Logic
                         Location = Constants.DefaultLocation,
                         Sku = new IntegrationAccountSku()
                         {
-                            Name = SkuName.Free
+                            Name = IntegrationAccountSkuName.Standard
                         },
                         Properties = new JObject(),
                         Name = integrationAccountName
@@ -236,12 +236,12 @@ namespace Test.Azure.Management.Logic
 
                 // Get the IntegrationAccount and verify the content
                 var callbackUrl1 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName);
+                    integrationAccountName, new ListCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl1);
 
                 var callbackUrl2 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName);
+                    integrationAccountName, new ListCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl2);
 

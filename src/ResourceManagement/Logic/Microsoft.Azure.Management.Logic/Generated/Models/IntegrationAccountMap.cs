@@ -27,10 +27,11 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationAccountMap class.
         /// </summary>
-        public IntegrationAccountMap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MapType? mapType = default(MapType?), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink), object metadata = default(object))
+        public IntegrationAccountMap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MapType? mapType = default(MapType?), IntegrationAccountMapPropertiesParametersSchema parametersSchema = default(IntegrationAccountMapPropertiesParametersSchema), DateTime? createdTime = default(DateTime?), DateTime? changedTime = default(DateTime?), object content = default(object), string contentType = default(string), IntegrationAccountContentLink contentLink = default(IntegrationAccountContentLink), object metadata = default(object))
             : base(id, name, type, location, tags)
         {
             MapType = mapType;
+            ParametersSchema = parametersSchema;
             CreatedTime = createdTime;
             ChangedTime = changedTime;
             Content = content;
@@ -45,6 +46,11 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.mapType")]
         public MapType? MapType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.parametersSchema")]
+        public IntegrationAccountMapPropertiesParametersSchema ParametersSchema { get; set; }
 
         /// <summary>
         /// Gets the created time.
