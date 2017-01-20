@@ -6,9 +6,7 @@
 
   "buildOptions": {
     "warningsAsErrors": true,
-    "delaySign": true,
-    "publicSign": false,
-    "keyFile": "../../build/MSSharedLibSN1024.snk",
+    "keyFile": "../../build/keyfile.snk",
     "additionalArguments": [ "/ruleset:./../../build/StyleCop.Analyzers.ruleset", "/additionalfile:./../../build/stylecop.json" ]
   },
 

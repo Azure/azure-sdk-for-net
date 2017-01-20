@@ -30,11 +30,6 @@ function Build-Solution
     }
 }
 
-function Add-StrongNameEntry
-{
-    &'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe' -Vr *,*
-}
-
 function Deploy-AzureResources
 {
     if ([bool]$env:ClientSecret `

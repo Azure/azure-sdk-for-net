@@ -1,10 +1,12 @@
 {
   "version": "1.0.0",
+  "title": "Microsoft.Azure.ServiceBus.UnitTests",
+
   "testRunner": "xunit",
 
   "buildOptions": {
     "warningsAsErrors": true,
-    "keyFile": "keyfile.snk",
+    "keyFile": "../../build/keyfile.snk",
     "additionalArguments": [ "/ruleset:./../../build/StyleCop.Analyzers.ruleset", "/additionalfile:./../../build/stylecop.json" ]
   },
 

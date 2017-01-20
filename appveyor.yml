@@ -14,8 +14,6 @@ build_script:
     Build-Solution
 before_test:
 - ps: >-
-    Add-StrongNameEntry
-
     Deploy-AzureResources
 test_script:
 - ps: >-

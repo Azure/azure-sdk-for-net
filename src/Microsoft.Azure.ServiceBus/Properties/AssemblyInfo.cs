@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Azure.ServiceBus")]
 [assembly: AssemblyTrademark("")]
 
@@ -23,8 +23,8 @@ using System.Runtime.InteropServices;
 
 // Friend Assemblies
 [assembly: InternalsVisibleTo("Microsoft.Azure.ServiceBus.UnitTests,PublicKey=" +
-"0024000004800000940000000602000000240000525341310004000001000100f9bc4236ac3b7c" +
-"ffc0f828bf2d60d34b447873db1fa3ce194d8ad43e134f944d40ab9a13c668f0c3c5af98a767e7" +
-"cc831d9e02390dfb7252077bb8f5efd8f8c011c529040583ba9f6bc4fe31f8d5deebd3add91163" +
-"7dd4e7096a409f032ca61ee270f8fca44156a6ee9bcbc6e23e650ba41d40280778985de18c4f33" +
-"b3841cc6")]
+"0024000004800000940000000602000000240000525341310004000001000100fdf4acac3b2244" +
+"dd8a96737e5385b31414369dc3e42f371172127252856a0650793e1f5673a16d5d78e2ac852a10" +
+"4bc51e6f018dca44fdd26a219c27cb2b263956a80620223c8e9c2f8913c3c903e1e453e9e4e840" +
+"98afdad5f4badb8c1ebe0a7b0a4b57a08454646a65886afe3e290a791ff3260099ce0edf0bdbcc" +
+"afadfeb6")]
