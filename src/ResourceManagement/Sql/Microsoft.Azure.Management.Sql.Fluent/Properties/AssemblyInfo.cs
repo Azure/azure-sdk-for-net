@@ -14,8 +14,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Microsoft.Azure.Management.Sql.Fluent")]
 [assembly: AssemblyTrademark("")]
 
-[assembly: AssemblyVersion("1.0.0.41")]
-[assembly: AssemblyFileVersion("1.0.0.41")]
+[assembly: AssemblyVersion("1.0.0.50")]
+[assembly: AssemblyFileVersion("1.0.0.50")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

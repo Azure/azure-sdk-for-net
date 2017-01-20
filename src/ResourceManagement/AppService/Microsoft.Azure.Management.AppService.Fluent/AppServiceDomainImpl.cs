@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
 
