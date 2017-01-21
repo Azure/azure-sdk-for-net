@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
     /// <summary>
     /// The implementation for AppServicePlan.
-    /// </summary>    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlSW1wbA==
+    /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmFwcHNlcnZpY2UuaW1wbGVtZW50YXRpb24uQXBwU2VydmljZUNlcnRpZmljYXRlSW1wbA==
     internal partial class AppServiceCertificateImpl :
         GroupableResource<
             IAppServiceCertificate,
