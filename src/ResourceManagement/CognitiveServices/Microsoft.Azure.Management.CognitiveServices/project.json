@@ -26,7 +26,6 @@
       "frameworkAssemblies": {
         "System.Collections": "",
         "System.Linq.Expressions": "",
-        "System.Runtime": "",
         "System.Runtime.Serialization": "",
         "System.Threading.Tasks": ""
       },
