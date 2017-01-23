@@ -34,47 +34,43 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static AmqpMessage BrokeredMessagesToAmqpMessage(IEnumerable<BrokeredMessage> brokeredMessages, bool batchable)
         {
             AmqpMessage amqpMessage = null;
+            AmqpMessage firstAmqpMessage = null;
             BrokeredMessage firstBrokeredMessage = null;
             List<Data> dataList = null;
             int messageCount = 0;
             foreach (var brokeredMessage in brokeredMessages)
             {
-                if (firstBrokeredMessage == null)
-                {
-                    firstBrokeredMessage = brokeredMessage;
-                }
-
-                if (messageCount == 1)
-                {
-                    dataList = new List<Data> { ToData(amqpMessage) };
-                }
+                messageCount++;
 
                 amqpMessage = AmqpMessageConverter.ClientGetMessage(brokeredMessage);
-
-                if (messageCount > 1)
+                if (firstAmqpMessage == null)
                 {
-                    // ReSharper disable once PossibleNullReferenceException
-                    dataList.Add(ToData(amqpMessage));
+                    firstAmqpMessage = amqpMessage;
+                    firstBrokeredMessage = brokeredMessage;
+                    continue;
                 }
 
-                messageCount++;
+                if (dataList == null)
+                {
+                    dataList = new List<Data>() { ToData(firstAmqpMessage) };
+                }
+
+                dataList.Add(ToData(amqpMessage));
             }
 
-            if (messageCount == 1)
+            if (messageCount == 1 && firstAmqpMessage != null)
             {
-                amqpMessage.Batchable = batchable;
-                return amqpMessage;
+                firstAmqpMessage.Batchable = batchable;
+                return firstAmqpMessage;
             }
 
             amqpMessage = AmqpMessage.Create(dataList);
             amqpMessage.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
 
-            // ReSharper disable once PossibleNullReferenceException
             if (firstBrokeredMessage.MessageId != null)
             {
                 amqpMessage.Properties.MessageId = firstBrokeredMessage.MessageId;
             }
-
             if (firstBrokeredMessage.SessionId != null)
             {
                 amqpMessage.Properties.GroupId = firstBrokeredMessage.SessionId;

@@ -75,6 +75,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             }
 
+            VerifyUniqueMessages(messagesToReturn);
             Log($"Received {messagesToReturn.Count} messages");
             return messagesToReturn;
         }
@@ -100,6 +101,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             }
 
+            VerifyUniqueMessages(peekedMessages);
             Log($"Peeked {peekedMessages.Count} messages");
             return peekedMessages;
         }
@@ -126,6 +128,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await messageReceiver.DeferAsync(messages.Select(message => message.LockToken));
             Log($"Deferred {messages.Count()} messages");
+        }
+
+        static void VerifyUniqueMessages(List<BrokeredMessage> messages)
+        {
+            if (messages != null && messages.Count > 1)
+            {
+                HashSet<long> sequenceNumbers = new HashSet<long>();
+                foreach (var message in messages)
+                {
+                    if (!sequenceNumbers.Add(message.SequenceNumber))
+                    {
+                        throw new Exception($"Sequence Number '{message.SequenceNumber}' was repeated");
+                    }
+                }
+            }
         }
     }
 }
