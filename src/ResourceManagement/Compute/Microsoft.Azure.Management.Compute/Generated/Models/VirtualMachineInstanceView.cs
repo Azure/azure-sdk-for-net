@@ -23,16 +23,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineInstanceView class.
         /// </summary>
-        /// <param name="platformUpdateDomain">the Update Domain count.</param>
-        /// <param name="platformFaultDomain">the Fault Domain count.</param>
-        /// <param name="rdpThumbPrint">the Remote desktop certificate
+        /// <param name="platformUpdateDomain">Specifies the update domain of
+        /// the virtual machine.</param>
+        /// <param name="platformFaultDomain">Specifies the fault domain of
+        /// the virtual machine.</param>
+        /// <param name="rdpThumbPrint">The Remote desktop certificate
         /// thumbprint.</param>
-        /// <param name="vmAgent">the VM Agent running on the virtual
+        /// <param name="vmAgent">The VM Agent running on the virtual
         /// machine.</param>
-        /// <param name="disks">the disks information.</param>
-        /// <param name="extensions">the extensions information.</param>
-        /// <param name="bootDiagnostics">the boot diagnostics.</param>
-        /// <param name="statuses">the resource status information.</param>
+        /// <param name="disks">The virtual machine disk information.</param>
+        /// <param name="extensions">The extensions information.</param>
+        /// <param name="bootDiagnostics">The boot diagnostics.</param>
+        /// <param name="statuses">The resource status information.</param>
         public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), System.Collections.Generic.IList<DiskInstanceView> disks = default(System.Collections.Generic.IList<DiskInstanceView>), System.Collections.Generic.IList<VirtualMachineExtensionInstanceView> extensions = default(System.Collections.Generic.IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
@@ -46,13 +48,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the Update Domain count.
+        /// Gets or sets specifies the update domain of the virtual machine.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "platformUpdateDomain")]
         public int? PlatformUpdateDomain { get; set; }
 
         /// <summary>
-        /// Gets or sets the Fault Domain count.
+        /// Gets or sets specifies the fault domain of the virtual machine.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "platformFaultDomain")]
         public int? PlatformFaultDomain { get; set; }
@@ -70,7 +72,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineAgentInstanceView VmAgent { get; set; }
 
         /// <summary>
-        /// Gets or sets the disks information.
+        /// Gets or sets the virtual machine disk information.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "disks")]
         public System.Collections.Generic.IList<DiskInstanceView> Disks { get; set; }

@@ -25,17 +25,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetVMInstanceView class.
         /// </summary>
-        /// <param name="platformUpdateDomain">the Update Domain count.</param>
-        /// <param name="platformFaultDomain">the Fault Domain count.</param>
-        /// <param name="rdpThumbPrint">the Remote desktop certificate
+        /// <param name="platformUpdateDomain">The Update Domain count.</param>
+        /// <param name="platformFaultDomain">The Fault Domain count.</param>
+        /// <param name="rdpThumbPrint">The Remote desktop certificate
         /// thumbprint.</param>
-        /// <param name="vmAgent">the VM Agent running on the virtual
+        /// <param name="vmAgent">The VM Agent running on the virtual
         /// machine.</param>
-        /// <param name="disks">the disks information.</param>
-        /// <param name="extensions">the extensions information.</param>
-        /// <param name="bootDiagnostics">the boot diagnostics.</param>
-        /// <param name="statuses">the resource status information.</param>
-        public VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), System.Collections.Generic.IList<DiskInstanceView> disks = default(System.Collections.Generic.IList<DiskInstanceView>), System.Collections.Generic.IList<VirtualMachineExtensionInstanceView> extensions = default(System.Collections.Generic.IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
+        /// <param name="disks">The disks information.</param>
+        /// <param name="extensions">The extensions information.</param>
+        /// <param name="bootDiagnostics">The boot diagnostics.</param>
+        /// <param name="statuses">The resource status information.</param>
+        /// <param name="placementGroupId">The placement group in which the VM
+        /// is running. If the VM is deallocated it will not have a
+        /// placementGroupId.</param>
+        public VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), System.Collections.Generic.IList<DiskInstanceView> disks = default(System.Collections.Generic.IList<DiskInstanceView>), System.Collections.Generic.IList<VirtualMachineExtensionInstanceView> extensions = default(System.Collections.Generic.IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>), string placementGroupId = default(string))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -45,6 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Extensions = extensions;
             BootDiagnostics = bootDiagnostics;
             Statuses = statuses;
+            PlacementGroupId = placementGroupId;
         }
 
         /// <summary>
@@ -94,6 +98,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "statuses")]
         public System.Collections.Generic.IList<InstanceViewStatus> Statuses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the placement group in which the VM is running. If
+        /// the VM is deallocated it will not have a placementGroupId.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "placementGroupId")]
+        public string PlacementGroupId { get; set; }
 
     }
 }

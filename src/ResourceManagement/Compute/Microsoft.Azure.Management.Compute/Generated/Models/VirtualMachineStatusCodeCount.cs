@@ -26,8 +26,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineStatusCodeCount
         /// class.
         /// </summary>
-        /// <param name="code">the instance view status code.</param>
-        /// <param name="count">the number of instances having a particular
+        /// <param name="code">The instance view status code.</param>
+        /// <param name="count">The number of instances having a particular
         /// status code.</param>
         public VirtualMachineStatusCodeCount(string code = default(string), int? count = default(int?))
         {

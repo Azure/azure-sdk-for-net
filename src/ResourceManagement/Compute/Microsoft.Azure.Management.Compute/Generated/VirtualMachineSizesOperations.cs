@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;

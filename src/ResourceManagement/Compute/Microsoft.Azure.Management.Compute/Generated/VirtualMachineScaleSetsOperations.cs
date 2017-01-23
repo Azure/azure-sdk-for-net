@@ -42,17 +42,16 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Allows you to create or update a virtual machine scale set by providing
-        /// parameters or a path to pre-configured parameter file.
+        /// Create or update a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the Create Virtual Machine Scale Set operation.
+        /// The name of the VM scale set to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Scale Set operation.
+        /// The scale set object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -71,17 +70,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to create or update a virtual machine scale set by providing
-        /// parameters or a path to pre-configured parameter file.
+        /// Create or update a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the Create Virtual Machine Scale Set operation.
+        /// The name of the VM scale set to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Scale Set operation.
+        /// The scale set object.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -123,7 +121,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -297,19 +295,18 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to deallocate virtual machines in a virtual machine scale set.
-        /// Shuts down the virtual machines and releases the compute resources. You
-        /// are not billed for the compute resources that this virtual machine scale
-        /// set uses.
+        /// Deallocates specific virtual machines in a VM scale set. Shuts down the
+        /// virtual machines and releases the compute resources. You are not billed
+        /// for the compute resources that this virtual machine scale set deallocates.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -317,28 +314,27 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginDeallocateWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginDeallocateWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to deallocate virtual machines in a virtual machine scale set.
-        /// Shuts down the virtual machines and releases the compute resources. You
-        /// are not billed for the compute resources that this virtual machine scale
-        /// set uses.
+        /// Deallocates specific virtual machines in a VM scale set. Shuts down the
+        /// virtual machines and releases the compute resources. You are not billed
+        /// for the compute resources that this virtual machine scale set deallocates.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -349,13 +345,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -369,7 +368,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -463,14 +462,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -490,12 +497,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -505,13 +530,13 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to delete a virtual machine scale set.
+        /// Deletes a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -519,22 +544,22 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginDeleteWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to delete a virtual machine scale set.
+        /// Deletes a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -545,13 +570,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -565,7 +593,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -649,11 +677,19 @@ namespace Microsoft.Azure.Management.Compute
             if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -673,12 +709,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -694,7 +748,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -728,7 +782,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -877,16 +931,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to delete virtual machines in a virtual machine scale set.
+        /// Deletes virtual machines in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -894,25 +948,25 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> DeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginDeleteInstancesWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginDeleteInstancesWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to delete virtual machines in a virtual machine scale set.
+        /// Deletes virtual machines in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -923,13 +977,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginDeleteInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -947,7 +1004,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "instanceIds");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs = new VirtualMachineScaleSetVMInstanceRequiredIDs();
             if (instanceIds != null)
             {
@@ -1040,14 +1097,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1067,12 +1132,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -1082,13 +1165,13 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Displays status of a virtual machine scale set instance.
+        /// Gets the status of a VM scale set instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1122,7 +1205,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1271,7 +1354,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all virtual machine scale sets under a resource group.
+        /// Gets a list of all VM scale sets under a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1304,7 +1387,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1451,10 +1534,10 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all Virtual Machine Scale Sets in the subscription. Use nextLink
-        /// property in the response to get the next page of Virtual Machine Scale
-        /// Sets. Do this till nextLink is not null to fetch all the Virtual Machine
-        /// Scale Sets.
+        /// Gets a list of all VM Scale Sets in the subscription, regardless of the
+        /// associated resource group. Use nextLink property in the response to get
+        /// the next page of VM Scale Sets. Do this till nextLink is not null to
+        /// fetch all the VM Scale Sets.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1480,7 +1563,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1625,14 +1708,14 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Displays available skus for your virtual machine scale set including the
-        /// minimum and maximum vm instances allowed for a particular sku.
+        /// Gets a list of SKUs available for your VM scale set, including the minimum
+        /// and maximum VM instances allowed for each SKU.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1666,7 +1749,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1815,18 +1898,18 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to power off (stop) virtual machines in a virtual machine scale
-        /// set. Note that resources are still attached and you are getting charged
-        /// for the resources. Use deallocate to release resources.
+        /// Power off (stop) one or more virtual machines in a VM scale set. Note that
+        /// resources are still attached and you are getting charged for the
+        /// resources. Instead, use deallocate to release resources and avoid charges.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1834,27 +1917,27 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginPowerOffWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginPowerOffWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to power off (stop) virtual machines in a virtual machine scale
-        /// set. Note that resources are still attached and you are getting charged
-        /// for the resources. Use deallocate to release resources.
+        /// Power off (stop) one or more virtual machines in a VM scale set. Note that
+        /// resources are still attached and you are getting charged for the
+        /// resources. Instead, use deallocate to release resources and avoid charges.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1865,13 +1948,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1885,7 +1971,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -1979,14 +2065,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2006,12 +2100,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2021,16 +2133,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to restart virtual machines in a virtual machine scale set.
+        /// Restarts one or more virtual machines in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2038,25 +2150,25 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> RestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginRestartWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginRestartWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to restart virtual machines in a virtual machine scale set.
+        /// Restarts one or more virtual machines in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2067,13 +2179,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2087,7 +2202,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -2181,14 +2296,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2208,12 +2331,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2223,16 +2364,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to start virtual machines in a virtual machine scale set.
+        /// Starts one or more virtual machines in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2240,25 +2381,25 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> StartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginStartWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginStartWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to start virtual machines in a virtual machine scale set.
+        /// Starts one or more virtual machines in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2269,13 +2410,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginStartWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2289,7 +2433,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -2383,14 +2527,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2410,12 +2562,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2425,17 +2595,17 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to manually upgrade virtual machines in a virtual machine scale
-        /// set.
+        /// Upgrades one or more virtual machines to the latest SKU set in the VM
+        /// scale set model.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2443,26 +2613,26 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> UpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> UpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginUpdateInstancesWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginUpdateInstancesWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to manually upgrade virtual machines in a virtual machine scale
-        /// set.
+        /// Upgrades one or more virtual machines to the latest SKU set in the VM
+        /// scale set model.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceIds'>
-        /// the virtual machine scale set instance ids.
+        /// The virtual machine scale set instance ids.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2473,13 +2643,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginUpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginUpdateInstancesWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.IList<string> instanceIds, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2497,7 +2670,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "instanceIds");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs = new VirtualMachineScaleSetVMInstanceRequiredIDs();
             if (instanceIds != null)
             {
@@ -2590,14 +2763,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2617,12 +2798,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2632,14 +2831,14 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to re-image(update the version of the installed operating
-        /// system) virtual machines in a virtual machine scale set.
+        /// Reimages (upgrade the operating system) one or more virtual machines in a
+        /// VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2647,23 +2846,23 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginReimageWithHttpMessagesAsync(
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginReimageWithHttpMessagesAsync(
                 resourceGroupName, vmScaleSetName, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
-        /// Allows you to re-image(update the version of the installed operating
-        /// system) virtual machines in a virtual machine scale set.
+        /// Reimages (upgrade the operating system) one or more virtual machines in a
+        /// VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2674,13 +2873,16 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2694,7 +2896,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-03-30";
+            string apiVersion = "2016-04-30-preview";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2775,14 +2977,22 @@ namespace Microsoft.Azure.Management.Compute
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2802,12 +3012,30 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -2817,7 +3045,223 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all virtual machine scale sets under a resource group.
+        /// Reimages all the disks ( including data disks ) in the virtual machines in
+        /// a virtual machine scale set. This operation is only supported for managed
+        /// disks.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> ReimageAllWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Send request
+            Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse> _response = await BeginReimageAllWithHttpMessagesAsync(
+                resourceGroupName, vmScaleSetName, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reimages all the disks ( including data disks ) in the virtual machines in
+        /// a virtual machine scale set. This operation is only supported for managed
+        /// disks.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> BeginReimageAllWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (vmScaleSetName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "vmScaleSetName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            string apiVersion = "2016-04-30-preview";
+            // Tracing
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginReimageAll", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/reimageall").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatusResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets a list of all VM scale sets under a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2985,10 +3429,10 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all Virtual Machine Scale Sets in the subscription. Use nextLink
-        /// property in the response to get the next page of Virtual Machine Scale
-        /// Sets. Do this till nextLink is not null to fetch all the Virtual Machine
-        /// Scale Sets.
+        /// Gets a list of all VM Scale Sets in the subscription, regardless of the
+        /// associated resource group. Use nextLink property in the response to get
+        /// the next page of VM Scale Sets. Do this till nextLink is not null to
+        /// fetch all the VM Scale Sets.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3156,8 +3600,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Displays available skus for your virtual machine scale set including the
-        /// minimum and maximum vm instances allowed for a particular sku.
+        /// Gets a list of SKUs available for your VM scale set, including the minimum
+        /// and maximum VM instances allowed for each SKU.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

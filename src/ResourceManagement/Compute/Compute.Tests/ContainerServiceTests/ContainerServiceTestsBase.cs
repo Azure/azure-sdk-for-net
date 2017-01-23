@@ -33,7 +33,7 @@ namespace Compute.Tests
         protected const string DefaultAgentPoolProfileName = "AgentPool1";
         
         protected string DefaultVmSize = VirtualMachineSizeTypes.StandardA1;
-        protected const string DefaultLinuxAdminUsername = "acsLinuxAdmin";
+        protected const string DefaultLinuxAdminUsername = "acslinuxadmin";
         protected const string ContainerServiceType = "Microsoft.ContainerService/ContainerServices";
         private const string DefaultSshPublicKey =
             "MIIDszCCApugAwIBAgIJALBV9YJCF/tAMA0GCSqGSIb3DQEBBQUAMEUxCzAJBgNV" +
@@ -68,7 +68,8 @@ namespace Compute.Tests
             {
                 DnsPrefix = agentPoolDnsPrefix,
                 Name = DefaultAgentPoolProfileName,
-                VmSize = DefaultVmSize
+                VmSize = DefaultVmSize,
+                Count = 1 // This should be added because of AutoRest bug.
             };
 
             return new ContainerService
@@ -122,7 +123,7 @@ namespace Compute.Tests
                     agentPoolDnsPrefix,
                     out inputContainerService,
                     containerServiceCustomizer);
-                var getResponse = m_CrpClient.ContainerService.Get(rgName, csName);
+                var getResponse = m_CrpClient.ContainerServices.Get(rgName, csName);
                 ValidateContainerService(createOrUpdateResponse, getResponse);
                 return getResponse;
             }
@@ -135,7 +136,7 @@ namespace Compute.Tests
 
         protected void UpdateContainerService(string rgName, string vmssName, ContainerService inputContainerService)
         {
-            var createOrUpdateResponse = m_CrpClient.ContainerService.CreateOrUpdate(rgName, vmssName, inputContainerService);
+            var createOrUpdateResponse = m_CrpClient.ContainerServices.CreateOrUpdate(rgName, vmssName, inputContainerService);
         }
 
         private ContainerService CreateContainerServiceAndGetOperationResponse(
@@ -159,7 +160,7 @@ namespace Compute.Tests
                 containerServiceCustomizer(inputContainerService);
             }
 
-            var createOrUpdateResponse = m_CrpClient.ContainerService.CreateOrUpdate(rgName, csName, inputContainerService);
+            var createOrUpdateResponse = m_CrpClient.ContainerServices.CreateOrUpdate(rgName, csName, inputContainerService);
 
             Assert.Equal(csName, createOrUpdateResponse.Name);
             Assert.Equal(inputContainerService.Location.ToLower().Replace(" ", ""), createOrUpdateResponse.Location.ToLower());
@@ -187,7 +188,7 @@ namespace Compute.Tests
             for (var i = 0; i < containerService.AgentPoolProfiles.Count; i++)
             {
                 Assert.Equal(containerService.AgentPoolProfiles[i].Name, containerServiceOut.AgentPoolProfiles[i].Name);
-                Assert.Equal(containerService.AgentPoolProfiles[i].Count ?? 1, containerServiceOut.AgentPoolProfiles[i].Count);
+                Assert.Equal(containerService.AgentPoolProfiles[i].Count, containerServiceOut.AgentPoolProfiles[i].Count);
                 Assert.Equal(containerService.AgentPoolProfiles[i].DnsPrefix, containerServiceOut.AgentPoolProfiles[i].DnsPrefix);
                 Assert.Equal(containerService.AgentPoolProfiles[i].VmSize, containerServiceOut.AgentPoolProfiles[i].VmSize);
                 Assert.NotNull(containerServiceOut.AgentPoolProfiles[i].Fqdn);
@@ -201,7 +202,7 @@ namespace Compute.Tests
 
             // Verify LinuxProfile
             Assert.NotNull(containerServiceOut.LinuxProfile);
-            Assert.Equal(containerService.LinuxProfile.AdminUsername, containerServiceOut.LinuxProfile.AdminUsername);
+            Assert.Equal(containerService.LinuxProfile.AdminUsername.ToLowerInvariant(), containerServiceOut.LinuxProfile.AdminUsername.ToLowerInvariant());
             Assert.Equal(containerService.LinuxProfile.Ssh.PublicKeys.Count, containerServiceOut.LinuxProfile.Ssh.PublicKeys.Count);
             for (var i = 0; i < containerService.LinuxProfile.Ssh.PublicKeys.Count; i++)
             {

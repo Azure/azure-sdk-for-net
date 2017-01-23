@@ -25,16 +25,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetOSProfile
         /// class.
         /// </summary>
-        /// <param name="computerNamePrefix">the computer name prefix.</param>
-        /// <param name="adminUsername">the admin user name.</param>
-        /// <param name="adminPassword">the admin user password.</param>
-        /// <param name="customData">a base-64 encoded string of custom
+        /// <param name="computerNamePrefix">The computer name prefix.</param>
+        /// <param name="adminUsername">The admin user name.</param>
+        /// <param name="adminPassword">The admin user password.</param>
+        /// <param name="customData">A base-64 encoded string of custom
         /// data.</param>
-        /// <param name="windowsConfiguration">the Windows Configuration of
+        /// <param name="windowsConfiguration">The Windows Configuration of
         /// the OS profile.</param>
-        /// <param name="linuxConfiguration">the Linux Configuration of the OS
+        /// <param name="linuxConfiguration">The Linux Configuration of the OS
         /// profile.</param>
-        /// <param name="secrets">the List of certificates for addition to the
+        /// <param name="secrets">The List of certificates for addition to the
         /// VM.</param>
         public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), System.Collections.Generic.IList<VaultSecretGroup> secrets = default(System.Collections.Generic.IList<VaultSecretGroup>))
         {

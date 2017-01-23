@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetNetworkConfiguration class.
         /// </summary>
-        /// <param name="name">the network configuration name.</param>
-        /// <param name="ipConfigurations">the virtual machine scale set IP
+        /// <param name="name">The network configuration name.</param>
+        /// <param name="ipConfigurations">The virtual machine scale set IP
         /// Configuration.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="primary">whether this is a primary NIC on a virtual
+        /// <param name="primary">Whether this is a primary NIC on a virtual
         /// machine.</param>
         public VirtualMachineScaleSetNetworkConfiguration(string name, System.Collections.Generic.IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?))
             : base(id)

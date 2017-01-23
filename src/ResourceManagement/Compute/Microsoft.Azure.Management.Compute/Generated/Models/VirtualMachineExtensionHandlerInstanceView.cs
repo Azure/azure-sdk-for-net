@@ -25,11 +25,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineExtensionHandlerInstanceView class.
         /// </summary>
-        /// <param name="type">full type of the extension handler which
+        /// <param name="type">Full type of the extension handler which
         /// includes both publisher and type.</param>
-        /// <param name="typeHandlerVersion">the type version of the extension
+        /// <param name="typeHandlerVersion">The type version of the extension
         /// handler.</param>
-        /// <param name="status">the extension handler status.</param>
+        /// <param name="status">The extension handler status.</param>
         public VirtualMachineExtensionHandlerInstanceView(string type = default(string), string typeHandlerVersion = default(string), InstanceViewStatus status = default(InstanceViewStatus))
         {
             Type = type;

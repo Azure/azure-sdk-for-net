@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Create or update Availability Set parameters.
+    /// Create or update availability set parameters.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class AvailabilitySet : Resource
@@ -32,16 +32,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="platformUpdateDomainCount">Update Domain
         /// count.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count.</param>
-        /// <param name="virtualMachines">a list containing reference to all
-        /// Virtual Machines created under this Availability Set.</param>
-        /// <param name="statuses">the resource status information.</param>
-        public AvailabilitySet(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IList<SubResource> virtualMachines = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
+        /// <param name="virtualMachines">A list of references to all virtual
+        /// machines in the availability set.</param>
+        /// <param name="statuses">The resource status information.</param>
+        /// <param name="managed">If the availability set supports managed
+        /// disks.</param>
+        /// <param name="sku">Sku of the availability set</param>
+        public AvailabilitySet(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IList<SubResource> virtualMachines = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>), bool? managed = default(bool?), Sku sku = default(Sku))
             : base(location, id, name, type, tags)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
             PlatformFaultDomainCount = platformFaultDomainCount;
             VirtualMachines = virtualMachines;
             Statuses = statuses;
+            Managed = managed;
+            Sku = sku;
         }
 
         /// <summary>
@@ -57,8 +62,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? PlatformFaultDomainCount { get; set; }
 
         /// <summary>
-        /// Gets or sets a list containing reference to all Virtual Machines
-        /// created under this Availability Set.
+        /// Gets or sets a list of references to all virtual machines in the
+        /// availability set.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualMachines")]
         public System.Collections.Generic.IList<SubResource> VirtualMachines { get; set; }
@@ -68,6 +73,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.statuses")]
         public System.Collections.Generic.IList<InstanceViewStatus> Statuses { get; private set; }
+
+        /// <summary>
+        /// Gets or sets if the availability set supports managed disks.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.managed")]
+        public bool? Managed { get; set; }
+
+        /// <summary>
+        /// Gets or sets sku of the availability set
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.

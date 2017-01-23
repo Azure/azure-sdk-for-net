@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// subscription credentials which uniquely identify Microsoft Azure
+        /// Subscription credentials which uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
         /// </summary>
@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineSizesOperations VirtualMachineSizes { get; }
 
         /// <summary>
+        /// Gets the IImagesOperations.
+        /// </summary>
+        IImagesOperations Images { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachinesOperations.
         /// </summary>
         IVirtualMachinesOperations VirtualMachines { get; }
@@ -108,9 +113,19 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
 
         /// <summary>
-        /// Gets the IContainerServiceOperations.
+        /// Gets the IContainerServicesOperations.
         /// </summary>
-        IContainerServiceOperations ContainerService { get; }
+        IContainerServicesOperations ContainerServices { get; }
+
+        /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        IDisksOperations Disks { get; }
+
+        /// <summary>
+        /// Gets the ISnapshotsOperations.
+        /// </summary>
+        ISnapshotsOperations Snapshots { get; }
 
     }
 }

@@ -29,33 +29,35 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="instanceId">the virtual machine instance id.</param>
-        /// <param name="sku">the virtual machine sku.</param>
+        /// <param name="instanceId">The virtual machine instance ID.</param>
+        /// <param name="sku">The virtual machine SKU.</param>
         /// <param name="latestModelApplied">Specifies whether the latest
         /// model has been applied to the virtual machine.</param>
-        /// <param name="instanceView">the virtual machine instance
+        /// <param name="vmId">Azure VM unique ID.</param>
+        /// <param name="instanceView">The virtual machine instance
         /// view.</param>
-        /// <param name="hardwareProfile">the hardware profile.</param>
-        /// <param name="storageProfile">the storage profile.</param>
-        /// <param name="osProfile">the OS profile.</param>
-        /// <param name="networkProfile">the network profile.</param>
-        /// <param name="diagnosticsProfile">the diagnostics profile.</param>
-        /// <param name="availabilitySet">the reference Id of the availability
+        /// <param name="hardwareProfile">The hardware profile.</param>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <param name="osProfile">The OS profile.</param>
+        /// <param name="networkProfile">The network profile.</param>
+        /// <param name="diagnosticsProfile">The diagnostics profile.</param>
+        /// <param name="availabilitySet">The reference Id of the availability
         /// set to which this virtual machine belongs.</param>
-        /// <param name="provisioningState">the provisioning state, which only
+        /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
-        /// <param name="licenseType">the license type, which is for bring
+        /// <param name="licenseType">The license type, which is for bring
         /// your own license scenario.</param>
-        /// <param name="plan">the purchase plan when deploying virtual
+        /// <param name="plan">The purchase plan when deploying virtual
         /// machine from VM Marketplace images.</param>
-        /// <param name="resources">the virtual machine child extension
+        /// <param name="resources">The virtual machine child extension
         /// resources.</param>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), System.Collections.Generic.IList<VirtualMachineExtension> resources = default(System.Collections.Generic.IList<VirtualMachineExtension>))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), System.Collections.Generic.IList<VirtualMachineExtension> resources = default(System.Collections.Generic.IList<VirtualMachineExtension>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
             Sku = sku;
             LatestModelApplied = latestModelApplied;
+            VmId = vmId;
             InstanceView = instanceView;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -70,13 +72,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the virtual machine instance id.
+        /// Gets the virtual machine instance ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "instanceId")]
         public string InstanceId { get; private set; }
 
         /// <summary>
-        /// Gets the virtual machine sku.
+        /// Gets the virtual machine SKU.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }
@@ -87,6 +89,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.latestModelApplied")]
         public bool? LatestModelApplied { get; private set; }
+
+        /// <summary>
+        /// Gets azure VM unique ID.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.vmId")]
+        public string VmId { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine instance view.

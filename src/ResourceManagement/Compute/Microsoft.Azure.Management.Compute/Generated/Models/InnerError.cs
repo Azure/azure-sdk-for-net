@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the InnerError class.
         /// </summary>
-        /// <param name="exceptiontype">the exception type.</param>
-        /// <param name="errordetail">the internal error message or exception
+        /// <param name="exceptiontype">The exception type.</param>
+        /// <param name="errordetail">The internal error message or exception
         /// dump.</param>
         public InnerError(string exceptiontype = default(string), string errordetail = default(string))
         {

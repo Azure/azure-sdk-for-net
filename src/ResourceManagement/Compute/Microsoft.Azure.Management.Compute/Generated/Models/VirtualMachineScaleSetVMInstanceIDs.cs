@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the list of virtual machine scale set instance IDs.
+    /// Specifies a list of virtual machine instance IDs from the VM scale set.
     /// </summary>
     public partial class VirtualMachineScaleSetVMInstanceIDs
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetVMInstanceIDs class.
         /// </summary>
-        /// <param name="instanceIds">the virtual machine scale set instance
+        /// <param name="instanceIds">The virtual machine scale set instance
         /// ids.</param>
         public VirtualMachineScaleSetVMInstanceIDs(System.Collections.Generic.IList<string> instanceIds = default(System.Collections.Generic.IList<string>))
         {

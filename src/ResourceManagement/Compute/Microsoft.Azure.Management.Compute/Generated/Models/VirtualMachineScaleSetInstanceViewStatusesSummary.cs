@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetInstanceViewStatusesSummary class.
         /// </summary>
-        /// <param name="statusesSummary">the extensions information.</param>
+        /// <param name="statusesSummary">The extensions information.</param>
         public VirtualMachineScaleSetInstanceViewStatusesSummary(System.Collections.Generic.IList<VirtualMachineStatusCodeCount> statusesSummary = default(System.Collections.Generic.IList<VirtualMachineStatusCodeCount>))
         {
             StatusesSummary = statusesSummary;

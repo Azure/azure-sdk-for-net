@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the ApiErrorBase class.
         /// </summary>
-        /// <param name="code">the error code.</param>
-        /// <param name="target">the target of the particular error.</param>
-        /// <param name="message">the error message.</param>
+        /// <param name="code">The error code.</param>
+        /// <param name="target">The target of the particular error.</param>
+        /// <param name="message">The error message.</param>
         public ApiErrorBase(string code = default(string), string target = default(string), string message = default(string))
         {
             Code = code;

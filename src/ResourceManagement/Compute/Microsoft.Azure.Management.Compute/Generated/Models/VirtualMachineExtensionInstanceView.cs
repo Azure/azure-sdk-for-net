@@ -25,13 +25,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineExtensionInstanceView class.
         /// </summary>
-        /// <param name="name">the virtual machine extension name.</param>
-        /// <param name="type">the full type of the extension handler which
+        /// <param name="name">The virtual machine extension name.</param>
+        /// <param name="type">The full type of the extension handler which
         /// includes both publisher and type.</param>
-        /// <param name="typeHandlerVersion">the type version of the extension
+        /// <param name="typeHandlerVersion">The type version of the extension
         /// handler.</param>
-        /// <param name="substatuses">the resource status information.</param>
-        /// <param name="statuses">the resource status information.</param>
+        /// <param name="substatuses">The resource status information.</param>
+        /// <param name="statuses">The resource status information.</param>
         public VirtualMachineExtensionInstanceView(string name = default(string), string type = default(string), string typeHandlerVersion = default(string), System.Collections.Generic.IList<InstanceViewStatus> substatuses = default(System.Collections.Generic.IList<InstanceViewStatus>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             Name = name;

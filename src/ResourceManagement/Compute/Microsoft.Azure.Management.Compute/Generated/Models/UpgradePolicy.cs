@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the UpgradePolicy class.
         /// </summary>
-        /// <param name="mode">the upgrade mode. Possible values include:
+        /// <param name="mode">The upgrade mode. Possible values include:
         /// 'Automatic', 'Manual'</param>
         public UpgradePolicy(UpgradeMode? mode = default(UpgradeMode?))
         {

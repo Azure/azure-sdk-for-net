@@ -25,13 +25,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetVMProfile
         /// class.
         /// </summary>
-        /// <param name="osProfile">the virtual machine scale set OS
+        /// <param name="osProfile">The virtual machine scale set OS
         /// profile.</param>
-        /// <param name="storageProfile">the virtual machine scale set storage
+        /// <param name="storageProfile">The virtual machine scale set storage
         /// profile.</param>
-        /// <param name="networkProfile">the virtual machine scale set network
+        /// <param name="networkProfile">The virtual machine scale set network
         /// profile.</param>
-        /// <param name="extensionProfile">the virtual machine scale set
+        /// <param name="extensionProfile">The virtual machine scale set
         /// extension profile.</param>
         public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile))
         {

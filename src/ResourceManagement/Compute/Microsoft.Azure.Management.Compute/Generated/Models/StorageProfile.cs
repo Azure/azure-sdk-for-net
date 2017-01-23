@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the StorageProfile class.
         /// </summary>
-        /// <param name="imageReference">the image reference.</param>
-        /// <param name="osDisk">the OS disk.</param>
-        /// <param name="dataDisks">the data disks.</param>
+        /// <param name="imageReference">The image reference.</param>
+        /// <param name="osDisk">The OS disk.</param>
+        /// <param name="dataDisks">The data disks.</param>
         public StorageProfile(ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), System.Collections.Generic.IList<DataDisk> dataDisks = default(System.Collections.Generic.IList<DataDisk>))
         {
             ImageReference = imageReference;

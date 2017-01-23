@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineAgentInstanceView
         /// class.
         /// </summary>
-        /// <param name="vmAgentVersion">the VM Agent full version.</param>
-        /// <param name="extensionHandlers">the virtual machine extension
+        /// <param name="vmAgentVersion">The VM Agent full version.</param>
+        /// <param name="extensionHandlers">The virtual machine extension
         /// handler instance view.</param>
-        /// <param name="statuses">the resource status information.</param>
+        /// <param name="statuses">The resource status information.</param>
         public VirtualMachineAgentInstanceView(string vmAgentVersion = default(string), System.Collections.Generic.IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default(System.Collections.Generic.IList<VirtualMachineExtensionHandlerInstanceView>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             VmAgentVersion = vmAgentVersion;

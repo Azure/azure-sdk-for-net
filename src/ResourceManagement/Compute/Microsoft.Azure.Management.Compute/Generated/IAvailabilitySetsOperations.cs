@@ -17,13 +17,13 @@ namespace Microsoft.Azure.Management.Compute
     public partial interface IAvailabilitySetsOperations
     {
         /// <summary>
-        /// The operation to create or update the availability set.
+        /// Create or update an availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the Create Availability Set operation.
+        /// The name of the availability set.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Availability Set operation.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AvailabilitySet>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, AvailabilitySet parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to delete the availability set.
+        /// Delete an availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -62,12 +62,15 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string availabilitySetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<OperationStatusResponse>> DeleteWithHttpMessagesAsync(string resourceGroupName, string availabilitySetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to get the availability set.
+        /// Retrieves information about an availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -92,7 +95,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AvailabilitySet>> GetWithHttpMessagesAsync(string resourceGroupName, string availabilitySetName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to list the availability sets.
+        /// Lists all availability sets in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

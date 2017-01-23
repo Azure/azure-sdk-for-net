@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// The image reference.
     /// </summary>
-    public partial class ImageReference
+    public partial class ImageReference : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ImageReference class.
@@ -23,14 +23,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the ImageReference class.
         /// </summary>
-        /// <param name="publisher">the image publisher.</param>
-        /// <param name="offer">the image offer.</param>
-        /// <param name="sku">the image sku.</param>
-        /// <param name="version">the image version. The allowed formats are
-        /// Major.Minor.Build or 'latest'. Major, Minor and Build being
-        /// decimal numbers. Specify 'latest' to use the latest version of
+        /// <param name="id">Resource Id</param>
+        /// <param name="publisher">The image publisher.</param>
+        /// <param name="offer">The image offer.</param>
+        /// <param name="sku">The image SKU.</param>
+        /// <param name="version">The image version. The allowed formats are
+        /// Major.Minor.Build or 'latest'. Major, Minor and Build are decimal
+        /// numbers. Specify 'latest' to use the latest version of the
         /// image.</param>
-        public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string))
+        public ImageReference(string id = default(string), string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string))
+            : base(id)
         {
             Publisher = publisher;
             Offer = offer;
@@ -51,16 +53,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Offer { get; set; }
 
         /// <summary>
-        /// Gets or sets the image sku.
+        /// Gets or sets the image SKU.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the image version. The allowed formats are
-        /// Major.Minor.Build or 'latest'. Major, Minor and Build being
-        /// decimal numbers. Specify 'latest' to use the latest version of
-        /// image.
+        /// Major.Minor.Build or 'latest'. Major, Minor and Build are decimal
+        /// numbers. Specify 'latest' to use the latest version of the image.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
         public string Version { get; set; }

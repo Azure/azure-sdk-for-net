@@ -23,14 +23,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the NetworkProfile class.
         /// </summary>
-        /// <param name="networkInterfaces">the network interfaces.</param>
+        /// <param name="networkInterfaces">Specifies the list of resource IDs
+        /// for the network interfaces associated with the virtual
+        /// machine.</param>
         public NetworkProfile(System.Collections.Generic.IList<NetworkInterfaceReference> networkInterfaces = default(System.Collections.Generic.IList<NetworkInterfaceReference>))
         {
             NetworkInterfaces = networkInterfaces;
         }
 
         /// <summary>
-        /// Gets or sets the network interfaces.
+        /// Gets or sets specifies the list of resource IDs for the network
+        /// interfaces associated with the virtual machine.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "networkInterfaces")]
         public System.Collections.Generic.IList<NetworkInterfaceReference> NetworkInterfaces { get; set; }

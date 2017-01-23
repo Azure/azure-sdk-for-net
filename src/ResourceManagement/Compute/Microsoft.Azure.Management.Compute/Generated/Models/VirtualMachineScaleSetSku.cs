@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetSku class.
         /// </summary>
-        /// <param name="resourceType">the type of resource the sku applies
+        /// <param name="resourceType">The type of resource the sku applies
         /// to.</param>
-        /// <param name="sku">the Sku.</param>
-        /// <param name="capacity">available scaling information.</param>
+        /// <param name="sku">The Sku.</param>
+        /// <param name="capacity">Available scaling information.</param>
         public VirtualMachineScaleSetSku(string resourceType = default(string), Sku sku = default(Sku), VirtualMachineScaleSetSkuCapacity capacity = default(VirtualMachineScaleSetSkuCapacity))
         {
             ResourceType = resourceType;

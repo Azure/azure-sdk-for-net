@@ -217,9 +217,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).DeleteAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).DeleteAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -237,9 +237,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -254,9 +257,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginDeleteAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginDeleteAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -274,13 +277,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// The operation to get a virtual machine.
+            /// Retrieves information about the model view or the instance view of a
+            /// virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -301,7 +308,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to get a virtual machine.
+            /// Retrieves information about the model view or the instance view of a
+            /// virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -328,8 +336,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Shuts down the Virtual Machine and releases the compute resources. You are
-            /// not billed for the compute resources that this Virtual Machine uses.
+            /// Converts virtual machine disks from blob-based to managed disks. Virtual
+            /// machine must be stop-deallocated before invoking this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -340,53 +348,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse ConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).DeallocateAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ConvertToManagedDisksAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Shuts down the Virtual Machine and releases the compute resources. You are
-            /// not billed for the compute resources that this Virtual Machine uses.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Shuts down the Virtual Machine and releases the compute resources. You are
-            /// not billed for the compute resources that this Virtual Machine uses.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginDeallocateAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Shuts down the Virtual Machine and releases the compute resources. You are
-            /// not billed for the compute resources that this Virtual Machine uses.
+            /// Converts virtual machine disks from blob-based to managed disks. Virtual
+            /// machine must be stop-deallocated before invoking this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -400,13 +369,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> ConvertToManagedDisksAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.ConvertToManagedDisksWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Sets the state of the VM as Generalized.
+            /// Converts virtual machine disks from blob-based to managed disks. Virtual
+            /// machine must be stop-deallocated before invoking this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -417,13 +390,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Generalize(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse BeginConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).GeneralizeAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginConvertToManagedDisksAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Sets the state of the VM as Generalized.
+            /// Converts virtual machine disks from blob-based to managed disks. Virtual
+            /// machine must be stop-deallocated before invoking this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -437,13 +411,142 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task GeneralizeAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginConvertToManagedDisksAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.GeneralizeWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.BeginConvertToManagedDisksWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// The operation to list virtual machines under a resource group.
+            /// Shuts down the virtual machine and releases the compute resources. You are
+            /// not billed for the compute resources that this virtual machine uses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static OperationStatusResponse Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).DeallocateAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Shuts down the virtual machine and releases the compute resources. You are
+            /// not billed for the compute resources that this virtual machine uses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Shuts down the virtual machine and releases the compute resources. You are
+            /// not billed for the compute resources that this virtual machine uses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static OperationStatusResponse BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginDeallocateAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Shuts down the virtual machine and releases the compute resources. You are
+            /// not billed for the compute resources that this virtual machine uses.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Sets the state of the virtual machine to generalized.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static OperationStatusResponse Generalize(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).GeneralizeAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets the state of the virtual machine to generalized.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> GeneralizeAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GeneralizeWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all of the virtual machines in the specified resource group. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -457,7 +560,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to list virtual machines under a resource group.
+            /// Lists all of the virtual machines in the specified resource group. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -477,9 +582,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets the list of Virtual Machines in the subscription. Use nextLink
-            /// property in the response to get the next page of Virtual Machines. Do
-            /// this till nextLink is not null to fetch all the Virtual Machines.
+            /// Lists all of the virtual machines in the specified subscription. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -490,9 +595,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets the list of Virtual Machines in the subscription. Use nextLink
-            /// property in the response to get the next page of Virtual Machines. Do
-            /// this till nextLink is not null to fetch all the Virtual Machines.
+            /// Lists all of the virtual machines in the specified subscription. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -509,8 +614,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists all available virtual machine sizes it can be resized to for a
-            /// virtual machine.
+            /// Lists all available virtual machine sizes to which the specified virtual
+            /// machine can be resized.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -527,8 +632,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists all available virtual machine sizes it can be resized to for a
-            /// virtual machine.
+            /// Lists all available virtual machine sizes to which the specified virtual
+            /// machine can be resized.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -551,7 +656,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to power off (stop) a virtual machine.
+            /// The operation to power off (stop) a virtual machine. The virtual machine
+            /// can be restarted with the same provisioned resources. You are still
+            /// charged for this virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -562,13 +669,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void PowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse PowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).PowerOffAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).PowerOffAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to power off (stop) a virtual machine.
+            /// The operation to power off (stop) a virtual machine. The virtual machine
+            /// can be restarted with the same provisioned resources. You are still
+            /// charged for this virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -582,13 +691,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task PowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> PowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// The operation to power off (stop) a virtual machine.
+            /// The operation to power off (stop) a virtual machine. The virtual machine
+            /// can be restarted with the same provisioned resources. You are still
+            /// charged for this virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -599,13 +713,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginPowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse BeginPowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginPowerOffAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginPowerOffAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to power off (stop) a virtual machine.
+            /// The operation to power off (stop) a virtual machine. The virtual machine
+            /// can be restarted with the same provisioned resources. You are still
+            /// charged for this virtual machine.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -619,9 +735,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginPowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginPowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -636,46 +755,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Restart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse Restart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).RestartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to restart a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task RestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.RestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// The operation to restart a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void BeginRestart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginRestartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).RestartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -693,9 +775,52 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginRestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> RestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.RestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to restart a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static OperationStatusResponse BeginRestart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginRestartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to restart a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginRestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -710,9 +835,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Start(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse Start(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).StartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).StartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -730,9 +855,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task StartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> StartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.StartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.StartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -747,9 +875,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginStart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse BeginStart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginStartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginStartAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -767,9 +895,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginStartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginStartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -784,46 +915,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Redeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static OperationStatusResponse Redeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).RedeployAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to redeploy a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task RedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.RedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// The operation to redeploy a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void BeginRedeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginRedeployAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).RedeployAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -841,13 +935,58 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginRedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> RedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.RedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// The operation to list virtual machines under a resource group.
+            /// The operation to redeploy a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static OperationStatusResponse BeginRedeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).BeginRedeployAsync(resourceGroupName, vmName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to redeploy a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginRedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all of the virtual machines in the specified resource group. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -861,7 +1000,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to list virtual machines under a resource group.
+            /// Lists all of the virtual machines in the specified resource group. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -881,9 +1022,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets the list of Virtual Machines in the subscription. Use nextLink
-            /// property in the response to get the next page of Virtual Machines. Do
-            /// this till nextLink is not null to fetch all the Virtual Machines.
+            /// Lists all of the virtual machines in the specified subscription. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -897,9 +1038,9 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Gets the list of Virtual Machines in the subscription. Use nextLink
-            /// property in the response to get the next page of Virtual Machines. Do
-            /// this till nextLink is not null to fetch all the Virtual Machines.
+            /// Lists all of the virtual machines in the specified subscription. Use the
+            /// nextLink property in the response to get the next page of virtual
+            /// machines.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

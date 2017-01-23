@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a Virtual Machine Scale Set Extension.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetExtension : SubResource
+    public partial class VirtualMachineScaleSetExtension : SubResourceReadOnly
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetExtension
@@ -27,20 +27,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource Id</param>
-        /// <param name="name">the name of the extension.</param>
-        /// <param name="publisher">the name of the extension handler
+        /// <param name="name">The name of the extension.</param>
+        /// <param name="publisher">The name of the extension handler
         /// publisher.</param>
-        /// <param name="type">the type of the extension handler.</param>
-        /// <param name="typeHandlerVersion">the type version of the extension
+        /// <param name="type">The type of the extension handler.</param>
+        /// <param name="typeHandlerVersion">The type version of the extension
         /// handler.</param>
-        /// <param name="autoUpgradeMinorVersion">whether the extension
+        /// <param name="autoUpgradeMinorVersion">Whether the extension
         /// handler should be automatically upgraded across minor
         /// versions.</param>
         /// <param name="settings">Json formatted public settings for the
         /// extension.</param>
         /// <param name="protectedSettings">Json formatted protected settings
         /// for the extension.</param>
-        /// <param name="provisioningState">the provisioning state, which only
+        /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
             : base(id)

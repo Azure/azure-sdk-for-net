@@ -23,16 +23,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualHardDisk class.
         /// </summary>
-        /// <param name="uri">the virtual hard disk's uri. It should be a
-        /// valid Uri to a virtual hard disk.</param>
+        /// <param name="uri">The virtual hard disk's URI. Must be a valid URI
+        /// to a virtual hard disk.</param>
         public VirtualHardDisk(string uri = default(string))
         {
             Uri = uri;
         }
 
         /// <summary>
-        /// Gets or sets the virtual hard disk's uri. It should be a valid Uri
-        /// to a virtual hard disk.
+        /// Gets or sets the virtual hard disk's URI. Must be a valid URI to a
+        /// virtual hard disk.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }

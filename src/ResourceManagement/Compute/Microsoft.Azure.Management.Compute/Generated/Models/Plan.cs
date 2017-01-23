@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the Plan class.
         /// </summary>
-        /// <param name="name">the plan ID.</param>
-        /// <param name="publisher">the publisher ID.</param>
-        /// <param name="product">the offer ID.</param>
-        /// <param name="promotionCode">the promotion code.</param>
+        /// <param name="name">The plan ID.</param>
+        /// <param name="publisher">The publisher ID.</param>
+        /// <param name="product">The offer ID.</param>
+        /// <param name="promotionCode">The promotion code.</param>
         public Plan(string name = default(string), string publisher = default(string), string product = default(string), string promotionCode = default(string))
         {
             Name = name;

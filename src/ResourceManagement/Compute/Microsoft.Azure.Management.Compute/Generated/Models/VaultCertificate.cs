@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VaultCertificate class.
         /// </summary>
-        /// <param name="certificateUrl">the URL referencing a secret in a Key
+        /// <param name="certificateUrl">The URL referencing a secret in a Key
         /// Vault which contains a properly formatted certificate.</param>
-        /// <param name="certificateStore">the Certificate store in
+        /// <param name="certificateStore">The Certificate store in
         /// LocalMachine to add the certificate to on Windows, leave empty on
         /// Linux.</param>
         public VaultCertificate(string certificateUrl = default(string), string certificateStore = default(string))

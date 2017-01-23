@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the OSDiskImage class.
         /// </summary>
-        /// <param name="operatingSystem">the operating system of the
+        /// <param name="operatingSystem">The operating system of the
         /// osDiskImage. Possible values include: 'Windows', 'Linux'</param>
         public OSDiskImage(OperatingSystemTypes? operatingSystem)
         {

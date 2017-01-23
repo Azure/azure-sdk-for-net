@@ -29,22 +29,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="sku">the virtual machine scale set sku.</param>
-        /// <param name="upgradePolicy">the upgrade policy.</param>
-        /// <param name="virtualMachineProfile">the virtual machine
+        /// <param name="sku">The virtual machine scale set sku.</param>
+        /// <param name="plan">The purchase plan when deploying a virtual
+        /// machine scale set from VM Marketplace images.</param>
+        /// <param name="upgradePolicy">The upgrade policy.</param>
+        /// <param name="virtualMachineProfile">The virtual machine
         /// profile.</param>
-        /// <param name="provisioningState">the provisioning state, which only
+        /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="overprovision">Specifies whether the Virtual Machine
         /// Scale Set should be overprovisioned.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?))
+        /// <param name="singlePlacementGroup">When true this limits the scale
+        /// set to a single placement group, of max size 100 virtual
+        /// machines.</param>
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
+            Plan = plan;
             UpgradePolicy = upgradePolicy;
             VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
             Overprovision = overprovision;
+            SinglePlacementGroup = singlePlacementGroup;
         }
 
         /// <summary>
@@ -52,6 +59,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the purchase plan when deploying a virtual machine
+        /// scale set from VM Marketplace images.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "plan")]
+        public Plan Plan { get; set; }
 
         /// <summary>
         /// Gets or sets the upgrade policy.
@@ -77,6 +91,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.overprovision")]
         public bool? Overprovision { get; set; }
+
+        /// <summary>
+        /// Gets or sets when true this limits the scale set to a single
+        /// placement group, of max size 100 virtual machines.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.singlePlacementGroup")]
+        public bool? SinglePlacementGroup { get; set; }
 
         /// <summary>
         /// Validate the object.

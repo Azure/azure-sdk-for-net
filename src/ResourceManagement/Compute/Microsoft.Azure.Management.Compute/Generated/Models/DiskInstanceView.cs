@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiskInstanceView class.
         /// </summary>
-        /// <param name="name">the disk name.</param>
-        /// <param name="statuses">the resource status information.</param>
+        /// <param name="name">The disk name.</param>
+        /// <param name="statuses">The resource status information.</param>
         public DiskInstanceView(string name = default(string), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             Name = name;

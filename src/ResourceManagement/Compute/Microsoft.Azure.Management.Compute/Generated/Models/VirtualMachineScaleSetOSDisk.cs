@@ -25,20 +25,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetOSDisk
         /// class.
         /// </summary>
-        /// <param name="name">the disk name.</param>
-        /// <param name="createOption">the create option. Possible values
+        /// <param name="createOption">The create option. Possible values
         /// include: 'fromImage', 'empty', 'attach'</param>
-        /// <param name="caching">the caching type. Possible values include:
+        /// <param name="name">The disk name.</param>
+        /// <param name="caching">The caching type. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
-        /// <param name="osType">the Operating System type. Possible values
+        /// <param name="osType">The Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
-        /// <param name="image">the Source User Image VirtualHardDisk. This
+        /// <param name="image">The Source User Image VirtualHardDisk. This
         /// VirtualHardDisk will be copied before using it to attach to the
         /// Virtual Machine. If SourceImage is provided, the destination
         /// VirtualHardDisk should not exist.</param>
-        /// <param name="vhdContainers">the list of virtual hard disk
+        /// <param name="vhdContainers">The list of virtual hard disk
         /// container uris.</param>
-        public VirtualMachineScaleSetOSDisk(string name, DiskCreateOptionTypes createOption, CachingTypes? caching = default(CachingTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), System.Collections.Generic.IList<string> vhdContainers = default(System.Collections.Generic.IList<string>))
+        /// <param name="managedDisk">The managed disk parameters.</param>
+        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), System.Collections.Generic.IList<string> vhdContainers = default(System.Collections.Generic.IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
         {
             Name = name;
             Caching = caching;
@@ -46,6 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             OsType = osType;
             Image = image;
             VhdContainers = vhdContainers;
+            ManagedDisk = managedDisk;
         }
 
         /// <summary>
@@ -91,6 +93,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public System.Collections.Generic.IList<string> VhdContainers { get; set; }
 
         /// <summary>
+        /// Gets or sets the managed disk parameters.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "managedDisk")]
+        public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -98,10 +106,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
-            }
         }
     }
 }

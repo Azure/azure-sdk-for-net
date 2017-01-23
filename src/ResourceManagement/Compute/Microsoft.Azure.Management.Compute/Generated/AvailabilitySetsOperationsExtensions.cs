@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class AvailabilitySetsOperationsExtensions
     {
             /// <summary>
-            /// The operation to create or update the availability set.
+            /// Create or update an availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the Create Availability Set operation.
+            /// The name of the availability set.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Availability Set operation.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update the availability set.
+            /// Create or update an availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='name'>
-            /// Parameters supplied to the Create Availability Set operation.
+            /// The name of the availability set.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Availability Set operation.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to delete the availability set.
+            /// Delete an availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,13 +75,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='availabilitySetName'>
             /// The name of the availability set.
             /// </param>
-            public static void Delete(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName)
+            public static OperationStatusResponse Delete(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IAvailabilitySetsOperations)s).DeleteAsync(resourceGroupName, availabilitySetName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IAvailabilitySetsOperations)s).DeleteAsync(resourceGroupName, availabilitySetName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to delete the availability set.
+            /// Delete an availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,13 +95,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task DeleteAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// The operation to get the availability set.
+            /// Retrieves information about an availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -118,7 +121,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to get the availability set.
+            /// Retrieves information about an availability set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -141,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to list the availability sets.
+            /// Lists all availability sets in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -155,7 +158,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to list the availability sets.
+            /// Lists all availability sets in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

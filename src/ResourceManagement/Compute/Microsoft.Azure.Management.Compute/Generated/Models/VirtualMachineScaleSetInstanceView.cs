@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetInstanceView class.
         /// </summary>
-        /// <param name="virtualMachine">the instance view status summary for
+        /// <param name="virtualMachine">The instance view status summary for
         /// the virtual machine scale set.</param>
-        /// <param name="extensions">the extensions information.</param>
-        /// <param name="statuses">the resource status information.</param>
+        /// <param name="extensions">The extensions information.</param>
+        /// <param name="statuses">The resource status information.</param>
         public VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default(VirtualMachineScaleSetInstanceViewStatusesSummary), System.Collections.Generic.IList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default(System.Collections.Generic.IList<VirtualMachineScaleSetVMExtensionsSummary>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             VirtualMachine = virtualMachine;

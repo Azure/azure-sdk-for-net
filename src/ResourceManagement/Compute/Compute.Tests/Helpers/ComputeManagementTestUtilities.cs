@@ -35,7 +35,7 @@ namespace Compute.Tests
                 handler.IsPassThrough = true;
             }
 
-            var client = context.GetServiceClient<ComputeManagementClient>(handlers: 
+            var client = context.GetServiceClient<ComputeManagementClient>(handlers:
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
             return client;
         }

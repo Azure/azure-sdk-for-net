@@ -29,25 +29,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="forceUpdateTag">how the extension handler should be
+        /// <param name="forceUpdateTag">How the extension handler should be
         /// forced to update even if the extension configuration has not
         /// changed.</param>
-        /// <param name="publisher">the name of the extension handler
+        /// <param name="publisher">The name of the extension handler
         /// publisher.</param>
-        /// <param name="virtualMachineExtensionType">the type of the
+        /// <param name="virtualMachineExtensionType">The type of the
         /// extension handler.</param>
-        /// <param name="typeHandlerVersion">the type version of the extension
+        /// <param name="typeHandlerVersion">The type version of the extension
         /// handler.</param>
-        /// <param name="autoUpgradeMinorVersion">whether the extension
+        /// <param name="autoUpgradeMinorVersion">Whether the extension
         /// handler should be automatically upgraded across minor
         /// versions.</param>
         /// <param name="settings">Json formatted public settings for the
         /// extension.</param>
         /// <param name="protectedSettings">Json formatted protected settings
         /// for the extension.</param>
-        /// <param name="provisioningState">the provisioning state, which only
+        /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
-        /// <param name="instanceView">the virtual machine extension instance
+        /// <param name="instanceView">The virtual machine extension instance
         /// view.</param>
         public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
             : base(location, id, name, type, tags)

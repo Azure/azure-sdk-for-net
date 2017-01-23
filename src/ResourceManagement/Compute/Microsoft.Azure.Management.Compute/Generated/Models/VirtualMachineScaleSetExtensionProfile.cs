@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetExtensionProfile class.
         /// </summary>
-        /// <param name="extensions">the virtual machine scale set child
+        /// <param name="extensions">The virtual machine scale set child
         /// extension resources.</param>
         public VirtualMachineScaleSetExtensionProfile(System.Collections.Generic.IList<VirtualMachineScaleSetExtension> extensions = default(System.Collections.Generic.IList<VirtualMachineScaleSetExtension>))
         {

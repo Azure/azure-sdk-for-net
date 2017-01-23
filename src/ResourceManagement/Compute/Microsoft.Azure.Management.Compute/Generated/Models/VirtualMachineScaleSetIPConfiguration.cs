@@ -27,14 +27,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetIPConfiguration class.
         /// </summary>
-        /// <param name="name">the IP configuration name.</param>
-        /// <param name="subnet">the subnet.</param>
+        /// <param name="name">The IP configuration name.</param>
+        /// <param name="subnet">The subnet.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="applicationGatewayBackendAddressPools">the
+        /// <param name="applicationGatewayBackendAddressPools">The
         /// application gateway backend address pools.</param>
-        /// <param name="loadBalancerBackendAddressPools">the load balancer
+        /// <param name="loadBalancerBackendAddressPools">The load balancer
         /// backend address pools.</param>
-        /// <param name="loadBalancerInboundNatPools">the load balancer
+        /// <param name="loadBalancerInboundNatPools">The load balancer
         /// inbound nat pools.</param>
         public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, string id = default(string), System.Collections.Generic.IList<SubResource> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> loadBalancerInboundNatPools = default(System.Collections.Generic.IList<SubResource>))
             : base(id)

@@ -25,12 +25,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetStorageProfile class.
         /// </summary>
-        /// <param name="imageReference">the image reference.</param>
-        /// <param name="osDisk">the OS disk.</param>
-        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk))
+        /// <param name="imageReference">The image reference.</param>
+        /// <param name="osDisk">The OS disk.</param>
+        /// <param name="dataDisks">The data disks.</param>
+        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk), System.Collections.Generic.IList<VirtualMachineScaleSetDataDisk> dataDisks = default(System.Collections.Generic.IList<VirtualMachineScaleSetDataDisk>))
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
+            DataDisks = dataDisks;
         }
 
         /// <summary>
@@ -46,6 +48,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
 
         /// <summary>
+        /// Gets or sets the data disks.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataDisks")]
+        public System.Collections.Generic.IList<VirtualMachineScaleSetDataDisk> DataDisks { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -56,6 +64,16 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (this.OsDisk != null)
             {
                 this.OsDisk.Validate();
+            }
+            if (this.DataDisks != null)
+            {
+                foreach (var element in this.DataDisks)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Container service
+    /// Container service.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ContainerService : Resource
@@ -25,25 +25,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerService class.
         /// </summary>
         /// <param name="location">Resource location</param>
-        /// <param name="masterProfile">Properties of master agents</param>
-        /// <param name="agentPoolProfiles">Properties of agent pools</param>
-        /// <param name="linuxProfile">Properties for Linux VMs</param>
+        /// <param name="masterProfile">Properties of master agents.</param>
+        /// <param name="agentPoolProfiles">Properties of the agent
+        /// pool.</param>
+        /// <param name="linuxProfile">Properties of Linux VMs.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">the provisioning state, which only
-        /// appears in the response.</param>
-        /// <param name="orchestratorProfile">Properties of
-        /// orchestrator</param>
-        /// <param name="windowsProfile">Properties of Windows VMs</param>
-        /// <param name="diagnosticsProfile">Properties for Diagnostic
-        /// Agent</param>
-        public ContainerService(string location, ContainerServiceMasterProfile masterProfile, System.Collections.Generic.IList<ContainerServiceAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string provisioningState = default(string), ContainerServiceOrchestratorProfile orchestratorProfile = default(ContainerServiceOrchestratorProfile), ContainerServiceWindowsProfile windowsProfile = default(ContainerServiceWindowsProfile), ContainerServiceDiagnosticsProfile diagnosticsProfile = default(ContainerServiceDiagnosticsProfile))
+        /// <param name="provisioningState">the current deployment or
+        /// provisioning state, which only appears in the response.</param>
+        /// <param name="orchestratorProfile">Properties of the
+        /// orchestrator.</param>
+        /// <param name="customProfile">Properties for custom clusters.</param>
+        /// <param name="servicePrincipalProfile">Properties for cluster
+        /// service principals.</param>
+        /// <param name="windowsProfile">Properties of Windows VMs.</param>
+        /// <param name="diagnosticsProfile">Properties of the diagnostic
+        /// agent.</param>
+        public ContainerService(string location, ContainerServiceMasterProfile masterProfile, System.Collections.Generic.IList<ContainerServiceAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string provisioningState = default(string), ContainerServiceOrchestratorProfile orchestratorProfile = default(ContainerServiceOrchestratorProfile), ContainerServiceCustomProfile customProfile = default(ContainerServiceCustomProfile), ContainerServiceServicePrincipalProfile servicePrincipalProfile = default(ContainerServiceServicePrincipalProfile), ContainerServiceWindowsProfile windowsProfile = default(ContainerServiceWindowsProfile), ContainerServiceDiagnosticsProfile diagnosticsProfile = default(ContainerServiceDiagnosticsProfile))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             OrchestratorProfile = orchestratorProfile;
+            CustomProfile = customProfile;
+            ServicePrincipalProfile = servicePrincipalProfile;
             MasterProfile = masterProfile;
             AgentPoolProfiles = agentPoolProfiles;
             WindowsProfile = windowsProfile;
@@ -52,43 +58,56 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the provisioning state, which only appears in the response.
+        /// Gets the current deployment or provisioning state, which only
+        /// appears in the response.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets properties of orchestrator
+        /// Gets or sets properties of the orchestrator.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.orchestratorProfile")]
         public ContainerServiceOrchestratorProfile OrchestratorProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of master agents
+        /// Gets or sets properties for custom clusters.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.customProfile")]
+        public ContainerServiceCustomProfile CustomProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties for cluster service principals.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.servicePrincipalProfile")]
+        public ContainerServiceServicePrincipalProfile ServicePrincipalProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of master agents.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.masterProfile")]
         public ContainerServiceMasterProfile MasterProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of agent pools
+        /// Gets or sets properties of the agent pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.agentPoolProfiles")]
         public System.Collections.Generic.IList<ContainerServiceAgentPoolProfile> AgentPoolProfiles { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of Windows VMs
+        /// Gets or sets properties of Windows VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.windowsProfile")]
         public ContainerServiceWindowsProfile WindowsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets properties for Linux VMs
+        /// Gets or sets properties of Linux VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.linuxProfile")]
         public ContainerServiceLinuxProfile LinuxProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets properties for Diagnostic Agent
+        /// Gets or sets properties of the diagnostic agent.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.diagnosticsProfile")]
         public ContainerServiceDiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -114,6 +133,18 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "LinuxProfile");
             }
+            if (this.OrchestratorProfile != null)
+            {
+                this.OrchestratorProfile.Validate();
+            }
+            if (this.CustomProfile != null)
+            {
+                this.CustomProfile.Validate();
+            }
+            if (this.ServicePrincipalProfile != null)
+            {
+                this.ServicePrincipalProfile.Validate();
+            }
             if (this.MasterProfile != null)
             {
                 this.MasterProfile.Validate();
@@ -135,6 +166,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (this.LinuxProfile != null)
             {
                 this.LinuxProfile.Validate();
+            }
+            if (this.DiagnosticsProfile != null)
+            {
+                this.DiagnosticsProfile.Validate();
             }
         }
     }

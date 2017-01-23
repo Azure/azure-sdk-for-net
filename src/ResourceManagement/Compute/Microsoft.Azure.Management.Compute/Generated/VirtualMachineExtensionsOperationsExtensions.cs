@@ -140,9 +140,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmExtensionName'>
             /// The name of the virtual machine extension.
             /// </param>
-            public static void Delete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+            public static OperationStatusResponse Delete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).DeleteAsync(resourceGroupName, vmName, vmExtensionName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).DeleteAsync(resourceGroupName, vmName, vmExtensionName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -163,9 +163,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task DeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -183,9 +186,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmExtensionName'>
             /// The name of the virtual machine extension.
             /// </param>
-            public static void BeginDelete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+            public static OperationStatusResponse BeginDelete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).BeginDeleteAsync(resourceGroupName, vmName, vmExtensionName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineExtensionsOperations)s).BeginDeleteAsync(resourceGroupName, vmName, vmExtensionName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -206,9 +209,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

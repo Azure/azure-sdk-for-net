@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetNetworkProfile class.
         /// </summary>
-        /// <param name="networkInterfaceConfigurations">the list of network
+        /// <param name="networkInterfaceConfigurations">The list of network
         /// configurations.</param>
         public VirtualMachineScaleSetNetworkProfile(System.Collections.Generic.IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default(System.Collections.Generic.IList<VirtualMachineScaleSetNetworkConfiguration>))
         {

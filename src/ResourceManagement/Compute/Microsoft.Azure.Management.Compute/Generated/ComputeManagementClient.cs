@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// subscription credentials which uniquely identify Microsoft Azure
+        /// Subscription credentials which uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineSizesOperations VirtualMachineSizes { get; private set; }
 
         /// <summary>
+        /// Gets the IImagesOperations.
+        /// </summary>
+        public virtual IImagesOperations Images { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachinesOperations.
         /// </summary>
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
@@ -108,9 +113,19 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
 
         /// <summary>
-        /// Gets the IContainerServiceOperations.
+        /// Gets the IContainerServicesOperations.
         /// </summary>
-        public virtual IContainerServiceOperations ContainerService { get; private set; }
+        public virtual IContainerServicesOperations ContainerServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        public virtual IDisksOperations Disks { get; private set; }
+
+        /// <summary>
+        /// Gets the ISnapshotsOperations.
+        /// </summary>
+        public virtual ISnapshotsOperations Snapshots { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -319,10 +334,13 @@ namespace Microsoft.Azure.Management.Compute
             this.VirtualMachineImages = new VirtualMachineImagesOperations(this);
             this.Usage = new UsageOperations(this);
             this.VirtualMachineSizes = new VirtualMachineSizesOperations(this);
+            this.Images = new ImagesOperations(this);
             this.VirtualMachines = new VirtualMachinesOperations(this);
             this.VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             this.VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
-            this.ContainerService = new ContainerServiceOperations(this);
+            this.ContainerServices = new ContainerServicesOperations(this);
+            this.Disks = new DisksOperations(this);
+            this.Snapshots = new SnapshotsOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

@@ -23,14 +23,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the InstanceViewStatus class.
         /// </summary>
-        /// <param name="code">the status Code.</param>
-        /// <param name="level">the level Code. Possible values include:
+        /// <param name="code">The status code.</param>
+        /// <param name="level">The level code. Possible values include:
         /// 'Info', 'Warning', 'Error'</param>
-        /// <param name="displayStatus">the short localizable label for the
+        /// <param name="displayStatus">The short localizable label for the
         /// status.</param>
-        /// <param name="message">the detailed Message, including for alerts
-        /// and error messages.</param>
-        /// <param name="time">the time of the status.</param>
+        /// <param name="message">The detailed status message, including for
+        /// alerts and error messages.</param>
+        /// <param name="time">The time of the status.</param>
         public InstanceViewStatus(string code = default(string), StatusLevelTypes? level = default(StatusLevelTypes?), string displayStatus = default(string), string message = default(string), System.DateTime? time = default(System.DateTime?))
         {
             Code = code;
@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the status Code.
+        /// Gets or sets the status code.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the level Code. Possible values include: 'Info',
+        /// Gets or sets the level code. Possible values include: 'Info',
         /// 'Warning', 'Error'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "level")]
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DisplayStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets the detailed Message, including for alerts and error
-        /// messages.
+        /// Gets or sets the detailed status message, including for alerts and
+        /// error messages.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

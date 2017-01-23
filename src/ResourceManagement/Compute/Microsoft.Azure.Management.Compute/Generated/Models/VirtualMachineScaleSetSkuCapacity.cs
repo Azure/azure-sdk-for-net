@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetSkuCapacity class.
         /// </summary>
-        /// <param name="minimum">the minimum capacity.</param>
-        /// <param name="maximum">the maximum capacity that can be set.</param>
-        /// <param name="defaultCapacity">the default capacity.</param>
-        /// <param name="scaleType">the scale type applicable to the sku.
+        /// <param name="minimum">The minimum capacity.</param>
+        /// <param name="maximum">The maximum capacity that can be set.</param>
+        /// <param name="defaultCapacity">The default capacity.</param>
+        /// <param name="scaleType">The scale type applicable to the sku.
         /// Possible values include: 'Automatic', 'None'</param>
         public VirtualMachineScaleSetSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? defaultCapacity = default(long?), VirtualMachineScaleSetSkuScaleType? scaleType = default(VirtualMachineScaleSetSkuScaleType?))
         {

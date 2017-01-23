@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the ApiEntityReference class.
         /// </summary>
-        /// <param name="id">the ARM resource id in the form of
+        /// <param name="id">The ARM resource id in the form of
         /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...</param>
         public ApiEntityReference(string id = default(string))
         {

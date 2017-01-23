@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the PurchasePlan class.
         /// </summary>
-        /// <param name="publisher">the publisher ID.</param>
-        /// <param name="name">the plan ID.</param>
-        /// <param name="product">the product ID.</param>
+        /// <param name="publisher">The publisher ID.</param>
+        /// <param name="name">The plan ID.</param>
+        /// <param name="product">The product ID.</param>
         public PurchasePlan(string publisher, string name, string product)
         {
             Publisher = publisher;
