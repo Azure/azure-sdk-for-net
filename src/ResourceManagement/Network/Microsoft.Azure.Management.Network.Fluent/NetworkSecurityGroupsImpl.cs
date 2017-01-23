@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkManager>,
         INetworkSecurityGroups
     {
+        ///GENMHASH:0181826DACC9044D90EB575AAA5C527E:51C34340BDCC9750108D6EDBB1DD1BA7
         internal  NetworkSecurityGroupsImpl (
             INetworkSecurityGroupsOperations innerCollection,
             NetworkManager networkManager) : base(innerCollection, networkManager)
@@ -76,6 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         //$TODO: return NetworkSecurityGroupImpl
+
         ///GENMHASH:B59141AC50BFD765AA31B7D8EBE354C5:DBC6065F28483C4BE88514804CCBFFAA
         override protected INetworkSecurityGroup WrapModel (NetworkSecurityGroupInner inner)
         {

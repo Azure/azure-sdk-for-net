@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         private IOriginsOperations originsClient;
         private ICustomDomainsOperations customDomainsClient;
         private ICdnManagementClient cdnManagementClient;
+
         ///GENMHASH:2CEB6E35574F5C7F1D19ADAC97C93D65:4CE4EF96A3377BCB6304539746BB262C
         public PagedList<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations()
         {
@@ -82,6 +83,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return null;
         }
 
+        ///GENMHASH:2404C5CA15B0D5D6226D2C7D01E79303:FA381ABED6F4688FD47A380CF0F41845
         internal  CdnProfilesImpl(ICdnManagementClient cdnManagementClient, CdnManager cdnManager)
             : base(cdnManagementClient.Profiles, cdnManager)
         {

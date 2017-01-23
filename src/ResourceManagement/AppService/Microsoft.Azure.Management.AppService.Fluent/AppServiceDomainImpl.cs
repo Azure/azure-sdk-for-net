@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -119,6 +118,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return this;
         }
 
+        ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
         internal AppServiceDomainImpl(string name, DomainInner innerObject, IDomainsOperations client, ITopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
             : base(name, innerObject, manager)
         {

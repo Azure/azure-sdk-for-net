@@ -94,17 +94,19 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Authentication
 
             if (!credentialsCache.ContainsKey(adSettings.TokenAudience))
             {
-                if (userLoginInformation != null)
+                if (servicePrincipalLoginInformation != null)
+                {
+                    credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
+                        TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.ClientSecret, adSettings, TokenCache.DefaultShared);
+                }
+#if !PORTABLE
+                else if (userLoginInformation != null)
                 {
                     credentialsCache[adSettings.TokenAudience] = await UserTokenProvider.LoginSilentAsync(
                         userLoginInformation.ClientId, TenantId, userLoginInformation.UserName,
                         userLoginInformation.Password, adSettings, TokenCache.DefaultShared);
                 }
-                else if (servicePrincipalLoginInformation != null)
-                {
-                    credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
-                        TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.ClientSecret, adSettings, TokenCache.DefaultShared);
-                }
+#endif
 #if PORTABLE
                 else if (deviceCredentialInformation != null)
                 {

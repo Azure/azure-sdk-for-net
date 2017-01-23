@@ -68,6 +68,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private List<string> primaryInternalLBBackendsToAddOnUpdate = new List<string>();
         private List<string> primaryInternalLBInboundNatPoolsToAddOnUpdate = new List<string>();
 
+        ///GENMHASH:F0C80BE7722CB6620CCF10F060FE486B:9C152084C68269BCEA950F9F22FF2153
         internal VirtualMachineScaleSetImpl(string name, VirtualMachineScaleSetInner innerModel, IVirtualMachineScaleSetsOperations client, IVirtualMachineScaleSetVMsOperations vmInstancesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) : base(name, innerModel, computeManager)
         {
             this.client = client;

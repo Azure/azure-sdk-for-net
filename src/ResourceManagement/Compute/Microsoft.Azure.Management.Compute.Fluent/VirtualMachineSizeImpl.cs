@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private VirtualMachineSize innerModel;
 
+        ///GENMHASH:54DAF03887166AD77373DBD6DF3CAAE8:9DE16EE3CF4C1A1AEDF10E0F272AF8F2
         internal VirtualMachineSizeImpl (VirtualMachineSize innerModel)
         {
             this.innerModel = innerModel;

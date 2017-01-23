@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Get the reason value.
         /// </summary>
         /// <return>The reason value.</return>
+
         ///GENMHASH:5D3E8FC383AE40AAD3262C598E63D4A1:BE83F39AD4B1EBEEF700E7A538565BBC
         public string Reason
         {
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Indicates whether the name is available.
         /// </summary>
         /// <return>The nameAvailable value.</return>
+
         ///GENMHASH:E75FA496943895CE09994FE393A6DEBF:B8DDB4AB3E2E846B3FEEEE35153D2599
         public bool NameAvailable
         {
@@ -42,6 +44,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Construct CheckNameAvailabilityResult object from server response object.
         /// </summary>
         /// <param name="inner">Server response for CheckNameAvailability request.</param>
+        ///GENMHASH:E71ACFFD67FE0B74DBA80A4283F03C63:BC4B1282CA708DC220050F834F17A184
         public CheckNameAvailabilityResult(CheckNameAvailabilityOutputInner inner)
         {
             this.inner = inner;
@@ -51,6 +54,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Get the message value.
         /// </summary>
         /// <return>The message value.</return>
+
         ///GENMHASH:E703019D95A4EEA3549CBD7305C71A96:F1468984A8145CAD5144260CCBB8C51C
         public string Message
         {

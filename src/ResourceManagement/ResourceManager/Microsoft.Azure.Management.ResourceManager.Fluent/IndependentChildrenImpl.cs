@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     using System.Threading.Tasks;
 
     /// <summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs
     /// Base class for independent child collection class.
     /// (Internal use only).
     /// </summary>
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="Inner">The wrapper inner type.</typeparam>
     /// <typeparam name="InnerCollection">The inner type of the collection object.</typeparam>
     /// <typeparam name="Manager">The manager type for this resource provider type.</typeparam>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs
+
     public abstract partial class IndependentChildrenImpl<T, ImplT, InnerT, InnerCollectionT, ManagerT> :
         CreatableResources<T, ImplT, InnerT>,
         ISupportsGettingById<T>,
@@ -29,13 +30,14 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         protected InnerCollectionT innerCollection;
         protected ManagerT manager;
 
+        ///GENMHASH:ED07292865768A689F918C1B84A21178:E628E6DE6456B030DED192E940597C6E
         public IndependentChildrenImpl(InnerCollectionT innerCollection, ManagerT manager)
         {
             this.innerCollection = innerCollection;
             this.manager = manager;
         }
 
-        ///GENMHASH:5002116800CBAC02BBC1B4BF62BC4942:EC62A0BF293C71A310E2FDC965B8DA29
+        ///GENMHASH:5002116800CBAC02BBC1B4BF62BC4942:A2A025A9F2772D74D0B8615C6144E641
         public T GetById(string id)
         {
             return GetByIdAsync(id).GetAwaiter().GetResult();
@@ -85,7 +87,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             DeleteByIdAsync(id).Wait();
         }
 
-        ///GENMHASH:4D33A73A344E127F784620E76B686786:45501AE2D88C8DB770F13846C7DD5857
+        ///GENMHASH:4D33A73A344E127F784620E76B686786:F75A1B8CEFE83AE0B483457A2928324B
         public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             ResourceId resourceId = ResourceId.FromString(id);

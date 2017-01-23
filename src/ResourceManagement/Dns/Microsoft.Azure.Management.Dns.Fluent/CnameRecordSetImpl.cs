@@ -13,12 +13,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         ICnameRecordSet
     {
+
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:AF11C8A7E2B299112E3CED7714F622A7
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
             return resource;
         }
 
+        ///GENMHASH:E5A5F4A2DE55AF67359951B8714E8E37:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  CnameRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

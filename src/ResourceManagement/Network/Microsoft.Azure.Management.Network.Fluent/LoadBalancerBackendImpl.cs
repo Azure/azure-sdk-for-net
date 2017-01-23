@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         IUpdate
     {
+        ///GENMHASH:EE2A508C800EC05294CBB5EAA90384AB:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal LoadBalancerBackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
         }

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         IAaaaRecordSet
     {
+
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:09F5D9EDC414E52781BD92550F31253C
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {
@@ -57,6 +58,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return ipv6Addresses;
         }
 
+        ///GENMHASH:6CC2CE509AA8735DD6507ACE8F3C9688:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
         internal  AaaaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(parent, innerModel, client)
         {
         }

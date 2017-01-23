@@ -215,7 +215,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:75636395FBDB9C1FA7F5231207B98D55
         public override FluentT Refresh()
         {
+            ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
             SiteInner inner = GetInnerAsync().GetAwaiter().GetResult();
+            ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
             inner.SiteConfig = GetConfigInnerAsync().GetAwaiter().GetResult();
             SetInner(inner);
             CacheAppSettingsAndConnectionStringsAsync().GetAwaiter().GetResult();
@@ -255,7 +257,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public async Task CacheAppSettingsAndConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             Task<StringDictionaryInner> appSettingsTask = ListAppSettingsAsync();
+            ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:27E486AB74A10242FF421C0798DDC450
             Task<ConnectionStringDictionaryInner> connectionStringsTask = ListConnectionStringsAsync();
+            ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:27E486AB74A10242FF421C0798DDC450
             Task<SlotConfigNamesResourceInner> slotConfigsTask = ListSlotConfigurationsAsync();
 
             await Task.WhenAll(appSettingsTask, connectionStringsTask, slotConfigsTask);
@@ -419,6 +423,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
 
             // Web app creation
+            ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:27E486AB74A10242FF421C0798DDC450
             var site = await CreateOrUpdateInnerAsync(Inner, cancellationToken).ContinueWith<SiteInner>(t =>
             {
                 var innerSite = t.Result;
@@ -472,6 +477,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             // Submit site config
             if (Inner.SiteConfig != null)
             {
+                ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:27E486AB74A10242FF421C0798DDC450
                 SiteConfigInner configInner = await CreateOrUpdateSiteConfigAsync(Inner.SiteConfig, cancellationToken);
                 site.SiteConfig = configInner;
             }
@@ -568,6 +574,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 slotConfigs.AppSettingNames = new List<string>(stickyAppSettingKeys);
                 slotConfigs.ConnectionStringNames = new List<string>(stickyConnectionStringNames);
 
+                ///GENMHASH:62F8B201D885123D1E906E306D144662:27E486AB74A10242FF421C0798DDC450
                 slotConfigs = await UpdateSlotConfigurationsAsync(slotConfigs, cancellationToken);
             }
 
@@ -575,6 +582,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             if (sourceControl != null && !sourceControlToDelete)
             {
                 await sourceControl.RegisterGithubAccessTokenAsync(cancellationToken);
+                ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:27E486AB74A10242FF421C0798DDC450
                 await CreateOrUpdateSourceControlAsync(sourceControl.Inner, cancellationToken);
             }
 
@@ -813,7 +821,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:62A0C790E618C837459BE1A5103CA0E5:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> ListSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:845984DE82811B6BF5DE9676CE5B433A:6A4C5D736C724933B8B06C102140E89D
@@ -864,7 +871,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:62F8B201D885123D1E906E306D144662:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SlotConfigNamesResourceInner> UpdateSlotConfigurationsAsync(SlotConfigNamesResourceInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:3BE74CEDB189CF13F08D5268649B73D7:FBDC4182C8802269267E808E13D08A16
@@ -873,7 +879,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new ReadOnlyDictionary<string, IAppSetting>(cachedAppSettings);
         }
 
-        ///GENMHASH:256905D5B839C64BFE9830503CB5607B:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> GetConfigInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:F76B0B1D4816856D9C8EA506F611C03D:91C46F0ECB5CC2D51804D2C0710E6211
@@ -904,7 +909,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:C102774B5B56F13DBA5095A48DC5F846:1886C5FB5632B7468462889794AFEA08
@@ -948,7 +952,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return Inner.SiteConfig.NodeVersion;
         }
 
-        ///GENMHASH:07FBC6D492A2E1E463B39D4D7FFC40E9:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteInner> CreateOrUpdateInnerAsync(SiteInner site, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:FA07D0476A4A7B9F0FDA17B8DF0095F1:FC345DE9B0C87952B3DE42BCE0488ECD
@@ -957,9 +960,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new ReadOnlyDictionary<string, Microsoft.Azure.Management.AppService.Fluent.IConnectionString>(cachedConnectionStrings);
         }
 
-        ///GENMHASH:88806945F575AAA522C2E09EBC366CC0:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
+        ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
         internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, manager)
         {
@@ -1045,7 +1048,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (bool)Inner.SiteConfig.AlwaysOn;
         }
 
-        ///GENMHASH:6799EDFB0B008F8C0EB7E07EE71E6B34:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteConfigInner> CreateOrUpdateSiteConfigAsync(SiteConfigInner siteConfig, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:FA11486B840C0E86D3D1A446BF2A3C96:AA358901B07077B2692CB317CAFFF60D
@@ -1103,7 +1105,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        ///GENMHASH:0FE78F842439357DA0333AABD3B95D59:27E486AB74A10242FF421C0798DDC450
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.ConnectionStringDictionaryInner> ListConnectionStringsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:6CAC70824B4E95B3FC2D7FE1CE29759E:513EF027EB09EB5FEC6C661F74328B72

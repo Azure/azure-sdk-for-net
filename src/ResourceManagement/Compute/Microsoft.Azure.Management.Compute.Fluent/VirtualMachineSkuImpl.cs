@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private string skuName;
         private IVirtualMachineImagesInSku imagesInSku;
 
+        ///GENMHASH:21D3D2F31FC065A4FFA54A06386FB988:A4610E899250FB2A5209F126FAB351F7
         internal VirtualMachineSkuImpl(IVirtualMachineOffer offer, string skuName, IVirtualMachineImagesOperations client)
         {
             this.offer = offer;

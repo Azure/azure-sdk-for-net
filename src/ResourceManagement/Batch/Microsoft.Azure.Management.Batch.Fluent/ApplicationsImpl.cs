@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         private IApplicationPackageOperations applicationPackagesClient;
         private BatchAccountImpl parent;
 
+        ///GENMHASH:7F1D4CEF6D71CC38B50E5E83BB1A6DDB:C5EC5A81A9B660015E5BC8802942DF92
         internal ApplicationsImpl(IApplicationOperations client, IApplicationPackageOperations applicationPackagesClient, BatchAccountImpl parent)
             : base(parent, "Application")
         {

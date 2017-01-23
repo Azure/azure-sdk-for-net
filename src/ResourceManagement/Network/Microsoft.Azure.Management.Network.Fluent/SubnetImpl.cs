@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Subnet.UpdateDefinition.IUpdateDefinition<Network.Update.IUpdate>,
         Subnet.Update.IUpdate
     {
+        ///GENMHASH:95294A80FBE609A8A5735E8840009FC0:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner, parent)
         {
         }
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return (Inner.RouteTable != null) ? Inner.RouteTable.Id : null;
         }
 
-        ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:8E698A4D3F26647C89221EE26B291774
+        ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:92C42A9D6A5461310D3C0243B1847E84
         internal INetworkSecurityGroup GetNetworkSecurityGroup ()
         {
             var nsgId = NetworkSecurityGroupId();

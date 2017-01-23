@@ -17,20 +17,20 @@
       "imports": [ "dnxcore50" ],
       "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
-        "Microsoft.NETCore.Platforms": "1.0.1",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.Net.Http": "4.1.0",
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Threading.Tasks": "4.0.11",
-        "System.Console": "4.0.0"
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "System.Diagnostics.Tools": "4.3.0",
+        "System.Net.Http": "4.3.0",
+        "System.Runtime.Serialization.Primitives": "4.3.0",
+        "System.Threading.Tasks": "4.3.0",
+        "System.Console": "4.3.0"
       }
     },
     "netstandard1.1": {
       "imports": [ "dnxcore50" ],
       "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Console": "4.0.0"
+        "System.Runtime.Serialization.Primitives": "4.3.0",
+        "System.Console": "4.3.0"
       }
     }
   }

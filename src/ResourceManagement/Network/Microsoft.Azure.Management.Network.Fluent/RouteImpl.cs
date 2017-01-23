@@ -19,12 +19,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<RouteTable.Update.IUpdate>,
         Route.Update.IUpdate
     {
+
         ///GENMHASH:DA055B08DA468C4A0FDC8D28BC654F0A:8F0C59692A7F0EEB231DF5A0F980E52E
         public string DestinationAddressPrefix()
         {
             return Inner.AddressPrefix;
         }
 
+        ///GENMHASH:1AE50C561DDB7EC1CBF9E9D75A7B7164:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal RouteImpl(RouteInner inner, RouteTableImpl parent) : base(inner, parent)
         {
         }

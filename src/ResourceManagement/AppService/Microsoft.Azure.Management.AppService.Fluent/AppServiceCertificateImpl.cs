@@ -140,6 +140,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WithPfxByteArray(fileContent);
         }
 
+        ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
         internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, ICertificatesOperations client, AppServiceManager manager)
                     : base(Name, innerObject, manager)
         {

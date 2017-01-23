@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Fluent.Network
 {
@@ -9,11 +9,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using System.Collections.Generic;
 
     /// <summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmljSXBDb25maWd1cmF0aW9uQmFzZUltcGw=
     /// Base class implementation for various network interface ip configurations.
     /// </summary>
     /// <typeparam name="ParentImplT">Parent implementation.</typeparam>
     /// <typeparam name="IParentT">Parent interface.</typeparam>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmljSXBDb25maWd1cmF0aW9uQmFzZUltcGw=
+
     internal partial class NicIpConfigurationBaseImpl<ParentImplT, IParentT> : 
         ChildResource<NetworkInterfaceIPConfigurationInner, ParentImplT, IParentT>
         where ParentImplT : IParentT

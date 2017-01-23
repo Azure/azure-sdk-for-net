@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private IVirtualMachineScaleSetVMsOperations client;
         private IComputeManager computeManager;
+
         ///GENMHASH:7A41C20BB6F19CCDAC03072604BF281B:10AB7511A9B5C284B8E2E1F35126DD60
         public string WindowsTimeZone()
         {
@@ -408,6 +409,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.InstanceId(), cancellationToken);
         }
 
+        ///GENMHASH:56E00E1F789510BB94AFCDC1FF61D00B:C0B660115AA9DC53D76DEDA856496556
         internal VirtualMachineScaleSetVMImpl(VirtualMachineScaleSetVMInner inner,
             VirtualMachineScaleSetImpl parent,
             IVirtualMachineScaleSetVMsOperations client,

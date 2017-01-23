@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private IDatabasesOperations databasesInner;
         private IRecommendedElasticPoolsOperations recommendedElasticPoolsInner;
 
+        ///GENMHASH:01C0FA69267690E3BF39F794FC8D1F05:9CCC9CA468F37F7150A173588C172C02
         internal SqlServersImpl(IServersOperations innerCollection,
             IElasticPoolsOperations elasticPoolsInner,
             IDatabasesOperations databasesInner,

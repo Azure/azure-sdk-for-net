@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         private IStorageAccount existingStorageAccountToAssociate;
         private ApplicationsImpl applicationsImpl;
 
+        ///GENMHASH:4A1C1CE1A5FD21C2D77E9D249E53B0FC:2CAC092B38BC608EA9EE02AF770A8C0D
         internal BatchAccountImpl(string name,
                 BatchAccountInner innerObject,
                 IBatchAccountOperations innerCollection,

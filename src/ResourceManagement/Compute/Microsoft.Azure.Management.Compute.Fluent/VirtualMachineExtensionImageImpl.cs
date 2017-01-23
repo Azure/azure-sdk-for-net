@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IVirtualMachineExtensionImageVersion version;
 
+        ///GENMHASH:A7E90FDB3C926DF27F7112B4B162FAF4:18F40888397DB8447972CA66C758B20D
         internal VirtualMachineExtensionImageImpl(IVirtualMachineExtensionImageVersion version, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.version = version;

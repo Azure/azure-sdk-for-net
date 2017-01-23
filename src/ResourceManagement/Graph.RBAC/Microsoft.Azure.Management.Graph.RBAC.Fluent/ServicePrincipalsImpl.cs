@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         private IServicePrincipalsOperations innerCollection;
         private GraphRbacManager manager;
+        ///GENMHASH:A268FD9043A10BBA863D754221CF201B:B5C5E95A3298DE50C35002A7B21387E7
         internal ServicePrincipalsImpl (IServicePrincipalsOperations client, GraphRbacManager graphRbacManager)
         {
             this.innerCollection = client;

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSetImpl,
         ISrvRecordSet
     {
+
         ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:53BB67595D71CD0CA502C876E02949C2
         protected override RecordSetInner PrepareForUpdate(RecordSetInner resource)
         {

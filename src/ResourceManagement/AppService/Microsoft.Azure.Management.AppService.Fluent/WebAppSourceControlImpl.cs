@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent;
         private WebSiteManagementClient serviceClient;
         private string githubAccessToken;
+
         ///GENMHASH:8560BA43F3FC1809A8347C8CFFC2AB2F:153E3E10E3E86D913133A2F022C5C3C5
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> WithPublicMercurialRepository(string url)
         {
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return parent;
         }
 
+        ///GENMHASH:DBC91E274023CE112BF5317D36B0BDC3:08D6495FD781CCB57E524CE9B1EDE729
         internal WebAppSourceControlImpl(SiteSourceControlInner inner, WebAppBaseImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> parent, WebSiteManagementClient serviceClient)
             : base (inner)
         {

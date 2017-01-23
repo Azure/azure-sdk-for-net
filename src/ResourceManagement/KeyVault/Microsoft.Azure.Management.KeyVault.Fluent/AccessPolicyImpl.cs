@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     {
         private string userPrincipalName;
         private string servicePrincipalName;
+        ///GENMHASH:DB1CD9648996DA10B58423DFABD976E4:BC7BE29DA61C7F6594944FD23512AD2F
         internal AccessPolicyImpl (AccessPolicyEntry innerObject, VaultImpl parent) : base(innerObject, parent)
         {
             Inner.TenantId = Guid.Parse(parent.TenantId);
@@ -100,6 +101,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 return Inner.Permissions;
             }
         }
+
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:ECE58FC8B41B858AA434697B6028BD23
         public override string Name()
         {
@@ -136,6 +138,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return AllowKeyPermissions(new List<KeyPermissions>(permissions));
         }
 
+        ///GENMHASH:4285C26105D2CACA3EB31944C49CADB1:4EA7EF6F19835FEDF776325D20842BA6
         public AccessPolicyImpl AllowKeyPermissions (IList<KeyPermissions> permissions)
         {
             InitializeKeyPermissions();

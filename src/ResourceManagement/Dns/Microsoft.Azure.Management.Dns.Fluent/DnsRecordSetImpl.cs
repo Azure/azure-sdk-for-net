@@ -64,6 +64,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 resource.TTL = this.Inner.TTL;
                 this.Inner.TTL = null;
             }
+            ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:27E486AB74A10242FF421C0798DDC450
             return PrepareForUpdate(resource);
         }
 
@@ -188,7 +189,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:27E486AB74A10242FF421C0798DDC450
         protected abstract RecordSetInner PrepareForUpdate(RecordSetInner resource);
 
         ///GENMHASH:C99F2F80022268E13D703B3379BD3B58:E0FC813C874E3B3480E4DA74E4253BCC
@@ -335,6 +335,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
+        ///GENMHASH:C9AB5BEB0FF2C1CFD204A7692C092D2D:2603823A7ECCC53B6CAF90D20F5F9E24
         protected  DnsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel, IRecordSetsOperations client) : base(innerModel.Name, parent, innerModel)
         {
             this.client = client;

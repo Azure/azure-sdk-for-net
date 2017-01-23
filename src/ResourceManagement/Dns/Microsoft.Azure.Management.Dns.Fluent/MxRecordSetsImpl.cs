@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return new MxRecordSetImpl(this.dnsZone, inner, this.client);
         }
 
+        ///GENMHASH:6F2FBDD481155D6AAAD51709649A57BB:93DD647D9AB0DB30D017785882D88829
         internal  MxRecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
         {
             this.dnsZone = dnsZone;

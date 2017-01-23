@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             AppServiceManager>,
         IAppServicePlans
     {
+
         ///GENMHASH:E776888E46F8A3FC56D24DF4A74E5B74:938AF55195C22DFA74E6820E73D5DEE3
         public async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -68,6 +69,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new AppServicePlanImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
+        ///GENMHASH:13EDEABEC8823ED4BDC78DA4C9882000:0FCD47CBCD9128C3D4A03458C5796741
         internal AppServicePlansImpl(IAppServicePlansOperations innerCollection, AppServiceManager manager)
             : base(innerCollection, manager)
         {

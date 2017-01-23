@@ -47,6 +47,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return WrapList(pagedList);
         }
 
+        ///GENMHASH:A640FDB092C8BFC007EAD13B539088B5:93DD647D9AB0DB30D017785882D88829
         internal  ARecordSetsImpl(DnsZoneImpl dnsZone, IRecordSetsOperations client)
         {
             this.dnsZone = dnsZone;

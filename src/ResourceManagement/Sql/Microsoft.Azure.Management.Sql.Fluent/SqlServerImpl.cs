@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// <summary>
     /// Implementation for SqlServer and its parent interfaces.
     /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxTZXJ2ZXJJbXBs
     internal partial class SqlServerImpl :
         GroupableResource<
             ISqlServer,
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private IList<string> firewallRulesToDelete;
         private IList<string> databasesToDelete;
 
-        ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxTZXJ2ZXJJbXBs
+        ///GENMHASH:13130EA9D0D51B33AB3979B218BFFA7D:10E44AC4E7806D854C536C98ECFD0C23
         internal SqlServerImpl(string name, ServerInner innerObject, IServersOperations innerCollection,
             ISqlManager manager, IElasticPoolsOperations elasticPoolsInner, IDatabasesOperations databasesInner,
             IRecommendedElasticPoolsOperations recommendedElasticPoolsInner)
@@ -263,7 +264,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this.Inner.Version;
         }
 
-        ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:C1BF60564A7C5B160B5E34171A73CC9C
+        ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:CEA494BF84552A0D1AD6DEA7E85EA72E
         public SqlServerImpl WithNewDatabase(string databaseName)
         {
             this.databaseCreatableMap.Remove(databaseName);
@@ -321,7 +322,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return this;
         }
 
-        ///GENMHASH:77FCE079B32B71295AE582EB77E23D52:96B9EEEE3F1DEFD789BCB8A2254A6BC8
+        ///GENMHASH:77FCE079B32B71295AE582EB77E23D52:F261F33699B298737889E849E6BAB705
         private void WithDatabaseInElasticPool(string databaseName, string elasticPoolName)
         {
             this.databaseCreatableMap.Remove(databaseName);

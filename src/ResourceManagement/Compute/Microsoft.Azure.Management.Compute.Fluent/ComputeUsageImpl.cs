@@ -13,12 +13,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Wrapper<Usage>,
         IComputeUsage
     {
+
         ///GENMHASH:98D67B93923AC46ECFE338C62748BCCB:AE70F51B2F784C2A02F858F867A2AA34
         public ComputeUsageUnit Unit()
         {
             return new ComputeUsageUnit(Usage.Unit);
         }
 
+        ///GENMHASH:A5E7AF81C3FDCACFFFE1D6B50B56161F:C0C35E00AF4E17F141675A2C05C7067B
         internal ComputeUsageImpl(Usage innerObject) : base(innerObject)
         {
         }

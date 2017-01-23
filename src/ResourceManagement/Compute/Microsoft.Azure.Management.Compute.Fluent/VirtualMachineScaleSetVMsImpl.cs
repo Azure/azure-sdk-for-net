@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private VirtualMachineScaleSetImpl scaleSet;
         private IVirtualMachineScaleSetVMsOperations client;
         private IComputeManager computeManager;
+        ///GENMHASH:2F547EF235083E7C24F2AAD75FCE9FFC:C140D4869BF21B82D034CCD0BC161B59
         internal VirtualMachineScaleSetVMsImpl(VirtualMachineScaleSetImpl scaleSet,
             IVirtualMachineScaleSetVMsOperations client,
             IComputeManager computeManager)

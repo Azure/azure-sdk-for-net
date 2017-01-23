@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private ISqlElasticPoolsCreatable elasticPools;
         private Region region;
 
+        ///GENMHASH:C9332154641E1021A796A0AA87A41D7C:CB5497929793111AF874DCDF5A64A775
         internal ElasticPoolsImpl(IElasticPoolsOperations innerCollection,
             ISqlManager manager,
             IDatabasesOperations databasesInner,
