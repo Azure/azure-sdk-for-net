@@ -22,40 +22,6 @@ namespace Microsoft.Azure.Management.Network
     public static partial class ServiceCommunitiesOperationsExtensions
     {
             /// <summary>
-            /// Get the specified service communities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the service community.
-            /// </param>
-            public static IPage<BGPCommunity> Get(this IServiceCommunitiesOperations operations, string serviceName)
-            {
-                return operations.GetAsync(serviceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the specified service communities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the service community.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<BGPCommunity>> GetAsync(this IServiceCommunitiesOperations operations, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(serviceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all the available service communities.
             /// </summary>
             /// <param name='operations'>
@@ -78,40 +44,6 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<ServiceCommunity>> ListAsync(this IServiceCommunitiesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get the specified service communities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<BGPCommunity> GetNext(this IServiceCommunitiesOperations operations, string nextPageLink)
-            {
-                return operations.GetNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the specified service communities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<BGPCommunity>> GetNextAsync(this IServiceCommunitiesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
