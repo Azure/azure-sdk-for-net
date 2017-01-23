@@ -28,19 +28,198 @@ namespace ManageWebAppWithTrafficManager
 
     public class Program
     {
-        private static string RG_NAME = SharedSettings.RandomResourceName("rgNEMV_", 24);
         private static string CERT_PASSWORD = "StrongPass!12";
         private static string pfxPath;
-        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-        private static readonly string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
-        private static readonly string app5Name = SharedSettings.RandomResourceName("webapp5-", 20);
-        private static readonly string plan1Name = SharedSettings.RandomResourceName("jplan1_", 15);
-        private static readonly string plan2Name = SharedSettings.RandomResourceName("jplan2_", 15);
-        private static readonly string plan3Name = SharedSettings.RandomResourceName("jplan3_", 15);
-        private static readonly string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
-        private static readonly string tmName = SharedSettings.RandomResourceName("jsdktm-", 20);
+
+        public static void RunSample(IAzure azure)
+        {
+            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
+            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+            string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
+            string app5Name = SharedSettings.RandomResourceName("webapp5-", 20);
+            string plan1Name = SharedSettings.RandomResourceName("jplan1_", 15);
+            string plan2Name = SharedSettings.RandomResourceName("jplan2_", 15);
+            string plan3Name = SharedSettings.RandomResourceName("jplan3_", 15);
+            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string tmName = SharedSettings.RandomResourceName("jsdktm-", 20);
+
+            try
+            {
+                //============================================================
+                // Purchase a domain (will be canceled for a full refund)
+
+                Utilities.Log("Purchasing a domain " + domainName + "...");
+
+                azure.ResourceGroups.Define(rgName)
+                        .WithRegion(Region.US_WEST)
+                        .Create();
+
+                var domain = azure.AppServices.AppServiceDomains.Define(domainName)
+                        .WithExistingResourceGroup(rgName)
+                        .DefineRegistrantContact()
+                            .WithFirstName("Jon")
+                            .WithLastName("Doe")
+                            .WithEmail("jondoe@contoso.com")
+                            .WithAddressLine1("123 4th Ave")
+                            .WithCity("Redmond")
+                            .WithStateOrProvince("WA")
+                            .WithCountry(CountryISOCode.UnitedStates)
+                            .WithPostalCode("98052")
+                            .WithPhoneCountryCode(CountryPhoneCode.UnitedStates)
+                            .WithPhoneNumber("4258828080")
+                            .Attach()
+                        .WithDomainPrivacyEnabled(true)
+                        .WithAutoRenewEnabled(false)
+                        .Create();
+                Utilities.Log("Purchased domain " + domain.Name);
+                Utilities.Print(domain);
+
+                //============================================================
+                // Create a self-singed SSL certificate
+
+                pfxPath = domainName + ".pfx";
+
+                Utilities.Log("Creating a self-signed certificate " + pfxPath + "...");
+
+                CreateCertificate(domainName, pfxPath, CERT_PASSWORD);
+
+                //============================================================
+                // Create 3 app service plans in 3 regions
+
+                Utilities.Log("Creating app service plan " + plan1Name + " in US West...");
+
+                var plan1 = CreateAppServicePlan(azure, rgName, plan1Name, Region.US_WEST);
+
+                Utilities.Log("Created app service plan " + plan1.Name);
+                Utilities.Print(plan1);
+
+                Utilities.Log("Creating app service plan " + plan2Name + " in Europe West...");
+
+                var plan2 = CreateAppServicePlan(azure, rgName, plan2Name, Region.EUROPE_WEST);
+
+                Utilities.Log("Created app service plan " + plan2.Name);
+                Utilities.Print(plan1);
+
+                Utilities.Log("Creating app service plan " + plan3Name + " in Asia East...");
+
+                var plan3 = CreateAppServicePlan(azure, rgName, plan3Name, Region.ASIA_EAST);
+
+                Utilities.Log("Created app service plan " + plan2.Name);
+                Utilities.Print(plan1);
+
+                //============================================================
+                // Create 5 web apps under these 3 app service plans
+
+                Utilities.Log("Creating web app " + app1Name + "...");
+
+                var app1 = CreateWebApp(azure, domain, rgName, app1Name, plan1);
+
+                Utilities.Log("Created web app " + app1.Name);
+                Utilities.Print(app1);
+
+                Utilities.Log("Creating another web app " + app2Name + "...");
+                var app2 = CreateWebApp(azure, domain, rgName, app2Name, plan2);
+
+                Utilities.Log("Created web app " + app2.Name);
+                Utilities.Print(app2);
+
+                Utilities.Log("Creating another web app " + app3Name + "...");
+                var app3 = CreateWebApp(azure, domain, rgName, app3Name, plan3);
+
+                Utilities.Log("Created web app " + app3.Name);
+                Utilities.Print(app3);
+
+                Utilities.Log("Creating another web app " + app3Name + "...");
+                var app4 = CreateWebApp(azure, domain, rgName, app4Name, plan1);
+
+                Utilities.Log("Created web app " + app4.Name);
+                Utilities.Print(app4);
+
+                Utilities.Log("Creating another web app " + app3Name + "...");
+                var app5 = CreateWebApp(azure, domain, rgName, app5Name, plan1);
+
+                Utilities.Log("Created web app " + app5.Name);
+                Utilities.Print(app5);
+
+                //============================================================
+                // Create a traffic manager
+
+                Utilities.Log("Creating a traffic manager " + tmName + " for the web apps...");
+
+                var trafficManager = azure.TrafficManagerProfiles
+                        .Define(tmName)
+                        .WithExistingResourceGroup(rgName)
+                        .WithLeafDomainLabel(tmName)
+                        .WithTrafficRoutingMethod(TrafficRoutingMethod.Weighted)
+                        .DefineAzureTargetEndpoint("endpoint1")
+                            .ToResourceId(app1.Id)
+                            .Attach()
+                        .DefineAzureTargetEndpoint("endpoint2")
+                            .ToResourceId(app2.Id)
+                            .Attach()
+                        .DefineAzureTargetEndpoint("endpoint3")
+                            .ToResourceId(app3.Id)
+                            .Attach()
+                        .DefineAzureTargetEndpoint("endpoint4")
+                            .ToResourceId(app4.Id)
+                            .Attach()
+                        .DefineAzureTargetEndpoint("endpoint5")
+                            .ToResourceId(app5.Id)
+                            .Attach()
+                        .Create();
+
+                Utilities.Log("Created traffic manager " + trafficManager.Name);
+
+                //============================================================
+                // Scale up the app service plans
+
+                Utilities.Log("Scaling up app service plan " + plan1Name + "...");
+
+                plan1.Update()
+                                .WithCapacity(plan1.Capacity * 2)
+                                .Apply();
+
+                Utilities.Log("Scaled up app service plan " + plan1Name);
+                Utilities.Print(plan1);
+
+                Utilities.Log("Scaling up app service plan " + plan2Name + "...");
+
+                plan2.Update()
+                                .WithCapacity(plan2.Capacity * 2)
+                                .Apply();
+
+                Utilities.Log("Scaled up app service plan " + plan2Name);
+                Utilities.Print(plan2);
+
+                Utilities.Log("Scaling up app service plan " + plan3Name + "...");
+
+                plan3.Update()
+                                .WithCapacity(plan3.Capacity * 2)
+                                .Apply();
+
+                Utilities.Log("Scaled up app service plan " + plan3Name);
+                Utilities.Print(plan3);
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (NullReferenceException)
+                {
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
+                }
+                catch (Exception g)
+                {
+                    Utilities.Log(g);
+                }
+            }
+        }
 
         public static void Main(string[] args)
         {
@@ -57,206 +236,30 @@ namespace ManageWebAppWithTrafficManager
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
-                try
-                {
-                    //============================================================
-                    // Purchase a domain (will be canceled for a full refund)
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                    Console.WriteLine("Purchasing a domain " + domainName + "...");
-
-                    azure.ResourceGroups.Define(RG_NAME)
-                            .WithRegion(Region.US_WEST)
-                            .Create();
-
-                    var domain = azure.AppServices.AppServiceDomains.Define(domainName)
-                            .WithExistingResourceGroup(RG_NAME)
-                            .DefineRegistrantContact()
-                                .WithFirstName("Jon")
-                                .WithLastName("Doe")
-                                .WithEmail("jondoe@contoso.com")
-                                .WithAddressLine1("123 4th Ave")
-                                .WithCity("Redmond")
-                                .WithStateOrProvince("WA")
-                                .WithCountry(CountryISOCode.UnitedStates)
-                                .WithPostalCode("98052")
-                                .WithPhoneCountryCode(CountryPhoneCode.UnitedStates)
-                                .WithPhoneNumber("4258828080")
-                                .Attach()
-                            .WithDomainPrivacyEnabled(true)
-                            .WithAutoRenewEnabled(false)
-                            .Create();
-                    Console.WriteLine("Purchased domain " + domain.Name);
-                    Utilities.Print(domain);
-
-                    //============================================================
-                    // Create a self-singed SSL certificate
-
-                    pfxPath = domainName + ".pfx";
-
-                    Console.WriteLine("Creating a self-signed certificate " + pfxPath + "...");
-
-                    CreateCertificate(domainName, pfxPath, CERT_PASSWORD);
-
-                    //============================================================
-                    // Create 3 app service plans in 3 regions
-
-                    Console.WriteLine("Creating app service plan " + plan1Name + " in US West...");
-
-                    var plan1 = CreateAppServicePlan(azure, plan1Name, Region.US_WEST);
-
-                    Console.WriteLine("Created app service plan " + plan1.Name);
-                    Utilities.Print(plan1);
-
-                    Console.WriteLine("Creating app service plan " + plan2Name + " in Europe West...");
-
-                    var plan2 = CreateAppServicePlan(azure, plan2Name, Region.EUROPE_WEST);
-
-                    Console.WriteLine("Created app service plan " + plan2.Name);
-                    Utilities.Print(plan1);
-
-                    Console.WriteLine("Creating app service plan " + plan3Name + " in Asia East...");
-
-                    var plan3 = CreateAppServicePlan(azure, plan3Name, Region.ASIA_EAST);
-
-                    Console.WriteLine("Created app service plan " + plan2.Name);
-                    Utilities.Print(plan1);
-
-                    //============================================================
-                    // Create 5 web apps under these 3 app service plans
-
-                    Console.WriteLine("Creating web app " + app1Name + "...");
-
-                    var app1 = CreateWebApp(azure, domain, app1Name, plan1);
-
-                    Console.WriteLine("Created web app " + app1.Name);
-                    Utilities.Print(app1);
-
-                    Console.WriteLine("Creating another web app " + app2Name + "...");
-                    var app2 = CreateWebApp(azure, domain, app2Name, plan2);
-
-                    Console.WriteLine("Created web app " + app2.Name);
-                    Utilities.Print(app2);
-
-                    Console.WriteLine("Creating another web app " + app3Name + "...");
-                    var app3 = CreateWebApp(azure, domain, app3Name, plan3);
-
-                    Console.WriteLine("Created web app " + app3.Name);
-                    Utilities.Print(app3);
-
-                    Console.WriteLine("Creating another web app " + app3Name + "...");
-                    var app4 = CreateWebApp(azure, domain, app4Name, plan1);
-
-                    Console.WriteLine("Created web app " + app4.Name);
-                    Utilities.Print(app4);
-
-                    Console.WriteLine("Creating another web app " + app3Name + "...");
-                    var app5 = CreateWebApp(azure, domain, app5Name, plan1);
-
-                    Console.WriteLine("Created web app " + app5.Name);
-                    Utilities.Print(app5);
-
-                    //============================================================
-                    // Create a traffic manager
-
-                    Console.WriteLine("Creating a traffic manager " + tmName + " for the web apps...");
-
-                    var trafficManager = azure.TrafficManagerProfiles
-                            .Define(tmName)
-                            .WithExistingResourceGroup(RG_NAME)
-                            .WithLeafDomainLabel(tmName)
-                            .WithTrafficRoutingMethod(TrafficRoutingMethod.Weighted)
-                            .DefineAzureTargetEndpoint("endpoint1")
-                                .ToResourceId(app1.Id)
-                                .Attach()
-                            .DefineAzureTargetEndpoint("endpoint2")
-                                .ToResourceId(app2.Id)
-                                .Attach()
-                            .DefineAzureTargetEndpoint("endpoint3")
-                                .ToResourceId(app3.Id)
-                                .Attach()
-                            .DefineAzureTargetEndpoint("endpoint4")
-                                .ToResourceId(app4.Id)
-                                .Attach()
-                            .DefineAzureTargetEndpoint("endpoint5")
-                                .ToResourceId(app5.Id)
-                                .Attach()
-                            .Create();
-
-                    Console.WriteLine("Created traffic manager " + trafficManager.Name);
-
-                    //============================================================
-                    // Scale up the app service plans
-
-                    Console.WriteLine("Scaling up app service plan " + plan1Name + "...");
-
-                    plan1.Update()
-                                    .WithCapacity(plan1.Capacity * 2)
-                                    .Apply();
-
-                    Console.WriteLine("Scaled up app service plan " + plan1Name);
-                    Utilities.Print(plan1);
-
-                    Console.WriteLine("Scaling up app service plan " + plan2Name + "...");
-
-                    plan2.Update()
-                                    .WithCapacity(plan2.Capacity * 2)
-                                    .Apply();
-
-                    Console.WriteLine("Scaled up app service plan " + plan2Name);
-                    Utilities.Print(plan2);
-
-                    Console.WriteLine("Scaling up app service plan " + plan3Name + "...");
-
-                    plan3.Update()
-                                    .WithCapacity(plan3.Capacity * 2)
-                                    .Apply();
-
-                    Console.WriteLine("Scaled up app service plan " + plan3Name);
-                    Utilities.Print(plan3);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    try
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + RG_NAME);
-                        azure.ResourceGroups.DeleteByName(RG_NAME);
-                        Console.WriteLine("Deleted Resource Group: " + RG_NAME);
-                    }
-                    catch (NullReferenceException)
-                    {
-                        Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                    }
-                    catch (Exception g)
-                    {
-                        Console.WriteLine(g);
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Utilities.Log(e);
             }
         }
 
-        private static IAppServicePlan CreateAppServicePlan(IAzure azure, string name, Region region)
+        private static IAppServicePlan CreateAppServicePlan(IAzure azure, string rgName, string name, Region region)
         {
             return azure.AppServices.AppServicePlans
                     .Define(name)
                     .WithRegion(region)
-                    .WithExistingResourceGroup(RG_NAME)
+                    .WithExistingResourceGroup(rgName)
                     .WithPricingTier(AppServicePricingTier.Basic_B1)
                     .Create();
         }
 
-        private static IWebApp CreateWebApp(IAzure azure, IAppServiceDomain domain, string name, IAppServicePlan plan)
+        private static IWebApp CreateWebApp(IAzure azure, IAppServiceDomain domain, string rgName, string name, IAppServicePlan plan)
         {
             return azure.WebApps.Define(name)
-                    .WithExistingResourceGroup(RG_NAME)
+                    .WithExistingResourceGroup(rgName)
                     .WithExistingAppServicePlan(plan)
                     .WithManagedHostnameBindings(domain, name)
                     .DefineSslBinding()

@@ -8,9 +8,8 @@
   "testRunner": "xunit",
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": [ "dnxcore50" ],
+      "imports": [ "dnxcore50", "portable-net451+win8", "net45" ],
       "dependencies": {
-        "System.Diagnostics.Tracing": "4.1.0"
       }
     }
   },
@@ -20,12 +19,12 @@
       "type": "platform",
       "version": "1.0.0"
     },
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "SSH.NET": "2016.0.0",
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.9-preview, 3.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10, 3.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.2",
     "Microsoft.Azure.Management.Fluent": {
       "target": "project",
       "type": "build"
@@ -80,6 +79,10 @@
     },
     "ManageWebAppBasic": "1.0.0-*",
     "ManageWebAppSlots": "1.0.0-*",
-    "ManageWebAppSourceControl": "1.0.0-*"
+    "ManageWebAppSourceControl": "1.0.0-*",
+    "ManageWebAppSqlConnection": "1.0.0-*",
+    "ManageWebAppStorageAccountConnection": "1.0.0-*",
+    "ManageWebAppWithDomainSsl": "1.0.0-*",
+    "ManageWebAppWithTrafficManager": "1.0.0-*"
   }
 }

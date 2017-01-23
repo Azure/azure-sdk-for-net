@@ -52,5 +52,48 @@ namespace Samples.Tests
             }
         }
 
+        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Trait("Samples", "AppService")]
+        public void ManageWebAppSqlConnectionTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageWebAppSqlConnection.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Trait("Samples", "AppService")]
+        public void ManageWebAppStorageAccountConnectionTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageWebAppStorageAccountConnection.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Trait("Samples", "AppService")]
+        public void ManageWebAppWithDomainSslTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageWebAppWithDomainSsl.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Trait("Samples", "AppService")]
+        public void ManageWebAppWithTrafficManagerTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageWebAppWithTrafficManager.Program.RunSample(rollUpClient);
+            }
+        }
     }
 }
