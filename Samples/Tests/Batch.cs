@@ -13,6 +13,7 @@ namespace Samples.Tests
         public Batch(ITestOutputHelper output)
         {
             Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
+            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]

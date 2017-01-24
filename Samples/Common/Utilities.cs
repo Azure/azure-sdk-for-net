@@ -23,10 +23,12 @@ namespace Microsoft.Azure.Management.Samples.Common
     public static class Utilities
     {
         public static Action<string> LoggerMethod { get; set; }
+        public static Func<string> PauseMethod { get; set; }
 
         static Utilities()
         {
             LoggerMethod = Console.WriteLine;
+            PauseMethod = Console.ReadLine;
         }
 
         public static void Log(string message)
@@ -37,6 +39,16 @@ namespace Microsoft.Azure.Management.Samples.Common
         public static void Log(object obj)
         {
             LoggerMethod.Invoke(obj.ToString());
+        }
+
+        public static void Log()
+        {
+            Utilities.Log("");
+        }
+
+        public static string ReadLine()
+        {
+            return PauseMethod.Invoke();
         }
 
         // Print app gateway info

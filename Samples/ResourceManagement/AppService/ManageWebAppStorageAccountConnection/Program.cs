@@ -219,13 +219,13 @@ namespace ManageWebAppStorageAccountConnection
             catch (FormatException)
             {
                 Utilities.Log("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
-                Console.ReadLine();
+                Utilities.ReadLine();
                 throw;
             }
             catch (ArgumentException)
             {
                 Utilities.Log("Invalid storage account information provided. Please confirm the AccountName and AccountKey are valid in the app.config file - then restart the sample.");
-                Console.ReadLine();
+                Utilities.ReadLine();
                 throw;
             }
 

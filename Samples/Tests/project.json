@@ -95,6 +95,17 @@
     "ManageVirtualMachineExtension": "1.0.0-*",
     "ManageVirtualMachineScaleSet": "1.0.0-*",
     "ManageVirtualMachinesInParallel": "1.0.0-*",
-    "ManageVirtualMachinesInParallelWithNetwork": "1.0.0-*"
+    "ManageVirtualMachinesInParallelWithNetwork": "1.0.0-*",
+    "ManageDns": "1.0.0-*",
+    "ManageKeyVault": "1.0.0-*",
+    "ManageApplicationGateway": "1.0.0-*",
+    "ManageInternalLoadBalancer": "1.0.0-*",
+    "ManageInternetFacingLoadBalancer": "1.0.0-*",
+    "ManageIpAddress": "1.0.0-*",
+    "ManageNetworkInterface": "1.0.0-*",
+    "ManageNetworkSecurityGroup": "1.0.0-*",
+    "ManageSimpleApplicationGateway": "1.0.0-*",
+    "ManageUserDefinedRoute": "1.0.0-*",
+    "ManageVirtualNetwork": "1.0.0-*"
   }
 }

@@ -105,7 +105,7 @@ namespace ManageWebAppSqlConnection
 
                 Utilities.Log("Your WordPress app is ready.");
                 Utilities.Log("Please navigate to http://" + appUrl + " to finish the GUI setup. Press enter to exit.");
-                Console.ReadLine();
+                Utilities.ReadLine();
 
             }
             finally

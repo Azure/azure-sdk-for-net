@@ -74,7 +74,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("SSH into the VM [" + linuxVM.GetPrimaryPublicIpAddress().Fqdn + "]");
                 Utilities.Log("and run 'sudo waagent -deprovision+user' to prepare it for capturing");
                 Utilities.Log("after that press 'Enter' to continue.");
-                Console.ReadKey();
+                Utilities.ReadLine();
 
                 //=============================================================
                 // Deallocate the virtual machine

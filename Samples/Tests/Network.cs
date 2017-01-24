@@ -8,121 +8,99 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Compute
+    public class Network
     {
-        public Compute(ITestOutputHelper output)
+        public Network(ITestOutputHelper output)
         {
             Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void CreateVirtualMachinesInParallelTest()
+        [Trait("Samples", "Network")]
+        public void ManageApplicationGatewayTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                CreateVirtualMachinesInParallel.Program.RunSample(rollUpClient);
+                ManageApplicationGateway.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void CreateVMsUsingCustomImageOrSpecializedVHDTest()
+        [Trait("Samples", "Network")]
+        public void ManageInternalLoadBalancerTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                CreateVMsUsingCustomImageOrSpecializedVHD.Program.RunSample(rollUpClient);
+                ManageInternalLoadBalancer.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ListVirtualMachineExtensionImagesTest()
+        [Trait("Samples", "Network")]
+        public void ManageInternetFacingLoadBalancerTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ListVirtualMachineExtensionImages.Program.RunSample(rollUpClient);
+                ManageInternetFacingLoadBalancer.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ListVirtualMachineImagesTest()
+        [Trait("Samples", "Network")]
+        public void ManageIpAddressTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ListVirtualMachineImages.Program.RunSample(rollUpClient);
+                ManageIpAddress.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ManageAvailabilitySetTest()
+        [Trait("Samples", "Network")]
+        public void ManageNetworkInterfaceTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageAvailabilitySet.Program.RunSample(rollUpClient);
+                ManageNetworkInterface.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ManageVirtualMachineTest()
+        [Trait("Samples", "Network")]
+        public void ManageNetworkSecurityGroupTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachine.Program.RunSample(rollUpClient);
+                ManageNetworkSecurityGroup.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ManageVirtualMachineExtensionTest()
+        [Trait("Samples", "Network")]
+        public void ManageSimpleApplicationGatewayTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachineExtension.Program.RunSample(rollUpClient);
+                ManageSimpleApplicationGateway.Program.RunSample(rollUpClient);
             }
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ManageVirtualMachineScaleSetTest()
+        [Trait("Samples", "Network")]
+        public void ManageVirtualNetworkTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachineScaleSet.Program.RunSample(rollUpClient);
-            }
-        }
-
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ManageVirtualMachinesInParallelTest()
-        {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachinesInParallel.Program.RunSample(rollUpClient);
-            }
-        }
-
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Compute")]
-        public void ManageVirtualMachinesInParallelWithNetworkTest()
-        {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachinesInParallelWithNetwork.Program.RunSample(rollUpClient);
+                ManageVirtualNetwork.Program.RunSample(rollUpClient);
             }
         }
     }

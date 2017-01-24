@@ -8,22 +8,22 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Cdn
+    public class Dns
     {
-        public Cdn(ITestOutputHelper output)
+        public Dns(ITestOutputHelper output)
         {
             Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
-        [Trait("Samples", "Cdn")]
-        public void ManageCdnTest()
+        [Trait("Samples", "Dns")]
+        public void ManageDnsTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageCdn.Program.RunSample(rollUpClient);
+                ManageDns.Program.RunSample(rollUpClient);
             }
         }
     }

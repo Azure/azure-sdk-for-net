@@ -13,6 +13,7 @@ namespace Samples.Tests
         public AppService(ITestOutputHelper output)
         {
             Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
+            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact]
