@@ -27,12 +27,129 @@ namespace ManageRedis
          *     - restart it.
          *  - Clean up all resources.
          */
+        public static void RunSample(IAzure azure)
+        {
+            var redisCacheName1 = SharedSettings.RandomResourceName("rc1", 20);
+            var redisCacheName2 = SharedSettings.RandomResourceName("rc2", 20);
+            var redisCacheName3 = SharedSettings.RandomResourceName("rc3", 20);
+            var rgName = SharedSettings.RandomResourceName("rgRCMC", 20);
+
+            try
+            {
+                // ============================================================
+                // Create a Redis cache
+
+                Utilities.Log("Creating a Redis Cache");
+
+                var redisCache1 = azure.RedisCaches.Define(redisCacheName1)
+                        .WithRegion(Region.US_CENTRAL)
+                        .WithNewResourceGroup(rgName)
+                        .WithBasicSku()
+                        .Create();
+
+                Utilities.Log("Created a Redis Cache:");
+                Utilities.PrintRedisCache(redisCache1);
+
+                // ============================================================
+                // Get | regenerate Redis Cache access keys
+
+                Utilities.Log("Getting Redis Cache access keys");
+                var redisAccessKeys = redisCache1.Keys;
+                Utilities.PrintRedisAccessKeys(redisAccessKeys);
+
+                Utilities.Log("Regenerating secondary Redis Cache access key");
+                redisAccessKeys = redisCache1.RegenerateKey(RedisKeyType.Secondary);
+                Utilities.PrintRedisAccessKeys(redisAccessKeys);
+
+                // ============================================================
+                // Create another two Redis Caches
+
+                Utilities.Log("Creating two more Redis Caches with Premium Sku");
+
+                var redisCache2 = azure.RedisCaches.Define(redisCacheName2)
+                        .WithRegion(Region.US_CENTRAL)
+                        .WithNewResourceGroup(rgName)
+                        .WithPremiumSku()
+                        .WithShardCount(3)
+                        .Create();
+
+                Utilities.Log("Created a Redis Cache:");
+                Utilities.PrintRedisCache(redisCache2);
+
+                var redisCache3 = azure.RedisCaches.Define(redisCacheName3)
+                        .WithRegion(Region.US_CENTRAL)
+                        .WithNewResourceGroup(rgName)
+                        .WithPremiumSku(2)
+                        .WithShardCount(3)
+                        .Create();
+
+                Utilities.Log("Created a Redis Cache:");
+                Utilities.PrintRedisCache(redisCache3);
+
+                // ============================================================
+                // List Redis Caches inside the resource group
+
+                Utilities.Log("Listing Redis Caches");
+
+                var redisCaches = azure.RedisCaches;
+
+                // List Redis Caches and select Premium Sku instances only
+                var caches = redisCaches.ListByGroup(rgName)
+                    .Where(rc => rc.IsPremium)
+                    .Select(rc => rc.AsPremium());
+
+                foreach (var premium in caches)
+                {
+                    // Update each Premium Sku Redis Cache instance
+                    Utilities.Log("Updating Premium Redis Cache");
+                    premium.Update()
+                            .WithPatchSchedule(Microsoft.Azure.Management.Redis.Fluent.Models.DayOfWeek.Monday, 5)
+                            .WithShardCount(4)
+                            .WithNonSslPort()
+                            .WithRedisConfiguration("maxmemory-policy", "allkeys-random")
+                            .WithRedisConfiguration("maxmemory-reserved", "20")
+                            .Apply();
+
+                    Utilities.Log("Updated Redis Cache:");
+                    Utilities.PrintRedisCache(premium);
+
+                    // Restart Redis Cache
+                    Utilities.Log("Restarting updated Redis Cache");
+                    premium.ForceReboot(RebootType.AllNodes, 1);
+
+                    Utilities.Log("Redis Cache restart scheduled");
+                }
+
+                // ============================================================
+                // Delete a Redis Cache
+
+                Utilities.Log("Deleting a Redis Cache  - " + redisCache1.Name);
+
+                azure.RedisCaches.DeleteById(redisCache1.Id);
+
+                Utilities.Log("Deleted Redis Cache");
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (NullReferenceException)
+                {
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
+
         public static void Main(string[] args)
         {
-            var redisCacheName1 = Utilities.CreateRandomName("rc1");
-            var redisCacheName2 = Utilities.CreateRandomName("rc2");
-            var redisCacheName3 = Utilities.CreateRandomName("rc3");
-            var rgName = Utilities.CreateRandomName("rgRCMC");
 
             try
             {
@@ -44,124 +161,13 @@ namespace ManageRedis
                     .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                try
-                {
-                    // ============================================================
-                    // Create a Redis cache
-
-                    Console.WriteLine("Creating a Redis Cache");
-
-                    var redisCache1 = azure.RedisCaches.Define(redisCacheName1)
-                            .WithRegion(Region.US_CENTRAL)
-                            .WithNewResourceGroup(rgName)
-                            .WithBasicSku()
-                            .Create();
-
-                    Console.WriteLine("Created a Redis Cache:");
-                    Utilities.PrintRedisCache(redisCache1);
-
-                    // ============================================================
-                    // Get | regenerate Redis Cache access keys
-
-                    Console.WriteLine("Getting Redis Cache access keys");
-                    var redisAccessKeys = redisCache1.Keys;
-                    Utilities.PrintRedisAccessKeys(redisAccessKeys);
-
-                    Console.WriteLine("Regenerating secondary Redis Cache access key");
-                    redisAccessKeys = redisCache1.RegenerateKey(RedisKeyType.Secondary);
-                    Utilities.PrintRedisAccessKeys(redisAccessKeys);
-
-                    // ============================================================
-                    // Create another two Redis Caches
-
-                    Console.WriteLine("Creating two more Redis Caches with Premium Sku");
-
-                    var redisCache2 = azure.RedisCaches.Define(redisCacheName2)
-                            .WithRegion(Region.US_CENTRAL)
-                            .WithNewResourceGroup(rgName)
-                            .WithPremiumSku()
-                            .WithShardCount(3)
-                            .Create();
-
-                    Console.WriteLine("Created a Redis Cache:");
-                    Utilities.PrintRedisCache(redisCache2);
-
-                    var redisCache3 = azure.RedisCaches.Define(redisCacheName3)
-                            .WithRegion(Region.US_CENTRAL)
-                            .WithNewResourceGroup(rgName)
-                            .WithPremiumSku(2)
-                            .WithShardCount(3)
-                            .Create();
-
-                    Console.WriteLine("Created a Redis Cache:");
-                    Utilities.PrintRedisCache(redisCache3);
-
-                    // ============================================================
-                    // List Redis Caches inside the resource group
-
-                    Console.WriteLine("Listing Redis Caches");
-
-                    var redisCaches = azure.RedisCaches;
-
-                    // List Redis Caches and select Premium Sku instances only
-                    var caches = redisCaches.ListByGroup(rgName)
-                        .Where(rc => rc.IsPremium)
-                        .Select(rc => rc.AsPremium());
-
-                    foreach (var premium in caches)
-                    {
-                        // Update each Premium Sku Redis Cache instance
-                        Console.WriteLine("Updating Premium Redis Cache");
-                        premium.Update()
-                                .WithPatchSchedule(Microsoft.Azure.Management.Redis.Fluent.Models.DayOfWeek.Monday, 5)
-                                .WithShardCount(4)
-                                .WithNonSslPort()
-                                .WithRedisConfiguration("maxmemory-policy", "allkeys-random")
-                                .WithRedisConfiguration("maxmemory-reserved", "20")
-                                .Apply();
-
-                        Console.WriteLine("Updated Redis Cache:");
-                        Utilities.PrintRedisCache(premium);
-                        
-                        // Restart Redis Cache
-                        Console.WriteLine("Restarting updated Redis Cache");
-                        premium.ForceReboot(RebootType.AllNodes, 1);
-
-                        Console.WriteLine("Redis Cache restart scheduled");
-                    }
-
-                    // ============================================================
-                    // Delete a Redis Cache
-
-                    Console.WriteLine("Deleting a Redis Cache  - " + redisCache1.Name);
-
-                    azure.RedisCaches.DeleteById(redisCache1.Id);
-
-                    Console.WriteLine("Deleted Redis Cache");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    if (azure.ResourceGroups.GetByName(rgName) != null)
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.DeleteByName(rgName);
-                        Console.WriteLine("Deleted Resource Group: " + rgName);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

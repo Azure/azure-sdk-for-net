@@ -106,6 +106,17 @@
     "ManageNetworkSecurityGroup": "1.0.0-*",
     "ManageSimpleApplicationGateway": "1.0.0-*",
     "ManageUserDefinedRoute": "1.0.0-*",
-    "ManageVirtualNetwork": "1.0.0-*"
+    "ManageVirtualNetwork": "1.0.0-*",
+    "ManageRedis": "1.0.0-*",
+    "DeployUsingARMTemplate": "1.0.0-*",
+    "DeployUsingARMTemplateWithProgress": "1.0.0-*",
+    "ManageResource": "1.0.0-*",
+    "ManageResourceGroup": "1.0.0-*",
+    "ManageSqlDatabase": "1.0.0-*",
+    "ManageSqlDatabaseInElasticPool": "1.0.0-*",
+    "ManageSqlDatabasesAcrossDifferentDataCenters": "1.0.0-*",
+    "ManageSqlFirewallRules": "1.0.0-*",
+    "ManageStorageAccount": "1.0.0-*",
+    "ManageTrafficManager": "1.0.0-*"
   }
 }

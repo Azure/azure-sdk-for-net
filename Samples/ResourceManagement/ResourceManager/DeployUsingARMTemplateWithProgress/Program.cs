@@ -3,112 +3,106 @@
 
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Models;
+using Microsoft.Azure.Management.Samples.Common;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading;
 
 namespace DeployUsingARMTemplateWithProgress
 {
-    /**
-     * Azure Resource sample for deploying resources using an ARM template and
-     * showing progress.
-     */
-
     public class Program
     {
-        private static readonly string rgName = SharedSettings.RandomResourceName("rgRSAP", 24);
-        private static readonly string deploymentName = SharedSettings.RandomResourceName("dpRSAP", 24);
+        /**
+         * Azure Resource sample for deploying resources using an ARM template and
+         * showing progress.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            string rgName = SharedSettings.RandomResourceName("rgRSAP", 24);
+            string deploymentName = SharedSettings.RandomResourceName("dpRSAP", 24);
+
+            try
+            {
+                var templateJson = GetTemplate();
+
+                //=============================================================
+                // Create resource group.
+
+                Utilities.Log("Creating a resource group with name: " + rgName);
+
+                azure.ResourceGroups.Define(rgName)
+                        .WithRegion(Region.US_WEST)
+                        .Create();
+
+                Utilities.Log("Created a resource group with name: " + rgName);
+
+                //=============================================================
+                // Create a deployment for an Azure App Service via an ARM
+                // template.
+
+                Utilities.Log("Starting a deployment for an Azure App Service: " + deploymentName);
+
+                azure.Deployments.Define(deploymentName)
+                        .WithExistingResourceGroup(rgName)
+                        .WithTemplate(templateJson)
+                        .WithParameters("{}")
+                        .WithMode(DeploymentMode.Incremental)
+                        .BeginCreate();
+
+                Utilities.Log("Started a deployment for an Azure App Service: " + deploymentName);
+
+                var deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
+
+                while (!(StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Succeeded") || 
+                        StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Failed") || 
+                        StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
+                {
+                    SharedSettings.DelayProvider.Delay(10000, CancellationToken.None).Wait();
+                    deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                    Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
+                }
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (NullReferenceException)
+                {
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
 
         public static void Main(string[] args)
         {
             try
             {
-                try
-                {
-                    //=================================================================
-                    // Authenticate
-                    var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                //=================================================================
+                // Authenticate
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                    var azure = Azure
-                        .Configure()
-                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
-                        .Authenticate(credentials)
-                        .WithDefaultSubscription();
-                    try
-                    {
-                        var templateJson = GetTemplate();
+                var azure = Azure
+                    .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .Authenticate(credentials)
+                    .WithDefaultSubscription();
 
-                        //=============================================================
-                        // Create resource group.
-
-                        Console.WriteLine("Creating a resource group with name: " + rgName);
-
-                        azure.ResourceGroups.Define(rgName)
-                                .WithRegion(Region.US_WEST)
-                                .Create();
-
-                        Console.WriteLine("Created a resource group with name: " + rgName);
-
-                        //=============================================================
-                        // Create a deployment for an Azure App Service via an ARM
-                        // template.
-
-                        Console.WriteLine("Starting a deployment for an Azure App Service: " + deploymentName);
-
-                        azure.Deployments.Define(deploymentName)
-                                .WithExistingResourceGroup(rgName)
-                                .WithTemplate(templateJson)
-                                .WithParameters("{}")
-                                .WithMode(DeploymentMode.Incremental)
-                                .BeginCreate();
-
-                        Console.WriteLine("Started a deployment for an Azure App Service: " + deploymentName);
-
-                        var deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
-                        Console.WriteLine("Current deployment status : " + deployment.ProvisioningState);
-
-                        while (!(StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Succeeded")
-                                || StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Failed")
-                                || StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
-                        {
-                            Thread.Sleep(10000);
-                            deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
-                            Console.WriteLine("Current deployment status : " + deployment.ProvisioningState);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            Console.WriteLine("Deleting Resource Group: " + rgName);
-                            azure.ResourceGroups.DeleteByName(rgName);
-                            Console.WriteLine("Deleted Resource Group: " + rgName);
-                        }
-                        catch (NullReferenceException)
-                        {
-                            Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
 
