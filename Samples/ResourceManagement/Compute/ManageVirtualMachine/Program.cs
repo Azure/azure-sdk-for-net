@@ -59,7 +59,7 @@ namespace ManageVirtualMachine
                     var startTime = DateTimeOffset.Now.UtcDateTime;
 
                     var windowsVM = azure.VirtualMachines.Define(windowsVMName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -174,7 +174,7 @@ namespace ManageVirtualMachine
                     Console.WriteLine("Creating a Linux VM in the network");
 
                     var linuxVM = azure.VirtualMachines.Define(linuxVMName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("subnet1") // Referencing the default subnet name when no name specified at creation

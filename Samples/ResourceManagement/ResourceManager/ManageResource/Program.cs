@@ -47,7 +47,7 @@ namespace ManageResource
 
                     azure.ResourceGroups
                         .Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                     //=============================================================
@@ -57,7 +57,7 @@ namespace ManageResource
 
                     var storageAccount = azure.StorageAccounts
                         .Define(resourceName1)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .WithExistingResourceGroup(rgName)
                             .Create();
 
@@ -80,7 +80,7 @@ namespace ManageResource
                     Console.WriteLine("Creating another storage account with name: " + resourceName2);
 
                     var storageAccount2 = azure.StorageAccounts.Define(resourceName2)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .WithExistingResourceGroup(rgName)
                         .Create();
 

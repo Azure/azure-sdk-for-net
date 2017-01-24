@@ -56,7 +56,7 @@ namespace ManageDns
                 try
                 {
                     var resourceGroup = azure.ResourceGroups.Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                     //============================================================
@@ -89,7 +89,7 @@ namespace ManageDns
                     var webApp = azure.WebApps.Define(webAppName)
                             .WithExistingResourceGroup(rgName)
                             .WithNewAppServicePlan(appServicePlanName)
-                            .WithRegion(Region.US_EAST2)
+                            .WithRegion(Region.USEast2)
                             .WithPricingTier(AppServicePricingTier.Basic_B1)
                             .DefineSourceControl()
                                 .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
@@ -138,7 +138,7 @@ namespace ManageDns
                     Console.WriteLine("Creating a virtual machine with public IP...");
                     var virtualMachine1 = azure.VirtualMachines
                             .Define(SharedSettings.RandomResourceName("employeesvm-", 20))
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -225,7 +225,7 @@ namespace ManageDns
                     Console.WriteLine("Creating a virtual machine with public IP...");
                     var virtualMachine2 = azure.VirtualMachines
                             .Define(SharedSettings.RandomResourceName("partnersvm-", 20))
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -279,7 +279,7 @@ namespace ManageDns
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (Exception e)
+                    catch
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

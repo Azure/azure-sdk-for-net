@@ -72,7 +72,7 @@ namespace ManageVirtualMachineScaleSet
                     Console.WriteLine("Creating virtual network with a frontend subnet ...");
 
                     var network = azure.Networks.Define(vnetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAddressSpace("172.16.0.0/16")
                             .DefineSubnet("Front-end")
@@ -89,7 +89,7 @@ namespace ManageVirtualMachineScaleSet
                     Console.WriteLine("Creating a public IP address...");
 
                     var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithLeafDomainLabel(publicIpName)
                             .Create();
@@ -124,7 +124,7 @@ namespace ManageVirtualMachineScaleSet
                             + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                     var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefinePublicFrontend(frontendName)
                                 .WithExistingPublicIpAddress(publicIpAddress)
@@ -192,7 +192,7 @@ namespace ManageVirtualMachineScaleSet
 
                     var virtualMachineScaleSet = azure.VirtualMachineScaleSets
                             .Define(vmssName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_D3_V2)
                             .WithExistingPrimaryNetworkSubnet(network, "Front-end")
@@ -274,7 +274,7 @@ namespace ManageVirtualMachineScaleSet
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (NullReferenceException npe)
+                    catch (NullReferenceException)
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

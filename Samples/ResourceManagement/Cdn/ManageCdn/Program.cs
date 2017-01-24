@@ -55,7 +55,7 @@ namespace ManageRedis
                 {
 
                     azure.ResourceGroups.Define(RG_NAME)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .Create();
 
                     // ============================================================
@@ -66,22 +66,22 @@ namespace ManageRedis
                     }
 
                     // 2 in US
-                    CreateWebApp(azure, appNames[0], Region.US_WEST);
-                    CreateWebApp(azure, appNames[1], Region.US_EAST);
+                    CreateWebApp(azure, appNames[0], Region.USWest);
+                    CreateWebApp(azure, appNames[1], Region.USEast);
 
                     // 2 in EU
-                    CreateWebApp(azure, appNames[2], Region.EUROPE_WEST);
-                    CreateWebApp(azure, appNames[3], Region.EUROPE_NORTH);
+                    CreateWebApp(azure, appNames[2], Region.EuropeWest);
+                    CreateWebApp(azure, appNames[3], Region.EuropeNorth);
 
                     // 2 in Southeast
-                    CreateWebApp(azure, appNames[4], Region.ASIA_SOUTHEAST);
-                    CreateWebApp(azure, appNames[5], Region.AUSTRALIA_SOUTHEAST);
+                    CreateWebApp(azure, appNames[4], Region.AsiaSouthEast);
+                    CreateWebApp(azure, appNames[5], Region.AustraliaSouthEast);
 
                     // 1 in Brazil
-                    CreateWebApp(azure, appNames[6], Region.BRAZIL_SOUTH);
+                    CreateWebApp(azure, appNames[6], Region.BrazilSouth);
 
                     // 1 in Japan
-                    CreateWebApp(azure, appNames[7], Region.JAPAN_WEST);
+                    CreateWebApp(azure, appNames[7], Region.JapanWest);
                     // =======================================================================================
                     // Create CDN profile using Standard Verizon SKU with endpoints in each region of Web apps.
                     Console.WriteLine("Creating a CDN Profile");
@@ -89,7 +89,7 @@ namespace ManageRedis
                     // create Cdn Profile definition object that will let us do a for loop
                     // to define all 8 endpoints and then parallelize their creation
                     var profileDefinition = azure.CdnProfiles.Define(cdnProfileName)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithExistingResourceGroup(RG_NAME)
                             .WithStandardVerizonSku();
 
@@ -135,7 +135,7 @@ namespace ManageRedis
                         azure.ResourceGroups.DeleteByName(RG_NAME);
                         Console.WriteLine("Deleted Resource Group: " + RG_NAME);
                     }
-                    catch (Exception e)
+                    catch
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

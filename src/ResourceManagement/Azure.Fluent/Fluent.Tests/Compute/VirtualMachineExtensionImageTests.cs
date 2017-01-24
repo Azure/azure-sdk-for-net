@@ -23,7 +23,7 @@ namespace Fluent.Tests.Compute
                 var azure = TestHelper.CreateRollupClient();
                 int maxListing = 20;
                 var extensionImages = azure.VirtualMachineExtensionImages
-                                .ListByRegion(Region.US_EAST);
+                                .ListByRegion(Region.USEast);
                 // Lazy listing
                 var firstTwenty = extensionImages.Take(maxListing);
                 Assert.Equal(firstTwenty.Count(), maxListing);
@@ -40,7 +40,7 @@ namespace Fluent.Tests.Compute
                 var azure = TestHelper.CreateRollupClient();
                 var extensionImages =
                         azure.VirtualMachineExtensionImages
-                                .ListByRegion(Region.US_EAST);
+                                .ListByRegion(Region.USEast);
 
                 string dockerExtensionPublisherName = "Microsoft.Azure.Extensions";
                 string dockerExtensionImageTypeName = "DockerExtension";
@@ -50,7 +50,7 @@ namespace Fluent.Tests.Compute
                 var publishers =
                         azure.VirtualMachineExtensionImages
                                 .Publishers
-                                .ListByRegion(Region.US_EAST);
+                                .ListByRegion(Region.USEast);
 
                 IVirtualMachinePublisher azureDockerExtensionPublisher = publishers
                     .Where(publisher => publisher.Name.Equals(dockerExtensionPublisherName, StringComparison.OrdinalIgnoreCase))

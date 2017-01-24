@@ -74,7 +74,7 @@ namespace ManageApplicationGateway
         private const int backendPools = 2;
         private const int vmCountInAPool = 4;
 
-        private static List<Region> regions = new List<Region>(){ Region.US_EAST, Region.UK_WEST };
+        private static List<Region> regions = new List<Region>(){ Region.USEast, Region.UKWest };
         private static List<string> addressSpaces = new List<string>(){ "172.16.0.0/16", "172.17.0.0/16" };
         private static string[,] publicIpCreatableKeys = new string[backendPools, vmCountInAPool];
         private static string[,] ipAddresses = new string[backendPools,vmCountInAPool];
@@ -103,7 +103,7 @@ namespace ManageApplicationGateway
                     //
                     var resourceGroup = azure.ResourceGroups
                             .Define(rgName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .Create();
 
                     Console.WriteLine("Created a new resource group - " + resourceGroup.Id);
@@ -113,7 +113,7 @@ namespace ManageApplicationGateway
                     Console.WriteLine("Creating a public IP address for the application gateway ...");
 
                     var publicIpAddress = azure.PublicIpAddresses.Define(pipName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .Create().Refresh();
 
@@ -234,7 +234,7 @@ namespace ManageApplicationGateway
                     t = Stopwatch.StartNew();
 
                     IApplicationGateway applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             // Request routing rule for HTTP from public 80 to public 8080
                             .DefineRequestRoutingRule("HTTP-80-to-8080")

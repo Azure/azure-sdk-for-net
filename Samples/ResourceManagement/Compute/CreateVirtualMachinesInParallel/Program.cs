@@ -29,8 +29,8 @@ namespace CreateVirtualMachinesInParallel
 
         public static void Main(string[] args)
         {
-            virtualMachinesByLocation.Add(Region.US_EAST, 5);
-            virtualMachinesByLocation.Add(Region.US_SOUTH_CENTRAL, 5);
+            virtualMachinesByLocation.Add(Region.USEast, 5);
+            virtualMachinesByLocation.Add(Region.USSouthCentral, 5);
 
             try
             {
@@ -53,7 +53,7 @@ namespace CreateVirtualMachinesInParallel
                     // Create a resource group (Where all resources gets created)
                     //
                     var resourceGroup = azure.ResourceGroups.Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                     Console.WriteLine($"Created a new resource group - {resourceGroup.Id}");

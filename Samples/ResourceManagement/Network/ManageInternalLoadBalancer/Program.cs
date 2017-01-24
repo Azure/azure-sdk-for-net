@@ -104,7 +104,7 @@ namespace ManageInternalLoadBalancer
                     Console.WriteLine("Creating virtual network with a frontend and a backend subnets...");
 
                     var network = azure.Networks.Define(vnetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAddressSpace("172.16.0.0/16")
                             .DefineSubnet("Front-end")
@@ -146,7 +146,7 @@ namespace ManageInternalLoadBalancer
 
                     var loadBalancer3 = azure.LoadBalancers
                             .Define(loadBalancerName3)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefinePrivateFrontend(privateFrontEndName)
                                 .WithExistingSubnet(network, "Back-end")
@@ -213,7 +213,7 @@ namespace ManageInternalLoadBalancer
 
                     networkInterface3Creatable = azure.NetworkInterfaces
                             .Define(networkInterfaceName3)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Back-end")
@@ -226,7 +226,7 @@ namespace ManageInternalLoadBalancer
 
                     networkInterface4Creatable = azure.NetworkInterfaces
                             .Define(networkInterfaceName4)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Back-end")
@@ -253,7 +253,7 @@ namespace ManageInternalLoadBalancer
                     Console.WriteLine("Creating an availability set ...");
 
                     var availSet2 = azure.AvailabilitySets.Define(availSetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithFaultDomainCount(2)
                             .WithUpdateDomainCount(4)
@@ -274,7 +274,7 @@ namespace ManageInternalLoadBalancer
 
                     virtualMachine3Creatable = azure.VirtualMachines
                             .Define(vmName3)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterfaces2.ElementAt(0))
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
@@ -287,7 +287,7 @@ namespace ManageInternalLoadBalancer
 
                     virtualMachine4Creatable = azure.VirtualMachines
                             .Define(vmName4)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterfaces2.ElementAt(1))
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
@@ -353,7 +353,7 @@ namespace ManageInternalLoadBalancer
 
                     var loadBalancer4 = azure.LoadBalancers
                             .Define(loadBalancerName4)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefinePrivateFrontend(privateFrontEndName)
                             .WithExistingSubnet(network, "Back-end")

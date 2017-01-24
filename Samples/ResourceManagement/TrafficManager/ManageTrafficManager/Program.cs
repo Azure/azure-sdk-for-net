@@ -3,7 +3,6 @@
 
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.Samples.Common;
@@ -13,10 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Azure.Management.AppService.Fluent;
-using Microsoft.Azure.Management.AppService.Fluent.Models;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
 
 namespace ManageTrafficManager
 {
@@ -50,11 +45,11 @@ namespace ManageTrafficManager
             {
                 // The regions in which web app needs to be created
                 //
-                regions.Add(Region.US_WEST2);
-                regions.Add(Region.US_EAST2);
-                regions.Add(Region.ASIA_EAST);
-                regions.Add(Region.INDIA_WEST);
-                regions.Add(Region.US_CENTRAL);
+                regions.Add(Region.USWest2);
+                regions.Add(Region.USEast2);
+                regions.Add(Region.AsiaEast);
+                regions.Add(Region.IndiaWest);
+                regions.Add(Region.USCentral);
 
                 //=================================================================
                 // Authenticate
@@ -72,7 +67,7 @@ namespace ManageTrafficManager
                 try
                 {
                     azure.ResourceGroups.Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                     // ============================================================
@@ -249,7 +244,7 @@ namespace ManageTrafficManager
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (Exception e)
+                    catch
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

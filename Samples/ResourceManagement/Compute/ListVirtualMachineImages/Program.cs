@@ -39,7 +39,7 @@ namespace ListVirtualMachineImages
                 var publishers = azure
                         .VirtualMachineImages
                         .Publishers
-                        .ListByRegion(Region.US_EAST);
+                        .ListByRegion(Region.USEast);
 
                 Console.WriteLine("US East data center: printing list of \n"
                         + "a) Publishers and\n"

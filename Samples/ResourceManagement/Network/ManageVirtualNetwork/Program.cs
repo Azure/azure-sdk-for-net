@@ -66,7 +66,7 @@ namespace ManageVirtualNetwork
 
                     var backEndSubnetNsg = azure.NetworkSecurityGroups
                             .Define(vnet1BackEndSubnetNsgName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .DefineRule("DenyInternetInComing")
                                 .DenyInbound()
@@ -97,7 +97,7 @@ namespace ManageVirtualNetwork
 
                     var virtualNetwork1 = azure.Networks
                             .Define(vnetName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithAddressSpace("192.168.0.0/16")
                             .WithSubnet(vnet1FrontEndSubnetName, "192.168.1.0/24")
@@ -120,7 +120,7 @@ namespace ManageVirtualNetwork
 
                     var frontEndSubnetNsg = azure.NetworkSecurityGroups
                             .Define(vnet1FrontEndSubnetNsgName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefineRule("AllowHttpInComing")
                                 .AllowInbound()
@@ -168,7 +168,7 @@ namespace ManageVirtualNetwork
                     var t1 = DateTime.UtcNow;
 
                     var frontEndVM = azure.VirtualMachines.Define(frontEndVmName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(virtualNetwork1)
                             .WithSubnet(vnet1FrontEndSubnetName)
@@ -193,7 +193,7 @@ namespace ManageVirtualNetwork
                     var t3 = DateTime.UtcNow;
 
                     var backEndVM = azure.VirtualMachines.Define(backEndVmName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(virtualNetwork1)
                             .WithSubnet(vnet1BackEndSubnetName)
@@ -218,7 +218,7 @@ namespace ManageVirtualNetwork
 
                     var virtualNetwork2 = azure.Networks
                             .Define(vnetName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .Create();
 

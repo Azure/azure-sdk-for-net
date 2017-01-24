@@ -60,7 +60,7 @@ namespace ManageAvailabilitySet
                     Console.WriteLine("Creating an availability set");
 
                     var availSet1 = azure.AvailabilitySets.Define(availSetName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithFaultDomainCount(2)
                             .WithUpdateDomainCount(4)
@@ -75,7 +75,7 @@ namespace ManageAvailabilitySet
                     // Define a virtual network for the VMs in this availability set
                     var network = azure.Networks
                             .Define(vnetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithAddressSpace("10.0.0.0/28");
 
@@ -85,7 +85,7 @@ namespace ManageAvailabilitySet
                     Console.WriteLine("Creating a Windows VM in the availability set");
 
                     var vm1 = azure.VirtualMachines.Define(vm1Name)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork(network)
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -106,7 +106,7 @@ namespace ManageAvailabilitySet
                     Console.WriteLine("Creating a Linux VM in the availability set");
 
                     var vm2 = azure.VirtualMachines.Define(vm2Name)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork(network)
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -138,7 +138,7 @@ namespace ManageAvailabilitySet
                     Console.WriteLine("Creating an availability set");
 
                     var availSet2 = azure.AvailabilitySets.Define(availSetName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .Create();
 

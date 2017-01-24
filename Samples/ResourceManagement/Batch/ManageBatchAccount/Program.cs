@@ -38,8 +38,8 @@ namespace ManageBatchAccount
         private static readonly string applicationPackageName = "app_package";
         private static readonly string batchAccountName2 = Utilities.CreateRandomName("ba2");
         private static readonly string rgName = Utilities.CreateRandomName("rgBAMB");
-        private static readonly Region region = Region.AUSTRALIA_SOUTHEAST;
-        private static readonly Region region2 = Region.US_CENTRAL;
+        private static readonly Region region = Region.AustraliaSouthEast;
+        private static readonly Region region2 = Region.USCentral;
 
         public static void Main(string[] args)
         {
@@ -177,7 +177,6 @@ namespace ManageBatchAccount
                     Console.WriteLine("Listing Batch accounts");
 
                     var accounts = azure.BatchAccounts.ListByGroup(rgName);
-                    IBatchAccount ba;
                     foreach (var account in accounts)
                     {
                         Console.WriteLine("Batch Account - " + account.Name);

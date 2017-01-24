@@ -14,51 +14,51 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         private static IDictionary<string, Region> regions = new Dictionary<string, Region>();
 
         #region Americas
-        public static readonly Region US_WEST = new Region("westus");
-        public static readonly Region US_WEST2 = new Region("westus2");
-        public static readonly Region US_CENTRAL = new Region("centralus");
-        public static readonly Region US_EAST = new Region("eastus");
-        public static readonly Region US_EAST2 = new Region("eastus2");
-        public static readonly Region US_NORTH_CENTRAL = new Region("northcentralus");
-        public static readonly Region US_SOUTH_CENTRAL = new Region("southcentralus");
-        public static readonly Region US_WEST_CENTRAL = new Region("westcentralus");
-        public static readonly Region CANADA_CENTRAL = new Region("canadacentral");
-        public static readonly Region CANADA_EAST = new Region("canadaeast");
-        public static readonly Region BRAZIL_SOUTH = new Region("brazilsouth");
+        public static readonly Region USWest = new Region("westus");
+        public static readonly Region USWest2 = new Region("westus2");
+        public static readonly Region USCentral = new Region("centralus");
+        public static readonly Region USEast = new Region("eastus");
+        public static readonly Region USEast2 = new Region("eastus2");
+        public static readonly Region USNorthCentral = new Region("northcentralus");
+        public static readonly Region USSouthCentral = new Region("southcentralus");
+        public static readonly Region USWestCentral = new Region("westcentralus");
+        public static readonly Region CanadaCentral = new Region("canadacentral");
+        public static readonly Region CanadaEast = new Region("canadaeast");
+        public static readonly Region BrazilSouth = new Region("brazilsouth");
         #endregion
 
         #region Europe
-        public static readonly Region EUROPE_NORTH = new Region("northeurope");
-        public static readonly Region EUROPE_WEST = new Region("westeurope");
-        public static readonly Region UK_SOUTH = new Region("uksouth");
-        public static readonly Region UK_WEST = new Region("ukwest");
+        public static readonly Region EuropeNorth = new Region("northeurope");
+        public static readonly Region EuropeWest = new Region("westeurope");
+        public static readonly Region UKSouth = new Region("uksouth");
+        public static readonly Region UKWest = new Region("ukwest");
         #endregion
 
         #region Asia
-        public static readonly Region ASIA_EAST = new Region("eastasia");
-        public static readonly Region ASIA_SOUTHEAST = new Region("southeastasia");
-        public static readonly Region JAPAN_EAST = new Region("japaneast");
-        public static readonly Region JAPAN_WEST = new Region("japanwest");
-        public static readonly Region AUSTRALIA_EAST = new Region("australiaeast");
-        public static readonly Region AUSTRALIA_SOUTHEAST = new Region("australiasoutheast");
-        public static readonly Region INDIA_CENTRAL = new Region("centralindia");
-        public static readonly Region INDIA_SOUTH = new Region("southindia");
-        public static readonly Region INDIA_WEST = new Region("westindia");
+        public static readonly Region AsiaEast = new Region("eastasia");
+        public static readonly Region AsiaSouthEast = new Region("southeastasia");
+        public static readonly Region JapanEast = new Region("japaneast");
+        public static readonly Region JapanWest = new Region("japanwest");
+        public static readonly Region AustraliaEast = new Region("australiaeast");
+        public static readonly Region AustraliaSouthEast = new Region("australiasoutheast");
+        public static readonly Region IndiaCentral = new Region("centralindia");
+        public static readonly Region IndiaSouth = new Region("southindia");
+        public static readonly Region IndiaWest = new Region("westindia");
         #endregion
 
         #region China
-        public static readonly Region CHINA_NORTH = new Region("chinanorth");
-        public static readonly Region CHINA_EAST = new Region("chinaeast");
+        public static readonly Region ChinaNorth = new Region("chinanorth");
+        public static readonly Region ChinaEast = new Region("chinaeast");
         #endregion
 
         #region German
-        public static readonly Region GERMANY_CENTRAL = new Region("germanycentral");
-        public static readonly Region GERMANY_NORTHEAST = new Region("germanynortheast");
+        public static readonly Region GermanyCentral = new Region("germanycentral");
+        public static readonly Region GermanyNorthEast = new Region("germanynortheast");
         #endregion
 
         #region Government Cloud
-        public static readonly Region GOV_US_VIRGINIA = new Region("usgovvirginia");
-        public static readonly Region GOV_US_IOWA = new Region("usgoviowa");
+        public static readonly Region GovernmentUSVirginia = new Region("usgovvirginia");
+        public static readonly Region GovernmnetUSIowa = new Region("usgoviowa");
         #endregion
 
         public static IReadOnlyCollection<Region> Values

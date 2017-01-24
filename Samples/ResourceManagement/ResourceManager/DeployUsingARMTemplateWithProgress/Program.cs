@@ -47,7 +47,7 @@ namespace DeployUsingARMTemplateWithProgress
                         Console.WriteLine("Creating a resource group with name: " + rgName);
 
                         azure.ResourceGroups.Define(rgName)
-                                .WithRegion(Region.US_WEST)
+                                .WithRegion(Region.USWest)
                                 .Create();
 
                         Console.WriteLine("Created a resource group with name: " + rgName);

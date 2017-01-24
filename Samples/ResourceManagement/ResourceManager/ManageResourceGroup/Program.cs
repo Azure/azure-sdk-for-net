@@ -50,7 +50,7 @@ namespace ManageResourceGroup
 
                         var resourceGroup = azure.ResourceGroups
                                 .Define(rgName)
-                                .WithRegion(Region.US_WEST)
+                                .WithRegion(Region.USWest)
                                 .Create();
 
                         Console.WriteLine("Created a resource group with name: " + rgName);
@@ -73,7 +73,7 @@ namespace ManageResourceGroup
 
                         var resourceGroup2 = azure.ResourceGroups
                             .Define(rgName2)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .Create();
 
                         Console.WriteLine("Created another resource group with name: " + rgName2);

@@ -114,7 +114,7 @@ namespace ManageVirtualMachineExtension
                     Console.WriteLine("Creating a Linux VM");
 
                     IVirtualMachine linuxVM = azure.VirtualMachines.Define(linuxVmName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -213,7 +213,7 @@ namespace ManageVirtualMachineExtension
                     Console.WriteLine("Creating a Windows VM");
 
                     IVirtualMachine windowsVM = azure.VirtualMachines.Define(windowsVmName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()

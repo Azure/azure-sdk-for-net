@@ -26,7 +26,7 @@ namespace Fluent.Tests.Network
 
                 var manager = TestHelper.CreateNetworkManager();
                 manager.NetworkInterfaces.Define("nic" + testId)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup("rg" + testId)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
@@ -58,7 +58,7 @@ namespace Fluent.Tests.Network
                 var testId = TestUtilities.GenerateName("");
 
                 var azure = TestHelper.CreateRollupClient();
-                var region = Region.US_EAST;
+                var region = Region.USEast;
 
                 ICreatable<IResourceGroup> rgCreatable = azure.ResourceGroups
                     .Define("rg" + testId)

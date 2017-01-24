@@ -55,7 +55,7 @@ namespace ManageKeyVault
 
                     var vault1 = azure.Vaults
                             .Define(vaultName1)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithNewResourceGroup(rgName)
                             .WithEmptyAccessPolicy()
                             .Create();
@@ -102,7 +102,7 @@ namespace ManageKeyVault
 
                     var vault2 = azure.Vaults
                             .Define(vaultName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefineAccessPolicy()
                                 .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)

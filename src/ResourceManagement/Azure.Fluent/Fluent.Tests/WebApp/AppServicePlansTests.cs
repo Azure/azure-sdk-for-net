@@ -25,7 +25,7 @@ namespace Azure.Tests.WebApp
                 // CREATE
                 var appServicePlan = appServiceManager.AppServicePlans
                     .Define(AppServicePlanName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithNewResourceGroup(GroupName)
                     .WithPricingTier(AppServicePricingTier.Premium_P1)
                     .WithPerSiteScaling(false)

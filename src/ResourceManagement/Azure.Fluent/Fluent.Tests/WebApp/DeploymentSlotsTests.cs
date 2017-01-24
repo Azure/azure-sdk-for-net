@@ -30,7 +30,7 @@ namespace Azure.Tests.WebApp
                 var webApp = appServiceManager.WebApps.Define(WebAppName)
                     .WithNewResourceGroup(GroupName)
                     .WithNewAppServicePlan(AppServicePlanName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithPricingTier(AppServicePricingTier.Standard_S2)
                     .WithAppSetting("appkey", "appvalue")
                     .WithStickyAppSetting("stickykey", "stickyvalue")
@@ -40,7 +40,7 @@ namespace Azure.Tests.WebApp
                     .WithWebContainer(WebContainer.Tomcat_7_0_50)
                     .Create();
                 Assert.NotNull(webApp);
-                Assert.Equal(Region.US_WEST, webApp.Region);
+                Assert.Equal(Region.USWest, webApp.Region);
 
                 // Create a deployment slot with empty config
                 var slot1 = webApp.DeploymentSlots.Define(SlotName1)

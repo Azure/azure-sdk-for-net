@@ -105,7 +105,7 @@ namespace ManageInternetFacingLoadBalancer
                     Console.WriteLine("Creating virtual network with a frontend and a backend subnets...");
 
                     var network = azure.Networks.Define(vnetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAddressSpace("172.16.0.0/16")
                             .DefineSubnet("Front-end")
@@ -125,7 +125,7 @@ namespace ManageInternetFacingLoadBalancer
                     Console.WriteLine("Creating a public IP address...");
 
                     var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithLeafDomainLabel(publicIpName1)
                             .Create();
@@ -160,7 +160,7 @@ namespace ManageInternetFacingLoadBalancer
                                        + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                     var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefinePublicFrontend(frontendName)
                                 .WithExistingPublicIpAddress(publicIpAddress)
@@ -240,7 +240,7 @@ namespace ManageInternetFacingLoadBalancer
 
                     networkInterface1Creatable = azure.NetworkInterfaces
                             .Define(networkInterfaceName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Front-end")
@@ -254,7 +254,7 @@ namespace ManageInternetFacingLoadBalancer
 
                     networkInterface2Creatable = azure.NetworkInterfaces
                             .Define(networkInterfaceName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Front-end")
@@ -282,7 +282,7 @@ namespace ManageInternetFacingLoadBalancer
                     Console.WriteLine("Creating an availability set ...");
 
                     var availSet1 = azure.AvailabilitySets.Define(availSetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithFaultDomainCount(2)
                             .WithUpdateDomainCount(4)
@@ -303,7 +303,7 @@ namespace ManageInternetFacingLoadBalancer
 
                     virtualMachine1Creatable = azure.VirtualMachines
                             .Define(vmName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterfaces1.ElementAt(0))
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
@@ -316,7 +316,7 @@ namespace ManageInternetFacingLoadBalancer
 
                     virtualMachine2Creatable = azure.VirtualMachines
                             .Define(vmName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterfaces1.ElementAt(1))
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
@@ -363,7 +363,7 @@ namespace ManageInternetFacingLoadBalancer
                     Console.WriteLine("Creating another public IP address...");
 
                     var publicIpAddress2 = azure.PublicIpAddresses.Define(publicIpName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithLeafDomainLabel(publicIpName2)
                             .Create();
@@ -398,7 +398,7 @@ namespace ManageInternetFacingLoadBalancer
                             + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                     var loadBalancer2 = azure.LoadBalancers.Define(loadBalancerName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefinePublicFrontend(frontendName)
                             .WithExistingPublicIpAddress(publicIpAddress2)

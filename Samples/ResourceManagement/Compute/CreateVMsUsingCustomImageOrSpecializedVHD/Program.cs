@@ -63,7 +63,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                     Console.WriteLine("Creating a Linux VM");
 
                     var linuxVM = azure.VirtualMachines.Define(linuxVmName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -127,7 +127,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                     Console.WriteLine("Creating a Linux VM using captured image - " + capturedImageUri);
 
                     var linuxVM2 = azure.VirtualMachines.Define(linuxVmName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -158,7 +158,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                             + " of deleted VM");
 
                     var linuxVM3 = azure.VirtualMachines.Define(linuxVmName3)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -181,7 +181,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

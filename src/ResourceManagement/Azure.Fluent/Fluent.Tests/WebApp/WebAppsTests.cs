@@ -30,15 +30,15 @@ namespace Azure.Tests.WebApp
                 var webApp1 = appServiceManager.WebApps.Define(WebAppName1)
                     .WithNewResourceGroup(GroupName1)
                     .WithNewAppServicePlan(AppServicePlanName1)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithPricingTier(AppServicePricingTier.Basic_B1)
                     .WithRemoteDebuggingEnabled(RemoteVisualStudioVersion.VS2013)
                     .Create();
                 Assert.NotNull(webApp1);
-                Assert.Equal(Region.US_WEST, webApp1.Region);
+                Assert.Equal(Region.USWest, webApp1.Region);
                 var plan1 = appServiceManager.AppServicePlans.GetByGroup(GroupName1, AppServicePlanName1);
                 Assert.NotNull(plan1);
-                Assert.Equal(Region.US_WEST, plan1.Region);
+                Assert.Equal(Region.USWest, plan1.Region);
                 Assert.Equal(AppServicePricingTier.Basic_B1, plan1.PricingTier);
 
                 // Create in a new group with existing app service plan
@@ -47,7 +47,7 @@ namespace Azure.Tests.WebApp
                     .WithExistingAppServicePlan(plan1)
                     .Create();
                 Assert.NotNull(webApp2);
-                Assert.Equal(Region.US_WEST, webApp1.Region);
+                Assert.Equal(Region.USWest, webApp1.Region);
 
                 // Get
                 var webApp = appServiceManager.WebApps.GetByGroup(GroupName1, webApp1.Name);
@@ -68,7 +68,7 @@ namespace Azure.Tests.WebApp
                     .Apply();
                 var plan2 = appServiceManager.AppServicePlans.GetByGroup(GroupName1, AppServicePlanName2);
                 Assert.NotNull(plan2);
-                Assert.Equal(Region.US_WEST, plan2.Region);
+                Assert.Equal(Region.USWest, plan2.Region);
                 Assert.Equal(AppServicePricingTier.Standard_S2, plan2.PricingTier);
             }
         }

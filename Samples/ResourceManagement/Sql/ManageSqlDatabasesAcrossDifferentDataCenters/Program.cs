@@ -63,7 +63,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     // Create a SQL Server, with 2 firewall rules.
 
                     var masterSqlServer = azure.SqlServers.Define(sqlServerName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAdministratorLogin(administratorLogin)
                             .WithAdministratorPassword(administratorPassword)
@@ -99,7 +99,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                     var sqlServerInEurope = azure.SqlServers
                             .Define(Utilities.CreateRandomName(slaveSqlServer2Name))
-                            .WithRegion(Region.EUROPE_WEST)
+                            .WithRegion(Region.EuropeWest)
                             .WithExistingResourceGroup(rgName)
                             .WithAdministratorLogin(administratorLogin)
                             .WithAdministratorPassword(administratorPassword)
@@ -117,11 +117,11 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     // Create Virtual Networks in different regions
                     var regions = new List<Region>();
 
-                    regions.Add(Region.US_EAST);
-                    regions.Add(Region.US_WEST);
-                    regions.Add(Region.EUROPE_NORTH);
-                    regions.Add(Region.ASIA_SOUTHEAST);
-                    regions.Add(Region.JAPAN_EAST);
+                    regions.Add(Region.USEast);
+                    regions.Add(Region.USWest);
+                    regions.Add(Region.EuropeNorth);
+                    regions.Add(Region.AsiaSouthEast);
+                    regions.Add(Region.JapanEast);
 
                     var creatableNetworks = new List<ICreatable<INetwork>>();
 
@@ -211,7 +211,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (Exception e)
+                    catch
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

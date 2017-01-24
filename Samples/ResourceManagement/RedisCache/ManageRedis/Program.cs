@@ -54,7 +54,7 @@ namespace ManageRedis
                     Console.WriteLine("Creating a Redis Cache");
 
                     var redisCache1 = azure.RedisCaches.Define(redisCacheName1)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithNewResourceGroup(rgName)
                             .WithBasicSku()
                             .Create();
@@ -79,7 +79,7 @@ namespace ManageRedis
                     Console.WriteLine("Creating two more Redis Caches with Premium Sku");
 
                     var redisCache2 = azure.RedisCaches.Define(redisCacheName2)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithNewResourceGroup(rgName)
                             .WithPremiumSku()
                             .WithShardCount(3)
@@ -89,7 +89,7 @@ namespace ManageRedis
                     Utilities.PrintRedisCache(redisCache2);
 
                     var redisCache3 = azure.RedisCaches.Define(redisCacheName3)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithNewResourceGroup(rgName)
                             .WithPremiumSku(2)
                             .WithShardCount(3)

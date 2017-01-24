@@ -63,7 +63,7 @@ namespace ManageWebAppStorageAccountConnection
 
                     var storageAccount = azure.StorageAccounts
                             .Define(storageName)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithNewResourceGroup(rgName)
                             .Create();
 
@@ -94,7 +94,7 @@ namespace ManageWebAppStorageAccountConnection
                             .Define(app1Name)
                             .WithExistingResourceGroup(rgName)
                             .WithNewAppServicePlan(planName)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithPricingTier(AppServicePricingTier.Standard_S1)
                             .WithJavaVersion(JavaVersion.Java_8_Newest)
                             .WithWebContainer(WebContainer.Tomcat_8_0_Newest)

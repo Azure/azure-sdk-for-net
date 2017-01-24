@@ -27,7 +27,7 @@ namespace Azure.Tests.WebApp
                     .WithHostName("graph-dm7720.com")
                     .WithStandardSku()
                     .WithDomainVerification(appServiceManager.AppServiceDomains.GetByGroup("javacsmrg9b9912262", "graph-dm7720.com"))
-                    .WithNewKeyVault("graphvault", Region.US_WEST)
+                    .WithNewKeyVault("graphvault", Region.USWest)
                     .WithValidYears(1)
                     .Create();
                 Assert.NotNull(certificateOrder);

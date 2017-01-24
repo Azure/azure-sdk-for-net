@@ -69,7 +69,7 @@ namespace ManageWebAppSourceControl
                             .Define(app1Name)
                             .WithNewResourceGroup(rgName)
                             .WithNewAppServicePlan(planName)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithPricingTier(AppServicePricingTier.Standard_S1)
                             .WithJavaVersion(JavaVersion.Java_8_Newest)
                             .WithWebContainer(WebContainer.Tomcat_8_0_Newest)

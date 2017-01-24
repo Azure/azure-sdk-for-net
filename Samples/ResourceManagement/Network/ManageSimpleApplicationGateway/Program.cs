@@ -82,7 +82,7 @@ namespace ManageSimpleApplicationGateway
                     Stopwatch t = Stopwatch.StartNew();
 
                     IApplicationGateway applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             // Request routing rule for HTTP from public 80 to public 8080
                             .DefineRequestRoutingRule("HTTP-80-to-8080")

@@ -49,20 +49,20 @@ namespace ManageVirtualMachinesInParallel
                     // Create a resource group [Where all resources gets created]
                     IResourceGroup resourceGroup = azure.ResourceGroups
                             .Define(rgName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .Create();
 
                     // Prepare Creatable Network definition [Where all the virtual machines get added to]
                     var creatableNetwork = azure.Networks
                             .Define(networkName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithAddressSpace("172.16.0.0/16");
 
                     // Prepare Creatable Storage account definition [For storing VMs disk]
                     var creatableStorageAccount = azure.StorageAccounts
                             .Define(storageAccountName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup);
 
                     // Prepare a batch of Creatable Virtual Machines definitions
@@ -72,14 +72,14 @@ namespace ManageVirtualMachinesInParallel
                     {
                         var creatableVirtualMachine = azure.VirtualMachines
                             .Define("VM-" + i)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithNewPrimaryNetwork(creatableNetwork)
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUsername("tirekicker")
-                            .WithRootPassword("12NewPA$$w0rd!")
+                            .WithRootUsername(userName)
+                            .WithRootPassword(password)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                             .WithNewStorageAccount(creatableStorageAccount);
                         creatableVirtualMachines.Add(creatableVirtualMachine);

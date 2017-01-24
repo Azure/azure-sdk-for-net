@@ -54,7 +54,7 @@ namespace ManageSqlDatabase
                     // Create a SQL Server, with 2 firewall rules.
 
                     var sqlServer = azure.SqlServers.Define(sqlServerName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAdministratorLogin(administratorLogin)
                             .WithAdministratorPassword(administratorPassword)

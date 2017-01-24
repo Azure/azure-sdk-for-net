@@ -59,7 +59,7 @@ namespace ManageSqlFirewallRules
                     Console.WriteLine("Create a SQL server with 2 firewall rules adding a single IP Address and a range of IP Addresses");
 
                     var sqlServer = azure.SqlServers.Define(sqlServerName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAdministratorLogin(administratorLogin)
                             .WithAdministratorPassword(administratorPassword)
@@ -125,7 +125,7 @@ namespace ManageSqlFirewallRules
                         azure.ResourceGroups.DeleteByName(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
-                    catch (Exception e)
+                    catch
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }

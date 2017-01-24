@@ -64,7 +64,7 @@ namespace ManageNetworkInterface
 
                     var network = azure.Networks
                             .Define(vnetName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithAddressSpace("172.16.0.0/16")
                             .DefineSubnet("Front-end")
@@ -85,7 +85,7 @@ namespace ManageNetworkInterface
                     Console.WriteLine("Creating network interface 1");
 
                     var networkInterface1 = azure.NetworkInterfaces.Define(networkInterfaceName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Front-end")
@@ -99,7 +99,7 @@ namespace ManageNetworkInterface
                     Console.WriteLine("Creating network interface 2");
 
                     var networkInterface2 = azure.NetworkInterfaces.Define(networkInterfaceName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Mid-tier")
@@ -112,7 +112,7 @@ namespace ManageNetworkInterface
                     Console.WriteLine("Creating network interface 3");
 
                     var networkInterface3 = azure.NetworkInterfaces.Define(networkInterfaceName3)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Back-end")
@@ -130,7 +130,7 @@ namespace ManageNetworkInterface
                     var t1 = DateTime.UtcNow;
 
                     var vm = azure.VirtualMachines.Define(vmName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetworkInterface(networkInterface1)
                             .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)

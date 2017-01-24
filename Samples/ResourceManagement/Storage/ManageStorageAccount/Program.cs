@@ -49,7 +49,7 @@ namespace ManageStorageAccount
                     Console.WriteLine("Creating a Storage Account");
 
                     var storageAccount = azure.StorageAccounts.Define(storageAccountName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .Create();
 
@@ -77,7 +77,7 @@ namespace ManageStorageAccount
                     Console.WriteLine("Creating a 2nd Storage Account");
 
                     var storageAccount2 = azure.StorageAccounts.Define(storageAccountName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .Create();
 

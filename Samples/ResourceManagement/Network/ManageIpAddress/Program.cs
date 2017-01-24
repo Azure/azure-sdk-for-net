@@ -58,7 +58,7 @@ namespace ManageIpAddress
 
                     var publicIpAddress = azure.PublicIpAddresses
                             .Define(publicIpAddressName1)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithLeafDomainLabel(publicIpAddressLeafDNS1)
                             .Create();
@@ -74,7 +74,7 @@ namespace ManageIpAddress
                     var t1 = DateTime.UtcNow;
 
                     var vm = azure.VirtualMachines.Define(vmName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
                             .WithPrimaryPrivateIpAddressDynamic()
@@ -105,7 +105,7 @@ namespace ManageIpAddress
 
                     var publicIpAddress2 = azure.PublicIpAddresses
                             .Define(publicIpAddressName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithNewResourceGroup(rgName)
                             .WithLeafDomainLabel(publicIpAddressLeafDNS2)
                             .Create();

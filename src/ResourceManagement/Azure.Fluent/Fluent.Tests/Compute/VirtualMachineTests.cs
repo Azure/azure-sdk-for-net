@@ -94,7 +94,7 @@ namespace Fluent.Tests.Compute
                 var publicIpNamePrefix = TestUtilities.GenerateName("pip-");
                 var networkNamePrefix = TestUtilities.GenerateName("vnet-");
 
-                var region = Region.US_EAST;
+                var region = Region.USEast;
                 int count = 5;
 
                 var azure = TestHelper.CreateRollupClient();
@@ -202,7 +202,7 @@ namespace Fluent.Tests.Compute
                 var username = "testuser";
                 var password = "12NewPA$$w0rd!";
                 var publicIpDnsLabel = TestUtilities.GenerateName("abc");
-                var region = Region.US_EAST;
+                var region = Region.USEast;
                 var cloudInitEncodedString = Convert.ToBase64String(Encoding.ASCII.GetBytes("#cloud-config\r\npackages:\r\n - pwgen"));
 
                 var azure = TestHelper.CreateRollupClient();
@@ -256,7 +256,7 @@ namespace Fluent.Tests.Compute
                 var username = "testuser";
                 var password = "12NewPA$$w0rd!";
                 var publicIpDnsLabel = TestUtilities.GenerateName("abc");
-                var region = Region.US_EAST;
+                var region = Region.USEast;
 
                 var azure = TestHelper.CreateRollupClient();
                 try

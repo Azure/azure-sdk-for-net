@@ -58,7 +58,7 @@ namespace Azure.Tests.Sql
                 GenerateNewRGAndSqlServerNameForTest();
                 var rollUpClient = TestHelper.CreateRollupClient();
                 var sqlServer = rollUpClient.SqlServers.Define(SqlServerName)
-                        .WithRegion(Region.US_CENTRAL)
+                        .WithRegion(Region.USCentral)
                         .WithNewResourceGroup(GroupName)
                         .WithAdministratorLogin("userName")
                         .WithAdministratorPassword("loepop77ejk~13@@")
@@ -145,7 +145,7 @@ namespace Azure.Tests.Sql
 
                 // Create
                 var sqlServer = sqlServerManager.SqlServers.Define(SqlServerName)
-                    .WithRegion(Region.US_CENTRAL)
+                    .WithRegion(Region.USCentral)
                     .WithNewResourceGroup(GroupName)
                     .WithAdministratorLogin("userName")
                     .WithAdministratorPassword("loepopfuejk~13@@")
@@ -848,7 +848,7 @@ namespace Azure.Tests.Sql
         {
             return sqlServerManager.SqlServers
                     .Define(sqlServerName)
-                    .WithRegion(Region.US_CENTRAL)
+                    .WithRegion(Region.USCentral)
                     .WithNewResourceGroup(GroupName)
                     .WithAdministratorLogin("userName")
                     .WithAdministratorPassword("loepopfuejk~13@@")
@@ -869,7 +869,7 @@ namespace Azure.Tests.Sql
             Assert.Equal(EndIPAddress, sqlFirewallRule.EndIpAddress);
             Assert.Equal(GroupName, sqlFirewallRule.ResourceGroupName);
             Assert.Equal(SqlServerName, sqlFirewallRule.SqlServerName);
-            Assert.Equal(Region.US_CENTRAL, sqlFirewallRule.Region);
+            Assert.Equal(Region.USCentral, sqlFirewallRule.Region);
         }
 
         private static void ValidateListSqlElasticPool(IList<ISqlElasticPool> sqlElasticPools)

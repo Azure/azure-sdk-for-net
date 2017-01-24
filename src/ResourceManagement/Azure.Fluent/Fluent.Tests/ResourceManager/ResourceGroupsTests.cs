@@ -24,7 +24,7 @@ namespace Fluent.Tests.ResourceManager
                     Assert.NotNull(resourceGroup.Name);
                     Assert.True(resourceGroup.Name.Equals(rgName, StringComparison.OrdinalIgnoreCase));
                     Assert.NotNull(resourceGroup.RegionName);
-                    Assert.True(StringComparer.CurrentCultureIgnoreCase.Equals(resourceGroup.RegionName, Region.US_EAST2.Name));
+                    Assert.True(StringComparer.CurrentCultureIgnoreCase.Equals(resourceGroup.RegionName, Region.USEast2.Name));
                     Assert.NotNull(resourceGroup.Id);
                     Assert.NotNull(resourceGroup.Tags);
                     Assert.Equal(resourceGroup.Tags.Count, 3);
@@ -34,7 +34,7 @@ namespace Fluent.Tests.ResourceManager
                 {
                     var resourceManager = TestHelper.CreateResourceManager();
                     var resourceGroup = resourceManager.ResourceGroups.Define(rgName)
-                        .WithRegion(Region.US_EAST2)
+                        .WithRegion(Region.USEast2)
                         .WithTag("t1", "v1")
                         .WithTag("t2", "v2")
                         .WithTag("t3", "v3")

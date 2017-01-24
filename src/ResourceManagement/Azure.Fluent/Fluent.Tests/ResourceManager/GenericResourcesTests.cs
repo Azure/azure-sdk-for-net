@@ -29,7 +29,7 @@ namespace Fluent.Tests.ResourceManager
                 IGenericResources genericResources = resourceManager.GenericResources;
 
                 IGenericResource resource = genericResources.Define(resourceName)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .WithNewResourceGroup(rgName)
                     .WithResourceType("sites")
                     .WithProviderNamespace("Microsoft.Web")
@@ -57,7 +57,7 @@ namespace Fluent.Tests.ResourceManager
                 IResourceGroup newGroup = resourceManager
                     .ResourceGroups
                     .Define(newRgName)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .Create();
                 genericResources.MoveResources(rgName, newGroup, new List<string>
             {

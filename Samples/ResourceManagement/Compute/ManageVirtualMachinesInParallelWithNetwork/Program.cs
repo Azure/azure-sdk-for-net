@@ -59,7 +59,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                     // Create a resource group [Where all resources gets created]
                     IResourceGroup resourceGroup = azure.ResourceGroups
                             .Define(rgName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .Create();
 
                     //============================================================
@@ -70,7 +70,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                     var frontEndNSGCreatable = azure.NetworkSecurityGroups
                             .Define(frontEndNSGName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .DefineRule("ALLOW-SSH")
                                 .AllowInbound()
@@ -101,7 +101,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                     var backEndNSGCreatable = azure.NetworkSecurityGroups
                             .Define(backEndNSGName)
-                                .WithRegion(Region.US_EAST)
+                                .WithRegion(Region.USEast)
                                 .WithExistingResourceGroup(resourceGroup)
                                 .DefineRule("ALLOW-SQL")
                                 .AllowInbound()
@@ -142,7 +142,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                     // Create Network [Where all the virtual machines get added to]
                     var network = azure.Networks
                             .Define(networkName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithAddressSpace("172.16.0.0/16")
                             .DefineSubnet("Front-end")
@@ -158,7 +158,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                     // Prepare Creatable Storage account definition [For storing VMs disk]
                     var creatableStorageAccount = azure.StorageAccounts
                             .Define(storageAccountName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup);
 
                     // Prepare a batch of Creatable Virtual Machines definitions
@@ -168,7 +168,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                     {
                         var creatableVirtualMachine = azure.VirtualMachines
                             .Define("VM-FE-" + i)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Front-end")
@@ -188,7 +188,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                     {
                         var creatableVirtualMachine = azure.VirtualMachines
                             .Define("VM-BE-" + i)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("Back-end")

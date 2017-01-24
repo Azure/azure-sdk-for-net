@@ -34,7 +34,7 @@ namespace Fluent.Tests.ResourceManager
 
                 resourceManager.Deployments
                     .Define(deploymentName1)
-                    .WithNewResourceGroup(rgName, Region.US_EAST)
+                    .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
@@ -80,7 +80,7 @@ namespace Fluent.Tests.ResourceManager
                 IResourceManager resourceManager = TestHelper.CreateResourceManager();
                 resourceManager.Deployments
                     .Define(deploymentName2)
-                    .WithNewResourceGroup(rgName, Region.US_EAST)
+                    .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
@@ -103,7 +103,7 @@ namespace Fluent.Tests.ResourceManager
 
                 resourceManager.Deployments
                     .Define(deploymentName3)
-                    .WithNewResourceGroup(rgName, Region.US_EAST)
+                    .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)

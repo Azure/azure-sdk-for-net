@@ -66,7 +66,7 @@ namespace ManageWebAppSqlConnection
                     Console.WriteLine("Creating SQL server " + sqlServerName + "...");
 
                     ISqlServer server = azure.SqlServers.Define(sqlServerName)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithNewResourceGroup(rgName)
                             .WithAdministratorLogin(admin)
                             .WithAdministratorPassword(password)
@@ -93,7 +93,7 @@ namespace ManageWebAppSqlConnection
                             .Define(appName)
                             .WithExistingResourceGroup(rgName)
                             .WithNewAppServicePlan(planName)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithPricingTier(AppServicePricingTier.Standard_S1)
                             .WithPhpVersion(PhpVersion.Php5_6)
                             .DefineSourceControl()

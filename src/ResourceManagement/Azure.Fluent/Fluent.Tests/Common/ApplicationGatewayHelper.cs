@@ -50,7 +50,7 @@ namespace Azure.Tests.Common
         {
             var createdVMs = new List<IVirtualMachine>();
             INetwork network = null;
-            Region region = Region.US_WEST;
+            Region region = Region.USWest;
             string userName = "testuser" + TestId;
             string availabilitySetName = "as" + TestId;
 
@@ -78,7 +78,7 @@ namespace Azure.Tests.Common
                     }
 
                     vm = vms.Define(vmName)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithNewResourceGroup(groupName)
                             .WithExistingPrimaryNetwork(network)
                             .WithSubnet("subnet1")

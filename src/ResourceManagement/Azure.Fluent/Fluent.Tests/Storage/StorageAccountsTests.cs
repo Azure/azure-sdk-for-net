@@ -32,7 +32,7 @@ namespace Fluent.Tests.Storage
                     // Create
                     IStorageAccount storageAccount = storageManager.StorageAccounts
                         .Define(stgName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithTag("t1", "v1")
                         .WithTag("t2", "v2")

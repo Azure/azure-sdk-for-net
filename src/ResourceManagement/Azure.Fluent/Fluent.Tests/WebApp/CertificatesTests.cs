@@ -24,7 +24,7 @@ namespace Azure.Tests.WebApp
 
                 var vault = keyVaultManager.Vaults.GetByGroup(GroupName, "bananagraphwebapp319com");
                 var certificate = appServiceManager.AppServiceCertificates.Define("bananacert")
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithExistingResourceGroup(GroupName)
                     .WithExistingCertificateOrder(appServiceManager.AppServiceCertificateOrders.GetByGroup(GroupName, "graphwebapp319"))
                     .Create();
@@ -32,7 +32,7 @@ namespace Azure.Tests.WebApp
 
                 // CREATE
                 certificate = appServiceManager.AppServiceCertificates.Define(CertificateName)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .WithExistingResourceGroup(GroupName)
                     .WithPfxFile("/Users/jianghlu/Documents/code/certs/myserver.Pfx")
                     .WithPfxPassword("StrongPass!123")

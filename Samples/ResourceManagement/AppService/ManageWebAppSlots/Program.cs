@@ -49,15 +49,15 @@ namespace ManageWebAppSlots
                 try
                 {
                     azure.ResourceGroups.Define(RG_NAME)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                     //============================================================
                     // Create 3 web apps with 3 new app service plans in different regions
 
-                    var app1 = CreateWebApp(azure, app1Name, Region.US_WEST);
-                    var app2 = CreateWebApp(azure, app2Name, Region.EUROPE_WEST);
-                    var app3 = CreateWebApp(azure, app3Name, Region.ASIA_EAST);
+                    var app1 = CreateWebApp(azure, app1Name, Region.USWest);
+                    var app2 = CreateWebApp(azure, app2Name, Region.EuropeWest);
+                    var app3 = CreateWebApp(azure, app3Name, Region.AsiaEast);
 
 
                     //============================================================

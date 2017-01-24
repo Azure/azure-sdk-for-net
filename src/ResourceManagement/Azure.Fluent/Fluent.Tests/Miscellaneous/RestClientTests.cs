@@ -49,7 +49,7 @@ namespace Fluent.Tests.Miscellaneous
 
                     IStorageAccount storageAccount = azure.StorageAccounts
                        .Define(stgName)
-                       .WithRegion(Region.US_EAST)
+                       .WithRegion(Region.USEast)
                        .WithNewResourceGroup(rgName)
                        .Create();
 

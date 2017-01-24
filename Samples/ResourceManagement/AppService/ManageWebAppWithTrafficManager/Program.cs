@@ -66,7 +66,7 @@ namespace ManageWebAppWithTrafficManager
                     Console.WriteLine("Purchasing a domain " + domainName + "...");
 
                     azure.ResourceGroups.Define(RG_NAME)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .Create();
 
                     var domain = azure.AppServices.AppServiceDomains.Define(domainName)
@@ -103,21 +103,21 @@ namespace ManageWebAppWithTrafficManager
 
                     Console.WriteLine("Creating app service plan " + plan1Name + " in US West...");
 
-                    var plan1 = CreateAppServicePlan(azure, plan1Name, Region.US_WEST);
+                    var plan1 = CreateAppServicePlan(azure, plan1Name, Region.USWest);
 
                     Console.WriteLine("Created app service plan " + plan1.Name);
                     Utilities.Print(plan1);
 
                     Console.WriteLine("Creating app service plan " + plan2Name + " in Europe West...");
 
-                    var plan2 = CreateAppServicePlan(azure, plan2Name, Region.EUROPE_WEST);
+                    var plan2 = CreateAppServicePlan(azure, plan2Name, Region.EuropeWest);
 
                     Console.WriteLine("Created app service plan " + plan2.Name);
                     Utilities.Print(plan1);
 
                     Console.WriteLine("Creating app service plan " + plan3Name + " in Asia East...");
 
-                    var plan3 = CreateAppServicePlan(azure, plan3Name, Region.ASIA_EAST);
+                    var plan3 = CreateAppServicePlan(azure, plan3Name, Region.AsiaEast);
 
                     Console.WriteLine("Created app service plan " + plan2.Name);
                     Utilities.Print(plan1);

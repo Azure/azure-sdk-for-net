@@ -28,14 +28,14 @@ namespace Azure.Tests.WebApp
                 appServiceManager.WebApps.Define(WebAppName)
                     .WithNewResourceGroup(GroupName)
                     .WithNewAppServicePlan(AppServicePlanName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithPricingTier(AppServicePricingTier.Basic_B1)
                     .WithNetFrameworkVersion(NetFrameworkVersion.V3_0)
                     .Create();
 
                 var webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
                 Assert.NotNull(webApp);
-                Assert.Equal(Region.US_WEST, webApp.Region);
+                Assert.Equal(Region.USWest, webApp.Region);
                 Assert.Equal(NetFrameworkVersion.V3_0, webApp.NetFrameworkVersion);
 
                 // Java version
