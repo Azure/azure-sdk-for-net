@@ -23,25 +23,37 @@ namespace HDInsightJob.Tests
 {
     public static class TestUtils
     {
-        public static string ClusterName = "pattipakalinux330.azurehdinsight.net";
+        // ADL clusters are supported only for Linux. This flag is to configure ADL clusters.
+        public static bool AdlCluster = true;
+        public static string AdlAccountName = "pattipakaadls2";
+
+        // ADL store access details like default storage root, application Id and certificate details to access storage
+        public static string DefaultStorageRoot = "/clusters/pattipakaadls";
+        public static string ApplicationId = "";
+        public static string AdlCertificatePath = @"D:\ADLS\pattipakalinuxadls.pfx";
+        public static string AdlCertificatePassword = "";
+
+        public static string ClusterName = "pattipakaadls.azurehdinsight.net";
         public static string UserName = "admin";
         public static string Password = "";
-        public static string StorageAccountName = "pattipakalinux";
-        public static string StorageAccountKey = "";
-        public static string DefaultContainer = "pattipakalinux330";
 
-        public static string WinClusterName = "pattipakawin33.azurehdinsight.net";
-        public static string WinStorageAccountName = "pattipakastorageaccount";
-        public static string WinStorageAccountKey = "";
-        public static string WinDefaultContainer = "pattipakawin33";
+        public static string StorageAccountName = "";
+        public static string StorageAccountKey = "";
+        public static string DefaultContainer = "";
+
+        public static string WinClusterName = "pattipakwin33.azurehdinsight.net";
         public static string WinUserName = "admin";
         public static string WinPassword = "";
         //set storage account suffix appropriately for different environments, for example:core.chinacloudapi.cn
         public static string storageAccountSuffix = "";
 
-        public static string SQLServerUserName = "";
+        public static string WinStorageAccountName = "";
+        public static string WinStorageAccountKey = "";
+        public static string WinDefaultContainer = "";
+
+        public static string SQLServerUserName = "hdiquerytest";
         public static string SQLServerPassword = "";
-        public static string SQLServerConnectionString = "jdbc:sqlserver://hdinsightjobtest.database.windows.net:1433;database=HdInsightJobTest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
+        public static string SQLServerConnectionString = "jdbc:sqlserver://hdiquerytest.database.windows.net:1433;database=hdiquerytest;user=" + SQLServerUserName + ";password=" + SQLServerPassword + ";";
         public static string SQLServerTableName = "dept";
 
         public static TimeSpan JobPollInterval = TimeSpan.FromSeconds(30);
