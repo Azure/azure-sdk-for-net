@@ -26,7 +26,7 @@ namespace HDInsight.Tests.Helpers
         private const string DefaultContainer = "";
         private const string StorageAccountName = "";
         private const string StorageAccountKey = "";
-		private const string SshKey = "";
+        private const string SshKey = "";
         private const string SshUser = "";
         private const string SshPassword = "";
         private const string HttpUser = "";
@@ -289,7 +289,7 @@ namespace HDInsight.Tests.Helpers
                 Location = "East US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
-                Version = "3.2"
+                Version = "3.5"
             };
 
             return clusterparams;

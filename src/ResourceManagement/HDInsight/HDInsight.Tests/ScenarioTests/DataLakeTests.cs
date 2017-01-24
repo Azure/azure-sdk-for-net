@@ -147,7 +147,7 @@ namespace HDInsight.Tests
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, clusterCreateParams);
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
-                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Running");
+                Assert.Equal("Running", createresponse.Cluster.Properties.ClusterState);
                 
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
