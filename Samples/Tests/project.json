@@ -83,6 +83,18 @@
     "ManageWebAppSqlConnection": "1.0.0-*",
     "ManageWebAppStorageAccountConnection": "1.0.0-*",
     "ManageWebAppWithDomainSsl": "1.0.0-*",
-    "ManageWebAppWithTrafficManager": "1.0.0-*"
+    "ManageWebAppWithTrafficManager": "1.0.0-*",
+    "ManageBatchAccount": "1.0.0-*",
+    "ManageCdn": "1.0.0-*",
+    "CreateVirtualMachinesInParallel": "1.0.0-*",
+    "CreateVMsUsingCustomImageOrSpecializedVHD": "1.0.0-*",
+    "ListVirtualMachineExtensionImages": "1.0.0-*",
+    "ListVirtualMachineImages": "1.0.0-*",
+    "ManageAvailabilitySet": "1.0.0-*",
+    "ManageVirtualMachine": "1.0.0-*",
+    "ManageVirtualMachineExtension": "1.0.0-*",
+    "ManageVirtualMachineScaleSet": "1.0.0-*",
+    "ManageVirtualMachinesInParallel": "1.0.0-*",
+    "ManageVirtualMachinesInParallelWithNetwork": "1.0.0-*"
   }
 }

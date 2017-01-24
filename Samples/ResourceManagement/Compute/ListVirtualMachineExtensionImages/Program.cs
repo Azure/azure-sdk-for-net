@@ -4,18 +4,63 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 
 namespace ListVirtualMachineExtensionImages
 {
-    /**
-     * List all virtual machine extension image publishers and
-     * list all virtual machine extension images published by Microsoft.OSTCExtensions, Microsoft.Azure.Extensions
-     * by browsing through extension image publishers, types, and versions.
-     */
-
     public class Program
     {
+        /**
+         * List all virtual machine extension image publishers and
+         * list all virtual machine extension images published by Microsoft.OSTCExtensions, Microsoft.Azure.Extensions
+         * by browsing through extension image publishers, types, and versions.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            //=================================================================
+            // List all virtual machine extension image publishers and
+            // list all virtual machine extension images
+            // published by Microsoft.OSTCExtensions and Microsoft.Azure.Extensions
+            // y browsing through extension image publishers, types, and versions
+
+            var publishers = azure
+                    .VirtualMachineImages
+                    .Publishers
+                    .ListByRegion(Region.US_EAST);
+
+            Utilities.Log("US East data center: printing list of \n"
+                    + "a) Publishers and\n"
+                    + "b) virtual machine images published by Microsoft.OSTCExtensions and Microsoft.Azure.Extensions");
+            Utilities.Log("=======================================================");
+            Utilities.Log("\n");
+
+            foreach (var publisher in publishers)
+            {
+                Utilities.Log("Publisher - " + publisher.Name);
+
+                if (StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Microsoft.OSTCExtensions") || 
+                    StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Microsoft.Azure.Extensions"))
+                {
+                    Utilities.Log("\n\n");
+                    Utilities.Log("=======================================================");
+                    Utilities.Log("Located " + publisher.Name);
+                    Utilities.Log("=======================================================");
+                    Utilities.Log("Printing entries as publisher/type/version");
+
+                    foreach (var imageType in publisher.ExtensionTypes.List())
+                    {
+                        foreach (var version in imageType.Versions.List())
+                        {
+                            var image = version.GetImage();
+                            Utilities.Log($"Image - {publisher.Name}/{image.TypeName}/{image.VersionName}");
+                        }
+                    }
+                    Utilities.Log("\n\n");
+                }
+            }
+        }
+
         public static void Main(string[] args)
         {
             try
@@ -30,51 +75,11 @@ namespace ListVirtualMachineExtensionImages
                     .Authenticate(credentials)
                     .WithDefaultSubscription();
 
-                //=================================================================
-                // List all virtual machine extension image publishers and
-                // list all virtual machine extension images
-                // published by Microsoft.OSTCExtensions and Microsoft.Azure.Extensions
-                // y browsing through extension image publishers, types, and versions
-
-                var publishers = azure
-                        .VirtualMachineImages
-                        .Publishers
-                        .ListByRegion(Region.US_EAST);
-
-                Console.WriteLine("US East data center: printing list of \n"
-                        + "a) Publishers and\n"
-                        + "b) virtual machine images published by Microsoft.OSTCExtensions and Microsoft.Azure.Extensions");
-                Console.WriteLine("=======================================================");
-                Console.WriteLine("\n");
-
-                foreach (var publisher in publishers)
-                {
-                    Console.WriteLine("Publisher - " + publisher.Name);
-
-                    if (StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Microsoft.OSTCExtensions")
-                            || StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Microsoft.Azure.Extensions"))
-                    {
-                        Console.WriteLine("\n\n");
-                        Console.WriteLine("=======================================================");
-                        Console.WriteLine("Located " + publisher.Name);
-                        Console.WriteLine("=======================================================");
-                        Console.WriteLine("Printing entries as publisher/type/version");
-
-                        foreach (var imageType in publisher.ExtensionTypes.List())
-                        {
-                            foreach (var version in imageType.Versions.List())
-                            {
-                                var image = version.GetImage();
-                                Console.WriteLine($"Image - {publisher.Name}/{image.TypeName}/{image.VersionName}");
-                            }
-                        }
-                        Console.WriteLine("\n\n");
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

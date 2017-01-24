@@ -15,6 +15,9 @@
       "src/ResourceManagement/Storage",
       "src/ResourceManagement/TrafficManager",
       "Samples",
-      "Samples/ResourceManagement/AppService"
+      "Samples/ResourceManagement/AppService",
+      "Samples/ResourceManagement/Batch",
+      "Samples/ResourceManagement/Cdn",
+      "Samples/ResourceManagement/Compute"
     ]
 }
