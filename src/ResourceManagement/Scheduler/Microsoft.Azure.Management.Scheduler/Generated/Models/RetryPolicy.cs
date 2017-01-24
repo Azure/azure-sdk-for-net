@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public RetryType? RetryType { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry interval between retries.
+        /// Gets or sets the retry interval between retries, specify duration
+        /// in ISO 8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "retryInterval")]
         public TimeSpan? RetryInterval { get; set; }

@@ -4,7 +4,7 @@
 ::
  
 set autoRestVersion=0.16.0-Nightly20160329
-set specUrl="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-scheduler/2016-03-01/swagger/scheduler.json"
+set specUrl="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c582747a6ea5d55ea976a9a3cb7c7959e7f9ce2f/arm-scheduler/2016-03-01/swagger/scheduler.json"
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set repoRoot=%~dp0..\..\..\..
