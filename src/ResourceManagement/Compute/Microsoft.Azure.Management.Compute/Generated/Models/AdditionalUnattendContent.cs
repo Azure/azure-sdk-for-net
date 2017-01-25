@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// additional XML formatted information that can be included in the
+    /// Additional XML formatted information that can be included in the
     /// Unattend.xml file, which is used by Windows Setup. Contents are
     /// defined by setting name, component name, and the pass in which the
     /// content is a applied.
@@ -26,10 +26,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the AdditionalUnattendContent class.
         /// </summary>
-        /// <param name="passName">the pass name. Currently, the only
+        /// <param name="passName">The pass name. Currently, the only
         /// allowable value is oobeSystem. Possible values include:
         /// 'oobeSystem'</param>
-        /// <param name="componentName">the component name. Currently, the
+        /// <param name="componentName">The component name. Currently, the
         /// only allowable value is Microsoft-Windows-Shell-Setup. Possible
         /// values include: 'Microsoft-Windows-Shell-Setup'</param>
         /// <param name="settingName">setting name (e.g. FirstLogonCommands,

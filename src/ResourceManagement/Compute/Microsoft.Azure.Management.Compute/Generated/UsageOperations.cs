@@ -42,10 +42,12 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists compute usages for a subscription.
+        /// Gets, for the specified location, the current compute resource usage
+        /// information as well as the limits for compute resources under the
+        /// subscription.
         /// </summary>
         /// <param name='location'>
-        /// The location upon which resource usage is queried.
+        /// The location for which resource usage is queried.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -229,7 +231,9 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists compute usages for a subscription.
+        /// Gets, for the specified location, the current compute resource usage
+        /// information as well as the limits for compute resources under the
+        /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -45,14 +45,19 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets a virtual machine image.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
+        /// A valid image publisher.
         /// </param>
         /// <param name='offer'>
+        /// A valid image publisher offer.
         /// </param>
         /// <param name='skus'>
+        /// A valid image SKU.
         /// </param>
         /// <param name='version'>
+        /// A valid image SKU version.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -253,15 +258,20 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine images.
+        /// Gets a list of all virtual machine image versions for the specified
+        /// location, publisher, offer, and SKU.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
+        /// A valid image publisher.
         /// </param>
         /// <param name='offer'>
+        /// A valid image publisher offer.
         /// </param>
         /// <param name='skus'>
+        /// A valid image SKU.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -468,11 +478,14 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine image offers.
+        /// Gets a list of virtual machine image offers for the specified location and
+        /// publisher.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
+        /// A valid image publisher.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -655,9 +668,11 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine image publishers.
+        /// Gets a list of virtual machine image publishers for the specified Azure
+        /// location.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -834,13 +849,17 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine image skus.
+        /// Gets a list of virtual machine image SKUs for the specified location,
+        /// publisher, and offer.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
+        /// A valid image publisher.
         /// </param>
         /// <param name='offer'>
+        /// A valid image publisher offer.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

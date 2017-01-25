@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile for Windows VMs
+    /// Profile for Windows VMs in the container service cluster.
     /// </summary>
     public partial class ContainerServiceWindowsProfile
     {
@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerServiceWindowsProfile
         /// class.
         /// </summary>
-        /// <param name="adminUsername">The administrator username to use for
-        /// Windows VMs</param>
+        /// <param name="adminUsername">The administrator user name to use for
+        /// Windows VMs.</param>
         /// <param name="adminPassword">The administrator password to use for
-        /// Windows VMs</param>
+        /// Windows VMs.</param>
         public ContainerServiceWindowsProfile(string adminUsername, string adminPassword)
         {
             AdminUsername = adminUsername;
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the administrator username to use for Windows VMs
+        /// Gets or sets the administrator user name to use for Windows VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "adminUsername")]
         public string AdminUsername { get; set; }
 
         /// <summary>
-        /// Gets or sets the administrator password to use for Windows VMs
+        /// Gets or sets the administrator password to use for Windows VMs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "adminPassword")]
         public string AdminPassword { get; set; }
@@ -62,6 +62,20 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (AdminPassword == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AdminPassword");
+            }
+            if (this.AdminUsername != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.AdminUsername, "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "AdminUsername", "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+                }
+            }
+            if (this.AdminPassword != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.AdminPassword, "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "AdminPassword", "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%\\^&\\*\\(\\)])[a-zA-Z\\d!@#$%\\^&\\*\\(\\)]{12,123}$");
+                }
             }
         }
     }

@@ -23,9 +23,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
-        /// <param name="currentValue">the current value of the usage.</param>
-        /// <param name="limit">the limit of usage.</param>
-        /// <param name="name">the name of the type of usage.</param>
+        /// <param name="currentValue">The current usage of the
+        /// resource.</param>
+        /// <param name="limit">The maximum permitted usage of the
+        /// resource.</param>
+        /// <param name="name">The name of the type of usage.</param>
         public Usage(int currentValue, long limit, UsageName name)
         {
             CurrentValue = currentValue;
@@ -41,13 +43,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the current value of the usage.
+        /// Gets or sets the current usage of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "currentValue")]
         public int CurrentValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the limit of usage.
+        /// Gets or sets the maximum permitted usage of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "limit")]
         public long Limit { get; set; }
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public UsageName Name { get; set; }
 
         /// <summary>
-        /// an enum describing the unit of measurement.
+        /// An enum describing the unit of usage measurement.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "unit")]
         public static string Unit { get; private set; }

@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the SshPublicKey class.
         /// </summary>
-        /// <param name="path">the full path on the created VM where SSH
-        /// public key is stored. If the file already exists, the specified
-        /// key is appended to the file.</param>
+        /// <param name="path">Specifies the full path on the created VM where
+        /// SSH public key is stored. If the file already exists, the
+        /// specified key is appended to the file.</param>
         /// <param name="keyData">Certificate public key used to authenticate
-        /// with VM through SSH. The certificate must be in Pem format with
+        /// to the VM through SSH. The certificate must be in Pem format with
         /// or without headers.</param>
         public SshPublicKey(string path = default(string), string keyData = default(string))
         {
@@ -37,15 +37,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the full path on the created VM where SSH public key
-        /// is stored. If the file already exists, the specified key is
-        /// appended to the file.
+        /// Gets or sets specifies the full path on the created VM where SSH
+        /// public key is stored. If the file already exists, the specified
+        /// key is appended to the file.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets certificate public key used to authenticate with VM
+        /// Gets or sets certificate public key used to authenticate to the VM
         /// through SSH. The certificate must be in Pem format with or
         /// without headers.
         /// </summary>

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiskEncryptionSettings class.
         /// </summary>
-        /// <param name="diskEncryptionKey">the disk encryption key which is a
-        /// KeyVault Secret.</param>
-        /// <param name="keyEncryptionKey">the key encryption key which is
-        /// KeyVault Key.</param>
-        /// <param name="enabled">whether disk encryption should be enabled on
-        /// the Virtual Machine.</param>
+        /// <param name="diskEncryptionKey">The disk encryption key which is a
+        /// Key Vault Secret.</param>
+        /// <param name="keyEncryptionKey">The key encryption key which is Key
+        /// Vault Key.</param>
+        /// <param name="enabled">Specifies whether disk encryption should be
+        /// enabled on the virtual machine.</param>
         public DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey = default(KeyVaultSecretReference), KeyVaultKeyReference keyEncryptionKey = default(KeyVaultKeyReference), bool? enabled = default(bool?))
         {
             DiskEncryptionKey = diskEncryptionKey;
@@ -37,20 +37,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the disk encryption key which is a KeyVault Secret.
+        /// Gets or sets the disk encryption key which is a Key Vault Secret.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "diskEncryptionKey")]
         public KeyVaultSecretReference DiskEncryptionKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the key encryption key which is KeyVault Key.
+        /// Gets or sets the key encryption key which is Key Vault Key.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "keyEncryptionKey")]
         public KeyVaultKeyReference KeyEncryptionKey { get; set; }
 
         /// <summary>
-        /// Gets or sets whether disk encryption should be enabled on the
-        /// Virtual Machine.
+        /// Gets or sets specifies whether disk encryption should be enabled
+        /// on the virtual machine.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }

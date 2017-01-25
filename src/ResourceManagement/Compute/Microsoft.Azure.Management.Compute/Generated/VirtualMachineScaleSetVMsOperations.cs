@@ -42,17 +42,17 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Allows you to re-image(update the version of the installed operating
-        /// system) a virtual machine scale set instance.
+        /// Reimages (upgrade the operating system) a specific virtual machine in a VM
+        /// scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -69,17 +69,17 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to re-image(update the version of the installed operating
-        /// system) a virtual machine scale set instance.
+        /// Reimages (upgrade the operating system) a specific virtual machine in a VM
+        /// scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -239,18 +239,19 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to deallocate a virtual machine scale set virtual machine.
-        /// Shuts down the virtual machine and releases the compute resources. You
-        /// are not billed for the compute resources that this virtual machine uses.
+        /// Deallocates a specific virtual machine in a VM scale set. Shuts down the
+        /// virtual machine and releases the compute resources it uses. You are not
+        /// billed for the compute resources of this virtual machine once it is
+        /// deallocated.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -267,18 +268,19 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to deallocate a virtual machine scale set virtual machine.
-        /// Shuts down the virtual machine and releases the compute resources. You
-        /// are not billed for the compute resources that this virtual machine uses.
+        /// Deallocates a specific virtual machine in a VM scale set. Shuts down the
+        /// virtual machine and releases the compute resources it uses. You are not
+        /// billed for the compute resources of this virtual machine once it is
+        /// deallocated.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -438,16 +440,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to delete a virtual machine scale set.
+        /// Deletes a virtual machine from a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -464,16 +466,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to delete a virtual machine scale set.
+        /// Deletes a virtual machine from a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -633,16 +635,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Displays information about a virtual machine scale set virtual machine.
+        /// Gets a virtual machine from a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -831,16 +833,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Displays the status of a virtual machine scale set virtual machine.
+        /// Gets the status of a virtual machine from a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1029,13 +1031,13 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all virtual machines in a VM scale sets.
+        /// Gets a list of all virtual machines in a VM scale sets.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='virtualMachineScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1238,16 +1240,18 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to power off (stop) a virtual machine in a VM scale set.
+        /// Power off (stop) a virtual machine in a VM scale set. Note that resources
+        /// are still attached and you are getting charged for the resources.
+        /// Instead, use deallocate to release resources and avoid charges.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1264,16 +1268,18 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to power off (stop) a virtual machine in a VM scale set.
+        /// Power off (stop) a virtual machine in a VM scale set. Note that resources
+        /// are still attached and you are getting charged for the resources.
+        /// Instead, use deallocate to release resources and avoid charges.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1433,16 +1439,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to restart a virtual machine in a VM scale set.
+        /// Restarts a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1459,16 +1465,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to restart a virtual machine in a VM scale set.
+        /// Restarts a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1628,16 +1634,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to start a virtual machine in a VM scale set.
+        /// Starts a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1654,16 +1660,16 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Allows you to start a virtual machine in a VM scale set.
+        /// Starts a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='vmScaleSetName'>
-        /// The name of the virtual machine scale set.
+        /// The name of the VM scale set.
         /// </param>
         /// <param name='instanceId'>
-        /// The instance id of the virtual machine.
+        /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1823,7 +1829,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Lists all virtual machines in a VM scale sets.
+        /// Gets a list of all virtual machines in a VM scale sets.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

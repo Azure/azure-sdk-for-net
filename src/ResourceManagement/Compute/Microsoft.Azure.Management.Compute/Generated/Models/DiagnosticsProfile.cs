@@ -23,14 +23,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiagnosticsProfile class.
         /// </summary>
-        /// <param name="bootDiagnostics">the boot diagnostics.</param>
+        /// <param name="bootDiagnostics">Boot Diagnostics is a debugging
+        /// feature which allows the user to view console output and/or a
+        /// screenshot of the virtual machine from the hypervisor.</param>
         public DiagnosticsProfile(BootDiagnostics bootDiagnostics = default(BootDiagnostics))
         {
             BootDiagnostics = bootDiagnostics;
         }
 
         /// <summary>
-        /// Gets or sets the boot diagnostics.
+        /// Gets or sets boot Diagnostics is a debugging feature which allows
+        /// the user to view console output and/or a screenshot of the
+        /// virtual machine from the hypervisor.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnostics BootDiagnostics { get; set; }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile for container service agent pool
+    /// Profile for the container service agent pool.
     /// </summary>
     public partial class ContainerServiceAgentPoolProfile
     {
@@ -25,12 +25,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ContainerServiceAgentPoolProfile
         /// class.
         /// </summary>
-        /// <param name="name">Unique name of the agent pool profile within
-        /// the context of the subscription and resource group</param>
-        /// <param name="dnsPrefix">DNS prefix to be used to create FQDN for
-        /// this agent pool</param>
-        /// <param name="count">No. of agents (VMs) that will host docker
-        /// containers</param>
+        /// <param name="name">Unique name of the agent pool profile in the
+        /// context of the subscription and resource group.</param>
+        /// <param name="count">Number of agents (VMs) to host docker
+        /// containers. Allowed values must be in the range of 1 to 100
+        /// (inclusive). The default value is 1. </param>
         /// <param name="vmSize">Size of agent VMs. Possible values include:
         /// 'Standard_A0', 'Standard_A1', 'Standard_A2', 'Standard_A3',
         /// 'Standard_A4', 'Standard_A5', 'Standard_A6', 'Standard_A7',
@@ -45,8 +44,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_DS4', 'Standard_DS11', 'Standard_DS12',
         /// 'Standard_DS13', 'Standard_DS14', 'Standard_GS1', 'Standard_GS2',
         /// 'Standard_GS3', 'Standard_GS4', 'Standard_GS5'</param>
-        /// <param name="fqdn">FDQN for the agent pool</param>
-        public ContainerServiceAgentPoolProfile(string name, string dnsPrefix, int? count = default(int?), string vmSize = default(string), string fqdn = default(string))
+        /// <param name="dnsPrefix">DNS prefix to be used to create the FQDN
+        /// for the agent pool.</param>
+        /// <param name="fqdn">FDQN for the agent pool.</param>
+        public ContainerServiceAgentPoolProfile(string name, int count, string vmSize, string dnsPrefix, string fqdn = default(string))
         {
             Name = name;
             Count = count;
@@ -56,17 +57,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets unique name of the agent pool profile within the
-        /// context of the subscription and resource group
+        /// Gets or sets unique name of the agent pool profile in the context
+        /// of the subscription and resource group.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets no. of agents (VMs) that will host docker containers
+        /// Gets or sets number of agents (VMs) to host docker containers.
+        /// Allowed values must be in the range of 1 to 100 (inclusive). The
+        /// default value is 1.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
-        public int? Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// Gets or sets size of agent VMs. Possible values include:
@@ -88,14 +91,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets DNS prefix to be used to create FQDN for this agent
-        /// pool
+        /// Gets or sets DNS prefix to be used to create the FQDN for the
+        /// agent pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dnsPrefix")]
         public string DnsPrefix { get; set; }
 
         /// <summary>
-        /// Gets FDQN for the agent pool
+        /// Gets FDQN for the agent pool.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }
@@ -111,6 +114,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (Name == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+            }
+            if (VmSize == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmSize");
             }
             if (DnsPrefix == null)
             {

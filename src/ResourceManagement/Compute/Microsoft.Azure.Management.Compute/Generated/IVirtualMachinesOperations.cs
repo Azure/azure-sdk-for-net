@@ -175,7 +175,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to get a virtual machine.
+        /// Retrieves information about the model view or the instance view of
+        /// a virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -204,9 +205,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<VirtualMachine>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Shuts down the Virtual Machine and releases the compute resources.
-        /// You are not billed for the compute resources that this Virtual
-        /// Machine uses.
+        /// Shuts down the virtual machine and releases the compute resources.
+        /// You are not billed for the compute resources that this virtual
+        /// machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -228,9 +229,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Shuts down the Virtual Machine and releases the compute resources.
-        /// You are not billed for the compute resources that this Virtual
-        /// Machine uses.
+        /// Shuts down the virtual machine and releases the compute resources.
+        /// You are not billed for the compute resources that this virtual
+        /// machine uses.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -252,7 +253,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Sets the state of the VM as Generalized.
+        /// Sets the state of the virtual machine to generalized.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -274,7 +275,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> GeneralizeWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to list virtual machines under a resource group.
+        /// Lists all of the virtual machines in the specified resource group.
+        /// Use the nextLink property in the response to get the next page of
+        /// virtual machines.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -296,10 +299,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets the list of Virtual Machines in the subscription. Use
-        /// nextLink property in the response to get the next page of Virtual
-        /// Machines. Do this till nextLink is not null to fetch all the
-        /// Virtual Machines.
+        /// Lists all of the virtual machines in the specified subscription.
+        /// Use the nextLink property in the response to get the next page of
+        /// virtual machines.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -318,8 +320,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Lists all available virtual machine sizes it can be resized to for
-        /// a virtual machine.
+        /// Lists all available virtual machine sizes to which the specified
+        /// virtual machine can be resized.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -344,7 +346,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<VirtualMachineSize>>> ListAvailableSizesWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to power off (stop) a virtual machine.
+        /// The operation to power off (stop) a virtual machine. The virtual
+        /// machine can be restarted with the same provisioned resources. You
+        /// are still charged for this virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -366,7 +370,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to power off (stop) a virtual machine.
+        /// The operation to power off (stop) a virtual machine. The virtual
+        /// machine can be restarted with the same provisioned resources. You
+        /// are still charged for this virtual machine.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -520,7 +526,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginRedeployWithHttpMessagesAsync(string resourceGroupName, string vmName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// The operation to list virtual machines under a resource group.
+        /// Lists all of the virtual machines in the specified resource group.
+        /// Use the nextLink property in the response to get the next page of
+        /// virtual machines.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -542,10 +550,9 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<VirtualMachine>>> ListNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets the list of Virtual Machines in the subscription. Use
-        /// nextLink property in the response to get the next page of Virtual
-        /// Machines. Do this till nextLink is not null to fetch all the
-        /// Virtual Machines.
+        /// Lists all of the virtual machines in the specified subscription.
+        /// Use the nextLink property in the response to get the next page of
+        /// virtual machines.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

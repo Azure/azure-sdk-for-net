@@ -25,10 +25,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineImageResource
         /// class.
         /// </summary>
-        /// <param name="name">the name of the resource.</param>
-        /// <param name="location">the location of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="location">The supported Azure location of the
+        /// resource.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="tags">the tags attached to the resource.</param>
+        /// <param name="tags">The tags attached to the resource.</param>
         public VirtualMachineImageResource(string name, string location, string id = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
             : base(id)
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the resource.
+        /// Gets or sets the supported Azure location of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

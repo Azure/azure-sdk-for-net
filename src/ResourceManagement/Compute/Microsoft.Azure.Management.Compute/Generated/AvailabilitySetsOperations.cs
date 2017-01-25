@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The operation to create or update the availability set.
+        /// Create or update an availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='name'>
-        /// Parameters supplied to the Create Availability Set operation.
+        /// The name of the availability set.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Availability Set operation.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to delete the availability set.
+        /// Delete an availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to get the availability set.
+        /// Retrieves information about an availability set.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to list the availability sets.
+        /// Lists all availability sets in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

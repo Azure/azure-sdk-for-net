@@ -18,6 +18,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         [System.Runtime.Serialization.EnumMember(Value = "Swarm")]
         Swarm,
         [System.Runtime.Serialization.EnumMember(Value = "DCOS")]
-        DCOS
+        DCOS,
+        [System.Runtime.Serialization.EnumMember(Value = "Custom")]
+        Custom,
+        [System.Runtime.Serialization.EnumMember(Value = "Kubernetes")]
+        Kubernetes
     }
 }

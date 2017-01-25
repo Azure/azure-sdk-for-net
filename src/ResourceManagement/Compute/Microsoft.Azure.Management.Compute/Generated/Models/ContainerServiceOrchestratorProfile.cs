@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile for Orchestrator
+    /// Profile for the container service orchestrator.
     /// </summary>
     public partial class ContainerServiceOrchestratorProfile
     {
@@ -25,21 +25,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// ContainerServiceOrchestratorProfile class.
         /// </summary>
-        /// <param name="orchestratorType">Specifies what orchestrator will be
-        /// used to manage container cluster resources. Possible values
-        /// include: 'Swarm', 'DCOS'</param>
-        public ContainerServiceOrchestratorProfile(ContainerServiceOchestratorTypes? orchestratorType = default(ContainerServiceOchestratorTypes?))
+        /// <param name="orchestratorType">The orchestrator to use to manage
+        /// container service cluster resources. Valid values are Swarm,
+        /// DCOS, and Custom. Possible values include: 'Swarm', 'DCOS',
+        /// 'Custom', 'Kubernetes'</param>
+        public ContainerServiceOrchestratorProfile(ContainerServiceOchestratorTypes orchestratorType)
         {
             OrchestratorType = orchestratorType;
         }
 
         /// <summary>
-        /// Gets or sets specifies what orchestrator will be used to manage
-        /// container cluster resources. Possible values include: 'Swarm',
-        /// 'DCOS'
+        /// Gets or sets the orchestrator to use to manage container service
+        /// cluster resources. Valid values are Swarm, DCOS, and Custom.
+        /// Possible values include: 'Swarm', 'DCOS', 'Custom', 'Kubernetes'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "orchestratorType")]
-        public ContainerServiceOchestratorTypes? OrchestratorType { get; set; }
+        public ContainerServiceOchestratorTypes OrchestratorType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

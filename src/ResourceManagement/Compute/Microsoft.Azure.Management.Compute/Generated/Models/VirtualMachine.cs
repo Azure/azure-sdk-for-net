@@ -24,27 +24,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachine class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="plan">the purchase plan when deploying virtual
+        /// <param name="location">Resource location.</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="plan">The purchase plan when deploying virtual
         /// machine from VM Marketplace images.</param>
-        /// <param name="hardwareProfile">the hardware profile.</param>
-        /// <param name="storageProfile">the storage profile.</param>
-        /// <param name="osProfile">the OS profile.</param>
-        /// <param name="networkProfile">the network profile.</param>
-        /// <param name="diagnosticsProfile">the diagnostics profile.</param>
-        /// <param name="availabilitySet">the reference Id of the availability
-        /// set to which this virtual machine belongs.</param>
-        /// <param name="provisioningState">the provisioning state, which only
+        /// <param name="hardwareProfile">The hardware profile.</param>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <param name="osProfile">The OS profile.</param>
+        /// <param name="networkProfile">The network profile.</param>
+        /// <param name="diagnosticsProfile">The diagnostics profile.</param>
+        /// <param name="availabilitySet">The reference Id of the availability
+        /// set to which the virtual machine belongs.</param>
+        /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
-        /// <param name="instanceView">the virtual machine instance
+        /// <param name="instanceView">The virtual machine instance
         /// view.</param>
-        /// <param name="licenseType">the license type, which is for bring
-        /// your own license scenario.</param>
-        /// <param name="vmId">the virtual machine unique id.</param>
+        /// <param name="licenseType">Specifies that the image or disk that is
+        /// being used was licensed on-premises. This element is only used
+        /// for images that contain the Windows Server operating
+        /// system.</param>
+        /// <param name="vmId">Specifies the VM unique ID which is a 128-bits
+        /// identifier that is encoded and stored in all Azure IaaS VMs
+        /// SMBIOS and can be read using platform BIOS commands.</param>
         /// <param name="resources">the virtual machine child extension
         /// resources.</param>
         public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), System.Collections.Generic.IList<VirtualMachineExtension> resources = default(System.Collections.Generic.IList<VirtualMachineExtension>))
@@ -102,8 +106,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference Id of the availability set to which
-        /// this virtual machine belongs.
+        /// Gets or sets the reference Id of the availability set to which the
+        /// virtual machine belongs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
@@ -121,14 +125,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineInstanceView InstanceView { get; private set; }
 
         /// <summary>
-        /// Gets or sets the license type, which is for bring your own license
-        /// scenario.
+        /// Gets or sets specifies that the image or disk that is being used
+        /// was licensed on-premises. This element is only used for images
+        /// that contain the Windows Server operating system.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.licenseType")]
         public string LicenseType { get; set; }
 
         /// <summary>
-        /// Gets the virtual machine unique id.
+        /// Gets specifies the VM unique ID which is a 128-bits identifier
+        /// that is encoded and stored in all Azure IaaS VMs SMBIOS and can
+        /// be read using platform BIOS commands.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.vmId")]
         public string VmId { get; private set; }

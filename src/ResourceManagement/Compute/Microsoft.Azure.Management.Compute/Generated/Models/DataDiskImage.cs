@@ -23,10 +23,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DataDiskImage class.
         /// </summary>
-        /// <param name="lun">the LUN number for a data disk. This value is
-        /// used to identify data disk image inside the VMImage therefore it
-        /// must be unique for each data disk. The allowed character for the
-        /// value is digit.</param>
+        /// <param name="lun">The LUN number for a data disk. This value is
+        /// used to identify data disk image inside the VMImage and therefore
+        /// it must be unique for each data disk.</param>
         public DataDiskImage(int? lun = default(int?))
         {
             Lun = lun;
@@ -34,9 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets the LUN number for a data disk. This value is used to
-        /// identify data disk image inside the VMImage therefore it must be
-        /// unique for each data disk. The allowed character for the value is
-        /// digit.
+        /// identify data disk image inside the VMImage and therefore it must
+        /// be unique for each data disk.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lun")]
         public int? Lun { get; private set; }

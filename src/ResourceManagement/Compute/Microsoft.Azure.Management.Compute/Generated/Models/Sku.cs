@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">the sku name.</param>
-        /// <param name="tier">the sku tier.</param>
-        /// <param name="capacity">the sku capacity.</param>
+        /// <param name="name">The sku name.</param>
+        /// <param name="tier">The sku tier.</param>
+        /// <param name="capacity">The sku capacity.</param>
         public Sku(string name = default(string), string tier = default(string), long? capacity = default(long?))
         {
             Name = name;

@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultKeyReference class.
         /// </summary>
-        /// <param name="keyUrl">the URL referencing a key in a Key
+        /// <param name="keyUrl">The URL referencing a key in a Key
         /// Vault.</param>
-        /// <param name="sourceVault">the Relative URL of the Key Vault
-        /// containing the key</param>
+        /// <param name="sourceVault">The relative URL of the Key Vault
+        /// containing the key.</param>
         public KeyVaultKeyReference(string keyUrl, SubResource sourceVault)
         {
             KeyUrl = keyUrl;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string KeyUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the Relative URL of the Key Vault containing the key
+        /// Gets or sets the relative URL of the Key Vault containing the key.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sourceVault")]
         public SubResource SourceVault { get; set; }
