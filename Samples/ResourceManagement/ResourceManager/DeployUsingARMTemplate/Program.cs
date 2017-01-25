@@ -4,92 +4,86 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using Newtonsoft.Json.Linq;
 using System;
 
 namespace DeployUsingARMTemplate
 {
-    /**
-     * Azure Resource sample for deploying resources using an ARM template.
-     */
-
     public class Program
     {
+        /**
+         * Azure Resource sample for deploying resources using an ARM template.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            var rgName = SharedSettings.RandomResourceName("rgRSAT", 24);
+            var deploymentName = SharedSettings.RandomResourceName("dpRSAT", 24);
+
+            try
+            {
+                var templateJson = GetTemplate();
+
+                //=============================================================
+                // Create resource group.
+
+                Utilities.Log("Creating a resource group with name: " + rgName);
+
+                azure.ResourceGroups.Define(rgName)
+                    .WithRegion(Region.USWest)
+                    .Create();
+
+                Utilities.Log("Created a resource group with name: " + rgName);
+
+                //=============================================================
+                // Create a deployment for an Azure App Service via an ARM
+                // template.
+
+                Utilities.Log("Starting a deployment for an Azure App Service: " + deploymentName);
+
+                azure.Deployments.Define(deploymentName)
+                    .WithExistingResourceGroup(rgName)
+                    .WithTemplate(templateJson)
+                    .WithParameters("{}")
+                    .WithMode(Microsoft.Azure.Management.Resource.Fluent.Models.DeploymentMode.Incremental)
+                    .Create();
+
+                Utilities.Log("Completed the deployment: " + deploymentName);
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
+
         public static void Main(string[] args)
         {
             try
             {
-                var rgName = SharedSettings.RandomResourceName("rgRSAT", 24);
-                var deploymentName = SharedSettings.RandomResourceName("dpRSAT", 24);
+                //=================================================================
+                // Authenticate
+                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                try
-                {
-                    //=================================================================
-                    // Authenticate
-                    var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var azure = Azure
+                    .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .Authenticate(credentials)
+                    .WithDefaultSubscription();
 
-                    var azure = Azure
-                        .Configure()
-                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
-                        .Authenticate(credentials)
-                        .WithDefaultSubscription();
-
-                    try
-                    {
-                        var templateJson = GetTemplate();
-
-                        //=============================================================
-                        // Create resource group.
-
-                        Console.WriteLine("Creating a resource group with name: " + rgName);
-
-                        azure.ResourceGroups.Define(rgName)
-                            .WithRegion(Region.USWest)
-                            .Create();
-
-                        Console.WriteLine("Created a resource group with name: " + rgName);
-
-                        //=============================================================
-                        // Create a deployment for an Azure App Service via an ARM
-                        // template.
-
-                        Console.WriteLine("Starting a deployment for an Azure App Service: " + deploymentName);
-
-                        azure.Deployments.Define(deploymentName)
-                            .WithExistingResourceGroup(rgName)
-                            .WithTemplate(templateJson)
-                            .WithParameters("{}")
-                            .WithMode(Microsoft.Azure.Management.Resource.Fluent.Models.DeploymentMode.Incremental)
-                            .Create();
-
-                        Console.WriteLine("Completed the deployment: " + deploymentName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            Console.WriteLine("Deleting Resource Group: " + rgName);
-                            azure.ResourceGroups.DeleteByName(rgName);
-                            Console.WriteLine("Deleted Resource Group: " + rgName);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
 

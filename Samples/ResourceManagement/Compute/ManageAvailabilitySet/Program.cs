@@ -1,39 +1,168 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
-using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace ManageAvailabilitySet
 {
-    /**
-     * Azure Compute sample for managing availability sets -
-     *  - Create an availability set
-     *  - Create a VM in a new availability set
-     *  - Create another VM in the same availability set
-     *  - Update the availability set
-     *  - Create another availability set
-     *  - List availability sets
-     *  - Delete an availability set.
-     */
-
     public class Program
     {
-        private static readonly string rgName = Utilities.CreateRandomName("rgCOMA");
-        private static readonly string availSetName1 = Utilities.CreateRandomName("av1");
-        private static readonly string availSetName2 = Utilities.CreateRandomName("av2");
-        private static readonly string vm1Name = Utilities.CreateRandomName("vm1");
-        private static readonly string vm2Name = Utilities.CreateRandomName("vm2");
-        private static readonly string vnetName = Utilities.CreateRandomName("vnet");
+        private const string UserName = "tirekicker";
+        private const string Password = "12NewPA$$w0rd!";
+        
+        /**
+         * Azure Compute sample for managing availability sets -
+         *  - Create an availability set
+         *  - Create a VM in a new availability set
+         *  - Create another VM in the same availability set
+         *  - Update the availability set
+         *  - Create another availability set
+         *  - List availability sets
+         *  - Delete an availability set.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            string rgName = Utilities.CreateRandomName("rgCOMA");
+            string availSetName1 = Utilities.CreateRandomName("av1");
+            string availSetName2 = Utilities.CreateRandomName("av2");
+            string vm1Name = Utilities.CreateRandomName("vm1");
+            string vm2Name = Utilities.CreateRandomName("vm2");
+            string vnetName = Utilities.CreateRandomName("vnet");
 
-        private static readonly string userName = "tirekicker";
-        private static readonly string password = "12NewPA$$w0rd!";
+            try
+            {
+                //=============================================================
+                // Create an availability set
+
+                Utilities.Log("Creating an availability set");
+
+                var availSet1 = azure.AvailabilitySets.Define(availSetName1)
+                        .WithRegion(Region.USEast)
+                        .WithNewResourceGroup(rgName)
+                        .WithFaultDomainCount(2)
+                        .WithUpdateDomainCount(4)
+                        .WithTag("cluster", "Windowslinux")
+                        .WithTag("tag1", "tag1val")
+                        .Create();
+
+                Utilities.Log("Created first availability set: " + availSet1.Id);
+                Utilities.PrintAvailabilitySet(availSet1);
+
+                //=============================================================
+                // Define a virtual network for the VMs in this availability set
+                var network = azure.Networks
+                        .Define(vnetName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(rgName)
+                        .WithAddressSpace("10.0.0.0/28");
+
+                //=============================================================
+                // Create a Windows VM in the new availability set
+
+                Utilities.Log("Creating a Windows VM in the availability set");
+
+                var vm1 = azure.VirtualMachines.Define(vm1Name)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(rgName)
+                        .WithNewPrimaryNetwork(network)
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithoutPrimaryPublicIpAddress()
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                        .WithAdminUsername(UserName)
+                        .WithAdminPassword(Password)
+                        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
+                        .WithExistingAvailabilitySet(availSet1)
+                        .Create();
+
+                Utilities.Log("Created first VM:" + vm1.Id);
+                Utilities.PrintVirtualMachine(vm1);
+
+                //=============================================================
+                // Create a Linux VM in the same availability set
+
+                Utilities.Log("Creating a Linux VM in the availability set");
+
+                var vm2 = azure.VirtualMachines.Define(vm2Name)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(rgName)
+                        .WithNewPrimaryNetwork(network)
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithoutPrimaryPublicIpAddress()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
+                        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
+                        .WithExistingAvailabilitySet(availSet1)
+                        .Create();
+
+                Utilities.Log("Created second VM: " + vm2.Id);
+                Utilities.PrintVirtualMachine(vm2);
+
+                //=============================================================
+                // Update - Tag the availability set
+
+                availSet1 = availSet1.Update()
+                        .WithTag("server1", "nginx")
+                        .WithTag("server2", "iis")
+                        .WithoutTag("tag1")
+                        .Apply();
+
+                Utilities.Log("Tagged availability set: " + availSet1.Id);
+
+                //=============================================================
+                // Create another availability set
+
+                Utilities.Log("Creating an availability set");
+
+                var availSet2 = azure.AvailabilitySets.Define(availSetName2)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(rgName)
+                        .Create();
+
+                Utilities.Log("Created second availability set: " + availSet2.Id);
+                Utilities.PrintAvailabilitySet(availSet2);
+
+                //=============================================================
+                // List availability sets
+
+                var resourceGroupName = availSet1.ResourceGroupName;
+
+                Utilities.Log("Printing list of availability sets  =======");
+
+                foreach (var availabilitySet in azure.AvailabilitySets.ListByGroup(resourceGroupName))
+                {
+                    Utilities.PrintAvailabilitySet(availabilitySet);
+                }
+
+                //=============================================================
+                // Delete an availability set
+
+                Utilities.Log("Deleting an availability set: " + availSet2.Id);
+
+                azure.AvailabilitySets.DeleteById(availSet2.Id);
+
+                Utilities.Log("Deleted availability set: " + availSet2.Id);
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
 
         public static void Main(string[] args)
         {
@@ -50,143 +179,13 @@ namespace ManageAvailabilitySet
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                try
-                {
-                    //=============================================================
-                    // Create an availability set
-
-                    Console.WriteLine("Creating an availability set");
-
-                    var availSet1 = azure.AvailabilitySets.Define(availSetName1)
-                            .WithRegion(Region.USEast)
-                            .WithNewResourceGroup(rgName)
-                            .WithFaultDomainCount(2)
-                            .WithUpdateDomainCount(4)
-                            .WithTag("cluster", "Windowslinux")
-                            .WithTag("tag1", "tag1val")
-                            .Create();
-
-                    Console.WriteLine("Created first availability set: " + availSet1.Id);
-                    Utilities.PrintAvailabilitySet(availSet1);
-
-                    //=============================================================
-                    // Define a virtual network for the VMs in this availability set
-                    var network = azure.Networks
-                            .Define(vnetName)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(rgName)
-                            .WithAddressSpace("10.0.0.0/28");
-
-                    //=============================================================
-                    // Create a Windows VM in the new availability set
-
-                    Console.WriteLine("Creating a Windows VM in the availability set");
-
-                    var vm1 = azure.VirtualMachines.Define(vm1Name)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(rgName)
-                            .WithNewPrimaryNetwork(network)
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
-                            .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                            .WithAdminUsername(userName)
-                            .WithAdminPassword(password)
-                            .WithSize(VirtualMachineSizeTypes.StandardD3V2)
-                            .WithExistingAvailabilitySet(availSet1)
-                            .Create();
-
-                    Console.WriteLine("Created first VM:" + vm1.Id);
-                    Utilities.PrintVirtualMachine(vm1);
-
-                    //=============================================================
-                    // Create a Linux VM in the same availability set
-
-                    Console.WriteLine("Creating a Linux VM in the availability set");
-
-                    var vm2 = azure.VirtualMachines.Define(vm2Name)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(rgName)
-                            .WithNewPrimaryNetwork(network)
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUsername(userName)
-                            .WithRootPassword(password)
-                            .WithSize(VirtualMachineSizeTypes.StandardD3V2)
-                            .WithExistingAvailabilitySet(availSet1)
-                            .Create();
-
-                    Console.WriteLine("Created second VM: " + vm2.Id);
-                    Utilities.PrintVirtualMachine(vm2);
-
-                    //=============================================================
-                    // Update - Tag the availability set
-
-                    availSet1 = availSet1.Update()
-                            .WithTag("server1", "nginx")
-                            .WithTag("server2", "iis")
-                            .WithoutTag("tag1")
-                            .Apply();
-
-                    Console.WriteLine("Tagged availability set: " + availSet1.Id);
-
-                    //=============================================================
-                    // Create another availability set
-
-                    Console.WriteLine("Creating an availability set");
-
-                    var availSet2 = azure.AvailabilitySets.Define(availSetName2)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(rgName)
-                            .Create();
-
-                    Console.WriteLine("Created second availability set: " + availSet2.Id);
-                    Utilities.PrintAvailabilitySet(availSet2);
-
-                    //=============================================================
-                    // List availability sets
-
-                    var resourceGroupName = availSet1.ResourceGroupName;
-
-                    Console.WriteLine("Printing list of availability sets  =======");
-
-                    foreach (var availabilitySet in azure.AvailabilitySets.ListByGroup(resourceGroupName))
-                    {
-                        Utilities.PrintAvailabilitySet(availabilitySet);
-                    }
-
-                    //=============================================================
-                    // Delete an availability set
-
-                    Console.WriteLine("Deleting an availability set: " + availSet2.Id);
-
-                    azure.AvailabilitySets.DeleteById(availSet2.Id);
-
-                    Console.WriteLine("Deleted availability set: " + availSet2.Id);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    try
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.DeleteByName(rgName);
-                        Console.WriteLine("Deleted Resource Group: " + rgName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

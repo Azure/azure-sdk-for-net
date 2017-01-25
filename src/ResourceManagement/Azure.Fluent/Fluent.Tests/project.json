@@ -23,7 +23,7 @@
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10, 3.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.1-preview",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.2",
     "Microsoft.Azure.Management.Fluent": "[1.0.0-beta50, 2.0)",
     "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta50, 2.0)",
     "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta50, 2.0)",

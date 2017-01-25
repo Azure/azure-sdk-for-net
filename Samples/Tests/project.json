@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0-*",
+  
+  "buildOptions": {
+    "compile": "../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net451+win8", "net45" ],
+      "dependencies": {
+      }
+    }
+  },
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "NETStandard.Library": "1.6.1",
+    "SSH.NET": "2016.0.0",
+    "xunit": "2.2.0-beta4-build3444",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.10, 3.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.5.2",
+    "Microsoft.Azure.Management.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.ResourceManager.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Storage.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Compute.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Network.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Graph.RBAC.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.KeyVault.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Batch.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Sql.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Cdn.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.Redis.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Azure.Management.AppService.Fluent": {
+      "target": "project",
+      "type": "build"
+    },
+    "Fluent.Tests": {
+      "target": "project",
+      "type": "build"
+    },
+    "ManageWebAppBasic": "1.0.0-*",
+    "ManageWebAppSlots": "1.0.0-*",
+    "ManageWebAppSourceControl": "1.0.0-*",
+    "ManageWebAppSqlConnection": "1.0.0-*",
+    "ManageWebAppStorageAccountConnection": "1.0.0-*",
+    "ManageWebAppWithDomainSsl": "1.0.0-*",
+    "ManageWebAppWithTrafficManager": "1.0.0-*",
+    "ManageBatchAccount": "1.0.0-*",
+    "ManageCdn": "1.0.0-*",
+    "CreateVirtualMachinesInParallel": "1.0.0-*",
+    "CreateVMsUsingCustomImageOrSpecializedVHD": "1.0.0-*",
+    "ListVirtualMachineExtensionImages": "1.0.0-*",
+    "ListVirtualMachineImages": "1.0.0-*",
+    "ManageAvailabilitySet": "1.0.0-*",
+    "ManageVirtualMachine": "1.0.0-*",
+    "ManageVirtualMachineExtension": "1.0.0-*",
+    "ManageVirtualMachineScaleSet": "1.0.0-*",
+    "ManageVirtualMachinesInParallel": "1.0.0-*",
+    "ManageVirtualMachinesInParallelWithNetwork": "1.0.0-*",
+    "ManageDns": "1.0.0-*",
+    "ManageKeyVault": "1.0.0-*",
+    "ManageApplicationGateway": "1.0.0-*",
+    "ManageInternalLoadBalancer": "1.0.0-*",
+    "ManageInternetFacingLoadBalancer": "1.0.0-*",
+    "ManageIpAddress": "1.0.0-*",
+    "ManageNetworkInterface": "1.0.0-*",
+    "ManageNetworkSecurityGroup": "1.0.0-*",
+    "ManageSimpleApplicationGateway": "1.0.0-*",
+    "ManageUserDefinedRoute": "1.0.0-*",
+    "ManageVirtualNetwork": "1.0.0-*",
+    "ManageRedis": "1.0.0-*",
+    "DeployUsingARMTemplate": "1.0.0-*",
+    "DeployUsingARMTemplateWithProgress": "1.0.0-*",
+    "ManageResource": "1.0.0-*",
+    "ManageResourceGroup": "1.0.0-*",
+    "ManageSqlDatabase": "1.0.0-*",
+    "ManageSqlDatabaseInElasticPool": "1.0.0-*",
+    "ManageSqlDatabasesAcrossDifferentDataCenters": "1.0.0-*",
+    "ManageSqlFirewallRules": "1.0.0-*",
+    "ManageStorageAccount": "1.0.0-*",
+    "ManageTrafficManager": "1.0.0-*"
+  }
+}

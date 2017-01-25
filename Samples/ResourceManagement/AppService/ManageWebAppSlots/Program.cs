@@ -4,7 +4,6 @@
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
@@ -12,23 +11,78 @@ using System.Net.Http;
 
 namespace ManageWebAppSlots
 {
-    /**
-     * Azure App Service basic sample for managing web apps.
-     *  - Create 3 web apps in 3 different regions
-     *  - Deploy to all 3 web apps
-     *  - For each of the web apps, create a staging slot
-     *  - For each of the web apps, deploy to staging slot
-     *  - For each of the web apps, auto-swap to production slot is triggered
-     *  - For each of the web apps, swap back (something goes wrong)
-     */
     public class Program
     {
-        private static readonly string RG_NAME = SharedSettings.RandomResourceName("rg1NEMV_", 24);
-        private static readonly string SUFFIX = ".azurewebsites.net";
-        private static readonly string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-        private static readonly string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-        private static readonly string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-        private static readonly string slotName = "staging";
+        private const string Suffix = ".azurewebsites.net";
+        private const string SlotName = "staging";
+
+        /**
+         * Azure App Service basic sample for managing web apps.
+         *  - Create 3 web apps in 3 different regions
+         *  - Deploy to all 3 web apps
+         *  - For each of the web apps, create a staging slot
+         *  - For each of the web apps, deploy to staging slot
+         *  - For each of the web apps, auto-swap to production slot is triggered
+         *  - For each of the web apps, swap back (something goes wrong)
+         */
+        public static void RunSample(IAzure azure)
+        {
+            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
+            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+
+            try
+            {
+                azure.ResourceGroups.Define(rgName)
+                    .WithRegion(Region.USWest)
+                    .Create();
+
+                //============================================================
+                // Create 3 web apps with 3 new app service plans in different regions
+
+                var app1 = CreateWebApp(azure, rgName, app1Name, Region.USWest);
+                var app2 = CreateWebApp(azure, rgName, app2Name, Region.EuropeWest);
+                var app3 = CreateWebApp(azure, rgName, app3Name, Region.AsiaEast);
+
+                //============================================================
+                // Create a deployment slot under each web app with auto swap
+
+                var slot1 = CreateSlot(azure, SlotName, app1);
+                var slot2 = CreateSlot(azure, SlotName, app2);
+                var slot3 = CreateSlot(azure, SlotName, app3);
+
+                //============================================================
+                // Deploy the staging branch to the slot
+
+                DeployToStaging(azure, slot1);
+                DeployToStaging(azure, slot2);
+                DeployToStaging(azure, slot3);
+
+                // swap back
+                SwapProductionBackToSlot(azure, slot1);
+                SwapProductionBackToSlot(azure, slot2);
+                SwapProductionBackToSlot(azure, slot3);
+
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (NullReferenceException)
+                {
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
+                }
+                catch (Exception g)
+                {
+                    Utilities.Log(g);
+                }
+            }
+        }
 
         public static void Main(string[] args)
         {
@@ -45,80 +99,26 @@ namespace ManageWebAppSlots
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
-                try
-                {
-                    azure.ResourceGroups.Define(RG_NAME)
-                        .WithRegion(Region.USWest)
-                        .Create();
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                    //============================================================
-                    // Create 3 web apps with 3 new app service plans in different regions
-
-                    var app1 = CreateWebApp(azure, app1Name, Region.USWest);
-                    var app2 = CreateWebApp(azure, app2Name, Region.EuropeWest);
-                    var app3 = CreateWebApp(azure, app3Name, Region.AsiaEast);
-
-
-                    //============================================================
-                    // Create a deployment slot under each web app with auto swap
-
-                    var slot1 = CreateSlot(azure, slotName, app1);
-                    var slot2 = CreateSlot(azure, slotName, app2);
-                    var slot3 = CreateSlot(azure, slotName, app3);
-
-                    //============================================================
-                    // Deploy the staging branch to the slot
-
-                    DeployToStaging(azure, slot1);
-                    DeployToStaging(azure, slot2);
-                    DeployToStaging(azure, slot3);
-
-                    // swap back
-                    SwapProductionBackToSlot(azure, slot1);
-                    SwapProductionBackToSlot(azure, slot2);
-                    SwapProductionBackToSlot(azure, slot3);
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    try
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + RG_NAME);
-                        azure.ResourceGroups.DeleteByName(RG_NAME);
-                        Console.WriteLine("Deleted Resource Group: " + RG_NAME);
-                    }
-                    catch (NullReferenceException)
-                    {
-                        Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                    }
-                    catch (Exception g)
-                    {
-                        Console.WriteLine(g);
-                    }
-                }
-
+                RunSample(azure);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Utilities.Log(e);
             }
         }
-
-        private static IWebApp CreateWebApp(IAzure azure, string appName, Region region)
+        
+        private static IWebApp CreateWebApp(IAzure azure, string rgName, string appName, Region region)
         {
             var planName = SharedSettings.RandomResourceName("jplan_", 15);
-            var appUrl = appName + SUFFIX;
+            var appUrl = appName + Suffix;
 
-            Console.WriteLine("Creating web app " + appName + " with master branch...");
+            Utilities.Log("Creating web app " + appName + " with master branch...");
 
             var app = azure.WebApps
                     .Define(appName)
-                    .WithExistingResourceGroup(RG_NAME)
+                    .WithExistingResourceGroup(rgName)
                     .WithNewAppServicePlan(planName)
                     .WithRegion(region)
                     .WithPricingTier(AppServicePricingTier.Standard_S1)
@@ -130,17 +130,17 @@ namespace ManageWebAppSlots
                         .Attach()
                     .Create();
 
-            Console.WriteLine("Created web app " + app.Name);
+            Utilities.Log("Created web app " + app.Name);
             Utilities.Print(app);
 
-            Console.WriteLine("CURLing " + appUrl + "...");
-            Console.WriteLine(CheckAddress("http://" + appUrl));
+            Utilities.Log("CURLing " + appUrl + "...");
+            Utilities.Log(CheckAddress("http://" + appUrl));
             return app;
         }
 
         private static IDeploymentSlot CreateSlot(IAzure azure, String slotName, IWebApp app)
         {
-            Console.WriteLine("Creating a slot " + slotName + " with auto swap turned on...");
+            Utilities.Log("Creating a slot " + slotName + " with auto swap turned on...");
 
             var slot = app.DeploymentSlots
                     .Define(slotName)
@@ -148,16 +148,16 @@ namespace ManageWebAppSlots
                     .WithAutoSwapSlotName("production")
                     .Create();
 
-            Console.WriteLine("Created slot " + slot.Name);
+            Utilities.Log("Created slot " + slot.Name);
             Utilities.Print(slot);
             return slot;
         }
 
         private static void DeployToStaging(IAzure azure, IDeploymentSlot slot)
         {
-            var slotUrl = slot.Parent.Name + "-" + slot.Name + SUFFIX;
-            var appUrl = slot.Parent.Name + SUFFIX;
-            Console.WriteLine("Deploying staging branch to slot " + slot.Name + "...");
+            var slotUrl = slot.Parent.Name + "-" + slot.Name + Suffix;
+            var appUrl = slot.Parent.Name + Suffix;
+            Utilities.Log("Deploying staging branch to slot " + slot.Name + "...");
 
             slot.Update()
                     .DefineSourceControl()
@@ -166,26 +166,26 @@ namespace ManageWebAppSlots
                     .Attach()
                     .Apply();
 
-            Console.WriteLine("Deployed staging branch to slot " + slot.Name);
+            Utilities.Log("Deployed staging branch to slot " + slot.Name);
 
-            Console.WriteLine("CURLing " + slotUrl + "...");
-            Console.WriteLine(CheckAddress("http://" + slotUrl));
+            Utilities.Log("CURLing " + slotUrl + "...");
+            Utilities.Log(CheckAddress("http://" + slotUrl));
 
-            Console.WriteLine("CURLing " + appUrl + "...");
-            Console.WriteLine(CheckAddress("http://" + appUrl));
+            Utilities.Log("CURLing " + appUrl + "...");
+            Utilities.Log(CheckAddress("http://" + appUrl));
         }
 
         private static void SwapProductionBackToSlot(IAzure azure, IDeploymentSlot slot)
         {
-            var appUrl = slot.Parent.Name + SUFFIX;
-            Console.WriteLine("Manually swap production slot back to  " + slot.Name + "...");
+            var appUrl = slot.Parent.Name + Suffix;
+            Utilities.Log("Manually swap production slot back to  " + slot.Name + "...");
 
             slot.Swap("production");
 
-            Console.WriteLine("Swapped production slot back to " + slot.Name);
+            Utilities.Log("Swapped production slot back to " + slot.Name);
 
-            Console.WriteLine("CURLing " + appUrl + "...");
-            Console.WriteLine(CheckAddress("http://" + appUrl));
+            Utilities.Log("CURLing " + appUrl + "...");
+            Utilities.Log(CheckAddress("http://" + appUrl));
         }
 
         private static HttpResponseMessage CheckAddress(string url)

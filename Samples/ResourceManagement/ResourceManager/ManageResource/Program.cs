@@ -5,26 +5,115 @@ using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 
 namespace ManageResource
 {
-    /**
-     * Azure Resource sample for managing resources -
-     * - Create a resource
-     * - Update a resource
-     * - Create another resource
-     * - List resources
-     * - Delete a resource.
-     */
-
     public class Program
     {
-        public static void Main(string[] args)
+        /**
+        * Azure Resource sample for managing resources -
+        * - Create a resource
+        * - Update a resource
+        * - Create another resource
+        * - List resources
+        * - Delete a resource.
+        */
+        public static void RunSample(IAzure azure)
         {
-            var rgName = SharedSettings.RandomResourceName("rgRSMR", 24);
+            var resourceGroupName = SharedSettings.RandomResourceName("rgRSMR", 24);
             var resourceName1 = SharedSettings.RandomResourceName("rn1", 24);
             var resourceName2 = SharedSettings.RandomResourceName("rn2", 24);
+
+            try
+            {
+                //=============================================================
+                // Create resource group.
+
+                Utilities.Log("Creating a resource group with name: " + resourceGroupName);
+
+                azure.ResourceGroups
+                    .Define(resourceGroupName)
+                    .WithRegion(Region.USWest)
+                    .Create();
+
+                //=============================================================
+                // Create storage account.
+
+                Utilities.Log("Creating a storage account with name: " + resourceName1);
+
+                var storageAccount = azure.StorageAccounts
+                    .Define(resourceName1)
+                    .WithRegion(Region.USWest)
+                    .WithExistingResourceGroup(resourceGroupName)
+                    .Create();
+
+                Utilities.Log("Storage account created: " + storageAccount.Id);
+
+                //=============================================================
+                // Update - set the sku name
+
+                Utilities.Log("Updating the storage account with name: " + resourceName1);
+
+                storageAccount.Update()
+                    .WithSku(Microsoft.Azure.Management.Storage.Fluent.Models.SkuName.StandardRAGRS)
+                    .Apply();
+
+                Utilities.Log("Updated the storage account with name: " + resourceName1);
+
+                //=============================================================
+                // Create another storage account.
+
+                Utilities.Log("Creating another storage account with name: " + resourceName2);
+
+                var storageAccount2 = azure.StorageAccounts.Define(resourceName2)
+                    .WithRegion(Region.USWest)
+                    .WithExistingResourceGroup(resourceGroupName)
+                    .Create();
+
+                Utilities.Log("Storage account created: " + storageAccount2.Id);
+
+                //=============================================================
+                // List storage accounts.
+
+                Utilities.Log("Listing all storage accounts for resource group: " + resourceGroupName);
+
+                foreach (var sAccount in azure.StorageAccounts.List())
+                {
+                    Utilities.Log("Storage account: " + sAccount.Name);
+                }
+
+                //=============================================================
+                // Delete a storage accounts.
+
+                Utilities.Log("Deleting storage account: " + resourceName2);
+
+                azure.StorageAccounts.DeleteById(storageAccount2.Id);
+
+                Utilities.Log("Deleted storage account: " + resourceName2);
+            }
+            catch (Exception ex)
+            {
+                Utilities.Log(ex);
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + resourceGroupName);
+                    azure.ResourceGroups.DeleteByName(resourceGroupName);
+                    Utilities.Log("Deleted Resource Group: " + resourceGroupName);
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
+
+        public static void Main(string[] args)
+        {
 
             try
             {
@@ -38,94 +127,11 @@ namespace ManageResource
                     .Authenticate(credentials)
                     .WithDefaultSubscription();
 
-                try
-                {
-                    //=============================================================
-                    // Create resource group.
-
-                    Console.WriteLine("Creating a resource group with name: " + rgName);
-
-                    azure.ResourceGroups
-                        .Define(rgName)
-                        .WithRegion(Region.USWest)
-                        .Create();
-
-                    //=============================================================
-                    // Create storage account.
-
-                    Console.WriteLine("Creating a storage account with name: " + resourceName1);
-
-                    var storageAccount = azure.StorageAccounts
-                        .Define(resourceName1)
-                        .WithRegion(Region.USWest)
-                        .WithExistingResourceGroup(rgName)
-                            .Create();
-
-                    Console.WriteLine("Storage account created: " + storageAccount.Id);
-
-                    //=============================================================
-                    // Update - set the sku name
-
-                    Console.WriteLine("Updating the storage account with name: " + resourceName1);
-
-                    storageAccount.Update()
-                        .WithSku(Microsoft.Azure.Management.Storage.Fluent.Models.SkuName.StandardRAGRS)
-                        .Apply();
-
-                    Console.WriteLine("Updated the storage account with name: " + resourceName1);
-
-                    //=============================================================
-                    // Create another storage account.
-
-                    Console.WriteLine("Creating another storage account with name: " + resourceName2);
-
-                    var storageAccount2 = azure.StorageAccounts.Define(resourceName2)
-                        .WithRegion(Region.USWest)
-                        .WithExistingResourceGroup(rgName)
-                        .Create();
-
-                    Console.WriteLine("Storage account created: " + storageAccount2.Id);
-
-                    //=============================================================
-                    // List storage accounts.
-
-                    Console.WriteLine("Listing all storage accounts for resource group: " + rgName);
-
-                    foreach (var sAccount in azure.StorageAccounts.List())
-                    {
-                        Console.WriteLine("Storage account: " + sAccount.Name);
-                    }
-
-                    //=============================================================
-                    // Delete a storage accounts.
-
-                    Console.WriteLine("Deleting storage account: " + resourceName2);
-
-                    azure.StorageAccounts.DeleteById(storageAccount2.Id);
-
-                    Console.WriteLine("Deleted storage account: " + resourceName2);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    try
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.DeleteByName(rgName);
-                        Console.WriteLine("Deleted Resource Group: " + rgName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

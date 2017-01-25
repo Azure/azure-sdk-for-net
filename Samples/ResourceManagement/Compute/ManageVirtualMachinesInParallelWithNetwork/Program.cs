@@ -17,25 +17,202 @@ using System.Linq;
 
 namespace ManageVirtualMachinesInParallelWithNetwork
 {
-    /**
-     * Create a virtual network with two Subnets – frontend and backend
-     * Frontend allows HTTP in and denies Internet out
-     * Backend denies Internet in and Internet out
-     * Create m Linux virtual machines in the frontend
-     * Create m Windows virtual machines in the backend.
-     */
-
     public class Program
     {
-        private static readonly int frontendVmCount = 10;
-        private static readonly int backendVmCount = 10;
-        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEPP", 24);
-        private static readonly string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
-        private static readonly string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
-        private static readonly string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
-        private static readonly string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
-        private static readonly string userName = "tirekicker";
-        private static readonly string password = "12NewPA$$w0rd!";
+        private const int FrontendVMCount = 10;
+        private const int BackendVMCount = 10;
+        private const string UserName = "tirekicker";
+        private const string Password = "12NewPA$$w0rd!";
+
+        /**
+         * Create a virtual network with two Subnets – frontend and backend
+         * Frontend allows HTTP in and denies Internet out
+         * Backend denies Internet in and Internet out
+         * Create m Linux virtual machines in the frontend
+         * Create m Windows virtual machines in the backend.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            string rgName = SharedSettings.RandomResourceName("rgNEPP", 24);
+            string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
+            string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
+            string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
+            string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
+
+            try
+            {
+                // Create a resource group [Where all resources gets created]
+                IResourceGroup resourceGroup = azure.ResourceGroups
+                        .Define(rgName)
+                        .WithRegion(Region.USEast)
+                        .Create();
+
+                //============================================================
+                // Define a network security group for the front end of a subnet
+                // front end subnet contains two rules
+                // - ALLOW-SSH - allows SSH traffic into the front end subnet
+                // - ALLOW-WEB- allows HTTP traffic into the front end subnet
+
+                var frontEndNSGCreatable = azure.NetworkSecurityGroups
+                        .Define(frontEndNSGName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .DefineRule("ALLOW-SSH")
+                            .AllowInbound()
+                            .FromAnyAddress()
+                            .FromAnyPort()
+                            .ToAnyAddress()
+                            .ToPort(22)
+                            .WithProtocol(SecurityRuleProtocol.Tcp)
+                            .WithPriority(100)
+                            .WithDescription("Allow SSH")
+                        .Attach()
+                        .DefineRule("ALLOW-HTTP")
+                            .AllowInbound()
+                            .FromAnyAddress()
+                            .FromAnyPort()
+                            .ToAnyAddress()
+                            .ToPort(80)
+                            .WithProtocol(SecurityRuleProtocol.Tcp)
+                            .WithPriority(101)
+                            .WithDescription("Allow HTTP")
+                        .Attach();
+
+                //============================================================
+                // Define a network security group for the back end of a subnet
+                // back end subnet contains two rules
+                // - ALLOW-SQL - allows SQL traffic only from the front end subnet
+                // - DENY-WEB - denies all outbound internet traffic from the back end subnet
+
+                var backEndNSGCreatable = azure.NetworkSecurityGroups
+                        .Define(backEndNSGName)
+                            .WithRegion(Region.USEast)
+                            .WithExistingResourceGroup(resourceGroup)
+                            .DefineRule("ALLOW-SQL")
+                            .AllowInbound()
+                            .FromAddress("172.16.1.0/24")
+                            .FromAnyPort()
+                            .ToAnyAddress()
+                            .ToPort(1433)
+                            .WithProtocol(SecurityRuleProtocol.Tcp)
+                            .WithPriority(100)
+                            .WithDescription("Allow SQL")
+                        .Attach()
+                        .DefineRule("DENY-WEB")
+                            .DenyOutbound()
+                            .FromAnyAddress()
+                            .FromAnyPort()
+                            .ToAnyAddress()
+                            .ToAnyPort()
+                            .WithAnyProtocol()
+                            .WithDescription("Deny Web")
+                            .WithPriority(200)
+                        .Attach();
+
+                Utilities.Log("Creating a security group for the front ends - allows SSH and HTTP");
+                Utilities.Log("Creating a security group for the back ends - allows SSH and denies all outbound internet traffic");
+
+                var networkSecurityGroups = azure.NetworkSecurityGroups
+                        .Create(frontEndNSGCreatable, backEndNSGCreatable);
+
+                INetworkSecurityGroup frontendNSG = networkSecurityGroups.First(n => n.Name.Equals(frontEndNSGName, StringComparison.OrdinalIgnoreCase));
+                INetworkSecurityGroup backendNSG = networkSecurityGroups.First(n => n.Name.Equals(backEndNSGName, StringComparison.OrdinalIgnoreCase));
+
+                Utilities.Log("Created a security group for the front end: " + frontendNSG.Id);
+                Utilities.PrintNetworkSecurityGroup(frontendNSG);
+
+                Utilities.Log("Created a security group for the back end: " + backendNSG.Id);
+                Utilities.PrintNetworkSecurityGroup(backendNSG);
+
+                // Create Network [Where all the virtual machines get added to]
+                var network = azure.Networks
+                        .Define(networkName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithAddressSpace("172.16.0.0/16")
+                        .DefineSubnet("Front-end")
+                            .WithAddressPrefix("172.16.1.0/24")
+                            .WithExistingNetworkSecurityGroup(frontendNSG)
+                        .Attach()
+                        .DefineSubnet("Back-end")
+                            .WithAddressPrefix("172.16.2.0/24")
+                            .WithExistingNetworkSecurityGroup(backendNSG)
+                        .Attach()
+                        .Create();
+
+                // Prepare Creatable Storage account definition [For storing VMs disk]
+                var creatableStorageAccount = azure.StorageAccounts
+                        .Define(storageAccountName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(resourceGroup);
+
+                // Prepare a batch of Creatable Virtual Machines definitions
+                List<ICreatable<IVirtualMachine>> frontendCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
+
+                for (int i = 0; i < FrontendVMCount; i++)
+                {
+                    var creatableVirtualMachine = azure.VirtualMachines
+                        .Define("VM-FE-" + i)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet("Front-end")
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithoutPrimaryPublicIpAddress()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
+                        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
+                        .WithNewStorageAccount(creatableStorageAccount);
+                    frontendCreatableVirtualMachines.Add(creatableVirtualMachine);
+                }
+
+                List<ICreatable<IVirtualMachine>> backendCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
+
+                for (int i = 0; i < BackendVMCount; i++)
+                {
+                    var creatableVirtualMachine = azure.VirtualMachines
+                        .Define("VM-BE-" + i)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet("Back-end")
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithoutPrimaryPublicIpAddress()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
+                        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
+                        .WithNewStorageAccount(creatableStorageAccount);
+                    backendCreatableVirtualMachines.Add(creatableVirtualMachine);
+                }
+
+                var startTime = DateTimeOffset.Now.UtcDateTime;
+                Utilities.Log("Creating the virtual machines");
+
+                List<ICreatable<IVirtualMachine>> allCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
+                allCreatableVirtualMachines.AddRange(frontendCreatableVirtualMachines);
+                allCreatableVirtualMachines.AddRange(backendCreatableVirtualMachines);
+
+                var virtualMachines = azure.VirtualMachines.Create(allCreatableVirtualMachines.ToArray());
+
+                var endTime = DateTimeOffset.Now.UtcDateTime;
+                Utilities.Log("Created virtual machines");
+
+                foreach (var virtualMachine in virtualMachines)
+                {
+                    Utilities.Log(virtualMachine.Id);
+                }
+
+                Utilities.Log($"Virtual machines create: took {(endTime - startTime).TotalSeconds } seconds");
+            }
+            finally
+            {
+                Utilities.Log($"Deleting resource group : {rgName}");
+                azure.ResourceGroups.DeleteByName(rgName);
+                Utilities.Log($"Deleted resource group : {rgName}");
+            }
+        }
 
         public static void Main(string[] args)
         {
@@ -52,189 +229,13 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                try
-                {
-                    // Create a resource group [Where all resources gets created]
-                    IResourceGroup resourceGroup = azure.ResourceGroups
-                            .Define(rgName)
-                            .WithRegion(Region.USEast)
-                            .Create();
-
-                    //============================================================
-                    // Define a network security group for the front end of a subnet
-                    // front end subnet contains two rules
-                    // - ALLOW-SSH - allows SSH traffic into the front end subnet
-                    // - ALLOW-WEB- allows HTTP traffic into the front end subnet
-
-                    var frontEndNSGCreatable = azure.NetworkSecurityGroups
-                            .Define(frontEndNSGName)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(resourceGroup)
-                            .DefineRule("ALLOW-SSH")
-                                .AllowInbound()
-                                .FromAnyAddress()
-                                .FromAnyPort()
-                                .ToAnyAddress()
-                                .ToPort(22)
-                                .WithProtocol(SecurityRuleProtocol.Tcp)
-                                .WithPriority(100)
-                                .WithDescription("Allow SSH")
-                            .Attach()
-                            .DefineRule("ALLOW-HTTP")
-                                .AllowInbound()
-                                .FromAnyAddress()
-                                .FromAnyPort()
-                                .ToAnyAddress()
-                                .ToPort(80)
-                                .WithProtocol(SecurityRuleProtocol.Tcp)
-                                .WithPriority(101)
-                                .WithDescription("Allow HTTP")
-                            .Attach();
-
-                    //============================================================
-                    // Define a network security group for the back end of a subnet
-                    // back end subnet contains two rules
-                    // - ALLOW-SQL - allows SQL traffic only from the front end subnet
-                    // - DENY-WEB - denies all outbound internet traffic from the back end subnet
-
-                    var backEndNSGCreatable = azure.NetworkSecurityGroups
-                            .Define(backEndNSGName)
-                                .WithRegion(Region.USEast)
-                                .WithExistingResourceGroup(resourceGroup)
-                                .DefineRule("ALLOW-SQL")
-                                .AllowInbound()
-                                .FromAddress("172.16.1.0/24")
-                                .FromAnyPort()
-                                .ToAnyAddress()
-                                .ToPort(1433)
-                                .WithProtocol(SecurityRuleProtocol.Tcp)
-                                .WithPriority(100)
-                                .WithDescription("Allow SQL")
-                            .Attach()
-                            .DefineRule("DENY-WEB")
-                                .DenyOutbound()
-                                .FromAnyAddress()
-                                .FromAnyPort()
-                                .ToAnyAddress()
-                                .ToAnyPort()
-                                .WithAnyProtocol()
-                                .WithDescription("Deny Web")
-                                .WithPriority(200)
-                            .Attach();
-
-                    Console.WriteLine("Creating a security group for the front ends - allows SSH and HTTP");
-                    Console.WriteLine("Creating a security group for the back ends - allows SSH and denies all outbound internet traffic");
-
-                    var networkSecurityGroups = azure.NetworkSecurityGroups
-                            .Create(frontEndNSGCreatable, backEndNSGCreatable);
-
-                    INetworkSecurityGroup frontendNSG = networkSecurityGroups.First(n => n.Name.Equals(frontEndNSGName, StringComparison.OrdinalIgnoreCase));
-                    INetworkSecurityGroup backendNSG = networkSecurityGroups.First(n => n.Name.Equals(backEndNSGName, StringComparison.OrdinalIgnoreCase));
-
-                    Console.WriteLine("Created a security group for the front end: " + frontendNSG.Id);
-                    Utilities.PrintNetworkSecurityGroup(frontendNSG);
-
-                    Console.WriteLine("Created a security group for the back end: " + backendNSG.Id);
-                    Utilities.PrintNetworkSecurityGroup(backendNSG);
-
-                    // Create Network [Where all the virtual machines get added to]
-                    var network = azure.Networks
-                            .Define(networkName)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(resourceGroup)
-                            .WithAddressSpace("172.16.0.0/16")
-                            .DefineSubnet("Front-end")
-                                .WithAddressPrefix("172.16.1.0/24")
-                                .WithExistingNetworkSecurityGroup(frontendNSG)
-                            .Attach()
-                            .DefineSubnet("Back-end")
-                                .WithAddressPrefix("172.16.2.0/24")
-                                .WithExistingNetworkSecurityGroup(backendNSG)
-                            .Attach()
-                            .Create();
-
-                    // Prepare Creatable Storage account definition [For storing VMs disk]
-                    var creatableStorageAccount = azure.StorageAccounts
-                            .Define(storageAccountName)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(resourceGroup);
-
-                    // Prepare a batch of Creatable Virtual Machines definitions
-                    List<ICreatable<IVirtualMachine>> frontendCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
-
-                    for (int i = 0; i < frontendVmCount; i++)
-                    {
-                        var creatableVirtualMachine = azure.VirtualMachines
-                            .Define("VM-FE-" + i)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(resourceGroup)
-                            .WithExistingPrimaryNetwork(network)
-                            .WithSubnet("Front-end")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUsername(userName)
-                            .WithRootPassword(password)
-                            .WithSize(VirtualMachineSizeTypes.StandardD3V2)
-                            .WithNewStorageAccount(creatableStorageAccount);
-                        frontendCreatableVirtualMachines.Add(creatableVirtualMachine);
-                    }
-
-                    List<ICreatable<IVirtualMachine>> backendCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
-
-                    for (int i = 0; i < backendVmCount; i++)
-                    {
-                        var creatableVirtualMachine = azure.VirtualMachines
-                            .Define("VM-BE-" + i)
-                            .WithRegion(Region.USEast)
-                            .WithExistingResourceGroup(resourceGroup)
-                            .WithExistingPrimaryNetwork(network)
-                            .WithSubnet("Back-end")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                            .WithRootUsername(userName)
-                            .WithRootPassword(password)
-                            .WithSize(VirtualMachineSizeTypes.StandardD3V2)
-                            .WithNewStorageAccount(creatableStorageAccount);
-                        backendCreatableVirtualMachines.Add(creatableVirtualMachine);
-                    }
-
-                    var startTime = DateTimeOffset.Now.UtcDateTime;
-                    Console.WriteLine("Creating the virtual machines");
-
-                    List<ICreatable<IVirtualMachine>> allCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
-                    allCreatableVirtualMachines.AddRange(frontendCreatableVirtualMachines);
-                    allCreatableVirtualMachines.AddRange(backendCreatableVirtualMachines);
-
-                    var virtualMachines = azure.VirtualMachines.Create(allCreatableVirtualMachines.ToArray());
-
-                    var endTime = DateTimeOffset.Now.UtcDateTime;
-                    Console.WriteLine("Created virtual machines");
-
-                    foreach (var virtualMachine in virtualMachines)
-                    {
-                        Console.WriteLine(virtualMachine.Id);
-                    }
-
-                    Console.WriteLine($"Virtual machines create: took {(endTime - startTime).TotalSeconds } seconds");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    Console.WriteLine($"Deleting resource group : {rgName}");
-                    azure.ResourceGroups.DeleteByName(rgName);
-                    Console.WriteLine($"Deleted resource group : {rgName}");
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

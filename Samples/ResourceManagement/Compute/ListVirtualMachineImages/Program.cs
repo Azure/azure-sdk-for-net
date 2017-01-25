@@ -4,18 +4,67 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 
 namespace ListVirtualMachineImages
 {
-    /**
-     * List all virtual machine image publishers and
-     * list all virtual machine images published by Canonical, Red Hat and
-     * SUSE by browsing through locations, publishers, offers, SKUs and images.
-     */
-
     public class Program
     {
+        /**
+         * List all virtual machine image publishers and
+         * list all virtual machine images published by Canonical, Red Hat and
+         * SUSE by browsing through locations, publishers, offers, SKUs and images.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            //=================================================================
+            // List all virtual machine image publishers and
+            // list all virtual machine images
+            // published by Canonical, Red Hat and SUSE
+            // by browsing through locations, publishers, offers, SKUs and images
+
+            var publishers = azure
+                    .VirtualMachineImages
+                    .Publishers
+                    .ListByRegion(Region.USEast);
+
+            Utilities.Log("US East data center: printing list of \n" + 
+                            "a) Publishers and\n" + 
+                            "b) Images published by Canonical, Red Hat and Suse");
+            Utilities.Log("=======================================================");
+            Utilities.Log("\n");
+
+            foreach (var publisher in publishers)
+            {
+                Utilities.Log("Publisher - " + publisher.Name);
+
+                if (StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Canonical") || 
+                    StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Suse") || 
+                    StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "RedHat"))
+                {
+                    Utilities.Log("\n\n");
+                    Utilities.Log("=======================================================");
+                    Utilities.Log("Located " + publisher.Name);
+                    Utilities.Log("=======================================================");
+                    Utilities.Log("Printing entries as publisher/offer/sku/image/version");
+
+                    foreach (var offer in publisher.Offers.List())
+                    {
+                        foreach (var sku in offer.Skus.List())
+                        {
+                            foreach (var image in sku.Images.List())
+                            {
+                                Utilities.Log($"Image - {publisher.Name}/{offer.Name}/{sku.Name}/{image.Version}");
+                            }
+                        }
+                    }
+
+                    Utilities.Log("\n\n");
+                }
+            }
+        }
+
         public static void Main(string[] args)
         {
             try
@@ -30,55 +79,11 @@ namespace ListVirtualMachineImages
                     .Authenticate(credentials)
                     .WithDefaultSubscription();
 
-                //=================================================================
-                // List all virtual machine image publishers and
-                // list all virtual machine images
-                // published by Canonical, Red Hat and SUSE
-                // by browsing through locations, publishers, offers, SKUs and images
-
-                var publishers = azure
-                        .VirtualMachineImages
-                        .Publishers
-                        .ListByRegion(Region.USEast);
-
-                Console.WriteLine("US East data center: printing list of \n"
-                        + "a) Publishers and\n"
-                        + "b) Images published by Canonical, Red Hat and Suse");
-                Console.WriteLine("=======================================================");
-                Console.WriteLine("\n");
-
-                foreach (var publisher in publishers)
-                {
-                    Console.WriteLine("Publisher - " + publisher.Name);
-
-                    if (StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Canonical")
-                            || StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "Suse")
-                            || StringComparer.OrdinalIgnoreCase.Equals(publisher.Name, "RedHat"))
-                    {
-                        Console.WriteLine("\n\n");
-                        Console.WriteLine("=======================================================");
-                        Console.WriteLine("Located " + publisher.Name);
-                        Console.WriteLine("=======================================================");
-                        Console.WriteLine("Printing entries as publisher/offer/sku/image/version");
-
-                        foreach (var offer in publisher.Offers.List())
-                        {
-                            foreach (var sku in offer.Skus.List())
-                            {
-                                foreach (var image in sku.Images.List())
-                                {
-                                    Console.WriteLine($"Image - {publisher.Name}/{offer.Name}/{sku.Name}/{image.Version}");
-                                }
-                            }
-                        }
-
-                        Console.WriteLine("\n\n");
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }
