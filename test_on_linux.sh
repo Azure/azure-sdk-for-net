@@ -10,3 +10,8 @@ cd $rootdir/src/ResourceManagement/Azure.Fluent/Fluent.Tests
 dotnet restore
 dotnet build --framework netcoreapp1.0
 dotnet test
+
+cd $rootdir/Samples/Tests
+dotnet restore
+dotnet build --framework netcoreapp1.0
+dotnet test

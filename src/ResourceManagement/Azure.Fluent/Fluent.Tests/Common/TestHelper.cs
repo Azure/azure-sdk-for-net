@@ -25,6 +25,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Rest.Azure;
 using Azure.Tests;
+using System.Diagnostics;
 
 namespace Fluent.Tests.Common
 {
@@ -48,6 +49,27 @@ namespace Fluent.Tests.Common
             {
                 Thread.Sleep(timeout);
             }
+        }
+
+        public static string ReadLine()
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                // NOTE: This test requires a manual action to be performed before it can continue recording.
+                // Please go up the execution stack (or check test output window) to see what steps needs 
+                // to be performed before you can continue execution.
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                    return "[Running in interactive mode]";
+                }
+
+                throw new NotSupportedException(
+                    "This test requires a manual action to be performed before it can continue recording. " + 
+                    "Please run it with a debugger attached to be able to perform required steps in the Record mode.");
+            }
+
+            return "[Running in non interactive mode]";
         }
 
         public static void WriteLine(string format, params string[] parameters)
@@ -184,6 +206,7 @@ namespace Fluent.Tests.Common
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
+                // In Playback mode set all the LongRunning timeouts to 0 
                 var managersList = new List<object>();
                 var managerTraversalStack = new Stack<object>();
 

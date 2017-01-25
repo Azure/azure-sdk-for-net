@@ -5,124 +5,118 @@ using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 
 namespace ManageResourceGroup
 {
-    /**
-     * Azure Resource sample for managing resource groups -
-     * - Create a resource group
-     * - Update a resource group
-     * - Create another resource group
-     * - List resource groups
-     * - Delete a resource group.
-     */
-
     public class Program
     {
+        /**
+         * Azure Resource sample for managing resource groups -
+         * - Create a resource group
+         * - Update a resource group
+         * - Create another resource group
+         * - List resource groups
+         * - Delete a resource group.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            var rgName = SharedSettings.RandomResourceName("rgRSMA", 24);
+            var rgName2 = SharedSettings.RandomResourceName("rgRSMA", 24);
+            var resourceTagName = SharedSettings.RandomResourceName("rgRSTN", 24);
+            var resourceTagValue = SharedSettings.RandomResourceName("rgRSTV", 24);
+            
+            try
+            {
+                //=============================================================
+                // Create resource group.
+
+                Utilities.Log("Creating a resource group with name: " + rgName);
+
+                var resourceGroup = azure.ResourceGroups
+                        .Define(rgName)
+                        .WithRegion(Region.US_WEST)
+                        .Create();
+
+                Utilities.Log("Created a resource group with name: " + rgName);
+
+                //=============================================================
+                // Update the resource group.
+
+                Utilities.Log("Updating the resource group with name: " + rgName);
+
+                resourceGroup.Update()
+                    .WithTag(resourceTagName, resourceTagValue)
+                    .Apply();
+
+                Utilities.Log("Updated the resource group with name: " + rgName);
+
+                //=============================================================
+                // Create another resource group.
+
+                Utilities.Log("Creating another resource group with name: " + rgName2);
+
+                var resourceGroup2 = azure.ResourceGroups
+                    .Define(rgName2)
+                    .WithRegion(Region.US_WEST)
+                    .Create();
+
+                Utilities.Log("Created another resource group with name: " + rgName2);
+
+                //=============================================================
+                // List resource groups.
+
+                Utilities.Log("Listing all resource groups");
+
+                foreach (var rGroup in azure.ResourceGroups.List())
+                {
+                    Utilities.Log("Resource group: " + rGroup.Name);
+                }
+
+                //=============================================================
+                // Delete a resource group.
+
+                Utilities.Log("Deleting resource group: " + rgName2);
+
+                azure.ResourceGroups.DeleteByName(rgName2);
+
+                Utilities.Log("Deleted resource group: " + rgName2);
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch (Exception ex)
+                {
+                    Utilities.Log(ex);
+                }
+            }
+        }
+
         public static void Main(string[] args)
         {
             try
             {
-                var rgName = SharedSettings.RandomResourceName("rgRSMA", 24);
-                var rgName2 = SharedSettings.RandomResourceName("rgRSMA", 24);
-                var resourceTagName = SharedSettings.RandomResourceName("rgRSTN", 24);
-                var resourceTagValue = SharedSettings.RandomResourceName("rgRSTV", 24);
+                //=================================================================
+                // Authenticate
+                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                try
-                {
-                    //=================================================================
-                    // Authenticate
-                    AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var azure = Azure
+                    .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .Authenticate(credentials)
+                    .WithDefaultSubscription();
 
-                    var azure = Azure
-                        .Configure()
-                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
-                        .Authenticate(credentials)
-                        .WithDefaultSubscription();
-
-                    try
-                    {
-                        //=============================================================
-                        // Create resource group.
-
-                        Console.WriteLine("Creating a resource group with name: " + rgName);
-
-                        var resourceGroup = azure.ResourceGroups
-                                .Define(rgName)
-                                .WithRegion(Region.US_WEST)
-                                .Create();
-
-                        Console.WriteLine("Created a resource group with name: " + rgName);
-
-                        //=============================================================
-                        // Update the resource group.
-
-                        Console.WriteLine("Updating the resource group with name: " + rgName);
-
-                        resourceGroup.Update()
-                            .WithTag(resourceTagName, resourceTagValue)
-                            .Apply();
-
-                        Console.WriteLine("Updated the resource group with name: " + rgName);
-
-                        //=============================================================
-                        // Create another resource group.
-
-                        Console.WriteLine("Creating another resource group with name: " + rgName2);
-
-                        var resourceGroup2 = azure.ResourceGroups
-                            .Define(rgName2)
-                            .WithRegion(Region.US_WEST)
-                            .Create();
-
-                        Console.WriteLine("Created another resource group with name: " + rgName2);
-
-                        //=============================================================
-                        // List resource groups.
-
-                        Console.WriteLine("Listing all resource groups");
-
-                        foreach (var rGroup in azure.ResourceGroups.List())
-                        {
-                            Console.WriteLine("Resource group: " + rGroup.Name);
-                        }
-
-                        //=============================================================
-                        // Delete a resource group.
-
-                        Console.WriteLine("Deleting resource group: " + rgName2);
-
-                        azure.ResourceGroups.DeleteByName(rgName2);
-
-                        Console.WriteLine("Deleted resource group: " + rgName2);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            Console.WriteLine("Deleting Resource Group: " + rgName);
-                            azure.ResourceGroups.DeleteByName(rgName);
-                            Console.WriteLine("Deleted Resource Group: " + rgName);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

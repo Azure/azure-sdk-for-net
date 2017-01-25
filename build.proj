@@ -47,6 +47,7 @@
     <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
     <SamplesFolder>$(LibraryRoot)Samples</SamplesFolder>
+    <SamplesTestsFolder>$(LibraryRoot)Samples\Tests</SamplesTestsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
@@ -170,6 +171,10 @@
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
     <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
           WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
+          Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
+
+    <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\Sample.Tests.xml&quot;" 
+          WorkingDirectory="$(SamplesTestsFolder)"
           Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
   </Target>
   

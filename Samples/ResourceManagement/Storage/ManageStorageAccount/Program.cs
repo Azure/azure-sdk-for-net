@@ -9,20 +9,102 @@ using System;
 
 namespace ManageStorageAccount
 {
-    /**
-     * Azure Storage sample for managing storage accounts -
-     *  - Create a storage account
-     *  - Get | regenerate storage account access keys
-     *  - Create another storage account
-     *  - List storage accounts
-     *  - Delete a storage account.
-     */
-
     public class Program
     {
-        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
-        private static readonly string storageAccountName = Utilities.CreateRandomName("sa");
-        private static readonly string storageAccountName2 = Utilities.CreateRandomName("sa2");
+        /**
+         * Azure Storage sample for managing storage accounts -
+         *  - Create a storage account
+         *  - Get | regenerate storage account access keys
+         *  - Create another storage account
+         *  - List storage accounts
+         *  - Delete a storage account.
+         */
+        public static void RunSample(IAzure azure)
+        {
+            string rgName = SharedSettings.RandomResourceName("rgSTMS", 20);
+            string storageAccountName = SharedSettings.RandomResourceName("sa", 20);
+            string storageAccountName2 = SharedSettings.RandomResourceName("sa2", 20);
+
+            try
+            {
+                // ============================================================
+                // Create a storage account
+
+                Utilities.Log("Creating a Storage Account");
+
+                var storageAccount = azure.StorageAccounts.Define(storageAccountName)
+                        .WithRegion(Region.US_EAST)
+                        .WithNewResourceGroup(rgName)
+                        .Create();
+
+                Utilities.Log("Created a Storage Account:");
+                Utilities.PrintStorageAccount(storageAccount);
+
+                // ============================================================
+                // Get | regenerate storage account access keys
+
+                Utilities.Log("Getting storage account access keys");
+
+                var storageAccountKeys = storageAccount.GetKeys();
+
+                Utilities.PrintStorageAccountKeys(storageAccountKeys);
+
+                Utilities.Log("Regenerating first storage account access key");
+
+                storageAccountKeys = storageAccount.RegenerateKey(storageAccountKeys[0].KeyName);
+
+                Utilities.PrintStorageAccountKeys(storageAccountKeys);
+
+                // ============================================================
+                // Create another storage account
+
+                Utilities.Log("Creating a 2nd Storage Account");
+
+                var storageAccount2 = azure.StorageAccounts.Define(storageAccountName2)
+                        .WithRegion(Region.US_EAST)
+                        .WithNewResourceGroup(rgName)
+                        .Create();
+
+                Utilities.Log("Created a Storage Account:");
+                Utilities.PrintStorageAccount(storageAccount2);
+
+                // ============================================================
+                // List storage accounts
+
+                Utilities.Log("Listing storage accounts");
+
+                var storageAccounts = azure.StorageAccounts;
+
+                var accounts = storageAccounts.ListByGroup(rgName);
+
+                foreach (var account in accounts)
+                {
+                    Utilities.Log($"Storage Account {account.Name} created @ {account.CreationTime}");
+                }
+
+                // ============================================================
+                // Delete a storage account
+
+                Utilities.Log($"Deleting a storage account - {accounts[0].Name} created @ {accounts[0].CreationTime}");
+
+                azure.StorageAccounts.DeleteById(accounts[0].Id);
+
+                Utilities.Log("Deleted storage account");
+            }
+            finally
+            {
+                if (azure.ResourceGroups.GetByName(rgName) != null)
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                else
+                {
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
+                }
+            }
+        }
 
         public static void Main(string[] args)
         {
@@ -39,95 +121,13 @@ namespace ManageStorageAccount
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                try
-                {
-                    // ============================================================
-                    // Create a storage account
-
-                    Console.WriteLine("Creating a Storage Account");
-
-                    var storageAccount = azure.StorageAccounts.Define(storageAccountName)
-                            .WithRegion(Region.US_EAST)
-                            .WithNewResourceGroup(rgName)
-                            .Create();
-
-                    Console.WriteLine("Created a Storage Account:");
-                    Utilities.PrintStorageAccount(storageAccount);
-
-                    // ============================================================
-                    // Get | regenerate storage account access keys
-
-                    Console.WriteLine("Getting storage account access keys");
-
-                    var storageAccountKeys = storageAccount.GetKeys();
-
-                    Utilities.PrintStorageAccountKeys(storageAccountKeys);
-
-                    Console.WriteLine("Regenerating first storage account access key");
-
-                    storageAccountKeys = storageAccount.RegenerateKey(storageAccountKeys[0].KeyName);
-
-                    Utilities.PrintStorageAccountKeys(storageAccountKeys);
-
-                    // ============================================================
-                    // Create another storage account
-
-                    Console.WriteLine("Creating a 2nd Storage Account");
-
-                    var storageAccount2 = azure.StorageAccounts.Define(storageAccountName2)
-                            .WithRegion(Region.US_EAST)
-                            .WithNewResourceGroup(rgName)
-                            .Create();
-
-                    Console.WriteLine("Created a Storage Account:");
-                    Utilities.PrintStorageAccount(storageAccount2);
-
-                    // ============================================================
-                    // List storage accounts
-
-                    Console.WriteLine("Listing storage accounts");
-
-                    var storageAccounts = azure.StorageAccounts;
-
-                    var accounts = storageAccounts.ListByGroup(rgName);
-
-                    foreach (var account in accounts)
-                    {
-                        Console.WriteLine($"Storage Account {account.Name} created @ {account.CreationTime}");
-                    }
-
-                    // ============================================================
-                    // Delete a storage account
-
-                    Console.WriteLine($"Deleting a storage account - {accounts[0].Name} created @ {accounts[0].CreationTime}");
-
-                    azure.StorageAccounts.DeleteById(accounts[0].Id);
-
-                    Console.WriteLine("Deleted storage account");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    if (azure.ResourceGroups.GetByName(rgName) != null)
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.DeleteByName(rgName);
-                        Console.WriteLine("Deleted Resource Group: " + rgName);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Utilities.Log(ex);
             }
         }
     }

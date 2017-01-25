@@ -24,8 +24,6 @@ namespace ManageSqlDatabaseInElasticPool
      */
     public class Program
     {
-        private static readonly string sqlServerName = Utilities.CreateRandomName("sqlserver");
-        private static readonly string rgName = Utilities.CreateRandomName("rgRSSDEP");
         private static readonly string elasticPoolName = "myElasticPool";
         private static readonly string elasticPool2Name = "secondElasticPool";
         private static readonly string administratorLogin = "sqladmin3423";
@@ -34,6 +32,175 @@ namespace ManageSqlDatabaseInElasticPool
         private static readonly string database2Name = "myDatabase2";
         private static readonly string anotherDatabaseName = "myAnotherDatabase";
         private static readonly string elasticPoolEdition = ElasticPoolEditions.Standard;
+
+        public static void RunSample(IAzure azure)
+        {
+            string sqlServerName = SharedSettings.RandomResourceName("sqlserver", 20);
+            string rgName = SharedSettings.RandomResourceName("rgRSSDEP", 20);
+            
+            try
+            {
+                // ============================================================
+                // Create a SQL Server, with 2 firewall rules.
+
+                var sqlServer = azure.SqlServers.Define(sqlServerName)
+                        .WithRegion(Region.US_EAST)
+                        .WithNewResourceGroup(rgName)
+                        .WithAdministratorLogin(administratorLogin)
+                        .WithAdministratorPassword(administratorPassword)
+                        .WithNewElasticPool(elasticPoolName, elasticPoolEdition, database1Name, database2Name)
+                        .Create();
+
+                Utilities.PrintSqlServer(sqlServer);
+
+                // ============================================================
+                // List and prints the elastic pools
+                foreach (var elasticPoolInList in sqlServer.ElasticPools.List())
+                {
+                    Utilities.PrintElasticPool(elasticPoolInList);
+                }
+
+                // ============================================================
+                // Get and prints the elastic pool
+                var elasticPool = sqlServer.ElasticPools.Get(elasticPoolName);
+                Utilities.PrintElasticPool(elasticPool);
+
+                // ============================================================
+                // Change DTUs in the elastic pools.
+                elasticPool = elasticPool.Update()
+                        .WithDtu(200)
+                        .WithDatabaseDtuMin(10)
+                        .WithDatabaseDtuMax(50)
+                        .Apply();
+
+                Utilities.PrintElasticPool(elasticPool);
+
+                Utilities.Log("Start ------- Current databases in the elastic pool");
+                foreach (var databaseInElasticPool in elasticPool.ListDatabases())
+                {
+                    Utilities.PrintDatabase(databaseInElasticPool);
+                }
+                Utilities.Log("End --------- Current databases in the elastic pool");
+
+                // ============================================================
+                // Create a Database in SQL server created above.
+                Utilities.Log("Creating a database");
+
+                var database = sqlServer.Databases
+                        .Define("myNewDatabase")
+                        .Create();
+                Utilities.PrintDatabase(database);
+
+                Utilities.Log("Start ------- Current databases in the elastic pool");
+                foreach (var databaseInElasticPool in elasticPool.ListDatabases())
+                {
+                    Utilities.PrintDatabase(databaseInElasticPool);
+                }
+                Utilities.Log("End --------- Current databases in the elastic pool");
+
+                // ============================================================
+                // Move newly created database to the pool.
+                Utilities.Log("Updating a database");
+                database = database.Update()
+                        .WithExistingElasticPool(elasticPoolName)
+                        .Apply();
+                Utilities.PrintDatabase(database);
+
+                // ============================================================
+                // Create another database and move it in elastic pool as update to the elastic pool.
+                var anotherDatabase = sqlServer.Databases.Define(anotherDatabaseName)
+                        .Create();
+
+                // ============================================================
+                // Update the elastic pool to have newly created database.
+                elasticPool.Update()
+                        .WithExistingDatabase(anotherDatabase)
+                        .Apply();
+
+                Utilities.Log("Start ------- Current databases in the elastic pool");
+                foreach (var databaseInElasticPool in elasticPool.ListDatabases())
+                {
+                    Utilities.PrintDatabase(databaseInElasticPool);
+                }
+                Utilities.Log("End --------- Current databases in the elastic pool");
+
+                // ============================================================
+                // Remove the database from the elastic pool.
+                Utilities.Log("Remove the database from the pool.");
+                anotherDatabase = anotherDatabase.Update()
+                        .WithoutElasticPool()
+                        .WithEdition(DatabaseEditions.Standard)
+                        .Apply();
+                Utilities.PrintDatabase(anotherDatabase);
+
+                Utilities.Log("Start ------- Current databases in the elastic pool");
+                foreach (var databaseInElasticPool in elasticPool.ListDatabases())
+                {
+                    Utilities.PrintDatabase(databaseInElasticPool);
+                }
+                Utilities.Log("End --------- Current databases in the elastic pool");
+
+                // ============================================================
+                // Get list of elastic pool's activities and print the same.
+                Utilities.Log("Start ------- Activities in a elastic pool");
+                foreach (var activity in elasticPool.ListActivities())
+                {
+                    Utilities.PrintElasticPoolActivity(activity);
+                }
+                Utilities.Log("End ------- Activities in a elastic pool");
+
+                // ============================================================
+                // Get list of elastic pool's database activities and print the same.
+
+                Utilities.Log("Start ------- Activities in a elastic pool");
+                foreach (var databaseActivity in elasticPool.ListDatabaseActivities())
+                {
+                    Utilities.PrintDatabaseActivity(databaseActivity);
+                }
+                Utilities.Log("End ------- Activities in a elastic pool");
+
+                // ============================================================
+                // List databases in the sql server and delete the same.
+                Utilities.Log("List and delete all databases from SQL Server");
+                foreach (var databaseInServer in sqlServer.Databases.List())
+                {
+                    Utilities.PrintDatabase(databaseInServer);
+                    databaseInServer.Delete();
+                }
+
+                // ============================================================
+                // Create another elastic pool in SQL Server
+                Utilities.Log("Create ElasticPool in existing SQL Server");
+                var elasticPool2 = sqlServer.ElasticPools.Define(elasticPool2Name)
+                        .WithEdition(elasticPoolEdition)
+                        .Create();
+
+                Utilities.PrintElasticPool(elasticPool2);
+                // ============================================================
+                // Deletes the elastic pool.
+                Utilities.Log("Delete the elastic pool from the SQL Server");
+                sqlServer.ElasticPools.Delete(elasticPoolName);
+                sqlServer.ElasticPools.Delete(elasticPool2Name);
+
+                // ============================================================
+                // Delete the SQL Server.
+                Utilities.Log("Deleting a Sql Server");
+                azure.SqlServers.DeleteById(sqlServer.Id);
+            }
+            finally
+            {
+                try
+                {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.DeleteByName(rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
+                }
+                catch(Exception e)
+                {
+                    Utilities.Log(e);
+                }
+            }
+        }
 
         public static void Main(string[] args)
         {
@@ -50,177 +217,13 @@ namespace ManageSqlDatabaseInElasticPool
                     .WithDefaultSubscription();
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+                Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                try
-                {
-                    // ============================================================
-                    // Create a SQL Server, with 2 firewall rules.
-
-                    var sqlServer = azure.SqlServers.Define(sqlServerName)
-                            .WithRegion(Region.US_EAST)
-                            .WithNewResourceGroup(rgName)
-                            .WithAdministratorLogin(administratorLogin)
-                            .WithAdministratorPassword(administratorPassword)
-                            .WithNewElasticPool(elasticPoolName, elasticPoolEdition, database1Name, database2Name)
-                            .Create();
-
-                    Utilities.PrintSqlServer(sqlServer);
-
-                    // ============================================================
-                    // List and prints the elastic pools
-                    foreach (var elasticPoolInList in sqlServer.ElasticPools.List())
-                    {
-                        Utilities.PrintElasticPool(elasticPoolInList);
-                    }
-
-                    // ============================================================
-                    // Get and prints the elastic pool
-                    var elasticPool = sqlServer.ElasticPools.Get(elasticPoolName);
-                    Utilities.PrintElasticPool(elasticPool);
-
-                    // ============================================================
-                    // Change DTUs in the elastic pools.
-                    elasticPool = elasticPool.Update()
-                            .WithDtu(200)
-                            .WithDatabaseDtuMin(10)
-                            .WithDatabaseDtuMax(50)
-                            .Apply();
-
-                    Utilities.PrintElasticPool(elasticPool);
-
-                    Console.WriteLine("Start ------- Current databases in the elastic pool");
-                    foreach (var databaseInElasticPool in elasticPool.ListDatabases())
-                    {
-                        Utilities.PrintDatabase(databaseInElasticPool);
-                    }
-                    Console.WriteLine("End --------- Current databases in the elastic pool");
-
-                    // ============================================================
-                    // Create a Database in SQL server created above.
-                    Console.WriteLine("Creating a database");
-
-                    var database = sqlServer.Databases
-                            .Define("myNewDatabase")
-                            .Create();
-                    Utilities.PrintDatabase(database);
-
-                    Console.WriteLine("Start ------- Current databases in the elastic pool");
-                    foreach (var databaseInElasticPool in elasticPool.ListDatabases())
-                    {
-                        Utilities.PrintDatabase(databaseInElasticPool);
-                    }
-                    Console.WriteLine("End --------- Current databases in the elastic pool");
-
-                    // ============================================================
-                    // Move newly created database to the pool.
-                    Console.WriteLine("Updating a database");
-                    database = database.Update()
-                            .WithExistingElasticPool(elasticPoolName)
-                            .Apply();
-                    Utilities.PrintDatabase(database);
-
-                    // ============================================================
-                    // Create another database and move it in elastic pool as update to the elastic pool.
-                    var anotherDatabase = sqlServer.Databases.Define(anotherDatabaseName)
-                            .Create();
-
-                    // ============================================================
-                    // Update the elastic pool to have newly created database.
-                    elasticPool.Update()
-                            .WithExistingDatabase(anotherDatabase)
-                            .Apply();
-
-                    Console.WriteLine("Start ------- Current databases in the elastic pool");
-                    foreach (var databaseInElasticPool in elasticPool.ListDatabases())
-                    {
-                        Utilities.PrintDatabase(databaseInElasticPool);
-                    }
-                    Console.WriteLine("End --------- Current databases in the elastic pool");
-
-                    // ============================================================
-                    // Remove the database from the elastic pool.
-                    Console.WriteLine("Remove the database from the pool.");
-                    anotherDatabase = anotherDatabase.Update()
-                            .WithoutElasticPool()
-                            .WithEdition(DatabaseEditions.Standard)
-                            .Apply();
-                    Utilities.PrintDatabase(anotherDatabase);
-
-                    Console.WriteLine("Start ------- Current databases in the elastic pool");
-                    foreach (var databaseInElasticPool in elasticPool.ListDatabases())
-                    {
-                        Utilities.PrintDatabase(databaseInElasticPool);
-                    }
-                    Console.WriteLine("End --------- Current databases in the elastic pool");
-
-                    // ============================================================
-                    // Get list of elastic pool's activities and print the same.
-                    Console.WriteLine("Start ------- Activities in a elastic pool");
-                    foreach (var activity in elasticPool.ListActivities())
-                    {
-                        Utilities.PrintElasticPoolActivity(activity);
-                    }
-                    Console.WriteLine("End ------- Activities in a elastic pool");
-
-                    // ============================================================
-                    // Get list of elastic pool's database activities and print the same.
-
-                    Console.WriteLine("Start ------- Activities in a elastic pool");
-                    foreach (var databaseActivity in elasticPool.ListDatabaseActivities())
-                    {
-                        Utilities.PrintDatabaseActivity(databaseActivity);
-                    }
-                    Console.WriteLine("End ------- Activities in a elastic pool");
-
-                    // ============================================================
-                    // List databases in the sql server and delete the same.
-                    Console.WriteLine("List and delete all databases from SQL Server");
-                    foreach (var databaseInServer in sqlServer.Databases.List())
-                    {
-                        Utilities.PrintDatabase(databaseInServer);
-                        databaseInServer.Delete();
-                    }
-
-                    // ============================================================
-                    // Create another elastic pool in SQL Server
-                    Console.WriteLine("Create ElasticPool in existing SQL Server");
-                    var elasticPool2 = sqlServer.ElasticPools.Define(elasticPool2Name)
-                            .WithEdition(elasticPoolEdition)
-                            .Create();
-
-                    Utilities.PrintElasticPool(elasticPool2);
-                    // ============================================================
-                    // Deletes the elastic pool.
-                    Console.WriteLine("Delete the elastic pool from the SQL Server");
-                    sqlServer.ElasticPools.Delete(elasticPoolName);
-                    sqlServer.ElasticPools.Delete(elasticPool2Name);
-
-                    // ============================================================
-                    // Delete the SQL Server.
-                    Console.WriteLine("Deleting a Sql Server");
-                    azure.SqlServers.DeleteById(sqlServer.Id);
-                }
-                catch (Exception f)
-                {
-                    Console.WriteLine(f);
-                }
-                finally
-                {
-                    try
-                    {
-                        Console.WriteLine("Deleting Resource Group: " + rgName);
-                        azure.ResourceGroups.DeleteByName(rgName);
-                        Console.WriteLine("Deleted Resource Group: " + rgName);
-                    }
-                    catch                    {
-                        Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
-                    }
-                }
+                RunSample(azure);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Utilities.Log(e);
             }
         }
     }

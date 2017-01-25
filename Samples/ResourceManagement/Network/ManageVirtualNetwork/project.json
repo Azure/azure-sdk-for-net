@@ -5,8 +5,10 @@
   },
 
   "dependencies": {
-    "Common": {
-      "target": "project"
+    "Common": "1.0.0-*", 
+    "Microsoft.Azure.Management.Fluent": {
+      "target": "project",
+      "type": "build"
     },
     "Microsoft.NETCore.App": {
       "type": "platform",
