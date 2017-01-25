@@ -25,5 +25,7 @@ namespace RP2_Sdk
         public Class1()
         {
         }
+
+        public void TestMethod1() { }
     }
 }

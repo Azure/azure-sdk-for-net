@@ -25,5 +25,7 @@ namespace RP1_MgmtPlane
         public Class1()
         {
         }
+
+        public void TestMethod1() { }
     }
 }

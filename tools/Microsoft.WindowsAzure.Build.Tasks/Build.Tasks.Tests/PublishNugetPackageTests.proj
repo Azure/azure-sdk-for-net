@@ -5,7 +5,7 @@
 		<LibrarySourceFolder Condition="'$(PublishTestProjects)' == 'true'">$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks.Tests\TestPublishProjects</LibrarySourceFolder>
 		<LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
 		<FxTargetList>portable;net40;net45</FxTargetList>
-		<NuGetPublishingSource Condition="'$(NuGetPublishingSource)' == ''">$(LibraryRoot)\packages\nugetPublish</NuGetPublishingSource>
+		<NuGetPublishingSource Condition="'$(NuGetPublishingSource)' == ''">$(LibraryRoot)\testPackages\nugetPublish</NuGetPublishingSource>
 		<NuGetKey>1234</NuGetKey>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -85,6 +85,7 @@
   -->
   <!-- Use Case:
 		msbuild build.proj /p:PublishTestProjects=true /t:Publish_MultipleSelectedPackage /p:Scope=MultiProjectSingleSln /p:PackageName="Sdk RP1_MgmtPlane"
+    msbuild build.proj /t:Build;Package;Publish /p:PublishTestProjects=true /p:Scope=MultiProjectSingleSln /p:PackageName="Sdk RP1_MgmtPlane"
 	-->
 	<Target Name="Publish_MultipleSelectedPackage" DependsOnTargets="MultiSelectedPackagesInit;$(TestInit)">
 		<Message Text="'Publish_MultipleSelectedPackage' completed"/>

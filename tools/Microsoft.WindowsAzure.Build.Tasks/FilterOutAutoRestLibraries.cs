@@ -31,10 +31,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         public string AutoRestMark { get; set; }
 
         /// <summary>
-        /// Name of packages that needs to be published. Currently for ease of user, it will be space delimited list of NetCore projects
+        /// Name of packages that needs to be published. Currently for ease for the user, it will be space delimited list of NetCore projects
         /// Non-NetCore projects cannot be published more than one package due to MSBuild limitation as well as our existing architecture of nuget.proj files
-        /// Plus once we are very limited set of non-netCore projects, so the effort is not worth. Worse case, each job to publish 1 package at a time
-        /// E.g. /p:PackageName="PackageName1 PackageName2" string can be passed to publish PacakgeName1 and PackageName2
+        /// Plus as we have very limited set of non-netCore projects, so the effort is not worth it. Worse case for publishing non-netCore projects, each job 
+        /// to publish 1 package at a time
+        /// 
+        /// E.g. for NetCore projects /p:PackageName="PackageName1 PackageName2" string can be passed to publish PacakgeName1 and PackageName2
         /// </summary>
         public string NugetPackagesToPublish { get; set; }
 
@@ -56,14 +58,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             
             List<string> nPkgsList = null;
 
-            if (NugetPackagesToPublish != null)
+            if (!string.IsNullOrWhiteSpace(NugetPackagesToPublish))
             {
-                NugetPackagesToPublish = NugetPackagesToPublish.Trim();
-
-                if (!string.IsNullOrEmpty(NugetPackagesToPublish))
-                {   
-                    nPkgsList = NugetPackagesToPublish.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
-                }
+                nPkgsList = NugetPackagesToPublish.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
             }
 
             foreach (ITaskItem solution in AllLibraries)
@@ -102,7 +99,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         string projectDirName = Path.GetFileName(projectDirPath);
                         string match = nPkgsList.Find((pn) => pn.Equals(projectDirName, System.StringComparison.OrdinalIgnoreCase));
                         if (!string.IsNullOrEmpty(match))
+                        {
                             nonNetCoreAutoRestLibraries.Add(solution);
+                        }
                     }
                     else
                     {
@@ -158,6 +157,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         others.Add(solution);
                     }
+                }
+            }
+
+            if(nPkgsList != null)
+            {
+                if (nPkgsList.Any<string>())
+                {
+                    string pkgNames = string.Join(",", nPkgsList);
+                    Log.LogMessage(MessageImportance.High, "Trying to publish packages: {0}", pkgNames);
                 }
             }
 

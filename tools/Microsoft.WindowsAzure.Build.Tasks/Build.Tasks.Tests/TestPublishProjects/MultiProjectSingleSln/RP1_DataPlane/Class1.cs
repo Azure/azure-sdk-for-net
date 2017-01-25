@@ -25,5 +25,7 @@ namespace RP1_DataPlane
         public Class1()
         {
         }
+
+        public void TestMethod1() { }
     }
 }
