@@ -35,9 +35,9 @@ namespace ManageDns
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string appServicePlanName = SharedSettings.RandomResourceName("jplan1_", 15);
-            string webAppName = SharedSettings.RandomResourceName("webapp1-", 20);
+            string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string appServicePlanName = SdkContext.RandomResourceName("jplan1_", 15);
+            string webAppName = SdkContext.RandomResourceName("webapp1-", 20);
             
             try
             {
@@ -123,12 +123,12 @@ namespace ManageDns
 
                 Utilities.Log("Creating a virtual machine with public IP...");
                 var virtualMachine1 = azure.VirtualMachines
-                        .Define(SharedSettings.RandomResourceName("employeesvm-", 20))
+                        .Define(SdkContext.RandomResourceName("employeesvm-", 20))
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SharedSettings.RandomResourceName("empip-", 20))
+                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("empip-", 20))
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
@@ -210,12 +210,12 @@ namespace ManageDns
 
                 Utilities.Log("Creating a virtual machine with public IP...");
                 var virtualMachine2 = azure.VirtualMachines
-                        .Define(SharedSettings.RandomResourceName("partnersvm-", 20))
+                        .Define(SdkContext.RandomResourceName("partnersvm-", 20))
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SharedSettings.RandomResourceName("ptnerpip-", 20))
+                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("ptnerpip-", 20))
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
@@ -274,7 +274,7 @@ namespace ManageDns
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

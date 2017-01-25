@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     this.Parent.ResourceGroupName,
                     this.Parent.Name,
                     this.Name(),
-                    SharedSettings.RandomResourceName("CustomDomain", 50),
+                    SdkContext.RandomResourceName("CustomDomain", 50),
                     itemToCreate.HostName,
                     cancellationToken);
             }

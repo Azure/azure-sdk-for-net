@@ -34,8 +34,8 @@ namespace ManageSqlFirewallRules
          */
         public static void RunSample(IAzure azure)
         {
-            string sqlServerName = SharedSettings.RandomResourceName("sqlserver", 20);
-            string rgName = SharedSettings.RandomResourceName("rgRSSDFW", 20);
+            string sqlServerName = SdkContext.RandomResourceName("sqlserver", 20);
+            string rgName = SdkContext.RandomResourceName("rgRSSDFW", 20);
             
             try
             {
@@ -119,7 +119,7 @@ namespace ManageSqlFirewallRules
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

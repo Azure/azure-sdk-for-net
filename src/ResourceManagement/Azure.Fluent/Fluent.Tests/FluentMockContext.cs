@@ -16,9 +16,9 @@ namespace Azure.Tests
             var fluentMockContext = new FluentMockContext();
             fluentMockContext.mockContext = MockContext.Start(className, methodName);
 
-            SharedSettings.CreateResourceNamer = new SharedSettings.ResourceNamerCreator((name) => new TestResourceNamer(name, methodName));
-            SharedSettings.AzureCredentialsFactory = new TestAzureCredentialsFactory();
-            SharedSettings.DelayProvider = new TestDelayProvider();
+            SdkContext.CreateResourceNamer = new SdkContext.ResourceNamerCreator((name) => new TestResourceNamer(name, methodName));
+            SdkContext.AzureCredentialsFactory = new TestAzureCredentialsFactory();
+            SdkContext.DelayProvider = new TestDelayProvider();
 
             return fluentMockContext;
         }

@@ -200,7 +200,7 @@ namespace Fluent.Tests.Common
 
         private static T CreateMockedManager<T>(Func<AzureCredentials, T> builder)
         {
-            AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(authFilePath);
+            AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(authFilePath);
 
             var manager = builder.Invoke(credentials);
 

@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 if (name == null)
                 {
                     // No name specified, so auto-name it
-                    name = SharedSettings.RandomResourceName("port", 9);
+                    name = SdkContext.RandomResourceName("port", 9);
                 }
 
                 frontendPortByName = new ApplicationGatewayFrontendPortInner()
@@ -1317,7 +1317,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             if (creatablePip == null)
             {
-                string pipName = SharedSettings.RandomResourceName("pip", 9);
+                string pipName = SdkContext.RandomResourceName("pip", 9);
                 creatablePip = Manager.PublicIpAddresses.Define(pipName)
                     .WithRegion(RegionName)
                     .WithExistingResourceGroup(ResourceGroupName);
@@ -1336,7 +1336,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             else
             {
-                string name = SharedSettings.RandomResourceName("frontend", 14);
+                string name = SdkContext.RandomResourceName("frontend", 14);
                 frontend = DefineFrontend(name);
                 frontend.Attach();
                 defaultPublicFrontend = frontend;
@@ -1383,7 +1383,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             else
             {
-                string name = SharedSettings.RandomResourceName("frontend", 14);
+                string name = SdkContext.RandomResourceName("frontend", 14);
                 frontend = DefineFrontend(name);
                 frontend.Attach();
                 defaultPrivateFrontend = frontend;
@@ -1397,7 +1397,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             ApplicationGatewayIpConfigurationImpl ipConfig = (ApplicationGatewayIpConfigurationImpl) DefaultIpConfiguration();
             if (ipConfig == null)
             {
-                string name = SharedSettings.RandomResourceName("ipcfg", 11);
+                string name = SdkContext.RandomResourceName("ipcfg", 11);
                 ipConfig = DefineIpConfiguration(name);
                 ipConfig.Attach();
             }
@@ -1409,7 +1409,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             if (creatableNetwork == null)
             {
-                string vnetName = SharedSettings.RandomResourceName("vnet", 10);
+                string vnetName = SdkContext.RandomResourceName("vnet", 10);
                 creatableNetwork = Manager.Networks.Define(vnetName)
                     .WithRegion(Region)
                     .WithExistingResourceGroup(ResourceGroupName)

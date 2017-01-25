@@ -33,17 +33,17 @@ namespace ManageWebAppWithTrafficManager
 
         public static void RunSample(IAzure azure)
         {
-            string resourceGroupName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-            string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
-            string app5Name = SharedSettings.RandomResourceName("webapp5-", 20);
-            string plan1Name = SharedSettings.RandomResourceName("jplan1_", 15);
-            string plan2Name = SharedSettings.RandomResourceName("jplan2_", 15);
-            string plan3Name = SharedSettings.RandomResourceName("jplan3_", 15);
-            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
-            string trafficManagerName = SharedSettings.RandomResourceName("jsdktm-", 20);
+            string resourceGroupName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
+            string app4Name = SdkContext.RandomResourceName("webapp4-", 20);
+            string app5Name = SdkContext.RandomResourceName("webapp5-", 20);
+            string plan1Name = SdkContext.RandomResourceName("jplan1_", 15);
+            string plan2Name = SdkContext.RandomResourceName("jplan2_", 15);
+            string plan3Name = SdkContext.RandomResourceName("jplan3_", 15);
+            string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string trafficManagerName = SdkContext.RandomResourceName("jsdktm-", 20);
 
             try
             {
@@ -227,7 +227,7 @@ namespace ManageWebAppWithTrafficManager
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

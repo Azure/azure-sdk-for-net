@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             innerCollection = client;
             nicName = name;
-            namer = SharedSettings.CreateResourceNamer(nicName);
+            namer = SdkContext.CreateResourceNamer(nicName);
             InitializeChildrenFromInner();
         }
 

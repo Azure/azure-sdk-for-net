@@ -28,7 +28,7 @@ namespace CreateVirtualMachinesInParallel
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOMV", 10);
+            string rgName = SdkContext.RandomResourceName("rgCOMV", 10);
             IDictionary<Region, int> virtualMachinesByLocation = new Dictionary<Region, int>();
 
             virtualMachinesByLocation.Add(Region.USEast, 5);
@@ -58,7 +58,7 @@ namespace CreateVirtualMachinesInParallel
                     // Create 1 network creatable per region
                     // Prepare Creatable Network definition (Where all the virtual machines get added to)
                     //
-                    var networkName = SharedSettings.RandomResourceName("vnetCOPD-", 20);
+                    var networkName = SdkContext.RandomResourceName("vnetCOPD-", 20);
                     var networkCreatable = azure.Networks
                             .Define(networkName)
                             .WithRegion(region)
@@ -68,13 +68,13 @@ namespace CreateVirtualMachinesInParallel
                     //=============================================================
                     // Create 1 storage creatable per region (For storing VMs disk)
                     //
-                    var storageAccountName = SharedSettings.RandomResourceName("stgcopd", 20);
+                    var storageAccountName = SdkContext.RandomResourceName("stgcopd", 20);
                     var storageAccountCreatable = azure.StorageAccounts
                             .Define(storageAccountName)
                             .WithRegion(region)
                             .WithExistingResourceGroup(resourceGroup);
 
-                    var linuxVMNamePrefix = SharedSettings.RandomResourceName("vm-", 15);
+                    var linuxVMNamePrefix = SdkContext.RandomResourceName("vm-", 15);
                     for (int i = 1; i <= vmCount; i++)
                     {
                         //=============================================================
@@ -134,7 +134,7 @@ namespace CreateVirtualMachinesInParallel
                 //=============================================================
                 // Create 1 Traffic Manager Profile
                 //
-                var trafficManagerName = SharedSettings.RandomResourceName("tra", 15);
+                var trafficManagerName = SdkContext.RandomResourceName("tra", 15);
                 var profileWithEndpoint = azure.TrafficManagerProfiles.Define(trafficManagerName)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithLeafDomainLabel(trafficManagerName)
@@ -187,7 +187,7 @@ namespace CreateVirtualMachinesInParallel
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

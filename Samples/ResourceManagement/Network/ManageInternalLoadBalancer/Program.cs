@@ -70,17 +70,17 @@ namespace ManageInternalLoadBalancer
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEML", 15);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string loadBalancerName3 = SharedSettings.RandomResourceName("intlb3" + "-", 18);
-            string loadBalancerName4 = SharedSettings.RandomResourceName("intlb4" + "-", 18);
+            string rgName = SdkContext.RandomResourceName("rgNEML", 15);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string loadBalancerName3 = SdkContext.RandomResourceName("intlb3" + "-", 18);
+            string loadBalancerName4 = SdkContext.RandomResourceName("intlb4" + "-", 18);
             string privateFrontEndName = loadBalancerName3 + "-BE";
             string backendPoolName3 = loadBalancerName3 + "-BAP3";
-            string networkInterfaceName3 = SharedSettings.RandomResourceName("nic3", 24);
-            string networkInterfaceName4 = SharedSettings.RandomResourceName("nic4", 24);
-            string availSetName = SharedSettings.RandomResourceName("av2", 24);
-            string vmName3 = SharedSettings.RandomResourceName("lVM3", 24);
-            string vmName4 = SharedSettings.RandomResourceName("lVM4", 24);
+            string networkInterfaceName3 = SdkContext.RandomResourceName("nic3", 24);
+            string networkInterfaceName4 = SdkContext.RandomResourceName("nic4", 24);
+            string availSetName = SdkContext.RandomResourceName("av2", 24);
+            string vmName3 = SdkContext.RandomResourceName("lVM3", 24);
+            string vmName4 = SdkContext.RandomResourceName("lVM4", 24);
 
             try
             {
@@ -440,7 +440,7 @@ namespace ManageInternalLoadBalancer
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

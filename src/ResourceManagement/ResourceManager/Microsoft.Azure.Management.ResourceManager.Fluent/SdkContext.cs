@@ -5,7 +5,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-    public static class SharedSettings
+    public static class SdkContext
     {
         public delegate IResourceNamer ResourceNamerCreator(string name);
 

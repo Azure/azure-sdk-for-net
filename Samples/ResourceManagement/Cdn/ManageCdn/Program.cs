@@ -33,7 +33,7 @@ namespace ManageCdn
         public static void RunSample(IAzure azure)
         {
             string cdnProfileName = Utilities.CreateRandomName("cdnStandardProfile");
-            string rgName = SharedSettings.RandomResourceName("rgCDN_", 24);
+            string rgName = SdkContext.RandomResourceName("rgCDN_", 24);
             var appNames = new string[8];
 
             try
@@ -47,7 +47,7 @@ namespace ManageCdn
                 // Create 8 websites
                 for (int i = 0; i < 8; i++)
                 {
-                    appNames[i] = SharedSettings.RandomResourceName("webapp" + (i + 1) + "-", 20);
+                    appNames[i] = SdkContext.RandomResourceName("webapp" + (i + 1) + "-", 20);
                 }
 
                 // 2 in US
@@ -86,8 +86,8 @@ namespace ManageCdn
                 {
                     cdnCreatable = profileDefinition
                             .DefineNewEndpoint()
-                                .WithOrigin(webSite + SUFFIX)
-                                .WithHostHeader(webSite + SUFFIX)
+                                .WithOrigin(webSite + Suffix)
+                                .WithHostHeader(webSite + Suffix)
                                 .WithCompressionEnabled(true)
                                 .WithContentTypeToCompress("application/javascript")
                                 .WithQueryStringCachingBehavior(QueryStringCachingBehavior.IgnoreQueryString)
@@ -129,7 +129,7 @@ namespace ManageCdn
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -150,8 +150,8 @@ namespace ManageCdn
 
         private static IWebApp CreateWebApp(IAzure azure, string rgName, string appName, Region region)
         {
-            var planName = SharedSettings.RandomResourceName("jplan_", 15);
-            var appUrl = appName + SUFFIX;
+            var planName = SdkContext.RandomResourceName("jplan_", 15);
+            var appUrl = appName + Suffix;
 
             Utilities.Log("Creating web app " + appName + " with master branch...");
 

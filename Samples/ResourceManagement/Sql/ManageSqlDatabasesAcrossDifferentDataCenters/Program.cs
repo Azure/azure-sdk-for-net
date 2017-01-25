@@ -39,8 +39,8 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
          */
         public static void RunSample(IAzure azure)
         {
-            string sqlServerName = SharedSettings.RandomResourceName("sqlserver", 20);
-            string rgName = SharedSettings.RandomResourceName("rgRSSDRE", 20);
+            string sqlServerName = SdkContext.RandomResourceName("sqlserver", 20);
+            string rgName = SdkContext.RandomResourceName("rgRSSDRE", 20);
             
             try
             {
@@ -204,7 +204,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

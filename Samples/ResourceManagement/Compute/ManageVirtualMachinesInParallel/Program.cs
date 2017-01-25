@@ -26,9 +26,9 @@ namespace ManageVirtualMachinesInParallel
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOPP", 24);
-            string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
-            string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
+            string rgName = SdkContext.RandomResourceName("rgCOPP", 24);
+            string networkName = SdkContext.RandomResourceName("vnetCOMV", 24);
+            string storageAccountName = SdkContext.RandomResourceName("stgCOMV", 20);
 
             try
             {
@@ -105,7 +105,7 @@ namespace ManageVirtualMachinesInParallel
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

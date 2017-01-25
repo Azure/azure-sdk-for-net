@@ -29,11 +29,11 @@ namespace ManageWebAppWithDomainSsl
          */
         public static void RunSample(IAzure azure)
         {
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string planName = SdkContext.RandomResourceName("jplan_", 15);
+            string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
 
             try
             {
@@ -175,7 +175,7 @@ namespace ManageWebAppWithDomainSsl
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

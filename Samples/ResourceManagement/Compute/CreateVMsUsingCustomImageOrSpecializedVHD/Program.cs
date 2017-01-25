@@ -35,11 +35,11 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOMV", 10);
-            string linuxVmName1 = SharedSettings.RandomResourceName("VM1", 10);
-            string linuxVmName2 = SharedSettings.RandomResourceName("VM2", 10);
-            string linuxVmName3 = SharedSettings.RandomResourceName("VM3", 10);
-            string publicIpDnsLabel = SharedSettings.RandomResourceName("pip", 10);
+            string rgName = SdkContext.RandomResourceName("rgCOMV", 10);
+            string linuxVmName1 = SdkContext.RandomResourceName("VM1", 10);
+            string linuxVmName2 = SdkContext.RandomResourceName("VM2", 10);
+            string linuxVmName3 = SdkContext.RandomResourceName("VM3", 10);
+            string publicIpDnsLabel = SdkContext.RandomResourceName("pip", 10);
 
             try
             {
@@ -176,7 +176,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

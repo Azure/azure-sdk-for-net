@@ -79,8 +79,8 @@ namespace ManageApplicationGateway
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEAG", 15);
-            string pipName = SharedSettings.RandomResourceName("pip" + "-", 18);
+            string rgName = SdkContext.RandomResourceName("rgNEAG", 15);
+            string pipName = SdkContext.RandomResourceName("pip" + "-", 18);
 
             try
             {
@@ -120,7 +120,7 @@ namespace ManageApplicationGateway
                     //=============================================================
                     // Create 1 network creatable per region
                     // Prepare Creatable Network definition (Where all the virtual machines get added to)
-                    var networkName = SharedSettings.RandomResourceName("vnetNEAG-", 20);
+                    var networkName = SdkContext.RandomResourceName("vnetNEAG-", 20);
 
                     var networkCreatable = azure.Networks
                             .Define(networkName)
@@ -130,13 +130,13 @@ namespace ManageApplicationGateway
 
                     //=============================================================
                     // Create 1 storage creatable per region (For storing VMs disk)
-                    var storageAccountName = SharedSettings.RandomResourceName("stgneag", 20);
+                    var storageAccountName = SdkContext.RandomResourceName("stgneag", 20);
                     var storageAccountCreatable = azure.StorageAccounts
                             .Define(storageAccountName)
                             .WithRegion(Regions[i])
                             .WithExistingResourceGroup(resourceGroup);
 
-                    var linuxVMNamePrefix = SharedSettings.RandomResourceName("vm-", 15);
+                    var linuxVMNamePrefix = SdkContext.RandomResourceName("vm-", 15);
 
                     for (int j = 0; j < VMCountInAPool; j++)
                     {
@@ -309,7 +309,7 @@ namespace ManageApplicationGateway
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

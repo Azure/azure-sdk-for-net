@@ -25,15 +25,15 @@ namespace ManageNetworkInterface
          */
         public static void RunSample(IAzure azure)
         {
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
-            string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
-            string networkInterfaceName3 = SharedSettings.RandomResourceName("nic3", 24);
-            string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 24);
-            string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 24);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
+            string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
+            string networkInterfaceName3 = SdkContext.RandomResourceName("nic3", 24);
+            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
+            string publicIpAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 24);
             // TODO adjust the length of vm name from 8 to 24
-            string vmName = SharedSettings.RandomResourceName("vm", 8);
-            string rgName = SharedSettings.RandomResourceName("rgNEMI", 24);
+            string vmName = SdkContext.RandomResourceName("vm", 8);
+            string rgName = SdkContext.RandomResourceName("rgNEMI", 24);
 
             try
             {
@@ -193,7 +193,7 @@ namespace ManageNetworkInterface
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

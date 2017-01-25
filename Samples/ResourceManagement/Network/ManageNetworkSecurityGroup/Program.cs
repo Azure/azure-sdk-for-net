@@ -29,15 +29,15 @@ namespace ManageNetworkSecurityGroup
          */
         public static void RunSample(IAzure azure)
         {
-            string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
-            string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
-            string rgName = SharedSettings.RandomResourceName("rgNEMS", 24);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
-            string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
-            string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 24);
-            string frontEndVMName = SharedSettings.RandomResourceName("fevm", 24);
-            string backEndVMName = SharedSettings.RandomResourceName("bevm", 24);
+            string frontEndNSGName = SdkContext.RandomResourceName("fensg", 24);
+            string backEndNSGName = SdkContext.RandomResourceName("bensg", 24);
+            string rgName = SdkContext.RandomResourceName("rgNEMS", 24);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
+            string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
+            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
+            string frontEndVMName = SdkContext.RandomResourceName("fevm", 24);
+            string backEndVMName = SdkContext.RandomResourceName("bevm", 24);
 
             try
             {
@@ -280,7 +280,7 @@ namespace ManageNetworkSecurityGroup
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

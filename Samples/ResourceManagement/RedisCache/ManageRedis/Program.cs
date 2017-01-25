@@ -29,10 +29,10 @@ namespace ManageRedis
          */
         public static void RunSample(IAzure azure)
         {
-            var redisCacheName1 = SharedSettings.RandomResourceName("rc1", 20);
-            var redisCacheName2 = SharedSettings.RandomResourceName("rc2", 20);
-            var redisCacheName3 = SharedSettings.RandomResourceName("rc3", 20);
-            var rgName = SharedSettings.RandomResourceName("rgRCMC", 20);
+            var redisCacheName1 = SdkContext.RandomResourceName("rc1", 20);
+            var redisCacheName2 = SdkContext.RandomResourceName("rc2", 20);
+            var redisCacheName3 = SdkContext.RandomResourceName("rc3", 20);
+            var rgName = SdkContext.RandomResourceName("rgRCMC", 20);
 
             try
             {
@@ -153,7 +153,7 @@ namespace ManageRedis
 
             try
             {
-                var tokenCredentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var tokenCredentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

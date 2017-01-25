@@ -84,11 +84,11 @@ namespace ManageVirtualMachineExtension
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOVE", 15);
-            string linuxVmName = SharedSettings.RandomResourceName("lVM", 10);
-            string windowsVmName = SharedSettings.RandomResourceName("wVM", 10);
-            string pipDnsLabelLinuxVM = SharedSettings.RandomResourceName("rgPip1", 25);
-            string pipDnsLabelWindowsVM = SharedSettings.RandomResourceName("rgPip2", 25);
+            string rgName = SdkContext.RandomResourceName("rgCOVE", 15);
+            string linuxVmName = SdkContext.RandomResourceName("lVM", 10);
+            string windowsVmName = SdkContext.RandomResourceName("wVM", 10);
+            string pipDnsLabelLinuxVM = SdkContext.RandomResourceName("rgPip1", 25);
+            string pipDnsLabelWindowsVM = SdkContext.RandomResourceName("rgPip2", 25);
 
             try
             {
@@ -288,7 +288,7 @@ namespace ManageVirtualMachineExtension
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

@@ -35,9 +35,9 @@ namespace ManageVirtualMachine
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOMV", 24);
-            string windowsVMName = SharedSettings.RandomResourceName("wVM", 24);
-            string linuxVMName = SharedSettings.RandomResourceName("lVM", 24);
+            string rgName = SdkContext.RandomResourceName("rgCOMV", 24);
+            string windowsVMName = SdkContext.RandomResourceName("wVM", 24);
+            string linuxVMName = SdkContext.RandomResourceName("lVM", 24);
             try
             {
                 var startTime = DateTimeOffset.Now.UtcDateTime;
@@ -214,7 +214,7 @@ namespace ManageVirtualMachine
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

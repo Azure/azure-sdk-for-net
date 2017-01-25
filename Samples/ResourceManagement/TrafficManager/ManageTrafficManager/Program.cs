@@ -36,11 +36,11 @@ namespace ManageTrafficManager
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
-            string appServicePlanNamePrefix = SharedSettings.RandomResourceName("jplan1_", 15);
-            string webAppNamePrefix = SharedSettings.RandomResourceName("webapp1-", 20);
-            string tmName = SharedSettings.RandomResourceName("jsdktm-", 20);
+            string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string appServicePlanNamePrefix = SdkContext.RandomResourceName("jplan1_", 15);
+            string webAppNamePrefix = SdkContext.RandomResourceName("webapp1-", 20);
+            string tmName = SdkContext.RandomResourceName("jsdktm-", 20);
 
 
             // The regions in which web app needs to be created
@@ -240,7 +240,7 @@ namespace ManageTrafficManager
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

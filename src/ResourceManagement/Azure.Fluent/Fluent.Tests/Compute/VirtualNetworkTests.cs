@@ -20,19 +20,19 @@ namespace Fluent.Tests.Compute
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void Test()
         {
-            string vnetName1 = SharedSettings.RandomResourceName("vnet1", 20);
-            string vnetName2 = SharedSettings.RandomResourceName("vnet2", 20);
+            string vnetName1 = SdkContext.RandomResourceName("vnet1", 20);
+            string vnetName2 = SdkContext.RandomResourceName("vnet2", 20);
             string vnet1FrontEndSubnetName = "frontend";
             string vnet1BackEndSubnetName = "backend";
             string vnet1FrontEndSubnetNsgName = "frontendnsg";
             string vnet1BackEndSubnetNsgName = "backendnsg";
-            string frontEndVMName = SharedSettings.RandomResourceName("fevm", 24);
-            string backEndVMName = SharedSettings.RandomResourceName("bevm", 24);
-            string publicIpAddressLeafDNSForFrontEndVM = SharedSettings.RandomResourceName("pip1", 24);
+            string frontEndVMName = SdkContext.RandomResourceName("fevm", 24);
+            string backEndVMName = SdkContext.RandomResourceName("bevm", 24);
+            string publicIpAddressLeafDNSForFrontEndVM = SdkContext.RandomResourceName("pip1", 24);
 
             INetworkManager manager = TestHelper.CreateNetworkManager();
 
-            string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
+            string rgName = SdkContext.RandomResourceName("rgNEMV", 24);
             INetworkSecurityGroup backEndSubnetNsg = manager.NetworkSecurityGroups
                     .Define(vnet1BackEndSubnetNsgName)
                     .WithRegion(Region.USEast)

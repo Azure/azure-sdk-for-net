@@ -26,12 +26,12 @@ namespace ManageIpAddress
          */
         public static void RunSample(IAzure azure)
         {
-            string publicIpAddressName1 = SharedSettings.RandomResourceName("pip1", 20);
-            string publicIpAddressName2 = SharedSettings.RandomResourceName("pip2", 20);
-            string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 20);
-            string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 20);
-            string vmName = SharedSettings.RandomResourceName("vm", 8);
-            string rgName = SharedSettings.RandomResourceName("rgNEMP", 24);
+            string publicIpAddressName1 = SdkContext.RandomResourceName("pip1", 20);
+            string publicIpAddressName2 = SdkContext.RandomResourceName("pip2", 20);
+            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 20);
+            string publicIpAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 20);
+            string vmName = SdkContext.RandomResourceName("vm", 8);
+            string rgName = SdkContext.RandomResourceName("rgNEMP", 24);
 
             try
             {
@@ -158,7 +158,7 @@ namespace ManageIpAddress
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

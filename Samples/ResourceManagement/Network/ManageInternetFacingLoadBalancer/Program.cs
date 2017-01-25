@@ -69,20 +69,20 @@ namespace ManageInternetFacingLoadBalancer
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEML", 15);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string loadBalancerName1 = SharedSettings.RandomResourceName("intlb1" + "-", 18);
-            string loadBalancerName2 = SharedSettings.RandomResourceName("intlb2" + "-", 18);
+            string rgName = SdkContext.RandomResourceName("rgNEML", 15);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string loadBalancerName1 = SdkContext.RandomResourceName("intlb1" + "-", 18);
+            string loadBalancerName2 = SdkContext.RandomResourceName("intlb2" + "-", 18);
             string publicIpName1 = "pip1-" + loadBalancerName1;
             string publicIpName2 = "pip2-" + loadBalancerName1;
             string frontendName = loadBalancerName1 + "-FE1";
             string backendPoolName1 = loadBalancerName1 + "-BAP1";
             string backendPoolName2 = loadBalancerName1 + "-BAP2";
-            string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
-            string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
-            string availSetName = SharedSettings.RandomResourceName("av", 24);
-            string vmName1 = SharedSettings.RandomResourceName("lVM1", 24);
-            string vmName2 = SharedSettings.RandomResourceName("lVM2", 24);
+            string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
+            string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
+            string availSetName = SdkContext.RandomResourceName("av", 24);
+            string vmName1 = SdkContext.RandomResourceName("lVM1", 24);
+            string vmName2 = SdkContext.RandomResourceName("lVM2", 24);
 
             try
             {
@@ -495,7 +495,7 @@ namespace ManageInternetFacingLoadBalancer
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

@@ -30,12 +30,12 @@ namespace ManageWebAppSqlConnection
 
         public static void RunSample(IAzure azure)
         {
-            string appName = SharedSettings.RandomResourceName("webapp1-", 20);
+            string appName = SdkContext.RandomResourceName("webapp1-", 20);
             string appUrl = appName + Suffix;
-            string sqlServerName = SharedSettings.RandomResourceName("jsdkserver", 20);
-            string sqlDbName = SharedSettings.RandomResourceName("jsdkdb", 20);
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string sqlServerName = SdkContext.RandomResourceName("jsdkserver", 20);
+            string sqlDbName = SdkContext.RandomResourceName("jsdkdb", 20);
+            string planName = SdkContext.RandomResourceName("jplan_", 15);
+            string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
             {
@@ -133,7 +133,7 @@ namespace ManageWebAppSqlConnection
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

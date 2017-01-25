@@ -53,8 +53,8 @@ namespace ManageSimpleApplicationGateway
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEAGS", 15);
-            string pipName = SharedSettings.RandomResourceName("pip" + "-", 18);
+            string rgName = SdkContext.RandomResourceName("rgNEAGS", 15);
+            string pipName = SdkContext.RandomResourceName("pip" + "-", 18);
             
             try
             {
@@ -144,7 +144,7 @@ namespace ManageSimpleApplicationGateway
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

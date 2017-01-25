@@ -27,10 +27,10 @@ namespace ManageWebAppSlots
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+            string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
 
             try
             {
@@ -90,7 +90,7 @@ namespace ManageWebAppSlots
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -111,7 +111,7 @@ namespace ManageWebAppSlots
         
         private static IWebApp CreateWebApp(IAzure azure, string rgName, string appName, Region region)
         {
-            var planName = SharedSettings.RandomResourceName("jplan_", 15);
+            var planName = SdkContext.RandomResourceName("jplan_", 15);
             var appUrl = appName + Suffix;
 
             Utilities.Log("Creating web app " + appName + " with master branch...");

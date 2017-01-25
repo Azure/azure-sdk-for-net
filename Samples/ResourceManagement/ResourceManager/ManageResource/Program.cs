@@ -22,9 +22,9 @@ namespace ManageResource
         */
         public static void RunSample(IAzure azure)
         {
-            var resourceGroupName = SharedSettings.RandomResourceName("rgRSMR", 24);
-            var resourceName1 = SharedSettings.RandomResourceName("rn1", 24);
-            var resourceName2 = SharedSettings.RandomResourceName("rn2", 24);
+            var resourceGroupName = SdkContext.RandomResourceName("rgRSMR", 24);
+            var resourceName1 = SdkContext.RandomResourceName("rn1", 24);
+            var resourceName2 = SdkContext.RandomResourceName("rn2", 24);
 
             try
             {
@@ -119,7 +119,7 @@ namespace ManageResource
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

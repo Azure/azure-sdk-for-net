@@ -37,13 +37,13 @@ namespace ManageVirtualMachineScaleSet
          */
         public static void RunSample(IAzure azure)
         {
-            string vmssName = SharedSettings.RandomResourceName("vmss", 24);
-            string storageAccountName1 = SharedSettings.RandomResourceName("stg1", 24);
-            string storageAccountName2 = SharedSettings.RandomResourceName("stg2", 24);
-            string storageAccountName3 = SharedSettings.RandomResourceName("stg3", 24);
-            string rgName = SharedSettings.RandomResourceName("rgCOVS", 15);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string loadBalancerName1 = SharedSettings.RandomResourceName("intlb" + "-", 18);
+            string vmssName = SdkContext.RandomResourceName("vmss", 24);
+            string storageAccountName1 = SdkContext.RandomResourceName("stg1", 24);
+            string storageAccountName2 = SdkContext.RandomResourceName("stg2", 24);
+            string storageAccountName3 = SdkContext.RandomResourceName("stg3", 24);
+            string rgName = SdkContext.RandomResourceName("rgCOVS", 15);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string loadBalancerName1 = SdkContext.RandomResourceName("intlb" + "-", 18);
             string publicIpName = "pip-" + loadBalancerName1;
             string frontendName = loadBalancerName1 + "-FE1";
             string backendPoolName1 = loadBalancerName1 + "-BAP1";
@@ -274,7 +274,7 @@ namespace ManageVirtualMachineScaleSet
             {
                 //=============================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

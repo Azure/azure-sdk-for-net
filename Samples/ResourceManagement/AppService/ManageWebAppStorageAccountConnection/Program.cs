@@ -32,12 +32,12 @@ namespace ManageWebAppStorageAccountConnection
          */
         public static void RunSample(IAzure azure)
         {
-            string App1Name = SharedSettings.RandomResourceName("webapp1-", 20);
+            string App1Name = SdkContext.RandomResourceName("webapp1-", 20);
             string App1Url = App1Name + SUFFIX;
-            string StorageName = SharedSettings.RandomResourceName("jsdkstore", 20);
-            string ContainerName = SharedSettings.RandomResourceName("jcontainer", 20);
-            string PlanName = SharedSettings.RandomResourceName("jplan_", 15);
-            string ResourceGroupName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string StorageName = SdkContext.RandomResourceName("jsdkstore", 20);
+            string ContainerName = SdkContext.RandomResourceName("jcontainer", 20);
+            string PlanName = SdkContext.RandomResourceName("jplan_", 15);
+            string ResourceGroupName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
             {
@@ -104,7 +104,7 @@ namespace ManageWebAppStorageAccountConnection
                 // warm up
                 Utilities.Log("Warming up " + App1Url + "/azure-samples-blob-traverser...");
                 CheckAddress("http://" + App1Url + "/azure-samples-blob-traverser");
-                SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
                 Utilities.Log("CURLing " + App1Url + "/azure-samples-blob-traverser...");
                 Utilities.Log(CheckAddress("http://" + App1Url + "/azure-samples-blob-traverser"));
             }
@@ -133,7 +133,7 @@ namespace ManageWebAppStorageAccountConnection
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
