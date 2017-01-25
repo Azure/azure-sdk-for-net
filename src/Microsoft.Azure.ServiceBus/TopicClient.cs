@@ -106,6 +106,43 @@ namespace Microsoft.Azure.ServiceBus
             return this.InnerSender.SendAsync(brokeredMessages);
         }
 
+        /// <summary>
+        /// Sends a scheduled message
+        /// </summary>
+        /// <param name="message">Message to be scheduled</param>
+        /// <param name="scheduleEnqueueTimeUtc">Time of enqueue</param>
+        /// <returns>Sequence number that is needed for cancelling.</returns>
+        public Task<long> ScheduleMessageAsync(BrokeredMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
+        {
+            try
+            {
+                return this.innerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
+            }
+            catch (Exception)
+            {
+                // TODO: Log Complete Exception
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a scheduled message
+        /// </summary>
+        /// <param name="sequenceNumber">Returned on scheduling a message.</param>
+        /// <returns></returns>
+        public Task CancelScheduledMessageAsync(long sequenceNumber)
+        {
+            try
+            {
+                return this.innerSender.CancelScheduledMessageAsync(sequenceNumber);
+            }
+            catch (Exception)
+            {
+                // TODO: Log Complete Exception
+                throw;
+            }
+        }
+
         protected MessageSender CreateMessageSender()
         {
             return this.OnCreateMessageSender();

@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Messaging.Amqp
             public const string SetSessionStateOperation = Microsoft + ":set-session-state";
             public const string GetSessionStateOperation = Microsoft + ":get-session-state";
             public const string PeekMessageOperation = Microsoft + ":peek-message";
+            public const string ScheduleMessageOperation = Microsoft + ":schedule-message";
+            public const string CancelScheduledMessageOperation = Microsoft + ":cancel-scheduled-message";
         }
 
         public static class Properties
@@ -44,6 +46,8 @@ namespace Microsoft.Azure.Messaging.Amqp
             public static readonly MapKey Expirations = new MapKey("expirations");
             public static readonly MapKey Expiration = new MapKey("expiration");
             public static readonly MapKey SessionId = new MapKey("session-id");
+            public static readonly MapKey MessageId = new MapKey("message-id");
+            public static readonly MapKey PartitionKey = new MapKey("partition-key");
 
             public static readonly MapKey ReceiverSettleMode = new MapKey("receiver-settle-mode");
             public static readonly MapKey Message = new MapKey("message");

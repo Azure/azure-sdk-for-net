@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus
 
     /// <summary>
     /// Anchor class - all Queue client operations start here.
-    /// See <see cref="QueueClient.Create(string)"/>
+    /// See <see cref="QueueClient.CreateFromConnectionString(string)"/>
     /// </summary>
     public abstract class QueueClient : ClientEntity
     {
@@ -280,6 +280,43 @@ namespace Microsoft.Azure.ServiceBus
         public Task<DateTime> RenewMessageLockAsync(Guid lockToken)
         {
             return this.InnerReceiver.RenewLockAsync(lockToken);
+        }
+
+        /// <summary>
+        /// Sends a scheduled message
+        /// </summary>
+        /// <param name="message">Message to be scheduled</param>
+        /// <param name="scheduleEnqueueTimeUtc">Time of enqueue</param>
+        /// <returns>Sequence number that is needed for cancelling.</returns>
+        public Task<long> ScheduleMessageAsync(BrokeredMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
+        {
+            try
+            {
+                return this.innerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
+            }
+            catch (Exception)
+            {
+                // TODO: Log Complete Exception
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a scheduled message
+        /// </summary>
+        /// <param name="sequenceNumber">Returned on scheduling a message.</param>
+        /// <returns></returns>
+        public Task CancelScheduledMessageAsync(long sequenceNumber)
+        {
+            try
+            {
+                return this.innerSender.CancelScheduledMessageAsync(sequenceNumber);
+            }
+            catch (Exception)
+            {
+                // TODO: Log Complete Exception
+                throw;
+            }
         }
 
         protected MessageSender CreateMessageSender()

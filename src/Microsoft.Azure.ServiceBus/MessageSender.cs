@@ -48,31 +48,60 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageSendStop(this.ClientId);
         }
 
+        public Task<long> ScheduleMessageAsync(BrokeredMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
+        {
+            if (message == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(message));
+            }
+
+            if (scheduleEnqueueTimeUtc.CompareTo(DateTimeOffset.UtcNow) < 0)
+            {
+                throw Fx.Exception.ArgumentOutOfRange(
+                    nameof(scheduleEnqueueTimeUtc),
+                    scheduleEnqueueTimeUtc.ToString(),
+                    "Cannot schedule messages in the past");
+            }
+
+            message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
+            MessageSender.ValidateMessage(message);
+            return this.OnScheduleMessageAsync(message);
+        }
+
+        public Task CancelScheduledMessageAsync(long sequenceNumber)
+        {
+            return this.OnCancelScheduledMessageAsync(sequenceNumber);
+        }
+
         protected abstract Task OnSendAsync(IEnumerable<BrokeredMessage> brokeredMessages);
+
+        protected abstract Task<long> OnScheduleMessageAsync(BrokeredMessage brokeredMessage);
+
+        protected abstract Task OnCancelScheduledMessageAsync(long sequenceNumber);
 
         static int ValidateMessages(IEnumerable<BrokeredMessage> brokeredMessages)
         {
             int count = 0;
-
             if (brokeredMessages == null)
             {
                 throw Fx.Exception.ArgumentNull(nameof(brokeredMessages));
             }
+
             foreach (var message in brokeredMessages)
             {
                 count++;
-                if (message.IsLockTokenSet)
-                {
-                    throw Fx.Exception.Argument(nameof(brokeredMessages), "Cannot Send ReceivedMessages");
-                }
-            }
-
-            if (count == 0)
-            {
-                throw Fx.Exception.Argument(nameof(brokeredMessages), "BrokeredMessage List cannot be empty");
+                ValidateMessage(message);
             }
 
             return count;
+        }
+
+        static void ValidateMessage(BrokeredMessage brokeredMessage)
+        {
+            if (brokeredMessage.IsLockTokenSet)
+            {
+                throw Fx.Exception.Argument(nameof(brokeredMessage), "Cannot send a message that was already received.");
+            }
         }
     }
 }
