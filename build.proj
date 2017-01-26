@@ -171,14 +171,15 @@
     <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
   </Target>
  
-  <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
+  <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <!--<MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
              Targets="Clean" />-->
-    
+
     <MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"
              Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Clean" />
+
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 

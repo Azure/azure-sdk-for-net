@@ -51,6 +51,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         public override bool Execute()
         {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            foreach (ITaskItem sln in AllLibraries)
+            {   
+                sb.AppendFormat("{0},", sln.GetMetadata("FullPath"));
+            }
+
+            Log.LogMessage(MessageImportance.High, "We have found {0}", sb.ToString());
+
             var nonNetCoreAutoRestLibraries = new List<ITaskItem>();
             var netCoreAutoRestLibraries = new List<ITaskItem>();
             var netCoreLibraryTestOnes = new List<ITaskItem>();
@@ -95,9 +103,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     if (nPkgsList != null)
                     {
                         //We need to filter out projects from the final output to build and publish limited set of projects
-                        string projectDirPath = Path.GetDirectoryName(nugetProjects[0]);
-                        string projectDirName = Path.GetFileName(projectDirPath);
-                        string match = nPkgsList.Find((pn) => pn.Equals(projectDirName, System.StringComparison.OrdinalIgnoreCase));
+                        //Here we need to get to the name of the nuget.proj file with .nuget.proj
+                        string nugetProjName = Path.GetFileName(nugetProjects[0]);
+                        string projNameWithoutExt = Path.GetFileNameWithoutExtension(nugetProjName);
+                        projNameWithoutExt = Path.GetFileNameWithoutExtension(projNameWithoutExt);
+                        string match = nPkgsList.Find((pn) => pn.Equals(projNameWithoutExt, System.StringComparison.OrdinalIgnoreCase));
                         if (!string.IsNullOrEmpty(match))
                         {
                             nonNetCoreAutoRestLibraries.Add(solution);

@@ -95,7 +95,9 @@
  
   <Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
-
+	<Message Text="Trying to Create directory $(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
+	<MakeDir Directories="$(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(NuGetPublishingSource)', '^(?i)http'))" />
+	<Message Text="Publishing directory detected $(NuGetPublishingSource)" Condition="Exists($(NuGetPublishingSource))" />
     <PropertyGroup>
       <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
       <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
