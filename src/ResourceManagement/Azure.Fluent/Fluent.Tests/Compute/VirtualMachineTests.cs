@@ -43,7 +43,7 @@ namespace Fluent.Tests.Compute
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_DATACENTER)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012Datacenter)
                         .WithAdminUsername("Foo12")
                         .WithAdminPassword("BaR@12!Foo")
                         .WithSize(VirtualMachineSizeTypes.StandardD3)
@@ -63,7 +63,7 @@ namespace Fluent.Tests.Compute
 
                     // Fetch instance view
                     PowerState powerState = foundedVM.PowerState;
-                    Assert.True(powerState == PowerState.RUNNING);
+                    Assert.True(powerState == PowerState.Running);
                     VirtualMachineInstanceView instanceView = foundedVM.InstanceView;
                     Assert.NotNull(instanceView);
                     Assert.NotNull(instanceView.Statuses.Count > 0);
@@ -134,7 +134,7 @@ namespace Fluent.Tests.Compute
                                 .WithNewPrimaryNetwork(networkCreatable)
                                 .WithPrimaryPrivateIpAddressDynamic()
                                 .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                                 .WithRootUsername("tirekicker")
                                 .WithRootPassword("BaR@12!#")
                                 .WithNewStorageAccount(storageAccountCreatable);
@@ -219,7 +219,7 @@ namespace Fluent.Tests.Compute
                     .WithNewPrimaryNetwork("10.0.0.0/28")
                     .WithPrimaryPrivateIpAddressDynamic()
                     .WithExistingPrimaryPublicIpAddress(publicIpAddress)
-                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername(username)
                     .WithRootPassword(password)
                     .WithCustomData(cloudInitEncodedString)
@@ -267,7 +267,7 @@ namespace Fluent.Tests.Compute
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(username)
                         .WithRootPassword(password)
                         .Create();

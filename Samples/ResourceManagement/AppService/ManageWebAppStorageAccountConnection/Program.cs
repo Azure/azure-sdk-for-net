@@ -80,9 +80,9 @@ namespace ManageWebAppStorageAccountConnection
                         .WithExistingResourceGroup(ResourceGroupName)
                         .WithNewAppServicePlan(PlanName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .WithConnectionString("storage.ConnectionString", connectionString, ConnectionStringType.Custom)
                         .WithAppSetting("storage.ContainerName", ContainerName)
                         .Create();

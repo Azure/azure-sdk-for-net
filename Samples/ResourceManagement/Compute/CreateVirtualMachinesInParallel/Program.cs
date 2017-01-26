@@ -97,7 +97,7 @@ namespace CreateVirtualMachinesInParallel
                                 .WithNewPrimaryNetwork(networkCreatable)
                                 .WithPrimaryPrivateIpAddressDynamic()
                                 .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                                 .WithRootUsername(Username)
                                 .WithRootPassword(Password)
                                 .WithSize(VirtualMachineSizeTypes.StandardDS3V2)

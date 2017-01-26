@@ -31,13 +31,13 @@ namespace Azure.Tests.WebApp
                     .WithNewResourceGroup(GroupName)
                     .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.Standard_S2)
+                    .WithPricingTier(AppServicePricingTier.StandardS2)
                     .WithAppSetting("appkey", "appvalue")
                     .WithStickyAppSetting("stickykey", "stickyvalue")
                     .WithConnectionString("connectionName", "connectionValue", ConnectionStringType.Custom)
                     .WithStickyConnectionString("stickyName", "stickyValue", ConnectionStringType.Custom)
-                    .WithJavaVersion(JavaVersion.Java_1_7_0_51)
-                    .WithWebContainer(WebContainer.Tomcat_7_0_50)
+                    .WithJavaVersion(JavaVersion.V7_51)
+                    .WithWebContainer(WebContainer.Tomcat7_0_50)
                     .Create();
                 Assert.NotNull(webApp);
                 Assert.Equal(Region.USWest, webApp.Region);
@@ -45,11 +45,11 @@ namespace Azure.Tests.WebApp
                 // Create a deployment slot with empty config
                 var slot1 = webApp.DeploymentSlots.Define(SlotName1)
                     .WithBrandNewConfiguration()
-                    .WithPythonVersion(PythonVersion.Python_27)
+                    .WithPythonVersion(PythonVersion.V27)
                     .Create();
                 Assert.NotNull(slot1);
-                Assert.NotEqual(JavaVersion.Java_1_7_0_51, slot1.JavaVersion);
-                Assert.Equal(PythonVersion.Python_27, slot1.PythonVersion);
+                Assert.NotEqual(JavaVersion.V7_51, slot1.JavaVersion);
+                Assert.Equal(PythonVersion.V27, slot1.PythonVersion);
                 var appSettingMap = slot1.AppSettings;
                 Assert.False(appSettingMap.ContainsKey("appkey"));
                 Assert.False(appSettingMap.ContainsKey("stickykey"));
@@ -62,7 +62,7 @@ namespace Azure.Tests.WebApp
                     .WithConfigurationFromParent()
                     .Create();
                 Assert.NotNull(slot2);
-                Assert.Equal(JavaVersion.Java_1_7_0_51, slot2.JavaVersion);
+                Assert.Equal(JavaVersion.V7_51, slot2.JavaVersion);
                 appSettingMap = slot2.AppSettings;
                 Assert.Equal("appvalue", appSettingMap["appkey"].Value);
                 Assert.Equal(false, appSettingMap["appkey"].Sticky);
@@ -77,13 +77,13 @@ namespace Azure.Tests.WebApp
                 // Update deployment slot
                 slot2.Update()
                         .WithoutJava()
-                        .WithPythonVersion(PythonVersion.Python_34)
+                        .WithPythonVersion(PythonVersion.V34)
                         .WithAppSetting("slot2key", "slot2value")
                         .WithStickyAppSetting("sticky2key", "sticky2value")
                         .Apply();
                 Assert.NotNull(slot2);
                 Assert.Equal(JavaVersion.Off, slot2.JavaVersion);
-                Assert.Equal(PythonVersion.Python_34, slot2.PythonVersion);
+                Assert.Equal(PythonVersion.V34, slot2.PythonVersion);
                 appSettingMap = slot2.AppSettings;
                 Assert.Equal("slot2value", appSettingMap["slot2key"].Value);
 
@@ -93,7 +93,7 @@ namespace Azure.Tests.WebApp
                         .Create();
                 Assert.NotNull(slot3);
                 Assert.Equal(JavaVersion.Off, slot3.JavaVersion);
-                Assert.Equal(PythonVersion.Python_34, slot3.PythonVersion);
+                Assert.Equal(PythonVersion.V34, slot3.PythonVersion);
                 appSettingMap = slot3.AppSettings;
                 Assert.Equal("slot2value", appSettingMap["slot2key"].Value);
 
@@ -109,8 +109,8 @@ namespace Azure.Tests.WebApp
                 slot3.Swap(slot1.Name);
                 slot1 = webApp.DeploymentSlots.GetByName(SlotName1);
                 Assert.Equal(JavaVersion.Off, slot1.JavaVersion);
-                Assert.Equal(PythonVersion.Python_34, slot1.PythonVersion);
-                Assert.Equal(PythonVersion.Python_27, slot3.PythonVersion);
+                Assert.Equal(PythonVersion.V34, slot1.PythonVersion);
+                Assert.Equal(PythonVersion.V27, slot3.PythonVersion);
                 Assert.Equal("appvalue", slot1.AppSettings["appkey"].Value);
                 Assert.Equal("slot2value", slot1.AppSettings["slot2key"].Value);
                 Assert.Equal("sticky2value", slot3.AppSettings["sticky2key"].Value);

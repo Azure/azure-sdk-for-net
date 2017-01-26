@@ -9,9 +9,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public partial class PhpVersion
     {
         public static readonly PhpVersion Off = new PhpVersion("null");
-        public static readonly PhpVersion Php5_5 = new PhpVersion("5.5");
-        public static readonly PhpVersion Php5_6 = new PhpVersion("5.6");
-        public static readonly PhpVersion Php7 = new PhpVersion("7.0");
+        public static readonly PhpVersion V5_5 = new PhpVersion("5.5");
+        public static readonly PhpVersion V5_6 = new PhpVersion("5.6");
+        public static readonly PhpVersion V7 = new PhpVersion("7.0");
 
         private string value;
 

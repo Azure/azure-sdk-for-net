@@ -102,7 +102,7 @@ namespace ManageTrafficManager
                             .Define(planName)
                             .WithRegion(region)
                             .WithExistingResourceGroup(rgName)
-                            .WithPricingTier(AppServicePricingTier.Basic_B1)
+                            .WithPricingTier(AppServicePricingTier.BasicB1)
                             .Create();
                     Utilities.Log("Created app service plan " + planName);
                     Utilities.Print(appServicePlan);

@@ -84,7 +84,7 @@ namespace Azure.Tests.Common
                             .WithSubnet("subnet1")
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
+                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer14_04_Lts)
                             .WithRootUsername(userName)
                             .WithRootPassword("Abcdef.123456")
                             .WithNewAvailabilitySet(availabilitySetName)

@@ -48,7 +48,7 @@ namespace ManageVirtualMachine
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername(UserName)
                         .WithAdminPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
@@ -164,7 +164,7 @@ namespace ManageVirtualMachine
                         .WithSubnet("subnet1") // Referencing the default subnet name when no name specified at creation
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(UserName)
                         .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)

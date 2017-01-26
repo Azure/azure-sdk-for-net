@@ -63,7 +63,7 @@ namespace ManageVirtualMachinesInParallel
                         .WithNewPrimaryNetwork(creatableNetwork)
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername("tirekicker")
                         .WithRootPassword("12NewPA$$w0rd!")
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)

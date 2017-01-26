@@ -159,7 +159,7 @@ namespace ManageApplicationGateway
                                 .WithNewPrimaryNetwork(networkCreatable)
                                 .WithPrimaryPrivateIpAddressDynamic()
                                 .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                                 .WithRootUsername(UserName)
                                 .WithSsh(SshKey)
                                 .WithSize(VirtualMachineSizeTypes.StandardD3V2)

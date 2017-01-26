@@ -29,7 +29,7 @@ namespace Azure.Tests.WebApp
                     .WithNewResourceGroup(GroupName)
                     .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.Basic_B1)
+                    .WithPricingTier(AppServicePricingTier.BasicB1)
                     .WithNetFrameworkVersion(NetFrameworkVersion.V3_0)
                     .Create();
 
@@ -40,18 +40,18 @@ namespace Azure.Tests.WebApp
 
                 // Java version
                 webApp.Update()
-                    .WithJavaVersion(JavaVersion.Java_1_7_0_51)
-                    .WithWebContainer(WebContainer.Tomcat_7_0_50)
+                    .WithJavaVersion(JavaVersion.V7_51)
+                    .WithWebContainer(WebContainer.Tomcat7_0_50)
                     .Apply();
                 webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
-                Assert.Equal(JavaVersion.Java_1_7_0_51, webApp.JavaVersion);
+                Assert.Equal(JavaVersion.V7_51, webApp.JavaVersion);
 
                 // Python version
                 webApp.Update()
-                    .WithPythonVersion(PythonVersion.Python_34)
+                    .WithPythonVersion(PythonVersion.V34)
                     .Apply();
                 webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
-                Assert.Equal(PythonVersion.Python_34, webApp.PythonVersion);
+                Assert.Equal(PythonVersion.V34, webApp.PythonVersion);
 
                 // Default documents
                 var documentSize = webApp.DefaultDocuments.Count;

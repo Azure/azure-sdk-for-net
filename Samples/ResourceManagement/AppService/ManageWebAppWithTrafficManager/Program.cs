@@ -252,7 +252,7 @@ namespace ManageWebAppWithTrafficManager
                     .Define(name)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
-                    .WithPricingTier(AppServicePricingTier.Basic_B1)
+                    .WithPricingTier(AppServicePricingTier.BasicB1)
                     .Create();
         }
 

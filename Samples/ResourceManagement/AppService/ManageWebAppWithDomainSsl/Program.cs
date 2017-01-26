@@ -47,7 +47,7 @@ namespace ManageWebAppWithDomainSsl
                         .WithNewResourceGroup(rgName)
                         .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);

@@ -43,7 +43,7 @@ namespace ManageWebAppBasic
                         .WithNewResourceGroup(rg1Name)
                         .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -96,8 +96,8 @@ namespace ManageWebAppBasic
                 // Configure app 3 to have Java 8 enabled
                 Utilities.Log("Adding Java support to web app " + app3Name + "...");
                 app3.Update()
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Apply();
                 Utilities.Log("Java supported on web app " + app3Name + "...");
 

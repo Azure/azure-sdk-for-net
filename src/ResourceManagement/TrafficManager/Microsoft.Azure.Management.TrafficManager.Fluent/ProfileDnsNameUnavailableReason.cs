@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlByb2ZpbGVEbnNOYW1lVW5hdmFpbGFibGVSZWFzb24=
     public partial class ProfileDnsNameUnavailableReason 
     {
-        public static readonly ProfileDnsNameUnavailableReason Invalid = new ProfileDnsNameUnavailableReason("Invalid");
+        public static readonly ProfileDnsNameUnavailableReason NotValid = new ProfileDnsNameUnavailableReason("Invalid");
         public static readonly ProfileDnsNameUnavailableReason AlreadyExists = new ProfileDnsNameUnavailableReason("AlreadyExists");
 
         private string value;

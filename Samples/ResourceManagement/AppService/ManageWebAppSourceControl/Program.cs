@@ -54,9 +54,9 @@ namespace ManageWebAppSourceControl
                         .WithNewResourceGroup(rgName)
                         .WithNewAppServicePlan(planName)
                         .WithRegion(Region.USWest)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -89,8 +89,8 @@ namespace ManageWebAppSourceControl
                         .WithExistingResourceGroup(rgName)
                         .WithExistingAppServicePlan(plan)
                         .WithLocalGitSourceControl()
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Create();
 
                 Utilities.Log("Created web app " + app2.Name);

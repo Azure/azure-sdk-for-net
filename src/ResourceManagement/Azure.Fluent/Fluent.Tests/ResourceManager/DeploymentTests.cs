@@ -59,7 +59,7 @@ namespace Fluent.Tests.ResourceManager
 
                 // Try export template using resourcegroup
                 var resourceGroup = resourceManager.ResourceGroups.GetByName(rgName);
-                var exportedRG = resourceGroup.ExportTemplate(ResourceGroupExportTemplateOptions.INCLUDE_BOTH);
+                var exportedRG = resourceGroup.ExportTemplate(ResourceGroupExportTemplateOptions.IncludeBoth);
                 Assert.True(exportedRG.Template != null);
 
                 // Deployment operations

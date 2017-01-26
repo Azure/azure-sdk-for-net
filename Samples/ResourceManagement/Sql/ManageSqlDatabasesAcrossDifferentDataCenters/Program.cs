@@ -139,7 +139,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                             .WithSubnet(network.Subnets.Values.First().Name)
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                            .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                            .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                             .WithAdminUsername(administratorLogin)
                             .WithAdminPassword(administratorPassword)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2));

@@ -36,7 +36,7 @@ namespace Azure.Tests.WebApp
                     .WithNewResourceGroup(GroupName)
                     .WithNewAppServicePlan(AppServicePlanName)
                     .WithRegion(Region.USWest)
-                    .WithPricingTier(AppServicePricingTier.Basic_B1)
+                    .WithPricingTier(AppServicePricingTier.BasicB1)
                     .DefineHostnameBinding()
                         .WithAzureManagedDomain(domain)
                         .WithSubDomain(WebAppName)

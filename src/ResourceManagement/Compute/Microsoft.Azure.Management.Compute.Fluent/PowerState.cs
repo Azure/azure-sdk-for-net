@@ -14,32 +14,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Static value PowerState/running for PowerState.
         /// </summary>
-        public static readonly PowerState RUNNING = new PowerState("PowerState/running");
+        public static readonly PowerState Running = new PowerState("PowerState/running");
 
         /// <summary>
         /// Static value PowerState/deallocating for PowerState.
         /// </summary>
-        public static readonly PowerState DEALLOCATING = new PowerState("PowerState/deallocating");
+        public static readonly PowerState Deallocating = new PowerState("PowerState/deallocating");
 
         /// <summary>
         /// Static value PowerState/deallocated for PowerState.
         /// </summary>
-        public static readonly PowerState DEALLOCATED = new PowerState("PowerState/deallocated");
+        public static readonly PowerState Deallocated = new PowerState("PowerState/deallocated");
 
         /// <summary>
         /// Static value PowerState/starting for PowerState.
         /// </summary>
-        public static readonly PowerState STARTING = new PowerState("PowerState/starting");
+        public static readonly PowerState Starting = new PowerState("PowerState/starting");
 
         /// <summary>
         /// Static value PowerState/stopped for PowerState.
         /// </summary>
-        public static readonly PowerState STOPPED = new PowerState("PowerState/stopped");
+        public static readonly PowerState Stopped = new PowerState("PowerState/stopped");
 
         /// <summary>
         /// Static value PowerState/unknown for PowerState.
         /// </summary>
-        public static readonly PowerState UNKNOWN = new PowerState("PowerState/unknown");
+        public static readonly PowerState Unknown = new PowerState("PowerState/unknown");
 
         private string value;
 
