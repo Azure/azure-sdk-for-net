@@ -22,26 +22,21 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Route Filter Rule Resource
     /// </summary>
     [JsonTransformation]
-    public partial class RouteFitlerRule : SubResource
+    public partial class PatchRouteFilterRule : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the RouteFitlerRule class.
+        /// Initializes a new instance of the PatchRouteFilterRule class.
         /// </summary>
-        public RouteFitlerRule() { }
+        public PatchRouteFilterRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the RouteFitlerRule class.
+        /// Initializes a new instance of the PatchRouteFilterRule class.
         /// </summary>
-        /// <param name="location">Resource location.</param>
+        /// <param name="access">The access type of the rule. Valid values are:
+        /// 'Allow', 'Deny'. Possible values include: 'Allow', 'Deny'</param>
+        /// <param name="communities">The collection for bgp community values
+        /// to filter on. e.g. ['12076:5010','12076:5020']</param>
         /// <param name="id">Resource ID.</param>
-        /// <param name="access">The access type of the rule. Possible values
-        /// are: 'Allow', 'Deny. Possible values include: 'Allow',
-        /// 'Deny'</param>
-        /// <param name="routeFilterRuleType">The type of the rule. Possible
-        /// values are: 'Community. Possible values include:
-        /// 'Community'</param>
-        /// <param name="communities">The collection for bgp communities to
-        /// filter on.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values are: 'Updating', 'Deleting', 'Succeeded'
         /// and 'Failed'.</param>
@@ -51,35 +46,34 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="tags">Resource tags.</param>
-        public RouteFitlerRule(string location, string id = default(string), string access = default(string), string routeFilterRuleType = default(string), IList<string> communities = default(IList<string>), string provisioningState = default(string), string name = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public PatchRouteFilterRule(string access, IList<string> communities, string id = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id)
         {
             Access = access;
-            RouteFilterRuleType = routeFilterRuleType;
             Communities = communities;
             ProvisioningState = provisioningState;
             Name = name;
-            Location = location;
             Etag = etag;
             Tags = tags;
         }
+        /// <summary>
+        /// Static constructor for PatchRouteFilterRule class.
+        /// </summary>
+        static PatchRouteFilterRule()
+        {
+            RouteFilterRuleType = "Community";
+        }
 
         /// <summary>
-        /// Gets or sets the access type of the rule. Possible values are:
-        /// 'Allow', 'Deny. Possible values include: 'Allow', 'Deny'
+        /// Gets or sets the access type of the rule. Valid values are:
+        /// 'Allow', 'Deny'. Possible values include: 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "properties.access")]
         public string Access { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the rule. Possible values are: 'Community.
-        /// Possible values include: 'Community'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.routeFilterRuleType")]
-        public string RouteFilterRuleType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the collection for bgp communities to filter on.
+        /// Gets or sets the collection for bgp community values to filter on.
+        /// e.g. ['12076:5010','12076:5020']
         /// </summary>
         [JsonProperty(PropertyName = "properties.communities")]
         public IList<string> Communities { get; set; }
@@ -99,12 +93,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets or sets resource location.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -118,6 +106,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// The rule type of the rule. Valid value is: 'Community'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeFilterRuleType")]
+        public static string RouteFilterRuleType { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -125,9 +119,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
+            if (Access == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Access");
+            }
+            if (Communities == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Communities");
             }
         }
     }

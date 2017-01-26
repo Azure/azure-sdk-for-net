@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='ruleName'>
             /// The name of the rule.
             /// </param>
-            public static RouteFitlerRule Get(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName)
+            public static RouteFilterRule Get(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName)
             {
                 return operations.GetAsync(resourceGroupName, routeFilterName, ruleName).GetAwaiter().GetResult();
             }
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteFitlerRule> GetAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RouteFilterRule> GetAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, routeFilterName, ruleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeFilterRuleParameters'>
             /// Parameters supplied to the create or update route filter rule operation.
             /// </param>
-            public static RouteFitlerRule CreateOrUpdate(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFitlerRule routeFilterRuleParameters)
+            public static RouteFilterRule CreateOrUpdate(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters).GetAwaiter().GetResult();
             }
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteFitlerRule> CreateOrUpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFitlerRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RouteFilterRule> CreateOrUpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeFilterRuleParameters'>
             /// Parameters supplied to the update route filter rule operation.
             /// </param>
-            public static RouteFitlerRule Update(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFitlerRule routeFilterRuleParameters)
+            public static RouteFilterRule Update(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFilterRule routeFilterRuleParameters)
             {
                 return operations.UpdateAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters).GetAwaiter().GetResult();
             }
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteFitlerRule> UpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFitlerRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RouteFilterRule> UpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeFilterName'>
             /// The name of the route filter.
             /// </param>
-            public static IPage<RouteFitlerRule> ListByRouteFilter(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName)
+            public static IPage<RouteFilterRule> ListByRouteFilter(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName)
             {
                 return operations.ListByRouteFilterAsync(resourceGroupName, routeFilterName).GetAwaiter().GetResult();
             }
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteFitlerRule>> ListByRouteFilterAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RouteFilterRule>> ListByRouteFilterAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByRouteFilterWithHttpMessagesAsync(resourceGroupName, routeFilterName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeFilterRuleParameters'>
             /// Parameters supplied to the create or update route filter rule operation.
             /// </param>
-            public static RouteFitlerRule BeginCreateOrUpdate(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFitlerRule routeFilterRuleParameters)
+            public static RouteFilterRule BeginCreateOrUpdate(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters).GetAwaiter().GetResult();
             }
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteFitlerRule> BeginCreateOrUpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFitlerRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RouteFilterRule> BeginCreateOrUpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, RouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeFilterRuleParameters'>
             /// Parameters supplied to the update route filter rule operation.
             /// </param>
-            public static RouteFitlerRule BeginUpdate(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFitlerRule routeFilterRuleParameters)
+            public static RouteFilterRule BeginUpdate(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFilterRule routeFilterRuleParameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters).GetAwaiter().GetResult();
             }
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteFitlerRule> BeginUpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFitlerRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RouteFilterRule> BeginUpdateAsync(this IRouteFilterRulesOperations operations, string resourceGroupName, string routeFilterName, string ruleName, PatchRouteFilterRule routeFilterRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RouteFitlerRule> ListByRouteFilterNext(this IRouteFilterRulesOperations operations, string nextPageLink)
+            public static IPage<RouteFilterRule> ListByRouteFilterNext(this IRouteFilterRulesOperations operations, string nextPageLink)
             {
                 return operations.ListByRouteFilterNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteFitlerRule>> ListByRouteFilterNextAsync(this IRouteFilterRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RouteFilterRule>> ListByRouteFilterNextAsync(this IRouteFilterRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByRouteFilterNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

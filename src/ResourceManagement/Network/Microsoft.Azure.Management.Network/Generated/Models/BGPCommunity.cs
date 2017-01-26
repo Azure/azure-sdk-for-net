@@ -30,14 +30,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the BGPCommunity class.
         /// </summary>
-        /// <param name="region">The region which the service support. For
-        /// microsoft services, e.g. O365/CRM, it will be global, For public
-        /// services, e.g. storage, it will be the region customer is
-        /// using.</param>
-        /// <param name="communityName">The name of the bgp community.</param>
-        /// <param name="communityVaule">The value of the bgp community. It is
-        /// 2 byte integer:2 byte integer, e.g. 12076:5010. All bgp community
-        /// value are published publicly.</param>
+        /// <param name="region">The region which the service support. e.g. For
+        /// O365, region is Global.</param>
+        /// <param name="communityName">The name of the bgp community. e.g.
+        /// Skype.</param>
+        /// <param name="communityVaule">The value of the bgp community. For
+        /// more information:
+        /// https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.</param>
         /// <param name="communityPrefixes">The prefixes that the bgp community
         /// contains.</param>
         public BGPCommunity(string region = default(string), string communityName = default(string), string communityVaule = default(string), IList<string> communityPrefixes = default(IList<string>))
@@ -49,23 +48,21 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the region which the service support. For microsoft
-        /// services, e.g. O365/CRM, it will be global, For public services,
-        /// e.g. storage, it will be the region customer is using.
+        /// Gets or sets the region which the service support. e.g. For O365,
+        /// region is Global.
         /// </summary>
         [JsonProperty(PropertyName = "region")]
         public string Region { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the bgp community.
+        /// Gets or sets the name of the bgp community. e.g. Skype.
         /// </summary>
         [JsonProperty(PropertyName = "communityName")]
         public string CommunityName { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the bgp community. It is 2 byte integer:2
-        /// byte integer, e.g. 12076:5010. All bgp community value are
-        /// published publicly.
+        /// Gets or sets the value of the bgp community. For more information:
+        /// https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.
         /// </summary>
         [JsonProperty(PropertyName = "communityVaule")]
         public string CommunityVaule { get; set; }

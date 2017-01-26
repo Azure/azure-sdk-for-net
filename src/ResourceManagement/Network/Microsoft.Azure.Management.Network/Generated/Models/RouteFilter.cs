@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public RouteFilter(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<RouteFitlerRule> rules = default(IList<RouteFitlerRule>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string provisioningState = default(string), string etag = default(string))
+        public RouteFilter(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<RouteFilterRule> rules = default(IList<RouteFilterRule>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Rules = rules;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// route filter.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rules")]
-        public IList<RouteFitlerRule> Rules { get; set; }
+        public IList<RouteFilterRule> Rules { get; set; }
 
         /// <summary>
         /// Gets a collection of references to express route circuit peerings.

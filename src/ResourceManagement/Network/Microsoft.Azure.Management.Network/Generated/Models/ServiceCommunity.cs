@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// A service community object.
+    /// Service Community Properties.
     /// </summary>
     [JsonTransformation]
     public partial class ServiceCommunity : Resource
@@ -37,28 +37,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="state">For using certain microsoft service, customer
-        /// needs to go through WARM room to get special permission. If the
-        /// customer subscription is not allowed to use given service, the
-        /// state will be disabled, otherwise it will be enabled. Possible
-        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="communities">Get a list of bgp communities.</param>
-        public ServiceCommunity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string state = default(string), IList<BGPCommunity> communities = default(IList<BGPCommunity>))
+        public ServiceCommunity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<BGPCommunity> communities = default(IList<BGPCommunity>))
             : base(id, name, type, location, tags)
         {
-            State = state;
             Communities = communities;
         }
-
-        /// <summary>
-        /// Gets for using certain microsoft service, customer needs to go
-        /// through WARM room to get special permission. If the customer
-        /// subscription is not allowed to use given service, the state will be
-        /// disabled, otherwise it will be enabled. Possible values include:
-        /// 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; protected set; }
 
         /// <summary>
         /// Gets or sets get a list of bgp communities.

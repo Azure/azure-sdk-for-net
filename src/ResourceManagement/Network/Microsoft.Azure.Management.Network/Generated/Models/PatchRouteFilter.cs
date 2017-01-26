@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        public PatchRouteFilter(string id = default(string), IList<RouteFitlerRule> rules = default(IList<RouteFitlerRule>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public PatchRouteFilter(string id = default(string), IList<RouteFilterRule> rules = default(IList<RouteFilterRule>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id)
         {
             Rules = rules;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// route filter.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rules")]
-        public IList<RouteFitlerRule> Rules { get; set; }
+        public IList<RouteFilterRule> Rules { get; set; }
 
         /// <summary>
         /// Gets a collection of references to express route circuit peerings.
