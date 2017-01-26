@@ -43,7 +43,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     Sku = new Sku(SkuNameEnum.Standard)
                 };
@@ -59,8 +58,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var storageInsight = new StorageInsight
                 {
-                    Name = storageInsightName,
-                    Location = resourceGroup.Location,
                     Tables = new[] { "WADWindowsEventLogsTable", "LinuxSyslogVer2v0" },
                     Containers = new[] { "wad-iis-logfiles" },
                     StorageAccount =
@@ -82,8 +79,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 var storageInsightNameTwo = TestUtilities.GenerateName("AzTestSI");
                 var storageInsightTwo = new StorageInsight
                 {
-                    Name = storageInsightNameTwo,
-                    Location = resourceGroup.Location,
                     Tables = new[] { "WADWindowsEventLogsTable", "LinuxSyslogVer2v0" },
                     Containers = null,
                     StorageAccount =
@@ -142,8 +137,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 string workspaceName = TestUtilities.GenerateName("AzTest");
                 var storageInsight = new StorageInsight
                 {
-                    Name = storageInsightName,
-                    Location = resourceGroup.Location,
                     StorageAccount =
                             new StorageAccount
                             {

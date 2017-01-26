@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="name">The name of the field the search query is sorted
         /// on.</param>
-        /// <param name="order">The sort order of the search.</param>
+        /// <param name="order">The sort order of the search. Possible values
+        /// include: 'asc', 'desc'</param>
         public SearchSort(string name = default(string), string order = default(string))
         {
             Name = name;
@@ -35,7 +36,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort order of the search.
+        /// Gets or sets the sort order of the search. Possible values include:
+        /// 'asc', 'desc'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "order")]
         public string Order { get; set; }

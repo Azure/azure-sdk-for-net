@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
          /// <summary>
          /// Gets the link to the next page.
          /// </summary>
-         [Newtonsoft.Json.JsonProperty("nextLink")]
+         [Newtonsoft.Json.JsonProperty("")]
          public System.String NextPageLink { get; private set; }
 
          [Newtonsoft.Json.JsonProperty("value")]

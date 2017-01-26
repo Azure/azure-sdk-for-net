@@ -20,18 +20,40 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// Initializes a new instance of the StorageInsightStatus class.
         /// </summary>
         /// <param name="state">The state of the storage insight connection to
-        /// the workspace</param>
-        public StorageInsightStatus(string state = default(string))
+        /// the workspace. Possible values include: 'OK', 'ERROR'</param>
+        /// <param name="description">Description of the state of the storage
+        /// insight.</param>
+        public StorageInsightStatus(string state, string description = default(string))
         {
             State = state;
+            Description = description;
         }
 
         /// <summary>
         /// Gets or sets the state of the storage insight connection to the
-        /// workspace
+        /// workspace. Possible values include: 'OK', 'ERROR'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
+        /// <summary>
+        /// Gets or sets description of the state of the storage insight.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (State == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "State");
+            }
+        }
     }
 }

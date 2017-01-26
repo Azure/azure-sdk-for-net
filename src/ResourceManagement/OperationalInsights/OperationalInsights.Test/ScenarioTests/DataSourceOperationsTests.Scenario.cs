@@ -43,7 +43,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     Sku = new Sku(SkuNameEnum.Standard)
                 };
@@ -59,7 +58,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 string dataSourceName = TestUtilities.GenerateName("AzTestDS");
                 var createParameters = new DataSource
                 {
-                    Name = dataSourceName,
                     Kind = "AzureAuditLog",
                     Properties = JToken.Parse("{\"LinkedResourceId\":\"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/microsoft.insights/eventtypes/management\"}")
                 };
@@ -73,7 +71,7 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // Create a second data source for list testing
                 var dataSourceNameTwo = TestUtilities.GenerateName("AzTestDS");
-                createParameters.Name = dataSourceNameTwo;
+                //createParameters.Name = dataSourceNameTwo;
                 createParameters.Properties = JToken.Parse("{'LinkedResourceId':'/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management'}");
                 createResponse = client.DataSources.CreateOrUpdate(resourceGroupName, workspaceName, dataSourceNameTwo, createParameters);
                 TestHelper.ValidateDatasource(createParameters, createResponse);
@@ -87,7 +85,7 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // Perform an update on one of the data sources
                 createResponse.Properties = JToken.Parse("{'LinkedResourceId':'/subscriptions/1b51d7a0-d97f-456f-914e-18cdcbedf1ce/providers/microsoft.insights/eventtypes/management'}");
-                createResponse.Name = dataSourceNameTwo;
+                //createResponse.Name = dataSourceNameTwo;
                 var updateResponse = client.DataSources.CreateOrUpdate(resourceGroupName, workspaceName, createResponse.Name, createResponse);
                 TestHelper.ValidateDatasource(createResponse, updateResponse);
 
@@ -115,7 +113,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     Sku = new Sku(SkuNameEnum.Standard)
                 };
@@ -133,7 +130,6 @@ namespace OperationalInsights.Test.ScenarioTests
                     string windowsEventDataSourceName = TestUtilities.GenerateName("AzTestDSWE");
                     var createParameters = new DataSource
                     {
-                        Name = windowsEventDataSourceName,
                         Kind = DataSourceKind.WindowsEvent,
                         Properties = JToken.Parse("{\"eventLogName\": \"" + ("windowsEvent" + i) + "\", \"eventTypes\": [{\"eventType\": \"Error\"}]}")
                     };
@@ -171,7 +167,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var createParameters = new DataSource
                 {
-                    Name = dataSourceName,
                     Kind = "AzureAuditLog",
                     Properties = JToken.Parse("{'LinkedResourceId':'/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management'}")
                 };

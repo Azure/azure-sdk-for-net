@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
     public static partial class WorkspacesOperationsExtensions
     {
             /// <summary>
-            /// Disables an intelligence back for a given workspace.
+            /// Disables an intelligence pack for a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Disables an intelligence back for a given workspace.
+            /// Disables an intelligence pack for a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Enables an intelligence back for a given workspace.
+            /// Enables an intelligence pack for a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Enables an intelligence back for a given workspace.
+            /// Enables an intelligence pack for a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static WorkspaceListManagementGroupsResult ListManagementGroups(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
+            public static System.Collections.Generic.IEnumerable<ManagementGroup> ListManagementGroups(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IWorkspacesOperations)s).ListManagementGroupsAsync(resourceGroupName, workspaceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<WorkspaceListManagementGroupsResult> ListManagementGroupsAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<ManagementGroup>> ListManagementGroupsAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListManagementGroupsWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='resourceGroupName'>
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
-            public static WorkspaceListResult ListByResourceGroup(this IWorkspacesOperations operations, string resourceGroupName)
+            public static System.Collections.Generic.IEnumerable<Workspace> ListByResourceGroup(this IWorkspacesOperations operations, string resourceGroupName)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IWorkspacesOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<WorkspaceListResult> ListByResourceGroupAsync(this IWorkspacesOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<Workspace>> ListByResourceGroupAsync(this IWorkspacesOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static WorkspaceListResult List(this IWorkspacesOperations operations)
+            public static System.Collections.Generic.IEnumerable<Workspace> List(this IWorkspacesOperations operations)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IWorkspacesOperations)s).ListAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<WorkspaceListResult> ListAsync(this IWorkspacesOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<Workspace>> ListAsync(this IWorkspacesOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='id'>
             /// The id of the search that will have results updated. You can get the id
-            /// from the response of the response of the GetResults call.
+            /// from the response of the GetResults call.
             /// </param>
             public static SearchResultsResponse UpdateSearchResults(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, string id)
             {
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// </param>
             /// <param name='id'>
             /// The id of the search that will have results updated. You can get the id
-            /// from the response of the response of the GetResults call.
+            /// from the response of the GetResults call.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -657,6 +657,56 @@ namespace Microsoft.Azure.Management.OperationalInsights
             public static async System.Threading.Tasks.Task<Workspace> BeginCreateOrUpdateAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, Workspace parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Submit a search for a given workspace. The response will contain an id to
+            /// track the search. User can use the id to poll the search status and get the
+            /// full search result later if the search takes long time to finish.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to get. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// Log Analytics workspace name
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters required to execute a search query.
+            /// </param>
+            public static SearchResultsResponse BeginGetSearchResults(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, SearchParameters parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IWorkspacesOperations)s).BeginGetSearchResultsAsync(resourceGroupName, workspaceName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Submit a search for a given workspace. The response will contain an id to
+            /// track the search. User can use the id to poll the search status and get the
+            /// full search result later if the search takes long time to finish.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to get. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// Log Analytics workspace name
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters required to execute a search query.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<SearchResultsResponse> BeginGetSearchResultsAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, SearchParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginGetSearchResultsWithHttpMessagesAsync(resourceGroupName, workspaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

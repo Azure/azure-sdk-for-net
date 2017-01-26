@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Metadata items for saved search items.
+    /// Schema metadata for search.
     /// </summary>
     public partial class SearchMetadataSchema
     {
@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Initializes a new instance of the SearchMetadataSchema class.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="version">The version.</param>
+        /// <param name="name">The name of the metadata schema.</param>
+        /// <param name="version">The version of the metadata schema.</param>
         public SearchMetadataSchema(string name = default(string), int? version = default(int?))
         {
             Name = name;
@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the name of the metadata schema.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the version.
+        /// Gets or sets the version of the metadata schema.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
         public int? Version { get; set; }

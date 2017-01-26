@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace that contains the storage insight.
+        /// Log Analytics Workspace name that contains the
+        /// storageInsightsConfigs resource
         /// </param>
         /// <param name='storageInsightName'>
         /// Name of the storageInsightsConfigs resource
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Log Analytics Workspace name that will contain the
+        /// Log Analytics Workspace name that contains the
         /// storageInsightsConfigs resource
         /// </param>
         /// <param name='storageInsightName'>

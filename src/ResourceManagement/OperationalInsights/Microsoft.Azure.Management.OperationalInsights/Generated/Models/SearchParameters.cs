@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Initializes a new instance of the SearchParameters class.
         /// </summary>
+        /// <param name="query">The query to search.</param>
         /// <param name="top">The number to get from the top.</param>
         /// <param name="highlight">The highlight that looks for all occurences
         /// of a string.</param>
-        /// <param name="query">The query to search.</param>
         /// <param name="start">The start date filter, so the only query
         /// results returned are after this date.</param>
         /// <param name="end">The end date filter, so the only query results
         /// returned are before this date.</param>
-        public SearchParameters(long? top = default(long?), SearchHighlight highlight = default(SearchHighlight), string query = default(string), System.DateTime? start = default(System.DateTime?), System.DateTime? end = default(System.DateTime?))
+        public SearchParameters(string query, long? top = default(long?), SearchHighlight highlight = default(SearchHighlight), System.DateTime? start = default(System.DateTime?), System.DateTime? end = default(System.DateTime?))
         {
             Top = top;
             Highlight = highlight;
@@ -69,5 +69,18 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "end")]
         public System.DateTime? End { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Query == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Query");
+            }
+        }
     }
 }

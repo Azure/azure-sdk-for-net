@@ -27,7 +27,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 string workspaceName = TestUtilities.GenerateName("AzTest");
                 var workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     Tags = new Dictionary<string, string> { { "tag1", "val1" } },
                     Sku = new Sku(SkuNameEnum.PerNode),
@@ -63,7 +62,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     CustomerId = Guid.NewGuid().ToString(),
                 };
@@ -75,7 +73,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 // Create a real workspace
                 workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     Sku = new Sku(SkuNameEnum.Free)
                 };
@@ -93,7 +90,7 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // List the management groups connected to the workspace
                 var managementGroupsResponse = client.Workspaces.ListManagementGroups(resourceGroupName, workspaceName);
-                Assert.Equal(0, managementGroupsResponse.Value.Count());
+                Assert.Equal(0, managementGroupsResponse.Count());
 
                 // List the usage for a workspace
                 var usagesResponse = client.Workspaces.ListUsages(resourceGroupName, workspaceName);
@@ -122,7 +119,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 string workspaceName = TestUtilities.GenerateName("AzTest");
                 var workspace = new Workspace()
                 {
-                    Name = workspaceName,
                     Location = resourceGroup.Location,
                     Tags = new Dictionary<string, string> { { "tag1", "val1" } },
                     Sku = new Sku(SkuNameEnum.PerNode),

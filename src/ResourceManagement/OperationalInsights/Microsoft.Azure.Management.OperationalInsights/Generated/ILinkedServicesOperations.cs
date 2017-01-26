@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// linkedServices resource
         /// </param>
         /// <param name='linkedServiceName'>
-        /// The parameters required to create or update a linked service.
+        /// Name of the linkedServices resource
         /// </param>
         /// <param name='parameters'>
         /// The parameters required to create or update a linked service.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the
+        /// Name of the Log Analytics Workspace that contains the
         /// linkedServices resource
         /// </param>
         /// <param name='linkedServiceName'>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the
+        /// Name of the Log Analytics Workspace that contains the
         /// linkedServices resource
         /// </param>
         /// <param name='linkedServiceName'>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the linked
+        /// Name of the Log Analytics Workspace that contains the linked
         /// services.
         /// </param>
         /// <param name='customHeaders'>
@@ -128,6 +128,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<LinkedServiceListResult>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<LinkedService>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

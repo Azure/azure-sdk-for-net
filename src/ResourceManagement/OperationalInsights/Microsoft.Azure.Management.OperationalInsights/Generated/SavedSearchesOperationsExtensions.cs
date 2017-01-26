@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='parameters'>
             /// The parameters required to save a search.
             /// </param>
-            public static SavedSearch CreateOrUpdate(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchName, SavedSearchCreateOrUpdateParameters parameters)
+            public static SavedSearch CreateOrUpdate(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchName, SavedSearch parameters)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((ISavedSearchesOperations)s).CreateOrUpdateAsync(resourceGroupName, workspaceName, savedSearchName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<SavedSearch> CreateOrUpdateAsync(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchName, SavedSearchCreateOrUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<SavedSearch> CreateOrUpdateAsync(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchName, SavedSearch parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, savedSearchName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

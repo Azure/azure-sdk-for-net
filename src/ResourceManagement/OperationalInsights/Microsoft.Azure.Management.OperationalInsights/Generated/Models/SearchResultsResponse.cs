@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the search, which includes the full url.
+        /// Gets the id of the search, which includes the full url.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the metadata from search results.

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// resource
         /// </param>
         /// <param name='linkedServiceName'>
-        /// The parameters required to create or update a linked service.
+        /// Name of the linkedServices resource
         /// </param>
         /// <param name='parameters'>
         /// The parameters required to create or update a linked service.
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the linkedServices
+        /// Name of the Log Analytics Workspace that contains the linkedServices
         /// resource
         /// </param>
         /// <param name='linkedServiceName'>
@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the linkedServices
+        /// Name of the Log Analytics Workspace that contains the linkedServices
         /// resource
         /// </param>
         /// <param name='linkedServiceName'>
@@ -693,7 +693,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the linked services.
+        /// Name of the Log Analytics Workspace that contains the linked services.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -713,7 +713,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<LinkedServiceListResult>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<LinkedService>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -858,7 +858,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<LinkedServiceListResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<LinkedService>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -871,7 +871,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<LinkedServiceListResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<LinkedService>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SavedSearch>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string savedSearchName, SavedSearchCreateOrUpdateParameters parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SavedSearch>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string savedSearchName, SavedSearch parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets the specified saved search for a given workspace.
         /// </summary>

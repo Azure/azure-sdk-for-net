@@ -294,7 +294,8 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The name of the workspace that contains the storage insight.
+        /// Log Analytics Workspace name that contains the storageInsightsConfigs
+        /// resource
         /// </param>
         /// <param name='storageInsightName'>
         /// Name of the storageInsightsConfigs resource
@@ -507,7 +508,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Log Analytics Workspace name that will contain the storageInsightsConfigs
+        /// Log Analytics Workspace name that contains the storageInsightsConfigs
         /// resource
         /// </param>
         /// <param name='storageInsightName'>

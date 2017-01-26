@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the saved search.
+        /// Gets the id of the saved search.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the etag of the saved search.

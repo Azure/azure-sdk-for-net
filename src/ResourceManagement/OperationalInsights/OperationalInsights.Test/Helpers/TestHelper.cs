@@ -94,7 +94,6 @@ namespace OperationalInsights.Tests.Helpers
         {
             Assert.NotNull(actual);
             Assert.NotNull(actual.Id);
-            Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Location, actual.Location);
             Assert.Equal(WorkspaceResourceType, actual.Type);
             if (expected.RetentionInDays.HasValue)
@@ -134,7 +133,6 @@ namespace OperationalInsights.Tests.Helpers
         {
             Assert.NotNull(actual);
             Assert.NotNull(actual.Id);
-            Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(expected.Kind, actual.Kind);
             Assert.Equal(DataSourceResourceType, actual.Type);
 
@@ -164,7 +162,6 @@ namespace OperationalInsights.Tests.Helpers
         {
             Assert.NotNull(actual);
             Assert.NotNull(actual.Id);
-            Assert.Equal(expected.Name, actual.Name);
             Assert.Equal(StorageInsightResourceType, actual.Type);
             if (expected.Tags != null)
             {

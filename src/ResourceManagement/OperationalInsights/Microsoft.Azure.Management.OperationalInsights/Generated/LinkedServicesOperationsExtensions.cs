@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// resource
             /// </param>
             /// <param name='linkedServiceName'>
-            /// The parameters required to create or update a linked service.
+            /// Name of the linkedServices resource
             /// </param>
             /// <param name='parameters'>
             /// The parameters required to create or update a linked service.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// resource
             /// </param>
             /// <param name='linkedServiceName'>
-            /// The parameters required to create or update a linked service.
+            /// Name of the linkedServices resource
             /// </param>
             /// <param name='parameters'>
             /// The parameters required to create or update a linked service.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contain the linkedServices
+            /// Name of the Log Analytics Workspace that contains the linkedServices
             /// resource
             /// </param>
             /// <param name='linkedServiceName'>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contain the linkedServices
+            /// Name of the Log Analytics Workspace that contains the linkedServices
             /// resource
             /// </param>
             /// <param name='linkedServiceName'>
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contain the linkedServices
+            /// Name of the Log Analytics Workspace that contains the linkedServices
             /// resource
             /// </param>
             /// <param name='linkedServiceName'>
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contain the linkedServices
+            /// Name of the Log Analytics Workspace that contains the linkedServices
             /// resource
             /// </param>
             /// <param name='linkedServiceName'>
@@ -170,9 +170,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contain the linked services.
+            /// Name of the Log Analytics Workspace that contains the linked services.
             /// </param>
-            public static LinkedServiceListResult ListByWorkspace(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName)
+            public static System.Collections.Generic.IEnumerable<LinkedService> ListByWorkspace(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((ILinkedServicesOperations)s).ListByWorkspaceAsync(resourceGroupName, workspaceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -187,12 +187,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contain the linked services.
+            /// Name of the Log Analytics Workspace that contains the linked services.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<LinkedServiceListResult> ListByWorkspaceAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<LinkedService>> ListByWorkspaceAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {

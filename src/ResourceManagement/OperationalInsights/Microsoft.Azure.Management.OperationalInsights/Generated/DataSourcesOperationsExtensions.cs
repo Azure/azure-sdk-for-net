@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contains the datasource.
+            /// Name of the Log Analytics Workspace that contains the datasource.
             /// </param>
             /// <param name='dataSourceName'>
             /// Name of the datasource.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that will contains the datasource.
+            /// Name of the Log Analytics Workspace that contains the datasource.
             /// </param>
             /// <param name='dataSourceName'>
             /// Name of the datasource.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that contain the the datasource.
+            /// Name of the Log Analytics Workspace that contains the datasource.
             /// </param>
             /// <param name='dataSourceName'>
             /// Name of the datasource
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace that contain the the datasource.
+            /// Name of the Log Analytics Workspace that contains the datasource.
             /// </param>
             /// <param name='dataSourceName'>
             /// Name of the datasource
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The workspace that contains the data sources.
             /// </param>
             /// <param name='skiptoken'>
-            /// Token for paging support.
+            /// Starting point of the collection of data source instances.
             /// </param>
             public static Microsoft.Rest.Azure.IPage<DataSource> ListByWorkspace(this IDataSourcesOperations operations, Microsoft.Rest.Azure.OData.ODataQuery<DataSourceFilter> odataQuery, string resourceGroupName, string workspaceName, string skiptoken = default(string))
             {
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The workspace that contains the data sources.
             /// </param>
             /// <param name='skiptoken'>
-            /// Token for paging support.
+            /// Starting point of the collection of data source instances.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

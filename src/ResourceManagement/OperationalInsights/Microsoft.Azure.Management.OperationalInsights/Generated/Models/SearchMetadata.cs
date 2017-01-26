@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="searchId">The request id of the search.</param>
         /// <param name="resultType">The search result type.</param>
-        /// <param name="total">The total search results.</param>
+        /// <param name="total">The total number of search results.</param>
         /// <param name="top">The number of top search results.</param>
         /// <param name="id">The id of the search results request.</param>
         /// <param name="coreSummaries">The core summaries.</param>
@@ -29,14 +29,16 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="startTime">The start time for the search.</param>
         /// <param name="lastUpdated">The time of last update.</param>
         /// <param name="eTag">The ETag of the search results.</param>
-        /// <param name="sort">Gets or sets sort.</param>
+        /// <param name="sort">How the results are sorted.</param>
         /// <param name="requestTime">The request time.</param>
         /// <param name="aggregatedValueField">The aggregated value
         /// field.</param>
         /// <param name="aggregatedGroupingFields">The aggregated grouping
         /// fields.</param>
-        /// <param name="sum">The sum.</param>
-        /// <param name="max">The max.</param>
+        /// <param name="sum">The sum of all aggregates returned in the result
+        /// set.</param>
+        /// <param name="max">The max of all aggregates returned in the result
+        /// set.</param>
         /// <param name="schema">The schema.</param>
         public SearchMetadata(string searchId = default(string), string resultType = default(string), long? total = default(long?), long? top = default(long?), string id = default(string), System.Collections.Generic.IList<CoreSummary> coreSummaries = default(System.Collections.Generic.IList<CoreSummary>), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? lastUpdated = default(System.DateTime?), string eTag = default(string), System.Collections.Generic.IList<SearchSort> sort = default(System.Collections.Generic.IList<SearchSort>), long? requestTime = default(long?), string aggregatedValueField = default(string), string aggregatedGroupingFields = default(string), long? sum = default(long?), long? max = default(long?), SearchMetadataSchema schema = default(SearchMetadataSchema))
         {
@@ -72,7 +74,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string ResultType { get; set; }
 
         /// <summary>
-        /// Gets or sets the total search results.
+        /// Gets or sets the total number of search results.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "total")]
         public long? Total { get; set; }
@@ -120,7 +122,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string ETag { get; set; }
 
         /// <summary>
-        /// Gets or sets sort.
+        /// Gets or sets how the results are sorted.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sort")]
         public System.Collections.Generic.IList<SearchSort> Sort { get; set; }
@@ -144,13 +146,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string AggregatedGroupingFields { get; set; }
 
         /// <summary>
-        /// Gets or sets the sum.
+        /// Gets or sets the sum of all aggregates returned in the result set.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sum")]
         public long? Sum { get; set; }
 
         /// <summary>
-        /// Gets or sets the max.
+        /// Gets or sets the max of all aggregates returned in the result set.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "max")]
         public long? Max { get; set; }

@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// field is stored.</param>
         /// <param name="facet">The boolean that indicates whether or not the
         /// field is a facet.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="displayName">The display name.</param>
+        /// <param name="name">The name of the schema.</param>
+        /// <param name="displayName">The display name of the schema.</param>
         /// <param name="type">The type.</param>
         /// <param name="ownerType">The array of workflows containing the
         /// field.</param>
@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the name of the schema.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name.
+        /// Gets or sets the display name of the schema.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }

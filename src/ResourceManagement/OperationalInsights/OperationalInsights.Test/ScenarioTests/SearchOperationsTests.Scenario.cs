@@ -126,7 +126,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
                 string newSavedSearchId = "test-new-saved-search-id-2015";
 
-                SavedSearchCreateOrUpdateParameters parameters = new SavedSearchCreateOrUpdateParameters();
+                SavedSearch parameters = new SavedSearch();
                 parameters.Version = 1;
                 parameters.Query = "* | measure Count() by Computer";
                 parameters.DisplayName = "Create or Update Saved Search Test";

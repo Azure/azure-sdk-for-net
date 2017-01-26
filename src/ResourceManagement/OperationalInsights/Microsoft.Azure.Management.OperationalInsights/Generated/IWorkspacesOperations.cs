@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
     public partial interface IWorkspacesOperations
     {
         /// <summary>
-        /// Disables an intelligence back for a given workspace.
+        /// Disables an intelligence pack for a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DisableIntelligencePackWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string intelligencePackName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Enables an intelligence back for a given workspace.
+        /// Enables an intelligence pack for a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<WorkspaceListManagementGroupsResult>> ListManagementGroupsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<ManagementGroup>>> ListManagementGroupsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets workspaces in a resource group.
         /// </summary>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<WorkspaceListResult>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Workspace>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets the workspaces in a subscription.
         /// </summary>
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<WorkspaceListResult>> ListWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Workspace>>> ListWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Create or update a workspace.
         /// </summary>
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </param>
         /// <param name='id'>
         /// The id of the search that will have results updated. You can get
-        /// the id from the response of the response of the GetResults call.
+        /// the id from the response of the GetResults call.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -423,5 +423,37 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Thrown when a required parameter is null
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Workspace>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Workspace parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Submit a search for a given workspace. The response will contain an
+        /// id to track the search. User can use the id to poll the search
+        /// status and get the full search result later if the search takes
+        /// long time to finish.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to get. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Log Analytics workspace name
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to execute a search query.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<SearchResultsResponse>> BeginGetSearchResultsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, SearchParameters parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

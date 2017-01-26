@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// The top level storage insight resource container.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class StorageInsight : Resource
+    public partial class StorageInsight : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageInsight class.
@@ -22,10 +22,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="storageAccount">The storage account connection
         /// details</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="containers">The names of the blob containers that the
         /// workspace should read</param>
@@ -33,8 +32,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// workspace should read</param>
         /// <param name="status">The status of the storage insight</param>
         /// <param name="eTag">The ETag of the storage insight.</param>
-        public StorageInsight(StorageAccount storageAccount, string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<string> containers = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> tables = default(System.Collections.Generic.IList<string>), StorageInsightStatus status = default(StorageInsightStatus), string eTag = default(string))
-            : base(id, name, type, location, tags)
+        public StorageInsight(StorageAccount storageAccount, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<string> containers = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> tables = default(System.Collections.Generic.IList<string>), StorageInsightStatus status = default(StorageInsightStatus), string eTag = default(string))
+            : base(id, name, type, tags)
         {
             Containers = containers;
             Tables = tables;
@@ -64,10 +63,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public StorageAccount StorageAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets the status of the storage insight
+        /// Gets the status of the storage insight
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
-        public StorageInsightStatus Status { get; set; }
+        public StorageInsightStatus Status { get; private set; }
 
         /// <summary>
         /// Gets or sets the ETag of the storage insight.
@@ -86,6 +85,14 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             if (StorageAccount == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "StorageAccount");
+            }
+            if (this.StorageAccount != null)
+            {
+                this.StorageAccount.Validate();
+            }
+            if (this.Status != null)
+            {
+                this.Status.Validate();
             }
         }
     }

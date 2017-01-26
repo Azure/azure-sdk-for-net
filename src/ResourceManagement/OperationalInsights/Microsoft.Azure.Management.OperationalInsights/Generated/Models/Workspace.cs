@@ -20,10 +20,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Initializes a new instance of the Workspace class.
         /// </summary>
+        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">The provisioning state of the
         /// workspace. Possible values include: 'Creating', 'Succeeded',
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// -1 means Unlimited retention for the Unlimited Sku. 730 days is the
         /// maximum allowed for all other Skus. </param>
         /// <param name="eTag">The ETag of the workspace.</param>
-        public Workspace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string provisioningState = default(string), string source = default(string), string customerId = default(string), string portalUrl = default(string), Sku sku = default(Sku), int? retentionInDays = default(int?), string eTag = default(string))
-            : base(id, name, type, location, tags)
+        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string provisioningState = default(string), string source = default(string), string customerId = default(string), string portalUrl = default(string), Sku sku = default(Sku), int? retentionInDays = default(int?), string eTag = default(string))
+            : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             Source = source;
@@ -116,8 +116,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (this.Sku != null)
             {
                 this.Sku.Validate();

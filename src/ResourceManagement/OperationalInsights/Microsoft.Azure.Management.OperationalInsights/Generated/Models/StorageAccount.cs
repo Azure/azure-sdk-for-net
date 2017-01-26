@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="id">The Azure Resource Manager ID of the storage
         /// account resource.</param>
         /// <param name="key">The storage account key.</param>
-        public StorageAccount(string id = default(string), string key = default(string))
+        public StorageAccount(string id, string key)
         {
             Id = id;
             Key = key;
@@ -41,5 +41,22 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
+            }
+            if (Key == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Key");
+            }
+        }
     }
 }

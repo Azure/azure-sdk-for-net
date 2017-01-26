@@ -53,8 +53,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contains the
-        /// datasource.
+        /// Name of the Log Analytics Workspace that contains the datasource.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource.
@@ -80,8 +79,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contain the the
-        /// datasource.
+        /// Name of the Log Analytics Workspace that contains the datasource.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource
@@ -117,7 +115,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The workspace that contains the data sources.
         /// </param>
         /// <param name='skiptoken'>
-        /// Token for paging support.
+        /// Starting point of the collection of data source instances.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contains the datasource.
+        /// Name of the Log Analytics Workspace that contains the datasource.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource.
@@ -477,7 +477,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The name of the resource group to get. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contain the the datasource.
+        /// Name of the Log Analytics Workspace that contains the datasource.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource
@@ -697,7 +697,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The workspace that contains the data sources.
         /// </param>
         /// <param name='skiptoken'>
-        /// Token for paging support.
+        /// Starting point of the collection of data source instances.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -893,7 +893,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DataSource>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<DataSource>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -1062,7 +1062,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DataSource>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<DataSource>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

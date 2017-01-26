@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// <summary>
     /// Datasources under OMS Workspace.
     /// </summary>
-    public partial class DataSource : Resource
+    public partial class DataSource : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the DataSource class.
@@ -19,6 +19,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <summary>
         /// Initializes a new instance of the DataSource class.
         /// </summary>
+        /// <param name="properties">The data source properties in raw json
+        /// format, each kind of data source have it's own schema.</param>
         /// <param name="kind">Possible values include: 'AzureActivityLog',
         /// 'ChangeTrackingPath', 'ChangeTrackingDefaultPath',
         /// 'ChangeTrackingDefaultRegistry', 'ChangeTrackingCustomRegistry',
@@ -26,16 +28,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// 'LinuxPerformanceObject', 'LinuxPerformanceCollection',
         /// 'LinuxSyslog', 'LinuxSyslogCollection', 'WindowsEvent',
         /// 'WindowsPerformanceCounter'</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="properties">The data source properties in raw json
-        /// format, each kind of data source have it's own schema.</param>
         /// <param name="eTag">The ETag of the data source.</param>
-        public DataSource(string kind, string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), object properties = default(object), string eTag = default(string))
-            : base(id, name, type, location, tags)
+        public DataSource(object properties, string kind, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string eTag = default(string))
+            : base(id, name, type, tags)
         {
             Properties = properties;
             ETag = eTag;
@@ -75,6 +74,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Properties == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Properties");
+            }
             if (Kind == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Kind");

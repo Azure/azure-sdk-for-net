@@ -45,7 +45,6 @@ namespace OperationalInsights.Test.ScenarioTests
                 // Create a linked service
                 var createParameters = new LinkedService
                 {
-                    Name = linkedServiceName,
                     ResourceId = accountResourceId
                 };
                 var createResponse = client.LinkedServices.CreateOrUpdate(resourceGroupName, workspaceName, linkedServiceName, createParameters);
@@ -57,13 +56,12 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // List the linked services in the workspace
                 var listResponse = client.LinkedServices.ListByWorkspace(resourceGroupName, workspaceName);
-                Assert.Equal(1, listResponse.Value.Count);
-                Assert.Single(listResponse.Value.Where(w => w.ResourceId.Equals(accountResourceId, StringComparison.OrdinalIgnoreCase)));
+                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse.Where(w => w.ResourceId.Equals(accountResourceId, StringComparison.OrdinalIgnoreCase)));
 
                 var accountResourceId2 = string.Format(accountResourceIdFromat, subId, resourceGroupName, automationAccountName2);
                 var updateParameters = new LinkedService
                 {
-                    Name = linkedServiceName,
                     ResourceId = accountResourceId2
                 };
 
@@ -92,7 +90,6 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 var createParameters = new LinkedService
                 {
-                    Name = linkedServiceName,
                     ResourceId = accountResourceId
                 };
 

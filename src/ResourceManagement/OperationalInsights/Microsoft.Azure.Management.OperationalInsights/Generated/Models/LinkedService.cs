@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// The top level Linked service resource container.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class LinkedService : Resource
+    public partial class LinkedService : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the LinkedService class.
@@ -22,13 +22,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="resourceId">The resource id of the resource that will
         /// be linked to the workspace.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags</param>
-        public LinkedService(string resourceId, string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
-            : base(id, name, type, location, tags)
+        public LinkedService(string resourceId, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+            : base(id, name, type, tags)
         {
             ResourceId = resourceId;
         }
