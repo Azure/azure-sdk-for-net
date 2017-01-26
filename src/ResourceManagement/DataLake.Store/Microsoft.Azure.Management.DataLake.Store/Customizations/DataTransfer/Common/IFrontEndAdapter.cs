@@ -20,7 +20,7 @@ using System.IO;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Defines operations that the DataLakeUploader needs from the FrontEnd in order to operate
+    /// Defines operations that the DataLakeTransferClient needs from the FrontEnd in order to operate
     /// </summary>
     public interface IFrontEndAdapter
     {

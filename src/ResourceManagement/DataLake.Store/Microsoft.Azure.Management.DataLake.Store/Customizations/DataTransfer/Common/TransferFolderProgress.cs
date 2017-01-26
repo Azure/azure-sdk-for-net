@@ -23,7 +23,7 @@ using System.Threading;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Reports progress on an upload for a folder.
+    /// Reports progress on an transfer for a folder.
     /// </summary>
     public class TransferFolderProgress
     {
@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 var toAdd = new TransferProgress(fileMetadata);
                 if (fileMetadata.Status == SegmentTransferStatus.Complete)
                 {
-                    this.UploadedByteCount += fileMetadata.FileLength;
-                    this.UploadedFileCount++;
-                    toAdd.UploadedByteCount = toAdd.TotalFileLength;
+                    this.TransferedByteCount += fileMetadata.FileLength;
+                    this.TransferedFileCount++;
+                    toAdd.TransferedByteCount = toAdd.TotalFileLength;
                     foreach(var segment in toAdd._segmentProgress)
                     {
-                        segment.UploadedByteCount = segment.Length;
+                        segment.TransferedByteCount = segment.Length;
                     }
                 }
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region Properties
 
         /// <summary>
-        /// Gets a value indicating the total length of the file to upload.
+        /// Gets a value indicating the total length of the file to transfer.
         /// </summary>
         /// <value>
         /// The total length of the file.
@@ -112,20 +112,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public int TotalFileCount { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating the number of bytes that have been uploaded so far.
+        /// Gets a value indicating the number of bytes that have been transfered so far.
         /// </summary>
         /// <value>
-        /// The uploaded byte count.
+        /// The transfered byte count.
         /// </value>
-        public long UploadedByteCount { get; private set; }
+        public long TransferedByteCount { get; private set; }
 
         /// <summary>
-        /// Gets the uploaded file count.
+        /// Gets the transfered file count.
         /// </summary>
         /// <value>
-        /// The uploaded file count.
+        /// The transfered file count.
         /// </value>
-        public long UploadedFileCount { get; private set; }
+        public long TransferedFileCount { get; private set; }
 
         /// <summary>
         /// Gets the count of files that failed.
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long FailedFileCount { get; private set; }
 
         /// <summary>
-        /// Gets the upload progress for a particular file.
+        /// Gets the transfer progress for a particular file.
         /// </summary>
         /// <param name="segmentNumber">The sequence number of the file to retrieve information for</param>
         /// <returns></returns>
@@ -153,15 +153,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Updates the progress to indicate that a file failed
         /// </summary>
-        internal void OnFileUploadThreadAborted(TransferMetadata failedFile)
+        internal void OnFileTransferThreadAborted(TransferMetadata failedFile)
         {
             ++this.FailedFileCount;
             
-            var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(failedFile.UploadId, StringComparison.OrdinalIgnoreCase)).First();
+            var previousProgress = _fileProgress.Where(p => p.TransferId.Equals(failedFile.TransferId, StringComparison.OrdinalIgnoreCase)).First();
             foreach (var segment in previousProgress._segmentProgress)
             {
                 // only fail out segments that haven't been completed.
-                if (segment.Length != segment.UploadedByteCount)
+                if (segment.Length != segment.TransferedByteCount)
                 {
                     segment.IsFailed = true;
                 }
@@ -177,24 +177,24 @@ namespace Microsoft.Azure.Management.DataLake.Store
         private void SetSegmentProgress(CancellationToken token)
         {
             TransferProgress segmentProgress;
-            while (this.UploadedFileCount + this.FailedFileCount < this.TotalFileCount)
+            while (this.TransferedFileCount + this.FailedFileCount < this.TotalFileCount)
             {
                 token.ThrowIfCancellationRequested();
                 if(_progressBacklog.TryDequeue(out segmentProgress))
                 {
                     token.ThrowIfCancellationRequested();
-                    var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(segmentProgress.UploadId, StringComparison.OrdinalIgnoreCase)).First();
+                    var previousProgress = _fileProgress.Where(p => p.TransferId.Equals(segmentProgress.TransferId, StringComparison.OrdinalIgnoreCase)).First();
 
-                    long deltaLength = segmentProgress.UploadedByteCount - previousProgress.UploadedByteCount;
-                    this.UploadedByteCount += deltaLength;
+                    long deltaLength = segmentProgress.TransferedByteCount - previousProgress.TransferedByteCount;
+                    this.TransferedByteCount += deltaLength;
 
-                    // check to see if this upload is complete and that we haven't already marked it as complete
-                    if (segmentProgress.UploadedByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
+                    // check to see if this transfer is complete and that we haven't already marked it as complete
+                    if (segmentProgress.TransferedByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
                     {
-                        ++this.UploadedFileCount;
+                        ++this.TransferedFileCount;
                     }
 
-                    // Iterate through all the segments inside this upload we are setting to get them up-to-date
+                    // Iterate through all the segments inside this transfer we are setting to get them up-to-date
                     foreach (var segment in segmentProgress._segmentProgress)
                     {
                         token.ThrowIfCancellationRequested();

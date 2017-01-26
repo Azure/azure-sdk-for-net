@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Represents an exception that is thrown when an upload fails.
+    /// Represents an exception that is thrown when an transfer fails.
     /// </summary>
 #if !PORTABLE
     [Serializable]

@@ -28,9 +28,9 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Represents general metadata pertaining to an upload.
+    /// Represents general metadata pertaining to a transfer.
     /// </summary>
-    [DebuggerDisplay("FileCount = {FileCount}, UploadId = {UploadId}, IsRecursive = {IsRecursive}")]
+    [DebuggerDisplay("FileCount = {FileCount}, TransferId = {TransferId}, IsRecursive = {IsRecursive}")]
     public class TransferFolderMetadata
     {
 
@@ -52,27 +52,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Constructs a new UploadMetadata from the given parameters.
+        /// Constructs a new TransferFolderMetadata object from the given parameters.
         /// </summary>
         /// <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
-        /// <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
+        /// <param name="transferParameters">The parameters to use for constructing this metadata.</param>
         /// <param name="frontend">The frontend to use when generating per file metadata.</param>
-        public TransferFolderMetadata(string metadataFilePath, TransferParameters uploadParameters, IFrontEndAdapter frontend)
+        public TransferFolderMetadata(string metadataFilePath, TransferParameters transferParameters, IFrontEndAdapter frontend)
         {
             this.MetadataFilePath = metadataFilePath;
            
-            this.UploadId = Guid.NewGuid().ToString("N");
-            this.InputFolderPath = uploadParameters.InputFilePath;
-            this.TargetStreamFolderPath = uploadParameters.TargetStreamPath.TrimEnd('/');
-            this.IsRecursive = uploadParameters.IsRecursive;
+            this.TransferId = Guid.NewGuid().ToString("N");
+            this.InputFolderPath = transferParameters.InputFilePath;
+            this.TargetStreamFolderPath = transferParameters.TargetStreamPath.TrimEnd('/');
+            this.IsRecursive = transferParameters.IsRecursive;
             // get this list of all files in the source directory, depending on if this is recursive or not.
             ConcurrentQueue<string> allFiles;
             ConcurrentQueue<Exception> exceptions = new ConcurrentQueue<Exception>();
 
             Dictionary<string, long> downloadFiles = new Dictionary<string, long>();
-            if (uploadParameters.IsDownload)
+            if (transferParameters.IsDownload)
             {
-                foreach (var entry in frontend.ListDirectory(uploadParameters.InputFilePath, uploadParameters.IsRecursive))
+                foreach (var entry in frontend.ListDirectory(transferParameters.InputFilePath, transferParameters.IsRecursive))
                 {
                     downloadFiles.Add(entry.Key, entry.Value);
                 }
@@ -109,26 +109,26 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             var paramsPerFile = new TransferParameters
                             (
                                 curFile,
-                                String.Format("{0}{1}{2}", this.TargetStreamFolderPath, uploadParameters.IsDownload ? "\\" : "/", relativeFilePath),
-                                uploadParameters.AccountName,
-                                uploadParameters.PerFileThreadCount,
-                                uploadParameters.ConcurrentFileCount,
-                                uploadParameters.IsOverwrite,
-                                uploadParameters.IsResume,
-                                uploadParameters.IsBinary,
-                                uploadParameters.IsRecursive,
-                                uploadParameters.IsDownload,
-                                uploadParameters.MaxSegementLength,
-                                uploadParameters.LocalMetadataLocation
+                                String.Format("{0}{1}{2}", this.TargetStreamFolderPath, transferParameters.IsDownload ? "\\" : "/", relativeFilePath),
+                                transferParameters.AccountName,
+                                transferParameters.PerFileThreadCount,
+                                transferParameters.ConcurrentFileCount,
+                                transferParameters.IsOverwrite,
+                                transferParameters.IsResume,
+                                transferParameters.IsBinary,
+                                transferParameters.IsRecursive,
+                                transferParameters.IsDownload,
+                                transferParameters.MaxSegementLength,
+                                transferParameters.LocalMetadataLocation
                             );
 
                             long size = -1;
-                            if (uploadParameters.IsDownload && downloadFiles != null)
+                            if (transferParameters.IsDownload && downloadFiles != null)
                             {
                                 size = downloadFiles[curFile];
                             }
-                            var uploadMetadataPath = Path.Combine(uploadParameters.LocalMetadataLocation, string.Format("{0}.upload.xml", Path.GetFileName(curFile)));
-                            var eachFileMetadata = new TransferMetadata(uploadMetadataPath, paramsPerFile, frontend, size);
+                            var transferMetadataPath = Path.Combine(transferParameters.LocalMetadataLocation, string.Format("{0}.transfer.xml", Path.GetFileName(curFile)));
+                            var eachFileMetadata = new TransferMetadata(transferMetadataPath, paramsPerFile, frontend, size);
                             lock (indexIncrementLock)
                             {
                                 this.Files[currentIndex] = eachFileMetadata;
@@ -161,16 +161,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating the unique identifier associated with this upload.
+        /// Gets or sets a value indicating the unique identifier associated with this transfer.
         /// </summary>
         /// <value>
-        /// The upload identifier.
+        /// The transfer identifier.
         /// </value>
-        [JsonProperty(PropertyName = "UploadId")]
-        public string UploadId { get; set; }
+        [JsonProperty(PropertyName = "TransferId")]
+        public string TransferId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the full path to the file to be uploaded.
+        /// Gets or sets a value indicating the full path to the file to be transfered.
         /// </summary>
         /// <value>
         /// The input file path.
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string InputFolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the full stream folder path that will be used as the root folder for all files and folders being uploaded.
+        /// Gets or sets a value indicating the full stream folder path that will be used as the root folder for all files and folders being transfered.
         /// </summary>
         /// <value>
         /// The target stream path.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string TargetStreamFolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the number of files in this upload.
+        /// Gets or sets a value indicating the number of files in this transfer.
         /// </summary>
         /// <value>
         /// The segment count.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long TotalFileBytes { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this is recurisve directory upload or a flat directory upload
+        /// Gets a value indicating whether this is recurisve directory transfer or a flat directory transfer
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is recursive; otherwise, <c>false</c>.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsRecursive { get; set; }
 
         /// <summary>
-        /// Gets a pointer to an array of file upload metadata. This is used for each file that is being uploaded.
+        /// Gets a pointer to an array of file transfer metadata. This is used for each file that is being transfered.
         /// </summary>
         /// <value>
         /// The segments.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region File Operations
 
         /// <summary>
-        /// Attempts to load an UploadFolderMetadata object from the given file.
+        /// Attempts to load an TransferFolderMetadata object from the given file.
         /// </summary>
         /// <param name="filePath">The full path to the file where to load the metadata from</param>
         /// <param name="threadCount">The number of threads to use while populating the metadata. This is determined by the concurrent file count</param>
@@ -275,8 +275,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                     // just in case.
                                     break;
                                 }
-                                var uploadMetadataPath = Path.Combine(localMetadataFolder, string.Format("{0}.upload.xml", Path.GetFileName(result.Files[j].InputFilePath)));
-                                result.Files[j].MetadataFilePath = uploadMetadataPath;
+                                var transferMetadataPath = Path.Combine(localMetadataFolder, string.Format("{0}.transfer.xml", Path.GetFileName(result.Files[j].InputFilePath)));
+                                result.Files[j].MetadataFilePath = transferMetadataPath;
                             }
                         });
 

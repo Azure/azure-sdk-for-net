@@ -19,7 +19,7 @@ using System;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Reports progress on an upload.
+    /// Reports progress on a transfer.
     /// </summary>
     public class TransferProgress
     {
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         {
             this.TotalFileLength = metadata.FileLength;
             this.TotalSegmentCount = metadata.SegmentCount;
-            this.UploadId = metadata.UploadId;
+            this.TransferId = metadata.TransferId;
             _segmentProgress = new SegmentTransferProgress[this.TotalSegmentCount];
 
             foreach (var segmentInfo in metadata.Segments)
             {
                 if (segmentInfo.Status == SegmentTransferStatus.Complete)
                 {
-                    this.UploadedByteCount += segmentInfo.Length;
+                    this.TransferedByteCount += segmentInfo.Length;
                     _segmentProgress[segmentInfo.SegmentNumber] = new SegmentTransferProgress(segmentInfo.SegmentNumber, segmentInfo.Length, segmentInfo.Length, false);
                 }
                 else
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region Properties
 
         /// <summary>
-        /// Gets a value indicating the total length of the file to upload.
+        /// Gets a value indicating the total length of the file to transfer.
         /// </summary>
         /// <value>
         /// The total length of the file.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long TotalFileLength { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating the total number of segments to upload.
+        /// Gets a value indicating the total number of segments to transfer.
         /// </summary>
         /// <value>
         /// The total segment count.
@@ -90,24 +90,24 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public int TotalSegmentCount { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating the number of bytes that have been uploaded so far.
+        /// Gets a value indicating the number of bytes that have been transfered so far.
         /// </summary>
         /// <value>
-        /// The uploaded byte count.
+        /// The transfered byte count.
         /// </value>
-        public long UploadedByteCount { get; internal set; }
+        public long TransferedByteCount { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the upload identifier, which is used by folder upload to find each
-        /// individual file upload when updating progress.
+        /// Gets or sets the transfer identifier, which is used by folder transfer to find each
+        /// individual file transfer when updating progress.
         /// </summary>
         /// <value>
-        /// The upload identifier.
+        /// The transfer identifier.
         /// </value>
-        internal string UploadId { get; set; }
+        internal string TransferId { get; set; }
 
         /// <summary>
-        /// Gets the upload progress for a particular segment.
+        /// Gets the transfer progress for a particular segment.
         /// </summary>
         /// <param name="segmentNumber">The sequence number of the segment to retrieve information for</param>
         /// <returns></returns>
@@ -126,12 +126,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 var previousProgress = _segmentProgress[segmentProgress.SegmentNumber];
 
-                //calculate how many additional bytes we have uploaded so far
-                //the caveat here is that if a segment failed, we need to report it as 0 bytes uploaded (even though we did upload something; upon resume, we will reupload from scratch)
-                long deltaLength = segmentProgress.IsFailed ? 0 : segmentProgress.UploadedByteCount;
-                deltaLength -= previousProgress.IsFailed ? 0 : previousProgress.UploadedByteCount;
+                //calculate how many additional bytes we have transfered so far
+                //the caveat here is that if a segment failed, we need to report it as 0 bytes transfered (even though we did upload something; upon resume, we will reupload from scratch)
+                long deltaLength = segmentProgress.IsFailed ? 0 : segmentProgress.TransferedByteCount;
+                deltaLength -= previousProgress.IsFailed ? 0 : previousProgress.TransferedByteCount;
 
-                this.UploadedByteCount += deltaLength;
+                this.TransferedByteCount += deltaLength;
 
                 _segmentProgress[segmentProgress.SegmentNumber] = segmentProgress;
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     }
                     catch
                     {
-                        // don't break the upload if the progress tracker threw one our way
+                        // don't break the transfer if the progress tracker threw one our way
                     }
                 }
             }

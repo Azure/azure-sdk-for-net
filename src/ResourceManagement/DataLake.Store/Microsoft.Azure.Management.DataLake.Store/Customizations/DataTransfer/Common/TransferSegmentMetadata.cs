@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             this.Status = SegmentTransferStatus.Pending;
             string ignored;
             var targetStreamName = metadata.SplitTargetStreamPathByName(out ignored);
-            this.Path = string.Format("{0}/{1}.{2}.segment{3}", metadata.SegmentStreamDirectory, targetStreamName, metadata.UploadId, this.SegmentNumber);
+            this.Path = string.Format("{0}/{1}.{2}.segment{3}", metadata.SegmentStreamDirectory, targetStreamName, metadata.TransferId, this.SegmentNumber);
             this.Offset = this.SegmentNumber * metadata.SegmentLength; // segment number is zero-based
             this.Length = CalculateSegmentLength(this.SegmentNumber, metadata);
         }

@@ -20,32 +20,32 @@ using System.Runtime.Serialization;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Defines various states that a segment upload can have
+    /// Defines various states that a segment transfer can have
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]    
     public enum SegmentTransferStatus
     {
 
         /// <summary>
-        /// Indicates that the segment is currently scheduled for upload.
+        /// Indicates that the segment is currently scheduled for transfer.
         /// </summary>
         [EnumMember(Value = "Pending")]
         Pending = 0,
 
         /// <summary>
-        /// Indicates that the segment is currently being uploaded.
+        /// Indicates that the segment is currently being transfered.
         /// </summary>
         [EnumMember(Value = "InProgress")]
         InProgress = 1,
 
         /// <summary>
-        /// Indicates that the segment was not uploaded successfully.
+        /// Indicates that the segment was not transfered successfully.
         /// </summary>
         [EnumMember(Value = "Failed")]
         Failed = 2,
 
         /// <summary>
-        /// Indicates that the segment was successfully uploaded.
+        /// Indicates that the segment was successfully transfered.
         /// </summary>
         [EnumMember(Value = "Complete")]
         Complete = 3

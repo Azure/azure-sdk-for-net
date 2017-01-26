@@ -17,7 +17,7 @@
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Represents a class used for reporting upload progress on a segment.
+    /// Represents a class used for reporting transfer progress on a segment.
     /// </summary>
     public class SegmentTransferProgress
     {
@@ -27,13 +27,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         /// <param name="segmentNumber">The segment number the report refers to.</param>
         /// <param name="segmentLength">The segment length, in bytes.</param>
-        /// <param name="uploadedByteCount">The number of bytes uploaded so far.</param>
-        /// <param name="isFailed">Whether the upload operation failed.</param>
-        internal SegmentTransferProgress(int segmentNumber, long segmentLength, long uploadedByteCount, bool isFailed)
+        /// <param name="transferedByteCount">The number of bytes transfered so far.</param>
+        /// <param name="isFailed">Whether the transfer operation failed.</param>
+        internal SegmentTransferProgress(int segmentNumber, long segmentLength, long transferedByteCount, bool isFailed)
         {
             this.SegmentNumber = segmentNumber;
             this.Length = segmentLength;
-            this.UploadedByteCount = uploadedByteCount;
+            this.TransferedByteCount = transferedByteCount;
             this.IsFailed = isFailed;
         }
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long Length { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the upload failed or not.
+        /// Gets a value indicating whether the transfer failed or not.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is failed; otherwise, <c>false</c>.
@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsFailed { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the number of bytes uploaded so far for this segment.
+        /// Gets a value indicating the number of bytes transfered so far for this segment.
         /// </summary>
         /// <value>
-        /// The uploaded byte count.
+        /// The transfered byte count.
         /// </value>
-        public long UploadedByteCount { get; internal set; }
+        public long TransferedByteCount { get; internal set; }
 
     }
 }

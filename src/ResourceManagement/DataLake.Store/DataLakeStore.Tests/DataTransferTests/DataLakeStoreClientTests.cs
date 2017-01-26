@@ -170,7 +170,7 @@ namespace DataLakeStore.Tests
                     lock (syncRoot)
                     {
                         //it is possible that these come out of order because of race conditions (multiple threads reporting at the same time); only update if we are actually making progress
-                        if (progress == null || progress.UploadedByteCount < p.UploadedByteCount)
+                        if (progress == null || progress.TransferedByteCount < p.TransferedByteCount)
                         {
                             progress = p;
                         }
@@ -218,7 +218,7 @@ namespace DataLakeStore.Tests
                     lock (syncRoot)
                     {
                         //it is possible that these come out of order because of race conditions (multiple threads reporting at the same time); only update if we are actually making progress
-                        if (progress == null || progress.UploadedByteCount < p.UploadedByteCount)
+                        if (progress == null || progress.TransferedByteCount < p.TransferedByteCount)
                         {
                             progress = p;
                         }
@@ -298,7 +298,7 @@ namespace DataLakeStore.Tests
                     lock (syncRoot)
                     {
                         //it is possible that these come out of order because of race conditions (multiple threads reporting at the same time); only update if we are actually making progress
-                        if (progress == null || progress.UploadedByteCount < p.UploadedByteCount)
+                        if (progress == null || progress.TransferedByteCount < p.TransferedByteCount)
                         {
                             progress = p;
                         }
@@ -405,7 +405,7 @@ namespace DataLakeStore.Tests
                     lock (syncRoot)
                     {
                         //it is possible that these come out of order because of race conditions (multiple threads reporting at the same time); only update if we are actually making progress
-                        if (progress == null || progress.UploadedByteCount < p.UploadedByteCount)
+                        if (progress == null || progress.TransferedByteCount < p.TransferedByteCount)
                         {
                             progress = p;
                         }
@@ -737,7 +737,7 @@ namespace DataLakeStore.Tests
         {
             Assert.Equal(fileLength, progress.TotalFileLength);
             Assert.True(1 <= progress.TotalSegmentCount, "UploadProgress: Unexpected value for TotalSegmentCount");
-            Assert.Equal(progress.TotalFileLength, progress.UploadedByteCount);
+            Assert.Equal(progress.TotalFileLength, progress.TransferedByteCount);
 
             long uploadedByteSum = 0;
             for (int i = 0; i < progress.TotalSegmentCount; i++)
@@ -745,11 +745,11 @@ namespace DataLakeStore.Tests
                 var segmentProgress = progress.GetSegmentProgress(i);
                 Assert.False(segmentProgress.IsFailed, string.Format("UploadProgress: Segment {0} seems to have failed", i));
                 Assert.Equal(i, segmentProgress.SegmentNumber);
-                Assert.Equal(segmentProgress.Length, segmentProgress.UploadedByteCount);
-                uploadedByteSum += segmentProgress.UploadedByteCount;
+                Assert.Equal(segmentProgress.Length, segmentProgress.TransferedByteCount);
+                uploadedByteSum += segmentProgress.TransferedByteCount;
             }
 
-            Assert.Equal(progress.UploadedByteCount, uploadedByteSum);
+            Assert.Equal(progress.TransferedByteCount, uploadedByteSum);
         }
 
         /// <summary>
@@ -762,8 +762,8 @@ namespace DataLakeStore.Tests
         {
             Assert.Equal(totalFileLength, progress.TotalFileLength);
             Assert.Equal(totalFiles, progress.TotalFileCount);
-            Assert.Equal(progress.TotalFileCount, progress.UploadedFileCount);
-            Assert.Equal(progress.TotalFileLength, progress.UploadedByteCount);
+            Assert.Equal(progress.TotalFileCount, progress.TransferedFileCount);
+            Assert.Equal(progress.TotalFileLength, progress.TransferedByteCount);
 
             for (int i = 0; i < progress.TotalFileCount; i++)
             {

@@ -20,25 +20,25 @@ using System.IO;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Represents parameters for the DataLake Uploader.
+    /// Represents parameters for the DataLakeStoreTransferClient.
     /// </summary>
     public class TransferParameters
     {
         /// <summary>
-        /// Creates a new set of parameters for the DataLake Uploader.
+        /// Creates a new set of parameters for the DataLakeStoreTransferClient.
         /// </summary>
-        /// <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
-        /// <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
-        /// <param name="accountName">Name of the account to upload to.</param>
-        /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
-        /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
+        /// <param name="inputFilePath">The full path to the file or folder to be transfered.</param>
+        /// <param name="targetStreamPath">The full stream path where the file or folder will be transfered to.</param>
+        /// <param name="accountName">Name of the account to transfer to.</param>
+        /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to transfer in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+        /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to transfer in parallel during a folder transfer. This parameter is ignored for single file transfers. Default is 5 for folder transfers</param>
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
-        /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
-        /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
-        /// <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
-        /// <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an upload scenario. Default is false.</param>
+        /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted transfer.</param>
+        /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align transfer blocks to record boundaries (false).</param>
+        /// <param name="isRecursive">(Optional) Indicates whether to transfer the source folder recursively or not. If true, will transfer the source directory and all sub directories, preserving directory structure.</param>
+        /// <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an transfer scenario. Default is false.</param>
         /// <param name="maxSegmentLength">Maximum length of each segment. The default is 256mb, which gives optimal performance. Modify at your own risk.</param>
-        /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
+        /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local transfer metadata file while the transfer is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
         public TransferParameters(string inputFilePath, string targetStreamPath, string accountName, int perFileThreadCount = -1, int concurrentFileCount = -1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, bool isDownload = false, long maxSegmentLength = 256 * 1024 * 1024, string localMetadataLocation = null)
         {
             this.InputFilePath = inputFilePath;
@@ -68,21 +68,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Creates a new set of parameters for the DataLake Uploader.
+        /// Creates a new set of parameters for the DataLakeStoreTransferClient.
         /// </summary>
-        /// <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
-        /// <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
-        /// <param name="accountName">Name of the account to upload to.</param>
+        /// <param name="inputFilePath">The full path to the file or folder to be transfered.</param>
+        /// <param name="targetStreamPath">The full stream path where the file or folder will be transfered to.</param>
+        /// <param name="accountName">Name of the account to transfer to.</param>
         /// <param name="useSegmentBlockBackOffRetryStrategy">if set to <c>true</c> [use segment block back off retry strategy].</param>
-        /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
-        /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
+        /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to transfer in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+        /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to transfer in parallel during a folder transfer. This parameter is ignored for single file transfers. Default is 5 for folder transfers</param>
         /// <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
-        /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
-        /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
-        /// <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
-        /// <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an upload scenario. Default is false.</param>
+        /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted transfer.</param>
+        /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align transfer blocks to record boundaries (false).</param>
+        /// <param name="isRecursive">(Optional) Indicates whether to transfer the source folder recursively or not. If true, will transfer the source directory and all sub directories, preserving directory structure.</param>
+        /// <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an transfer scenario. Default is false.</param>
         /// <param name="maxSegmentLength">Maximum length of the segment.</param>
-        /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
+        /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local transfer metadata file while the transfer is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
         internal TransferParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int perFileThreadCount = -1, int concurrentFileCount = -1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, bool isRecursive = false, bool isDownload = false, long maxSegmentLength = 256 * 1024 * 1024, string localMetadataLocation = null) :
             this(inputFilePath, targetStreamPath, accountName, perFileThreadCount, concurrentFileCount, isOverwrite, isResume, isBinary, isRecursive, isDownload, maxSegmentLength, localMetadataLocation)
         {
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         internal bool UseSegmentBlockBackOffRetryStrategy { get; set; }
 
         /// <summary>
-        /// Gets a value indicating the full path to the file or folder to be uploaded.
+        /// Gets a value indicating the full path to the file or folder to be transfered.
         /// </summary>
         /// <value>
         /// The input file path.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string InputFilePath { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the full stream path where the file will be uploaded to.
+        /// Gets a value indicating the full stream path where the file will be transfered to.
         /// </summary>
         /// <value>
         /// The target stream path.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string TargetStreamPath { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the name of the account to upload to or download from.
+        /// Gets a value indicating the name of the account to transfer to or download from.
         /// </summary>
         /// <value>
         /// The name of the account.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string AccountName { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the maximum number of parallel threads to use for a single file upload or download.
+        /// Gets a value indicating the maximum number of parallel threads to use for a single file transfer or download.
         /// </summary>
         /// <value>
         /// The file thread count.
@@ -131,10 +131,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
 
         /// <summary>
-        /// Gets the parallel file count, which indicates how many files in a folder will be uploaded or downloaded in parallel
+        /// Gets the parallel file count, which indicates how many files in a folder will be transfered or downloaded in parallel
         /// </summary>
         /// <value>
-        /// The number of files to upload or download at once.
+        /// The number of files to transfer or download at once.
         /// </value>
         public int ConcurrentFileCount { get; internal set; }
 
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsOverwrite { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating whether to resume a previously interrupted upload.
+        /// Gets a value indicating whether to resume a previously interrupted transfer.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is resume; otherwise, <c>false</c>.
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsBinary { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating whether the folder upload should recursively upload the source folder. This is only valid for folder uploads and will be ignored for file uploads.
+        /// Gets a value indicating whether the folder transfer should recursively transfer the source folder. This is only valid for folder transfers and will be ignored for file transfers.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is recursive; otherwise, <c>false</c>.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
 
         /// <summary>
-        /// Gets a value indicating whether this instance is downloading to the local machine instead of uploading.
+        /// Gets a value indicating whether this instance is downloading to the local machine instead of transfering.
         /// </summary>
         /// <value>
         /// <c>true</c> if this instance is download; otherwise, <c>false</c>.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long MaxSegementLength { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the directory path where to store the metadata for the upload.
+        /// Gets a value indicating the directory path where to store the metadata for the transfer.
         /// </summary>
         /// <value>
         /// The local metadata location.
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string LocalMetadataLocation { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the encoding of the file being uploaded.
+        /// Gets a value indicating the encoding of the file being transfered.
         /// </summary>
         /// <value>
         /// The file encoding.

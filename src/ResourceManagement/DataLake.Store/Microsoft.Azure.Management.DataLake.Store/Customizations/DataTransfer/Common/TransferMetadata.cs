@@ -27,9 +27,9 @@ using System.Xml.Serialization;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Represents general metadata pertaining to an upload.
+    /// Represents general metadata pertaining to an transfer.
     /// </summary>
-    [DebuggerDisplay("Segments = {SegmentCount}, SegmentLength = {SegmentLength}, UploadId = {UploadId}, FileLength = {FileLength}, FilePath = {FilePath}, EncodingCodePage = {EncodingCodePage}, Delimiter = {Delimiter}")]
+    [DebuggerDisplay("Segments = {SegmentCount}, SegmentLength = {SegmentLength}, TransferId = {TransferId}, FileLength = {FileLength}, FilePath = {FilePath}, EncodingCodePage = {EncodingCodePage}, Delimiter = {Delimiter}")]
     public class TransferMetadata
     {
         
@@ -51,33 +51,33 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Constructs a new UploadMetadata from the given parameters.
+        /// Constructs a new TransferMetadata from the given parameters.
         /// </summary>
         /// <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
-        /// <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
+        /// <param name="transferParameters">The parameters to use for constructing this metadata.</param>
         /// <param name="frontEnd">The front end. This is used only in the constructor for determining file length</param>
-        internal TransferMetadata(string metadataFilePath, TransferParameters uploadParameters, IFrontEndAdapter frontEnd, long fileSize = -1)
+        internal TransferMetadata(string metadataFilePath, TransferParameters transferParameters, IFrontEndAdapter frontEnd, long fileSize = -1)
         {
             this.MetadataFilePath = metadataFilePath;
            
-            this.UploadId = Guid.NewGuid().ToString("N");
-            this.InputFilePath = uploadParameters.InputFilePath;
-            this.TargetStreamPath = uploadParameters.TargetStreamPath;
-            this.IsDownload = uploadParameters.IsDownload;
+            this.TransferId = Guid.NewGuid().ToString("N");
+            this.InputFilePath = transferParameters.InputFilePath;
+            this.TargetStreamPath = transferParameters.TargetStreamPath;
+            this.IsDownload = transferParameters.IsDownload;
 
             this.SegmentStreamDirectory = GetSegmentStreamDirectory();
 
-            this.IsBinary = uploadParameters.IsBinary;
+            this.IsBinary = transferParameters.IsBinary;
 
-            this.FileLength = fileSize < 0 ? frontEnd.GetStreamLength(uploadParameters.InputFilePath, !IsDownload) : fileSize;
+            this.FileLength = fileSize < 0 ? frontEnd.GetStreamLength(transferParameters.InputFilePath, !IsDownload) : fileSize;
 
-            this.EncodingCodePage = uploadParameters.FileEncoding.CodePage;
+            this.EncodingCodePage = transferParameters.FileEncoding.CodePage;
 
             // we are taking the smaller number of segments between segment lengths of 256 and the segment growth logic.
             // this protects us against agressive increase of thread count resulting in far more segments than
             // is reasonable for a given file size. We also ensure that each segment is at least 256mb in size.
             // This is the size that ensures we have the optimal storage creation in the store.
-            var preliminarySegmentCount = (int)Math.Ceiling((double)this.FileLength / uploadParameters.MaxSegementLength);
+            var preliminarySegmentCount = (int)Math.Ceiling((double)this.FileLength / transferParameters.MaxSegementLength);
             this.SegmentCount = Math.Min(preliminarySegmentCount, TransferSegmentMetadata.CalculateSegmentCount(this.FileLength));
             this.SegmentLength = TransferSegmentMetadata.CalculateSegmentLength(this.FileLength, this.SegmentCount);
 
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 this.Segments[i] = new TransferSegmentMetadata(i, this);
             }
 
-            if (!uploadParameters.IsBinary && this.SegmentCount > 1 && !this.IsDownload)
+            if (!transferParameters.IsBinary && this.SegmentCount > 1 && !this.IsDownload)
             {
                 this.AlignSegmentsToRecordBoundaries();
                 
@@ -104,16 +104,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating the unique identifier associated with this upload.
+        /// Gets or sets a value indicating the unique identifier associated with this transfer.
         /// </summary>
         /// <value>
-        /// The upload identifier.
+        /// The transfer identifier.
         /// </value>
-        [JsonProperty(PropertyName = "UploadId")]
-        public string UploadId { get; set; }
+        [JsonProperty(PropertyName = "TransferId")]
+        public string TransferId { get; set; }
 
         /// <summary>
-        /// /Gets or sets a value indicating the full path to the file to be uploaded.
+        /// /Gets or sets a value indicating the full path to the file to be transfered.
         /// </summary>
         /// <value>
         /// The input file path.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string InputFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the length (in bytes) of the file to be uploaded.
+        /// Gets or sets a value indicating the length (in bytes) of the file to be transfered.
         /// </summary>
         /// <value>
         /// The length of the file.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long FileLength { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the full stream path where the file will be uploaded to.
+        /// Gets or sets a value indicating the full stream path where the file will be transfered to.
         /// </summary>
         /// <value>
         /// The target stream path.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string SegmentStreamDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the number of segments this file is split into for purposes of uploading it.
+        /// Gets or sets a value indicating the number of segments this file is split into for purposes of transfering it.
         /// </summary>
         /// <value>
         /// The segment count.
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public TransferSegmentMetadata[] Segments { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether the upload file should be treated as a binary file or not.
+        /// Gets a value indicating whether the transfer file should be treated as a binary file or not.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is binary; otherwise, <c>false</c>.
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsBinary { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is a download instead of an upload.
+        /// Gets or sets a value indicating whether this instance is a download instead of an transfer.
         /// </summary>
         /// <value>
         /// <c>true</c> if this instance is download; otherwise, <c>false</c>.
@@ -212,9 +212,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string Delimiter { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the current upload status for this file upload.
-        /// This value is checked for folder upload progress and resuming. 
-        /// Single file uploads use segment status for tracking.
+        /// Gets or sets a value indicating the current transfer status for this file transfer.
+        /// This value is checked for folder transfer progress and resuming. 
+        /// Single file transfers use segment status for tracking.
         /// </summary>
         /// <value>
         /// The status.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region File Operations
 
         /// <summary>
-        /// Attempts to load an UploadMetadata object from the given file.
+        /// Attempts to load an TransferMetadata object from the given file.
         /// </summary>
         /// <param name="filePath">The full path to the file where to load the metadata from</param>
         /// <returns></returns>
@@ -378,13 +378,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
                 if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
                 {
-                    // the scenario where the file is being uploaded at the root
+                    // the scenario where the file is being transfered at the root
                     targetStreamDirectory = null;
                     return this.TargetStreamPath.TrimStart('/');
                 }
                 else
                 {
-                    // the scenario where the file is being uploaded in a sub folder
+                    // the scenario where the file is being transfered in a sub folder
                     targetStreamDirectory = this.TargetStreamPath.Substring(0,
                         this.TargetStreamPath.LastIndexOf('/'));
                     return this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1);
@@ -409,12 +409,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 if (string.IsNullOrEmpty(streamDirectory))
                 {
-                    // the scenario where the file is being uploaded at the root
+                    // the scenario where the file is being transfered at the root
                     return string.Format("/{0}.segments.{1}", streamName, Guid.NewGuid());
                 }
                 else
                 {
-                    // the scenario where the file is being uploaded in a sub folder
+                    // the scenario where the file is being transfered in a sub folder
                     return string.Format("{0}/{1}.segments.{2}",
                         streamDirectory,
                         streamName, Guid.NewGuid());

@@ -293,7 +293,7 @@ namespace DataLakeStore.Tests
                 SegmentLength = TransferSegmentMetadata.CalculateSegmentLength(_smallFileContents.Length, segmentCount),
                 Segments = new TransferSegmentMetadata[segmentCount],
                 TargetStreamPath = "abc",
-                UploadId = "123",
+                TransferId = "123",
                 IsBinary = true
             };
 
@@ -307,7 +307,7 @@ namespace DataLakeStore.Tests
                     Offset = offset,
                     Status = SegmentTransferStatus.Pending,
                     Length = length,
-                    Path = string.Format("{0}.{1}.segment{2}", metadata.TargetStreamPath, metadata.UploadId, i)
+                    Path = string.Format("{0}.{1}.segment{2}", metadata.TargetStreamPath, metadata.TransferId, i)
                 };
                 offset += length;
             }

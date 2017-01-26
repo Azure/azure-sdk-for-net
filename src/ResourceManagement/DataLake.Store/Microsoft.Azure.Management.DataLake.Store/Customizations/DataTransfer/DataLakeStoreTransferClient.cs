@@ -27,12 +27,12 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.DataLake.Store
 {
     /// <summary>
-    /// Represents a delegate that is called in the event of a thread uploading a file terminating unexpectedly.
+    /// Represents a delegate that is called in the event of a thread transfering a file terminating unexpectedly.
     /// </summary>
-    public delegate void FileUploadThreadFailProgressUpdate(TransferMetadata failedFile);
+    public delegate void FileTransferThreadFailProgressUpdate(TransferMetadata failedFile);
 
     /// <summary>
-    /// Represents a general purpose file uploader into DataLake. Supports the efficient upload of large files.
+    /// Represents a general purpose file transfer client into a Data Lake Store. Supports the efficient transfer of large files.
     /// </summary>
     public sealed class DataLakeStoreTransferClient
     {
@@ -65,46 +65,46 @@ namespace Microsoft.Azure.Management.DataLake.Store
         internal static List<Thread> ExecutionThreads { get; private set; }
 
         /// <summary>
-        ///  An event that is registered to progress tracking to ensure that, in the event of an unexpected upload failure,
+        ///  An event that is registered to progress tracking to ensure that, in the event of an unexpected transfer failure,
         ///  progress is properly updated.
         /// </summary>
-        public event FileUploadThreadFailProgressUpdate OnFileUploadThreadFailProgressUpdate;
+        public event FileTransferThreadFailProgressUpdate OnFileTransferThreadFailProgressUpdate;
 
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the DataLakeUploader class, by specifying a pointer to the FrontEnd to use for the upload.
+        /// Creates a new instance of the DataLakeStoreTransferClient class, by specifying a pointer to the FrontEnd to use for the transfer.
         /// </summary>
-        /// <param name="uploadParameters">The Upload Parameters to use.</param>
-        /// <param name="frontEnd">A pointer to the FrontEnd interface to use for the upload.</param>
-        /// <param name="progressTracker">(Optional) A tracker that reports progress on the upload.</param>
+        /// <param name="transferParameters">The transfer parameters to use.</param>
+        /// <param name="frontEnd">A pointer to the FrontEnd interface to use for the transfer.</param>
+        /// <param name="progressTracker">(Optional) A tracker that reports progress on the transfer.</param>
         /// <param name="folderProgressTracker">(Optional) The folder progress tracker.</param>
         public DataLakeStoreTransferClient(
-            TransferParameters uploadParameters,
+            TransferParameters transferParameters,
             IFrontEndAdapter frontEnd,
             IProgress<TransferProgress> progressTracker = null,
             IProgress<TransferFolderProgress> folderProgressTracker = null) :
-            this(uploadParameters, frontEnd, CancellationToken.None, progressTracker, folderProgressTracker)
+            this(transferParameters, frontEnd, CancellationToken.None, progressTracker, folderProgressTracker)
         {
             
         }
 
         /// <summary>
-        /// Creates a new instance of the DataLakeUploader class, by specifying a pointer to the FrontEnd to use for the upload.
+        /// Creates a new instance of the DataLakeStoreTransferClient class, by specifying a pointer to the FrontEnd to use for the transfer.
         /// </summary>
-        /// <param name="uploadParameters">The Upload Parameters to use.</param>
-        /// <param name="frontEnd">A pointer to the FrontEnd interface to use for the upload.</param>
+        /// <param name="transferParameters">The transfer Parameters to use.</param>
+        /// <param name="frontEnd">A pointer to the FrontEnd interface to use for the transfer.</param>
         /// <param name="token">The token.</param>
-        /// <param name="progressTracker">(Optional) A tracker that reports progress on the upload.</param>
+        /// <param name="progressTracker">(Optional) A tracker that reports progress on the transfer.</param>
         /// <param name="folderProgressTracker">(Optional) The folder progress tracker.</param>
         public DataLakeStoreTransferClient(
-            TransferParameters uploadParameters,
+            TransferParameters transferParameters,
             IFrontEndAdapter frontEnd,
             CancellationToken token,
             IProgress<TransferProgress> progressTracker = null,
             IProgress<TransferFolderProgress> folderProgressTracker = null)
         {
-            this.Parameters = uploadParameters;
+            this.Parameters = transferParameters;
             _frontEnd = frontEnd;
 
             //we need to override the default .NET value for max connections to a host to our number of threads, if necessary (otherwise we won't achieve the parallelism we want)
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <returns></returns>
         private string GetCanonicalMetadataFilePath()
         {
-            return Path.Combine(this.Parameters.LocalMetadataLocation, string.Format("{0}.upload.xml", Path.GetFileName(this.Parameters.InputFilePath)));
+            return Path.Combine(this.Parameters.LocalMetadataLocation, string.Format("{0}.transfer.xml", Path.GetFileName(this.Parameters.InputFilePath)));
         }
 
         #endregion
@@ -136,18 +136,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region Invocation
 
         /// <summary>
-        /// Gets the parameters to use for this upload.
+        /// Gets the parameters to use for this transfer.
         /// </summary>
         public TransferParameters Parameters { get; private set; }
 
         /// <summary>
-        /// Executes the upload as defined by the input parameters.
+        /// Executes the transfer as defined by the input parameters.
         /// </summary>
         public void Execute()
         {
             try
             {
-                // check if we are uploading a file or a directory
+                // check if we are transfering a file or a directory
                 if (!isDirectory)
                 {
                     //load up existing metadata or create a fresh one
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     }
                     else
                     {
-                        ValidateMetadataForFreshUpload(metadata);
+                        ValidateMetadataForFreshTransfer(metadata);
                     }
 
                     // set thread counts if defaults are desired.
@@ -171,6 +171,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             this.Parameters.MaxSegementLength);
                     }
 
+                    // optimize thread count based on file size
+                    if (metadata.SegmentCount < this.Parameters.PerFileThreadCount)
+                    {
+                        this.Parameters.PerFileThreadCount = metadata.SegmentCount;
+                    }
+
+                    ServiceClientTracing.Information("Single file thread count validated and optimized to: {0}", this.Parameters.PerFileThreadCount);
+                    
                     //begin (or resume) uploading/downloading the file
                     if(this.Parameters.IsDownload)
                     {
@@ -181,7 +189,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                         UploadFile(metadata);
                     }
 
-                    //clean up metadata after a successful upload
+                    //clean up metadata after a successful transfer
                     metadata.DeleteFile();
                 }
                 else
@@ -195,7 +203,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     }
                     else
                     {
-                        ValidateFolderMetadataForFreshUpload(metadata);
+                        ValidateFolderMetadataForFreshTransfer(metadata);
                     }
                     
                     // set defaults for number of files and per file thread count
@@ -219,6 +227,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     {
                         this.Parameters.ConcurrentFileCount = metadata.FileCount;
                     }
+
+                    ServiceClientTracing.Information("Single file thread count validated and optimized to: {0}", this.Parameters.PerFileThreadCount);
+                    ServiceClientTracing.Information("Concurrent file count validated and optimized to: {0}", this.Parameters.ConcurrentFileCount);
 
                     try
                     {
@@ -248,7 +259,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                     try
                                     {
                                         _token.ThrowIfCancellationRequested();
-                                        // only initiate uploads for files that are not already complete
+                                        // only initiate transfers for files that are not already complete
                                         if (file.Status != SegmentTransferStatus.Complete)
                                         {
                                             var segmentProgressTracker = CreateSegmentProgressTracker(file, fileProgressTracker);
@@ -271,7 +282,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                         try
                                         {
                                             // replace the file in the list with the one that we have been modifying
-                                            foreach (var item in metadata.Files.Where(f => f.UploadId.Equals(file.UploadId)))
+                                            foreach (var item in metadata.Files.Where(f => f.TransferId.Equals(file.TransferId)))
                                             {
                                                 item.Status = file.Status;
                                                 item.Segments = file.Segments;
@@ -294,7 +305,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                             {
                                                 // replace the file in the list with the one that we have been modifying
 
-                                                foreach (var item in metadata.Files.Where(f => f.UploadId.Equals(file.UploadId)))
+                                                foreach (var item in metadata.Files.Where(f => f.TransferId.Equals(file.TransferId)))
                                                 {
                                                     item.Status = file.Status;
                                                     item.Segments = file.Segments;
@@ -306,9 +317,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                         }
 
                                         // indicate we failed to tracking thread.
-                                        if(this.OnFileUploadThreadFailProgressUpdate != null)
+                                        if(this.OnFileTransferThreadFailProgressUpdate != null)
                                         {
-                                            this.OnFileUploadThreadFailProgressUpdate(file);
+                                            this.OnFileTransferThreadFailProgressUpdate(file);
                                         }
                                     }
                                     finally
@@ -318,7 +329,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                         Interlocked.Increment(ref filesCompleted);
                                         try
                                         {
-                                            foreach (var item in metadata.Files.Where(f => f.UploadId.Equals(file.UploadId)))
+                                            foreach (var item in metadata.Files.Where(f => f.TransferId.Equals(file.TransferId)))
                                             {
                                                 item.Status = file.Status;
                                                 item.Segments = file.Segments;
@@ -556,7 +567,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             else if(this.Parameters.ConcurrentFileCount <= 0)
             {
-                // Ideally 25 files uploading at once with four threads is good, However if possible we can increase this
+                // Ideally 25 files transfering at once with four threads is good, However if possible we can increase this
                 // if the ideal average number of threads is low ( < 4).
                 // this is only true in the case where the caller did not specify a folder thread count.
                 concurrentFileCount = (int)Math.Ceiling((double)DefaultIdealPerFileThreadCountForFolders / perFileThreadCountToUse);
@@ -585,17 +596,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
         #endregion
 
-        #region Uploading Operations
+        #region Transfer Operations
 
         /// <summary>
         /// Validates that the metadata is valid for a resume operation, and also updates the internal Segment States to match what the Server looks like.
         /// If any changes are made, the metadata will be saved to its canonical location.
         /// </summary>
         /// <param name="metadata"></param>
-        private TransferMetadata ValidateMetadataForResume(TransferMetadata metadata, bool isFolderUpload = false)
+        private TransferMetadata ValidateMetadataForResume(TransferMetadata metadata, bool isFolderTransfer = false)
         {
-            ValidateMetadataMatchesLocalFile(metadata, isFolderUpload);
-            if(isFolderUpload && metadata.Status == SegmentTransferStatus.Complete)
+            ValidateMetadataMatchesLocalFile(metadata, isFolderTransfer);
+            if(isFolderTransfer && metadata.Status == SegmentTransferStatus.Complete)
             {
                 // validate that the target stream does exist. If not, set its status back to pending
                 var retryCount = 0;
@@ -608,7 +619,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                         //verify that the stream exists and that the length is as expected
                         if (!_frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
                         {
-                            // this file was marked as completed, but no target stream exists; it needs to be reuploaded
+                            // this file was marked as completed, but no target stream exists; it needs to be retransfered
                             metadata.Status = SegmentTransferStatus.Pending;
                         }
                         else
@@ -616,9 +627,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             var remoteLength = _frontEnd.GetStreamLength(metadata.TargetStreamPath, this.Parameters.IsDownload);
                             if (remoteLength != metadata.FileLength)
                             {
-                                //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be reuploaded
+                                //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be retransfered
                                 //in this case it is considered safe to delete the file on the server,
-                                //since it is in an inconsistent state and we will be re-uploading it anyway
+                                //since it is in an inconsistent state and we will be re-transfering it anyway
                                 _frontEnd.DeleteStream(metadata.TargetStreamPath, this.Parameters.IsDownload);
                                 metadata.Status = SegmentTransferStatus.Pending;
                             }
@@ -643,7 +654,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                         }
 
                         var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
-                        TracingHelper.LogInfo("ValidateMetadataForResume - folder upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                        TracingHelper.LogInfo("ValidateMetadataForResume - folder transfer: StreamExists and GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
                             metadata.TargetStreamPath,
                             retryCount,
                             e,
@@ -664,7 +675,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
 
-            //make sure we don't upload part of the file as binary, while the rest is non-binary (that's just asking for trouble)
+            //make sure we don't transfer part of the file as binary, while the rest is non-binary (that's just asking for trouble)
             if (this.Parameters.IsBinary != metadata.IsBinary)
             {
                 var ex = new InvalidOperationException(
@@ -693,7 +704,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             //verify that the stream exists and that the length is as expected
                             if (!_frontEnd.StreamExists(segment.Path, this.Parameters.IsDownload))
                             {
-                                // this segment was marked as completed, but no target stream exists; it needs to be reuploaded
+                                // this segment was marked as completed, but no target stream exists; it needs to be retransfered
                                 segment.Status = SegmentTransferStatus.Pending;
                             }
                             else
@@ -701,7 +712,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                 var remoteLength = _frontEnd.GetStreamLength(segment.Path, this.Parameters.IsDownload);
                                 if (remoteLength != segment.Length)
                                 {
-                                    //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be reuploaded
+                                    //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be retransfered
                                     segment.Status = SegmentTransferStatus.Pending;
                                 }
                             }
@@ -725,7 +736,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             }
 
                             var waitTime = SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
-                            TracingHelper.LogInfo("ValidateMetadataForResume - file upload: GETFILESTATUS at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
+                            TracingHelper.LogInfo("ValidateMetadataForResume - file transfer: StreamExists and GetStreamLength at path:{0} failed on try: {1} with exception: {2}. Wait time in ms before retry: {3}",
                                 metadata.TargetStreamPath,
                                 retryCount,
                                 e,
@@ -735,12 +746,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 else
                 {
-                    //anything which is not in 'Completed' status needs to be reuploaded
+                    //anything which is not in 'Completed' status needs to be retransfered
                     segment.Status = SegmentTransferStatus.Pending;
                 }
             }
 
-            if (!isFolderUpload)
+            if (!isFolderTransfer)
             {
                 metadata.Save();
             }
@@ -749,10 +760,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Verifies that the metadata is valid for a fresh upload.
+        /// Verifies that the metadata is valid for a fresh transfer.
         /// </summary>
         /// <param name="metadata"></param>
-        private void ValidateMetadataForFreshUpload(TransferMetadata metadata)
+        private void ValidateMetadataForFreshTransfer(TransferMetadata metadata)
         {
             ValidateMetadataMatchesLocalFile(metadata);
 
@@ -771,10 +782,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Verifies that the metadata is consistent with the local file information.
         /// </summary>
         /// <param name="metadata"></param>
-        private void ValidateMetadataMatchesLocalFile(TransferMetadata metadata, bool isFolderUpload = false)
+        private void ValidateMetadataMatchesLocalFile(TransferMetadata metadata, bool isFolderTransfer = false)
         {
             //verify that it matches against source file (size, name)
-            if (isFolderUpload)
+            if (isFolderTransfer)
             {
                 if (!metadata.TargetStreamPath.Trim().Contains(this.Parameters.TargetStreamPath.Trim()))
                 {
@@ -806,7 +817,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
             }
 
-            // We only test for the stream existing and size for upload, for download this
+            // We only test for the stream existing and size for transfer, for download this
             // is covered in a separate check.
             if (!metadata.IsDownload && !_frontEnd.StreamExists(metadata.InputFilePath, !metadata.IsDownload))
             {
@@ -843,7 +854,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 var t = new Thread(() =>
                 {
-                    //see what files already exist - update metadata accordingly (only for segments that are missing from server; if it's on the server but not in metadata, reupload)
+                    //see what files already exist - update metadata accordingly (only for segments that are missing from server; if it's on the server but not in metadata, retransfer)
                     TransferMetadata toValidate;
                     while (files.TryDequeue(out toValidate))
                     {
@@ -853,7 +864,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             var toReplace = ValidateMetadataForResume(toValidate, true);
                             for (int j = 0; j < metadata.Files.Length; j++)
                             {
-                                if (metadata.Files[j].UploadId == toReplace.UploadId)
+                                if (metadata.Files[j].TransferId == toReplace.TransferId)
                                 {
                                     metadata.Files[j] = toReplace;
                                     break;
@@ -889,10 +900,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Verifies that the metadata is valid for a fresh upload.
+        /// Verifies that the metadata is valid for a fresh transfer.
         /// </summary>
         /// <param name="metadata"></param>
-        private void ValidateFolderMetadataForFreshUpload(TransferFolderMetadata metadata)
+        private void ValidateFolderMetadataForFreshTransfer(TransferFolderMetadata metadata)
         {
             ValidateFolderMetadataMatchesLocalFile(metadata);
             var exceptions = new ConcurrentQueue<Exception>();
@@ -1102,7 +1113,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Uploads the file using the given metadata.
+        /// Downloads the file using the given metadata.
         /// 
         /// </summary>
         /// <param name="metadata"></param>
@@ -1131,7 +1142,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 else if (metadata.SegmentCount > 1)
                 {
-                    //perform the multi-segment upload
+                    //perform the multi-segment download
                     // reducing the thread count to make it equal to the segment count
                     // if it is larger, since those extra threads will not be used.
                     using (var targetStream = new FileStream(metadata.TargetStreamPath + ".inprogress", FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
@@ -1157,7 +1168,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 else
                 {
-                    //optimization if we only have one segment: upload it directly to the target stream
+                    //optimization if we only have one segment: download it directly to the target stream
 
                     using (var targetStream = new FileStream(metadata.TargetStreamPath, FileMode.Create, FileAccess.Write))
                     {
@@ -1201,7 +1212,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     //update the overall progress and report it back
                     overallProgress.SetSegmentProgress(sup);
 
-                    // used in the folder upload case.
+                    // used in the folder transfer case.
                     if (customTracker != null)
                     {
                         customTracker.Report(overallProgress);
@@ -1229,8 +1240,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             var overallProgress = new TransferFolderProgress(metadata);
 
-            // register an event to ensure that, no matter what, we account for all file uploads.
-            this.OnFileUploadThreadFailProgressUpdate += overallProgress.OnFileUploadThreadAborted;
+            // register an event to ensure that, no matter what, we account for all file transfers.
+            this.OnFileTransferThreadFailProgressUpdate += overallProgress.OnFileTransferThreadAborted;
             toStart = overallProgress.GetProgressTrackingThread(_token);
             return new Progress<TransferProgress>(
                 (sup) =>

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the UploadMetadataGenerator with the given parameters and the given maximum append length.
+        /// Creates a new instance of the TransferFolderMetadataGenerator object with the given parameters and the given maximum append length.
         /// </summary>
         /// <param name="parameters">The parameters.</param>
         /// <param name="frontend">The frontend used when generating fresh metadata.</param>
