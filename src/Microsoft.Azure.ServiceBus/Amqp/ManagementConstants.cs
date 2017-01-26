@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Messaging.Amqp
         public static class Response
         {
             public const string StatusCode = "statusCode";
-            public const string StatusDescription = "statusDescription";
-            public const string ErrorCondition = "errorCondition";
+            public const string StatusDescription = "statusDescription";            public const string ErrorCondition = "errorCondition";
         }
 
         public static class Operations
@@ -30,6 +29,8 @@ namespace Microsoft.Azure.Messaging.Amqp
             public const string SetSessionStateOperation = Microsoft + ":set-session-state";
             public const string GetSessionStateOperation = Microsoft + ":get-session-state";
             public const string PeekMessageOperation = Microsoft + ":peek-message";
+            public const string AddRuleOperation = Microsoft + ":add-rule";
+            public const string RemoveRuleOperation = Microsoft + ":remove-rule";
             public const string ScheduleMessageOperation = Microsoft + ":schedule-message";
             public const string CancelScheduledMessageOperation = Microsoft + ":cancel-scheduled-message";
         }
@@ -56,6 +57,20 @@ namespace Microsoft.Azure.Messaging.Amqp
 
             public static readonly MapKey FromSequenceNumber = new MapKey("from-sequence-number");
             public static readonly MapKey MessageCount = new MapKey("message-count");
+
+            public static readonly MapKey RuleName = new MapKey("rule-name");
+            public static readonly MapKey RuleDescription = new MapKey("rule-description");
+            public static readonly MapKey SqlFilter = new MapKey("sql-filter");
+            public static readonly MapKey SqlRuleAction = new MapKey("sql-rule-action");
+            public static readonly MapKey CorrelationFilter = new MapKey("correlation-filter");
+            public static readonly MapKey Expression = new MapKey("expression");
+            public static readonly MapKey CorrelationId = new MapKey("correlation-id");
+            public static readonly MapKey To = new MapKey("to");
+            public static readonly MapKey ReplyTo = new MapKey("reply-to");
+            public static readonly MapKey Label = new MapKey("label");
+            public static readonly MapKey ReplyToSessionId = new MapKey("reply-to-session-id");
+            public static readonly MapKey ContentType = new MapKey("content-type");
+            public static readonly MapKey CorrelationFilterProperties = new MapKey("properties");
         }
     }
 }

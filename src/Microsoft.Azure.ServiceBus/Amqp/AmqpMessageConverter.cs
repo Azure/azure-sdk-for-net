@@ -11,6 +11,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
+    using Microsoft.Azure.Messaging.Amqp;
+    using Microsoft.Azure.ServiceBus.Filters;
 
     static class AmqpMessageConverter
     {
@@ -512,6 +514,34 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return netObject != null;
         }
 
+        public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
+        {
+            AmqpMap ruleDescriptionMap = new AmqpMap();
+            if (description.Filter is SqlFilter)
+            {
+                AmqpMap filterMap = GetSqlFilterMap(description.Filter as SqlFilter);
+                ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
+            }
+            else if (description.Filter is CorrelationFilter)
+            {
+                AmqpMap correlationFilterMap = GetCorrelationFilterMap(description.Filter as CorrelationFilter);
+                ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
+            }
+            else
+            {
+                throw new NotSupportedException(
+                    Resources.RuleFilterNotSupported.FormatForUser(
+                        description.Filter.GetType(),
+                        nameof(SqlFilter),
+                        nameof(CorrelationFilter)));
+            }
+
+            AmqpMap amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
+            ruleDescriptionMap[ManagementConstants.Properties.SqlRuleAction] = amqpAction;
+
+            return ruleDescriptionMap;
+        }
+
         public static ArraySegment<byte> StreamToBytes(Stream stream)
         {
             MemoryStream memoryStream = new MemoryStream();
@@ -551,6 +581,51 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             BufferListStream buffer = new BufferListStream(payload);
             ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
             return new Data { Value = value };
+        }
+
+        static AmqpMap GetSqlFilterMap(SqlFilter sqlFilter)
+        {
+            AmqpMap amqpFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.Expression] = sqlFilter.SqlExpression
+            };
+            return amqpFilterMap;
+        }
+
+        static AmqpMap GetCorrelationFilterMap(CorrelationFilter correlationFilter)
+        {
+            AmqpMap correlationFilterMap = new AmqpMap
+            {
+                [ManagementConstants.Properties.CorrelationId] = correlationFilter.CorrelationId,
+                [ManagementConstants.Properties.MessageId] = correlationFilter.MessageId,
+                [ManagementConstants.Properties.To] = correlationFilter.To,
+                [ManagementConstants.Properties.ReplyTo] = correlationFilter.ReplyTo,
+                [ManagementConstants.Properties.Label] = correlationFilter.Label,
+                [ManagementConstants.Properties.SessionId] = correlationFilter.SessionId,
+                [ManagementConstants.Properties.ReplyToSessionId] = correlationFilter.ReplyToSessionId,
+                [ManagementConstants.Properties.ContentType] = correlationFilter.ContentType
+            };
+
+            var propertiesMap = new AmqpMap();
+            foreach (var property in correlationFilter.Properties)
+            {
+                propertiesMap[new MapKey(property.Key)] = property.Value;
+            }
+
+            correlationFilterMap[ManagementConstants.Properties.CorrelationFilterProperties] = propertiesMap;
+
+            return correlationFilterMap;
+        }
+
+        static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
+        {
+            AmqpMap ruleActionMap = null;
+            if (sqlRuleAction != null)
+            {
+                ruleActionMap = new AmqpMap { [ManagementConstants.Properties.Expression] = sqlRuleAction.SqlExpression };
+            }
+
+            return ruleActionMap;
         }
     }
 }

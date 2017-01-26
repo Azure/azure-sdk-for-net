@@ -59,5 +59,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             return PropertyValueType.Unknown;
         }
+
+        public static bool IsSupportedPropertyType(Type type)
+        {
+            return TypeToIntMap.ContainsKey(type);
+        }
     }
 }

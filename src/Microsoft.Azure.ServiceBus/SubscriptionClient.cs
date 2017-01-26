@@ -6,10 +6,12 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Filters;
     using Microsoft.Azure.ServiceBus.Primitives;
 
     public abstract class SubscriptionClient : ClientEntity
     {
+        public const string DefaultRule = "$Default";
         MessageReceiver innerReceiver;
 
         protected SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string name, ReceiveMode receiveMode)
@@ -247,6 +249,49 @@ namespace Microsoft.Azure.ServiceBus
             return this.InnerReceiver.RenewLockAsync(lockToken);
         }
 
+        /// <summary>
+        /// Asynchronously adds a rule to the current subscription with the specified name and filter expression.
+        /// </summary>
+        /// <param name="ruleName">The name of the rule to add.</param>
+        /// <param name="filter">The filter expression against which messages will be matched.</param>
+        /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
+        public Task AddRuleAsync(string ruleName, Filter filter)
+        {
+            return this.AddRuleAsync(new RuleDescription(name: ruleName, filter: filter));
+        }
+
+        /// <summary>
+        /// Asynchronously adds a new rule to the subscription using the specified rule description.
+        /// </summary>
+        /// <param name="description">The rule description that provides metadata of the rule to add.</param>
+        /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
+        public Task AddRuleAsync(RuleDescription description)
+        {
+            if (description == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(description));
+            }
+
+            description.ValidateDescriptionName();
+
+            return this.OnAddRuleAsync(description);
+        }
+
+        /// <summary>
+        /// Asynchronously removes the rule described by <paramref name="ruleName" />.
+        /// </summary>
+        /// <param name="ruleName">The name of the rule.</param>
+        /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
+        public Task RemoveRuleAsync(string ruleName)
+        {
+            if (string.IsNullOrWhiteSpace(ruleName))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(ruleName));
+            }
+
+            return this.OnRemoveRuleAsync(ruleName);
+        }
+
         protected MessageReceiver CreateMessageReceiver()
         {
             return this.OnCreateMessageReceiver();
@@ -257,5 +302,9 @@ namespace Microsoft.Azure.ServiceBus
         protected abstract Task<MessageSession> OnAcceptMessageSessionAsync(string sessionId);
 
         protected abstract Task OnCloseAsync();
+
+        protected abstract Task OnAddRuleAsync(RuleDescription description);
+
+        protected abstract Task OnRemoveRuleAsync(string ruleName);
     }
 }

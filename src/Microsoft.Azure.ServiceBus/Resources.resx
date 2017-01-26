@@ -129,15 +129,6 @@
   <data name="ArgumentStringTooBig" xml:space="preserve">
     <value>The argument '{0}' cannot exceed {1} characters.</value>
   </data>
-  <data name="BrokeredMessageListIsNullOrEmpty" xml:space="preserve">
-    <value>There are no brokeredMessages supplied. Please make sure input messages are not empty.</value>
-  </data>
-  <data name="CannotSendAnEmptyMessage" xml:space="preserve">
-    <value>Sending empty {0} is not a valid operation.</value>
-  </data>
-  <data name="FailedToSerializeUnsupportedType" xml:space="preserve">
-    <value>Serialization operation failed due to unsupported type {0}.</value>
-  </data>
   <data name="InvalidEncoding" xml:space="preserve">
     <value>The string has an invalid encoding format.</value>
   </data>
@@ -152,5 +143,26 @@
   </data>
   <data name="TokenMissingExpiresOn" xml:space="preserve">
     <value>The provided token does not specify the 'ExpiresOn' value.</value>
+  </data>
+  <data name="NotSupportedPropertyType" xml:space="preserve">
+    <value>'{0}' is not a supported type.</value>
+  </data>
+  <data name="SqlFilterStatmentTooLong" xml:space="preserve">
+    <value>The length of the filter statement is {0}, which exceeds the maximum length of {1}</value>
+  </data>
+  <data name="SqlFilterActionStatmentTooLong" xml:space="preserve">
+    <value>The length of the filter action statement is {0}, which exceeds the maximum length of {1}.</value>
+  </data>
+  <data name="CharacterReservedForUriScheme" xml:space="preserve">
+    <value>'{0}' contains character '{1}' which is not allowed because it is reserved in the Uri scheme.</value>
+  </data>
+  <data name="EntityNameLengthExceedsLimit" xml:space="preserve">
+    <value>The entity path/name '{0}' exceeds the '{1}' character limit.</value>
+  </data>
+  <data name="InvalidCharacterInEntityName" xml:space="preserve">
+    <value>The entity name or path contains an invalid character '{0}'. The supplied value is '{1}'.</value>
+  </data>
+  <data name="RuleFilterNotSupported" xml:space="preserve">
+    <value>Provided rule filter {0} is not supported. Supported values are: {1}, {2}</value>
   </data>
 </root>
