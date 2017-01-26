@@ -967,6 +967,82 @@ namespace DataLakeStore.Tests
 
         #endregion
 
+        #region upload download tests
+        [Fact]
+        public void DataLakeStoreDownloadUploadFileAndFolder()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    // create a folder and two files with content. Then download the folder and files, then re-upload the folder and files
+                    var folderName = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
+                    var file1 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true, folderName);
+                    var file2 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true, folderName);
+                    var localTargetFolder = Path.Combine(Path.GetTempPath(), folderName);
+                    try
+                    {
+                        // download the folder
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.DownloadFolder(commonData.DataLakeStoreFileSystemAccountName, folderName, localTargetFolder);
+
+                        // verify the downloaded contents
+                        var localDir = new DirectoryInfo(localTargetFolder);
+                        Assert.True(localDir.Exists);
+                        var localFiles = localDir.GetFiles();
+                        Assert.Equal(2, localFiles.Count());
+                        Assert.Equal(fileContentsToAdd.Length * 2, localFiles.Sum(f => f.Length));
+
+                        // download just one file
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.DownloadFile(
+                            commonData.DataLakeStoreFileSystemAccountName,
+                            file1,
+                            Path.Combine(
+                                localTargetFolder,
+                                "specificFileDownload.out"));
+                        var newFile = new FileInfo(
+                            Path.Combine(
+                                localTargetFolder,
+                                "specificFileDownload.out"));
+                        Assert.True(newFile.Exists);
+                        Assert.Equal(fileContentsToAdd.Length, newFile.Length);
+
+                        var targetFolder = folderName + "/upload";
+                        // Upload the folder with these files, then upload a single file
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.UploadFolder(commonData.DataLakeStoreFileSystemAccountName, localTargetFolder, targetFolder);
+                        var folderStatus = commonData.DataLakeStoreFileSystemClient.FileSystem.ListFileStatus(
+                            commonData.DataLakeStoreFileSystemAccountName,
+                            targetFolder);
+                        Assert.Equal(3, folderStatus.FileStatuses.FileStatus.Count());
+                        Assert.Equal(fileContentsToAdd.Length * 3, folderStatus.FileStatuses.FileStatus.Sum(f => f.Length));
+
+                        // upload one more file
+                        var targetFile = string.Format("{0}/{1}.new", targetFolder, newFile.Name);
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.UploadFile(commonData.DataLakeStoreFileSystemAccountName, newFile.FullName, targetFile);
+                        GetAndCompareFileOrFolder(
+                            commonData.DataLakeStoreFileSystemClient,
+                            commonData.DataLakeStoreFileSystemAccountName,
+                            targetFile,
+                            FileType.FILE,
+                            fileContentsToAdd.Length);
+                        CompareFileContents(
+                            commonData.DataLakeStoreFileSystemClient,
+                            commonData.DataLakeStoreFileSystemAccountName,
+                            targetFile,
+                            fileContentsToAdd);
+                    }
+                    finally
+                    {
+                        if (Directory.Exists(localTargetFolder))
+                        {
+                            Directory.Delete(localTargetFolder, true);
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region helpers
         internal string CreateFolder(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, bool randomName = false)
         {

@@ -59,6 +59,5 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 return _result.Body;
             }
         }
-
     }
 }
