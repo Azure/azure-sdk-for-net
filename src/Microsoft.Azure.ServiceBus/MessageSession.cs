@@ -65,9 +65,9 @@ namespace Microsoft.Azure.ServiceBus
 
         protected abstract Task OnRenewLockAsync();
 
-        protected override Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount)
+        protected override Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
-            return this.InnerMessageReceiver.ReceiveAsync(maxMessageCount);
+            return this.InnerMessageReceiver.ReceiveAsync(maxMessageCount, serverWaitTime);
         }
 
         protected override Task<IList<BrokeredMessage>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)

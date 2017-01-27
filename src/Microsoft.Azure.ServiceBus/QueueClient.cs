@@ -157,20 +157,44 @@ namespace Microsoft.Azure.ServiceBus
             return this.InnerSender.SendAsync(brokeredMessages);
         }
 
-        public async Task<BrokeredMessage> ReceiveAsync()
+        /// <summary>
+        /// Receives a message using the <see cref="MessageReceiver" />.
+        /// </summary>
+        /// <returns>The asynchronous operation.</returns>
+        public Task<BrokeredMessage> ReceiveAsync()
         {
-            IList<BrokeredMessage> messages = await this.ReceiveAsync(1).ConfigureAwait(false);
-            if (messages != null && messages.Count > 0)
-            {
-                return messages[0];
-            }
-
-            return null;
+            return this.InnerReceiver.ReceiveAsync();
         }
 
+        /// <summary>
+        /// Receives a message using the <see cref="MessageReceiver" />.
+        /// </summary>
+        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
+        /// <returns>The asynchronous operation.</returns>
+        public Task<BrokeredMessage> ReceiveAsync(TimeSpan serverWaitTime)
+        {
+            return this.InnerReceiver.ReceiveAsync(serverWaitTime);
+        }
+
+        /// <summary>
+        /// Receives a message using the <see cref="MessageReceiver" />.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <returns>The asynchronous operation.</returns>
         public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
         {
-            return this.InnerReceiver.ReceiveAsync(maxMessageCount);
+            return this.InnerReceiver.ReceiveAsync(maxMessageCount, this.InnerReceiver.OperationTimeout);
+        }
+
+        /// <summary>
+        /// Receives a message using the <see cref="MessageReceiver" />.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
+        /// <returns>The asynchronous operation.</returns>
+        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
+        {
+            return this.InnerReceiver.ReceiveAsync(maxMessageCount, serverWaitTime);
         }
 
         public async Task<BrokeredMessage> ReceiveBySequenceNumberAsync(long sequenceNumber)
@@ -247,7 +271,17 @@ namespace Microsoft.Azure.ServiceBus
             return this.AcceptMessageSessionAsync(null);
         }
 
-        public async Task<MessageSession> AcceptMessageSessionAsync(string sessionId)
+        public Task<MessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime)
+        {
+            return this.AcceptMessageSessionAsync(null, serverWaitTime);
+        }
+
+        public Task<MessageSession> AcceptMessageSessionAsync(string sessionId)
+        {
+            return this.AcceptMessageSessionAsync(sessionId, this.InnerReceiver.OperationTimeout);
+        }
+
+        public async Task<MessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
         {
             MessageSession session = null;
 
@@ -255,7 +289,7 @@ namespace Microsoft.Azure.ServiceBus
 
             try
             {
-                session = await this.OnAcceptMessageSessionAsync(sessionId).ConfigureAwait(false);
+                session = await this.OnAcceptMessageSessionAsync(sessionId, serverWaitTime).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -333,7 +367,7 @@ namespace Microsoft.Azure.ServiceBus
 
         protected abstract MessageReceiver OnCreateMessageReceiver();
 
-        protected abstract Task<MessageSession> OnAcceptMessageSessionAsync(string sessionId);
+        protected abstract Task<MessageSession> OnAcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime);
 
         protected abstract Task OnCloseAsync();
     }

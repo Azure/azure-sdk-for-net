@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -157,6 +158,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
+        }
+
+        protected async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(MessageSender messageSender, MessageReceiver messageReceiver, int messageCount)
+        {
+            Stopwatch timer = Stopwatch.StartNew();
+            var message = await messageReceiver.ReceiveAsync(TimeSpan.FromSeconds(2));
+            timer.Stop();
+
+            // If message is not null, then the queue needs to be cleaned up before running the timeout test.
+            Assert.Null(message);
+
+            // Ensuring total time taken is less than 60 seconds, which is the default timeout for receive.
+            // Keeping the value of 40 to avoid flakiness in test infrastructure which may lead to extended time taken.
+            // Todo: Change this value to a lower number once test infra is performant.
+            Assert.True(timer.Elapsed.TotalSeconds < 40);
         }
 
         protected async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(MessageSender messageSender, MessageReceiver messageReceiver, int messageCount)

@@ -6,9 +6,7 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Amqp;
 
     public abstract class MessageReceiver : ClientEntity
     {
@@ -71,9 +69,23 @@ namespace Microsoft.Azure.ServiceBus
 
         protected MessagingEntityType EntityType { get; set; }
 
-        public async Task<BrokeredMessage> ReceiveAsync()
+        /// <summary>
+        /// Asynchronously receives a message using the <see cref="MessageReceiver" />.
+        /// </summary>
+        /// <returns>The asynchronous operation.</returns>
+        public Task<BrokeredMessage> ReceiveAsync()
         {
-            IList<BrokeredMessage> messages = await this.ReceiveAsync(1).ConfigureAwait(false);
+            return this.ReceiveAsync(this.OperationTimeout);
+        }
+
+        /// <summary>
+        /// Asynchronously receives a message. />.
+        /// </summary>
+        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
+        /// <returns>The asynchronous operation.</returns>
+        public async Task<BrokeredMessage> ReceiveAsync(TimeSpan serverWaitTime)
+        {
+            IList<BrokeredMessage> messages = await this.ReceiveAsync(1, serverWaitTime).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];
@@ -82,14 +94,30 @@ namespace Microsoft.Azure.ServiceBus
             return null;
         }
 
-        public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
+        /// <summary>
+        /// Asynchronously receives a message using the <see cref="MessageReceiver" />.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <returns>The asynchronous operation.</returns>
+        public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
+        {
+            return this.ReceiveAsync(maxMessageCount, this.OperationTimeout);
+        }
+
+        /// <summary>
+        /// Asynchronously receives a message. />.
+        /// </summary>
+        /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
+        /// <returns>The asynchronous operation.</returns>
+        public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
             MessagingEventSource.Log.MessageReceiveStart(this.ClientId, maxMessageCount);
 
             IList<BrokeredMessage> messages = null;
             try
             {
-                 messages = await this.OnReceiveAsync(maxMessageCount).ConfigureAwait(false);
+                messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime);
             }
             catch (Exception exception)
             {
@@ -278,7 +306,7 @@ namespace Microsoft.Azure.ServiceBus
             return messages;
         }
 
-        protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount);
+        protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
 
         protected abstract Task<IList<BrokeredMessage>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers);
 

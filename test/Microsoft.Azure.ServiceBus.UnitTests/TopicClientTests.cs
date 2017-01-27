@@ -161,6 +161,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
+        async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(string topicName, int messageCount = 1)
+        {
+            var entityConnectionString = TestUtility.GetEntityConnectionString(topicName);
+            var topicClient = TopicClient.CreateFromConnectionString(entityConnectionString);
+            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(entityConnectionString, this.SubscriptionName, ReceiveMode.ReceiveAndDelete);
+            try
+            {
+                await this.ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(topicClient.InnerSender, subscriptionClient.InnerReceiver, messageCount);
+            }
+            finally
+            {
+                await subscriptionClient.CloseAsync();
+                await topicClient.CloseAsync();
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
         async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(string topicName, int messageCount = 1)
         {
             var entityConnectionString = TestUtility.GetEntityConnectionString(topicName);

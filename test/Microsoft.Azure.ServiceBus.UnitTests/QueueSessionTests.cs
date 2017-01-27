@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Text;
     using System.Threading;
@@ -181,6 +182,32 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 // Peek Message, Receive and Delete with SessionId - sessionId 2
                 await this.PeekAndDeleteMessageAsync(queueClient, sessionId2, messageId2);
+            }
+            finally
+            {
+                await queueClient.CloseAsync();
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        async Task AcceptSessionShouldReturnNoLaterThanServerWaitTimeTestCase(string queueName, int messageCount = 1)
+        {
+            var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(queueName), ReceiveMode.ReceiveAndDelete);
+            try
+            {
+                Stopwatch timer = Stopwatch.StartNew();
+                var sessionReceiver = await queueClient.AcceptMessageSessionAsync(TimeSpan.FromSeconds(2));
+                timer.Stop();
+
+                // If sessionId is not null, then the queue needs to be cleaned up before running the timeout test.
+                Assert.Null(sessionReceiver.SessionId);
+
+                // Ensuring total time taken is less than 60 seconds, which is the default timeout for AcceptMessageSessionAsync.
+                // Keeping the value of 40 to avoid flakiness in test infrastructure which may lead to extended time taken.
+                // Todo: Change this value to a lower number once test infra is performant.
+                Assert.True(timer.Elapsed.TotalSeconds < 40);
             }
             finally
             {
