@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:7165E4A72787EF020E1C59029B4D2D13:A0244A057D0D2A3944D2A1B6B5FC52D6
-        internal DeploymentSlotImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppImpl parent, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal DeploymentSlotImpl(string name, SiteInner innerObject, SiteConfigInner configObject, WebAppImpl parent, IWebAppsOperations client, IAppServiceManager manager, WebSiteManagementClient serviceClient)
                     : base(Regex.Replace(name, ".*/", ""), innerObject, configObject, client, manager, serviceClient)
         {
             this.name = Regex.Replace(name, ".*/", "");

@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using WebApp.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point for web app management API.
@@ -14,7 +15,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IWebApp>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        IHasManager<IAppServiceManager>
     {
     }
 }

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             FluentT,
             SiteInner,
             FluentImplT,
-            AppServiceManager,
+            IAppServiceManager,
             DefAfterRegionT,
             DefAfterGroupT,
             IWithCreate<FluentT>,
@@ -963,7 +963,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal abstract Task<Microsoft.Azure.Management.AppService.Fluent.Models.SiteSourceControlInner> CreateOrUpdateSourceControlAsync(SiteSourceControlInner inner, CancellationToken cancellationToken = default(CancellationToken));
 
         ///GENMHASH:B0ECE8043B59B23D8A941C8FB1327608:F6986D710A3CD05509C969004E265D9B
-        internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, AppServiceManager manager, WebSiteManagementClient serviceClient)
+        internal  WebAppBaseImpl(string name, SiteInner innerObject, SiteConfigInner configObject, IWebAppsOperations client, IAppServiceManager manager, WebSiteManagementClient serviceClient)
             : base (name, innerObject, manager)
         {
             this.client = client;

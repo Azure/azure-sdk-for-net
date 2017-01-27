@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using DeploymentSlot.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point for storage accounts management API.
@@ -14,7 +15,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsGettingByName<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
         ISupportsDeletingById,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IDeploymentSlot>,
-        ISupportsDeletingByName
+        ISupportsDeletingByName,
+        IHasManager<IAppServiceManager>
     {
     }
 }

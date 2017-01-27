@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             WebAppImpl,
             Models.SiteInner,
             IWebAppsOperations,
-            AppServiceManager>,
+            IAppServiceManager>,
         IWebApps
     {
         private WebSiteManagementClient serviceClient;

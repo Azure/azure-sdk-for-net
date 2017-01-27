@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             AppServiceDomainImpl,
             DomainInner,
             IDomainsOperations,
-            AppServiceManager>,
+            IAppServiceManager>,
         IAppServiceDomains
     {
         private ITopLevelDomainsOperations topLevelDomainsInner;

@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using AppServiceCertificate.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point for certificate management API.
@@ -14,7 +15,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        IHasManager<IAppServiceManager>
     {
     }
 }
