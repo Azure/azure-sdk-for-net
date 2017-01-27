@@ -15,11 +15,11 @@ namespace ManageBatchAccount
 {
     public class Program
     {
-        private const string APP_NAME = "application";
-        private const string APP_DISPLAY_NAME = "My application display name";
-        private const string APP_PACKAGE_NAME = "app_package";
-        private static readonly Region region = Region.AUSTRALIA_SOUTHEAST;
-        private static readonly Region region2 = Region.US_CENTRAL;
+        private const string AppName = "application";
+        private const string AppDisplayName = "My application display name";
+        private const string AppPackageName = "app_package";
+        private static readonly Region Region = Region.AustraliaSouthEast;
+        private static readonly Region Region2 = Region.USCentral;
 
 
         /**
@@ -49,21 +49,21 @@ namespace ManageBatchAccount
                 // ===========================================================
                 // Get how many batch accounts can be created in specified region.
 
-                int allowedNumberOfBatchAccounts = azure.BatchAccounts.GetBatchAccountQuotaByLocation(region);
+                int allowedNumberOfBatchAccounts = azure.BatchAccounts.GetBatchAccountQuotaByLocation(Region);
 
                 // ===========================================================
                 // List all the batch accounts in subscription.
 
                 var batchAccounts = azure.BatchAccounts.List();
-                int batchAccountsAtSpecificRegion = batchAccounts.Count(x => x.Region == region);
+                int batchAccountsAtSpecificRegion = batchAccounts.Count(x => x.Region == Region);
 
                 if (batchAccountsAtSpecificRegion >= allowedNumberOfBatchAccounts)
                 {
                     Utilities.Log("No more batch accounts can be created at "
-                            + region + " region, this region already have "
+                            + Region + " region, this region already have "
                             + batchAccountsAtSpecificRegion
                             + " batch accounts, current quota to create batch account in "
-                            + region + " region is " + allowedNumberOfBatchAccounts + ".");
+                            + Region + " region is " + allowedNumberOfBatchAccounts + ".");
                     return;
                 }
 
@@ -73,12 +73,12 @@ namespace ManageBatchAccount
                 Utilities.Log("Creating a batch Account");
 
                 var batchAccount = azure.BatchAccounts.Define(batchAccountName)
-                        .WithRegion(region)
+                        .WithRegion(Region)
                         .WithNewResourceGroup(rgName)
-                            .DefineNewApplication(APP_NAME)
-                                .DefineNewApplicationPackage(APP_PACKAGE_NAME)
+                            .DefineNewApplication(AppName)
+                                .DefineNewApplicationPackage(AppPackageName)
                             .WithAllowUpdates(true)
-                            .WithDisplayName(APP_DISPLAY_NAME)
+                            .WithDisplayName(AppDisplayName)
                             .Attach()
                         .WithNewStorageAccount(storageAccountName)
                         .Create();
@@ -123,7 +123,7 @@ namespace ManageBatchAccount
                 // Update name of application.
                 batchAccount
                     .Update()
-                        .UpdateApplication(APP_NAME)
+                        .UpdateApplication(AppName)
                         .WithDisplayName("New application display name")
                         .Parent()
                     .Apply();
@@ -136,19 +136,19 @@ namespace ManageBatchAccount
 
                 Utilities.Log("Creating another Batch Account");
 
-                allowedNumberOfBatchAccounts = azure.BatchAccounts.GetBatchAccountQuotaByLocation(region2);
+                allowedNumberOfBatchAccounts = azure.BatchAccounts.GetBatchAccountQuotaByLocation(Region2);
 
                 // ===========================================================
                 // List all the batch accounts in subscription.
 
                 batchAccounts = azure.BatchAccounts.List();
-                batchAccountsAtSpecificRegion = batchAccounts.Count(x => x.Region == region2);
+                batchAccountsAtSpecificRegion = batchAccounts.Count(x => x.Region == Region2);
 
                 IBatchAccount batchAccount2 = null;
                 if (batchAccountsAtSpecificRegion < allowedNumberOfBatchAccounts)
                 {
                     batchAccount2 = azure.BatchAccounts.Define(batchAccountName2)
-                            .WithRegion(region2)
+                            .WithRegion(Region2)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingStorageAccount(storageAccount)
                             .Create();
@@ -163,7 +163,6 @@ namespace ManageBatchAccount
                 Utilities.Log("Listing Batch accounts");
 
                 var accounts = azure.BatchAccounts.ListByGroup(rgName);
-                IBatchAccount ba;
                 foreach (var account in accounts)
                 {
                     Utilities.Log("Batch Account - " + account.Name);
@@ -235,7 +234,7 @@ namespace ManageBatchAccount
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

@@ -19,17 +19,17 @@ namespace ManageApplicationGateway
 {
     public class Program
     {
-        private static readonly string userName = "tirekicker";
-        private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-        private static readonly string sslCertificatePfxPath = "myTest._pfx"; // Relative to project root directory by default
-        private static readonly string sslCertificatePfxPath2 = "myTest2._pfx"; // Relative to project root directory by default
-        private const int backendPools = 2;
-        private const int vmCountInAPool = 4;
+        private static readonly string UserName = "tirekicker";
+        private static readonly string SshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
+        private static readonly string SslCertificatePfxPath = "myTest._pfx"; // Relative to project root directory by default
+        private static readonly string SslCertificatePfxPath2 = "myTest2._pfx"; // Relative to project root directory by default
+        private const int BackendPools = 2;
+        private const int VMCountInAPool = 4;
 
-        private static List<Region> regions = new List<Region>(){ Region.US_EAST, Region.UK_WEST };
-        private static List<string> addressSpaces = new List<string>(){ "172.16.0.0/16", "172.17.0.0/16" };
-        private static string[,] publicIpCreatableKeys = new string[backendPools, vmCountInAPool];
-        private static string[,] ipAddresses = new string[backendPools,vmCountInAPool];
+        private static List<Region> Regions = new List<Region>(){ Region.USEast, Region.UKWest };
+        private static List<string> AddressSpaces = new List<string>(){ "172.16.0.0/16", "172.17.0.0/16" };
+        private static string[,] PublicIpCreatableKeys = new string[BackendPools, VMCountInAPool];
+        private static string[,] IPAddresses = new string[BackendPools,VMCountInAPool];
 
         /**
          * Azure network sample for managing application gateways.
@@ -79,8 +79,8 @@ namespace ManageApplicationGateway
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEAG", 15);
-            string pipName = SharedSettings.RandomResourceName("pip" + "-", 18);
+            string rgName = SdkContext.RandomResourceName("rgNEAG", 15);
+            string pipName = SdkContext.RandomResourceName("pip" + "-", 18);
 
             try
             {
@@ -90,7 +90,7 @@ namespace ManageApplicationGateway
                 //
                 var resourceGroup = azure.ResourceGroups
                         .Define(rgName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .Create();
 
                 Utilities.Log("Created a new resource group - " + resourceGroup.Id);
@@ -100,7 +100,7 @@ namespace ManageApplicationGateway
                 Utilities.Log("Creating a public IP address for the application gateway ...");
 
                 var publicIpAddress = azure.PublicIpAddresses.Define(pipName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .Create().Refresh();
 
@@ -115,53 +115,53 @@ namespace ManageApplicationGateway
                 // Prepare a batch of Creatable definitions
                 var creatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
 
-                for (var i = 0; i < backendPools; i++)
+                for (var i = 0; i < BackendPools; i++)
                 {
                     //=============================================================
                     // Create 1 network creatable per region
                     // Prepare Creatable Network definition (Where all the virtual machines get added to)
-                    var networkName = SharedSettings.RandomResourceName("vnetNEAG-", 20);
+                    var networkName = SdkContext.RandomResourceName("vnetNEAG-", 20);
 
                     var networkCreatable = azure.Networks
                             .Define(networkName)
-                            .WithRegion(regions[i])
+                            .WithRegion(Regions[i])
                             .WithExistingResourceGroup(resourceGroup)
-                            .WithAddressSpace(addressSpaces[i]);
+                            .WithAddressSpace(AddressSpaces[i]);
 
                     //=============================================================
                     // Create 1 storage creatable per region (For storing VMs disk)
-                    var storageAccountName = SharedSettings.RandomResourceName("stgneag", 20);
+                    var storageAccountName = SdkContext.RandomResourceName("stgneag", 20);
                     var storageAccountCreatable = azure.StorageAccounts
                             .Define(storageAccountName)
-                            .WithRegion(regions[i])
+                            .WithRegion(Regions[i])
                             .WithExistingResourceGroup(resourceGroup);
 
-                    var linuxVMNamePrefix = SharedSettings.RandomResourceName("vm-", 15);
+                    var linuxVMNamePrefix = SdkContext.RandomResourceName("vm-", 15);
 
-                    for (int j = 0; j < vmCountInAPool; j++)
+                    for (int j = 0; j < VMCountInAPool; j++)
                     {
                         //=============================================================
                         // Create 1 public IP address creatable
                         var publicIpAddressCreatable = azure.PublicIpAddresses
                                 .Define(string.Format("{0}-{1}", linuxVMNamePrefix, j))
-                                .WithRegion(regions[i])
+                                .WithRegion(Regions[i])
                                 .WithExistingResourceGroup(resourceGroup)
                                 .WithLeafDomainLabel(string.Format("{0}-{1}", linuxVMNamePrefix, j));
 
-                        publicIpCreatableKeys[i, j] = publicIpAddressCreatable.Key;
+                        PublicIpCreatableKeys[i, j] = publicIpAddressCreatable.Key;
 
                         //=============================================================
                         // Create 1 virtual machine creatable
                         var virtualMachineCreatable = azure.VirtualMachines
                                 .Define(string.Format("{0}-{1}", linuxVMNamePrefix, j))
-                                .WithRegion(regions[i])
+                                .WithRegion(Regions[i])
                                 .WithExistingResourceGroup(resourceGroup)
                                 .WithNewPrimaryNetwork(networkCreatable)
                                 .WithPrimaryPrivateIpAddressDynamic()
                                 .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                                .WithRootUsername(userName)
-                                .WithSsh(sshKey)
+                                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                                .WithRootUsername(UserName)
+                                .WithSsh(SshKey)
                                 .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                                 .WithNewStorageAccount(storageAccountCreatable);
                         creatableVirtualMachines.Add(virtualMachineCreatable);
@@ -193,25 +193,24 @@ namespace ManageApplicationGateway
                 // Get IP addresses from created resources
 
                 Utilities.Log("IP Addresses in the backend pools are - ");
-                for (var i = 0; i < backendPools; i++)
+                for (var i = 0; i < BackendPools; i++)
                 {
-                    for (var j = 0; j < vmCountInAPool; j++)
+                    for (var j = 0; j < VMCountInAPool; j++)
                     {
                         var pip = (IPublicIpAddress)virtualMachines
-                                .CreatedRelatedResource(publicIpCreatableKeys[i, j]);
+                                .CreatedRelatedResource(PublicIpCreatableKeys[i, j]);
                         pip.Refresh();
-                        ipAddresses[i, j] = pip.IpAddress;
+                        IPAddresses[i, j] = pip.IpAddress;
                         Utilities.Log("[backend pool ="
                            + i
                            + "][vm = "
                            + j
                            + "] = "
-                           + ipAddresses[i, j]);
+                           + IPAddresses[i, j]);
                     }
 
                     Utilities.Log("======");
                 }
-
 
                 //=======================================================================
                 // Create an application gateway
@@ -221,29 +220,29 @@ namespace ManageApplicationGateway
                 t = Stopwatch.StartNew();
 
                 IApplicationGateway applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         // Request routing rule for HTTP from public 80 to public 8080
                         .DefineRequestRoutingRule("HTTP-80-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpPort(80)
                             .ToBackendHttpPort(8080)
-                            .ToBackendIpAddress(ipAddresses[0, 0])
-                            .ToBackendIpAddress(ipAddresses[0, 1])
-                            .ToBackendIpAddress(ipAddresses[0, 2])
-                            .ToBackendIpAddress(ipAddresses[0, 3])
+                            .ToBackendIpAddress(IPAddresses[0, 0])
+                            .ToBackendIpAddress(IPAddresses[0, 1])
+                            .ToBackendIpAddress(IPAddresses[0, 2])
+                            .ToBackendIpAddress(IPAddresses[0, 3])
                             .Attach()
                         // Request routing rule for HTTPS from public 443 to public 8080
                         .DefineRequestRoutingRule("HTTPs-443-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpsPort(443)
-                            .WithSslCertificateFromPfxFile(new FileInfo(sslCertificatePfxPath))
+                            .WithSslCertificateFromPfxFile(new FileInfo(SslCertificatePfxPath))
                             .WithSslCertificatePassword("Abc123")
                             .ToBackendHttpPort(8080)
-                            .ToBackendIpAddress(ipAddresses[1, 0])
-                            .ToBackendIpAddress(ipAddresses[1, 1])
-                            .ToBackendIpAddress(ipAddresses[1, 2])
-                            .ToBackendIpAddress(ipAddresses[1, 3])
+                            .ToBackendIpAddress(IPAddresses[1, 0])
+                            .ToBackendIpAddress(IPAddresses[1, 1])
+                            .ToBackendIpAddress(IPAddresses[1, 2])
+                            .ToBackendIpAddress(IPAddresses[1, 3])
                             .Attach()
                         .WithExistingPublicIpAddress(publicIpAddress)
                         .Create();
@@ -268,13 +267,13 @@ namespace ManageApplicationGateway
                         .DefineRequestRoutingRule("HTTPs-1443-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpsPort(1443)
-                            .WithSslCertificateFromPfxFile(new FileInfo(sslCertificatePfxPath2))
+                            .WithSslCertificateFromPfxFile(new FileInfo(SslCertificatePfxPath2))
                             .WithSslCertificatePassword("Abc123")
                             .ToBackendHttpPort(8080)
-                            .ToBackendIpAddress(ipAddresses[0, 0])
-                            .ToBackendIpAddress(ipAddresses[0, 1])
-                            .ToBackendIpAddress(ipAddresses[0, 2])
-                            .ToBackendIpAddress(ipAddresses[0, 3])
+                            .ToBackendIpAddress(IPAddresses[0, 0])
+                            .ToBackendIpAddress(IPAddresses[0, 1])
+                            .ToBackendIpAddress(IPAddresses[0, 2])
+                            .ToBackendIpAddress(IPAddresses[0, 3])
                             .WithHostName("www.contoso.com")
                             .WithCookieBasedAffinity()
                             .Attach()
@@ -284,7 +283,6 @@ namespace ManageApplicationGateway
 
                 Utilities.Log("Application gateway updated: (took " + (t.ElapsedMilliseconds / 1000) + " seconds)");
                 Utilities.PrintAppGateway(applicationGateway);
-
             }
             finally
             {
@@ -311,7 +309,7 @@ namespace ManageApplicationGateway
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

@@ -18,7 +18,7 @@ namespace ManageWebAppSourceControl
 {
     public class Program
     {
-        private const string SUFFIX = ".azurewebsites.net";
+        private const string Suffix = ".azurewebsites.net";
 
         /**
          * Azure App Service basic sample for managing web apps.
@@ -31,16 +31,16 @@ namespace ManageWebAppSourceControl
          */
         public static void RunSample(IAzure azure)
         {
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-            string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
-            string app1Url = app1Name + SUFFIX;
-            string app2Url = app2Name + SUFFIX;
-            string app3Url = app3Name + SUFFIX;
-            string app4Url = app4Name + SUFFIX;
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
+            string app4Name = SdkContext.RandomResourceName("webapp4-", 20);
+            string app1Url = app1Name + Suffix;
+            string app2Url = app2Name + Suffix;
+            string app3Url = app3Name + Suffix;
+            string app4Url = app4Name + Suffix;
+            string planName = SdkContext.RandomResourceName("jplan_", 15);
+            string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
             {
@@ -53,10 +53,10 @@ namespace ManageWebAppSourceControl
                         .Define(app1Name)
                         .WithNewResourceGroup(rgName)
                         .WithNewAppServicePlan(planName)
-                        .WithRegion(Region.US_WEST)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithRegion(Region.USWest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -75,7 +75,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app1Url + "/helloworld...");
                 CheckAddress("http://" + app1Url + "/helloworld");
-                SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
                 Utilities.Log("CURLing " + app1Url + "/helloworld...");
                 Utilities.Log(CheckAddress("http://" + app1Url + "/helloworld"));
 
@@ -89,8 +89,8 @@ namespace ManageWebAppSourceControl
                         .WithExistingResourceGroup(rgName)
                         .WithExistingAppServicePlan(plan)
                         .WithLocalGitSourceControl()
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Create();
 
                 Utilities.Log("Created web app " + app2.Name);
@@ -124,7 +124,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app2Url + "/helloworld...");
                 CheckAddress("http://" + app2Url + "/helloworld");
-                SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
                 Utilities.Log("CURLing " + app2Url + "/helloworld...");
                 Utilities.Log(CheckAddress("http://" + app2Url + "/helloworld"));
 
@@ -148,7 +148,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app3Url + "...");
                 CheckAddress("http://" + app3Url);
-                SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
                 Utilities.Log("CURLing " + app3Url + "...");
                 Utilities.Log(CheckAddress("http://" + app3Url));
 
@@ -174,7 +174,7 @@ namespace ManageWebAppSourceControl
                 // warm up
                 Utilities.Log("Warming up " + app4Url + "...");
                 CheckAddress("http://" + app4Url);
-                SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
                 Utilities.Log("CURLing " + app4Url + "...");
                 Utilities.Log(CheckAddress("http://" + app4Url));
             }
@@ -207,7 +207,7 @@ namespace ManageWebAppSourceControl
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

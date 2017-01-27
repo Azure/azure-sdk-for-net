@@ -39,8 +39,8 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
          */
         public static void RunSample(IAzure azure)
         {
-            string sqlServerName = SharedSettings.RandomResourceName("sqlserver", 20);
-            string rgName = SharedSettings.RandomResourceName("rgRSSDRE", 20);
+            string sqlServerName = SdkContext.RandomResourceName("sqlserver", 20);
+            string rgName = SdkContext.RandomResourceName("rgRSSDRE", 20);
             
             try
             {
@@ -48,7 +48,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                 // Create a SQL Server, with 2 firewall rules.
 
                 var masterSqlServer = azure.SqlServers.Define(sqlServerName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAdministratorLogin(administratorLogin)
                         .WithAdministratorPassword(administratorPassword)
@@ -84,7 +84,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
 
                 var sqlServerInEurope = azure.SqlServers
                         .Define(Utilities.CreateRandomName(slaveSqlServer2Name))
-                        .WithRegion(Region.EUROPE_WEST)
+                        .WithRegion(Region.EuropeWest)
                         .WithExistingResourceGroup(rgName)
                         .WithAdministratorLogin(administratorLogin)
                         .WithAdministratorPassword(administratorPassword)
@@ -102,11 +102,11 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                 // Create Virtual Networks in different regions
                 var regions = new List<Region>();
 
-                regions.Add(Region.US_EAST);
-                regions.Add(Region.US_WEST);
-                regions.Add(Region.EUROPE_NORTH);
-                regions.Add(Region.ASIA_SOUTHEAST);
-                regions.Add(Region.JAPAN_EAST);
+                regions.Add(Region.USEast);
+                regions.Add(Region.USWest);
+                regions.Add(Region.EuropeNorth);
+                regions.Add(Region.AsiaSouthEast);
+                regions.Add(Region.JapanEast);
 
                 var creatableNetworks = new List<ICreatable<INetwork>>();
 
@@ -139,7 +139,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                             .WithSubnet(network.Subnets.Values.First().Name)
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithNewPrimaryPublicIpAddress(publicIpAddressCreatable)
-                            .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                            .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                             .WithAdminUsername(administratorLogin)
                             .WithAdminPassword(administratorPassword)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2));
@@ -192,7 +192,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
                     azure.ResourceGroups.DeleteByName(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
-                catch (Exception e)
+                catch
                 {
                     Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
@@ -204,7 +204,7 @@ namespace ManageSqlDatabasesAcrossDifferentDataCenters
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

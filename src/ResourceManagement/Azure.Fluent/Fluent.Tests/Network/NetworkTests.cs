@@ -22,7 +22,7 @@ namespace Fluent.Tests.Network
                 var testId = TestUtilities.GenerateName("");
 
                 string newName = "net" + testId;
-                var region = Region.US_WEST;
+                var region = Region.USWest;
                 var groupName = "rg" + testId;
 
                 // Create an NSG

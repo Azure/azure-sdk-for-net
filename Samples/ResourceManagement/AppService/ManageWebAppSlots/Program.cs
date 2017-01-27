@@ -13,8 +13,8 @@ namespace ManageWebAppSlots
 {
     public class Program
     {
-        private const string SUFFIX = ".azurewebsites.net";
-        private const string SLOT_NAME = "staging";
+        private const string Suffix = ".azurewebsites.net";
+        private const string SlotName = "staging";
 
         /**
          * Azure App Service basic sample for managing web apps.
@@ -27,31 +27,30 @@ namespace ManageWebAppSlots
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
+            string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
 
             try
             {
                 azure.ResourceGroups.Define(rgName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .Create();
 
                 //============================================================
                 // Create 3 web apps with 3 new app service plans in different regions
 
-                var app1 = CreateWebApp(azure, rgName, app1Name, Region.US_WEST);
-                var app2 = CreateWebApp(azure, rgName, app2Name, Region.EUROPE_WEST);
-                var app3 = CreateWebApp(azure, rgName, app3Name, Region.ASIA_EAST);
-
+                var app1 = CreateWebApp(azure, rgName, app1Name, Region.USWest);
+                var app2 = CreateWebApp(azure, rgName, app2Name, Region.EuropeWest);
+                var app3 = CreateWebApp(azure, rgName, app3Name, Region.AsiaEast);
 
                 //============================================================
                 // Create a deployment slot under each web app with auto swap
 
-                var slot1 = CreateSlot(azure, SLOT_NAME, app1);
-                var slot2 = CreateSlot(azure, SLOT_NAME, app2);
-                var slot3 = CreateSlot(azure, SLOT_NAME, app3);
+                var slot1 = CreateSlot(azure, SlotName, app1);
+                var slot2 = CreateSlot(azure, SlotName, app2);
+                var slot3 = CreateSlot(azure, SlotName, app3);
 
                 //============================================================
                 // Deploy the staging branch to the slot
@@ -91,7 +90,7 @@ namespace ManageWebAppSlots
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -112,8 +111,8 @@ namespace ManageWebAppSlots
         
         private static IWebApp CreateWebApp(IAzure azure, string rgName, string appName, Region region)
         {
-            var planName = SharedSettings.RandomResourceName("jplan_", 15);
-            var appUrl = appName + SUFFIX;
+            var planName = SdkContext.RandomResourceName("jplan_", 15);
+            var appUrl = appName + Suffix;
 
             Utilities.Log("Creating web app " + appName + " with master branch...");
 
@@ -122,9 +121,9 @@ namespace ManageWebAppSlots
                     .WithExistingResourceGroup(rgName)
                     .WithNewAppServicePlan(planName)
                     .WithRegion(region)
-                    .WithPricingTier(AppServicePricingTier.Standard_S1)
-                    .WithJavaVersion(JavaVersion.Java_8_Newest)
-                    .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                    .WithPricingTier(AppServicePricingTier.StandardS1)
+                    .WithJavaVersion(JavaVersion.V8Newest)
+                    .WithWebContainer(WebContainer.Tomcat8_0Newest)
                     .DefineSourceControl()
                         .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test.git")
                         .WithBranch("master")
@@ -156,8 +155,8 @@ namespace ManageWebAppSlots
 
         private static void DeployToStaging(IAzure azure, IDeploymentSlot slot)
         {
-            var slotUrl = slot.Parent.Name + "-" + slot.Name + SUFFIX;
-            var appUrl = slot.Parent.Name + SUFFIX;
+            var slotUrl = slot.Parent.Name + "-" + slot.Name + Suffix;
+            var appUrl = slot.Parent.Name + Suffix;
             Utilities.Log("Deploying staging branch to slot " + slot.Name + "...");
 
             slot.Update()
@@ -178,7 +177,7 @@ namespace ManageWebAppSlots
 
         private static void SwapProductionBackToSlot(IAzure azure, IDeploymentSlot slot)
         {
-            var appUrl = slot.Parent.Name + SUFFIX;
+            var appUrl = slot.Parent.Name + Suffix;
             Utilities.Log("Manually swap production slot back to  " + slot.Name + "...");
 
             slot.Swap("production");

@@ -19,10 +19,10 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 {
     public class Program
     {
-        private const int frontendVmCount = 10;
-        private const int backendVmCount = 10;
-        private const string userName = "tirekicker";
-        private const string password = "12NewPA$$w0rd!";
+        private const int FrontendVMCount = 10;
+        private const int BackendVMCount = 10;
+        private const string UserName = "tirekicker";
+        private const string Password = "12NewPA$$w0rd!";
 
         /**
          * Create a virtual network with two Subnets – frontend and backend
@@ -33,18 +33,18 @@ namespace ManageVirtualMachinesInParallelWithNetwork
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEPP", 24);
-            string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
-            string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
-            string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
-            string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
+            string rgName = SdkContext.RandomResourceName("rgNEPP", 24);
+            string frontEndNSGName = SdkContext.RandomResourceName("fensg", 24);
+            string backEndNSGName = SdkContext.RandomResourceName("bensg", 24);
+            string networkName = SdkContext.RandomResourceName("vnetCOMV", 24);
+            string storageAccountName = SdkContext.RandomResourceName("stgCOMV", 20);
 
             try
             {
                 // Create a resource group [Where all resources gets created]
                 IResourceGroup resourceGroup = azure.ResourceGroups
                         .Define(rgName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .Create();
 
                 //============================================================
@@ -55,7 +55,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                 var frontEndNSGCreatable = azure.NetworkSecurityGroups
                         .Define(frontEndNSGName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .DefineRule("ALLOW-SSH")
                             .AllowInbound()
@@ -86,7 +86,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                 var backEndNSGCreatable = azure.NetworkSecurityGroups
                         .Define(backEndNSGName)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(resourceGroup)
                             .DefineRule("ALLOW-SQL")
                             .AllowInbound()
@@ -127,7 +127,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                 // Create Network [Where all the virtual machines get added to]
                 var network = azure.Networks
                         .Define(networkName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithAddressSpace("172.16.0.0/16")
                         .DefineSubnet("Front-end")
@@ -143,25 +143,25 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                 // Prepare Creatable Storage account definition [For storing VMs disk]
                 var creatableStorageAccount = azure.StorageAccounts
                         .Define(storageAccountName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup);
 
                 // Prepare a batch of Creatable Virtual Machines definitions
                 List<ICreatable<IVirtualMachine>> frontendCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
 
-                for (int i = 0; i < frontendVmCount; i++)
+                for (int i = 0; i < FrontendVMCount; i++)
                 {
                     var creatableVirtualMachine = azure.VirtualMachines
                         .Define("VM-FE-" + i)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithRootPassword(password)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithNewStorageAccount(creatableStorageAccount);
                     frontendCreatableVirtualMachines.Add(creatableVirtualMachine);
@@ -169,19 +169,19 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                 List<ICreatable<IVirtualMachine>> backendCreatableVirtualMachines = new List<ICreatable<IVirtualMachine>>();
 
-                for (int i = 0; i < backendVmCount; i++)
+                for (int i = 0; i < BackendVMCount; i++)
                 {
                     var creatableVirtualMachine = azure.VirtualMachines
                         .Define("VM-BE-" + i)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithRootPassword(password)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithNewStorageAccount(creatableStorageAccount);
                     backendCreatableVirtualMachines.Add(creatableVirtualMachine);
@@ -220,7 +220,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

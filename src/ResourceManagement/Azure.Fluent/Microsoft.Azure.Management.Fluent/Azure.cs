@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         public static IAuthenticated Authenticate(string authFile)
         {
-            AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(authFile);
+            AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(authFile);
             return Authenticate(credentials);
         }
 

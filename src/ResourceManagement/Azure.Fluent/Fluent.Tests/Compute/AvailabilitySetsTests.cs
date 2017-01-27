@@ -26,7 +26,7 @@ namespace Fluent.Tests.Compute
                     IComputeManager computeManager = TestHelper.CreateComputeManager();
                     var availabilitySet = computeManager.AvailabilitySets
                         .Define(availName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithUpdateDomainCount(2)
                         .WithFaultDomainCount(3)

@@ -26,29 +26,29 @@ namespace ManageVirtualMachinesInParallel
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOPP", 24);
-            string networkName = SharedSettings.RandomResourceName("vnetCOMV", 24);
-            string storageAccountName = SharedSettings.RandomResourceName("stgCOMV", 20);
+            string rgName = SdkContext.RandomResourceName("rgCOPP", 24);
+            string networkName = SdkContext.RandomResourceName("vnetCOMV", 24);
+            string storageAccountName = SdkContext.RandomResourceName("stgCOMV", 20);
 
             try
             {
                 // Create a resource group [Where all resources gets created]
                 IResourceGroup resourceGroup = azure.ResourceGroups
                         .Define(rgName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .Create();
 
                 // Prepare Creatable Network definition [Where all the virtual machines get added to]
                 var creatableNetwork = azure.Networks
                         .Define(networkName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithAddressSpace("172.16.0.0/16");
 
                 // Prepare Creatable Storage account definition [For storing VMs disk]
                 var creatableStorageAccount = azure.StorageAccounts
                         .Define(storageAccountName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup);
 
                 // Prepare a batch of Creatable Virtual Machines definitions
@@ -58,12 +58,12 @@ namespace ManageVirtualMachinesInParallel
                 {
                     var creatableVirtualMachine = azure.VirtualMachines
                         .Define("VM-" + i)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork(creatableNetwork)
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername("tirekicker")
                         .WithRootPassword("12NewPA$$w0rd!")
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
@@ -105,7 +105,7 @@ namespace ManageVirtualMachinesInParallel
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

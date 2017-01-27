@@ -15,13 +15,13 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
 {
     public class Program
     {
-        private static readonly string userName = "tirekicker";
-        private static readonly string password = "12NewPA$$w0rd!";
-        private readonly static List<string> apacheInstallScriptUris = new List<string>()
+        private static readonly string UserName = "tirekicker";
+        private static readonly string Password = "12NewPA$$w0rd!";
+        private readonly static List<string> ApacheInstallScriptUris = new List<string>()
         {
             "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.sh"
         };
-        private static readonly string apacheInstallCommand = "bash install_apache.sh";
+        private static readonly string ApacheInstallCommand = "bash install_apache.sh";
 
         /**
          * Azure Compute sample for managing virtual machines -
@@ -35,11 +35,11 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOMV", 10);
-            string linuxVmName1 = SharedSettings.RandomResourceName("VM1", 10);
-            string linuxVmName2 = SharedSettings.RandomResourceName("VM2", 10);
-            string linuxVmName3 = SharedSettings.RandomResourceName("VM3", 10);
-            string publicIpDnsLabel = SharedSettings.RandomResourceName("pip", 10);
+            string rgName = SdkContext.RandomResourceName("rgCOMV", 10);
+            string linuxVmName1 = SdkContext.RandomResourceName("VM1", 10);
+            string linuxVmName2 = SdkContext.RandomResourceName("VM2", 10);
+            string linuxVmName3 = SdkContext.RandomResourceName("VM3", 10);
+            string publicIpDnsLabel = SdkContext.RandomResourceName("pip", 10);
 
             try
             {
@@ -49,22 +49,22 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("Creating a Linux VM");
 
                 var linuxVM = azure.VirtualMachines.Define(linuxVmName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithNewPrimaryPublicIpAddress(publicIpDnsLabel)
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithRootPassword(password)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .DefineNewExtension("CustomScriptForLinux")
                             .WithPublisher("Microsoft.OSTCExtensions")
                             .WithType("CustomScriptForLinux")
                             .WithVersion("1.4")
                             .WithMinorVersionAutoUpgrade()
-                            .WithPublicSetting("fileUris", apacheInstallScriptUris)
-                            .WithPublicSetting("commandToExecute", apacheInstallCommand)
+                            .WithPublicSetting("fileUris", ApacheInstallScriptUris)
+                            .WithPublicSetting("commandToExecute", ApacheInstallCommand)
                             .Attach()
                         .Create();
 
@@ -113,14 +113,14 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("Creating a Linux VM using captured image - " + capturedImageUri);
 
                 var linuxVM2 = azure.VirtualMachines.Define(linuxVmName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
                         .WithStoredLinuxImage(capturedImageUri) // Note: A Generalized Image can also be an uploaded VHD prepared from an on-premise generalized VM.
-                        .WithRootUsername(userName)
-                        .WithRootPassword(password)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -144,7 +144,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         + " of deleted VM");
 
                 var linuxVM3 = azure.VirtualMachines.Define(linuxVmName3)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
@@ -163,7 +163,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                     azure.ResourceGroups.DeleteByName(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
-                catch (Exception e)
+                catch
                 {
                     Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
@@ -176,7 +176,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

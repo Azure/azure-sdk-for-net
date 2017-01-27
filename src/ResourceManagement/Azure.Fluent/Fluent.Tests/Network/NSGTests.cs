@@ -24,7 +24,7 @@ namespace Fluent.Tests.Network
                 var newName = "nsg" + testId;
                 var manager = TestHelper.CreateNetworkManager();
                 var nsg = manager.NetworkSecurityGroups.Define(newName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithNewResourceGroup("rg" + testId)
                     .DefineRule("rule1")
                         .AllowOutbound()
@@ -47,7 +47,7 @@ namespace Fluent.Tests.Network
                     .Create();
 
                 // Verify
-                Assert.True(nsg.Region.Equals(Region.US_WEST));
+                Assert.True(nsg.Region.Equals(Region.USWest));
                 Assert.True(nsg.SecurityRules.Count == 2);
 
                 var resource = manager.NetworkSecurityGroups.GetByGroup("rg" + testId, newName);

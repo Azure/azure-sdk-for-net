@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:BC033DDD8D749B9BBCDC5BADD5CF2B94:9F4E7075C3242FB2777F45453DB418B6
         public WebAppImpl WithFreePricingTier()
         {
-            return WithPricingTier(AppServicePricingTier.Free_F1);
+            return WithPricingTier(AppServicePricingTier.FreeF1);
         }
 
         ///GENMHASH:256905D5B839C64BFE9830503CB5607B:7AC64BDE9A6045728A97AD3B7E256F87

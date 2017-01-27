@@ -22,20 +22,20 @@ namespace ManageResource
         */
         public static void RunSample(IAzure azure)
         {
-            var rgName = SharedSettings.RandomResourceName("rgRSMR", 24);
-            var resourceName1 = SharedSettings.RandomResourceName("rn1", 24);
-            var resourceName2 = SharedSettings.RandomResourceName("rn2", 24);
+            var resourceGroupName = SdkContext.RandomResourceName("rgRSMR", 24);
+            var resourceName1 = SdkContext.RandomResourceName("rn1", 24);
+            var resourceName2 = SdkContext.RandomResourceName("rn2", 24);
 
             try
             {
                 //=============================================================
                 // Create resource group.
 
-                Utilities.Log("Creating a resource group with name: " + rgName);
+                Utilities.Log("Creating a resource group with name: " + resourceGroupName);
 
                 azure.ResourceGroups
-                    .Define(rgName)
-                    .WithRegion(Region.US_WEST)
+                    .Define(resourceGroupName)
+                    .WithRegion(Region.USWest)
                     .Create();
 
                 //=============================================================
@@ -45,8 +45,8 @@ namespace ManageResource
 
                 var storageAccount = azure.StorageAccounts
                     .Define(resourceName1)
-                    .WithRegion(Region.US_WEST)
-                    .WithExistingResourceGroup(rgName)
+                    .WithRegion(Region.USWest)
+                    .WithExistingResourceGroup(resourceGroupName)
                     .Create();
 
                 Utilities.Log("Storage account created: " + storageAccount.Id);
@@ -68,8 +68,8 @@ namespace ManageResource
                 Utilities.Log("Creating another storage account with name: " + resourceName2);
 
                 var storageAccount2 = azure.StorageAccounts.Define(resourceName2)
-                    .WithRegion(Region.US_WEST)
-                    .WithExistingResourceGroup(rgName)
+                    .WithRegion(Region.USWest)
+                    .WithExistingResourceGroup(resourceGroupName)
                     .Create();
 
                 Utilities.Log("Storage account created: " + storageAccount2.Id);
@@ -77,7 +77,7 @@ namespace ManageResource
                 //=============================================================
                 // List storage accounts.
 
-                Utilities.Log("Listing all storage accounts for resource group: " + rgName);
+                Utilities.Log("Listing all storage accounts for resource group: " + resourceGroupName);
 
                 foreach (var sAccount in azure.StorageAccounts.List())
                 {
@@ -101,9 +101,9 @@ namespace ManageResource
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + resourceGroupName);
+                    azure.ResourceGroups.DeleteByName(resourceGroupName);
+                    Utilities.Log("Deleted Resource Group: " + resourceGroupName);
                 }
                 catch (Exception ex)
                 {
@@ -119,7 +119,7 @@ namespace ManageResource
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

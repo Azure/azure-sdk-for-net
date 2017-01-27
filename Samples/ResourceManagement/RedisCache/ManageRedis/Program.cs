@@ -29,10 +29,10 @@ namespace ManageRedis
          */
         public static void RunSample(IAzure azure)
         {
-            var redisCacheName1 = SharedSettings.RandomResourceName("rc1", 20);
-            var redisCacheName2 = SharedSettings.RandomResourceName("rc2", 20);
-            var redisCacheName3 = SharedSettings.RandomResourceName("rc3", 20);
-            var rgName = SharedSettings.RandomResourceName("rgRCMC", 20);
+            var redisCacheName1 = SdkContext.RandomResourceName("rc1", 20);
+            var redisCacheName2 = SdkContext.RandomResourceName("rc2", 20);
+            var redisCacheName3 = SdkContext.RandomResourceName("rc3", 20);
+            var rgName = SdkContext.RandomResourceName("rgRCMC", 20);
 
             try
             {
@@ -42,7 +42,7 @@ namespace ManageRedis
                 Utilities.Log("Creating a Redis Cache");
 
                 var redisCache1 = azure.RedisCaches.Define(redisCacheName1)
-                        .WithRegion(Region.US_CENTRAL)
+                        .WithRegion(Region.USCentral)
                         .WithNewResourceGroup(rgName)
                         .WithBasicSku()
                         .Create();
@@ -67,7 +67,7 @@ namespace ManageRedis
                 Utilities.Log("Creating two more Redis Caches with Premium Sku");
 
                 var redisCache2 = azure.RedisCaches.Define(redisCacheName2)
-                        .WithRegion(Region.US_CENTRAL)
+                        .WithRegion(Region.USCentral)
                         .WithNewResourceGroup(rgName)
                         .WithPremiumSku()
                         .WithShardCount(3)
@@ -77,7 +77,7 @@ namespace ManageRedis
                 Utilities.PrintRedisCache(redisCache2);
 
                 var redisCache3 = azure.RedisCaches.Define(redisCacheName3)
-                        .WithRegion(Region.US_CENTRAL)
+                        .WithRegion(Region.USCentral)
                         .WithNewResourceGroup(rgName)
                         .WithPremiumSku(2)
                         .WithShardCount(3)
@@ -153,7 +153,7 @@ namespace ManageRedis
 
             try
             {
-                var tokenCredentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var tokenCredentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

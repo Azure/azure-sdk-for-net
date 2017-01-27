@@ -4,7 +4,6 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
-using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.Samples.Common;
@@ -38,13 +37,13 @@ namespace ManageVirtualMachineScaleSet
          */
         public static void RunSample(IAzure azure)
         {
-            string vmssName = SharedSettings.RandomResourceName("vmss", 24);
-            string storageAccountName1 = SharedSettings.RandomResourceName("stg1", 24);
-            string storageAccountName2 = SharedSettings.RandomResourceName("stg2", 24);
-            string storageAccountName3 = SharedSettings.RandomResourceName("stg3", 24);
-            string rgName = SharedSettings.RandomResourceName("rgCOVS", 15);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string loadBalancerName1 = SharedSettings.RandomResourceName("intlb" + "-", 18);
+            string vmssName = SdkContext.RandomResourceName("vmss", 24);
+            string storageAccountName1 = SdkContext.RandomResourceName("stg1", 24);
+            string storageAccountName2 = SdkContext.RandomResourceName("stg2", 24);
+            string storageAccountName3 = SdkContext.RandomResourceName("stg3", 24);
+            string rgName = SdkContext.RandomResourceName("rgCOVS", 15);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string loadBalancerName1 = SdkContext.RandomResourceName("intlb" + "-", 18);
             string publicIpName = "pip-" + loadBalancerName1;
             string frontendName = loadBalancerName1 + "-FE1";
             string backendPoolName1 = loadBalancerName1 + "-BAP1";
@@ -57,7 +56,7 @@ namespace ManageVirtualMachineScaleSet
                 Utilities.Log("Creating virtual network with a frontend subnet ...");
 
                 var network = azure.Networks.Define(vnetName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAddressSpace("172.16.0.0/16")
                         .DefineSubnet("Front-end")
@@ -74,7 +73,7 @@ namespace ManageVirtualMachineScaleSet
                 Utilities.Log("Creating a public IP address...");
 
                 var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpName)
                         .Create();
@@ -109,7 +108,7 @@ namespace ManageVirtualMachineScaleSet
                         + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                 var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePublicFrontend(frontendName)
                             .WithExistingPublicIpAddress(publicIpAddress)
@@ -177,15 +176,15 @@ namespace ManageVirtualMachineScaleSet
 
                 var virtualMachineScaleSet = azure.VirtualMachineScaleSets
                         .Define(vmssName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
-                        .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_D3_V2)
+                        .WithSku(VirtualMachineScaleSetSkuTypes.StandardD3v2)
                         .WithExistingPrimaryNetworkSubnet(network, "Front-end")
                         .WithExistingPrimaryInternetFacingLoadBalancer(loadBalancer1)
                         .WithPrimaryInternetFacingLoadBalancerBackends(backendPoolName1, backendPoolName2)
                         .WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
                         .WithoutPrimaryInternalLoadBalancer()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(userName)
                         .WithSsh(sshKey)
                         .WithNewStorageAccount(storageAccountName1)
@@ -258,7 +257,7 @@ namespace ManageVirtualMachineScaleSet
                     azure.ResourceGroups.DeleteByName(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
-                catch (NullReferenceException npe)
+                catch (NullReferenceException)
                 {
                     Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
@@ -275,7 +274,7 @@ namespace ManageVirtualMachineScaleSet
             {
                 //=============================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

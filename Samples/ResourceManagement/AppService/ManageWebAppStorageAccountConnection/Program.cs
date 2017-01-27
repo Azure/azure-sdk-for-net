@@ -32,24 +32,24 @@ namespace ManageWebAppStorageAccountConnection
          */
         public static void RunSample(IAzure azure)
         {
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app1Url = app1Name + SUFFIX;
-            string storageName = SharedSettings.RandomResourceName("jsdkstore", 20);
-            string containerName = SharedSettings.RandomResourceName("jcontainer", 20);
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string App1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string App1Url = App1Name + SUFFIX;
+            string StorageName = SdkContext.RandomResourceName("jsdkstore", 20);
+            string ContainerName = SdkContext.RandomResourceName("jcontainer", 20);
+            string PlanName = SdkContext.RandomResourceName("jplan_", 15);
+            string ResourceGroupName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
             {
                 //============================================================
                 // Create a storage account for the web app to use
 
-                Utilities.Log("Creating storage account " + storageName + "...");
+                Utilities.Log("Creating storage account " + StorageName + "...");
 
                 var storageAccount = azure.StorageAccounts
-                        .Define(storageName)
-                        .WithRegion(Region.US_WEST)
-                        .WithNewResourceGroup(rgName)
+                        .Define(StorageName)
+                        .WithRegion(Region.USWest)
+                        .WithNewResourceGroup(ResourceGroupName)
                         .Create();
 
                 var accountKey = storageAccount.GetKeys().FirstOrDefault().Value;
@@ -62,9 +62,9 @@ namespace ManageWebAppStorageAccountConnection
                 //============================================================
                 // Upload a few files to the storage account blobs
 
-                Utilities.Log("Uploading 2 blobs to container " + containerName + "...");
+                Utilities.Log("Uploading 2 blobs to container " + ContainerName + "...");
 
-                var container = SetUpStorageAccount(connectionString, containerName).GetAwaiter().GetResult();
+                var container = SetUpStorageAccount(connectionString, ContainerName).GetAwaiter().GetResult();
                 UploadFileToContainer(container, "helloworld.war", "Asset/helloworld.war").GetAwaiter().GetResult();
                 UploadFileToContainer(container, "install_apache.sh", "Asset/install_apache.Sh").GetAwaiter().GetResult();
 
@@ -73,18 +73,18 @@ namespace ManageWebAppStorageAccountConnection
                 //============================================================
                 // Create a web app with a new app service plan
 
-                Utilities.Log("Creating web app " + app1Name + "...");
+                Utilities.Log("Creating web app " + App1Name + "...");
 
                 var app1 = azure.WebApps
-                        .Define(app1Name)
-                        .WithExistingResourceGroup(rgName)
-                        .WithNewAppServicePlan(planName)
-                        .WithRegion(Region.US_WEST)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .Define(App1Name)
+                        .WithExistingResourceGroup(ResourceGroupName)
+                        .WithNewAppServicePlan(PlanName)
+                        .WithRegion(Region.USWest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .WithConnectionString("storage.ConnectionString", connectionString, ConnectionStringType.Custom)
-                        .WithAppSetting("storage.ContainerName", containerName)
+                        .WithAppSetting("storage.ContainerName", ContainerName)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -94,7 +94,7 @@ namespace ManageWebAppStorageAccountConnection
                 // Deploy a web app that connects to the storage account
                 // Source code: https://github.Com/jianghaolu/azure-samples-blob-explorer
 
-                Utilities.Log("Deploying azure-samples-blob-traverser.war to " + app1Name + " through FTP...");
+                Utilities.Log("Deploying azure-samples-blob-traverser.war to " + App1Name + " through FTP...");
 
                 UploadFileToFtp(app1.GetPublishingProfile(), "azure-samples-blob-traverser.war", "Asset/azure-samples-blob-traverser.war").GetAwaiter().GetResult();
 
@@ -102,19 +102,19 @@ namespace ManageWebAppStorageAccountConnection
                 Utilities.Print(app1);
 
                 // warm up
-                Utilities.Log("Warming up " + app1Url + "/azure-samples-blob-traverser...");
-                CheckAddress("http://" + app1Url + "/azure-samples-blob-traverser");
-                SharedSettings.DelayProvider.Delay(5000, CancellationToken.None).Wait();
-                Utilities.Log("CURLing " + app1Url + "/azure-samples-blob-traverser...");
-                Utilities.Log(CheckAddress("http://" + app1Url + "/azure-samples-blob-traverser"));
+                Utilities.Log("Warming up " + App1Url + "/azure-samples-blob-traverser...");
+                CheckAddress("http://" + App1Url + "/azure-samples-blob-traverser");
+                SdkContext.DelayProvider.Delay(5000, CancellationToken.None).Wait();
+                Utilities.Log("CURLing " + App1Url + "/azure-samples-blob-traverser...");
+                Utilities.Log(CheckAddress("http://" + App1Url + "/azure-samples-blob-traverser"));
             }
             finally
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + ResourceGroupName);
+                    azure.ResourceGroups.DeleteByName(ResourceGroupName);
+                    Utilities.Log("Deleted Resource Group: " + ResourceGroupName);
                 }
                 catch (NullReferenceException)
                 {
@@ -133,7 +133,7 @@ namespace ManageWebAppStorageAccountConnection
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

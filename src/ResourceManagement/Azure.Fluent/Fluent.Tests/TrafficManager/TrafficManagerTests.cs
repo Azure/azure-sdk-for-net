@@ -19,7 +19,7 @@ namespace Azure.Tests.TrafficManager
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var region = Region.US_EAST;
+                var region = Region.USEast;
                 var externalEndpointName21 = "external-ep-1";
                 var externalEndpointName22 = "external-ep-2";
                 var externalEndpointName23 = "external-ep-3";
@@ -56,7 +56,7 @@ namespace Azure.Tests.TrafficManager
                             .WithPriorityBasedRouting()
                             .DefineExternalTargetEndpoint("external-ep-1")
                                 .ToFqdn("www.gitbook.com")
-                                .FromRegion(Region.INDIA_CENTRAL)
+                                .FromRegion(Region.IndiaCentral)
                                 .Attach()
                             .WithHttpsMonitoring()
                             .WithTimeToLive(500)
@@ -90,13 +90,13 @@ namespace Azure.Tests.TrafficManager
                             .WithWeightBasedRouting()
                             .DefineExternalTargetEndpoint(externalEndpointName21)
                                 .ToFqdn(externalFqdn21)
-                                .FromRegion(Region.US_EAST)
+                                .FromRegion(Region.USEast)
                                 .WithRoutingPriority(1)
                                 .WithRoutingWeight(1)
                                 .Attach()
                             .DefineExternalTargetEndpoint(externalEndpointName22)
                                 .ToFqdn(externalFqdn22)
-                                .FromRegion(Region.US_EAST2)
+                                .FromRegion(Region.USEast2)
                                 .WithRoutingPriority(2)
                                 .WithRoutingWeight(1)
                                 .WithTrafficDisabled()
@@ -107,7 +107,7 @@ namespace Azure.Tests.TrafficManager
                                 .Attach()
                             .DefineNestedTargetEndpoint(nestedProfileEndpointName)
                                 .ToProfile(nestedProfile)
-                                .FromRegion(Region.INDIA_CENTRAL)
+                                .FromRegion(Region.IndiaCentral)
                                 .WithMinimumEndpointsToEnableTraffic(1)
                                 .WithRoutingPriority(4)
                             .Attach()
@@ -138,7 +138,7 @@ namespace Azure.Tests.TrafficManager
                             Assert.Equal(1, endpoint.RoutingPriority);
                             Assert.Equal(externalFqdn21, endpoint.Fqdn);
                             Assert.NotNull(endpoint.MonitorStatus);
-                            Assert.Equal(Region.US_EAST, endpoint.SourceTrafficLocation);
+                            Assert.Equal(Region.USEast, endpoint.SourceTrafficLocation);
                             c++;
                         }
                         else if (endpoint.Name.Equals(externalEndpointName22, StringComparison.OrdinalIgnoreCase))
@@ -146,7 +146,7 @@ namespace Azure.Tests.TrafficManager
                             Assert.Equal(2, endpoint.RoutingPriority);
                             Assert.Equal(externalFqdn22, endpoint.Fqdn);
                             Assert.NotNull(endpoint.MonitorStatus);
-                            Assert.Equal(Region.US_EAST2, endpoint.SourceTrafficLocation);
+                            Assert.Equal(Region.USEast2, endpoint.SourceTrafficLocation);
                             c++;
                         }
                     }
@@ -177,7 +177,7 @@ namespace Azure.Tests.TrafficManager
                             Assert.NotNull(endpoint.MonitorStatus);
                             Assert.Equal(1, endpoint.MinimumChildEndpointCount);
                             Assert.Equal(nestedProfile.Id, endpoint.NestedProfileId);
-                            Assert.Equal(Region.INDIA_CENTRAL, endpoint.SourceTrafficLocation);
+                            Assert.Equal(Region.IndiaCentral, endpoint.SourceTrafficLocation);
                             c++;
                         }
                     }
@@ -199,7 +199,7 @@ namespace Azure.Tests.TrafficManager
                                 .Parent()
                             .DefineExternalTargetEndpoint(externalEndpointName23)
                                 .ToFqdn(externalFqdn23)
-                                .FromRegion(Region.US_CENTRAL)
+                                .FromRegion(Region.USCentral)
                                 .WithRoutingPriority(6)
                                 .Attach()
                             .Apply();
@@ -219,7 +219,7 @@ namespace Azure.Tests.TrafficManager
                         {
                             Assert.Equal(2, endpoint.RoutingPriority);
                             Assert.Equal(externalFqdn22, endpoint.Fqdn);
-                            Assert.Equal(Region.US_EAST2, endpoint.SourceTrafficLocation);
+                            Assert.Equal(Region.USEast2, endpoint.SourceTrafficLocation);
                             Assert.NotNull(endpoint.MonitorStatus);
                             c++;
                         }
@@ -228,7 +228,7 @@ namespace Azure.Tests.TrafficManager
                             Assert.Equal(6, endpoint.RoutingPriority);
                             Assert.Equal(externalFqdn23, endpoint.Fqdn);
                             Assert.NotNull(endpoint.MonitorStatus);
-                            Assert.Equal(Region.US_CENTRAL, endpoint.SourceTrafficLocation);
+                            Assert.Equal(Region.USCentral, endpoint.SourceTrafficLocation);
                             c++;
                         }
                         else

@@ -8,12 +8,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// </summary>
     public class ComputeUsageUnit
     {
-        public static readonly ComputeUsageUnit COUNT = new ComputeUsageUnit("Count");
-        public static readonly ComputeUsageUnit BYTES = new ComputeUsageUnit("Bytes");
-        public static readonly ComputeUsageUnit SECONDS = new ComputeUsageUnit("Seconds");
-        public static readonly ComputeUsageUnit PERCENT = new ComputeUsageUnit("Percent");
-        public static readonly ComputeUsageUnit COUNTS_PER_SECOND = new ComputeUsageUnit("CountsPerSecond");
-        public static readonly ComputeUsageUnit BYTES_PER_SECOND = new ComputeUsageUnit("BytesPerSecond");
+        public static readonly ComputeUsageUnit Count = new ComputeUsageUnit("Count");
+        public static readonly ComputeUsageUnit Bytes = new ComputeUsageUnit("Bytes");
+        public static readonly ComputeUsageUnit Seconds = new ComputeUsageUnit("Seconds");
+        public static readonly ComputeUsageUnit Percent = new ComputeUsageUnit("Percent");
+        public static readonly ComputeUsageUnit CountsPerSecond = new ComputeUsageUnit("CountsPerSecond");
+        public static readonly ComputeUsageUnit BytesPerSecond = new ComputeUsageUnit("BytesPerSecond");
 
         private string value;
         public override int GetHashCode()

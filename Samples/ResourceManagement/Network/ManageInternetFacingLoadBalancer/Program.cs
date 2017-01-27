@@ -19,16 +19,16 @@ namespace ManageInternetFacingLoadBalancer
 
     public class Program
     {
-        private static readonly string httpProbe = "httpProbe";
-        private static readonly string httpsProbe = "httpsProbe";
-        private static readonly string httpLoadBalancingRule = "httpRule";
-        private static readonly string httpsLoadBalancingRule = "httpsRule";
-        private static readonly string natRule5000to22forVM1 = "nat5000to22forVM1";
-        private static readonly string natRule5001to23forVM1 = "nat5001to23forVM1";
-        private static readonly string natRule5002to22forVM2 = "nat5002to22forVM2";
-        private static readonly string natRule5003to23forVM2 = "nat5003to23forVM2";
-        private static readonly string userName = "tirekicker";
-        private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
+        private static readonly string HttpProbe = "httpProbe";
+        private static readonly string HttpsProbe = "httpsProbe";
+        private static readonly string HttpLoadBalancingRule = "httpRule";
+        private static readonly string HttpsLoadBalancingRule = "httpsRule";
+        private static readonly string NatRule5000to22forVM1 = "nat5000to22forVM1";
+        private static readonly string NatRule5001to23forVM1 = "nat5001to23forVM1";
+        private static readonly string NatRule5002to22forVM2 = "nat5002to22forVM2";
+        private static readonly string NatRule5003to23forVM2 = "nat5003to23forVM2";
+        private static readonly string UserName = "tirekicker";
+        private static readonly string SshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
 
         /**
          * Azure Network sample for managing Internet facing load balancers -
@@ -69,20 +69,20 @@ namespace ManageInternetFacingLoadBalancer
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEML", 15);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string loadBalancerName1 = SharedSettings.RandomResourceName("intlb1" + "-", 18);
-            string loadBalancerName2 = SharedSettings.RandomResourceName("intlb2" + "-", 18);
+            string rgName = SdkContext.RandomResourceName("rgNEML", 15);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string loadBalancerName1 = SdkContext.RandomResourceName("intlb1" + "-", 18);
+            string loadBalancerName2 = SdkContext.RandomResourceName("intlb2" + "-", 18);
             string publicIpName1 = "pip1-" + loadBalancerName1;
             string publicIpName2 = "pip2-" + loadBalancerName1;
             string frontendName = loadBalancerName1 + "-FE1";
             string backendPoolName1 = loadBalancerName1 + "-BAP1";
             string backendPoolName2 = loadBalancerName1 + "-BAP2";
-            string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
-            string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
-            string availSetName = SharedSettings.RandomResourceName("av", 24);
-            string vmName1 = SharedSettings.RandomResourceName("lVM1", 24);
-            string vmName2 = SharedSettings.RandomResourceName("lVM2", 24);
+            string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
+            string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
+            string availSetName = SdkContext.RandomResourceName("av", 24);
+            string vmName1 = SdkContext.RandomResourceName("lVM1", 24);
+            string vmName2 = SdkContext.RandomResourceName("lVM2", 24);
 
             try
             {
@@ -91,7 +91,7 @@ namespace ManageInternetFacingLoadBalancer
                 Utilities.Log("Creating virtual network with a frontend and a backend subnets...");
 
                 var network = azure.Networks.Define(vnetName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAddressSpace("172.16.0.0/16")
                         .DefineSubnet("Front-end")
@@ -111,7 +111,7 @@ namespace ManageInternetFacingLoadBalancer
                 Utilities.Log("Creating a public IP address...");
 
                 var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpName1)
                         .Create();
@@ -146,7 +146,7 @@ namespace ManageInternetFacingLoadBalancer
                                    + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                 var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePublicFrontend(frontendName)
                             .WithExistingPublicIpAddress(publicIpAddress)
@@ -157,50 +157,50 @@ namespace ManageInternetFacingLoadBalancer
                         .DefineBackend(backendPoolName2)
                             .Attach()
                         // Add two probes one per rule
-                        .DefineHttpProbe(httpProbe)
+                        .DefineHttpProbe(HttpProbe)
                             .WithRequestPath("/")
                             .WithPort(80)
                             .Attach()
-                        .DefineHttpProbe(httpsProbe)
+                        .DefineHttpProbe(HttpsProbe)
                             .WithRequestPath("/")
                             .WithPort(443)
                             .Attach()
                         // Add two rules that uses above backend and probe
-                        .DefineLoadBalancingRule(httpLoadBalancingRule)
+                        .DefineLoadBalancingRule(HttpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(80)
-                            .WithProbe(httpProbe)
+                            .WithProbe(HttpProbe)
                             .WithBackend(backendPoolName1)
                             .Attach()
-                        .DefineLoadBalancingRule(httpsLoadBalancingRule)
+                        .DefineLoadBalancingRule(HttpsLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(443)
-                            .WithProbe(httpsProbe)
+                            .WithProbe(HttpsProbe)
                             .WithBackend(backendPoolName2)
                             .Attach()
                         // Add two nat pools to enable direct VM connectivity for
                         //  SSH to port 22 and TELNET to port 23
-                        .DefineInboundNatRule(natRule5000to22forVM1)
+                        .DefineInboundNatRule(NatRule5000to22forVM1)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5000)
                             .WithBackendPort(22)
                             .Attach()
-                        .DefineInboundNatRule(natRule5001to23forVM1)
+                        .DefineInboundNatRule(NatRule5001to23forVM1)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5001)
                             .WithBackendPort(23)
                             .Attach()
-                        .DefineInboundNatRule(natRule5002to22forVM2)
+                        .DefineInboundNatRule(NatRule5002to22forVM2)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5002)
                             .WithBackendPort(22)
                             .Attach()
-                        .DefineInboundNatRule(natRule5003to23forVM2)
+                        .DefineInboundNatRule(NatRule5003to23forVM2)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5003)
@@ -226,29 +226,29 @@ namespace ManageInternetFacingLoadBalancer
 
                 networkInterface1Creatable = azure.NetworkInterfaces
                         .Define(networkInterfaceName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithExistingLoadBalancerBackend(loadBalancer1, backendPoolName1)
                         .WithExistingLoadBalancerBackend(loadBalancer1, backendPoolName2)
-                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, natRule5000to22forVM1)
-                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, natRule5001to23forVM1);
+                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, NatRule5000to22forVM1)
+                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, NatRule5001to23forVM1);
 
                 networkInterfaceCreatables.Add(networkInterface1Creatable);
 
                 networkInterface2Creatable = azure.NetworkInterfaces
                         .Define(networkInterfaceName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithExistingLoadBalancerBackend(loadBalancer1, backendPoolName1)
                         .WithExistingLoadBalancerBackend(loadBalancer1, backendPoolName2)
-                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, natRule5002to22forVM2)
-                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, natRule5003to23forVM2);
+                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, NatRule5002to22forVM2)
+                        .WithExistingLoadBalancerInboundNatRule(loadBalancer1, NatRule5003to23forVM2);
 
                 networkInterfaceCreatables.Add(networkInterface2Creatable);
 
@@ -268,7 +268,7 @@ namespace ManageInternetFacingLoadBalancer
                 Utilities.Log("Creating an availability set ...");
 
                 var availSet1 = azure.AvailabilitySets.Define(availSetName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithFaultDomainCount(2)
                         .WithUpdateDomainCount(4)
@@ -289,12 +289,12 @@ namespace ManageInternetFacingLoadBalancer
 
                 virtualMachine1Creatable = azure.VirtualMachines
                         .Define(vmName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterfaces1.ElementAt(0))
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithSsh(sshKey)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithExistingAvailabilitySet(availSet1);
 
@@ -302,12 +302,12 @@ namespace ManageInternetFacingLoadBalancer
 
                 virtualMachine2Creatable = azure.VirtualMachines
                         .Define(vmName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterfaces1.ElementAt(1))
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithSsh(sshKey)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithExistingAvailabilitySet(availSet1);
 
@@ -334,10 +334,10 @@ namespace ManageInternetFacingLoadBalancer
                 Utilities.Log("Updating the load balancer ...");
 
                 loadBalancer1.Update()
-                        .UpdateLoadBalancingRule(httpLoadBalancingRule)
+                        .UpdateLoadBalancingRule(HttpLoadBalancingRule)
                             .WithIdleTimeoutInMinutes(15)
                             .Parent()
-                        .UpdateLoadBalancingRule(httpsLoadBalancingRule)
+                        .UpdateLoadBalancingRule(HttpsLoadBalancingRule)
                             .WithIdleTimeoutInMinutes(15)
                             .Parent()
                         .Apply();
@@ -349,7 +349,7 @@ namespace ManageInternetFacingLoadBalancer
                 Utilities.Log("Creating another public IP address...");
 
                 var publicIpAddress2 = azure.PublicIpAddresses.Define(publicIpName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpName2)
                         .Create();
@@ -384,7 +384,7 @@ namespace ManageInternetFacingLoadBalancer
                         + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                 var loadBalancer2 = azure.LoadBalancers.Define(loadBalancerName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePublicFrontend(frontendName)
                         .WithExistingPublicIpAddress(publicIpAddress2)
@@ -395,50 +395,50 @@ namespace ManageInternetFacingLoadBalancer
                         .DefineBackend(backendPoolName2)
                             .Attach()
                         // Add two probes one per rule
-                        .DefineHttpProbe(httpProbe)
+                        .DefineHttpProbe(HttpProbe)
                             .WithRequestPath("/")
                             .WithPort(80)
                             .Attach()
-                            .DefineHttpProbe(httpsProbe)
+                            .DefineHttpProbe(HttpsProbe)
                             .WithRequestPath("/")
                             .WithPort(443)
                             .Attach()
                         // Add two rules that uses above backend and probe
-                        .DefineLoadBalancingRule(httpLoadBalancingRule)
+                        .DefineLoadBalancingRule(HttpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(80)
-                            .WithProbe(httpProbe)
+                            .WithProbe(HttpProbe)
                             .WithBackend(backendPoolName1)
                             .Attach()
-                        .DefineLoadBalancingRule(httpsLoadBalancingRule)
+                        .DefineLoadBalancingRule(HttpsLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(443)
-                            .WithProbe(httpsProbe)
+                            .WithProbe(HttpsProbe)
                             .WithBackend(backendPoolName2)
                             .Attach()
                         // Add two nat pools to enable direct VM connectivity for
                         //  SSH to port 22 and TELNET to port 23
-                        .DefineInboundNatRule(natRule5000to22forVM1)
+                        .DefineInboundNatRule(NatRule5000to22forVM1)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5000)
                             .WithBackendPort(22)
                             .Attach()
-                        .DefineInboundNatRule(natRule5001to23forVM1)
+                        .DefineInboundNatRule(NatRule5001to23forVM1)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5001)
                             .WithBackendPort(23)
                             .Attach()
-                        .DefineInboundNatRule(natRule5002to22forVM2)
+                        .DefineInboundNatRule(NatRule5002to22forVM2)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5002)
                             .WithBackendPort(22)
                             .Attach()
-                        .DefineInboundNatRule(natRule5003to23forVM2)
+                        .DefineInboundNatRule(NatRule5003to23forVM2)
                             .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(frontendName)
                             .WithFrontendPort(5003)
@@ -495,7 +495,7 @@ namespace ManageInternetFacingLoadBalancer
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

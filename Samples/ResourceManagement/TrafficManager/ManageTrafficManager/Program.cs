@@ -36,25 +36,25 @@ namespace ManageTrafficManager
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
-            string appServicePlanNamePrefix = SharedSettings.RandomResourceName("jplan1_", 15);
-            string webAppNamePrefix = SharedSettings.RandomResourceName("webapp1-", 20);
-            string tmName = SharedSettings.RandomResourceName("jsdktm-", 20);
+            string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string appServicePlanNamePrefix = SdkContext.RandomResourceName("jplan1_", 15);
+            string webAppNamePrefix = SdkContext.RandomResourceName("webapp1-", 20);
+            string tmName = SdkContext.RandomResourceName("jsdktm-", 20);
 
 
             // The regions in which web app needs to be created
             //
-            regions.Add(Region.US_WEST2);
-            regions.Add(Region.US_EAST2);
-            regions.Add(Region.ASIA_EAST);
-            regions.Add(Region.INDIA_WEST);
-            regions.Add(Region.US_CENTRAL);
+            regions.Add(Region.USWest2);
+            regions.Add(Region.USEast2);
+            regions.Add(Region.AsiaEast);
+            regions.Add(Region.IndiaWest);
+            regions.Add(Region.USCentral);
 
             try
             {
                 azure.ResourceGroups.Define(rgName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .Create();
 
                 // ============================================================
@@ -102,7 +102,7 @@ namespace ManageTrafficManager
                             .Define(planName)
                             .WithRegion(region)
                             .WithExistingResourceGroup(rgName)
-                            .WithPricingTier(AppServicePricingTier.Basic_B1)
+                            .WithPricingTier(AppServicePricingTier.BasicB1)
                             .Create();
                     Utilities.Log("Created app service plan " + planName);
                     Utilities.Print(appServicePlan);
@@ -227,7 +227,7 @@ namespace ManageTrafficManager
                     azure.ResourceGroups.DeleteByName(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
-                catch (Exception e)
+                catch
                 {
                     Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
@@ -240,7 +240,7 @@ namespace ManageTrafficManager
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

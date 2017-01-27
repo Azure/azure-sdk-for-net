@@ -9,14 +9,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public partial class JavaVersion
     {
         public static readonly JavaVersion Off = new JavaVersion("null");
-        public static readonly JavaVersion Java_7_Newest = new JavaVersion("1.7");
-        public static readonly JavaVersion Java_1_7_0_51 = new JavaVersion("1.7.0_51");
-        public static readonly JavaVersion Java_1_7_0_71 = new JavaVersion("1.7.0_71");
-        public static readonly JavaVersion Java_8_Newest = new JavaVersion("1.8");
-        public static readonly JavaVersion Java_1_8_0_25 = new JavaVersion("1.8.0_25");
-        public static readonly JavaVersion Java_1_8_0_60 = new JavaVersion("1.8.0_60");
-        public static readonly JavaVersion Java_1_8_0_73 = new JavaVersion("1.8.0_73");
-        public static readonly JavaVersion Java_1_8_0_92 = new JavaVersion("1.8.0_92");   
+        public static readonly JavaVersion V7Newest = new JavaVersion("1.7");
+        public static readonly JavaVersion V7_51 = new JavaVersion("1.7.0_51");
+        public static readonly JavaVersion V7_71 = new JavaVersion("1.7.0_71");
+        public static readonly JavaVersion V8Newest = new JavaVersion("1.8");
+        public static readonly JavaVersion V8_25 = new JavaVersion("1.8.0_25");
+        public static readonly JavaVersion V8_60 = new JavaVersion("1.8.0_60");
+        public static readonly JavaVersion V8_73 = new JavaVersion("1.8.0_73");
+        public static readonly JavaVersion V8_92 = new JavaVersion("1.8.0_92");   
 
         private string value;
 

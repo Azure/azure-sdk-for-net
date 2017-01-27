@@ -20,22 +20,22 @@ namespace Fluent.Tests.Compute
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void Test()
         {
-            string vnetName1 = SharedSettings.RandomResourceName("vnet1", 20);
-            string vnetName2 = SharedSettings.RandomResourceName("vnet2", 20);
+            string vnetName1 = SdkContext.RandomResourceName("vnet1", 20);
+            string vnetName2 = SdkContext.RandomResourceName("vnet2", 20);
             string vnet1FrontEndSubnetName = "frontend";
             string vnet1BackEndSubnetName = "backend";
             string vnet1FrontEndSubnetNsgName = "frontendnsg";
             string vnet1BackEndSubnetNsgName = "backendnsg";
-            string frontEndVMName = SharedSettings.RandomResourceName("fevm", 24);
-            string backEndVMName = SharedSettings.RandomResourceName("bevm", 24);
-            string publicIpAddressLeafDNSForFrontEndVM = SharedSettings.RandomResourceName("pip1", 24);
+            string frontEndVMName = SdkContext.RandomResourceName("fevm", 24);
+            string backEndVMName = SdkContext.RandomResourceName("bevm", 24);
+            string publicIpAddressLeafDNSForFrontEndVM = SdkContext.RandomResourceName("pip1", 24);
 
             INetworkManager manager = TestHelper.CreateNetworkManager();
 
-            string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
+            string rgName = SdkContext.RandomResourceName("rgNEMV", 24);
             INetworkSecurityGroup backEndSubnetNsg = manager.NetworkSecurityGroups
                     .Define(vnet1BackEndSubnetNsgName)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .WithExistingResourceGroup(rgName)
                     .DefineRule("DenyInternetInComing")
                         .DenyInbound()
@@ -57,7 +57,7 @@ namespace Fluent.Tests.Compute
 
             INetwork virtualNetwork1 = manager.Networks
                     .Define(vnetName1)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .WithExistingResourceGroup(rgName)
                     .WithAddressSpace("192.168.0.0/16")
                     .WithSubnet(vnet1FrontEndSubnetName, "192.168.1.0/24")
@@ -69,7 +69,7 @@ namespace Fluent.Tests.Compute
 
             INetworkSecurityGroup frontEndSubnetNsg = manager.NetworkSecurityGroups
                     .Define(vnet1FrontEndSubnetNsgName)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .WithExistingResourceGroup(rgName)
                     .DefineRule("AllowHttpInComing")
                         .AllowInbound()
@@ -97,7 +97,7 @@ namespace Fluent.Tests.Compute
 
             INetwork virtualNetwork2 = manager.Networks
                     .Define(vnetName2)
-                    .WithRegion(Region.US_EAST)
+                    .WithRegion(Region.USEast)
                     .WithNewResourceGroup(rgName)
                     .Create();
 

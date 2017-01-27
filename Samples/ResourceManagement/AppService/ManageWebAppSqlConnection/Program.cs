@@ -15,9 +15,9 @@ namespace ManageWebAppSqlConnection
 
     public class Program
     {
-        private const string SUFFIX = ".azurewebsites.net";
-        private const string ADMIN = "jsdkadmin";
-        private const string PASSWORD = "StrongPass!123";
+        private const string Suffix = ".azurewebsites.net";
+        private const string Admin = "jsdkadmin";
+        private const string Password = "StrongPass!123";
 
         /**
          * Azure App Service basic sample for managing web apps.
@@ -30,12 +30,12 @@ namespace ManageWebAppSqlConnection
 
         public static void RunSample(IAzure azure)
         {
-            string appName = SharedSettings.RandomResourceName("webapp1-", 20);
-            string appUrl = appName + SUFFIX;
-            string sqlServerName = SharedSettings.RandomResourceName("jsdkserver", 20);
-            string sqlDbName = SharedSettings.RandomResourceName("jsdkdb", 20);
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rgName = SharedSettings.RandomResourceName("rg1NEMV_", 24);
+            string appName = SdkContext.RandomResourceName("webapp1-", 20);
+            string appUrl = appName + Suffix;
+            string sqlServerName = SdkContext.RandomResourceName("jsdkserver", 20);
+            string sqlDbName = SdkContext.RandomResourceName("jsdkdb", 20);
+            string planName = SdkContext.RandomResourceName("jplan_", 15);
+            string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
             {
@@ -45,10 +45,10 @@ namespace ManageWebAppSqlConnection
                 Utilities.Log("Creating SQL server " + sqlServerName + "...");
 
                 ISqlServer server = azure.SqlServers.Define(sqlServerName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
-                        .WithAdministratorLogin(ADMIN)
-                        .WithAdministratorPassword(PASSWORD)
+                        .WithAdministratorLogin(Admin)
+                        .WithAdministratorPassword(Password)
                         .Create();
 
                 Utilities.Log("Created SQL server " + server.Name);
@@ -72,17 +72,17 @@ namespace ManageWebAppSqlConnection
                         .Define(appName)
                         .WithExistingResourceGroup(rgName)
                         .WithNewAppServicePlan(planName)
-                        .WithRegion(Region.US_WEST)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
-                        .WithPhpVersion(PhpVersion.Php5_6)
+                        .WithRegion(Region.USWest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
+                        .WithPhpVersion(PhpVersion.V5_6)
                         .DefineSourceControl()
                             .WithPublicGitRepository("https://github.com/ProjectNami/projectnami")
                             .WithBranch("master")
                             .Attach()
                         .WithAppSetting("ProjectNami.DBHost", server.FullyQualifiedDomainName)
                         .WithAppSetting("ProjectNami.DBName", db.Name)
-                        .WithAppSetting("ProjectNami.DBUser", ADMIN)
-                        .WithAppSetting("ProjectNami.DBPass", PASSWORD)
+                        .WithAppSetting("ProjectNami.DBUser", Admin)
+                        .WithAppSetting("ProjectNami.DBPass", Password)
                         .Create();
 
                 Utilities.Log("Created web app " + app.Name);
@@ -133,7 +133,7 @@ namespace ManageWebAppSqlConnection
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

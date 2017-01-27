@@ -34,7 +34,7 @@ namespace Fluent.Tests.Batch
                     // Create
                     var batchAccount = await batchManager.BatchAccounts
                             .Define(batchAccountName)
-                            .WithRegion(Region.ASIA_EAST)
+                            .WithRegion(Region.AsiaEast)
                             .WithNewResourceGroup(rgName)
                             .CreateAsync();
 
@@ -194,7 +194,7 @@ namespace Fluent.Tests.Batch
                     // Create
                     var batchAccount = await batchManager.BatchAccounts
                         .Define(batchAccountName)
-                        .WithRegion(Region.ASIA_SOUTHEAST)
+                        .WithRegion(Region.AsiaSouthEast)
                         .WithNewResourceGroup(rgName)
                         .DefineNewApplication(applicationId)
                             .WithDisplayName(applicationDisplayName)

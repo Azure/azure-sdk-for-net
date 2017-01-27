@@ -15,9 +15,9 @@ namespace ManageVirtualMachine
 {
     public class Program
     {
-        private const string userName = "tirekicker";
-        private const string password = "12NewPA$$w0rd!";
-        private const string dataDiskName = "disk2";
+        private const string UserName = "tirekicker";
+        private const string Password = "12NewPA$$w0rd!";
+        private const string DataDiskName = "disk2";
 
         /**
          * Azure Compute sample for managing virtual machines -
@@ -35,22 +35,22 @@ namespace ManageVirtualMachine
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOMV", 24);
-            string windowsVMName = SharedSettings.RandomResourceName("wVM", 24);
-            string linuxVMName = SharedSettings.RandomResourceName("lVM", 24);
+            string rgName = SdkContext.RandomResourceName("rgCOMV", 24);
+            string windowsVMName = SdkContext.RandomResourceName("wVM", 24);
+            string linuxVMName = SdkContext.RandomResourceName("lVM", 24);
             try
             {
                 var startTime = DateTimeOffset.Now.UtcDateTime;
 
                 var windowsVM = azure.VirtualMachines.Define(windowsVMName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                        .WithAdminUsername(userName)
-                        .WithAdminPassword(password)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
+                        .WithAdminUsername(UserName)
+                        .WithAdminPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
                 var endTime = DateTimeOffset.Now.UtcDateTime;
@@ -71,20 +71,20 @@ namespace ManageVirtualMachine
 
                 windowsVM.Update()
                         .WithNewDataDisk(10)
-                        .DefineNewDataDisk(dataDiskName)
+                        .DefineNewDataDisk(DataDiskName)
                             .WithSizeInGB(20)
                             .WithCaching(CachingTypes.ReadWrite)
                             .Attach()
                         .Apply();
 
-                Utilities.Log("Attached a new data disk" + dataDiskName + " to VM" + windowsVM.Id);
+                Utilities.Log("Attached a new data disk" + DataDiskName + " to VM" + windowsVM.Id);
                 Utilities.PrintVirtualMachine(windowsVM);
 
                 windowsVM.Update()
-                    .WithoutDataDisk(dataDiskName)
+                    .WithoutDataDisk(DataDiskName)
                     .Apply();
 
-                Utilities.Log("Detached data disk " + dataDiskName + " from VM " + windowsVM.Id);
+                Utilities.Log("Detached data disk " + DataDiskName + " from VM " + windowsVM.Id);
 
                 //=============================================================
                 // Update - Resize (expand) the data disk
@@ -158,15 +158,15 @@ namespace ManageVirtualMachine
                 Utilities.Log("Creating a Linux VM in the network");
 
                 var linuxVM = azure.VirtualMachines.Define(linuxVMName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("subnet1") // Referencing the default subnet name when no name specified at creation
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithRootPassword(password)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -214,7 +214,7 @@ namespace ManageVirtualMachine
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

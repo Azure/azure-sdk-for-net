@@ -56,11 +56,11 @@ namespace Fluent.Tests.Compute
                         .Define(vmssName)
                         .WithRegion(location)
                         .WithExistingResourceGroup(resourceGroup)
-                        .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_A0)
+                        .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
                         .WithExistingPrimaryNetworkSubnet(network, "subnet1")
                         .WithExistingPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
                         .WithoutPrimaryInternalLoadBalancer()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername("jvuser")
                         .WithRootPassword("123OData!@#123")
                         .WithNewStorageAccount(TestUtilities.GenerateName("stg"))
@@ -129,12 +129,12 @@ namespace Fluent.Tests.Compute
                     .Define(vmss_name)
                     .WithRegion(location)
                     .WithExistingResourceGroup(resourceGroup)
-                    .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_A0)
+                    .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
                     .WithExistingPrimaryNetworkSubnet(network, "subnet1")
                     .WithExistingPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
                     .WithPrimaryInternetFacingLoadBalancerBackends(backends[0], backends[1])
                     .WithoutPrimaryInternalLoadBalancer()
-                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername("jvuser")
                     .WithRootPassword("123OData!@#123")
                     .WithNewStorageAccount(TestUtilities.GenerateName("stg"))
@@ -204,7 +204,7 @@ namespace Fluent.Tests.Compute
                 Assert.True(nicCount > 0);
 
                 Assert.Equal(virtualMachineScaleSet.VhdContainers.Count(), 2);
-                Assert.Equal(virtualMachineScaleSet.Sku, VirtualMachineScaleSetSkuTypes.STANDARD_A0);
+                Assert.Equal(virtualMachineScaleSet.Sku, VirtualMachineScaleSetSkuTypes.StandardA0);
                 // Check defaults
                 Assert.True(virtualMachineScaleSet.UpgradeModel == UpgradeMode.Automatic);
                 Assert.Equal(virtualMachineScaleSet.Capacity, 2);
@@ -340,7 +340,7 @@ namespace Fluent.Tests.Compute
             virtualMachineScaleSetVM.Restart();
             virtualMachineScaleSetVM.PowerOff();
             virtualMachineScaleSetVM.RefreshInstanceView();
-            Assert.Equal(virtualMachineScaleSetVM.PowerState, PowerState.STOPPED);
+            Assert.Equal(virtualMachineScaleSetVM.PowerState, PowerState.Stopped);
             virtualMachineScaleSetVM.Start();
 
             // Check Instance NICs

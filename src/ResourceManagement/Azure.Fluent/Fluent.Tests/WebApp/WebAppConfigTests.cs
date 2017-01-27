@@ -28,30 +28,30 @@ namespace Azure.Tests.WebApp
                 appServiceManager.WebApps.Define(WebAppName)
                     .WithNewResourceGroup(GroupName)
                     .WithNewAppServicePlan(AppServicePlanName)
-                    .WithRegion(Region.US_WEST)
-                    .WithPricingTier(AppServicePricingTier.Basic_B1)
+                    .WithRegion(Region.USWest)
+                    .WithPricingTier(AppServicePricingTier.BasicB1)
                     .WithNetFrameworkVersion(NetFrameworkVersion.V3_0)
                     .Create();
 
                 var webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
                 Assert.NotNull(webApp);
-                Assert.Equal(Region.US_WEST, webApp.Region);
+                Assert.Equal(Region.USWest, webApp.Region);
                 Assert.Equal(NetFrameworkVersion.V3_0, webApp.NetFrameworkVersion);
 
                 // Java version
                 webApp.Update()
-                    .WithJavaVersion(JavaVersion.Java_1_7_0_51)
-                    .WithWebContainer(WebContainer.Tomcat_7_0_50)
+                    .WithJavaVersion(JavaVersion.V7_51)
+                    .WithWebContainer(WebContainer.Tomcat7_0_50)
                     .Apply();
                 webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
-                Assert.Equal(JavaVersion.Java_1_7_0_51, webApp.JavaVersion);
+                Assert.Equal(JavaVersion.V7_51, webApp.JavaVersion);
 
                 // Python version
                 webApp.Update()
-                    .WithPythonVersion(PythonVersion.Python_34)
+                    .WithPythonVersion(PythonVersion.V34)
                     .Apply();
                 webApp = appServiceManager.WebApps.GetByGroup(GroupName, WebAppName);
-                Assert.Equal(PythonVersion.Python_34, webApp.PythonVersion);
+                Assert.Equal(PythonVersion.V34, webApp.PythonVersion);
 
                 // Default documents
                 var documentSize = webApp.DefaultDocuments.Count;

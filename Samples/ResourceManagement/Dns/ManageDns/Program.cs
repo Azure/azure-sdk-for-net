@@ -17,7 +17,7 @@ namespace ManageDns
 {
     public class Program
     {
-        private const string customDomainName = "THE CUSTOM DOMAIN THAT YOU OWN (e.g. contoso.com)";
+        private const string CustomDomainName = "THE CUSTOM DOMAIN THAT YOU OWN (e.g. contoso.com)";
         
         /**
          * Azure DNS sample for managing DNS zones.
@@ -35,21 +35,21 @@ namespace ManageDns
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string appServicePlanName = SharedSettings.RandomResourceName("jplan1_", 15);
-            string webAppName = SharedSettings.RandomResourceName("webapp1-", 20);
+            string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string appServicePlanName = SdkContext.RandomResourceName("jplan1_", 15);
+            string webAppName = SdkContext.RandomResourceName("webapp1-", 20);
             
             try
             {
                 var resourceGroup = azure.ResourceGroups.Define(rgName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .Create();
 
                 //============================================================
                 // Creates root DNS Zone
 
-                Utilities.Log("Creating root DNS zone " + customDomainName + "...");
-                var rootDnsZone = azure.DnsZones.Define(customDomainName)
+                Utilities.Log("Creating root DNS zone " + CustomDomainName + "...");
+                var rootDnsZone = azure.DnsZones.Define(CustomDomainName)
                     .WithExistingResourceGroup(resourceGroup)
                     .Create();
                 Utilities.Log("Created root DNS zone " + rootDnsZone.Name);
@@ -59,7 +59,7 @@ namespace ManageDns
                 // Sets NS records in the parent zone (hosting custom domain) to make Azure DNS the authoritative
                 // source for name resolution for the zone
 
-                Utilities.Log("Go to your registrar portal and configure your domain " + customDomainName
+                Utilities.Log("Go to your registrar portal and configure your domain " + CustomDomainName
                         + " with following name server addresses");
                 foreach (var nameServer in rootDnsZone.NameServers)
                 {
@@ -75,8 +75,8 @@ namespace ManageDns
                 var webApp = azure.WebApps.Define(webAppName)
                         .WithExistingResourceGroup(rgName)
                         .WithNewAppServicePlan(appServicePlanName)
-                        .WithRegion(Region.US_EAST2)
-                        .WithPricingTier(AppServicePricingTier.Basic_B1)
+                        .WithRegion(Region.USEast2)
+                        .WithPricingTier(AppServicePricingTier.BasicB1)
                         .DefineSourceControl()
                             .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
                             .WithBranch("master")
@@ -108,7 +108,7 @@ namespace ManageDns
                 Utilities.Log("Updating Web app with host name binding...");
                 webApp.Update()
                         .DefineHostnameBinding()
-                            .WithThirdPartyDomain(customDomainName)
+                            .WithThirdPartyDomain(CustomDomainName)
                             .WithSubDomain("www")
                             .WithDnsRecordType(CustomHostNameDnsRecordType.CName)
                             .Attach()
@@ -123,13 +123,13 @@ namespace ManageDns
 
                 Utilities.Log("Creating a virtual machine with public IP...");
                 var virtualMachine1 = azure.VirtualMachines
-                        .Define(SharedSettings.RandomResourceName("employeesvm-", 20))
-                        .WithRegion(Region.US_EAST)
+                        .Define(SdkContext.RandomResourceName("employeesvm-", 20))
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SharedSettings.RandomResourceName("empip-", 20))
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("empip-", 20))
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
                         .WithSize(VirtualMachineSizeTypes.StandardD12V2)
@@ -140,7 +140,7 @@ namespace ManageDns
                 // Update DNS zone by adding a A record in root DNS zone pointing to virtual machine IPv4 address
 
                 var vm1PublicIpAddress = virtualMachine1.GetPrimaryPublicIpAddress();
-                Utilities.Log("Updating root DNS zone " + customDomainName + "...");
+                Utilities.Log("Updating root DNS zone " + CustomDomainName + "...");
                 rootDnsZone = rootDnsZone.Update()
                         .DefineARecordSet("employees")
                             .WithIpv4Address(vm1PublicIpAddress.IpAddress)
@@ -151,7 +151,7 @@ namespace ManageDns
 
                 // Prints the CName and A Records in the root DNS zone
                 //
-                Utilities.Log("Getting CName record set in the root DNS zone " + customDomainName + "...");
+                Utilities.Log("Getting CName record set in the root DNS zone " + CustomDomainName + "...");
                 var cnameRecordSets = rootDnsZone
                         .CnameRecordSets
                         .List();
@@ -161,7 +161,7 @@ namespace ManageDns
                     Utilities.Log("Name: " + cnameRecordSet.Name + " Canonical Name: " + cnameRecordSet.CanonicalName);
                 }
 
-                Utilities.Log("Getting ARecord record set in the root DNS zone " + customDomainName + "...");
+                Utilities.Log("Getting ARecord record set in the root DNS zone " + CustomDomainName + "...");
                 var aRecordSets = rootDnsZone
                         .ARecordSets
                         .List();
@@ -178,7 +178,7 @@ namespace ManageDns
                 //============================================================
                 // Creates a child DNS zone
 
-                var partnerSubDomainName = "partners." + customDomainName;
+                var partnerSubDomainName = "partners." + CustomDomainName;
                 Utilities.Log("Creating child DNS zone " + partnerSubDomainName + "...");
                 var partnersDnsZone = azure.DnsZones
                         .Define(partnerSubDomainName)
@@ -210,13 +210,13 @@ namespace ManageDns
 
                 Utilities.Log("Creating a virtual machine with public IP...");
                 var virtualMachine2 = azure.VirtualMachines
-                        .Define(SharedSettings.RandomResourceName("partnersvm-", 20))
-                        .WithRegion(Region.US_EAST)
+                        .Define(SdkContext.RandomResourceName("partnersvm-", 20))
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
-                        .WithNewPrimaryPublicIpAddress(SharedSettings.RandomResourceName("ptnerpip-", 20))
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                        .WithNewPrimaryPublicIpAddress(SdkContext.RandomResourceName("ptnerpip-", 20))
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername("testuser")
                         .WithAdminPassword("12NewPA$$w0rd!")
                         .WithSize(VirtualMachineSizeTypes.StandardD12V2)
@@ -274,7 +274,7 @@ namespace ManageDns
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

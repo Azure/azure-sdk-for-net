@@ -27,7 +27,7 @@ namespace ListVirtualMachineExtensionImages
             var publishers = azure
                     .VirtualMachineImages
                     .Publishers
-                    .ListByRegion(Region.US_EAST);
+                    .ListByRegion(Region.USEast);
 
             Utilities.Log("US East data center: printing list of \n"
                     + "a) Publishers and\n"
@@ -67,7 +67,7 @@ namespace ListVirtualMachineExtensionImages
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

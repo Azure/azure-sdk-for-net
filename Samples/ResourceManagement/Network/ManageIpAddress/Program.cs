@@ -13,8 +13,8 @@ namespace ManageIpAddress
 {
     public class Program
     {
-        private static readonly string userName = "tirekicker";
-        private static readonly string password = "12NewPA$$w0rd!";
+        private static readonly string UserName = "tirekicker";
+        private static readonly string Password = "12NewPA$$w0rd!";
 
         /**
          * Azure Network sample for managing IP address -
@@ -26,12 +26,12 @@ namespace ManageIpAddress
          */
         public static void RunSample(IAzure azure)
         {
-            string publicIpAddressName1 = SharedSettings.RandomResourceName("pip1", 20);
-            string publicIpAddressName2 = SharedSettings.RandomResourceName("pip2", 20);
-            string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 20);
-            string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 20);
-            string vmName = SharedSettings.RandomResourceName("vm", 8);
-            string rgName = SharedSettings.RandomResourceName("rgNEMP", 24);
+            string publicIpAddressName1 = SdkContext.RandomResourceName("pip1", 20);
+            string publicIpAddressName2 = SdkContext.RandomResourceName("pip2", 20);
+            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 20);
+            string publicIpAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 20);
+            string vmName = SdkContext.RandomResourceName("vm", 8);
+            string rgName = SdkContext.RandomResourceName("rgNEMP", 24);
 
             try
             {
@@ -44,7 +44,7 @@ namespace ManageIpAddress
 
                 var publicIpAddress = azure.PublicIpAddresses
                         .Define(publicIpAddressName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpAddressLeafDNS1)
                         .Create();
@@ -60,14 +60,14 @@ namespace ManageIpAddress
                 var t1 = DateTime.UtcNow;
 
                 var vm = azure.VirtualMachines.Define(vmName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithExistingPrimaryPublicIpAddress(publicIpAddress)
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                        .WithAdminUsername(userName)
-                        .WithAdminPassword(password)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
+                        .WithAdminUsername(UserName)
+                        .WithAdminPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -91,7 +91,7 @@ namespace ManageIpAddress
 
                 var publicIpAddress2 = azure.PublicIpAddresses
                         .Define(publicIpAddressName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpAddressLeafDNS2)
                         .Create();
@@ -158,7 +158,7 @@ namespace ManageIpAddress
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

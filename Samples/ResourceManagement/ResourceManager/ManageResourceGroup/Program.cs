@@ -22,10 +22,10 @@ namespace ManageResourceGroup
          */
         public static void RunSample(IAzure azure)
         {
-            var rgName = SharedSettings.RandomResourceName("rgRSMA", 24);
-            var rgName2 = SharedSettings.RandomResourceName("rgRSMA", 24);
-            var resourceTagName = SharedSettings.RandomResourceName("rgRSTN", 24);
-            var resourceTagValue = SharedSettings.RandomResourceName("rgRSTV", 24);
+            var rgName = SdkContext.RandomResourceName("rgRSMA", 24);
+            var rgName2 = SdkContext.RandomResourceName("rgRSMA", 24);
+            var resourceTagName = SdkContext.RandomResourceName("rgRSTN", 24);
+            var resourceTagValue = SdkContext.RandomResourceName("rgRSTV", 24);
             
             try
             {
@@ -36,7 +36,7 @@ namespace ManageResourceGroup
 
                 var resourceGroup = azure.ResourceGroups
                         .Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                 Utilities.Log("Created a resource group with name: " + rgName);
@@ -59,7 +59,7 @@ namespace ManageResourceGroup
 
                 var resourceGroup2 = azure.ResourceGroups
                     .Define(rgName2)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .Create();
 
                 Utilities.Log("Created another resource group with name: " + rgName2);
@@ -104,7 +104,7 @@ namespace ManageResourceGroup
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

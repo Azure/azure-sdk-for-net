@@ -12,12 +12,12 @@ namespace ManageSqlDatabase
 {
     public class Program
     {
-        private static readonly string administratorLogin = "sqladmin3423";
-        private static readonly string administratorPassword = "myS3cureP@ssword";
-        private static readonly string firewallRuleIpAddress = "10.0.0.1";
-        private static readonly string firewallRuleStartIpAddress = "10.2.0.1";
-        private static readonly string firewallRuleEndIpAddress = "10.2.0.10";
-        private static readonly string databaseName = "mydatabase";
+        private static readonly string AdministratorLogin = "sqladmin3423";
+        private static readonly string AdministratorPassword = "myS3cureP@ssword";
+        private static readonly string FirewallRuleIpAddress = "10.0.0.1";
+        private static readonly string FirewallRuleStartIpAddress = "10.2.0.1";
+        private static readonly string FirewallRuleEndIpAddress = "10.2.0.10";
+        private static readonly string DatabaseName = "mydatabase";
 
         /**
          * Azure Storage sample for managing SQL Database -
@@ -30,8 +30,8 @@ namespace ManageSqlDatabase
          */
         public static void RunSample(IAzure azure)
         {
-            string sqlServerName = SharedSettings.RandomResourceName("sqlserver", 20);
-            string rgName = SharedSettings.RandomResourceName("rgRSDSI", 20);
+            string sqlServerName = SdkContext.RandomResourceName("sqlserver", 20);
+            string rgName = SdkContext.RandomResourceName("rgRSDSI", 20);
 
             try
             {
@@ -39,12 +39,12 @@ namespace ManageSqlDatabase
                 // Create a SQL Server, with 2 firewall rules.
 
                 var sqlServer = azure.SqlServers.Define(sqlServerName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
-                        .WithAdministratorLogin(administratorLogin)
-                        .WithAdministratorPassword(administratorPassword)
-                        .WithNewFirewallRule(firewallRuleIpAddress)
-                        .WithNewFirewallRule(firewallRuleStartIpAddress, firewallRuleEndIpAddress)
+                        .WithAdministratorLogin(AdministratorLogin)
+                        .WithAdministratorPassword(AdministratorPassword)
+                        .WithNewFirewallRule(FirewallRuleIpAddress)
+                        .WithNewFirewallRule(FirewallRuleStartIpAddress, FirewallRuleEndIpAddress)
                         .Create();
 
                 Utilities.PrintSqlServer(sqlServer);
@@ -54,7 +54,7 @@ namespace ManageSqlDatabase
                 Utilities.Log("Creating a database");
 
                 var database = sqlServer.Databases
-                        .Define(databaseName)
+                        .Define(DatabaseName)
                         .Create();
                 Utilities.PrintDatabase(database);
 
@@ -119,7 +119,7 @@ namespace ManageSqlDatabase
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

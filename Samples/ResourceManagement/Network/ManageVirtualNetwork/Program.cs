@@ -14,13 +14,13 @@ namespace ManageVirtualNetwork
 {
     public class Program
     {
-        private static readonly string vnet1FrontEndSubnetName = "frontend";
-        private static readonly string vnet1BackEndSubnetName = "backend";
-        private static readonly string vnet1FrontEndSubnetNsgName = "frontendnsg";
-        private static readonly string vnet1BackEndSubnetNsgName = "backendnsg";
-        private static readonly string userName = "tirekicker";
-        private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-        private static readonly string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
+        private static readonly string VNet1FrontEndSubnetName = "frontend";
+        private static readonly string VNet1BackEndSubnetName = "backend";
+        private static readonly string VNet1FrontEndSubnetNsgName = "frontendnsg";
+        private static readonly string VNet1BackEndSubnetNsgName = "backendnsg";
+        private static readonly string UserName = "tirekicker";
+        private static readonly string SshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
+        private static readonly string ResourceGroupName = SdkContext.RandomResourceName("rgNEMV", 24);
 
         /**
          * Azure Network sample for managing virtual networks -
@@ -33,11 +33,11 @@ namespace ManageVirtualNetwork
          */
         public static void RunSample(IAzure azure)
         {
-            string vnetName1 = SharedSettings.RandomResourceName("vnet1", 20);
-            string vnetName2 = SharedSettings.RandomResourceName("vnet2", 20);
-            string frontEndVmName = SharedSettings.RandomResourceName("fevm", 24);
-            string backEndVmName = SharedSettings.RandomResourceName("bevm", 24);
-            string publicIpAddressLeafDnsForFrontEndVm = SharedSettings.RandomResourceName("pip1", 24);
+            string vnetName1 = SdkContext.RandomResourceName("vnet1", 20);
+            string vnetName2 = SdkContext.RandomResourceName("vnet2", 20);
+            string frontEndVmName = SdkContext.RandomResourceName("fevm", 24);
+            string backEndVmName = SdkContext.RandomResourceName("bevm", 24);
+            string publicIpAddressLeafDnsForFrontEndVm = SdkContext.RandomResourceName("pip1", 24);
             
             try
             {
@@ -49,9 +49,9 @@ namespace ManageVirtualNetwork
                 Utilities.Log("Creating a network security group for virtual network backend subnet...");
 
                 var backEndSubnetNsg = azure.NetworkSecurityGroups
-                        .Define(vnet1BackEndSubnetNsgName)
-                        .WithRegion(Region.US_EAST)
-                        .WithNewResourceGroup(rgName)
+                        .Define(VNet1BackEndSubnetNsgName)
+                        .WithRegion(Region.USEast)
+                        .WithNewResourceGroup(ResourceGroupName)
                         .DefineRule("DenyInternetInComing")
                             .DenyInbound()
                             .FromAddress("INTERNET")
@@ -81,11 +81,11 @@ namespace ManageVirtualNetwork
 
                 var virtualNetwork1 = azure.Networks
                         .Define(vnetName1)
-                        .WithRegion(Region.US_EAST)
-                        .WithExistingResourceGroup(rgName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(ResourceGroupName)
                         .WithAddressSpace("192.168.0.0/16")
-                        .WithSubnet(vnet1FrontEndSubnetName, "192.168.1.0/24")
-                        .DefineSubnet(vnet1BackEndSubnetName)
+                        .WithSubnet(VNet1FrontEndSubnetName, "192.168.1.0/24")
+                        .DefineSubnet(VNet1BackEndSubnetName)
                             .WithAddressPrefix("192.168.2.0/24")
                             .WithExistingNetworkSecurityGroup(backEndSubnetNsg)
                             .Attach()
@@ -103,9 +103,9 @@ namespace ManageVirtualNetwork
                 Utilities.Log("Creating a network security group for virtual network backend subnet...");
 
                 var frontEndSubnetNsg = azure.NetworkSecurityGroups
-                        .Define(vnet1FrontEndSubnetNsgName)
-                        .WithRegion(Region.US_EAST)
-                        .WithExistingResourceGroup(rgName)
+                        .Define(VNet1FrontEndSubnetNsgName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(ResourceGroupName)
                         .DefineRule("AllowHttpInComing")
                             .AllowInbound()
                             .FromAddress("INTERNET")
@@ -133,7 +133,7 @@ namespace ManageVirtualNetwork
                 Utilities.Log("Associating network security group rule to frontend subnet");
 
                 virtualNetwork1.Update()
-                        .UpdateSubnet(vnet1FrontEndSubnetName)
+                        .UpdateSubnet(VNet1FrontEndSubnetName)
                             .WithExistingNetworkSecurityGroup(frontEndSubnetNsg)
                             .Parent()
                         .Apply();
@@ -152,15 +152,15 @@ namespace ManageVirtualNetwork
                 var t1 = DateTime.UtcNow;
 
                 var frontEndVM = azure.VirtualMachines.Define(frontEndVmName)
-                        .WithRegion(Region.US_EAST)
-                        .WithExistingResourceGroup(rgName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(ResourceGroupName)
                         .WithExistingPrimaryNetwork(virtualNetwork1)
-                        .WithSubnet(vnet1FrontEndSubnetName)
+                        .WithSubnet(VNet1FrontEndSubnetName)
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithNewPrimaryPublicIpAddress(publicIpAddressLeafDnsForFrontEndVm)
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithSsh(sshKey)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -177,15 +177,15 @@ namespace ManageVirtualNetwork
                 var t3 = DateTime.UtcNow;
 
                 var backEndVM = azure.VirtualMachines.Define(backEndVmName)
-                        .WithRegion(Region.US_EAST)
-                        .WithExistingResourceGroup(rgName)
+                        .WithRegion(Region.USEast)
+                        .WithExistingResourceGroup(ResourceGroupName)
                         .WithExistingPrimaryNetwork(virtualNetwork1)
-                        .WithSubnet(vnet1BackEndSubnetName)
+                        .WithSubnet(VNet1BackEndSubnetName)
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithSsh(sshKey)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -202,8 +202,8 @@ namespace ManageVirtualNetwork
 
                 var virtualNetwork2 = azure.Networks
                         .Define(vnetName2)
-                        .WithRegion(Region.US_EAST)
-                        .WithNewResourceGroup(rgName)
+                        .WithRegion(Region.USEast)
+                        .WithNewResourceGroup(ResourceGroupName)
                         .Create();
 
                 Utilities.Log("Created a virtual network");
@@ -213,7 +213,7 @@ namespace ManageVirtualNetwork
                 //============================================================
                 // List virtual networks
 
-                foreach (var virtualNetwork in azure.Networks.ListByGroup(rgName))
+                foreach (var virtualNetwork in azure.Networks.ListByGroup(ResourceGroupName))
                 {
                     Utilities.PrintVirtualNetwork(virtualNetwork);
                 }
@@ -228,9 +228,9 @@ namespace ManageVirtualNetwork
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + ResourceGroupName);
+                    azure.ResourceGroups.DeleteByName(ResourceGroupName);
+                    Utilities.Log("Deleted Resource Group: " + ResourceGroupName);
                 }
                 catch (NullReferenceException)
                 {
@@ -249,7 +249,7 @@ namespace ManageVirtualNetwork
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

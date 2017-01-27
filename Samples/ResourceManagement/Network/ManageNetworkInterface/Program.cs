@@ -13,8 +13,8 @@ namespace ManageNetworkInterface
 {
     public class Program
     {
-        private static readonly string userName = "tirekicker";
-        private static readonly string password = "12NewPA$$w0rd!";
+        private static readonly string UserName = "tirekicker";
+        private static readonly string Password = "12NewPA$$w0rd!";
 
         /**
          * Azure Network sample for managing network interfaces -
@@ -25,15 +25,15 @@ namespace ManageNetworkInterface
          */
         public static void RunSample(IAzure azure)
         {
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
-            string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
-            string networkInterfaceName3 = SharedSettings.RandomResourceName("nic3", 24);
-            string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 24);
-            string publicIpAddressLeafDNS2 = SharedSettings.RandomResourceName("pip2", 24);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
+            string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
+            string networkInterfaceName3 = SdkContext.RandomResourceName("nic3", 24);
+            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
+            string publicIpAddressLeafDNS2 = SdkContext.RandomResourceName("pip2", 24);
             // TODO adjust the length of vm name from 8 to 24
-            string vmName = SharedSettings.RandomResourceName("vm", 8);
-            string rgName = SharedSettings.RandomResourceName("rgNEMI", 24);
+            string vmName = SdkContext.RandomResourceName("vm", 8);
+            string rgName = SdkContext.RandomResourceName("rgNEMI", 24);
 
             try
             {
@@ -46,7 +46,7 @@ namespace ManageNetworkInterface
 
                 var network = azure.Networks
                         .Define(vnetName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAddressSpace("172.16.0.0/16")
                         .DefineSubnet("Front-end")
@@ -67,7 +67,7 @@ namespace ManageNetworkInterface
                 Utilities.Log("Creating network interface 1");
 
                 var networkInterface1 = azure.NetworkInterfaces.Define(networkInterfaceName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
@@ -81,7 +81,7 @@ namespace ManageNetworkInterface
                 Utilities.Log("Creating network interface 2");
 
                 var networkInterface2 = azure.NetworkInterfaces.Define(networkInterfaceName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Mid-tier")
@@ -94,7 +94,7 @@ namespace ManageNetworkInterface
                 Utilities.Log("Creating network interface 3");
 
                 var networkInterface3 = azure.NetworkInterfaces.Define(networkInterfaceName3)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
@@ -112,12 +112,12 @@ namespace ManageNetworkInterface
                 var t1 = DateTime.UtcNow;
 
                 var vm = azure.VirtualMachines.Define(vmName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterface1)
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                        .WithAdminUsername(userName)
-                        .WithAdminPassword(password)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
+                        .WithAdminUsername(UserName)
+                        .WithAdminPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithExistingSecondaryNetworkInterface(networkInterface2)
                         .WithExistingSecondaryNetworkInterface(networkInterface3)
@@ -193,7 +193,7 @@ namespace ManageNetworkInterface
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

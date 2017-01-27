@@ -17,8 +17,8 @@ namespace DeployUsingARMTemplate
          */
         public static void RunSample(IAzure azure)
         {
-            var rgName = SharedSettings.RandomResourceName("rgRSAT", 24);
-            var deploymentName = SharedSettings.RandomResourceName("dpRSAT", 24);
+            var rgName = SdkContext.RandomResourceName("rgRSAT", 24);
+            var deploymentName = SdkContext.RandomResourceName("dpRSAT", 24);
 
             try
             {
@@ -30,7 +30,7 @@ namespace DeployUsingARMTemplate
                 Utilities.Log("Creating a resource group with name: " + rgName);
 
                 azure.ResourceGroups.Define(rgName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .Create();
 
                 Utilities.Log("Created a resource group with name: " + rgName);
@@ -71,7 +71,7 @@ namespace DeployUsingARMTemplate
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -89,8 +89,8 @@ namespace DeployUsingARMTemplate
 
         private static string GetTemplate()
         {
-            var hostingPlanName = SharedSettings.RandomResourceName("hpRSAT", 24);
-            var webAppName = SharedSettings.RandomResourceName("wnRSAT", 24);
+            var hostingPlanName = SdkContext.RandomResourceName("hpRSAT", 24);
+            var webAppName = SdkContext.RandomResourceName("wnRSAT", 24);
             var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
 
             var parsedTemplate = JObject.Parse(armTemplateString);

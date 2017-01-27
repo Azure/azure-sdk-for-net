@@ -8,13 +8,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public partial class WebContainer
     {
-        public static readonly WebContainer Tomcat_7_0_Newest = new WebContainer("Tomcat 7.0");
-        public static readonly WebContainer Tomcat_7_0_50 = new WebContainer("Tomcat 7.0.50");
-        public static readonly WebContainer Tomcat_7_0_62 = new WebContainer("Tomcat 7.0.62");
-        public static readonly WebContainer Tomcat_8_0_Newest = new WebContainer("Tomcat 8.0");
-        public static readonly WebContainer Tomcat_8_0_23 = new WebContainer("Tomcat 8.0.23");
-        public static readonly WebContainer Jetty_9_1_Newest = new WebContainer("Jetty 9.1");
-        public static readonly WebContainer Jetty_9_1_V20131115 = new WebContainer("Jetty 9.1.0.20131115");
+        public static readonly WebContainer Tomcat7_0Newest = new WebContainer("Tomcat 7.0");
+        public static readonly WebContainer Tomcat7_0_50 = new WebContainer("Tomcat 7.0.50");
+        public static readonly WebContainer Tomcat7_0_62 = new WebContainer("Tomcat 7.0.62");
+        public static readonly WebContainer Tomcat8_0Newest = new WebContainer("Tomcat 8.0");
+        public static readonly WebContainer Tomcat8_0_23 = new WebContainer("Tomcat 8.0.23");
+        public static readonly WebContainer Jetty9_1Newest = new WebContainer("Jetty 9.1");
+        public static readonly WebContainer Jetty9_1V20131115 = new WebContainer("Jetty 9.1.0.20131115");
 
         private string value;
 

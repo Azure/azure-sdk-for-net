@@ -20,8 +20,8 @@ namespace DeployUsingARMTemplateWithProgress
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgRSAP", 24);
-            string deploymentName = SharedSettings.RandomResourceName("dpRSAP", 24);
+            string rgName = SdkContext.RandomResourceName("rgRSAP", 24);
+            string deploymentName = SdkContext.RandomResourceName("dpRSAP", 24);
 
             try
             {
@@ -33,7 +33,7 @@ namespace DeployUsingARMTemplateWithProgress
                 Utilities.Log("Creating a resource group with name: " + rgName);
 
                 azure.ResourceGroups.Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                 Utilities.Log("Created a resource group with name: " + rgName);
@@ -60,7 +60,7 @@ namespace DeployUsingARMTemplateWithProgress
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Failed") || 
                         StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
                 {
-                    SharedSettings.DelayProvider.Delay(10000, CancellationToken.None).Wait();
+                    SdkContext.DelayProvider.Delay(10000, CancellationToken.None).Wait();
                     deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
                     Utilities.Log("Current deployment status : " + deployment.ProvisioningState);
                 }
@@ -90,7 +90,7 @@ namespace DeployUsingARMTemplateWithProgress
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -108,8 +108,8 @@ namespace DeployUsingARMTemplateWithProgress
 
         private static string GetTemplate()
         {
-            var hostingPlanName = SharedSettings.RandomResourceName("hpRSAT", 24);
-            var webAppName = SharedSettings.RandomResourceName("wnRSAT", 24);
+            var hostingPlanName = SdkContext.RandomResourceName("hpRSAT", 24);
+            var webAppName = SdkContext.RandomResourceName("wnRSAT", 24);
             var armTemplateString = System.IO.File.ReadAllText(@".\ARMTemplate\TemplateValue.json");
 
             var parsedTemplate = JObject.Parse(armTemplateString);

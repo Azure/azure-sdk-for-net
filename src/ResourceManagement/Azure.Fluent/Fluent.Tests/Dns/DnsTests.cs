@@ -21,7 +21,7 @@ namespace Azure.Tests.Dns
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var region = Region.US_EAST;
+                var region = Region.USEast;
                 var groupName = TestUtilities.GenerateName("rgdnschash");
                 var topLevelDomain = $"{TestUtilities.GenerateName("www.contoso-")}.com";
 

@@ -21,9 +21,9 @@ namespace ManageStorageAccount
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgSTMS", 20);
-            string storageAccountName = SharedSettings.RandomResourceName("sa", 20);
-            string storageAccountName2 = SharedSettings.RandomResourceName("sa2", 20);
+            string rgName = SdkContext.RandomResourceName("rgSTMS", 20);
+            string storageAccountName = SdkContext.RandomResourceName("sa", 20);
+            string storageAccountName2 = SdkContext.RandomResourceName("sa2", 20);
 
             try
             {
@@ -33,7 +33,7 @@ namespace ManageStorageAccount
                 Utilities.Log("Creating a Storage Account");
 
                 var storageAccount = azure.StorageAccounts.Define(storageAccountName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .Create();
 
@@ -61,7 +61,7 @@ namespace ManageStorageAccount
                 Utilities.Log("Creating a 2nd Storage Account");
 
                 var storageAccount2 = azure.StorageAccounts.Define(storageAccountName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .Create();
 
@@ -112,7 +112,7 @@ namespace ManageStorageAccount
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

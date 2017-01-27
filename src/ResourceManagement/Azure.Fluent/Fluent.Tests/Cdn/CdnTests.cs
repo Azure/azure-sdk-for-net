@@ -29,7 +29,7 @@ namespace Azure.Tests.Cdn
                     var cdnManager = TestHelper.CreateCdnManager();
 
                     var standardProfile = cdnManager.Profiles.Define(cdnStandardProfileName)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithNewResourceGroup(rgName)
                             .WithStandardAkamaiSku()
                             .WithNewEndpoint("supername.cloudapp.net")
@@ -68,7 +68,7 @@ namespace Azure.Tests.Cdn
 
 
                     var premiumProfile = cdnManager.Profiles.Define(cdnPremiumProfileName)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithNewResourceGroup(rgName)
                             .WithPremiumVerizonSku()
                             .WithNewPremiumEndpoint("someweirdname.blob.core.windows.net")
@@ -84,7 +84,7 @@ namespace Azure.Tests.Cdn
                                 .Attach()
                             .Create();
                     Assert.NotNull(premiumProfile);
-                    Assert.Equal(Region.US_CENTRAL, premiumProfile.Region);
+                    Assert.Equal(Region.USCentral, premiumProfile.Region);
                     Assert.True(premiumProfile.IsPremiumVerizon);
                     Assert.Equal(3, premiumProfile.Endpoints.Count);
                     Assert.True(premiumProfile.Endpoints.ContainsKey(cdnPremiumEndpointName));

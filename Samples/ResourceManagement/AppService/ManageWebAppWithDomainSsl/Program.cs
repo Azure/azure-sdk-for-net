@@ -15,7 +15,7 @@ namespace ManageWebAppWithDomainSsl
 {
     public class Program
     {
-        private const string CERT_PASSWORD = "StrongPass!12";
+        private const string CertificatePassword = "StrongPass!12";
 
         /**
          * Azure App Service sample for managing web apps.
@@ -29,11 +29,11 @@ namespace ManageWebAppWithDomainSsl
          */
         public static void RunSample(IAzure azure)
         {
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string planName = SdkContext.RandomResourceName("jplan_", 15);
+            string rgName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
 
             try
             {
@@ -46,8 +46,8 @@ namespace ManageWebAppWithDomainSsl
                         .Define(app1Name)
                         .WithNewResourceGroup(rgName)
                         .WithNewAppServicePlan(planName)
-                        .WithRegion(Region.US_WEST)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
+                        .WithRegion(Region.USWest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -115,7 +115,7 @@ namespace ManageWebAppWithDomainSsl
 
                 Utilities.Log("Creating a self-signed certificate " + pfxPath + "...");
 
-                CreateCertificate(domainName, pfxPath, CERT_PASSWORD);
+                CreateCertificate(domainName, pfxPath, CertificatePassword);
 
                 Utilities.Log("Created self-signed certificate " + pfxPath);
 
@@ -128,7 +128,7 @@ namespace ManageWebAppWithDomainSsl
                                 .WithManagedHostnameBindings(domain, app1Name)
                                 .DefineSslBinding()
                                     .ForHostname(app1Name + "." + domainName)
-                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CERT_PASSWORD)
+                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CertificatePassword)
                                     .WithSniBasedSsl()
                                     .Attach()
                                 .Apply();
@@ -142,7 +142,7 @@ namespace ManageWebAppWithDomainSsl
                                 .WithManagedHostnameBindings(domain, app2Name)
                                 .DefineSslBinding()
                                     .ForHostname(app2Name + "." + domainName)
-                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CERT_PASSWORD)
+                                    .WithPfxCertificateToUpload("Asset/" + pfxPath, CertificatePassword)
                                     .WithSniBasedSsl()
                                     .Attach()
                                 .Apply();
@@ -175,7 +175,7 @@ namespace ManageWebAppWithDomainSsl
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

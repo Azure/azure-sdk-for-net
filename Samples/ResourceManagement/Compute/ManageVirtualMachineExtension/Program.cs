@@ -17,25 +17,25 @@ namespace ManageVirtualMachineExtension
     {
         // Linux configurations
         //
-        readonly static string firstLinuxUserName = "tirekicker";
-        readonly static string firstLinuxUserPassword = "12NewPA$$w0rd!";
-        readonly static string firstLinuxUserNewPassword = "muy!234OR";
+        readonly static string FirstLinuxUserName = "tirekicker";
+        readonly static string FirstLinuxUserPassword = "12NewPA$$w0rd!";
+        readonly static string FirstLinuxUserNewPassword = "muy!234OR";
 
-        readonly static string secondLinuxUserName = "seconduser";
-        readonly static string secondLinuxUserPassword = "B12a6@12xyz!";
-        readonly static string secondLinuxUserExpiration = "2020-12-31";
+        readonly static string SecondLinuxUserName = "seconduser";
+        readonly static string SecondLinuxUserPassword = "B12a6@12xyz!";
+        readonly static string SecondLinuxUserExpiration = "2020-12-31";
 
-        readonly static string thirdLinuxUserName = "thirduser";
-        readonly static string thirdLinuxUserPassword = "12xyz!B12a6@";
-        readonly static string thirdLinuxUserExpiration = "2020-12-31";
+        readonly static string ThirdLinuxUserName = "thirduser";
+        readonly static string ThirdLinuxUserPassword = "12xyz!B12a6@";
+        readonly static string ThirdLinuxUserExpiration = "2020-12-31";
 
-        readonly static string linuxCustomScriptExtensionName = "CustomScriptForLinux";
-        readonly static string linuxCustomScriptExtensionPublisherName = "Microsoft.OSTCExtensions";
-        readonly static string linuxCustomScriptExtensionTypeName = "CustomScriptForLinux";
-        readonly static string linuxCustomScriptExtensionVersionName = "1.4";
+        readonly static string LinuxCustomScriptExtensionName = "CustomScriptForLinux";
+        readonly static string LinuxCustomScriptExtensionPublisherName = "Microsoft.OSTCExtensions";
+        readonly static string LinuxCustomScriptExtensionTypeName = "CustomScriptForLinux";
+        readonly static string LinuxCustomScriptExtensionVersionName = "1.4";
 
-        readonly static string mySqlScriptLinuxInstallCommand = "bash install_mysql_server_5.6.sh Abc.123x(";
-        readonly static List<string> mySQLLinuxInstallScriptFileUris = new List<string>()
+        readonly static string MySqlScriptLinuxInstallCommand = "bash install_mysql_server_5.6.sh Abc.123x(";
+        readonly static List<string> MySQLLinuxInstallScriptFileUris = new List<string>()
         {
             "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/4397e808d07df60ff3cdfd1ae40999f0130eb1b3/mysql-standalone-server-ubuntu/scripts/install_mysql_server_5.6.sh"
         };
@@ -84,11 +84,11 @@ namespace ManageVirtualMachineExtension
          */
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgCOVE", 15);
-            string linuxVmName = SharedSettings.RandomResourceName("lVM", 10);
-            string windowsVmName = SharedSettings.RandomResourceName("wVM", 10);
-            string pipDnsLabelLinuxVM = SharedSettings.RandomResourceName("rgPip1", 25);
-            string pipDnsLabelWindowsVM = SharedSettings.RandomResourceName("rgPip2", 25);
+            string rgName = SdkContext.RandomResourceName("rgCOVE", 15);
+            string linuxVmName = SdkContext.RandomResourceName("lVM", 10);
+            string windowsVmName = SdkContext.RandomResourceName("wVM", 10);
+            string pipDnsLabelLinuxVM = SdkContext.RandomResourceName("rgPip1", 25);
+            string pipDnsLabelWindowsVM = SdkContext.RandomResourceName("rgPip2", 25);
 
             try
             {
@@ -97,14 +97,14 @@ namespace ManageVirtualMachineExtension
                 Utilities.Log("Creating a Linux VM");
 
                 IVirtualMachine linuxVM = azure.VirtualMachines.Define(linuxVmName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithNewPrimaryPublicIpAddress(pipDnsLabelLinuxVM)
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_14_04_LTS)
-                        .WithRootUsername(firstLinuxUserName)
-                        .WithRootPassword(firstLinuxUserPassword)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer14_04_Lts)
+                        .WithRootUsername(FirstLinuxUserName)
+                        .WithRootPassword(FirstLinuxUserPassword)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -119,9 +119,9 @@ namespace ManageVirtualMachineExtension
                             .WithPublisher(linuxVmAccessExtensionPublisherName)
                             .WithType(linuxVmAccessExtensionTypeName)
                             .WithVersion(linuxVmAccessExtensionVersionName)
-                            .WithProtectedSetting("username", secondLinuxUserName)
-                            .WithProtectedSetting("password", secondLinuxUserPassword)
-                            .WithProtectedSetting("expiration", secondLinuxUserExpiration)
+                            .WithProtectedSetting("username", SecondLinuxUserName)
+                            .WithProtectedSetting("password", SecondLinuxUserPassword)
+                            .WithProtectedSetting("expiration", SecondLinuxUserExpiration)
                             .Attach()
                         .Apply();
 
@@ -132,9 +132,9 @@ namespace ManageVirtualMachineExtension
 
                 linuxVM.Update()
                         .UpdateExtension(linuxVmAccessExtensionName)
-                            .WithProtectedSetting("username", thirdLinuxUserName)
-                            .WithProtectedSetting("password", thirdLinuxUserPassword)
-                            .WithProtectedSetting("expiration", thirdLinuxUserExpiration)
+                            .WithProtectedSetting("username", ThirdLinuxUserName)
+                            .WithProtectedSetting("password", ThirdLinuxUserPassword)
+                            .WithProtectedSetting("expiration", ThirdLinuxUserExpiration)
                         .Parent()
                         .Apply();
 
@@ -146,8 +146,8 @@ namespace ManageVirtualMachineExtension
 
                 linuxVM.Update()
                         .UpdateExtension(linuxVmAccessExtensionName)
-                            .WithProtectedSetting("username", firstLinuxUserName)
-                            .WithProtectedSetting("password", firstLinuxUserNewPassword)
+                            .WithProtectedSetting("username", FirstLinuxUserName)
+                            .WithProtectedSetting("password", FirstLinuxUserNewPassword)
                             .WithProtectedSetting("reset_ssh", "true")
                         .Parent()
                         .Apply();
@@ -159,7 +159,7 @@ namespace ManageVirtualMachineExtension
 
                 linuxVM.Update()
                         .UpdateExtension(linuxVmAccessExtensionName)
-                            .WithProtectedSetting("remove_user", secondLinuxUserName)
+                            .WithProtectedSetting("remove_user", SecondLinuxUserName)
                         .Parent()
                         .Apply();
 
@@ -167,13 +167,13 @@ namespace ManageVirtualMachineExtension
                 // Install MySQL in Linux VM using CustomScript extension
 
                 linuxVM.Update()
-                        .DefineNewExtension(linuxCustomScriptExtensionName)
-                            .WithPublisher(linuxCustomScriptExtensionPublisherName)
-                            .WithType(linuxCustomScriptExtensionTypeName)
-                            .WithVersion(linuxCustomScriptExtensionVersionName)
+                        .DefineNewExtension(LinuxCustomScriptExtensionName)
+                            .WithPublisher(LinuxCustomScriptExtensionPublisherName)
+                            .WithType(LinuxCustomScriptExtensionTypeName)
+                            .WithVersion(LinuxCustomScriptExtensionVersionName)
                             .WithMinorVersionAutoUpgrade()
-                            .WithPublicSetting("fileUris", mySQLLinuxInstallScriptFileUris)
-                            .WithPublicSetting("commandToExecute", mySqlScriptLinuxInstallCommand)
+                            .WithPublicSetting("fileUris", MySQLLinuxInstallScriptFileUris)
+                            .WithPublicSetting("commandToExecute", MySqlScriptLinuxInstallCommand)
                         .Attach()
                         .Apply();
 
@@ -184,7 +184,7 @@ namespace ManageVirtualMachineExtension
                 // Removes the extensions from Linux VM
 
                 linuxVM.Update()
-                        .WithoutExtension(linuxCustomScriptExtensionName)
+                        .WithoutExtension(LinuxCustomScriptExtensionName)
                         .WithoutExtension(linuxVmAccessExtensionName)
                         .Apply();
                 Utilities.Log("Removed the custom script and VM Access extensions from Linux VM");
@@ -196,12 +196,12 @@ namespace ManageVirtualMachineExtension
                 Utilities.Log("Creating a Windows VM");
 
                 IVirtualMachine windowsVM = azure.VirtualMachines.Define(windowsVmName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithNewPrimaryPublicIpAddress(pipDnsLabelWindowsVM)
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername(firstWindowsUserName)
                         .WithAdminPassword(firstWindowsUserPassword)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
@@ -288,7 +288,7 @@ namespace ManageVirtualMachineExtension
             {
                 //=============================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

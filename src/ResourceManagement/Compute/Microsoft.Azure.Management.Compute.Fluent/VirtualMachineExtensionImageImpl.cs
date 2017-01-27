@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (this.Inner.ComputeRole == null)
             {
-                return ComputeRoles.UNKNOWN;
+                return ComputeRoles.Unknown;
             }
             // ComputeRole is a fluent level convinence enum
             return EnumNameAttribute.FromName<ComputeRoles>(this.Inner.ComputeRole);

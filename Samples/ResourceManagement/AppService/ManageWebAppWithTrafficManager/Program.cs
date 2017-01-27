@@ -33,17 +33,17 @@ namespace ManageWebAppWithTrafficManager
 
         public static void RunSample(IAzure azure)
         {
-            string rgName = SharedSettings.RandomResourceName("rgNEMV_", 24);
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-            string app4Name = SharedSettings.RandomResourceName("webapp4-", 20);
-            string app5Name = SharedSettings.RandomResourceName("webapp5-", 20);
-            string plan1Name = SharedSettings.RandomResourceName("jplan1_", 15);
-            string plan2Name = SharedSettings.RandomResourceName("jplan2_", 15);
-            string plan3Name = SharedSettings.RandomResourceName("jplan3_", 15);
-            string domainName = SharedSettings.RandomResourceName("jsdkdemo-", 20) + ".com";
-            string tmName = SharedSettings.RandomResourceName("jsdktm-", 20);
+            string resourceGroupName = SdkContext.RandomResourceName("rgNEMV_", 24);
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
+            string app4Name = SdkContext.RandomResourceName("webapp4-", 20);
+            string app5Name = SdkContext.RandomResourceName("webapp5-", 20);
+            string plan1Name = SdkContext.RandomResourceName("jplan1_", 15);
+            string plan2Name = SdkContext.RandomResourceName("jplan2_", 15);
+            string plan3Name = SdkContext.RandomResourceName("jplan3_", 15);
+            string domainName = SdkContext.RandomResourceName("jsdkdemo-", 20) + ".com";
+            string trafficManagerName = SdkContext.RandomResourceName("jsdktm-", 20);
 
             try
             {
@@ -52,12 +52,12 @@ namespace ManageWebAppWithTrafficManager
 
                 Utilities.Log("Purchasing a domain " + domainName + "...");
 
-                azure.ResourceGroups.Define(rgName)
-                        .WithRegion(Region.US_WEST)
+                azure.ResourceGroups.Define(resourceGroupName)
+                        .WithRegion(Region.USWest)
                         .Create();
 
                 var domain = azure.AppServices.AppServiceDomains.Define(domainName)
-                        .WithExistingResourceGroup(rgName)
+                        .WithExistingResourceGroup(resourceGroupName)
                         .DefineRegistrantContact()
                             .WithFirstName("Jon")
                             .WithLastName("Doe")
@@ -90,21 +90,21 @@ namespace ManageWebAppWithTrafficManager
 
                 Utilities.Log("Creating app service plan " + plan1Name + " in US West...");
 
-                var plan1 = CreateAppServicePlan(azure, rgName, plan1Name, Region.US_WEST);
+                var plan1 = CreateAppServicePlan(azure, resourceGroupName, plan1Name, Region.USWest);
 
                 Utilities.Log("Created app service plan " + plan1.Name);
                 Utilities.Print(plan1);
 
                 Utilities.Log("Creating app service plan " + plan2Name + " in Europe West...");
 
-                var plan2 = CreateAppServicePlan(azure, rgName, plan2Name, Region.EUROPE_WEST);
+                var plan2 = CreateAppServicePlan(azure, resourceGroupName, plan2Name, Region.EuropeWest);
 
                 Utilities.Log("Created app service plan " + plan2.Name);
                 Utilities.Print(plan1);
 
                 Utilities.Log("Creating app service plan " + plan3Name + " in Asia East...");
 
-                var plan3 = CreateAppServicePlan(azure, rgName, plan3Name, Region.ASIA_EAST);
+                var plan3 = CreateAppServicePlan(azure, resourceGroupName, plan3Name, Region.AsiaEast);
 
                 Utilities.Log("Created app service plan " + plan2.Name);
                 Utilities.Print(plan1);
@@ -114,31 +114,31 @@ namespace ManageWebAppWithTrafficManager
 
                 Utilities.Log("Creating web app " + app1Name + "...");
 
-                var app1 = CreateWebApp(azure, domain, rgName, app1Name, plan1);
+                var app1 = CreateWebApp(azure, domain, resourceGroupName, app1Name, plan1);
 
                 Utilities.Log("Created web app " + app1.Name);
                 Utilities.Print(app1);
 
                 Utilities.Log("Creating another web app " + app2Name + "...");
-                var app2 = CreateWebApp(azure, domain, rgName, app2Name, plan2);
+                var app2 = CreateWebApp(azure, domain, resourceGroupName, app2Name, plan2);
 
                 Utilities.Log("Created web app " + app2.Name);
                 Utilities.Print(app2);
 
                 Utilities.Log("Creating another web app " + app3Name + "...");
-                var app3 = CreateWebApp(azure, domain, rgName, app3Name, plan3);
+                var app3 = CreateWebApp(azure, domain, resourceGroupName, app3Name, plan3);
 
                 Utilities.Log("Created web app " + app3.Name);
                 Utilities.Print(app3);
 
                 Utilities.Log("Creating another web app " + app3Name + "...");
-                var app4 = CreateWebApp(azure, domain, rgName, app4Name, plan1);
+                var app4 = CreateWebApp(azure, domain, resourceGroupName, app4Name, plan1);
 
                 Utilities.Log("Created web app " + app4.Name);
                 Utilities.Print(app4);
 
                 Utilities.Log("Creating another web app " + app3Name + "...");
-                var app5 = CreateWebApp(azure, domain, rgName, app5Name, plan1);
+                var app5 = CreateWebApp(azure, domain, resourceGroupName, app5Name, plan1);
 
                 Utilities.Log("Created web app " + app5.Name);
                 Utilities.Print(app5);
@@ -146,12 +146,12 @@ namespace ManageWebAppWithTrafficManager
                 //============================================================
                 // Create a traffic manager
 
-                Utilities.Log("Creating a traffic manager " + tmName + " for the web apps...");
+                Utilities.Log("Creating a traffic manager " + trafficManagerName + " for the web apps...");
 
                 var trafficManager = azure.TrafficManagerProfiles
-                        .Define(tmName)
-                        .WithExistingResourceGroup(rgName)
-                        .WithLeafDomainLabel(tmName)
+                        .Define(trafficManagerName)
+                        .WithExistingResourceGroup(resourceGroupName)
+                        .WithLeafDomainLabel(trafficManagerName)
                         .WithTrafficRoutingMethod(TrafficRoutingMethod.Weighted)
                         .DefineAzureTargetEndpoint("endpoint1")
                             .ToResourceId(app1.Id)
@@ -206,9 +206,9 @@ namespace ManageWebAppWithTrafficManager
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + resourceGroupName);
+                    azure.ResourceGroups.DeleteByName(resourceGroupName);
+                    Utilities.Log("Deleted Resource Group: " + resourceGroupName);
                 }
                 catch (NullReferenceException)
                 {
@@ -227,7 +227,7 @@ namespace ManageWebAppWithTrafficManager
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
@@ -252,7 +252,7 @@ namespace ManageWebAppWithTrafficManager
                     .Define(name)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
-                    .WithPricingTier(AppServicePricingTier.Basic_B1)
+                    .WithPricingTier(AppServicePricingTier.BasicB1)
                     .Create();
         }
 

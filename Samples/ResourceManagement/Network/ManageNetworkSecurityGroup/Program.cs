@@ -15,9 +15,8 @@ namespace ManageNetworkSecurityGroup
 
     public class Program
     {
-        private static readonly string userName = "tirekicker";
-        private static readonly string password = "12NewPA$$w0rd!";
-        private static readonly string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
+        private static readonly string UserName = "tirekicker";
+        private static readonly string SshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
 
         /**
          * Azure Network sample for managing network security groups -
@@ -30,15 +29,15 @@ namespace ManageNetworkSecurityGroup
          */
         public static void RunSample(IAzure azure)
         {
-            string frontEndNSGName = SharedSettings.RandomResourceName("fensg", 24);
-            string backEndNSGName = SharedSettings.RandomResourceName("bensg", 24);
-            string rgName = SharedSettings.RandomResourceName("rgNEMS", 24);
-            string vnetName = SharedSettings.RandomResourceName("vnet", 24);
-            string networkInterfaceName1 = SharedSettings.RandomResourceName("nic1", 24);
-            string networkInterfaceName2 = SharedSettings.RandomResourceName("nic2", 24);
-            string publicIpAddressLeafDNS1 = SharedSettings.RandomResourceName("pip1", 24);
-            string frontEndVMName = SharedSettings.RandomResourceName("fevm", 24);
-            string backEndVMName = SharedSettings.RandomResourceName("bevm", 24);
+            string frontEndNSGName = SdkContext.RandomResourceName("fensg", 24);
+            string backEndNSGName = SdkContext.RandomResourceName("bensg", 24);
+            string rgName = SdkContext.RandomResourceName("rgNEMS", 24);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string networkInterfaceName1 = SdkContext.RandomResourceName("nic1", 24);
+            string networkInterfaceName2 = SdkContext.RandomResourceName("nic2", 24);
+            string publicIpAddressLeafDNS1 = SdkContext.RandomResourceName("pip1", 24);
+            string frontEndVMName = SdkContext.RandomResourceName("fevm", 24);
+            string backEndVMName = SdkContext.RandomResourceName("bevm", 24);
 
             try
             {
@@ -48,7 +47,7 @@ namespace ManageNetworkSecurityGroup
 
                 var network = azure.Networks
                         .Define(vnetName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAddressSpace("172.16.0.0/16")
                         .DefineSubnet("Front-end")
@@ -70,7 +69,7 @@ namespace ManageNetworkSecurityGroup
 
                 Utilities.Log("Creating a security group for the front end - allows SSH and HTTP");
                 var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .DefineRule("ALLOW-SSH")
                             .AllowInbound()
@@ -107,7 +106,7 @@ namespace ManageNetworkSecurityGroup
                         + "denies all outbound internet traffic  ");
 
                 var backEndNSG = azure.NetworkSecurityGroups.Define(backEndNSGName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefineRule("ALLOW-SQL")
                             .AllowInbound()
@@ -144,7 +143,7 @@ namespace ManageNetworkSecurityGroup
                 Utilities.Log("Creating a network interface for the front end");
 
                 var networkInterface1 = azure.NetworkInterfaces.Define(networkInterfaceName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Front-end")
@@ -165,7 +164,7 @@ namespace ManageNetworkSecurityGroup
                 Utilities.Log("Creating a network interface for the back end");
 
                 var networkInterface2 = azure.NetworkInterfaces.Define(networkInterfaceName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("Back-end")
@@ -185,12 +184,12 @@ namespace ManageNetworkSecurityGroup
                 var t1 = DateTime.UtcNow;
 
                 var frontEndVM = azure.VirtualMachines.Define(frontEndVMName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterface1)
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithSsh(sshKey)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -210,12 +209,12 @@ namespace ManageNetworkSecurityGroup
                 t1 = DateTime.UtcNow;
 
                 var backEndVM = azure.VirtualMachines.Define(backEndVMName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterface2)
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(userName)
-                        .WithSsh(sshKey)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithSsh(SshKey)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -281,7 +280,7 @@ namespace ManageNetworkSecurityGroup
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

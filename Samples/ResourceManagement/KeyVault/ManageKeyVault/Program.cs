@@ -26,9 +26,9 @@ namespace ManageKeyVault
          */
         public static void RunSample(IAzure azure)
         {
-            string vaultName1 = SharedSettings.RandomResourceName("vault1", 20);
-            string vaultName2 = SharedSettings.RandomResourceName("vault2", 20);
-            string rgName = SharedSettings.RandomResourceName("rgNEMV", 24);
+            string vaultName1 = SdkContext.RandomResourceName("vault1", 20);
+            string vaultName2 = SdkContext.RandomResourceName("vault2", 20);
+            string rgName = SdkContext.RandomResourceName("rgNEMV", 24);
             try
             {
                 //============================================================
@@ -38,7 +38,7 @@ namespace ManageKeyVault
 
                 var vault1 = azure.Vaults
                         .Define(vaultName1)
-                        .WithRegion(Region.US_WEST)
+                        .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
                         .WithEmptyAccessPolicy()
                         .Create();
@@ -53,7 +53,7 @@ namespace ManageKeyVault
 
                 vault1 = vault1.Update()
                         .DefineAccessPolicy()
-                            .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                            .ForServicePrincipal(SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
                             .AllowKeyAllPermissions()
                             .AllowSecretPermissions(SecretPermissions.Get)
                             .AllowSecretPermissions(SecretPermissions.List)
@@ -85,10 +85,10 @@ namespace ManageKeyVault
 
                 var vault2 = azure.Vaults
                         .Define(vaultName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefineAccessPolicy()
-                            .ForServicePrincipal(SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
+                            .ForServicePrincipal(SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION")).ClientId)
                             .AllowKeyPermissions(KeyPermissions.List)
                             .AllowKeyPermissions(KeyPermissions.Get)
                             .AllowKeyPermissions(KeyPermissions.Decrypt)
@@ -142,7 +142,7 @@ namespace ManageKeyVault
             {
                 //=================================================================
                 // Authenticate
-                AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

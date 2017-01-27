@@ -34,7 +34,7 @@ namespace Fluent.Tests.Miscellaneous
                 ServiceClientTracing.IsEnabled = true;
                 try
                 {
-                    AzureCredentials credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                    AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
                     credentials.WithDefaultSubscription(null); // Clearing subscriptionId loaded from the auth
                                                                // file so that below WithDefaultSubscription()
                                                                // will force listing subscriptions and fetching
@@ -49,7 +49,7 @@ namespace Fluent.Tests.Miscellaneous
 
                     IStorageAccount storageAccount = azure.StorageAccounts
                        .Define(stgName)
-                       .WithRegion(Region.US_EAST)
+                       .WithRegion(Region.USEast)
                        .WithNewResourceGroup(rgName)
                        .Create();
 

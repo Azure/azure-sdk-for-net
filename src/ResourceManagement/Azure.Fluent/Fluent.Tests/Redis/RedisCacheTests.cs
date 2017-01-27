@@ -34,19 +34,19 @@ namespace Azure.Tests.Redis
                     // Create
                     var resourceGroup = redisManager.ResourceManager.ResourceGroups
                                             .Define(GroupName2)
-                                            .WithRegion(Region.US_CENTRAL)
+                                            .WithRegion(Region.USCentral)
                                             .Create();
 
                     var redisCacheDefinition1 = redisManager.RedisCaches
                             .Define(CacheName)
-                            .WithRegion(Region.ASIA_EAST)
+                            .WithRegion(Region.AsiaEast)
                             .WithNewResourceGroup(GroupName)
                             .WithBasicSku()
                             .Create();
 
                     var redisCacheDefinition2 = redisManager.RedisCaches
                             .Define(CacheName2)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithPremiumSku()
                             .WithShardCount(10)
@@ -55,7 +55,7 @@ namespace Azure.Tests.Redis
 
                     var redisCacheDefinition3 = redisManager.RedisCaches
                             .Define(CacheName3)
-                            .WithRegion(Region.US_CENTRAL)
+                            .WithRegion(Region.USCentral)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithPremiumSku(2)
                             .WithRedisConfiguration("maxclients", "2")

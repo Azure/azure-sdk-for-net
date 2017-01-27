@@ -13,8 +13,8 @@ namespace ManageAvailabilitySet
 {
     public class Program
     {
-        private const string USERNAME = "tirekicker";
-        private const string PASSWORD = "12NewPA$$w0rd!";
+        private const string UserName = "tirekicker";
+        private const string Password = "12NewPA$$w0rd!";
         
         /**
          * Azure Compute sample for managing availability sets -
@@ -43,7 +43,7 @@ namespace ManageAvailabilitySet
                 Utilities.Log("Creating an availability set");
 
                 var availSet1 = azure.AvailabilitySets.Define(availSetName1)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithFaultDomainCount(2)
                         .WithUpdateDomainCount(4)
@@ -58,7 +58,7 @@ namespace ManageAvailabilitySet
                 // Define a virtual network for the VMs in this availability set
                 var network = azure.Networks
                         .Define(vnetName)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithAddressSpace("10.0.0.0/28");
 
@@ -68,14 +68,14 @@ namespace ManageAvailabilitySet
                 Utilities.Log("Creating a Windows VM in the availability set");
 
                 var vm1 = azure.VirtualMachines.Define(vm1Name)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork(network)
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                        .WithAdminUsername(USERNAME)
-                        .WithAdminPassword(PASSWORD)
+                        .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
+                        .WithAdminUsername(UserName)
+                        .WithAdminPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithExistingAvailabilitySet(availSet1)
                         .Create();
@@ -89,14 +89,14 @@ namespace ManageAvailabilitySet
                 Utilities.Log("Creating a Linux VM in the availability set");
 
                 var vm2 = azure.VirtualMachines.Define(vm2Name)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork(network)
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                        .WithRootUsername(USERNAME)
-                        .WithRootPassword(PASSWORD)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .WithExistingAvailabilitySet(availSet1)
                         .Create();
@@ -121,7 +121,7 @@ namespace ManageAvailabilitySet
                 Utilities.Log("Creating an availability set");
 
                 var availSet2 = azure.AvailabilitySets.Define(availSetName2)
-                        .WithRegion(Region.US_EAST)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .Create();
 
@@ -170,7 +170,7 @@ namespace ManageAvailabilitySet
             {
                 //=============================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

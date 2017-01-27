@@ -40,7 +40,7 @@ namespace Fluent.Tests.KeyVault
                 {
                     IVault vault1 = manager.Vaults
                             .Define(vaultName1)
-                            .WithRegion(Region.US_WEST)
+                            .WithRegion(Region.USWest)
                             .WithNewResourceGroup(rgName)
                             .WithEmptyAccessPolicy()
                             .Create();
@@ -75,7 +75,7 @@ namespace Fluent.Tests.KeyVault
 
                     IVault vault2 = manager.Vaults
                             .Define(vaultName2)
-                            .WithRegion(Region.US_EAST)
+                            .WithRegion(Region.USEast)
                             .WithExistingResourceGroup(rgName)
                             .DefineAccessPolicy()
                                 .ForServicePrincipal(spnCredentialsClientId)

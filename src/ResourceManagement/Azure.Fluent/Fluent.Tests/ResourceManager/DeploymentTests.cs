@@ -34,7 +34,7 @@ namespace Fluent.Tests.ResourceManager
 
                 resourceManager.Deployments
                     .Define(deploymentName1)
-                    .WithNewResourceGroup(rgName, Region.US_EAST)
+                    .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
@@ -59,7 +59,7 @@ namespace Fluent.Tests.ResourceManager
 
                 // Try export template using resourcegroup
                 var resourceGroup = resourceManager.ResourceGroups.GetByName(rgName);
-                var exportedRG = resourceGroup.ExportTemplate(ResourceGroupExportTemplateOptions.INCLUDE_BOTH);
+                var exportedRG = resourceGroup.ExportTemplate(ResourceGroupExportTemplateOptions.IncludeBoth);
                 Assert.True(exportedRG.Template != null);
 
                 // Deployment operations
@@ -80,7 +80,7 @@ namespace Fluent.Tests.ResourceManager
                 IResourceManager resourceManager = TestHelper.CreateResourceManager();
                 resourceManager.Deployments
                     .Define(deploymentName2)
-                    .WithNewResourceGroup(rgName, Region.US_EAST)
+                    .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)
@@ -103,7 +103,7 @@ namespace Fluent.Tests.ResourceManager
 
                 resourceManager.Deployments
                     .Define(deploymentName3)
-                    .WithNewResourceGroup(rgName, Region.US_EAST)
+                    .WithNewResourceGroup(rgName, Region.USEast)
                     .WithTemplateLink(templateUri, contentVersion)
                     .WithParametersLink(parametersUri, contentVersion)
                     .WithMode(DeploymentMode.Complete)

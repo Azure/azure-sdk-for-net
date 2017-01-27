@@ -25,7 +25,7 @@ namespace Fluent.Tests.Network
                 var newRG = "rg" + testId;
                 var manager = TestHelper.CreateNetworkManager();
                 var pip = manager.PublicIpAddresses.Define(newPipName)
-                    .WithRegion(Region.US_WEST)
+                    .WithRegion(Region.USWest)
                     .WithNewResourceGroup(newRG)
                     .WithDynamicIp()
                     .WithLeafDomainLabel(newPipName)

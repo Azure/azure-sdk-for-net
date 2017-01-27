@@ -24,12 +24,12 @@ namespace ManageWebAppBasic
 
         public static void RunSample(IAzure azure)
         {
-            string app1Name = SharedSettings.RandomResourceName("webapp1-", 20);
-            string app2Name = SharedSettings.RandomResourceName("webapp2-", 20);
-            string app3Name = SharedSettings.RandomResourceName("webapp3-", 20);
-            string planName = SharedSettings.RandomResourceName("jplan_", 15);
-            string rg1Name = SharedSettings.RandomResourceName("rg1NEMV_", 24);
-            string rg2Name = SharedSettings.RandomResourceName("rg2NEMV_", 24);
+            string app1Name = SdkContext.RandomResourceName("webapp1-", 20);
+            string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
+            string planName = SdkContext.RandomResourceName("jplan_", 15);
+            string rg1Name = SdkContext.RandomResourceName("rg1NEMV_", 24);
+            string rg2Name = SdkContext.RandomResourceName("rg2NEMV_", 24);
 
             try
             {
@@ -42,8 +42,8 @@ namespace ManageWebAppBasic
                         .Define(app1Name)
                         .WithNewResourceGroup(rg1Name)
                         .WithNewAppServicePlan(planName)
-                        .WithRegion(Region.US_WEST)
-                        .WithPricingTier(AppServicePricingTier.Standard_S1)
+                        .WithRegion(Region.USWest)
+                        .WithPricingTier(AppServicePricingTier.StandardS1)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -96,8 +96,8 @@ namespace ManageWebAppBasic
                 // Configure app 3 to have Java 8 enabled
                 Utilities.Log("Adding Java support to web app " + app3Name + "...");
                 app3.Update()
-                        .WithJavaVersion(JavaVersion.Java_8_Newest)
-                        .WithWebContainer(WebContainer.Tomcat_8_0_Newest)
+                        .WithJavaVersion(JavaVersion.V8Newest)
+                        .WithWebContainer(WebContainer.Tomcat8_0Newest)
                         .Apply();
                 Utilities.Log("Java supported on web app " + app3Name + "...");
 
@@ -159,7 +159,7 @@ namespace ManageWebAppBasic
             {
                 //=================================================================
                 // Authenticate
-                var credentials = SharedSettings.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     public partial class PythonVersion
     {
         public static readonly PythonVersion Off = new PythonVersion("null");
-        public static readonly PythonVersion Python_27 = new PythonVersion("2.7");
-        public static readonly PythonVersion Python_34 = new PythonVersion("3.4");
+        public static readonly PythonVersion V27 = new PythonVersion("2.7");
+        public static readonly PythonVersion V34 = new PythonVersion("3.4");
 
         private string value;
 
