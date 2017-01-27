@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
     using Microsoft.Azure.Management.Resource.Fluent.Deployment.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Core;
 
     /// <summary>
     /// Entry point to template deployment in Azure.
@@ -18,7 +19,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         ISupportsGettingByGroup<IDeployment>,
         ISupportsGettingById<IDeployment>,
         ISupportsDeletingById,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        IHasManager<IResourceManager>
     {
         /// <summary>
         /// Checks if a deployment exists in a resource group.

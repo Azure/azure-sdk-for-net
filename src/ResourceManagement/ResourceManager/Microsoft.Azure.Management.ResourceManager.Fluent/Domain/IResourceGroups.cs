@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
-
+    using Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Resource.Fluent.ResourceGroup.Definition;
 
