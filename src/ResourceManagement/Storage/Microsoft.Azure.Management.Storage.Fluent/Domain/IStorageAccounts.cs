@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-
+    using Resource.Fluent.Core;
     using Resource.Fluent.Core.CollectionActions;
     /// <summary>
     /// Entry point for storage accounts management API.
@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ISupportsGettingByGroup<IStorageAccount>,
         ISupportsGettingById<IStorageAccount>,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<IStorageAccount>
+        ISupportsBatchCreation<IStorageAccount>,
+        IHasManager<IStorageManager>
     {
         /// <summary>
         /// Checks that account name is valid and is not in use.
