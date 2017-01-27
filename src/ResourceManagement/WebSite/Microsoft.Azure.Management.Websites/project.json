@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0-preview",
+  "version": "1.5.0-preview",
   "description": "Provides website management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -24,7 +24,7 @@
   "frameworks": {
     "net45": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.2.0,4.0.0)"
       }
     },
     "netstandard1.5": {

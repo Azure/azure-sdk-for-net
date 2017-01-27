@@ -45,7 +45,8 @@ namespace WebSites.Tests.ScenarioTests
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var webSite = webSitesClient.WebApps.Get(resourceGroupName, webSiteName, "SiteConfig");
+                    var webSite = webSitesClient.WebApps.Get(resourceGroupName, webSiteName);
+                    webSite.SiteConfig = webSitesClient.WebApps.GetConfiguration(resourceGroupName, webSiteName);
 
                     Assert.Equal(webSiteName, webSite.Name);
                     var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
@@ -65,7 +66,7 @@ namespace WebSites.Tests.ScenarioTests
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var webSites = webSitesClient.WebApps.ListByResourceGroup(resourceGroupName, null, null);
+                    var webSites = webSitesClient.WebApps.ListByResourceGroup(resourceGroupName, null);
 
                     Assert.Equal(1, webSites.Count());
                     Assert.Equal(webSiteName, webSites.ToList()[0].Name);
@@ -105,7 +106,8 @@ namespace WebSites.Tests.ScenarioTests
         }
 
         //Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
-        [Fact(Skip="TODO: Fix datetime parsing in test to properly handle universal time and rerecord.")]
+        //[Fact(Skip="TODO: Fix datetime parsing in test to properly handle universal time and rerecord.")]
+        [Fact]
         public void GetSiteMetrics()
         {
             RunWebsiteTestScenario(
