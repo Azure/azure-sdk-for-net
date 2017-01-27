@@ -174,11 +174,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C19382933BDE655D0F0F95CD9474DFE7:DB5E59650C351CEA1A8047EAB8DFA902
         public VirtualMachineSizeTypes Size()
         {
-            if (this.Inner.HardwareProfile != null && this.Inner.HardwareProfile.VmSize != null) {
-                return new VirtualMachineSizeTypes(this.Inner.HardwareProfile.VmSize);
+            if (Inner.HardwareProfile != null && Inner.HardwareProfile.VmSize != null) {
+                return VirtualMachineSizeTypes.Parse(Inner.HardwareProfile.VmSize);
             }
-            if (this.Sku() != null && this.Sku().Name != null) {
-                return new VirtualMachineSizeTypes(this.Sku().Name);
+            if (Sku() != null && Sku().Name != null) {
+                return VirtualMachineSizeTypes.Parse(Sku().Name);
             }
             return null;
         }

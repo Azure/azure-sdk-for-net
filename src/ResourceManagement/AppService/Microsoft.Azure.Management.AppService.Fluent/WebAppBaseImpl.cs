@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:5347BC9AA33E4B7344CEB8188EA1DAA3:B3A0F7D2A1C11139E3140FF2DC919CEB
         public FluentImplT WithoutPython()
         {
-            return WithPythonVersion(new PythonVersion(""));
+            return WithPythonVersion(Fluent.PythonVersion.Parse(""));
         }
 
         ///GENMHASH:B67E95BCEA89D1B6CBB6849249A60D4F:3A1F8EE2D47ED51D598D727D3C3FAA86
@@ -179,15 +179,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             if (Inner.SiteConfig == null || Inner.SiteConfig.PythonVersion == null)
             {
-                return Microsoft.Azure.Management.AppService.Fluent.PythonVersion.Off;
+                return Fluent.PythonVersion.Off;
             }
-            return new PythonVersion(Inner.SiteConfig.PythonVersion);
+            return Fluent.PythonVersion.Parse(Inner.SiteConfig.PythonVersion);
         }
 
         ///GENMHASH:C03B1FAF31FB94362C083BAA7332E4A4:516E9ADDDB1B086B94A185F8CA729E6B
         public FluentImplT WithoutJava()
         {
-            return WithJavaVersion(new JavaVersion("")).WithWebContainer(null);
+            return WithJavaVersion(Fluent.JavaVersion.Parse("")).WithWebContainer(null);
         }
 
         ///GENMHASH:3A0791A760CE20BB60B662E45E1B5A20:AC8556A885DA9E1351FB1A6C074AA07E
@@ -677,9 +677,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public JavaVersion JavaVersion()
         {
             if (Inner.SiteConfig == null || Inner.SiteConfig.JavaVersion == null) {
-                return Microsoft.Azure.Management.AppService.Fluent.JavaVersion.Off;
+                return Fluent.JavaVersion.Off;
             }
-            return new JavaVersion(Inner.SiteConfig.JavaVersion);
+            return Fluent.JavaVersion.Parse(Inner.SiteConfig.JavaVersion);
         }
 
         ///GENMHASH:16DA81E02BFF9B1983571901E1CA6AB9:D68A946D17769FFBF0FF5DAAE2212551
@@ -786,7 +786,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return Microsoft.Azure.Management.AppService.Fluent.PhpVersion.Off;
             }
-            return new PhpVersion(Inner.SiteConfig.PhpVersion);
+            return Fluent.PhpVersion.Parse(Inner.SiteConfig.PhpVersion);
         }
 
         ///GENMHASH:AED7BB300F28210D7E0EDA08BF191BDC:140BC7A2AF1C0E354A00FC241D95FE70
@@ -838,7 +838,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new RemoteVisualStudioVersion(Inner.SiteConfig.RemoteDebuggingVersion);
+            return RemoteVisualStudioVersion.Parse(Inner.SiteConfig.RemoteDebuggingVersion);
         }
 
         ///GENMHASH:F5F1D8F285012204F1326EAA44BBE26E:B4CE82C3129D4304A7C71A600E1CA97C
@@ -918,7 +918,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new NetFrameworkVersion(Inner.SiteConfig.NetFrameworkVersion);
+            return Fluent.NetFrameworkVersion.Parse(Inner.SiteConfig.NetFrameworkVersion);
         }
 
         ///GENMHASH:0A3B342EB54A6BB9B919686055C77154:D71C3ABF670D7D6382F65A18153CE77F
@@ -1065,7 +1065,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:3BBC37006EE11765DF55134711F9E6D9:86A9DA70332D3F08A24CC84ED1EBFE15
         public FluentImplT WithoutPhp()
         {
-            return WithPhpVersion(new PhpVersion(""));
+            return WithPhpVersion(Fluent.PhpVersion.Parse(""));
         }
 
         ///GENMHASH:04497E34F1930C831D67A21169FA28E0:5719C33FC3EAF071BCAD1249F58B0A1F
