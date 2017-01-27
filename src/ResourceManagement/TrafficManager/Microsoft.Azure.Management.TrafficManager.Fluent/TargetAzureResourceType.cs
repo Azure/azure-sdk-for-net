@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     /// <summary>
     /// Target Azure resource types supported for an Azure endpoint in a traffic manager profile.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLlRhcmdldEF6dXJlUmVzb3VyY2VUeXBl
-    public partial class TargetAzureResourceType 
+    public class TargetAzureResourceType 
     {
         public static readonly TargetAzureResourceType PublicIP = new TargetAzureResourceType("Microsoft.Network", "publicIPAddresses");
         public static readonly TargetAzureResourceType WebApp = new TargetAzureResourceType("Microsoft.Web", "sites");

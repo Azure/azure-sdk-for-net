@@ -4,7 +4,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent.Models;
 
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     /// <summary>
     /// Implementation for TrafficManagerAzureEndpoint.

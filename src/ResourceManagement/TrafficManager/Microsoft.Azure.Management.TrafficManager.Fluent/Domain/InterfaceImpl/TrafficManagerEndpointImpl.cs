@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Gets the priority of the endpoint which is used when traffic manager profile is configured with
         /// Priority traffic-routing method.
         /// </summary>
-        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.RoutingPriority
+        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.RoutingPriority
         {
             get
             {
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the endpoint type.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointType Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.EndpointType
+        Microsoft.Azure.Management.TrafficManager.Fluent.EndpointType Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.EndpointType
         {
             get
             {
@@ -345,11 +345,11 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the monitor status of the endpoint.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointMonitorStatus Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.MonitorStatus
+        Microsoft.Azure.Management.TrafficManager.Fluent.EndpointMonitorStatus Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.MonitorStatus
         {
             get
             {
-                return this.MonitorStatus() as Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointMonitorStatus;
+                return this.MonitorStatus() as Microsoft.Azure.Management.TrafficManager.Fluent.EndpointMonitorStatus;
             }
         }
 
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Gets the weight of the endpoint which is used when traffic manager profile is configured with
         /// Weighted traffic-routing method.
         /// </summary>
-        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.RoutingWeight
+        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.RoutingWeight
         {
             get
             {
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets true if the endpoint is enabled, false otherwise.
         /// </summary>
-        bool Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint.IsEnabled
+        bool Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint.IsEnabled
         {
             get
             {

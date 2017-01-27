@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Azure.Management.Sql.Fluent;
-using Microsoft.Azure.Management.Trafficmanager.Fluent;
+using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
 
 namespace Microsoft.Azure.Management.Samples.Common

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using Management.TrafficManager.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// An immutable client-side representation of an Azure traffic manager profile endpoint.
     /// </summary>
     public interface ITrafficManagerEndpoint  :
-        IExternalChildResource<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerEndpoint,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>,
+        IExternalChildResource<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
         IWrapper<EndpointInner>
     {
         /// <summary>
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the endpoint type.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointType EndpointType { get; }
+        Microsoft.Azure.Management.TrafficManager.Fluent.EndpointType EndpointType { get; }
 
         /// <summary>
         /// Gets true if the endpoint is enabled, false otherwise.
@@ -37,6 +37,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the monitor status of the endpoint.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointMonitorStatus MonitorStatus { get; }
+        Microsoft.Azure.Management.TrafficManager.Fluent.EndpointMonitorStatus MonitorStatus { get; }
     }
 }

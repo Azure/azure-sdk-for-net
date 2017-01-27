@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure.Management.TrafficManager.Fluent.Models;
 
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     /// <summary>
     /// The com.microsoft.azure.management.trafficmanager.TrafficManagerProfiles.checkDnsNameAvailability action result.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:5D3E8FC383AE40AAD3262C598E63D4A1:C811416A07055B5B1E64A3967CCACF6E
         public ProfileDnsNameUnavailableReason Reason()
         {
-            return new ProfileDnsNameUnavailableReason(inner.Reason);
+            return ProfileDnsNameUnavailableReason.Parse(inner.Reason);
         }
 
         /// <summary>

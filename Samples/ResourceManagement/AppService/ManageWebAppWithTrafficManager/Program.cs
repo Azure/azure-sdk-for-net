@@ -7,7 +7,7 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
-using Microsoft.Azure.Management.Trafficmanager.Fluent;
+using Microsoft.Azure.Management.TrafficManager.Fluent;
 using System;
 using System.Linq;
 using System.Diagnostics;

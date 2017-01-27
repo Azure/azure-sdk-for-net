@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition
+namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition
 {
-    using Microsoft.Azure.Management.Trafficmanager.Fluent;
+    using Microsoft.Azure.Management.TrafficManager.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// Specifies that this endpoint should be excluded from receiving traffic.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithTrafficDisabled();
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithTrafficDisabled();
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="weight">The endpoint weight.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithRoutingWeight(int weight);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithRoutingWeight(int weight);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// values represent higher priority.
         /// </param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithRoutingPriority(int priority);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithRoutingPriority(int priority);
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="profile">The nested traffic manager profile.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<ParentT> ToProfile(ITrafficManagerProfile profile);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<ParentT> ToProfile(ITrafficManagerProfile profile);
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> FromRegion(Region region);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> FromRegion(Region region);
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<ParentT> ToFqdn(string externalFqdn);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<ParentT> ToFqdn(string externalFqdn);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> ToResourceId(string resourceId);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> ToResourceId(string resourceId);
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="count">The number of endpoints.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithMinimumEndpointsToEnableTraffic(int count);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<ParentT> WithMinimumEndpointsToEnableTraffic(int count);
     }
 
     /// <summary>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoin
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the endpoint definition.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<ParentT> FromRegion(Region region);
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<ParentT> FromRegion(Region region);
     }
 
     /// <summary>

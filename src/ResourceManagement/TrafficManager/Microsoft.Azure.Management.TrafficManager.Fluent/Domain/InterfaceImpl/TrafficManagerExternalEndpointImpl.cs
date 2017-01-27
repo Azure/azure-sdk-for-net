@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the fully qualified DNS name of the external endpoint.
         /// </summary>
-        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerExternalEndpoint.Fqdn
+        string Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerExternalEndpoint.Fqdn
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the location of the traffic that the endpoint handles.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerExternalEndpoint.SourceTrafficLocation
+        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerExternalEndpoint.SourceTrafficLocation
         {
             get
             {

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>.Refresh()
+        Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>.Refresh()
         {
-            return this.Refresh() as Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile;
+            return this.Refresh() as Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile;
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the relative DNS name of the traffic manager profile.
         /// </summary>
-        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.DnsLabel
+        string Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.DnsLabel
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets fully qualified domain name (FQDN) of the traffic manager profile.
         /// </summary>
-        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.Fqdn
+        string Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.Fqdn
         {
             get
             {
@@ -209,11 +209,11 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets external endpoints in the traffic manager profile, indexed by the name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerExternalEndpoint> Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.ExternalEndpoints
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerExternalEndpoint> Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.ExternalEndpoints
         {
             get
             {
-                return this.ExternalEndpoints() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerExternalEndpoint>;
+                return this.ExternalEndpoints() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerExternalEndpoint>;
             }
         }
 
@@ -221,18 +221,18 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Gets profile monitor status which is combination of the endpoint monitor status values for all endpoints in
         /// the profile, and the configured profile status.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.ProfileMonitorStatus Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.MonitorStatus
+        Microsoft.Azure.Management.TrafficManager.Fluent.ProfileMonitorStatus Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.MonitorStatus
         {
             get
             {
-                return this.MonitorStatus() as Microsoft.Azure.Management.Trafficmanager.Fluent.ProfileMonitorStatus;
+                return this.MonitorStatus() as Microsoft.Azure.Management.TrafficManager.Fluent.ProfileMonitorStatus;
             }
         }
 
         /// <summary>
         /// Gets the DNS Time-To-Live (TTL), in seconds.
         /// </summary>
-        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.TimeToLive
+        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.TimeToLive
         {
             get
             {
@@ -243,29 +243,29 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets Azure endpoints in the traffic manager profile, indexed by the name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerAzureEndpoint> Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.AzureEndpoints
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerAzureEndpoint> Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.AzureEndpoints
         {
             get
             {
-                return this.AzureEndpoints() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerAzureEndpoint>;
+                return this.AzureEndpoints() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerAzureEndpoint>;
             }
         }
 
         /// <summary>
         /// Gets nested traffic manager profile endpoints in this traffic manager profile, indexed by the name.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint> Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.NestedProfileEndpoints
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerNestedProfileEndpoint> Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.NestedProfileEndpoints
         {
             get
             {
-                return this.NestedProfileEndpoints() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint>;
+                return this.NestedProfileEndpoints() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerNestedProfileEndpoint>;
             }
         }
 
         /// <summary>
         /// Gets the port that is monitored to check the health of traffic manager profile endpoints.
         /// </summary>
-        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.MonitoringPort
+        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.MonitoringPort
         {
             get
             {
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the path that is monitored to check the health of traffic manager profile endpoints.
         /// </summary>
-        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.MonitoringPath
+        string Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.MonitoringPath
         {
             get
             {
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets true if the traffic manager profile is enabled, false if enabled.
         /// </summary>
-        bool Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.IsEnabled
+        bool Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.IsEnabled
         {
             get
             {
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the routing method used to route traffic to traffic manager profile endpoints.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficRoutingMethod Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile.TrafficRoutingMethod
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficRoutingMethod Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile.TrafficRoutingMethod
         {
             get
             {
