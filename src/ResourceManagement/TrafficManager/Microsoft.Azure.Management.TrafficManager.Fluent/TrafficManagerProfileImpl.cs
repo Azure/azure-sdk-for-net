@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:C5CC2EE74F2176AA6473857322F7C248:4D37314EF7F75B745F5D65EF257C1402
-        internal  TrafficManagerProfileImpl(string name, ProfileInner innerModel, IProfilesOperations innerCollection, IEndpointsOperations endpointsClient, TrafficManager trafficManager) : base(name, innerModel, trafficManager)
+        internal  TrafficManagerProfileImpl(string name, ProfileInner innerModel, IProfilesOperations innerCollection, IEndpointsOperations endpointsClient, ITrafficManager trafficManager) : base(name, innerModel, trafficManager)
         {
             this.innerCollection = innerCollection;
             this.endpointsClient = endpointsClient;

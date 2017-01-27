@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
     using TrafficManagerProfile.Definition;
 
     /// <summary>
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>
+        ISupportsBatchCreation<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
+        IHasManager<ITrafficManager>
     {
         /// <summary>
         /// Checks that the DNS name is valid for traffic manager profile and is not in use.

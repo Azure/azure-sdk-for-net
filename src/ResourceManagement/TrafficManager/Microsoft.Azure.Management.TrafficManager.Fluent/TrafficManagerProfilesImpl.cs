@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLmltcGxlbWVudGF0aW9uLlRyYWZmaWNNYW5hZ2VyUHJvZmlsZXNJbXBs
     internal partial class TrafficManagerProfilesImpl  :
-        GroupableResources<ITrafficManagerProfile,TrafficManagerProfileImpl,ProfileInner,IProfilesOperations,TrafficManager>,
+        GroupableResources<ITrafficManagerProfile,TrafficManagerProfileImpl,ProfileInner,IProfilesOperations,ITrafficManager>,
         ITrafficManagerProfiles
     {
         private IEndpointsOperations endpointsClient;
