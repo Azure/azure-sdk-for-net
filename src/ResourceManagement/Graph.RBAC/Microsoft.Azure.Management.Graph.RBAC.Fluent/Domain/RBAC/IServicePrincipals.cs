@@ -8,12 +8,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Threading;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
     using System.Threading.Tasks;
+    using Resource.Fluent.Core;
+
     /// <summary>
     /// Entry point to service principal management API.
     /// </summary>
     public interface IServicePrincipals  :
         // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>
+        ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>,
+        IHasManager<IGraphRbacManager>
     {
         /// <summary>
         /// Gets the information about a service principal.
