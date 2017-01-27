@@ -45,8 +45,7 @@ namespace ManageNetworkSecurityGroup
 
                 Utilities.Log("Creating a virtual network ...");
 
-                var network = azure.Networks
-                        .Define(vnetName)
+                var network = azure.Networks.Define(vnetName)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAddressSpace("172.16.0.0/16")
@@ -240,7 +239,7 @@ namespace ManageNetworkSecurityGroup
                 Utilities.Log("Updating the front end network security group to allow FTP");
 
                 frontEndNSG.Update()
-                        .DefineRule("ALLOW-FTP")
+                    .DefineRule("ALLOW-FTP")
                             .AllowInbound()
                             .FromAnyAddress()
                             .FromAnyPort()
@@ -282,8 +281,7 @@ namespace ManageNetworkSecurityGroup
                 // Authenticate
                 var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var azure = Azure
-                    .Configure()
+                var azure = Azure.Configure()
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithDefaultSubscription();

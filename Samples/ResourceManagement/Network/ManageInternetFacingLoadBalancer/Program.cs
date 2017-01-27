@@ -151,20 +151,24 @@ namespace ManageInternetFacingLoadBalancer
                         .DefinePublicFrontend(frontendName)
                             .WithExistingPublicIpAddress(publicIpAddress)
                             .Attach()
+
                         // Add two backend one per rule
                         .DefineBackend(backendPoolName1)
                             .Attach()
                         .DefineBackend(backendPoolName2)
                             .Attach()
+
                         // Add two probes one per rule
                         .DefineHttpProbe(HttpProbe)
                             .WithRequestPath("/")
                             .WithPort(80)
                             .Attach()
+
                         .DefineHttpProbe(HttpsProbe)
                             .WithRequestPath("/")
                             .WithPort(443)
                             .Attach()
+                        
                         // Add two rules that uses above backend and probe
                         .DefineLoadBalancingRule(HttpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -180,6 +184,7 @@ namespace ManageInternetFacingLoadBalancer
                             .WithProbe(HttpsProbe)
                             .WithBackend(backendPoolName2)
                             .Attach()
+                        
                         // Add two nat pools to enable direct VM connectivity for
                         //  SSH to port 22 and TELNET to port 23
                         .DefineInboundNatRule(NatRule5000to22forVM1)
@@ -224,8 +229,7 @@ namespace ManageInternetFacingLoadBalancer
                 ICreatable<INetworkInterface> networkInterface1Creatable;
                 ICreatable<INetworkInterface> networkInterface2Creatable;
 
-                networkInterface1Creatable = azure.NetworkInterfaces
-                        .Define(networkInterfaceName1)
+                networkInterface1Creatable = azure.NetworkInterfaces.Define(networkInterfaceName1)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
@@ -238,8 +242,7 @@ namespace ManageInternetFacingLoadBalancer
 
                 networkInterfaceCreatables.Add(networkInterface1Creatable);
 
-                networkInterface2Creatable = azure.NetworkInterfaces
-                        .Define(networkInterfaceName2)
+                networkInterface2Creatable = azure.NetworkInterfaces.Define(networkInterfaceName2)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
@@ -287,8 +290,7 @@ namespace ManageInternetFacingLoadBalancer
                 ICreatable<IVirtualMachine> virtualMachine1Creatable;
                 ICreatable<IVirtualMachine> virtualMachine2Creatable;
 
-                virtualMachine1Creatable = azure.VirtualMachines
-                        .Define(vmName1)
+                virtualMachine1Creatable = azure.VirtualMachines.Define(vmName1)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterfaces1.ElementAt(0))
@@ -300,8 +302,7 @@ namespace ManageInternetFacingLoadBalancer
 
                 virtualMachineCreatables1.Add(virtualMachine1Creatable);
 
-                virtualMachine2Creatable = azure.VirtualMachines
-                        .Define(vmName2)
+                virtualMachine2Creatable = azure.VirtualMachines.Define(vmName2)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterfaces1.ElementAt(1))
@@ -387,7 +388,7 @@ namespace ManageInternetFacingLoadBalancer
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePublicFrontend(frontendName)
-                        .WithExistingPublicIpAddress(publicIpAddress2)
+                            .WithExistingPublicIpAddress(publicIpAddress2)
                             .Attach()
                         // Add two backend one per rule
                         .DefineBackend(backendPoolName1)
@@ -399,7 +400,7 @@ namespace ManageInternetFacingLoadBalancer
                             .WithRequestPath("/")
                             .WithPort(80)
                             .Attach()
-                            .DefineHttpProbe(HttpsProbe)
+                        .DefineHttpProbe(HttpsProbe)
                             .WithRequestPath("/")
                             .WithPort(443)
                             .Attach()

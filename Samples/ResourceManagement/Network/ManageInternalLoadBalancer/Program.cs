@@ -129,8 +129,7 @@ namespace ManageInternalLoadBalancer
                         + "  balancer to a port for a specific virtual machine in the backend address pool\n"
                         + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
-                var loadBalancer3 = azure.LoadBalancers
-                        .Define(loadBalancerName3)
+                var loadBalancer3 = azure.LoadBalancers.Define(loadBalancerName3)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePrivateFrontend(privateFrontEndName)
@@ -196,8 +195,7 @@ namespace ManageInternalLoadBalancer
                 ICreatable<INetworkInterface> networkInterface3Creatable;
                 ICreatable<INetworkInterface> networkInterface4Creatable;
 
-                networkInterface3Creatable = azure.NetworkInterfaces
-                        .Define(networkInterfaceName3)
+                networkInterface3Creatable = azure.NetworkInterfaces.Define(networkInterfaceName3)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
@@ -209,8 +207,7 @@ namespace ManageInternalLoadBalancer
 
                 networkInterfaceCreatables2.Add(networkInterface3Creatable);
 
-                networkInterface4Creatable = azure.NetworkInterfaces
-                        .Define(networkInterfaceName4)
+                networkInterface4Creatable = azure.NetworkInterfaces.Define(networkInterfaceName4)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
@@ -257,8 +254,7 @@ namespace ManageInternalLoadBalancer
                 ICreatable<IVirtualMachine> virtualMachine3Creatable;
                 ICreatable<IVirtualMachine> virtualMachine4Creatable;
 
-                virtualMachine3Creatable = azure.VirtualMachines
-                        .Define(vmName3)
+                virtualMachine3Creatable = azure.VirtualMachines.Define(vmName3)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterfaces2.ElementAt(0))
@@ -270,8 +266,7 @@ namespace ManageInternalLoadBalancer
 
                 virtualMachineCreatables2.Add(virtualMachine3Creatable);
 
-                virtualMachine4Creatable = azure.VirtualMachines
-                        .Define(vmName4)
+                virtualMachine4Creatable = azure.VirtualMachines.Define(vmName4)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetworkInterface(networkInterfaces2.ElementAt(1))
@@ -336,21 +331,23 @@ namespace ManageInternalLoadBalancer
                         + "  balancer to a port for a specific virtual machine in the backend address pool\n"
                         + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
-                var loadBalancer4 = azure.LoadBalancers
-                        .Define(loadBalancerName4)
+                var loadBalancer4 = azure.LoadBalancers.Define(loadBalancerName4)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePrivateFrontend(privateFrontEndName)
-                        .WithExistingSubnet(network, "Back-end")
+                            .WithExistingSubnet(network, "Back-end")
                             .WithPrivateIpAddressStatic("172.16.3.15")
                             .Attach()
+                        
                         // Add one backend - one per rule
                         .DefineBackend(backendPoolName3)
                             .Attach()
+                        
                         // Add one probes - one per rule
                         .DefineHttpProbe("httpProbe")
                             .WithRequestPath("/")
                             .Attach()
+
                         // Add one rule that uses above backend and probe
                         .DefineLoadBalancingRule(TcpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -359,10 +356,11 @@ namespace ManageInternalLoadBalancer
                             .WithProbe(HttpProbe)
                             .WithBackend(backendPoolName3)
                             .Attach()
+
                         // Add two nat pools to enable direct VM connectivity for
                         //  SSH to port 22 and TELNET to port 23
                         .DefineInboundNatRule(NatRule6000to22forVM3)
-                        .WithProtocol(TransportProtocol.Tcp)
+                            .WithProtocol(TransportProtocol.Tcp)
                             .WithFrontend(privateFrontEndName)
                             .WithFrontendPort(6000)
                             .WithBackendPort(22)
@@ -442,8 +440,7 @@ namespace ManageInternalLoadBalancer
                 // Authenticate
                 var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var azure = Azure
-                    .Configure()
+                var azure = Azure.Configure()
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithDefaultSubscription();

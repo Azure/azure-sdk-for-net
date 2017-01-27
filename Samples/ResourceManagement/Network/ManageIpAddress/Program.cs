@@ -42,8 +42,7 @@ namespace ManageIpAddress
 
                 Utilities.Log("Creating a public IP address...");
 
-                var publicIpAddress = azure.PublicIpAddresses
-                        .Define(publicIpAddressName1)
+                var publicIpAddress = azure.PublicIpAddresses.Define(publicIpAddressName1)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpAddressLeafDNS1)
@@ -89,8 +88,7 @@ namespace ManageIpAddress
 
                 // Define a new public IP address
 
-                var publicIpAddress2 = azure.PublicIpAddresses
-                        .Define(publicIpAddressName2)
+                var publicIpAddress2 = azure.PublicIpAddresses.Define(publicIpAddressName2)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpAddressLeafDNS2)
@@ -101,8 +99,7 @@ namespace ManageIpAddress
                 Utilities.Log("Updating the VM's primary NIC with new public IP address");
 
                 var primaryNetworkInterface = vm.GetPrimaryNetworkInterface();
-                primaryNetworkInterface
-                        .Update()
+                primaryNetworkInterface.Update()
                         .WithExistingPrimaryPublicIpAddress(publicIpAddress2)
                         .Apply();
 
@@ -160,8 +157,7 @@ namespace ManageIpAddress
                 // Authenticate
                 var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var azure = Azure
-                    .Configure()
+                var azure = Azure.Configure()
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithDefaultSubscription();

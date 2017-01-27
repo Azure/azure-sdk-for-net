@@ -5,10 +5,12 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Azure.Tests.Common
@@ -41,78 +43,7 @@ namespace Azure.Tests.Common
 
             return pips.Create(creatablePips.ToArray());
         }
-
-        // Ensure VMs for the LB
-        public IEnumerable<IVirtualMachine> EnsureVMs(
-            INetworks networks,
-            IVirtualMachines vms,
-            params string[] vmIds)
-        {
-            var createdVMs = new List<IVirtualMachine>();
-            INetwork network = null;
-            Region region = Region.USWest;
-            string userName = "testuser" + TestId;
-            string availabilitySetName = "as" + TestId;
-
-            foreach (var vmId in vmIds)
-            {
-                string groupName = ResourceUtils.GroupFromResourceId(vmId);
-                string vmName = ResourceUtils.NameFromResourceId(vmId);
-                IVirtualMachine vm = null;
-
-                if (groupName == null)
-                {
-                    // Creating a new VM
-                    vm = null;
-                    groupName = "rg" + TestId;
-                    vmName = "vm" + TestId;
-
-                    if (network == null)
-                    {
-                        // Create a VNet for the VM
-                        network = networks.Define("net" + TestId)
-                            .WithRegion(region)
-                            .WithNewResourceGroup(groupName)
-                            .WithAddressSpace("10.0.0.0/28")
-                            .Create();
-                    }
-
-                    vm = vms.Define(vmName)
-                            .WithRegion(Region.USWest)
-                            .WithNewResourceGroup(groupName)
-                            .WithExistingPrimaryNetwork(network)
-                            .WithSubnet("subnet1")
-                            .WithPrimaryPrivateIpAddressDynamic()
-                            .WithoutPrimaryPublicIpAddress()
-                            .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer14_04_Lts)
-                            .WithRootUsername(userName)
-                            .WithRootPassword("Abcdef.123456")
-                            .WithNewAvailabilitySet(availabilitySetName)
-                            .WithSize(VirtualMachineSizeTypes.StandardA1)
-                            .Create();
-                }
-                else
-                {
-                    // Getting an existing VM
-                    try
-                    {
-                        vm = vms.GetById(vmId);
-                    }
-                    catch (Exception)
-                    {
-                        vm = null;
-                    }
-                }
-
-                if (vm != null)
-                {
-                    createdVMs.Add(vm);
-                }
-            }
-
-            return createdVMs;
-        }
-
+ 
         // Print app gateway info
         public static void PrintAppGateway(IApplicationGateway resource)
         {

@@ -53,12 +53,16 @@ namespace Azure.Tests.Network.LoadBalancer
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
                         .WithRegion(loadBalancerHelper.Region)
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
+                        
                         // Frontend (default)
                         .WithExistingPublicIpAddress(existingPips.ElementAt(0))
+                        
                         // Backend (default)
                         .WithExistingVirtualMachines(existingVMs.ToArray())
+                        
                         // Probe (default)
                         .WithTcpProbe(22)
+                        
                         // LB rule (default)
                         .WithLoadBalancingRule(80, TransportProtocol.Tcp)
                         .Create();

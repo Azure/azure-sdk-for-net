@@ -14,7 +14,7 @@ namespace Azure.Tests.Common
             GroupName = "rg" + TestId;
         }
 
-        public Region Region = Region.USWest;
+        public Region Region = Region.USEast;
 
         public string TestId { get; private set; }
 

@@ -25,7 +25,7 @@ namespace Azure.Tests.Common
 
         public string LoadBalancerName { get; private set; }
 
-        // Create VNet for the LB
+        // Create PIPs for the LB
         public  IEnumerable<IPublicIpAddress> EnsurePIPs(IPublicIpAddresses pips)
         {
             var creatablePips = new List<ICreatable<IPublicIpAddress>>();
