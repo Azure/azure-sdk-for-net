@@ -39,18 +39,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="rules">Collection of RouteFilterRules contained within
         /// a route filter.</param>
-        /// <param name="peerings">A collection of references to express route
-        /// circuit peerings.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values are: 'Updating', 'Deleting', 'Succeeded'
         /// and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public RouteFilter(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<RouteFilterRule> rules = default(IList<RouteFilterRule>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string provisioningState = default(string), string etag = default(string))
+        public RouteFilter(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<RouteFilterRule> rules = default(IList<RouteFilterRule>), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Rules = rules;
-            Peerings = peerings;
             ProvisioningState = provisioningState;
             Etag = etag;
         }
@@ -61,12 +58,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.rules")]
         public IList<RouteFilterRule> Rules { get; set; }
-
-        /// <summary>
-        /// Gets a collection of references to express route circuit peerings.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.peerings")]
-        public IList<ExpressRouteCircuitPeering> Peerings { get; protected set; }
 
         /// <summary>
         /// Gets the provisioning state of the resource. Possible values are:
