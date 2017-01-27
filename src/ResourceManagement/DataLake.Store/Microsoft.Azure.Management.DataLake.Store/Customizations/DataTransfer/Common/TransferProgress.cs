@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 if (segmentInfo.Status == SegmentTransferStatus.Complete)
                 {
-                    this.TransferedByteCount += segmentInfo.Length;
+                    this.TransferredByteCount += segmentInfo.Length;
                     _segmentProgress[segmentInfo.SegmentNumber] = new SegmentTransferProgress(segmentInfo.SegmentNumber, segmentInfo.Length, segmentInfo.Length, false);
                 }
                 else
@@ -90,12 +90,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public int TotalSegmentCount { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating the number of bytes that have been transfered so far.
+        /// Gets a value indicating the number of bytes that have been transferred so far.
         /// </summary>
         /// <value>
-        /// The transfered byte count.
+        /// The transferred byte count.
         /// </value>
-        public long TransferedByteCount { get; internal set; }
+        public long TransferredByteCount { get; internal set; }
 
         /// <summary>
         /// Gets or sets the transfer identifier, which is used by folder transfer to find each
@@ -126,12 +126,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 var previousProgress = _segmentProgress[segmentProgress.SegmentNumber];
 
-                //calculate how many additional bytes we have transfered so far
-                //the caveat here is that if a segment failed, we need to report it as 0 bytes transfered (even though we did upload something; upon resume, we will reupload from scratch)
-                long deltaLength = segmentProgress.IsFailed ? 0 : segmentProgress.TransferedByteCount;
-                deltaLength -= previousProgress.IsFailed ? 0 : previousProgress.TransferedByteCount;
+                //calculate how many additional bytes we have transferred so far
+                //the caveat here is that if a segment failed, we need to report it as 0 bytes transferred (even though we did upload something; upon resume, we will reupload from scratch)
+                long deltaLength = segmentProgress.IsFailed ? 0 : segmentProgress.TransferredByteCount;
+                deltaLength -= previousProgress.IsFailed ? 0 : previousProgress.TransferredByteCount;
 
-                this.TransferedByteCount += deltaLength;
+                this.TransferredByteCount += deltaLength;
 
                 _segmentProgress[segmentProgress.SegmentNumber] = segmentProgress;
 

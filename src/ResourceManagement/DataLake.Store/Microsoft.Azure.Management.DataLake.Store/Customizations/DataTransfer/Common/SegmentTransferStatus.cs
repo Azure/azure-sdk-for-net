@@ -33,19 +33,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
         Pending = 0,
 
         /// <summary>
-        /// Indicates that the segment is currently being transfered.
+        /// Indicates that the segment is currently being transferred.
         /// </summary>
         [EnumMember(Value = "InProgress")]
         InProgress = 1,
 
         /// <summary>
-        /// Indicates that the segment was not transfered successfully.
+        /// Indicates that the segment was not transferred successfully.
         /// </summary>
         [EnumMember(Value = "Failed")]
         Failed = 2,
 
         /// <summary>
-        /// Indicates that the segment was successfully transfered.
+        /// Indicates that the segment was successfully transferred.
         /// </summary>
         [EnumMember(Value = "Complete")]
         Complete = 3

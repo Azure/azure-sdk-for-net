@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                         //verify that the stream exists and that the length is as expected
                         if (!_frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
                         {
-                            // this file was marked as completed, but no target stream exists; it needs to be retransfered
+                            // this file was marked as completed, but no target stream exists; it needs to be retransferred
                             metadata.Status = SegmentTransferStatus.Pending;
                         }
                         else
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             var remoteLength = _frontEnd.GetStreamLength(metadata.TargetStreamPath, this.Parameters.IsDownload);
                             if (remoteLength != metadata.FileLength)
                             {
-                                //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be retransfered
+                                //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be retransferred
                                 //in this case it is considered safe to delete the file on the server,
                                 //since it is in an inconsistent state and we will be re-transfering it anyway
                                 _frontEnd.DeleteStream(metadata.TargetStreamPath, this.Parameters.IsDownload);
@@ -704,7 +704,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                             //verify that the stream exists and that the length is as expected
                             if (!_frontEnd.StreamExists(segment.Path, this.Parameters.IsDownload))
                             {
-                                // this segment was marked as completed, but no target stream exists; it needs to be retransfered
+                                // this segment was marked as completed, but no target stream exists; it needs to be retransferred
                                 segment.Status = SegmentTransferStatus.Pending;
                             }
                             else
@@ -712,7 +712,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                                 var remoteLength = _frontEnd.GetStreamLength(segment.Path, this.Parameters.IsDownload);
                                 if (remoteLength != segment.Length)
                                 {
-                                    //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be retransfered
+                                    //the target stream has a different length than the input segment, which implies they are inconsistent; it needs to be retransferred
                                     segment.Status = SegmentTransferStatus.Pending;
                                 }
                             }
@@ -746,7 +746,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 else
                 {
-                    //anything which is not in 'Completed' status needs to be retransfered
+                    //anything which is not in 'Completed' status needs to be retransferred
                     segment.Status = SegmentTransferStatus.Pending;
                 }
             }

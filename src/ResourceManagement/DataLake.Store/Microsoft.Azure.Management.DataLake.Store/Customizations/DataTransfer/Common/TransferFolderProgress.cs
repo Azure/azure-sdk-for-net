@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 var toAdd = new TransferProgress(fileMetadata);
                 if (fileMetadata.Status == SegmentTransferStatus.Complete)
                 {
-                    this.TransferedByteCount += fileMetadata.FileLength;
-                    this.TransferedFileCount++;
-                    toAdd.TransferedByteCount = toAdd.TotalFileLength;
+                    this.TransferredByteCount += fileMetadata.FileLength;
+                    this.TransferredFileCount++;
+                    toAdd.TransferredByteCount = toAdd.TotalFileLength;
                     foreach(var segment in toAdd._segmentProgress)
                     {
-                        segment.TransferedByteCount = segment.Length;
+                        segment.TransferredByteCount = segment.Length;
                     }
                 }
 
@@ -112,20 +112,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public int TotalFileCount { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating the number of bytes that have been transfered so far.
+        /// Gets a value indicating the number of bytes that have been transferred so far.
         /// </summary>
         /// <value>
-        /// The transfered byte count.
+        /// The transferred byte count.
         /// </value>
-        public long TransferedByteCount { get; private set; }
+        public long TransferredByteCount { get; private set; }
 
         /// <summary>
-        /// Gets the transfered file count.
+        /// Gets the transferred file count.
         /// </summary>
         /// <value>
-        /// The transfered file count.
+        /// The transferred file count.
         /// </value>
-        public long TransferedFileCount { get; private set; }
+        public long TransferredFileCount { get; private set; }
 
         /// <summary>
         /// Gets the count of files that failed.
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             foreach (var segment in previousProgress._segmentProgress)
             {
                 // only fail out segments that haven't been completed.
-                if (segment.Length != segment.TransferedByteCount)
+                if (segment.Length != segment.TransferredByteCount)
                 {
                     segment.IsFailed = true;
                 }
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         private void SetSegmentProgress(CancellationToken token)
         {
             TransferProgress segmentProgress;
-            while (this.TransferedFileCount + this.FailedFileCount < this.TotalFileCount)
+            while (this.TransferredFileCount + this.FailedFileCount < this.TotalFileCount)
             {
                 token.ThrowIfCancellationRequested();
                 if(_progressBacklog.TryDequeue(out segmentProgress))
@@ -185,13 +185,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     token.ThrowIfCancellationRequested();
                     var previousProgress = _fileProgress.Where(p => p.TransferId.Equals(segmentProgress.TransferId, StringComparison.OrdinalIgnoreCase)).First();
 
-                    long deltaLength = segmentProgress.TransferedByteCount - previousProgress.TransferedByteCount;
-                    this.TransferedByteCount += deltaLength;
+                    long deltaLength = segmentProgress.TransferredByteCount - previousProgress.TransferredByteCount;
+                    this.TransferredByteCount += deltaLength;
 
                     // check to see if this transfer is complete and that we haven't already marked it as complete
-                    if (segmentProgress.TransferedByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
+                    if (segmentProgress.TransferredByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
                     {
-                        ++this.TransferedFileCount;
+                        ++this.TransferredFileCount;
                     }
 
                     // Iterate through all the segments inside this transfer we are setting to get them up-to-date

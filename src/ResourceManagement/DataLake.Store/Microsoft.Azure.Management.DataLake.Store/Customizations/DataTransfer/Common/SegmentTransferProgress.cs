@@ -27,13 +27,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         /// <param name="segmentNumber">The segment number the report refers to.</param>
         /// <param name="segmentLength">The segment length, in bytes.</param>
-        /// <param name="transferedByteCount">The number of bytes transfered so far.</param>
+        /// <param name="transferredByteCount">The number of bytes transferred so far.</param>
         /// <param name="isFailed">Whether the transfer operation failed.</param>
-        internal SegmentTransferProgress(int segmentNumber, long segmentLength, long transferedByteCount, bool isFailed)
+        internal SegmentTransferProgress(int segmentNumber, long segmentLength, long transferredByteCount, bool isFailed)
         {
             this.SegmentNumber = segmentNumber;
             this.Length = segmentLength;
-            this.TransferedByteCount = transferedByteCount;
+            this.TransferredByteCount = transferredByteCount;
             this.IsFailed = isFailed;
         }
 
@@ -62,12 +62,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsFailed { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the number of bytes transfered so far for this segment.
+        /// Gets a value indicating the number of bytes transferred so far for this segment.
         /// </summary>
         /// <value>
-        /// The transfered byte count.
+        /// The transferred byte count.
         /// </value>
-        public long TransferedByteCount { get; internal set; }
+        public long TransferredByteCount { get; internal set; }
 
     }
 }

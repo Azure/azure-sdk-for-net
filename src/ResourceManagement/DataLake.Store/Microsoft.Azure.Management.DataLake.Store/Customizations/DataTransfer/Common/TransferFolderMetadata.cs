@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string TransferId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the full path to the file to be transfered.
+        /// Gets or sets a value indicating the full path to the file to be transferred.
         /// </summary>
         /// <value>
         /// The input file path.
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string InputFolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the full stream folder path that will be used as the root folder for all files and folders being transfered.
+        /// Gets or sets a value indicating the full stream folder path that will be used as the root folder for all files and folders being transferred.
         /// </summary>
         /// <value>
         /// The target stream path.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool IsRecursive { get; set; }
 
         /// <summary>
-        /// Gets a pointer to an array of file transfer metadata. This is used for each file that is being transfered.
+        /// Gets a pointer to an array of file transfer metadata. This is used for each file that is being transferred.
         /// </summary>
         /// <value>
         /// The segments.

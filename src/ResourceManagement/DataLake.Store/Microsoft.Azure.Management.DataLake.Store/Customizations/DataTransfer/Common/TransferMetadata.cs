@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string TransferId { get; set; }
 
         /// <summary>
-        /// /Gets or sets a value indicating the full path to the file to be transfered.
+        /// /Gets or sets a value indicating the full path to the file to be transferred.
         /// </summary>
         /// <value>
         /// The input file path.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string InputFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the length (in bytes) of the file to be transfered.
+        /// Gets or sets a value indicating the length (in bytes) of the file to be transferred.
         /// </summary>
         /// <value>
         /// The length of the file.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public long FileLength { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the full stream path where the file will be transfered to.
+        /// Gets or sets a value indicating the full stream path where the file will be transferred to.
         /// </summary>
         /// <value>
         /// The target stream path.
@@ -378,13 +378,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 var numFoldersInPath = this.TargetStreamPath.Split('/').Length;
                 if (numFoldersInPath - 1 == 0 || (numFoldersInPath - 1 == 1 && this.TargetStreamPath.StartsWith("/")))
                 {
-                    // the scenario where the file is being transfered at the root
+                    // the scenario where the file is being transferred at the root
                     targetStreamDirectory = null;
                     return this.TargetStreamPath.TrimStart('/');
                 }
                 else
                 {
-                    // the scenario where the file is being transfered in a sub folder
+                    // the scenario where the file is being transferred in a sub folder
                     targetStreamDirectory = this.TargetStreamPath.Substring(0,
                         this.TargetStreamPath.LastIndexOf('/'));
                     return this.TargetStreamPath.Substring(this.TargetStreamPath.LastIndexOf('/') + 1);
@@ -409,12 +409,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 if (string.IsNullOrEmpty(streamDirectory))
                 {
-                    // the scenario where the file is being transfered at the root
+                    // the scenario where the file is being transferred at the root
                     return string.Format("/{0}.segments.{1}", streamName, Guid.NewGuid());
                 }
                 else
                 {
-                    // the scenario where the file is being transfered in a sub folder
+                    // the scenario where the file is being transferred in a sub folder
                     return string.Format("{0}/{1}.segments.{2}",
                         streamDirectory,
                         streamName, Guid.NewGuid());

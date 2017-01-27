@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Creates a new set of parameters for the DataLakeStoreTransferClient.
         /// </summary>
-        /// <param name="inputFilePath">The full path to the file or folder to be transfered.</param>
-        /// <param name="targetStreamPath">The full stream path where the file or folder will be transfered to.</param>
+        /// <param name="inputFilePath">The full path to the file or folder to be transferred.</param>
+        /// <param name="targetStreamPath">The full stream path where the file or folder will be transferred to.</param>
         /// <param name="accountName">Name of the account to transfer to.</param>
         /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to transfer in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
         /// <param name="concurrentFileCount">The parallel file count, indicating the number of files to transfer in parallel during a folder transfer. This parameter is ignored for single file transfers. Default is 5 for folder transfers</param>
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Creates a new set of parameters for the DataLakeStoreTransferClient.
         /// </summary>
-        /// <param name="inputFilePath">The full path to the file or folder to be transfered.</param>
-        /// <param name="targetStreamPath">The full stream path where the file or folder will be transfered to.</param>
+        /// <param name="inputFilePath">The full path to the file or folder to be transferred.</param>
+        /// <param name="targetStreamPath">The full stream path where the file or folder will be transferred to.</param>
         /// <param name="accountName">Name of the account to transfer to.</param>
         /// <param name="useSegmentBlockBackOffRetryStrategy">if set to <c>true</c> [use segment block back off retry strategy].</param>
         /// <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to transfer in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         internal bool UseSegmentBlockBackOffRetryStrategy { get; set; }
 
         /// <summary>
-        /// Gets a value indicating the full path to the file or folder to be transfered.
+        /// Gets a value indicating the full path to the file or folder to be transferred.
         /// </summary>
         /// <value>
         /// The input file path.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string InputFilePath { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the full stream path where the file will be transfered to.
+        /// Gets a value indicating the full stream path where the file will be transferred to.
         /// </summary>
         /// <value>
         /// The target stream path.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
 
         /// <summary>
-        /// Gets the parallel file count, which indicates how many files in a folder will be transfered or downloaded in parallel
+        /// Gets the parallel file count, which indicates how many files in a folder will be transferred or downloaded in parallel
         /// </summary>
         /// <value>
         /// The number of files to transfer or download at once.
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public string LocalMetadataLocation { get; internal set; }
 
         /// <summary>
-        /// Gets a value indicating the encoding of the file being transfered.
+        /// Gets a value indicating the encoding of the file being transferred.
         /// </summary>
         /// <value>
         /// The file encoding.

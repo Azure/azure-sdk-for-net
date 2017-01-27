@@ -329,14 +329,14 @@ namespace DataLakeStore.Tests
                 if (!isSuccessfulUpload && i == tracker.Reports.Count - 1)
                 {
                     Assert.True(currentReport.IsFailed, "Last report did not indicate failure for a failed upload");
-                    Assert.Equal(lastIndication, currentReport.TransferedByteCount);
+                    Assert.Equal(lastIndication, currentReport.TransferredByteCount);
                 }
                 else
                 {
                     Assert.False(currentReport.IsFailed, "Progress report indicated failure but failure was not expected");
-                    Assert.True(lastIndication < currentReport.TransferedByteCount, "Progress reports are not in increasing order");
+                    Assert.True(lastIndication < currentReport.TransferredByteCount, "Progress reports are not in increasing order");
                 }
-                lastIndication = currentReport.TransferedByteCount;
+                lastIndication = currentReport.TransferredByteCount;
             }
         }
 
