@@ -16,7 +16,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uQXZhaWxhYmlsaXR5U2V0c0ltcGw=
     internal partial class AvailabilitySetsImpl :
-        GroupableResources<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet, Microsoft.Azure.Management.Compute.Fluent.AvailabilitySetImpl, Models.AvailabilitySetInner, IAvailabilitySetsOperations, IComputeManager>,
+        GroupableResources<
+            Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet,
+            Microsoft.Azure.Management.Compute.Fluent.AvailabilitySetImpl,
+            Models.AvailabilitySetInner,
+            IAvailabilitySetsOperations,
+            IComputeManager>,
         IAvailabilitySets
     {
         ///GENMHASH:8CC9050C7F8D33DF867D6102B6152B2E:872A681ED7AE386A7C237A1C77E3E12A

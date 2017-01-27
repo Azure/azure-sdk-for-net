@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using AvailabilitySet.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to availability set management API.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsCreating<AvailabilitySet.Definition.IBlank>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        IHasManager<IComputeManager>
     {
     }
 }

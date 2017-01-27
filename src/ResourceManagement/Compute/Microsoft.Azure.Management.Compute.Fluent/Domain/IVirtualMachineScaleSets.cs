@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using VirtualMachineScaleSet.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to virtual machine scale set management API.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsCreating<VirtualMachineScaleSet.Definition.IBlank>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        IHasManager<IComputeManager>
     {
         /// <summary>
         /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set.
