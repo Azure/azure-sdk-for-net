@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             IEndpointsOperations endpointsClient, 
             IOriginsOperations originsClient, 
             ICustomDomainsOperations customDomainsClient, 
-            CdnManager cdnManager)
+            ICdnManager cdnManager)
             : base(name, innerModel, cdnManager)
         {
             this.innerCollection = innerCollection;
