@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             applicationPackages = new ApplicationPackagesImpl(applicationPackagesClient, this);
         }
 
-///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
-public string Id
+        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:899F2B088BBBD76CCBC31221756265BC
+        public string Id
         {
             get
             {
