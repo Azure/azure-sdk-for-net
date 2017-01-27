@@ -55,6 +55,7 @@ namespace Compute.Tests
             {
                 DnsPrefix = agentPoolDnsPrefix,
                 Name = DefaultAgentPoolProfileName,
+                Count = 1,
                 VmSize = DefaultVmSize
             };
 
@@ -109,7 +110,7 @@ namespace Compute.Tests
                     agentPoolDnsPrefix,
                     out inputContainerService,
                     containerServiceCustomizer);
-                var getResponse = m_CrpClient.ContainerService.Get(rgName, csName);
+                var getResponse = m_CrpClient.ContainerServices.Get(rgName, csName);
                 ValidateContainerService(createOrUpdateResponse, getResponse);
                 return getResponse;
             }
@@ -122,7 +123,7 @@ namespace Compute.Tests
 
         protected void UpdateContainerService(string rgName, string vmssName, ContainerService inputContainerService)
         {
-            var createOrUpdateResponse = m_CrpClient.ContainerService.CreateOrUpdate(rgName, vmssName, inputContainerService);
+            var createOrUpdateResponse = m_CrpClient.ContainerServices.CreateOrUpdate(rgName, vmssName, inputContainerService);
         }
 
         private ContainerService CreateContainerServiceAndGetOperationResponse(
@@ -146,7 +147,7 @@ namespace Compute.Tests
                 containerServiceCustomizer(inputContainerService);
             }
 
-            var createOrUpdateResponse = m_CrpClient.ContainerService.CreateOrUpdate(rgName, csName, inputContainerService);
+            var createOrUpdateResponse = m_CrpClient.ContainerServices.CreateOrUpdate(rgName, csName, inputContainerService);
 
             Assert.Equal(csName, createOrUpdateResponse.Name);
             Assert.Equal(inputContainerService.Location.ToLower().Replace(" ", ""), createOrUpdateResponse.Location.ToLower());
@@ -174,7 +175,7 @@ namespace Compute.Tests
             for (var i = 0; i < containerService.AgentPoolProfiles.Count; i++)
             {
                 Assert.Equal(containerService.AgentPoolProfiles[i].Name, containerServiceOut.AgentPoolProfiles[i].Name);
-                Assert.Equal(containerService.AgentPoolProfiles[i].Count ?? 1, containerServiceOut.AgentPoolProfiles[i].Count);
+                Assert.Equal(containerService.AgentPoolProfiles[i].Count, containerServiceOut.AgentPoolProfiles[i].Count);
                 Assert.Equal(containerService.AgentPoolProfiles[i].DnsPrefix, containerServiceOut.AgentPoolProfiles[i].DnsPrefix);
                 Assert.Equal(containerService.AgentPoolProfiles[i].VmSize, containerServiceOut.AgentPoolProfiles[i].VmSize);
                 Assert.NotNull(containerServiceOut.AgentPoolProfiles[i].Fqdn);
