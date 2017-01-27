@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using LoadBalancer.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to load balancer management API in Azure.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        IHasManager<INetworkManager>
     {
     }
 }

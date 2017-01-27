@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using RouteTable.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to route table management.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IRouteTable>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
+        IHasManager<INetworkManager>
     {
     }
 }

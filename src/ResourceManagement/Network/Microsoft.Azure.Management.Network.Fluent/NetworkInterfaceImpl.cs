@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         GroupableParentResource<INetworkInterface,
                 NetworkInterfaceInner,
                 NetworkInterfaceImpl,
-                NetworkManager,
+                INetworkManager,
                 IWithGroup,
                 IWithPrimaryNetwork,
                 IWithCreate,
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             string name,
             NetworkInterfaceInner innerModel,
             INetworkInterfacesOperations client,
-            NetworkManager networkManager) : base(name, innerModel, networkManager)
+            INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             innerCollection = client;
             nicName = name;

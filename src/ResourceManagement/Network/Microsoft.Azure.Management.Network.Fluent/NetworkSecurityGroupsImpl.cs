@@ -18,13 +18,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkSecurityGroupImpl,
             NetworkSecurityGroupInner,
             INetworkSecurityGroupsOperations,
-            NetworkManager>,
+            INetworkManager>,
         INetworkSecurityGroups
     {
         ///GENMHASH:0181826DACC9044D90EB575AAA5C527E:51C34340BDCC9750108D6EDBB1DD1BA7
         internal  NetworkSecurityGroupsImpl (
             INetworkSecurityGroupsOperations innerCollection,
-            NetworkManager networkManager) : base(innerCollection, networkManager)
+            INetworkManager networkManager) : base(innerCollection, networkManager)
         {
         }
 

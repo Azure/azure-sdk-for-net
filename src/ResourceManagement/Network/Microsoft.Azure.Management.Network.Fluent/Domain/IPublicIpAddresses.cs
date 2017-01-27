@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using PublicIpAddress.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to public IP address management.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ISupportsGettingByGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
+        IHasManager<INetworkManager>
     {
     }
 }

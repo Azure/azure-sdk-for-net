@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             PublicIpAddressImpl,
             PublicIPAddressInner,
             IPublicIPAddressesOperations,
-            NetworkManager>,
+            INetworkManager>,
         IPublicIpAddresses
     {
         ///GENMHASH:053A36D2D2F106CA9668224DB2C96180:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal PublicIpAddressesImpl(NetworkManagementClient client, NetworkManager networkManager)
+        internal PublicIpAddressesImpl(NetworkManagementClient client, INetworkManager networkManager)
             : base(client.PublicIPAddresses, networkManager)
         {
         }

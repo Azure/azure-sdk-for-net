@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             NetworkInterfaceImpl,
             NetworkInterfaceInner,
             INetworkInterfacesOperations,
-            NetworkManager>,
+            INetworkManager>,
         INetworkInterfaces
     {
         ///GENMHASH:29B7EF31B65B0BDDE2C36E88B44BD866:5AC88BA549EC2FB48FFEA9A94BE29B89
-        internal NetworkInterfacesImpl(NetworkManagementClient client, NetworkManager networkManager)
+        internal NetworkInterfacesImpl(NetworkManagementClient client, INetworkManager networkManager)
             : base(client.NetworkInterfaces, networkManager)
         {
         }
