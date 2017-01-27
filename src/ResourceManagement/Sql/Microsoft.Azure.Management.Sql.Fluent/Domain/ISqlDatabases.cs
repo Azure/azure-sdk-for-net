@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsDeletingById,
         ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
         ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        ISupportsDeletingByParent
+        ISupportsDeletingByParent,
+        IHasManager<ISqlManager>
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group and SQLServer.
