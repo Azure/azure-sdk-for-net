@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 {
     using DnsZone.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to Dns zone management API in Azure.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        IHasManager<IDnsZoneManager>
     {
     }
 }
