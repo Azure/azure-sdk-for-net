@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             RedisCacheImpl,
             RedisResourceInner,
             IRedisOperations,
-            RedisManager>,
+            IRedisManager>,
         IRedisCaches
     {
         private IPatchSchedulesOperations pathcSchedulesClient;
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:C2F15BEB23386D8534B400C08B468649:2DA21496DE2BD6513C1C418114ACEF97
-        internal RedisCachesImpl(IRedisOperations client, IPatchSchedulesOperations patchClient, RedisManager redisManager)
+        internal RedisCachesImpl(IRedisOperations client, IPatchSchedulesOperations patchClient, IRedisManager redisManager)
             : base(client, redisManager)
         {
             pathcSchedulesClient = patchClient;

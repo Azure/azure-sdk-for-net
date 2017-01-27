@@ -538,7 +538,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             RedisResourceInner innerModel,
             IPatchSchedulesOperations patchSchedulesInner,
             IRedisOperations client,
-            RedisManager redisManager)
+            IRedisManager redisManager)
             : base(name, innerModel, redisManager)
         {
             this.createParameters = new RedisCreateParametersInner();
