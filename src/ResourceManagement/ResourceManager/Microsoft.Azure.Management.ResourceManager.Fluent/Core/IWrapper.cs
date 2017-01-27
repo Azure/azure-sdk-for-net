@@ -6,7 +6,5 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     public interface IWrapper<T>
     {
         T Inner { get; }
-
-        void SetInner(T inner);
     }
 }
