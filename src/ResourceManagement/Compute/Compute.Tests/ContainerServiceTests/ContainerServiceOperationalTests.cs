@@ -54,7 +54,7 @@ namespace Compute.Tests
                         agentPoolDnsPrefixName,
                         out inputContainerService,
                         cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOchestratorTypes.DCOS);
-                    m_CrpClient.ContainerService.Delete(rgName, containerService.Name);
+                    m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                 }
                 finally
                 {
@@ -96,7 +96,7 @@ namespace Compute.Tests
                         agentPoolDnsPrefixName,
                         out inputContainerService,
                         cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOchestratorTypes.Swarm);
-                    m_CrpClient.ContainerService.Delete(rgName, containerService.Name);
+                    m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                 }
                 finally
                 {
