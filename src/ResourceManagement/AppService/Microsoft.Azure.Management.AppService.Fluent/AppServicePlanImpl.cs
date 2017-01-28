@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServicePlan,
             AppServicePlanInner,
             AppServicePlanImpl,
-            AppServiceManager,
+            IAppServiceManager,
             IWithGroup,
             AppServicePlan.Definition.IWithPricingTier,
             IWithCreate,
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:07BF52A3FFAEDB1E45066F5776F5CC29:8A264E667F06CE3E13EBAC780725861E
-        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServicePlansOperations client, AppServiceManager manager)
+        internal AppServicePlanImpl(string name, AppServicePlanInner innerObject, IAppServicePlansOperations client, IAppServiceManager manager)
             : base (name, innerObject, manager)
         {
             this.client = client;

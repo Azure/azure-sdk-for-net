@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     public class TrafficManager : ManagerBase, ITrafficManager
     {

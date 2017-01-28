@@ -1,58 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
 
     /// <summary>
     /// Defines values for PhpVersion.
     /// </summary>
-    public partial class PhpVersion
+    public class PhpVersion : ExpandableStringEnum<PhpVersion>
     {
-        public static readonly PhpVersion Off = new PhpVersion("null");
-        public static readonly PhpVersion V5_5 = new PhpVersion("5.5");
-        public static readonly PhpVersion V5_6 = new PhpVersion("5.6");
-        public static readonly PhpVersion V7 = new PhpVersion("7.0");
-
-        private string value;
-
-        /// <summary>
-        /// Creates a custom value for PhpVersion.
-        /// </summary>
-        /// <param name="version">the version value</param>
-        public PhpVersion(string version)
-        {
-            this.value = version;
-        }
-        
-        public override string ToString()
-        {
-            return this.value;
-        }
-
-        public override bool Equals(object obj)
-        {
-
-            string value = this.ToString();
-            if (!(obj is PhpVersion))
-            {
-                return false;
-            }
-
-            if (obj == this)
-            {
-                return true;
-            }
-            PhpVersion rhs = (PhpVersion) obj;
-            if (value == null)
-            {
-                return rhs.value == null;
-            }
-            return value.Equals(rhs.value);
-        }
-
-        public override int GetHashCode()
-        {
-            return value.GetHashCode();
-        }
+        public static readonly PhpVersion Off = Parse("null");
+        public static readonly PhpVersion V5_5 = Parse("5.5");
+        public static readonly PhpVersion V5_6 = Parse("5.6");
+        public static readonly PhpVersion V7 = Parse("7.0");
     }
 }

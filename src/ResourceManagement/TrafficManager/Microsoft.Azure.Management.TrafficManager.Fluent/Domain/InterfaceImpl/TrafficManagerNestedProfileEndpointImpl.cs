@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the number of child endpoints to be online to consider nested profile as healthy.
         /// </summary>
-        int Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint.MinimumChildEndpointCount
+        int Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerNestedProfileEndpoint.MinimumChildEndpointCount
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the nested traffic manager profile resource id.
         /// </summary>
-        string Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint.NestedProfileId
+        string Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerNestedProfileEndpoint.NestedProfileId
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the location of the traffic that the endpoint handles.
         /// </summary>
-        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerNestedProfileEndpoint.SourceTrafficLocation
+        Microsoft.Azure.Management.Resource.Fluent.Core.Region Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerNestedProfileEndpoint.SourceTrafficLocation
         {
             get
             {

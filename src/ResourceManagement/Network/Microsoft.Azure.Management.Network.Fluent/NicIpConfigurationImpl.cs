@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<NetworkInterface.Update.IUpdate>,
         NicIpConfiguration.Update.IUpdate
     {
-        private NetworkManager networkManager;
+        private INetworkManager networkManager;
         private bool isInCreateMode;
         private string creatableVirtualNetworkKey;
         private string creatablePublicIpKey;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal NicIpConfigurationImpl(
             NetworkInterfaceIPConfigurationInner inner,
             NetworkInterfaceImpl parent,
-            NetworkManager networkManager,
+            INetworkManager networkManager,
             bool isInCreateMode) : base(inner, parent, networkManager)
         {
             this.isInCreateMode = isInCreateMode;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:283CFC6EBD90D03165F029795BB0A81D:755A70E8170ABE5AC23D42E03EE7336A
-        internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
+        internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, INetworkManager networkManager)
         {
             NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
             ipConfigurationInner.Name = name;

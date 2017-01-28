@@ -766,7 +766,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C19382933BDE655D0F0F95CD9474DFE7:2F66035F0CB425AA1735B96753E25A51
         public VirtualMachineSizeTypes Size()
         {
-            return new VirtualMachineSizeTypes(Inner.HardwareProfile.VmSize);
+            return VirtualMachineSizeTypes.Parse(Inner.HardwareProfile.VmSize);
             
         }
 

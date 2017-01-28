@@ -22,9 +22,18 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         IUsers
     {
         private IUsersOperations innerCollection;
-        private GraphRbacManager manager;
+        private IGraphRbacManager manager;
+
+        public IGraphRbacManager Manager
+        {
+            get
+            {
+                return manager;
+            }
+        }
+
         ///GENMHASH:561BA4752C186EC8BFAF988C061767EA:B5C5E95A3298DE50C35002A7B21387E7
-        internal UsersImpl (IUsersOperations client, GraphRbacManager graphRbacManager)
+        internal UsersImpl (IUsersOperations client, IGraphRbacManager graphRbacManager)
         {
             this.innerCollection = client;
             this.manager = graphRbacManager;

@@ -141,7 +141,7 @@ namespace CreateVirtualMachinesInParallel
                         .WithPerformanceBasedRouting();
 
                 int endpointPriority = 1;
-                Microsoft.Azure.Management.Trafficmanager.Fluent.TrafficManagerProfile.Definition.IWithCreate profileWithCreate = null;
+                Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate profileWithCreate = null;
                 foreach (var publicIpResourceId in publicIpResourceIds)
                 {
                     var endpointName = $"azendpoint-{endpointPriority}";

@@ -29,7 +29,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private readonly VirtualMachineSizesImpl vmSizes;
         private readonly IVirtualMachineExtensionsOperations virtualMachineExtensionsClient;
         ///GENMHASH:CF74C66AC4A6B06C41B8E9D08F5D5F4B:DB478B04CDDECD11BE9F5F93E71FB984
-        internal VirtualMachinesImpl(IVirtualMachinesOperations client, IVirtualMachineExtensionsOperations virtualMachineExtensionsClient, IVirtualMachineSizesOperations virtualMachineSizesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) :
+        internal VirtualMachinesImpl(
+            IVirtualMachinesOperations client,
+            IVirtualMachineExtensionsOperations virtualMachineExtensionsClient,
+            IVirtualMachineSizesOperations virtualMachineSizesClient,
+            IComputeManager computeManager,
+            IStorageManager storageManager,
+            INetworkManager networkManager) :
             base(client, computeManager)
         {
             this.virtualMachineExtensionsClient = virtualMachineExtensionsClient;

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceDomain,
             DomainInner,
             AppServiceDomainImpl,
-            AppServiceManager,
+            IAppServiceManager,
             IBlank,
             IWithRegistrantContact,
             IWithCreate,
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:86C009804770AC54F0EF700492B5521A:3F31672F95C70228EC68BAF9D885F605
-        internal AppServiceDomainImpl(string name, DomainInner innerObject, IDomainsOperations client, ITopLevelDomainsOperations topLevelDomainsInner, AppServiceManager manager)
+        internal AppServiceDomainImpl(string name, DomainInner innerObject, IDomainsOperations client, ITopLevelDomainsOperations topLevelDomainsInner, IAppServiceManager manager)
             : base(name, innerObject, manager)
         {
             this.client = client;

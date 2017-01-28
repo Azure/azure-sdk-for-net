@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
+        IHasManager<IRedisManager>
     {
     }
 }

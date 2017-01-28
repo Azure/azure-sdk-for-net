@@ -1,57 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
 
     /// <summary>
     /// Defines values for PythonVersion.
     /// </summary>
-    public partial class PythonVersion
+    public class PythonVersion : ExpandableStringEnum<PythonVersion>
     {
-        public static readonly PythonVersion Off = new PythonVersion("null");
-        public static readonly PythonVersion V27 = new PythonVersion("2.7");
-        public static readonly PythonVersion V34 = new PythonVersion("3.4");
-
-        private string value;
-
-        /// <summary>
-        /// Creates a custom value for PythonVersion.
-        /// </summary>
-        /// <param name="version">the version value</param>
-        public PythonVersion(string version)
-        {
-            this.value = version;
-        }
-        
-        public override string ToString()
-        {
-            return this.value;
-        }
-
-        public override bool Equals(object obj)
-        {
-
-            string value = this.ToString();
-            if (!(obj is PythonVersion))
-            {
-                return false;
-            }
-
-            if (obj == this)
-            {
-                return true;
-            }
-            PythonVersion rhs = (PythonVersion) obj;
-            if (value == null)
-            {
-                return rhs.value == null;
-            }
-            return value.Equals(rhs.value);
-        }
-
-        public override int GetHashCode()
-        {
-            return value.GetHashCode();
-        }
+        public static readonly PythonVersion Off = Parse("null");
+        public static readonly PythonVersion V27 = Parse("2.7");
+        public static readonly PythonVersion V34 = Parse("3.4");
     }
 }

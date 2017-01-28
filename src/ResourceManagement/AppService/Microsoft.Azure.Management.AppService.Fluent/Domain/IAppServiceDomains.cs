@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
-        ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>
+        ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
+        IHasManager<IAppServiceManager>
     {
         /// <summary>
         /// List the agreements for purchasing a domain with a specific top level extension.

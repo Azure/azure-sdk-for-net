@@ -8,12 +8,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition;
+    using Resource.Fluent.Core;
+
     /// <summary>
     /// Entry point to AD user management API.
     /// </summary>
     public interface IUsers  :
         // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>
+        ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>,
+        IHasManager<IGraphRbacManager>
     {
         /// <summary>
         /// Gets the information about a user.

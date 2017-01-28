@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using TrafficManagerEndpoint.Update;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:01C4B6E26D53E1762A443721CECB5D96:43F1F30B8E8EB5054939168766D4F5BE
         public EndpointType EndpointType()
         {
-            return new Microsoft.Azure.Management.Trafficmanager.Fluent.EndpointType(this.Inner.Type);
+            return Fluent.EndpointType.Parse(Inner.Type);
         }
 
         ///GENMHASH:85BAA8BAAF184D879CCE5080E089F024:D3868AC81F258C85BCA29FE3546FDBB0
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         ///GENMHASH:2BE295DCD7E2E4E353B535754D34B1FF:103A6872B920F82A78D36FE5074C69CB
         public EndpointMonitorStatus MonitorStatus()
         {
-            return new EndpointMonitorStatus(this.Inner.EndpointMonitorStatus);
+            return EndpointMonitorStatus.Parse(Inner.EndpointMonitorStatus);
         }
 
         ///GENMHASH:F1873F4E2C7FA7133A7B71292C66E670:DA5C65C0BDAEE12A7FCA134EE523B9C0

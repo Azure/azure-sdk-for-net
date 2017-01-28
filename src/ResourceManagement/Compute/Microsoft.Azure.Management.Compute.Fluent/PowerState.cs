@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
@@ -9,44 +10,37 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Define values for PowerState
     /// </summary>
-    public class PowerState
+    public class PowerState : ExpandableStringEnum<PowerState>
     {
         /// <summary>
         /// Static value PowerState/running for PowerState.
         /// </summary>
-        public static readonly PowerState Running = new PowerState("PowerState/running");
+        public static readonly PowerState Running = Parse("PowerState/running");
 
         /// <summary>
         /// Static value PowerState/deallocating for PowerState.
         /// </summary>
-        public static readonly PowerState Deallocating = new PowerState("PowerState/deallocating");
+        public static readonly PowerState Deallocating = Parse("PowerState/deallocating");
 
         /// <summary>
         /// Static value PowerState/deallocated for PowerState.
         /// </summary>
-        public static readonly PowerState Deallocated = new PowerState("PowerState/deallocated");
+        public static readonly PowerState Deallocated = Parse("PowerState/deallocated");
 
         /// <summary>
         /// Static value PowerState/starting for PowerState.
         /// </summary>
-        public static readonly PowerState Starting = new PowerState("PowerState/starting");
+        public static readonly PowerState Starting = Parse("PowerState/starting");
 
         /// <summary>
         /// Static value PowerState/stopped for PowerState.
         /// </summary>
-        public static readonly PowerState Stopped = new PowerState("PowerState/stopped");
+        public static readonly PowerState Stopped = Parse("PowerState/stopped");
 
         /// <summary>
         /// Static value PowerState/unknown for PowerState.
         /// </summary>
-        public static readonly PowerState Unknown = new PowerState("PowerState/unknown");
-
-        private string value;
-
-        public PowerState(string sizeName)
-        {
-            this.value = sizeName;
-        }
+        public static readonly PowerState Unknown = Parse("PowerState/unknown");
 
         /// <summary>
         /// Creates an instance of PowerState from the virtual machine instance view status entry corresponding
@@ -60,54 +54,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return (from status in virtualMachineInstanceView.Statuses
                                         where status.Code != null && status.Code.StartsWith("PowerState")
-                                        select new PowerState(status.Code)).FirstOrDefault();
+                                        select Parse(status.Code)).FirstOrDefault();
             }
             return null;
-        }
-
-        public override string ToString()
-        {
-            return this.value;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.value.GetHashCode();
-        }
-
-        public static bool operator ==(PowerState lhs, PowerState rhs)
-        {
-            if (object.ReferenceEquals(lhs, null))
-            {
-                return object.ReferenceEquals(rhs, null);
-            }
-            return lhs.Equals(rhs);
-        }
-
-        public static bool operator !=(PowerState lhs, PowerState rhs)
-        {
-            return !(lhs == rhs);
-        }
-
-        public override bool Equals(object obj)
-        {
-
-            string value = this.ToString();
-            if (!(obj is PowerState))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(obj, this))
-            {
-                return true;
-            }
-            PowerState rhs = (PowerState)obj;
-            if (value == null)
-            {
-                return rhs.value == null;
-            }
-            return value.Equals(rhs.value);
         }
     }
 }

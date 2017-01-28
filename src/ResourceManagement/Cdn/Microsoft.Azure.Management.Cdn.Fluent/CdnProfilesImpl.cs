@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNkbi5pbXBsZW1lbnRhdGlvbi5DZG5Qcm9maWxlc0ltcGw=
     internal partial class CdnProfilesImpl  :
-        GroupableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,CdnManager>,
+        GroupableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,ICdnManager>,
         ICdnProfiles
     {
         private IEndpointsOperations endpointsClient;

@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 {
     using Microsoft.Azure.Management.Redis.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using RedisCache.Update;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -149,7 +148,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:6BCE517E09457FF033728269C8936E64:735695BBFA17FB30B54763A64BD24DB2
-        public override IUpdate Update()
+        public override RedisCache.Update.IUpdate Update()
         {
             this.updateParameters = new RedisUpdateParametersInner();
             this.scheduleEntries = new Dictionary<Models.DayOfWeek, ScheduleEntry>();
@@ -538,7 +537,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             RedisResourceInner innerModel,
             IPatchSchedulesOperations patchSchedulesInner,
             IRedisOperations client,
-            RedisManager redisManager)
+            IRedisManager redisManager)
             : base(name, innerModel, redisManager)
         {
             this.createParameters = new RedisCreateParametersInner();

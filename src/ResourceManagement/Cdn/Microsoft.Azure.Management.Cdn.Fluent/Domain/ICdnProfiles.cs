@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
+        IHasManager<ICdnManager>
     {
         /// <summary>
         /// Checks the availability of a endpoint name without creating the CDN endpoint.

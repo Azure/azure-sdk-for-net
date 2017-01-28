@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceCertificate,
             CertificateInner,
             AppServiceCertificateImpl,
-            AppServiceManager,
+            IAppServiceManager,
             IWithGroup,
             IWithCertificate,
             IWithCreate,
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:41B8D2ED29E80B92BB322B9C8B98A287:8A264E667F06CE3E13EBAC780725861E
-        internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, ICertificatesOperations client, AppServiceManager manager)
+        internal AppServiceCertificateImpl(string Name, CertificateInner innerObject, ICertificatesOperations client, IAppServiceManager manager)
                     : base(Name, innerObject, manager)
         {
             this.client = client;

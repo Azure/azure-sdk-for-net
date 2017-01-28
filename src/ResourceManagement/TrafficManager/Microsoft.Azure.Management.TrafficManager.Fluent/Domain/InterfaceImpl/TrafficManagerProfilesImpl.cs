@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile;
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <return>List of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>.List()
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>.List()
         {
-            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfile>;
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>;
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// </summary>
         /// <param name="dnsNameLabel">The DNS name to check.</param>
         /// <return>Whether the DNS is available to be used for a traffic manager profile and other info if not.</return>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.CheckProfileDnsNameAvailabilityResult Microsoft.Azure.Management.Trafficmanager.Fluent.ITrafficManagerProfiles.CheckDnsNameAvailability(string dnsNameLabel)
+        Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfiles.CheckDnsNameAvailability(string dnsNameLabel)
         {
-            return this.CheckDnsNameAvailability(dnsNameLabel) as Microsoft.Azure.Management.Trafficmanager.Fluent.CheckProfileDnsNameAvailabilityResult;
+            return this.CheckDnsNameAvailability(dnsNameLabel) as Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult;
         }
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using System.Linq;
-using Microsoft.Azure.Management.Trafficmanager.Fluent;
+using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent;
 using System;
 
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Fluent
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
             batchManager = BatchManager.Authenticate(restClient, subscriptionId);
             keyVaultManager = KeyVaultManager.Authenticate(restClient, subscriptionId, tenantId);
-            trafficManager = Trafficmanager.Fluent.TrafficManager.Authenticate(restClient, subscriptionId);
+            trafficManager = TrafficManager.Fluent.TrafficManager.Authenticate(restClient, subscriptionId);
             dnsZoneManager = DnsZoneManager.Authenticate(restClient, subscriptionId);
             sqlManager = SqlManager.Authenticate(restClient, subscriptionId);
             redisManager = RedisManager.Authenticate(restClient, subscriptionId);

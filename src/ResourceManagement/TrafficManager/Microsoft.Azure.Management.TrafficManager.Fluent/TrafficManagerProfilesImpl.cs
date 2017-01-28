@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnRyYWZmaWNtYW5hZ2VyLmltcGxlbWVudGF0aW9uLlRyYWZmaWNNYW5hZ2VyUHJvZmlsZXNJbXBs
     internal partial class TrafficManagerProfilesImpl  :
-        GroupableResources<ITrafficManagerProfile,TrafficManagerProfileImpl,ProfileInner,IProfilesOperations,TrafficManager>,
+        GroupableResources<ITrafficManagerProfile,TrafficManagerProfileImpl,ProfileInner,IProfilesOperations,ITrafficManager>,
         ITrafficManagerProfiles
     {
         private IEndpointsOperations endpointsClient;

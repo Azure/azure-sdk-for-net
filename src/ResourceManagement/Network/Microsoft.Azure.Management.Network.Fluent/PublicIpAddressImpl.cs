@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             string name,
             PublicIPAddressInner innerModel,
             IPublicIPAddressesOperations client,
-            NetworkManager networkManager) : base(name, innerModel, networkManager)
+            INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.client = client;
         }

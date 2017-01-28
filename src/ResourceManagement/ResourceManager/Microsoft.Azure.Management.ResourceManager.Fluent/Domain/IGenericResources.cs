@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.GenericResource.Definition;
+    using Core;
 
     /// <summary>
     /// Entry point to generic resources management API.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         ISupportsGettingByGroup<IGenericResource>,
         ISupportsGettingById<IGenericResource>,
         ISupportsCreating<GenericResource.Definition.IBlank>,
-        ISupportsBatchCreation<IGenericResource>
+        ISupportsBatchCreation<IGenericResource>,
+        IHasManager<IResourceManager>
     {
         /// <summary>
         /// Checks if a resource exists in a resource group.

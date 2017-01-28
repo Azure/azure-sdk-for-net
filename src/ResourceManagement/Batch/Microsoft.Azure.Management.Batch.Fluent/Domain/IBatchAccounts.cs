@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        IHasManager<IBatchManager>
     {
         /// <summary>
         /// Queries the number of the batch account can be created in specified region`.

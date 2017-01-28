@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Threading.Tasks;
     using AppServicePlan.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point for app service plan management API.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        IHasManager<IAppServiceManager>
     {
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.

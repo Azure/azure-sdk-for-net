@@ -152,8 +152,7 @@ namespace ManageApplicationGateway
 
                         //=============================================================
                         // Create 1 virtual machine creatable
-                        var virtualMachineCreatable = azure.VirtualMachines
-                                .Define(string.Format("{0}-{1}", linuxVMNamePrefix, j))
+                        var virtualMachineCreatable = azure.VirtualMachines.Define(string.Format("{0}-{1}", linuxVMNamePrefix, j))
                                 .WithRegion(Regions[i])
                                 .WithExistingResourceGroup(resourceGroup)
                                 .WithNewPrimaryNetwork(networkCreatable)
@@ -222,6 +221,7 @@ namespace ManageApplicationGateway
                 IApplicationGateway applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(resourceGroup)
+                        
                         // Request routing rule for HTTP from public 80 to public 8080
                         .DefineRequestRoutingRule("HTTP-80-to-8080")
                             .FromPublicFrontend()
@@ -232,7 +232,8 @@ namespace ManageApplicationGateway
                             .ToBackendIpAddress(IPAddresses[0, 2])
                             .ToBackendIpAddress(IPAddresses[0, 3])
                             .Attach()
-                        // Request routing rule for HTTPS from public 443 to public 8080
+                        
+                            // Request routing rule for HTTPS from public 443 to public 8080
                         .DefineRequestRoutingRule("HTTPs-443-to-8080")
                             .FromPublicFrontend()
                             .FromFrontendHttpsPort(443)

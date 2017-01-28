@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using VirtualMachine.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to virtual machine management API.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISupportsCreating<VirtualMachine.Definition.IBlank>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        IHasManager<IComputeManager>
     {
         /// <summary>
         /// Gets available virtual machine sizes.

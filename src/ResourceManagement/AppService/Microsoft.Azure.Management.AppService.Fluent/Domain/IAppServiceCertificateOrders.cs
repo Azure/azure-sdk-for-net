@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Threading.Tasks;
     using AppServiceCertificateOrder.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point for app service certificate order management API.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsListingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
         ISupportsGettingById<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        IHasManager<IAppServiceManager>
     {
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.

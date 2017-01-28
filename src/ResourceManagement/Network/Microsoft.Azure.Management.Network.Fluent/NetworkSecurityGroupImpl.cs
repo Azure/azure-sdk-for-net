@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             string name,
             NetworkSecurityGroupInner innerModel,
             INetworkSecurityGroupsOperations innerCollection,
-            NetworkManager networkManager) : base(name, innerModel, networkManager)
+            INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
         }

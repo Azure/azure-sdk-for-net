@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     {
         private Func<Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>> newCertificate;
         private IWithKeyVault certificateInDefinition;
-        private AppServiceManager manager;
+        private IAppServiceManager manager;
         private FluentImplT parent;
 
         ///GENMHASH:A1F44CA6A666B87D4C3A3AF168E6B317:B3CDCCA65868AC18E4EC708E7218B458
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:040FCD0915B61247DC4493834E39F655:A419F25EF828A0B88F2F3CAA051C4F14
-        internal HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent, AppServiceManager manager)
+        internal HostNameSslBindingImpl(HostNameSslState inner, FluentImplT parent, IAppServiceManager manager)
                     : base(inner)
         {
             this.parent = parent;

@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Resource.Fluent.Core;
     using SqlServer.Definition;
 
     /// <summary>
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         ISupportsDeletingById,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
+        IHasManager<ISqlManager>
     {
     }
 }

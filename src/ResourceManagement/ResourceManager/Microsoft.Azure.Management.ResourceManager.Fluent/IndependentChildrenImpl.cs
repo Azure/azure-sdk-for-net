@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     using CollectionActions;
     using System.Threading;
     using System.Threading.Tasks;
+    using System;
 
     /// <summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnJlc291cmNlcy5mbHVlbnRjb3JlLmFybS5jb2xsZWN0aW9uLmltcGxlbWVudGF0aW9uLkluZGVwZW5kZW50Q2hpbGRyZW5JbXBs
@@ -23,12 +24,21 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         ISupportsGettingByParent<T>,
         ISupportsListingByParent<T>,
         ISupportsDeletingById,
-        ISupportsDeletingByParent
+        ISupportsDeletingByParent,
+        IHasManager<ManagerT>
         where T : class, IHasId
         where ImplT : T
     {
         protected InnerCollectionT innerCollection;
         protected ManagerT manager;
+
+        public ManagerT Manager
+        {
+            get
+            {
+                return manager;
+            }
+        }
 
         ///GENMHASH:ED07292865768A689F918C1B84A21178:E628E6DE6456B030DED192E940597C6E
         public IndependentChildrenImpl(InnerCollectionT innerCollection, ManagerT manager)

@@ -79,8 +79,7 @@ namespace ManageVirtualNetwork
 
                 Utilities.Log("Creating virtual network #1...");
 
-                var virtualNetwork1 = azure.Networks
-                        .Define(vnetName1)
+                var virtualNetwork1 = azure.Networks.Define(vnetName1)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(ResourceGroupName)
                         .WithAddressSpace("192.168.0.0/16")
@@ -92,6 +91,7 @@ namespace ManageVirtualNetwork
                         .Create();
 
                 Utilities.Log("Created a virtual network");
+
                 // Print the virtual network details
                 Utilities.PrintVirtualNetwork(virtualNetwork1);
 
@@ -102,8 +102,7 @@ namespace ManageVirtualNetwork
 
                 Utilities.Log("Creating a network security group for virtual network backend subnet...");
 
-                var frontEndSubnetNsg = azure.NetworkSecurityGroups
-                        .Define(VNet1FrontEndSubnetNsgName)
+                var frontEndSubnetNsg = azure.NetworkSecurityGroups.Define(VNet1FrontEndSubnetNsgName)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(ResourceGroupName)
                         .DefineRule("AllowHttpInComing")
@@ -200,8 +199,7 @@ namespace ManageVirtualNetwork
 
                 Utilities.Log("Creating virtual network #2...");
 
-                var virtualNetwork2 = azure.Networks
-                        .Define(vnetName2)
+                var virtualNetwork2 = azure.Networks.Define(vnetName2)
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(ResourceGroupName)
                         .Create();
@@ -251,8 +249,7 @@ namespace ManageVirtualNetwork
                 // Authenticate
                 var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var azure = Azure
-                    .Configure()
+                var azure = Azure.Configure()
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithDefaultSubscription();

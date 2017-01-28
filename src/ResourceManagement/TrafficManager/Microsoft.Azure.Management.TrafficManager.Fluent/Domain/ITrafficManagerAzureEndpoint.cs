@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Trafficmanager.Fluent
+namespace Microsoft.Azure.Management.TrafficManager.Fluent
 {
     /// <summary>
     /// An immutable client-side representation of an Azure traffic manager profile Azure endpoint.
@@ -16,6 +16,6 @@ namespace Microsoft.Azure.Management.Trafficmanager.Fluent
         /// <summary>
         /// Gets the type of the target Azure resource.
         /// </summary>
-        Microsoft.Azure.Management.Trafficmanager.Fluent.TargetAzureResourceType TargetResourceType { get; }
+        Microsoft.Azure.Management.TrafficManager.Fluent.TargetAzureResourceType TargetResourceType { get; }
     }
 }
