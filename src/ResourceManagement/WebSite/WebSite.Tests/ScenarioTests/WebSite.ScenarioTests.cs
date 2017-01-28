@@ -113,7 +113,7 @@ namespace WebSites.Tests.ScenarioTests
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var endTime = DateTime.Parse("2015-10-05T23:49:31Z");
+                    var endTime = DateTime.Parse("2017-01-28T00:23:02Z").ToUniversalTime();
                     var metricNames = new List<string> {"Requests", "CPU", "MemoryWorkingSet"};
                     metricNames.Sort();
                     var result = webSitesClient.WebApps.ListMetrics(resourceGroupName: resourceGroupName,
