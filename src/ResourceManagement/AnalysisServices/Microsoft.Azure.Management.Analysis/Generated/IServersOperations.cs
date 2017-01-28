@@ -17,14 +17,16 @@ namespace Microsoft.Azure.Management.Analysis
     public partial interface IServersOperations
     {
         /// <summary>
-        /// Gets details about the specified Analysis Services server
+        /// Gets details about the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be a minimum of
+        /// 3 characters, and a maximum of 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,17 +46,20 @@ namespace Microsoft.Azure.Management.Analysis
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> GetDetailsWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Provisions the specified Analysis Services server based on the
-        /// configuration specified in the request
+        /// configuration specified in the request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be a minimum of
+        /// 3 characters, and a maximum of 63.
         /// </param>
         /// <param name='serverParameters'>
-        /// Request body for provisioning
+        /// Contains the information used to provision the Analysis Services
+        /// server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,17 +79,20 @@ namespace Microsoft.Azure.Management.Analysis
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> CreateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Provisions the specified Analysis Services server based on the
-        /// configuration specified in the request
+        /// configuration specified in the request.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be a minimum of
+        /// 3 characters, and a maximum of 63.
         /// </param>
         /// <param name='serverParameters'>
-        /// Request body for provisioning
+        /// Contains the information used to provision the Analysis Services
+        /// server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,11 +114,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// Deletes the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,11 +139,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// Deletes the specified Analysis Services server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -149,17 +161,21 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Updates the current state of the specified Analysis Services server
+        /// Updates the current state of the specified Analysis Services
+        /// server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='serverUpdateParameters'>
-        /// Request object for updating the server
+        /// Request object that contains the updated information for the
+        /// server.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -178,14 +194,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Supends the specified Analysis Services server instance
+        /// Supends operation of the specified Analysis Services server
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -201,14 +220,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SuspendWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Supends the specified Analysis Services server instance
+        /// Supends operation of the specified Analysis Services server
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -224,14 +246,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginSuspendWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Resumes the specified Analysis Services server instance
+        /// Resumes operation of the specified Analysis Services server
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -247,14 +272,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ResumeWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Resumes the specified Analysis Services server instance
+        /// Resumes operation of the specified Analysis Services server
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='serverName'>
-        /// Name of the Analysis Services server
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -270,11 +298,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginResumeWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets all the Analysis Services servers for the given resource group
+        /// Gets all the Analysis Services servers for the given resource
+        /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Azure Resource group which a given Analysis Services
-        /// server is part of.
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character
+        /// in length, and no more than 90.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -293,7 +323,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<AnalysisServicesServer>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// List all the Analysis Services servers for the given subscription
+        /// Lists all the Analysis Services servers for the given subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

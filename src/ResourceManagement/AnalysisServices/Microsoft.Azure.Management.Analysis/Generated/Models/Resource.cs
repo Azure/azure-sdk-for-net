@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an instance of Analysis Services resource
+    /// Represents an instance of an Analysis Services resource.
     /// </summary>
     public partial class Resource : Microsoft.Rest.Azure.IResource
     {
@@ -24,15 +24,17 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Initializes a new instance of the Resource class.
         /// </summary>
         /// <param name="location">Location of the Analysis Services
-        /// resource</param>
-        /// <param name="sku">Sku of the Analysis Services resource</param>
-        /// <param name="id">Identifier that represents the Analysis Services
-        /// resource</param>
-        /// <param name="name">Name of the Analysis Services resource</param>
-        /// <param name="type">Specifies the type of Analysis Services
-        /// resource</param>
-        /// <param name="tags">Key value pairs of additional properties that
-        /// can ebe specified</param>
+        /// resource.</param>
+        /// <param name="sku">The SKU of the Analysis Services
+        /// resource.</param>
+        /// <param name="id">An identifier that represents the Analysis
+        /// Services resource.</param>
+        /// <param name="name">The name of the Analysis Services
+        /// resource.</param>
+        /// <param name="type">The type of the Analysis Services
+        /// resource.</param>
+        /// <param name="tags">Key-value pairs of additional resource
+        /// provisioning properties.</param>
         public Resource(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
         {
             Id = id;
@@ -44,38 +46,38 @@ namespace Microsoft.Azure.Management.Analysis.Models
         }
 
         /// <summary>
-        /// Gets identifier that represents the Analysis Services resource
+        /// Gets an identifier that represents the Analysis Services resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the Analysis Services resource
+        /// Gets the name of the Analysis Services resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets specifies the type of Analysis Services resource
+        /// Gets the type of the Analysis Services resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets location of the Analysis Services resource
+        /// Gets or sets location of the Analysis Services resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets sku of the Analysis Services resource
+        /// Gets or sets the SKU of the Analysis Services resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public ResourceSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets key value pairs of additional properties that can ebe
-        /// specified
+        /// Gets or sets key-value pairs of additional resource provisioning
+        /// properties.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
