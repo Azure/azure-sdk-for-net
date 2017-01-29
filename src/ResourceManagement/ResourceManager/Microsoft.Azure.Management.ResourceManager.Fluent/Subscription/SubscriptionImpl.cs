@@ -53,6 +53,22 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             }
         }
 
+        public ILocation GetLocationByRegion(Region region)
+        {
+            if (region != null)
+            {
+                var locations = ListLocations();
+                foreach (var location in locations)
+                {
+                    if (region.Equals(location.Region))
+                    {
+                        return location;
+                    }
+                }
+            }
+            return null;
+        }
+
         public PagedList<ILocation> ListLocations()
         {
             var innerList = new PagedList<LocationInner>(innerCollection.ListLocations(SubscriptionId));

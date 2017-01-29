@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// <summary>
     /// An immutable client-side representation of an Azure subscription.
     /// </summary>
-    public interface ISubscription  :
+    public interface ISubscription :
         IIndexable,
         IWrapper<SubscriptionInner>
     {
@@ -33,5 +33,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         /// <returns>the lazy list of locations</returns>
         PagedList<ILocation> ListLocations();
 
+        /// <summary>
+        /// Gets the data center location for the specified region, if the selected subscription has access to it.
+        /// </summary>
+        /// <param name="region">an Azure region</param>
+        /// <returns>an Azure data center location, or null if the location is not accessible to this subscription</returns>
+        ILocation GetLocationByRegion(Region region);
     }
 }

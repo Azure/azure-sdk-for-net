@@ -45,6 +45,10 @@ namespace Fluent.Tests.ResourceManager
                     Assert.Equal(region, location.Region);
                     Assert.Equal(region.Name.ToLowerInvariant(), location.Name.ToLowerInvariant());
                 }
+
+                var uswest = subscription.GetLocationByRegion(Region.USWest);
+                Assert.NotNull(uswest);
+                Assert.Equal(Region.USWest.Name.ToLowerInvariant(), uswest.Name);
             }
         }
     }
