@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<LocationInner>>> ListLocationsWithHttpMessagesAsync(string subscriptionId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Location>>> ListLocationsWithHttpMessagesAsync(string subscriptionId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (subscriptionId == null)
             {
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<LocationInner>>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<Location>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<LocationInner>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Location>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

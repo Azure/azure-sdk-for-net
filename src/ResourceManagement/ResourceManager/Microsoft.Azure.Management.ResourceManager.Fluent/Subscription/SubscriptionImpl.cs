@@ -71,8 +71,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public PagedList<ILocation> ListLocations()
         {
-            var innerList = new PagedList<LocationInner>(innerCollection.ListLocations(SubscriptionId));
-            return PagedListConverter.Convert<LocationInner, ILocation>(innerList, innerLocation => {
+            var innerList = new PagedList<Location>(innerCollection.ListLocations(SubscriptionId));
+            return PagedListConverter.Convert<Location, ILocation>(innerList, innerLocation => {
                 return new LocationImpl(innerLocation); 
             });
         }

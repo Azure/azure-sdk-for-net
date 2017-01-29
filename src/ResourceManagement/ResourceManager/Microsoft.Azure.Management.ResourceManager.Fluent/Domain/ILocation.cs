@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     public interface ILocation  :
         IIndexable,
-        IWrapper<LocationInner>
+        IWrapper<Location>
     {
         /// <returns>the subscription UUID</returns>
         string SubscriptionId { get; }

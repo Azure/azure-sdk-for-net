@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Models
         /// Initializes a new instance of the LocationListResultInner class.
         /// </summary>
         /// <param name="value">Gets the locations.</param>
-        public LocationListResultInner(System.Collections.Generic.IList<LocationInner> value = default(System.Collections.Generic.IList<LocationInner>))
+        public LocationListResultInner(System.Collections.Generic.IList<Location> value = default(System.Collections.Generic.IList<Location>))
         {
             Value = value;
         }
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Models
         /// Gets the locations.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<LocationInner> Value { get; set; }
+        public System.Collections.Generic.IList<Location> Value { get; set; }
 
     }
 }

@@ -11,9 +11,9 @@ using Microsoft.Azure.Management.Resource.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Fluent.Resource
 {
-    internal class LocationImpl : IndexableWrapper<LocationInner>, ILocation
+    internal class LocationImpl : IndexableWrapper<Location>, ILocation
     {
-        public LocationImpl(LocationInner innerObject) : base(innerObject)
+        public LocationImpl(Location innerObject) : base(innerObject)
         {
         }
 
