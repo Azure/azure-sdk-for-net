@@ -30,5 +30,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         /// <returns>the longitude of the location</returns>
         string Longitude { get; }
 
+        /// <returns>the region of the data center location</returns>
+        Region Region { get; }
     }
 }

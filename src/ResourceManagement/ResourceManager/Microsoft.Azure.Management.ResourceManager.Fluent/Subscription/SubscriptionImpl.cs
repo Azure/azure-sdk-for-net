@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Models;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Collections.Generic;
 using System;
+using Microsoft.Azure.Management.Fluent.Resource;
 
 namespace Microsoft.Azure.Management.Resource.Fluent
 {
@@ -54,9 +55,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public PagedList<ILocation> ListLocations()
         {
-            IEnumerable<Location> firstPage = innerCollection.ListLocations(this.SubscriptionId);
-            throw new NotImplementedException("GeneratedSDKIssue: Generated SDK is not using LocationInner");
-            //return new PagedList<ILocation>(firstPage);
+            var innerList = new PagedList<LocationInner>(innerCollection.ListLocations(SubscriptionId));
+            return PagedListConverter.Convert<LocationInner, ILocation>(innerList, innerLocation => {
+                return new LocationImpl(innerLocation); 
+            });
         }
     }
 }

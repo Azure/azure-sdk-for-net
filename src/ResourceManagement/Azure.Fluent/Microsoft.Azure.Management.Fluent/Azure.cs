@@ -22,6 +22,8 @@ namespace Microsoft.Azure.Management.Fluent
 {
     public class Azure : IAzure
     {
+        private IAuthenticated authenticated;
+
         #region Service Managers
 
         private IResourceManager resourceManager;
@@ -41,11 +43,19 @@ namespace Microsoft.Azure.Management.Fluent
 
         #region Getters
 
+        /// <returns>the currently selected subscription ID this client is authenticated to work with</returns>
         public string SubscriptionId
         {
             get; private set;
         }
 
+        /// <returns>the currently selected subscription this client is authenticated to work with</returns>
+        public ISubscription GetCurrentSubscription()
+        {
+            return Subscriptions.GetById(SubscriptionId);
+        }
+
+        /// <returns>entry point to managing resource groups</returns>
         public IResourceGroups ResourceGroups
         {
             get
@@ -54,6 +64,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing storage accounts</returns>
         public IStorageAccounts StorageAccounts
         {
             get
@@ -62,6 +73,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing virtual machines</returns>
         public IVirtualMachines VirtualMachines
         {
             get
@@ -70,6 +82,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing virtual machine scale sets</returns>
         public IVirtualMachineScaleSets VirtualMachineScaleSets
         {
             get
@@ -78,6 +91,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing virtual networks</returns>
         public INetworks Networks
         {
             get
@@ -86,6 +100,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing network security groups</returns>
         public INetworkSecurityGroups NetworkSecurityGroups
         {
             get
@@ -94,6 +109,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing public IP addresses</returns>
         public IPublicIpAddresses PublicIpAddresses
         {
             get
@@ -102,6 +118,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing network interfaces</returns>
         public INetworkInterfaces NetworkInterfaces
         {
             get
@@ -110,6 +127,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing virtual load balancers</returns>
         public ILoadBalancers LoadBalancers
         {
             get
@@ -118,6 +136,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing application gateways</returns>
         public IApplicationGateways ApplicationGateways
         {
             get
@@ -126,6 +145,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing deployments</returns>
         public IDeployments Deployments
         {
             get
@@ -134,6 +154,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing virtual machine images</returns>
         public IVirtualMachineImages VirtualMachineImages
         {
             get
@@ -142,6 +163,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing virtual machine extension images</returns>
         public IVirtualMachineExtensionImages VirtualMachineExtensionImages
         {
             get
@@ -150,6 +172,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing availability sets</returns>
         public IAvailabilitySets AvailabilitySets
         {
             get
@@ -158,6 +181,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing Azure Batch accounts</returns>
         public IBatchAccounts BatchAccounts
         {
             get
@@ -166,6 +190,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing Azure key vaults</returns>
         public IVaults Vaults
         {
             get
@@ -174,6 +199,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing Traffic Manager profiles</returns>
         public ITrafficManagerProfiles TrafficManagerProfiles
         {
             get
@@ -182,6 +208,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing DNS zones</returns>
         public IDnsZones DnsZones
         {
             get
@@ -190,6 +217,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing SQL servers</returns>
         public ISqlServers SqlServers
         {
             get
@@ -198,6 +226,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing Redis caches</returns>
         public IRedisCaches RedisCaches
         {
             get
@@ -206,6 +235,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing CDN profiles</returns>
         public ICdnProfiles CdnProfiles
         {
             get
@@ -214,6 +244,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing web apps</returns>
         public IWebApps WebApps
         {
             get
@@ -222,6 +253,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing app services</returns>
         public IAppServiceManager AppServices
         {
             get
@@ -230,11 +262,20 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>subscriptions that this authenticated client has access to</returns>
+        public ISubscriptions Subscriptions
+        {
+            get
+            {
+                return authenticated.Subscriptions;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
 
-        private Azure(RestClient restClient, string subscriptionId, string tenantId)
+        private Azure(RestClient restClient, string subscriptionId, string tenantId, IAuthenticated authenticated)
         {
             resourceManager = ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
@@ -249,6 +290,7 @@ namespace Microsoft.Azure.Management.Fluent
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
             SubscriptionId = subscriptionId;
+            this.authenticated = authenticated;
         }
 
         #endregion ctrs
@@ -304,7 +346,7 @@ namespace Microsoft.Azure.Management.Fluent
         protected class Authenticated : IAuthenticated
         {
             private RestClient restClient;
-            private Resource.Fluent.ResourceManager.IAuthenticated resourceManagerAuthenticated;
+            private ResourceManager.IAuthenticated resourceManagerAuthenticated;
             private string defaultSubscription;
             private string tenantId;
 
@@ -327,7 +369,7 @@ namespace Microsoft.Azure.Management.Fluent
             public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
-                resourceManagerAuthenticated = Resource.Fluent.ResourceManager.Authenticate(this.restClient);
+                resourceManagerAuthenticated = ResourceManager.Authenticate(this.restClient);
                 this.tenantId = tenantId;
             }
 
@@ -338,7 +380,7 @@ namespace Microsoft.Azure.Management.Fluent
 
             public IAzure WithSubscription(string subscriptionId)
             {
-                return new Azure(restClient, subscriptionId, tenantId);
+                return new Azure(restClient, subscriptionId, tenantId, this);
             }
 
             public IAzure WithDefaultSubscription()
@@ -349,7 +391,7 @@ namespace Microsoft.Azure.Management.Fluent
                 }
                 else
                 {
-                    var resourceManager = Resource.Fluent.ResourceManager.Authenticate(
+                    var resourceManager = ResourceManager.Authenticate(
                         RestClient.Configure()
                             .WithBaseUri(restClient.BaseUri)
                             .WithCredentials(restClient.Credentials).Build());
@@ -390,6 +432,10 @@ namespace Microsoft.Azure.Management.Fluent
     public interface IAzure
     {
         string SubscriptionId { get; }
+
+        ISubscription GetCurrentSubscription();
+
+        ISubscriptions Subscriptions { get; }
 
         IResourceGroups ResourceGroups { get; }
 

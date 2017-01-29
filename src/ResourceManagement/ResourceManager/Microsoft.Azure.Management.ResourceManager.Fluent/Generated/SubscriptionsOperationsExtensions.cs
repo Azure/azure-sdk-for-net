@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             /// <param name='subscriptionId'>
             /// Id of the subscription
             /// </param>
-            public static System.Collections.Generic.IEnumerable<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
+            public static System.Collections.Generic.IEnumerable<LocationInner> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListLocationsAsync(subscriptionId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Collections.Generic.IEnumerable<Location>> ListLocationsAsync(this ISubscriptionsOperations operations, string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<LocationInner>> ListLocationsAsync(this ISubscriptionsOperations operations, string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "eeeef12b-764c-4d83-b171-ec5a11dac5e2"
+          "814a58f4-3438-4df7-8c78-f92568ed05ac"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Resource.Fluent.SubscriptionClient/1.0.0-beta4.1"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.SubscriptionClient/1.0.0-beta50"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n      \"subscriptionId\": \"9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n      \"displayName\": \"Java Tests - MS Open Tech Eng\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\",\r\n        \"spendingLimit\": \"Off\"\r\n      }\r\n    }\r\n  ]\r\n}",
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 07 Jan 2017 05:50:33 GMT"
+          "Sun, 29 Jan 2017 15:22:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,16 +41,71 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14998"
         ],
         "x-ms-request-id": [
-          "98a6863f-8dd7-4cbf-b599-6570f9e541f9"
+          "3ce8275e-e39c-4d99-9fc8-26c7d348c6de"
         ],
         "x-ms-correlation-request-id": [
-          "98a6863f-8dd7-4cbf-b599-6570f9e541f9"
+          "3ce8275e-e39c-4d99-9fc8-26c7d348c6de"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170107T055033Z:98a6863f-8dd7-4cbf-b599-6570f9e541f9"
+          "WESTUS:20170129T152207Z:3ce8275e-e39c-4d99-9fc8-26c7d348c6de"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY1N2FiNWQtNGE0YS00ZmQyLWFlN2EtNGNkOWZiZDAzMGVmP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b261c36d-3f61-44c9-8296-09687299975a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.SubscriptionClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n  \"subscriptionId\": \"9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef\",\r\n  \"displayName\": \"Java Tests - MS Open Tech Eng\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Internal_2014-09-01\",\r\n    \"quotaId\": \"Internal_2014-09-01\",\r\n    \"spendingLimit\": \"Off\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jan 2017 15:22:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "50b3c826-f505-4c33-b758-e66ff33ef35c"
+        ],
+        "x-ms-correlation-request-id": [
+          "50b3c826-f505-4c33-b758-e66ff33ef35c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170129T152207Z:50b3c826-f505-4c33-b758-e66ff33ef35c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,6 +116,8 @@
   ],
   "Names": {},
   "Variables": {
+    "ServicePrincipal": "a63dd492-b5b1-4169-b8e7-7fec407e987b",
+    "AADTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
     "SubscriptionId": "9657ab5d-4a4a-4fd2-ae7a-4cd9fbd030ef"
   }
 }

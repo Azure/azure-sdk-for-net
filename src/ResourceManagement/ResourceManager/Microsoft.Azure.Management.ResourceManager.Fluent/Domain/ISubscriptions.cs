@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// </summary>
     public interface ISubscriptions  :
         ISupportsListing<ISubscription>,
-        ISupportsGettingByName<ISubscription>
+        ISupportsGettingById<ISubscription>
     {
     }
 }

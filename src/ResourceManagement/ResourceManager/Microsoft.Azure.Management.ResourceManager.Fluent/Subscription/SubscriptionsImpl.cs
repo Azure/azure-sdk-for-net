@@ -36,12 +36,20 @@ namespace Microsoft.Azure.Management.Resource.Fluent
             });
         }
 
-        public ISubscription GetByName(string name)
+        public ISubscription GetById(string id)
         {
-            throw new NotImplementedException();
+            var inner = innerCollection.Get(id);
+            if (inner == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new SubscriptionImpl(inner, innerCollection);
+            }
         }
 
-        public Task<ISubscription> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<ISubscription> GetByIdAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
