@@ -77,10 +77,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// certificates are stored in a directory inside the task working
         /// directory and an environment variable AZ_BATCH_CERTIFICATES_DIR
         /// is supplied to the task to query for this location. For
-        /// certificates with visibility of remoteuser, a certs directory is
-        /// created in the user's home directory (e.g.,
-        /// /home/{user-name}/certs) where certificates are placed. Possible
-        /// values include: 'currentuser', 'localmachine', 'unmapped'
+        /// certificates with visibility of 'remoteuser', a 'certs' directory
+        /// is created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) and certificates are placed in that
+        /// directory. Possible values include: 'currentuser',
+        /// 'localmachine', 'unmapped'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }

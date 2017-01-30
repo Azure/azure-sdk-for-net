@@ -126,6 +126,7 @@
     <None Include="Spec\AffinityInformation.json" />
     <None Include="Spec\ApplicationPackageReference.json" />
     <None Include="Spec\ApplicationSummary.json" />
+    <None Include="Spec\AuthenticationTokenSettings.json" />
     <None Include="Spec\AutoPoolSpecification.json" />
     <None Include="Spec\AutoScaleRun.json" />
     <None Include="Spec\AutoScaleRunError.json" />

@@ -875,6 +875,87 @@
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void DependencyActionIsRoundTripped()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+
+                    try
+                    {
+                        //Create the job
+                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        cloudJob.OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction;
+
+                        cloudJob.UsesTaskDependencies = true;
+                        cloudJob.Commit();
+
+                        //Create a task
+                        const string taskId = "T1";
+                        CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"ping 127.0.0.1 \"");
+                        
+                        //Add the task
+                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        taskToAdd.ExitConditions = new ExitConditions { Default = new ExitOptions {JobAction = JobAction.Terminate, DependencyAction = DependencyAction.Satisfy} };
+                        batchCli.JobOperations.AddTask(jobId, taskToAdd);
+
+                        CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
+                        TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
+
+                        //Wait for the task state to complete 
+                        taskStateMonitor.WaitAll(new[] { task }, TaskState.Completed, TimeSpan.FromMinutes(2));
+
+                        task.Refresh();
+                        Assert.Equal(DependencyAction.Satisfy, task.ExitConditions.Default.DependencyAction);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void AccessScopeCanBeRoundTripped()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+
+                    //Create the job
+                    CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                    cloudJob.PoolInformation = new PoolInformation { PoolId = this.poolFixture.PoolId };
+                    this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                    cloudJob.Commit();
+
+                    //Create a task
+                    const string taskId = "T1";
+                    
+                    CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"set\"")
+                    {
+                        DisplayName = "name",
+                        AuthenticationTokenSettings = new AuthenticationTokenSettings { Access = AccessScope.Job }
+                    };
+
+                    batchCli.JobOperations.AddTask(jobId, taskToAdd);
+
+                    CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
+                    
+                    Assert.Equal(AccessScope.Job, task.AuthenticationTokenSettings.Access);
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]

@@ -239,7 +239,9 @@ namespace Azure.Batch.Unit.Tests
                 cloudJob.JobManagerTask = new JobManagerTask { ApplicationPackageReferences = new List<ApplicationPackageReference>
                 {
                     new ApplicationPackageReference { ApplicationId = applicationId, Version = applicationVersion }
-                }};
+                },
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings() { Access = AccessScope.Job }
+                };
 
                 cloudJob.OnAllTasksComplete = OnAllTasksComplete.NoAction;
                 cloudJob.OnTaskFailure = OnTaskFailure.NoAction;
@@ -257,6 +259,9 @@ namespace Azure.Batch.Unit.Tests
                 // writing isn't allowed for a job that is in an invalid state.
                 Assert.Throws<InvalidOperationException>(() => cloudJob.Id = "cannot-change-id");
                 Assert.Throws<InvalidOperationException>(() => cloudJob.DisplayName = "cannot-change-display-name");
+
+                AuthenticationTokenSettings authenticationTokenSettings = new AuthenticationTokenSettings { Access = AccessScope.Job };
+                Assert.Throws<InvalidOperationException>(() => { cloudJob.JobManagerTask.AuthenticationTokenSettings = authenticationTokenSettings; });
             }
         }
 
@@ -325,7 +330,11 @@ namespace Azure.Batch.Unit.Tests
             const int exitCodeRangeStart = 0;
             const int exitCodeRangeEnd = 4;
             Models.ExitOptions terminateExitOption = new Models.ExitOptions() { JobAction = Models.JobAction.Terminate };
-            Models.ExitOptions disableExitOption = new Models.ExitOptions() { JobAction = Models.JobAction.Disable };
+            Models.ExitOptions disableExitOption = new Models.ExitOptions()
+            {
+                JobAction = Models.JobAction.Disable,
+                DependencyAction = Models.DependencyAction.Satisfy
+            };
 
             BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
             using (BatchClient client = BatchClient.Open(credentials))
@@ -349,7 +358,9 @@ namespace Azure.Batch.Unit.Tests
 
 
                 Assert.Equal(taskId, boundTask.Id); // reading is allowed from a task that is returned from the server.
+                // These need to be compared as strings because they are different types but we are interested in the values being the same.
                 Assert.Equal(disableExitOption.JobAction.ToString(), boundTask.ExitConditions.Default.JobAction.ToString());
+                Assert.Equal(DependencyAction.Satisfy, boundTask.ExitConditions.Default.DependencyAction);
                 Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions = new ExitConditions());
                 Assert.Throws<InvalidOperationException>(() => boundTask.DependsOn = new TaskDependencies(new List<string>(), new List<TaskIdRange>()));
                 Assert.Throws<InvalidOperationException>(() => boundTask.RunElevated = true);

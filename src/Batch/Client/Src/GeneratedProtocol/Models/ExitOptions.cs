@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// How the Batch service should respond to a particular exit condition.
+    /// Specifies how the Batch service responds to a particular exit
+    /// condition.
     /// </summary>
     public partial class ExitOptions
     {
@@ -37,9 +38,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the task, if the task completes with the given exit condition and
         /// the job’s onTaskFailed property is
         /// 'performexitoptionsjobaction'.</param>
-        public ExitOptions(JobAction? jobAction = default(JobAction?))
+        /// <param name="dependencyAction">An action that the Batch service
+        /// takes on tasks that depend on this task.</param>
+        public ExitOptions(JobAction? jobAction = default(JobAction?), DependencyAction? dependencyAction = default(DependencyAction?))
         {
             JobAction = jobAction;
+            DependencyAction = dependencyAction;
         }
 
         /// <summary>
@@ -57,6 +61,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobAction")]
         public JobAction? JobAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action that the Batch service takes on tasks that
+        /// depend on this task.
+        /// </summary>
+        /// <remarks>
+        /// The default is 'satisfy' for exit code 0, and 'block' for all
+        /// other exit conditions. It is an error to specify this if the
+        /// job's usesTaskDependencies if false. The add task request fails
+        /// with an invalid property value error; if you are calling the REST
+        /// API directly, the HTTP status code is 400 (Bad Request). Possible
+        /// values include: 'satisfy', 'block'
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dependencyAction")]
+        public DependencyAction? DependencyAction { get; set; }
 
     }
 }

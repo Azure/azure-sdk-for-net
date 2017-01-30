@@ -75,7 +75,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="applicationPackageReferences">A list of application
         /// packages that the Batch service will deploy to the compute node
         /// before running the command line.</param>
-        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
+        /// <param name="authenticationTokenSettings">The settings for an
+        /// authentication token that the task can use to perform Batch
+        /// service operations.</param>
+        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -100,6 +103,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Stats = stats;
             DependsOn = dependsOn;
             ApplicationPackageReferences = applicationPackageReferences;
+            AuthenticationTokenSettings = authenticationTokenSettings;
         }
 
         /// <summary>
@@ -296,6 +300,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the
+        /// task can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with
+        /// an authentication token which can be used to authenticate Batch
+        /// service operations without requiring an account access key. The
+        /// token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN
+        /// environment variable. The operations that the task can carry out
+        /// using the token depend on the settings. For example, a task can
+        /// request job permissions in order to add other tasks to the job,
+        /// or check the status of the job or of other tasks.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "authenticationTokenSettings")]
+        public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

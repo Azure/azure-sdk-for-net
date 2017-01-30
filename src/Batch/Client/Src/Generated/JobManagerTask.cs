@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
+            public readonly PropertyAccessor<AuthenticationTokenSettings> AuthenticationTokenSettingsProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
@@ -49,6 +50,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
@@ -65,6 +67,10 @@ namespace Microsoft.Azure.Batch
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
                     "ApplicationPackageReferences",
+                    BindingAccess.Read);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o).Freeze()),
+                    "AuthenticationTokenSettings",
                     BindingAccess.Read);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
@@ -143,6 +149,22 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.ApplicationPackageReferencesProperty.Value = ConcurrentChangeTrackedModifiableList<ApplicationPackageReference>.TransformEnumerableToConcurrentModifiableList(value);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the task can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with an authentication token which can be used to 
+        /// authenticate Batch service operations without requiring an account access key. The token is provided via the 
+        /// AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the task can carry out using the token 
+        /// depend on the settings. For example, a task can request job permissions in order to add other tasks to the job, 
+        /// or check the status of the job or of other tasks.
+        /// </remarks>
+        public AuthenticationTokenSettings AuthenticationTokenSettings
+        {
+            get { return this.propertyContainer.AuthenticationTokenSettingsProperty.Value; }
+            set { this.propertyContainer.AuthenticationTokenSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -266,6 +288,7 @@ namespace Microsoft.Azure.Batch
             Models.JobManagerTask result = new Models.JobManagerTask()
             {
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
+                AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,

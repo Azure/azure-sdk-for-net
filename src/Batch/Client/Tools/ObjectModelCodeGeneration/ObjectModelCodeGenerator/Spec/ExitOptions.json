@@ -17,5 +17,19 @@
             "Name": "JobAction",
           }
         },
+        {
+            "Key": {
+                "Type": "Common.DependencyAction?",
+                "Name": "DependencyAction",
+                "SummaryComment": "An action that the Batch service should take on tasks that depend on this task.",
+                "RemarksComment": "The default is <see cref=\"Common.DependencyAction.Satisfy\"/> for exit code 0, and <see cref=\"Common.DependencyAction.Block\"/> for all other exit conditions. If the job's <see cref=\"CloudJob.UsesTaskDependencies\"/> is false, you cannot add a task with this property set.",
+                "BoundAccess": "read",
+                "UnboundAccess": "read,write"
+            },
+          "Value": {
+            "Type": "Models.DependencyAction?",
+            "Name": "DependencyAction"
+          }
+        },
       ]
     }
