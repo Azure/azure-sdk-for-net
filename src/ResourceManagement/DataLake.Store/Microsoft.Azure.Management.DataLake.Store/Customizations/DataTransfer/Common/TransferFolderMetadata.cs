@@ -257,6 +257,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 {
                     result.MetadataFilePath = filePath;
 
+                    // in the case where thread count is the default, explicitly set it to the ideal file/folder count for loading
+                    // the metadata. Note that this value may be changed once the metadata is loaded when the ideal is re-computed
+                    // based on:
+                    // 1. Total files remaining (since this is a resume)
+                    // 2. Total remaining file size.
+                    if (threadCount < 1)
+                    {
+                        threadCount = DataLakeStoreTransferClient.DefaultIdealPerFileThreadCountForFolders;
+                    }
+
                     // populate all child metadata file paths as well
                     var localMetadataFolder = Path.GetDirectoryName(filePath);
                     int updatesPerThread = (int)Math.Ceiling((double)result.Files.Length / threadCount);

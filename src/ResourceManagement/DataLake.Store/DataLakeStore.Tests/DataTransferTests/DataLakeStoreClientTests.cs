@@ -102,6 +102,9 @@ namespace DataLakeStore.Tests
 
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => { new DataLakeStoreTransferClient(new TransferParameters(_largeFilePath, "1", "foo", concurrentFileCount: DataLakeStoreTransferClient.MaxAllowedThreadsPerFile + 1, maxSegmentLength: 4 * 1024 * 1024), new InMemoryFrontEnd()); });
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => { new DataLakeStoreTransferClient(new TransferParameters(_largeFilePath, "1", "foo", concurrentFileCount: 1, maxSegmentLength: 0), new InMemoryFrontEnd()); });
         }
 
         /// <summary>
@@ -157,7 +160,7 @@ namespace DataLakeStore.Tests
         /// <summary>
         /// Tests the case of a fresh upload with multiple segments.
         /// </summary>
-        [Fact]//(Skip = "begoldsm has acknowledged the flakiness of these tests. Hence skipping and issue 2344 is opened to track the progress")]
+        [Fact]
         public void DataLakeUploader_FreshUploadDownload()
         {
             var frontEnd = new InMemoryFrontEnd();
@@ -391,7 +394,7 @@ namespace DataLakeStore.Tests
         /// <summary>
         /// Tests the resume upload when only some segments were uploaded previously with progress tracking enabled
         /// </summary>
-        [Fact]//(Skip = "begoldsm has acknowledged the flakiness of these tests.Hence skipping and issue 2344 is opened to track the progress")]
+        [Fact]
         public void DataLakeUploader_ResumePartialFolderUploadWithProgress()
         {
             //attempt to load the file fully, but only allow creating 1 target stream

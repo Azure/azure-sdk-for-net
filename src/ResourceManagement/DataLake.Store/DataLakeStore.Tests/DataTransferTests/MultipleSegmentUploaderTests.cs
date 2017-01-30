@@ -106,7 +106,7 @@ namespace DataLakeStore.Tests
         /// <summary>
         /// Tests an uneventful upload from scratch made of several segments
         /// </summary>
-        [Fact]//(Skip = "begoldsm has acknowledged the flakiness of these tests. Hence skipping and issue 2344 is opened to track the progress")]
+        [Fact]
         public void MultipleSegmentUploader_MultipleSegmentsAndMultipleThreads()
         {
             var fe = new InMemoryFrontEnd();

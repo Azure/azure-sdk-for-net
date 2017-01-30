@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The maximum number of parallel threads to allow. 
         /// </summary>
         public const int MaxAllowedThreadsPerFile = 1024;
-        private const int DefaultMaxPerFileThreadCount = 75;
-        private const int DefaultIdealConcurrentFileCount = 25;
-        private const int DefaultIdealPerFileThreadCountForFolders = 100;
+        internal const int DefaultMaxPerFileThreadCount = 75;
+        internal const int DefaultIdealConcurrentFileCount = 25;
+        internal const int DefaultIdealPerFileThreadCountForFolders = 100;
         private readonly IFrontEndAdapter _frontEnd;
         private readonly IProgress<TransferProgress> _progressTracker;
         private readonly IProgress<TransferFolderProgress> _folderProgressTracker;
@@ -496,6 +496,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
 
+            if (this.Parameters.MaxSegementLength < 1)
+            {
+                var ex = new ArgumentOutOfRangeException("MaxSegmentLength", string.Format("MaxSegmentLength must be greater than 0 bytes. Value passed in: {0}", this.Parameters.MaxSegementLength));
+                TracingHelper.LogError(ex);
+
+                throw ex;
+            }
+
             // if the input is a directory, set it
             isDirectory = this.Parameters.IsDownload? _frontEnd.IsDirectory(this.Parameters.InputFilePath) : Directory.Exists(this.Parameters.InputFilePath);
             
@@ -541,11 +549,28 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
         private int GetDefaultPerFileThreadCount(long fileLength, long maxSegmentLength)
         {
+            if (maxSegmentLength < 1)
+            {
+                var ex = new ArgumentOutOfRangeException("maxSegmentLength", string.Format("maxSegmentLength must be greater than 0 bytes. Value passed in: {0}", maxSegmentLength));
+                TracingHelper.LogError(ex);
+
+                throw ex;
+            }
+
             return (int)Math.Min(Math.Ceiling((double)fileLength / maxSegmentLength), DefaultMaxPerFileThreadCount);
         }
 
         private int GetDefaultPerFileThreadCountForFolder(long folderSize, long fileCount, long maxSegmentLength, out int concurrentFileCount)
         {
+            if (fileCount < 1)
+            {
+                // this case should never happen, but if it does we should throw
+                var ex = new ArgumentOutOfRangeException("fileCount", string.Format("fileCount must be greater than 0 for a transfer operation. Number of files: {0}", fileCount));
+                TracingHelper.LogError(ex);
+
+                throw ex;
+            }
+
             if (this.Parameters.ConcurrentFileCount > 0)
             {
                 concurrentFileCount = this.Parameters.ConcurrentFileCount;
@@ -1246,12 +1271,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
             return new Progress<TransferProgress>(
                 (sup) =>
                 {
-                    //update the overall progress and report it back
                     if(_token.IsCancellationRequested)
                     {
                         return;
                     }
 
+                    //update the overall progress and report it back
                     overallProgress.SetSegmentProgress(sup);
                     _folderProgressTracker.Report(overallProgress);
                 });
