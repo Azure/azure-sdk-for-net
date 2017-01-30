@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Queue operation.
+    /// Parameters supplied to the Create Or Update Queue operation.
     /// </summary>
     [JsonTransformation]
     public partial class QueueCreateOrUpdateParameters
@@ -73,11 +73,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// the duration of a peek lock; that is, the amount of time that the
+        /// The duration of a peek-lock; that is, the amount of time that the
         /// message is locked for other receivers. The maximum value for
         /// LockDuration is 5 minutes; the default value is 1 minute.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.lockDuration ")]
+        [JsonProperty(PropertyName = "properties.lockDuration")]
         public string LockDuration { get; set; }
 
         /// <summary>
@@ -98,17 +98,17 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Entity availability status for the queue. Possible values include:
         /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus ")]
+        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus")]
         public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
 
         /// <summary>
-        /// the exact time the message was created.
+        /// The exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public DateTime? CreatedAt { get; set; }
 
         /// <summary>
-        /// the default message time to live value. This is the duration after
+        /// The default message time to live value. This is the duration after
         /// which the message expires, starting from when the message is sent
         /// to Service Bus. This is the default value used when TimeToLive is
         /// not set on a message itself.
@@ -118,27 +118,27 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// TimeSpan structure that defines the duration of the duplicate
-        /// detection history. The default value is 10 minutes..
+        /// detection history. The default value is 10 minutes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow ")]
+        [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow")]
         public string DuplicateDetectionHistoryTimeWindow { get; set; }
 
         /// <summary>
-        /// value that indicates whether server-side batched operations are
-        /// enabled..
+        /// A value that indicates whether server-side batched operations are
+        /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
 
         /// <summary>
-        /// a value that indicates whether this queue has dead letter support
+        /// A value that indicates whether this queue has dead letter support
         /// when a message expires.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetteringOnMessageExpiration")]
         public bool? DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
-        /// a value that indicates whether Express Entities are enabled. An
+        /// A value that indicates whether Express Entities are enabled. An
         /// express queue holds a message in memory temporarily before
         /// writing it to persistent storage.
         /// </summary>
@@ -146,36 +146,37 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? EnableExpress { get; set; }
 
         /// <summary>
-        /// value that indicates whether the queue to be partitioned across
-        /// multiple message brokers is enabled.
+        /// A value that indicates whether the queue is to be partitioned
+        /// across multiple message brokers.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enablePartitioning")]
         public bool? EnablePartitioning { get; set; }
 
         /// <summary>
-        /// a value that indicates whether the message is anonymous accessible.
+        /// A value that indicates whether the message is accessible
+        /// anonymously.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAnonymousAccessible")]
         public bool? IsAnonymousAccessible { get; set; }
 
         /// <summary>
-        /// the maximum delivery count. A message is automatically
+        /// The maximum delivery count. A message is automatically
         /// deadlettered after this number of deliveries.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.maxDeliveryCount ")]
+        [JsonProperty(PropertyName = "properties.maxDeliveryCount")]
         public int? MaxDeliveryCount { get; set; }
 
         /// <summary>
-        /// the maximum size of the queue in megabytes, which is the size of
+        /// The maximum size of the queue in megabytes, which is the size of
         /// memory allocated for the queue.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeInMegabytes")]
         public long? MaxSizeInMegabytes { get; set; }
 
         /// <summary>
-        /// the number of messages in the queue.
+        /// The number of messages in the queue.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.messageCount ")]
+        [JsonProperty(PropertyName = "properties.messageCount")]
         public long? MessageCount { get; set; }
 
         /// <summary>
@@ -184,22 +185,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public MessageCountDetails CountDetails { get; set; }
 
         /// <summary>
-        /// the value indicating if this queue requires duplicate detection.
+        /// A value indicating if this queue requires duplicate detection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiresDuplicateDetection")]
         public bool? RequiresDuplicateDetection { get; set; }
 
         /// <summary>
-        /// a value that indicates whether the queue supports the concept of
-        /// session.
+        /// A value that indicates whether the queue supports the concept of
+        /// sessions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiresSession")]
         public bool? RequiresSession { get; set; }
 
         /// <summary>
-        /// the size of the queue in bytes.
+        /// The size of the queue, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sizeInBytes ")]
+        [JsonProperty(PropertyName = "properties.sizeInBytes")]
         public long? SizeInBytes { get; set; }
 
         /// <summary>
@@ -212,13 +213,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// a value that indicates whether the queue supports ordering.
+        /// A value that indicates whether the queue supports ordering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportOrdering")]
         public bool? SupportOrdering { get; set; }
 
         /// <summary>
-        /// the exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
         public DateTime? UpdatedAt { get; set; }

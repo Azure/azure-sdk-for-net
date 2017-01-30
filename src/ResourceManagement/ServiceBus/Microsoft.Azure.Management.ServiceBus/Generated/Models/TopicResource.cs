@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of topic Resource.
+    /// Description of topic resource.
     /// </summary>
     [JsonTransformation]
     public partial class TopicResource : Resource
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Last time the message was sent or a request was received for this
-        /// topic.
+        /// Last time the message was sent, or a request was received, for
+        /// this topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
         public DateTime? AccessedAt { get; set; }
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Entity availability status for the topic. Possible values include:
         /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus ")]
+        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus")]
         public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
 
         /// <summary>
@@ -99,14 +99,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// TimeSpan structure that defines the duration of the duplicate
-        /// detection history. The default value is 10 minutes..
+        /// detection history. The default value is 10 minutes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow ")]
+        [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow")]
         public string DuplicateDetectionHistoryTimeWindow { get; set; }
 
         /// <summary>
         /// Value that indicates whether server-side batched operations are
-        /// enabled..
+        /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? EnablePartitioning { get; set; }
 
         /// <summary>
-        /// Value that indicates whether partitioning is enabled or disabled..
+        /// Value that indicates whether partitioning is enabled or disabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableSubscriptionPartitioning")]
         public bool? EnableSubscriptionPartitioning { get; set; }
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? FilteringMessagesBeforePublishing { get; set; }
 
         /// <summary>
-        /// Value that indicates whether the message is anonymous accessible.
+        /// Value that indicates whether the message is accessible anonymously.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAnonymousAccessible")]
         public bool? IsAnonymousAccessible { get; set; }
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? IsExpress { get; set; }
 
         /// <summary>
-        /// Maximum size of the topic in megabytes, which is the size of
+        /// Maximum size of the topic in megabytes, which is the size of the
         /// memory allocated for the topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeInMegabytes")]
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? RequiresDuplicateDetection { get; set; }
 
         /// <summary>
-        /// Size of the topic in bytes.
+        /// Size of the topic, in bytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sizeInBytes")]
         public long? SizeInBytes { get; set; }
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? SupportOrdering { get; set; }
 
         /// <summary>
-        /// The exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
         public DateTime? UpdatedAt { get; set; }

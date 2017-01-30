@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Sku of the Namespace.
+    /// SKU of the namespace.
     /// </summary>
     public partial class Sku
     {
@@ -37,21 +37,21 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Name of this Sku. Possible values include: 'Basic', 'Standard',
+        /// Name of this SKU. Possible values include: 'Basic', 'Standard',
         /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The tier of this particular SKU. Possible values include: 'Basic',
-        /// 'Standard', 'Premium'
+        /// The billing tier of this particular SKU. Possible values include:
+        /// 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// The messaging units for the tier specified
+        /// The specified messaging units for the tier.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

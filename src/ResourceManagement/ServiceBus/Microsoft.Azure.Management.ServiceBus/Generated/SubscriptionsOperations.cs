@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         public ServiceBusManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic
+        /// Lsit all the subscriptions under a specified topic.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Creates a topic subscription
+        /// Creates a topic subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -250,13 +250,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='topicName'>
-        /// The topicName name.
+        /// The topic name.
         /// </param>
         /// <param name='subscriptionName'>
-        /// The subscriptionName name.
+        /// The subscription name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a subscription Resource.
+        /// Parameters supplied to create a subscription resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -828,7 +828,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic
+        /// Lsit all the subscriptions under a specified topic.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

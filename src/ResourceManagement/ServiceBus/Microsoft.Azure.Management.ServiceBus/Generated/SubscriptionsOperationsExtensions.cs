@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates a topic subscription
+            /// Creates a topic subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,13 +81,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='topicName'>
-            /// The topicName name.
+            /// The topic name.
             /// </param>
             /// <param name='subscriptionName'>
-            /// The subscriptionName name.
+            /// The subscription name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a subscription Resource.
+            /// Parameters supplied to create a subscription resource.
             /// </param>
             public static SubscriptionResource CreateOrUpdate(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionCreateOrUpdateParameters parameters)
             {
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates a topic subscription
+            /// Creates a topic subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -107,13 +107,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='topicName'>
-            /// The topicName name.
+            /// The topic name.
             /// </param>
             /// <param name='subscriptionName'>
-            /// The subscriptionName name.
+            /// The subscription name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a subscription Resource.
+            /// Parameters supplied to create a subscription resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

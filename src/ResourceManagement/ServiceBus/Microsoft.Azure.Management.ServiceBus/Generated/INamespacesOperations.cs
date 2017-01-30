@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface INamespacesOperations
     {
         /// <summary>
-        /// Lists all the available namespaces within the subscription
-        /// irrespective of the resourceGroups.
+        /// Gets all the available namespaces within the subscription,
+        /// irrespective of the resource groups.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<NamespaceResource>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the available namespaces within a resourceGroup.
+        /// Gets the available namespaces within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<NamespaceResource>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this
+        /// Creates or updates a service namespace. Once created, this
         /// namespace's resource manifest is immutable. This operation is
         /// idempotent.
         /// </summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a Namespace Resource.
+        /// Parameters supplied to create a namespace resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<NamespaceResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this
+        /// Creates or updates a service namespace. Once created, this
         /// namespace's resource manifest is immutable. This operation is
         /// idempotent.
         /// </summary>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a Namespace Resource.
+        /// Parameters supplied to create a namespace resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the description for the specified namespace.
+        /// Gets a description for the specified namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -139,13 +139,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<NamespaceResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Authorization rules for a namespace.
+        /// Gets the authorization rules for a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<SharedAccessAuthorizationRuleResource>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an authorization rule for a namespace
+        /// Creates or updates an authorization rule for a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Namespace Aauthorization Rule Name.
+        /// Namespace authorization rule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a namespace authorization rule
+        /// Deletes a namespace authorization rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization Rule Name.
+        /// Authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -196,13 +196,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse> DeleteAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Authorization rule for a namespace by name.
+        /// Gets an authorization rule for a namespace by rule name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
         /// <param name='authorizationRuleName'>
         /// Authorization rule name.
@@ -215,7 +215,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Primary and Secondary ConnectionStrings to the namespace
+        /// Gets the primary and secondary connection strings for the
+        /// namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -224,7 +225,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationRule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -234,8 +235,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<ResourceListKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerats the Primary or Secondary ConnectionStrings to the
-        /// namespace
+        /// Regenerates the primary or secondary connection strings for the
+        /// namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -244,10 +245,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationRule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to regenerate Auth Rule.
+        /// Parameters supplied to regenerate the authorization rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -257,8 +258,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<ResourceListKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateKeysParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all the available namespaces within the subscription
-        /// irrespective of the resourceGroups.
+        /// Gets all the available namespaces within the subscription,
+        /// irrespective of the resource groups.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -271,7 +272,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<NamespaceResource>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the available namespaces within a resourceGroup.
+        /// Gets the available namespaces within a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -284,7 +285,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<NamespaceResource>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Authorization rules for a namespace.
+        /// Gets the authorization rules for a namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

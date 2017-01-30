@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate  AuthorizationRules.
+    /// Parameters supplied to the Create Or Update Authorization Rules
+    /// operation.
     /// </summary>
     [JsonTransformation]
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateParameters
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Name of the AuthorizationRule.
+        /// Name of the authorization rule.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

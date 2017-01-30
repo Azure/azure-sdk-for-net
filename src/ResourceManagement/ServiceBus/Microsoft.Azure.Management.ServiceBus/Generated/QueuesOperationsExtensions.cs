@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class QueuesOperationsExtensions
     {
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates/Updates a service Queue. This operation is idempotent.
+            /// Creates or updates a Service Bus queue. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Queue Resource.
+            /// Parameters supplied to create or update a queue resource.
             /// </param>
             public static QueueResource CreateOrUpdate(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, QueueCreateOrUpdateParameters parameters)
             {
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates/Updates a service Queue. This operation is idempotent.
+            /// Creates or updates a Service Bus queue. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Queue Resource.
+            /// Parameters supplied to create or update a queue resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue from the specified namespace in resource group.
+            /// Deletes a queue from the specified namespace in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='queueName'>
-            /// The queue name.
+            /// The name of the queue to be deleted.
             /// </param>
             public static void Delete(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue from the specified namespace in resource group.
+            /// Deletes a queue from the specified namespace in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='queueName'>
-            /// The queue name.
+            /// The name of the queue to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified queue.
+            /// Returns a description for the specified queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified queue.
+            /// Returns a description for the specified queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorization rule for a queue
+            /// Creates an authorization rule for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorization rule for a queue
+            /// Creates an authorization rule for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue authorization rule
+            /// Deletes a queue authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue authorization rule
+            /// Deletes a queue authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Queue authorizationRule for a queue by name.
+            /// Gets an authorization rule for a queue by rule name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='queueName'>
             /// The queue name.
@@ -380,7 +380,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Queue authorizationRule for a queue by name.
+            /// Gets an authorization rule for a queue by rule name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='queueName'>
             /// The queue name.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the queue.
+            /// Primary and secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             public static ResourceListKeys ListKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the queue.
+            /// Primary and secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerates the Primary or Secondary ConnectionStrings to the Queue
+            /// Regenerates the primary or secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -476,10 +476,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             public static ResourceListKeys RegenerateKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateKeysParameters parameters)
             {
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerates the Primary or Secondary ConnectionStrings to the Queue
+            /// Regenerates the primary or secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -502,10 +502,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -553,7 +553,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

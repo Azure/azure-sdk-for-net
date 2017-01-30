@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface IQueuesOperations
     {
         /// <summary>
-        /// Lists the queues within the namespace.
+        /// Gets the queues within a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<QueueResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates/Updates a service Queue. This operation is idempotent.
+        /// Creates or updates a Service Bus queue. This operation is
+        /// idempotent.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The queue name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a Queue Resource.
+        /// Parameters supplied to create or update a queue resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<QueueResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, QueueCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a queue from the specified namespace in resource group.
+        /// Deletes a queue from the specified namespace in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// The name of the queue to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the description for the specified queue.
+        /// Returns a description for the specified queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -99,7 +100,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<QueueResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns all Queue authorizationRules.
+        /// Gets all authorization rules for a queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<SharedAccessAuthorizationRuleResource>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an authorization rule for a queue
+        /// Creates an authorization rule for a queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -130,7 +131,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Aauthorization Rule Name.
+        /// Authorization rule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a queue authorization rule
+        /// Deletes a queue authorization rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization Rule Name.
+        /// Authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,13 +166,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse> DeleteAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Queue authorizationRule for a queue by name.
+        /// Gets an authorization rule for a queue by rule name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
@@ -187,7 +188,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Primary and Secondary ConnectionStrings to the queue.
+        /// Primary and secondary connection strings to the queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -199,7 +200,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationRule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -209,7 +210,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<ResourceListKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerates the Primary or Secondary ConnectionStrings to the Queue
+        /// Regenerates the primary or secondary connection strings to the
+        /// queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -221,10 +223,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationRule name
+        /// The authorization rule name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to regenerate Auth Rule.
+        /// Parameters supplied to regenerate the authorization rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -234,7 +236,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<ResourceListKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateKeysParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the queues within the namespace.
+        /// Gets the queues within a namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -247,7 +249,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<IPage<QueueResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns all Queue authorizationRules.
+        /// Gets all authorization rules for a queue.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

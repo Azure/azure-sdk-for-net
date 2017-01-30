@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of a Namespace AuthorizationRules.
+    /// Description of a namespace authorization rule.
     /// </summary>
     [JsonTransformation]
     public partial class SharedAccessAuthorizationRuleResource : Resource

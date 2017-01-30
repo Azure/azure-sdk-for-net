@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Namespace operation.
+    /// Parameters supplied to the Create Or Update Namespace operation.
     /// </summary>
     [JsonTransformation]
     public partial class NamespaceCreateOrUpdateParameters
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Provisioning state of the Namespace.
+        /// Provisioning state of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
@@ -91,13 +91,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
-        /// Endpoint you can use to perform ServiceBus operations.
+        /// Endpoint you can use to perform Service Bus operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
         public string ServiceBusEndpoint { get; set; }
 
         /// <summary>
-        /// Indicates whether to create ACS namespace.
+        /// Indicates whether to create an ACS namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createACSNamespace")]
         public bool? CreateACSNamespace { get; set; }

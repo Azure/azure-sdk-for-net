@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of Subscription Resource.
+    /// Description of subscription resource.
     /// </summary>
     [JsonTransformation]
     public partial class SubscriptionResource : Resource
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Last time a there was a receive request to this subscription.
+        /// Last time there was a receive request to this subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
         public DateTime? AccessedAt { get; set; }
@@ -85,22 +85,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string DefaultMessageTimeToLive { get; set; }
 
         /// <summary>
-        /// Value that indicates if a subscription has dead letter support on
-        /// Filter evaluation exceptions.
+        /// Value that indicates whether a subscription has dead letter
+        /// support on filter evaluation exceptions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetteringOnFilterEvaluationExceptions")]
         public bool? DeadLetteringOnFilterEvaluationExceptions { get; set; }
 
         /// <summary>
-        /// Value that indicates if a subscription has dead letter support
-        /// when a message expires.
+        /// Value that indicates whether a subscription has dead letter
+        /// support when a message expires.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetteringOnMessageExpiration")]
         public bool? DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
         /// Value that indicates whether server-side batched operations are
-        /// enabled..
+        /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
@@ -137,7 +137,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public long? MessageCount { get; set; }
 
         /// <summary>
-        /// Value indicating if a subscription supports the concept of session.
+        /// Value indicating if a subscription supports the concept of
+        /// sessions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiresSession")]
         public bool? RequiresSession { get; set; }
@@ -152,7 +153,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// The exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
         public DateTime? UpdatedAt { get; set; }

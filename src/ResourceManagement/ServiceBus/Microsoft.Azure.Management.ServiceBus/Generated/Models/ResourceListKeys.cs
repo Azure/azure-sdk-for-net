@@ -39,34 +39,35 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// PrimaryConnectionString of the created Namespace AuthorizationRule.
+        /// Primary connection string of the created namespace authorization
+        /// rule.
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
         public string PrimaryConnectionString { get; set; }
 
         /// <summary>
-        /// SecondaryConnectionString of the created Namespace
-        /// AuthorizationRule
+        /// Secondary connection string of the created namespace authorization
+        /// rule.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]
         public string SecondaryConnectionString { get; set; }
 
         /// <summary>
         /// A base64-encoded 256-bit primary key for signing and validating
-        /// the SAS token
+        /// the SAS token.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; set; }
 
         /// <summary>
         /// A base64-encoded 256-bit primary key for signing and validating
-        /// the SAS token
+        /// the SAS token.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; set; }
 
         /// <summary>
-        /// A string that describes the authorization rule
+        /// A string that describes the authorization rule.
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; set; }

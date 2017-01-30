@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public long? ActiveMessageCount { get; set; }
 
         /// <summary>
-        /// Number of messages that are dead letters.
+        /// Number of messages that are dead lettered.
         /// </summary>
         [JsonProperty(PropertyName = "deadLetterMessageCount")]
         public long? DeadLetterMessageCount { get; set; }
 
         /// <summary>
-        /// Number scheduled messages.
+        /// Number of scheduled messages.
         /// </summary>
         [JsonProperty(PropertyName = "scheduledMessageCount")]
         public long? ScheduledMessageCount { get; set; }
