@@ -3,6 +3,7 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace Fluent.Tests.ResourceManager
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                var authenticated = TestHelper.Authenticate();
-                var subscriptions = authenticated.Subscriptions.List();
-                Assert.True(subscriptions.Count > 0);
+                var azure = TestHelper.CreateRollupClient();
+                Assert.True(0 < azure.Subscriptions.List().Count);
+                var subscription = azure.GetCurrentSubscription();
+                Assert.NotNull(subscription);
+                Assert.Equal(subscription.SubscriptionId.ToLowerInvariant(), azure.SubscriptionId.ToLowerInvariant());
             }
         }
 
@@ -28,11 +31,24 @@ namespace Fluent.Tests.ResourceManager
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
-                var authenticated = TestHelper.Authenticate();
-                var subscription = authenticated.Subscriptions.List().First();
-                // TODO - ans - Method below throws exception as the method is not implemented.
-                //var locations = subscription.ListLocations();
-                //Assert.True(locations.Count > 0);
+                var azure = TestHelper.CreateRollupClient();
+                var subscription = azure.GetCurrentSubscription();
+                Assert.NotNull(subscription);
+
+                var locations = subscription.ListLocations();
+                Assert.True(locations.Count > 0);
+
+                foreach (var location in locations)
+                {
+                    Region region = Region.Create(location.Name);
+                    Assert.NotNull(region);
+                    Assert.Equal(region, location.Region);
+                    Assert.Equal(region.Name.ToLowerInvariant(), location.Name.ToLowerInvariant());
+                }
+
+                var uswest = subscription.GetLocationByRegion(Region.USWest);
+                Assert.NotNull(uswest);
+                Assert.Equal(Region.USWest.Name.ToLowerInvariant(), uswest.Name);
             }
         }
     }

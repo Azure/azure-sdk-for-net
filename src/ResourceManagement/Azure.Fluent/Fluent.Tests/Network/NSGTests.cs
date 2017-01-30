@@ -9,6 +9,7 @@ using Xunit;
 using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
+using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace Fluent.Tests.Network
 {
@@ -20,12 +21,17 @@ namespace Fluent.Tests.Network
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
-                var testId = TestUtilities.GenerateName("");
-                var newName = "nsg" + testId;
+                string testId = SdkContext.RandomResourceName("", 9);
+                string resourceGroupName = "rg" + testId;
+                string nsgName = "nsg" + testId;
+                string nicName = "nic" + testId;
+                Region region = Region.USEast;
+
+                #region Create
                 var manager = TestHelper.CreateNetworkManager();
-                var nsg = manager.NetworkSecurityGroups.Define(newName)
-                    .WithRegion(Region.USWest)
-                    .WithNewResourceGroup("rg" + testId)
+                var nsg = manager.NetworkSecurityGroups.Define(nsgName)
+                    .WithRegion(region)
+                    .WithNewResourceGroup(resourceGroupName)
                     .DefineRule("rule1")
                         .AllowOutbound()
                         .FromAnyAddress()
@@ -46,11 +52,32 @@ namespace Fluent.Tests.Network
                         .Attach()
                     .Create();
 
+                var nic = manager.NetworkInterfaces.Define(nicName)
+                        .WithRegion(nsg.Region)
+                        .WithExistingResourceGroup(nsg.ResourceGroupName)
+                        .WithNewPrimaryNetwork("10.0.0.0/28")
+                        .WithPrimaryPrivateIpAddressDynamic()
+                        .WithExistingNetworkSecurityGroup(nsg)
+                        .Create();
+
+                nsg.Refresh();
+
                 // Verify
-                Assert.True(nsg.Region.Equals(Region.USWest));
+                Assert.True(nsg.Region.Equals(region));
                 Assert.True(nsg.SecurityRules.Count == 2);
 
-                var resource = manager.NetworkSecurityGroups.GetByGroup("rg" + testId, newName);
+                // Confirm NIC association
+                Assert.Equal(1, nsg.NetworkInterfaceIds.Count);
+                Assert.Equal(nsg.NetworkInterfaceIds[0].ToLowerInvariant(), nic.Id.ToLowerInvariant());
+
+                #endregion
+
+
+                #region Read
+                var resource = manager.NetworkSecurityGroups.GetByGroup(resourceGroupName, nsgName);
+                #endregion
+
+                #region Update
                 resource = resource.Update()
                     .WithoutRule("rule1")
                     .WithTag("tag1", "value1")
@@ -73,12 +100,14 @@ namespace Fluent.Tests.Network
                         .Parent()
                     .Apply();
                 Assert.True(resource.Tags.ContainsKey("tag1"));
+                #endregion
 
+                #region Delete
                 manager.NetworkSecurityGroups.DeleteById(resource.Id);
                 manager.ResourceManager.ResourceGroups.DeleteByName(resource.ResourceGroupName);
+                #endregion
             }
         }
-
 
         public void Print(INetworkSecurityGroup resource)
         {

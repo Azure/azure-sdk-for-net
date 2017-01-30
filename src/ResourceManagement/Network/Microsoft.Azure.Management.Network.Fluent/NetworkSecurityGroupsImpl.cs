@@ -59,6 +59,32 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
         public override Task DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Clear NIC references if any
+            var nsg = GetByGroup(groupName, name);
+            if (nsg != null)
+            {
+                var nicIds = nsg.NetworkInterfaceIds;
+                if (nicIds != null)
+                {
+                    foreach (string nicRef in nicIds)
+                    {
+                        var nic = Manager.NetworkInterfaces.GetById(nicRef);
+                        if (nic == null)
+                        {
+                            continue;
+                        }
+                        else if (!nsg.Id.ToLowerInvariant().Equals(nic.NetworkSecurityGroupId.ToLowerInvariant()))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            nic.Update().WithoutNetworkSecurityGroup().Apply();
+                        }
+                    }
+                }
+            }
+
             return InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
