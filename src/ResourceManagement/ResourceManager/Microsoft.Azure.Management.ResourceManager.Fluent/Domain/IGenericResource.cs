@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     /// An immutable client-side representation of an Azure generic resource.
     /// </summary>
     public interface IGenericResource  :
-        IGroupableResource,
+        IGroupableResource<IResourceManager>,
         IRefreshable<IGenericResource>,
         IUpdatable<GenericResource.Update.IWithApiVersion>,
         IWrapper<GenericResourceInner>

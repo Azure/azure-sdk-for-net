@@ -16,7 +16,7 @@ namespace Azure.Tests.Network.ApplicationGateway
     /// <summary>
     /// Internal complex app gateway test.
     /// </summary>
-    public class PublicComplex : TestTemplate<IApplicationGateway, IApplicationGateways>
+    public class PublicComplex : TestTemplate<IApplicationGateway, IApplicationGateways, INetworkManager>
     {
         private List<IPublicIpAddress> testPips;
         private ApplicationGatewayHelper applicationGatewayHelper;

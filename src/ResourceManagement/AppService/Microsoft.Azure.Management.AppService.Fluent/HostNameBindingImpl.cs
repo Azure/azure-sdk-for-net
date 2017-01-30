@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         ///GENMHASH:9E6C2387B371ABFFE71039FB9CDF745F:E5EF1EA4BA2D309DA43A37720754443C
-        public string ToString()
+        new public string ToString()
         {
             String suffix;
             if (AzureResourceType() == Models.AzureResourceType.TrafficManager)

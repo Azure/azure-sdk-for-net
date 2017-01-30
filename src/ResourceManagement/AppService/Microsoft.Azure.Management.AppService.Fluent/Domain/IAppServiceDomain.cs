@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </link>
     /// <link>Creatable.createAsync().</link>
     public interface IAppServiceDomain  :
-        IGroupableResource,
+        IGroupableResource<IAppServiceManager>,
         IHasName,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceDomain>,
         IUpdatable<AppServiceDomain.Update.IUpdate>,

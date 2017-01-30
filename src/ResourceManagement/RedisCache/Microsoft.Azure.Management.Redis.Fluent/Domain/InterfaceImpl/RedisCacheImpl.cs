@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="networkResource">Instance of Network object.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of Redis Cache definition.</return>
-        RedisCache.Definition.IWithCreate RedisCache.Definition.IWithCreate.WithSubnet(IGroupableResource networkResource, string subnetName)
+        RedisCache.Definition.IWithCreate RedisCache.Definition.IWithCreate.WithSubnet(IHasId networkResource, string subnetName)
         {
             return this.WithSubnet(networkResource, subnetName) as RedisCache.Definition.IWithCreate;
         }
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <param name="networkResource">Instance of Network object.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of Redis Cache update.</return>
-        RedisCache.Update.IUpdate RedisCache.Update.IUpdate.WithSubnet(IGroupableResource networkResource, string subnetName)
+        RedisCache.Update.IUpdate RedisCache.Update.IUpdate.WithSubnet(IHasId networkResource, string subnetName)
         {
             return this.WithSubnet(networkResource, subnetName) as RedisCache.Update.IUpdate;
         }

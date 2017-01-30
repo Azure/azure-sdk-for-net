@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:E0A932BCE095834DF49296A5A1B250F3:9AB43882F1D20579E20CB41390D07940
-        public RedisCacheImpl WithSubnet(IGroupableResource networkResource, string subnetName)
+        public RedisCacheImpl WithSubnet(IHasId networkResource, string subnetName)
         {
             if (networkResource != null)
             {

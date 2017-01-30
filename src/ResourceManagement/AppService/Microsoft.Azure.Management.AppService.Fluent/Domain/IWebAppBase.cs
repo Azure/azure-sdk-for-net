@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public interface IWebAppBase  :
         IHasName,
-        IGroupableResource,
+        IGroupableResource<IAppServiceManager>,
         IWrapper<Models.SiteInner>
     {
         /// <summary>

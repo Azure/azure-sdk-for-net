@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Public IP address.
     /// </summary>
     public interface IPublicIpAddress  :
-        IGroupableResource,
+        IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress>,
         IWrapper<Models.PublicIPAddressInner>,
         IUpdatable<PublicIpAddress.Update.IUpdate>

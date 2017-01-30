@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Database.
     /// </summary>
     public interface ISqlDatabase  :
-        IIndependentChildResource,
+        IIndependentChildResource<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
         IUpdatable<SqlDatabase.Update.IUpdate>,
         IWrapper<Models.DatabaseInner>

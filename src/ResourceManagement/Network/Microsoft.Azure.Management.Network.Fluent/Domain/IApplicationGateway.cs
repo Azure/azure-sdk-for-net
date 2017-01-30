@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for application gateway management API in Azure.
     /// </summary>
     public interface IApplicationGateway  :
-        IGroupableResource,
+        IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         IWrapper<Models.ApplicationGatewayInner>,
         IUpdatable<ApplicationGateway.Update.IUpdate>,
         IHasSubnet,
-        IHasPrivateIpAddress,
-        IHasManager<INetworkManager>
+        IHasPrivateIpAddress
     {
         /// <summary>
         /// Gets frontend IP configurations, indexed by name.

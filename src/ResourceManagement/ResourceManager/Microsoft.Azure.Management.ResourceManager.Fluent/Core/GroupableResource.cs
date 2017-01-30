@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
         DefTypeWithTags,
         UTypeWithTags> :
         ResourceBase<IFluentResourceT, InnerResourceT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>,
-        IGroupableResource
+        IGroupableResource<ManagerT>
         where FluentResourceT : GroupableResource<IFluentResourceT,
             InnerResourceT,
             FluentResourceT,
@@ -47,20 +47,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent
     {
         protected ICreatable<IResourceGroup> newGroup;
         private string groupName;
-        private ManagerT manager;
 
         protected GroupableResource(string key, InnerResourceT innerObject, ManagerT manager) :base(key, innerObject)
         {
-            this.manager = manager;
+            Manager = manager;
         }
 
-        public ManagerT Manager
-        {
-            get
-            {
-                return this.manager;
-            }
-        }
+        public ManagerT Manager { get; private set; }
 
         protected string ResourceIdBase
         {
@@ -97,7 +90,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public IDefinitionAfterResourceGroup WithNewResourceGroup(string groupName)
         {
-            ICreatable<IResourceGroup> creatable = manager
+            ICreatable<IResourceGroup> creatable = Manager
                 .ResourceManager
                 .ResourceGroups
                 .Define(groupName)
@@ -126,7 +119,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent
 
         public IDefinitionAfterResourceGroup WithNewResourceGroup(string name, Region region)
         {
-            return this.WithNewResourceGroup(this.manager.ResourceManager.ResourceGroups.Define(name).WithRegion(region));
+            return this.WithNewResourceGroup(Manager.ResourceManager.ResourceGroups.Define(name).WithRegion(region));
         }
 
         public IDefinitionAfterResourceGroup WithNewResourceGroup(Region region)

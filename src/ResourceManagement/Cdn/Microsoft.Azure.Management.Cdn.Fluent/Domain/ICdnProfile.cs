@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// An immutable client-side representation of an Azure CDN profile.
     /// </summary>
     public interface ICdnProfile  :
-        IGroupableResource,
+        IGroupableResource<ICdnManager>,
         IRefreshable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         IWrapper<Microsoft.Azure.Management.Cdn.Fluent.Models.ProfileInner>,
         IUpdatable<CdnProfile.Update.IUpdate>

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for route table management.
     /// </summary>
     public interface IRouteTable  :
-        IGroupableResource,
+        IGroupableResource<INetworkManager>,
         IRefreshable<Microsoft.Azure.Management.Network.Fluent.IRouteTable>,
         IWrapper<Models.RouteTableInner>,
         IUpdatable<RouteTable.Update.IUpdate>,

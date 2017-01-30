@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxEYXRhYmFzZUltcGw=
     internal partial class SqlDatabaseImpl :
-        IndependentChildResourceImpl<ISqlDatabase, ISqlServer, DatabaseInner, SqlDatabaseImpl, IHasId, IUpdate>,
+        IndependentChildResourceImpl<ISqlDatabase, ISqlServer, DatabaseInner, SqlDatabaseImpl, IHasId, IUpdate, ISqlManager>,
         ISqlDatabase,
         IDefinition,
         IUpdate,
@@ -288,8 +288,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0F0FD44A3D87F875885456FD45CEE6DF:FC20F8BEAA0D65FFE9DA4206313524DE
-        internal SqlDatabaseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection)
-               : base(name, innerObject)
+        internal SqlDatabaseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection, ISqlManager manager)
+               : base(name, innerObject, manager)
         {
             this.innerCollection = innerCollection;
         }

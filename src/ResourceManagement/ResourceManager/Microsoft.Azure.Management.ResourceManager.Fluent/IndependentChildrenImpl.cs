@@ -18,33 +18,27 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="InnerCollection">The inner type of the collection object.</typeparam>
     /// <typeparam name="Manager">The manager type for this resource provider type.</typeparam>
 
-    public abstract partial class IndependentChildrenImpl<T, ImplT, InnerT, InnerCollectionT, ManagerT> :
+    public abstract partial class IndependentChildrenImpl<T, ImplT, InnerT, InnerCollectionT, ManagerT, ParentT> :
         CreatableResources<T, ImplT, InnerT>,
         ISupportsGettingById<T>,
-        ISupportsGettingByParent<T>,
-        ISupportsListingByParent<T>,
+        ISupportsGettingByParent<T, ParentT, ManagerT>,
+        ISupportsListingByParent<T, ParentT, ManagerT>,
         ISupportsDeletingById,
         ISupportsDeletingByParent,
         IHasManager<ManagerT>
         where T : class, IHasId
         where ImplT : T
+        where ParentT : IGroupableResource<ManagerT>
     {
         protected InnerCollectionT innerCollection;
-        protected ManagerT manager;
 
-        public ManagerT Manager
-        {
-            get
-            {
-                return manager;
-            }
-        }
+        public ManagerT Manager { get; private set; }
 
         ///GENMHASH:ED07292865768A689F918C1B84A21178:E628E6DE6456B030DED192E940597C6E
         public IndependentChildrenImpl(InnerCollectionT innerCollection, ManagerT manager)
         {
             this.innerCollection = innerCollection;
-            this.manager = manager;
+            Manager = manager;
         }
 
         ///GENMHASH:5002116800CBAC02BBC1B4BF62BC4942:A2A025A9F2772D74D0B8615C6144E641
@@ -61,7 +55,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         ///GENMHASH:B1F9F82090ABF692D9645AE6B2D732EE:B8247A96B5B602D0F01FFC494377AA87
-        public T GetByParent(IGroupableResource parentResource, string name)
+        public T GetByParent(ParentT parentResource, string name)
         {
             return GetByParent(parentResource.ResourceGroupName, parentResource.Name, name);
         }
@@ -71,13 +65,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             return GetByParentAsync(resourceGroup, parentName, name).GetAwaiter().GetResult();
         }
 
-        public async Task<T> GetByParentAsync(IGroupableResource parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> GetByParentAsync(ParentT parentResource, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await GetByParentAsync(parentResource.ResourceGroupName, parentResource.Name, name);
         }
 
         ///GENMHASH:A0A10EB2FF1149F056003612DA902E09:D8BC76ED0E6FF85C69301F568869AE3D
-        public PagedList<T> ListByParent(IGroupableResource parentResource)
+        public PagedList<T> ListByParent(ParentT parentResource)
         {
             return ListByParent(parentResource.ResourceGroupName, parentResource.Name);
         }
@@ -87,7 +81,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             return ListByParentAsync(resourceGroupName, parentName).GetAwaiter().GetResult();
         }
 
-        public async Task<PagedList<T>> ListByParentAsync(IGroupableResource parentResource, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await ListByParentAsync(parentResource.ResourceGroupName, parentResource.Name);
         }

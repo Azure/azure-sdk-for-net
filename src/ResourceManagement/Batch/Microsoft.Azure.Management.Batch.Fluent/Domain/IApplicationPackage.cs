@@ -4,8 +4,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 {
 
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Batch.Fluent.Models;
-    using System;
     /// <summary>
     /// An immutable client-side representation of an Azure batch account application.
     /// </summary>
@@ -13,9 +11,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage,Microsoft.Azure.Management.Batch.Fluent.IApplication>,
         IWrapper<Microsoft.Azure.Management.Batch.Fluent.Models.ApplicationPackageInner>
     {
-        /// <returns>the name of application package.</returns>
-        string Name { get; }
-
         /// <returns>the sate of the application package</returns>
         Microsoft.Azure.Management.Batch.Fluent.Models.PackageState State { get; }
 
@@ -41,6 +36,5 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Deletes the application package.
         /// </summary>
         void Delete();
-
     }
 }

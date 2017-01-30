@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <return>The list of SQLDatabases in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(IGroupableResource sqlServer);
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(ISqlServer sqlServer);
 
         /// <summary>
         /// Gets the SQLDatabase based on the resource group name, SQLServer name and SQLDatabase name.
@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <param name="name">The name of SQLDatabase.</param>
         /// <return>An immutable representation of the SQLDatabase.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase GetBySqlServer(IGroupableResource sqlServer, string name);
+        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase GetBySqlServer(ISqlServer sqlServer, string name);
     }
 }

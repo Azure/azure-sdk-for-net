@@ -14,7 +14,7 @@ namespace Azure.Tests.Network.ApplicationGateway
     /// <summary>
     /// Internal minimalistic app gateway test.
     /// </summary>
-    public class PrivateMinimal : TestTemplate<IApplicationGateway, IApplicationGateways>
+    public class PrivateMinimal : TestTemplate<IApplicationGateway, IApplicationGateways, INetworkManager>
     {
         private INetworks networks;
         private ApplicationGatewayHelper applicationGatewayHelper;

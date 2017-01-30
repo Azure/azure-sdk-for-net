@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure availability set.
     /// </summary>
     public interface IAvailabilitySet  :
-        IGroupableResource,
+        IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         IWrapper<Models.AvailabilitySetInner>,
         IUpdatable<AvailabilitySet.Update.IUpdate>

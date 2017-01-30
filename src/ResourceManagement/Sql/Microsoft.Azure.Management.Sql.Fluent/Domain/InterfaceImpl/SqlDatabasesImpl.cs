@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="name">The name of the new resource.</param>
         /// <return>The first stage of the new resource definition.</return>
-        SqlDatabase.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<SqlDatabase.Definition.IBlank>.Define(string name)
+        SqlDatabase.Definition.IBlank ISupportsCreating<IBlank>.Define(string name)
         {
             return this.Define(name) as SqlDatabase.Definition.IBlank;
         }
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>.ListByParent(string resourceGroupName, string parentName)
+        PagedList<ISqlDatabase> ISupportsListingByParent<ISqlDatabase, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
         {
-            return this.ListByParent(resourceGroupName, parentName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
+            return this.ListByParent(resourceGroupName, parentName) as PagedList<ISqlDatabase>;
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>.GetByParent(string resourceGroup, string parentName, string name)
+        ISqlDatabase ISupportsGettingByParent<ISqlDatabase, ISqlServer, ISqlManager>.GetByParent(string resourceGroup, string parentName, string name)
         {
-            return this.GetByParent(resourceGroup, parentName, name) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
+            return this.GetByParent(resourceGroup, parentName, name) as ISqlDatabase;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="sqlServerName">The name of SQLServer.</param>
         /// <param name="name">The name of SQLDatabase.</param>
         /// <return>An immutable representation of the SQLDatabase.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Microsoft.Azure.Management.Sql.Fluent.ISqlDatabases.GetBySqlServer(string resourceGroup, string sqlServerName, string name)
+        ISqlDatabase ISqlDatabases.GetBySqlServer(string resourceGroup, string sqlServerName, string name)
         {
             return this.GetBySqlServer(resourceGroup, sqlServerName, name) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
         }
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <param name="name">The name of SQLDatabase.</param>
         /// <return>An immutable representation of the SQLDatabase.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Microsoft.Azure.Management.Sql.Fluent.ISqlDatabases.GetBySqlServer(IGroupableResource sqlServer, string name)
+        Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Microsoft.Azure.Management.Sql.Fluent.ISqlDatabases.GetBySqlServer(ISqlServer sqlServer, string name)
         {
             return this.GetBySqlServer(sqlServer, name) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
         }
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <return>The list of SQLDatabases in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabases.ListBySqlServer(IGroupableResource sqlServer)
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.ISqlDatabases.ListBySqlServer(ISqlServer sqlServer)
         {
             return this.ListBySqlServer(sqlServer) as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
         }

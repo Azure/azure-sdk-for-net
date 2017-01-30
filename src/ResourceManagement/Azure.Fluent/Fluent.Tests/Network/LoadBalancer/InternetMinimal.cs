@@ -16,7 +16,7 @@ namespace Azure.Tests.Network.LoadBalancer
     /// <summary>
     /// Internet-facing minimalistic LB test
     /// </summary>
-    public class InternetMinimal : TestTemplate<ILoadBalancer, ILoadBalancers>
+    public class InternetMinimal : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;

@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// @param <FluentModelImplT> the implementation type of the fluent model type
     /// @param <ManagerT> the service manager type
     /// </summary>
-    public abstract partial class GroupableParentResource<IFluentResourceT,
+    public abstract partial class GroupableParentResource<
+        IFluentResourceT,
         InnerResourceT,
         FluentResourceT,
         ManagerT,

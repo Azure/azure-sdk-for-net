@@ -131,7 +131,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new ReadOnlyDictionary<string, IRecommendedElasticPool>(recommendedElasticPools.ToDictionary(
                     recommendedElasticPoolInner => recommendedElasticPoolInner.Name,
                     recommendedElasticPoolInner => (IRecommendedElasticPool)new RecommendedElasticPoolImpl(
-                        recommendedElasticPoolInner, this.databasesInner, this.recommendedElasticPoolsInner)));
+                        recommendedElasticPoolInner,
+                        databasesInner,
+                        recommendedElasticPoolsInner,
+                        Manager)));
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:3A15AE6B9ADA17FBEC37A8078DA08565

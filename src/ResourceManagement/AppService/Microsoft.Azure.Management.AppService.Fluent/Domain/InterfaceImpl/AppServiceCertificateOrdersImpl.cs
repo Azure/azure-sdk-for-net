@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
         /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        async Task<IAppServiceCertificateOrder> ISupportsGettingByGroup<IAppServiceCertificateOrder>.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder;
+            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as IAppServiceCertificateOrder;
         }
 
         /// <summary>
@@ -55,20 +55,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </summary>
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
- 
             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
-        /// </summary>
-        /// <param name="resourceGroupName">The name of the resource group the resource is in.</param>
-        /// <param name="name">The name of the resource. (Note, this is not the ID).</param>
-        async Task<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder> Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrders.GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
-        {
-            return await this.GetByGroupAsync(resourceGroupName, name, cancellationToken) as Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder;
         }
     }
 }

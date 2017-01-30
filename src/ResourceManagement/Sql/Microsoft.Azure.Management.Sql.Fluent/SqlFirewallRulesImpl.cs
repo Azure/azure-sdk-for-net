@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxGaXJld2FsbFJ1bGVzSW1wbA==
     internal partial class SqlFirewallRulesImpl :
-        IndependentChildrenImpl<ISqlFirewallRule, SqlFirewallRuleImpl, ServerFirewallRuleInner, IServersOperations, ISqlManager>,
+        IndependentChildrenImpl<ISqlFirewallRule, SqlFirewallRuleImpl, ServerFirewallRuleInner, IServersOperations, ISqlManager, ISqlServer>,
         ISqlFirewallRules,
-        ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
-        ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
+        ISupportsGettingByParent<ISqlFirewallRule, ISqlServer, ISqlManager>,
+        ISupportsListingByParent<ISqlFirewallRule, ISqlServer, ISqlManager>,
         ISqlFirewallRulesCreatable
     {
         ///GENMHASH:94CD9D1734A2AA402A84D7B04BE4E08E:0FCD47CBCD9128C3D4A03458C5796741
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:CD989F8A79EC70D56C4F5154E2B8BE11:57462F0C7FF757AFBBFD3B3561C9F9ED
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(IGroupableResource sqlServer)
+        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer)
         {
             return new List<ISqlFirewallRule>(this.ListByParent(sqlServer));
         }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:6B5394D9B9C62E3B4A3B037DD27B7A20:466DF29CB4850E0593B3C691F625BC2C
-        public ISqlFirewallRule GetBySqlServer(IGroupableResource sqlServer, string name)
+        public ISqlFirewallRule GetBySqlServer(ISqlServer sqlServer, string name)
         {
             return this.GetByParent(sqlServer, name);
         }
@@ -73,7 +73,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlFirewallRuleImpl(
                 firewallRuleName,
                 inner,
-                this.innerCollection).WithExistingParentResource(resourceGroupName, sqlServerName);
+                this.innerCollection,
+                this.Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:D9AFFE54BAA276E6A6DADDEBF326C548
@@ -95,7 +96,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             {
                 return null;
             }
-            return new SqlFirewallRuleImpl(inner.Name, inner, this.innerCollection);
+            return new SqlFirewallRuleImpl(inner.Name, inner, this.innerCollection, this.Manager);
         }
     }
 }

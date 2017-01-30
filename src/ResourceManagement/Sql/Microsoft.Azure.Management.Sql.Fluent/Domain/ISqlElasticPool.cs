@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL ElasticPool.
     /// </summary>
     public interface ISqlElasticPool  :
-        IIndependentChildResource,
+        IIndependentChildResource<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
         IUpdatable<SqlElasticPool.Update.IUpdate>,
         IWrapper<Models.ElasticPoolInner>
