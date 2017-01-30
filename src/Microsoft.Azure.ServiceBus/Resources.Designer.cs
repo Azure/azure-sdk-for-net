@@ -114,6 +114,14 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Failed to serialize the session state because its state stream has been partially consumed..
+        /// </summary>
+        public static string CannotSerializeSessionStateWithPartiallyConsumedStream {
+            get {
+                return ResourceManager.GetString("CannotSerializeSessionStateWithPartiallyConsumedStream", resourceCulture);
+            }
+        }
+        
         ///    Looks up a localized string similar to The entity name or path contains an invalid character &apos;{0}&apos;. The supplied value is &apos;{1}&apos;..
         /// </summary>
         public static string InvalidCharacterInEntityName {
@@ -132,6 +140,14 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue..
+        /// </summary>
+        public static string MessageLockLost {
+            get {
+                return ResourceManager.GetString("MessageLockLost", resourceCulture);
+            }
+        }
+        
         ///    Looks up a localized string similar to &apos;{0}&apos; is not a supported type..
         /// </summary>
         public static string NotSupportedPropertyType {
@@ -141,6 +157,14 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The session lock has expired on the MessageSession. Accept a new MessageSession..
+        /// </summary>
+        public static string SessionLockExpiredOnMessageSession {
+            get {
+                return ResourceManager.GetString("SessionLockExpiredOnMessageSession", resourceCulture);
+            }
+        }
+        
         ///    Looks up a localized string similar to Provided rule filter {0} is not supported. Supported values are: {1}, {2}.
         /// </summary>
         public static string RuleFilterNotSupported {

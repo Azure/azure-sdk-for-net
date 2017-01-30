@@ -129,8 +129,26 @@
   <data name="ArgumentStringTooBig" xml:space="preserve">
     <value>The argument '{0}' cannot exceed {1} characters.</value>
   </data>
+  <data name="BrokeredMessageListIsNullOrEmpty" xml:space="preserve">
+    <value>There are no brokeredMessages supplied. Please make sure input messages are not empty.</value>
+  </data>
+  <data name="CannotSendAnEmptyMessage" xml:space="preserve">
+    <value>Sending empty {0} is not a valid operation.</value>
+  </data>
+  <data name="CannotSerializeSessionStateWithPartiallyConsumedStream" xml:space="preserve">
+    <value>Failed to serialize the session state because its state stream has been partially consumed.</value>
+  </data>
+  <data name="FailedToSerializeUnsupportedType" xml:space="preserve">
+    <value>Serialization operation failed due to unsupported type {0}.</value>
+  </data>
   <data name="InvalidEncoding" xml:space="preserve">
     <value>The string has an invalid encoding format.</value>
+  </data>
+  <data name="MessageLockLost" xml:space="preserve">
+    <value>The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue.</value>
+  </data>
+  <data name="SessionLockExpiredOnMessageSession" xml:space="preserve">
+    <value>The session lock has expired on the MessageSession. Accept a new MessageSession.</value>
   </data>
   <data name="TimeoutMustBeNonNegative" xml:space="preserve">
     <value>Argument {0} must be a non-negative timeout value. The provided value was {1}.</value>

@@ -18,9 +18,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public const string ReadOperationValue = "READ";
         public const string ManagementEntityTypeKey = "type";
         public const string ManagementSecurityTokenKey = "security_token";
-        public const string ResponseStatusCode = "status-code";
-        public const string ResponseErrorCondition = "error-condition";
-        public const string ResponseStatusDescription = "status-description";
 
         // Filters
         public const string FilterOffsetPartName = "amqp.annotation.x-opt-offset";
@@ -42,6 +39,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static readonly AmqpSymbol BatchFlushIntervalName = AmqpConstants.Vendor + ":batch-flush-interval";
         public static readonly AmqpSymbol EntityTypeName = AmqpConstants.Vendor + ":entity-type";
         public static readonly AmqpSymbol TimeoutName = AmqpConstants.Vendor + ":timeout";
+        public static readonly AmqpSymbol TrackingIdName = AmqpConstants.Vendor + ":tracking-id";
 
         // Error codes
         public static readonly AmqpSymbol DeadLetterName = AmqpConstants.Vendor + ":dead-letter";

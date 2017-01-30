@@ -64,24 +64,32 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             TimeoutHelper timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
             using (AmqpMessage amqpMessage = AmqpMessageConverter.BrokeredMessagesToAmqpMessage(brokeredMessages, true))
             {
-                SendingAmqpLink amqpLink = await this.SendLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-                if (amqpLink.Settings.MaxMessageSize.HasValue)
+                SendingAmqpLink amqpLink = null;
+                try
                 {
-                    ulong size = (ulong)amqpMessage.SerializedMessageSize;
-                    if (size > amqpLink.Settings.MaxMessageSize.Value)
+                    amqpLink = await this.SendLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+                    if (amqpLink.Settings.MaxMessageSize.HasValue)
                     {
-                        // TODO: Add MessageSizeExceededException
-                        throw new NotImplementedException("MessageSizeExceededException: " + Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value));
-                        ////throw Fx.Exception.AsError(new MessageSizeExceededException(
-                        ////Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value)));
+                        ulong size = (ulong)amqpMessage.SerializedMessageSize;
+                        if (size > amqpLink.Settings.MaxMessageSize.Value)
+                        {
+                            // TODO: Add MessageSizeExceededException
+                            throw new NotImplementedException("MessageSizeExceededException: " + Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value));
+                            ////throw Fx.Exception.AsError(new MessageSizeExceededException(
+                            ////Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value)));
+                        }
+                    }
+
+                    Outcome outcome = await amqpLink.SendMessageAsync(amqpMessage, this.GetNextDeliveryTag(), AmqpConstants.NullBinary, timeoutHelper.RemainingTime()).ConfigureAwait(false);
+                    if (outcome.DescriptorCode != Accepted.Code)
+                    {
+                        Rejected rejected = (Rejected)outcome;
+                        throw Fx.Exception.AsError(AmqpExceptionHelper.ToMessagingContractException(rejected.Error));
                     }
                 }
-
-                Outcome outcome = await amqpLink.SendMessageAsync(amqpMessage, this.GetNextDeliveryTag(), AmqpConstants.NullBinary, timeoutHelper.RemainingTime()).ConfigureAwait(false);
-                if (outcome.DescriptorCode != Accepted.Code)
+                catch (Exception exception)
                 {
-                    Rejected rejected = (Rejected)outcome;
-                    throw Fx.Exception.AsError(AmqpExceptionHelper.ToMessagingContract(rejected.Error));
+                    throw AmqpExceptionHelper.GetClientException(exception, amqpLink?.GetTrackingId());
                 }
             }
         }

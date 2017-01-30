@@ -198,11 +198,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 Stopwatch timer = Stopwatch.StartNew();
-                var sessionReceiver = await queueClient.AcceptMessageSessionAsync(TimeSpan.FromSeconds(2));
+
+                MessageSession sessionReceiver = null;
+                try
+                {
+                    sessionReceiver = await queueClient.AcceptMessageSessionAsync(TimeSpan.FromSeconds(2));
+                }
+                catch (TimeoutException)
+                {
+                }
+
                 timer.Stop();
 
                 // If sessionId is not null, then the queue needs to be cleaned up before running the timeout test.
-                Assert.Null(sessionReceiver.SessionId);
+                Assert.Null(sessionReceiver?.SessionId);
 
                 // Ensuring total time taken is less than 60 seconds, which is the default timeout for AcceptMessageSessionAsync.
                 // Keeping the value of 40 to avoid flakiness in test infrastructure which may lead to extended time taken.

@@ -79,5 +79,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             return list.Cast<TValue>();
         }
+
+        public AmqpSymbol GetResponseErrorCondition()
+        {
+            object condition = this.responseMessage.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
+
+            return condition is AmqpSymbol ? (AmqpSymbol)condition : null;
+        }
+
+        public Exception ToMessagingContractException()
+        {
+            return this.responseMessage.ToMessagingContractException(this.StatusCode);
+        }
     }
 }

@@ -5,6 +5,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Net.Sockets;
+    using System.Text;
     using Messaging.Amqp;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
@@ -38,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static AmqpSymbol GetResponseErrorCondition(AmqpMessage response, AmqpResponseStatusCode statusCode)
         {
-            object condition = response.ApplicationProperties.Map[AmqpClientConstants.ResponseErrorCondition];
+            object condition = response.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
             if (condition != null)
             {
                 return (AmqpSymbol)condition;
@@ -61,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             AmqpResponseStatusCode responseStatusCode = AmqpResponseStatusCode.Unused;
             if (responseMessage != null)
             {
-                object statusCodeValue = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusCode] ?? responseMessage.ApplicationProperties.Map[AmqpClientConstants.ResponseStatusCode];
+                object statusCodeValue = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
                 if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
                 {
                     responseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
@@ -71,17 +75,26 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return responseStatusCode;
         }
 
-        public static Exception ToMessagingContract(Error error, bool connectionError = false)
+        public static Exception ToMessagingContractException(this AmqpMessage responseMessage, AmqpResponseStatusCode statusCode)
+        {
+            AmqpSymbol errorCondition = AmqpExceptionHelper.GetResponseErrorCondition(responseMessage, statusCode);
+            var statusDescription = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusDescription] as string ?? errorCondition.Value;
+            Exception exception = AmqpExceptionHelper.ToMessagingContractException(errorCondition.Value, statusDescription);
+
+            return exception;
+        }
+
+        public static Exception ToMessagingContractException(Error error, bool connectionError = false)
         {
             if (error == null)
             {
                 return new ServiceBusException(true, "Unknown error.");
             }
 
-            return ToMessagingContract(error.Condition.Value, error.Description, connectionError);
+            return ToMessagingContractException(error.Condition.Value, error.Description, connectionError);
         }
 
-        public static Exception ToMessagingContract(string condition, string message, bool connectionError = false)
+        public static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
         {
             if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
             {
@@ -149,6 +162,64 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return new ServiceBusException(true, message);
+        }
+
+        public static Exception GetClientException(Exception exception)
+        {
+            return GetClientException(exception, null);
+        }
+
+        public static Exception GetClientException(Exception exception, string referenceId)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
+            if (referenceId != null)
+            {
+                builder.AppendFormat(CultureInfo.InvariantCulture, $"Reference: {referenceId}, {DateTime.UtcNow}");
+            }
+
+            string message = builder.ToString();
+
+            if (exception is SocketException || exception is IOException)
+            {
+                return new ServiceBusCommunicationException(message, exception);
+            }
+
+            if (exception is AmqpException)
+            {
+                AmqpException amqpException = exception as AmqpException;
+                return ToMessagingContractException(amqpException.Error);
+            }
+
+            if (exception is OperationCanceledException)
+            {
+                AmqpException amqpException = exception.InnerException as AmqpException;
+                if (amqpException != null)
+                {
+                    return ToMessagingContractException(amqpException.Error);
+                }
+
+                return new ServiceBusException(true, message, exception);
+            }
+
+            if (exception is TimeoutException && referenceId != null)
+            {
+                return new TimeoutException(message, exception);
+            }
+
+            return exception;
+        }
+
+        public static string GetTrackingId(this AmqpLink link)
+        {
+            string trackingContext = null;
+            if (link.Settings.Properties != null &&
+                link.Settings.Properties.TryGetValue<string>(AmqpClientConstants.TrackingIdName, out trackingContext))
+            {
+                return trackingContext;
+            }
+
+            return null;
         }
     }
 }
