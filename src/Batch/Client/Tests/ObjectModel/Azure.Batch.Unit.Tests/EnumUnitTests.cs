@@ -76,8 +76,8 @@
                 IEnumerable<string> generatedEnumNames = Enum.GetNames(generatedEnumType).Select(s => s.ToLower());
                 IEnumerable<string> handcraftedEnumNames = Enum.GetNames(handcraftedEnumType).Select(s => s.ToLower());
 
-                //Certificate visibility is a bit special so we have a special case for it
-                if (handcraftedEnumType.Name == "CertificateVisibility")
+                // Flags enums are a bit special so we have to have a special case for them
+                if (handcraftedEnumType.Name == nameof(CertificateVisibility) || handcraftedEnumType.Name == nameof(AccessScope))
                 {
                     handcraftedEnumNames = handcraftedEnumNames.Where(item => item != "none");
                 }

@@ -55,7 +55,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="applicationPackageReferences">A list of application
         /// packages that the Batch service will deploy to the compute node
         /// before running the command line.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
+        /// <param name="authenticationTokenSettings">The settings for an
+        /// authentication token that the task can use to perform Batch
+        /// service operations.</param>
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             RunElevated = runElevated;
             RunExclusive = runExclusive;
             ApplicationPackageReferences = applicationPackageReferences;
+            AuthenticationTokenSettings = authenticationTokenSettings;
         }
 
         /// <summary>
@@ -192,6 +196,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the
+        /// task can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with
+        /// an authentication token which can be used to authenticate Batch
+        /// service operations without requiring an account access key. The
+        /// token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN
+        /// environment variable. The operations that the task can carry out
+        /// using the token depend on the settings. For example, a task can
+        /// request job permissions in order to add other tasks to the job,
+        /// or check the status of the job or of other tasks.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "authenticationTokenSettings")]
+        public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

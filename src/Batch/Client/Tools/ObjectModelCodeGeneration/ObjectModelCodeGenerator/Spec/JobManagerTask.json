@@ -124,5 +124,19 @@
             "Name": "ApplicationPackageReferences",
           },
         },
+        {
+            "Key": {
+                "Type": "AuthenticationTokenSettings",
+                "Name": "AuthenticationTokenSettings",
+                "SummaryComment": "The settings for an authentication token that the task can use to perform Batch service operations.",
+                "RemarksComment": "If this property is set, the Batch service provides the task with an authentication token which can be used to authenticate Batch service operations without requiring an account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the task can carry out using the token depend on the settings. For example, a task can request job permissions in order to add other tasks to the job, or check the status of the job or of other tasks.",
+                "BoundAccess": "read",
+                "UnboundAccess": "read,write"
+            },
+            "Value": {
+                "Type": "Models.AuthenticationTokenSettings?",
+                "Name": "AuthenticationTokenSettings"
+            }
+        }
       ]
     }

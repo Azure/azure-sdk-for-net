@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿namespace Azure.Batch.Unit.Tests
+namespace Azure.Batch.Unit.Tests
 {
     using System;
     using System.Collections;
@@ -137,44 +137,6 @@
 
             Random rand = new Random();
 
-            Func<object> certificateReferenceBuilder = () =>
-            {
-                //Build cert visibility (which is a required property)
-                IList values = Enum.GetValues(typeof(CertificateVisibility));
-                IList<object> valuesToSelect = new List<object>();
-
-                foreach (object value in values)
-                {
-                    valuesToSelect.Add(value);
-                }
-
-                int valuesToPick = rand.Next(0, values.Count);
-                CertificateVisibility? visibility = null;
-
-                // If valuesToPick is 0, we want to allow visibility to be null (since null is a valid value)
-                // so only set visibility to be None if valuesToPick > 0
-                if (valuesToPick > 0)
-                {
-                    visibility = CertificateVisibility.None;
-                    for (int i = 0; i < valuesToPick; i++)
-                    {
-                        int selectedValueIndex = rand.Next(valuesToSelect.Count);
-                        object selectedValue = valuesToSelect[selectedValueIndex];
-                        visibility |= (CertificateVisibility)selectedValue;
-
-                        valuesToSelect.RemoveAt(selectedValueIndex);
-                    }
-                }
-
-                Protocol.Models.CertificateReference reference =
-                    this.defaultObjectFactory.GenerateNew<Protocol.Models.CertificateReference>();
-
-                //Set certificate visibility since it is required
-                reference.Visibility = visibility == null ? null : UtilitiesInternal.CertificateVisibilityToList(visibility.Value);
-
-                return reference;
-            };
-
             Func<object> omTaskRangeBuilder = () =>
             {
                 int rangeLimit1 = rand.Next(0, int.MaxValue);
@@ -183,9 +145,9 @@
                 return new TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
             };
 
-            Func<object> iFileStagingProviderBuilder = () => { return null; };
+            Func<object> iFileStagingProviderBuilder = () => null;
 
-            Func<object> batchClientBehaviorBuilder = () => { return null; };
+            Func<object> batchClientBehaviorBuilder = () => null;
 
             Func<object> taskRangeBuilder = () =>
             {
@@ -195,9 +157,13 @@
                 return new Protocol.Models.TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
             };
 
-            ObjectFactoryConstructionSpecification visibilitySpecification = new ObjectFactoryConstructionSpecification(
+            ObjectFactoryConstructionSpecification certificateReferenceSpecification = new ObjectFactoryConstructionSpecification(
                 typeof(Protocol.Models.CertificateReference),
-                certificateReferenceBuilder);
+                () => BuildCertificateReference(rand));
+
+            ObjectFactoryConstructionSpecification authenticationTokenSettingsSpecification = new ObjectFactoryConstructionSpecification(
+                typeof(Protocol.Models.AuthenticationTokenSettings),
+                () => BuildAuthenticationTokenSettings(rand));
 
             ObjectFactoryConstructionSpecification taskRangeSpecification = new ObjectFactoryConstructionSpecification(
                 typeof(Protocol.Models.TaskIdRange),
@@ -217,7 +183,8 @@
 
             this.customizedObjectFactory = new ObjectFactory(new List<ObjectFactoryConstructionSpecification>
                 {
-                    visibilitySpecification,
+                    certificateReferenceSpecification,
+                    authenticationTokenSettingsSpecification,
                     taskRangeSpecification,
                     omTaskRangeSpecification,
                     fileStagingProviderSpecification,
@@ -228,7 +195,7 @@
             // the object model (string in proxy, flags enum in OM
             ComparisonRule certificateReferenceComparisonRule = ComparisonRule.Create<CertificateVisibility?, List<Protocol.Models.CertificateVisibility?>>(
                 typeof(CertificateReference),
-                typeof(Protocol.Models.CertificateReference),
+                typeof(Protocol.Models.CertificateReference), // This is the type that hold the target property  
                 (visibility, proxyVisibility) =>
                 {
                     CertificateVisibility? convertedProxyVisibility = UtilitiesInternal.ParseCertificateVisibility(proxyVisibility);
@@ -241,10 +208,101 @@
                 type1PropertyName: "Visibility",
                 type2PropertyName: "Visibility");
 
+            ComparisonRule accessScopeComparisonRule = ComparisonRule.Create<AccessScope, List<Protocol.Models.AccessScope?>>(
+                typeof(AuthenticationTokenSettings),
+                typeof(Protocol.Models.AuthenticationTokenSettings),  // This is the type that hold the target property  
+                (scope, proxyVisibility) =>
+                {
+                    AccessScope convertedProxyVisibility = UtilitiesInternal.ParseAccessScope(proxyVisibility);
+
+                    //Treat null as None for the purposes of comparison:
+                    bool areEqual = convertedProxyVisibility == scope || convertedProxyVisibility == AccessScope.None;
+
+                    return areEqual ? ObjectComparer.CheckEqualityResult.True : ObjectComparer.CheckEqualityResult.False("AccessScope doesn't match");
+                },
+                type1PropertyName: "Access",
+                type2PropertyName: "Access");
+
+
             this.objectComparer = new ObjectComparer(
-                comparisonRules: new List<ComparisonRule>() { certificateReferenceComparisonRule },
+                comparisonRules: new List<ComparisonRule>() { certificateReferenceComparisonRule, accessScopeComparisonRule },
                 propertyMappings: this.proxyPropertyToObjectModelMapping,
                 shouldThrowOnPropertyReadException: e => !(e.InnerException is InvalidOperationException) || !e.InnerException.Message.Contains("while the object is in the Unbound"));
+        }
+
+        private Protocol.Models.CertificateReference BuildCertificateReference(Random rand)
+        {
+            //Build cert visibility (which is a required property)
+            IList values = Enum.GetValues(typeof(CertificateVisibility));
+            IList<object> valuesToSelect = new List<object>();
+
+            foreach (object value in values)
+            {
+                valuesToSelect.Add(value);
+            }
+
+            int valuesToPick = rand.Next(0, values.Count);
+            CertificateVisibility? visibility = null;
+
+            // If valuesToPick is 0, we want to allow visibility to be null (since null is a valid value)
+            // so only set visibility to be None if valuesToPick > 0
+            if (valuesToPick > 0)
+            {
+                visibility = CertificateVisibility.None;
+                for (int i = 0; i < valuesToPick; i++)
+                {
+                    int selectedValueIndex = rand.Next(valuesToSelect.Count);
+                    object selectedValue = valuesToSelect[selectedValueIndex];
+                    visibility |= (CertificateVisibility)selectedValue;
+
+                    valuesToSelect.RemoveAt(selectedValueIndex);
+                }
+            }
+
+            Protocol.Models.CertificateReference reference = this.defaultObjectFactory.GenerateNew<Protocol.Models.CertificateReference>();
+
+            //Set certificate visibility since it is required
+            reference.Visibility = visibility == null ? null : UtilitiesInternal.CertificateVisibilityToList(visibility.Value);
+
+            return reference;
+
+        }
+
+        private Protocol.Models.AuthenticationTokenSettings BuildAuthenticationTokenSettings(Random rand)
+        {
+            //Build access scope (which is a required property)
+            IList values = Enum.GetValues(typeof(AccessScope));
+            IList<object> valuesToSelect = new List<object>();
+
+            foreach (object value in values)
+            {
+                valuesToSelect.Add(value);
+            }
+
+            int valuesToPick = rand.Next(0, values.Count);
+            AccessScope? accessScope = null;
+
+            // If valuesToPick is 0, we want to allow access scope to be null (since null is a valid value)
+            // so only set access scope to be None if valuesToPick > 0
+            if (valuesToPick > 0)
+            {
+                accessScope = AccessScope.None;
+                for (int i = 0; i < valuesToPick; i++)
+                {
+                    int selectedValueIndex = rand.Next(valuesToSelect.Count);
+                    object selectedValue = valuesToSelect[selectedValueIndex];
+                    accessScope |= (AccessScope)selectedValue;
+
+                    valuesToSelect.RemoveAt(selectedValueIndex);
+                }
+            }
+
+            Protocol.Models.AuthenticationTokenSettings tokenSettings = this.defaultObjectFactory.GenerateNew<Protocol.Models.AuthenticationTokenSettings>();
+
+            //Set access scope since it is required
+            tokenSettings.Access = accessScope == null ? null : UtilitiesInternal.AccessScopeToList(accessScope.Value);
+
+            return tokenSettings;
         }
 
         #region Reflection based tests
@@ -549,7 +607,7 @@
             Assert.Equal(blobPath, protoFile.BlobSource);
             Assert.Equal(mode, protoFile.FileMode);
         }
-        
+
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestAutoPoolSpecificationUnboundConstraints()
