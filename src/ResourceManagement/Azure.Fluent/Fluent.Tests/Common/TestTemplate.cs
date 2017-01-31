@@ -11,8 +11,8 @@ using Xunit;
 
 namespace Azure.Tests.Common
 {
-    public abstract class TestTemplate<T, C>
-        where T : IGroupableResource
+    public abstract class TestTemplate<T, C, ManagerT>
+        where T : IGroupableResource<ManagerT>
         where C : ISupportsListing<T>, ISupportsGettingByGroup<T>, ISupportsDeletingById, ISupportsGettingById<T>
     {
         protected string TestId { get; private set; }

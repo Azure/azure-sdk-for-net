@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         IUpdate
     {
         private IProfilesOperations innerCollection;
-        private IEndpointsOperations endpointsClient;
         private const string profileStatusDisabled = "Disabled";
         private const string profileStatusEnabled = "Enabled";
         private TrafficManagerEndpointsImpl endpoints;
@@ -77,7 +76,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         internal  TrafficManagerProfileImpl(string name, ProfileInner innerModel, IProfilesOperations innerCollection, IEndpointsOperations endpointsClient, ITrafficManager trafficManager) : base(name, innerModel, trafficManager)
         {
             this.innerCollection = innerCollection;
-            this.endpointsClient = endpointsClient;
             this.endpoints = new TrafficManagerEndpointsImpl(endpointsClient, this);
         }
 

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// An immutable client-side representation of an Azure Redis Cache.
     /// </summary>
     public interface IRedisCache  :
-        IGroupableResource,
+        IGroupableResource<IRedisManager>,
         IRefreshable<Microsoft.Azure.Management.Redis.Fluent.IRedisCache>,
         IUpdatable<RedisCache.Update.IUpdate>,
         IWrapper<Models.RedisResourceInner>

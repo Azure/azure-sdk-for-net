@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
     /// Provides access to getting a specific Azure resource based on its resource group and parent.
     /// </summary>
     /// <typeparam name="">The type of the resource collection.</typeparam>
-    public interface ISupportsGettingByParent<T> 
+    public interface ISupportsGettingByParent<T, ParentT, ManagerT> where ParentT : IGroupableResource<ManagerT> 
     {
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <param name="name">The name of resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        T GetByParent(IGroupableResource parentResource, string name);
+        T GetByParent(ParentT parentResource, string name);
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
@@ -44,6 +44,6 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <param name="name">The name of resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<T> GetByParentAsync(IGroupableResource parentResource, string name, CancellationToken cancellationToken = default(CancellationToken));
+        Task<T> GetByParentAsync(ParentT parentResource, string name, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

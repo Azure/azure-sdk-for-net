@@ -20,11 +20,5 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ISupportsDeletingByGroup,
         IHasManager<IAppServiceManager>
     {
-        /// <summary>
-        /// Gets the information about a resource from Azure based on the resource name and the name of its resource group.
-        /// </summary>
-        /// <param name="id">The app service plan resource ID.</param>
-        /// <return>An immutable representation of the resource.</return>
-        Task<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

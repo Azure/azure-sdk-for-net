@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
     public interface IVirtualMachine  :
-        IGroupableResource,
+        IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         IWrapper<Models.VirtualMachineInner>,
         IUpdatable<VirtualMachine.Update.IUpdate>,

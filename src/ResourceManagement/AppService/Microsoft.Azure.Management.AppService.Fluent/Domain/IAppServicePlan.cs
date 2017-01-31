@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure App Service Plan.
     /// </summary>
     public interface IAppServicePlan  :
-        IGroupableResource,
+        IGroupableResource<IAppServiceManager>,
         IHasName,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan>,
         IUpdatable<AppServicePlan.Update.IUpdate>,

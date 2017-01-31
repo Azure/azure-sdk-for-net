@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <return>The list of SQLElasticPools in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> ListBySqlServer(IGroupableResource sqlServer);
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> ListBySqlServer(ISqlServer sqlServer);
 
         /// <summary>
         /// Gets the SQLElasticPool based on the resource group name, SQLServer name and SQLElasticPool name.
@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <param name="name">The name of SQLElasticPool.</param>
         /// <return>An immutable representation of the SQLElasticPool.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool GetBySqlServer(IGroupableResource sqlServer, string name);
+        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool GetBySqlServer(ISqlServer sqlServer, string name);
     }
 }

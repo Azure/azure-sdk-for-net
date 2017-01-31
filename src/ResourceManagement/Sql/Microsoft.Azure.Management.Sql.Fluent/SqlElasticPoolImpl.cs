@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxFbGFzdGljUG9vbEltcGw=
     internal partial class SqlElasticPoolImpl :
-        IndependentChildResourceImpl<ISqlElasticPool, ISqlServer, ElasticPoolInner, SqlElasticPoolImpl, IHasId, IUpdate>,
+        IndependentChildResourceImpl<ISqlElasticPool, ISqlServer, ElasticPoolInner, SqlElasticPoolImpl, IHasId, IUpdate, ISqlManager>,
         ISqlElasticPool,
         IDefinition,
         IUpdate,
@@ -56,8 +56,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:1D60743D6610D89F39BC74DA9C2B8F8B:E99F7FD0EF35FEF2A4996B397160B70D
-        internal SqlElasticPoolImpl(string name, ElasticPoolInner innerObject, IElasticPoolsOperations innerCollection, IDatabasesOperations databasesInner, DatabasesImpl databasesImpl)
-            : base(name, innerObject)
+        internal SqlElasticPoolImpl(
+            string name,
+            ElasticPoolInner innerObject,
+            IElasticPoolsOperations innerCollection,
+            IDatabasesOperations databasesInner,
+            DatabasesImpl databasesImpl,
+            ISqlManager manager)
+            : base(name, innerObject, manager)
         {
             this.innerCollection = innerCollection;
             this.databasesInner = databasesInner;
@@ -107,7 +113,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                         this.ResourceGroupName,
                         this.SqlServerName(),
                         this.Name);
-            return databases.Select((databaseInner) => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner)).ToList();
+            return databases.Select((databaseInner) => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner, this.Manager)).ToList();
         }
 
         ///GENMHASH:F5BFC9500AE4C04846BAAD2CC50792B3:DA87C4AB3EEB9D4BA746DF610E8BC39F
@@ -167,7 +173,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 this.SqlServerName(),
                 this.Name,
                 databaseName);
-            return new SqlDatabaseImpl(database.Name, database, this.databasesInner);
+            return new SqlDatabaseImpl(database.Name, database, this.databasesInner, this.Manager);
         }
 
         ///GENMHASH:B88CB61BDAE447E93768AB406D02A57B:0FE1382F901F74708CFA53CB4FCDAC21

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Server FirewallRule.
     /// </summary>
     public interface ISqlFirewallRule  :
-        IIndependentChild,
+        IIndependentChild<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
         IUpdatable<SqlFirewallRule.Update.IUpdate>,
         IWrapper<Models.ServerFirewallRuleInner>

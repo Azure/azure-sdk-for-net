@@ -17,12 +17,26 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="InnerModel">Azure inner resource class type.</typeparam>
     /// <typeparam name="FluentModelImpl">The implementation type of the fluent model type.</typeparam>
 
-    public abstract class IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT> :
-        IndependentChildImpl<IFluentResourceT,FluentParentModelT,InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT>,
-        IIndependentChildResource
+    public abstract class IndependentChildResourceImpl<
+            IFluentResourceT,
+            FluentParentModelT,
+            InnerModelT,
+            FluentResourceT,
+            IDefinitionT,
+            IUpdatableT,
+            ManagerT> :
+        IndependentChildImpl<
+            IFluentResourceT,
+            FluentParentModelT,
+            InnerModelT,
+            FluentResourceT,
+            IDefinitionT,
+            IUpdatableT,
+            ManagerT>,
+        IIndependentChildResource<ManagerT>
         where InnerModelT : Fluent.Resource
-        where FluentResourceT : IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT>, IFluentResourceT
-        where FluentParentModelT : class, IGroupableResource
+        where FluentResourceT : IndependentChildResourceImpl<IFluentResourceT, FluentParentModelT, InnerModelT, FluentResourceT, IDefinitionT, IUpdatableT, ManagerT>, IFluentResourceT
+        where FluentParentModelT : class, IGroupableResource<ManagerT>
         where IDefinitionT : class
         where IUpdatableT : class
         where IFluentResourceT : class, IDefinitionT
@@ -46,7 +60,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// <param name="name">The name of the resource.</param>
         /// <param name="innerObject">The inner object.</param>
         ///GENMHASH:E0523E7DBA50D933E82FB55AEF0FEEE3:2572719AB7F9FA6EF015164D8E50629B
-        protected  IndependentChildResourceImpl(string name, InnerModelT innerObject) : base(name, innerObject)
+        protected  IndependentChildResourceImpl(string name, InnerModelT innerObject, ManagerT manager) : base(name, innerObject, manager)
         {
             if (Inner.Tags == null)
             {
@@ -112,7 +126,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:C796465774D2BDD23B4B677CF847B445
-        public string Name
+        new public string Name
         {
             get
             {

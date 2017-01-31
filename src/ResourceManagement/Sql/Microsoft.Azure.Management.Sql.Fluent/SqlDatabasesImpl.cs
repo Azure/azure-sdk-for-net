@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxEYXRhYmFzZXNJbXBs
     internal partial class SqlDatabasesImpl :
-        IndependentChildResourcesImpl<ISqlDatabase, SqlDatabaseImpl, DatabaseInner, IDatabasesOperations, ISqlManager>,
+        IndependentChildResourcesImpl<ISqlDatabase, SqlDatabaseImpl, DatabaseInner, IDatabasesOperations, ISqlManager, ISqlServer>,
         ISqlDatabaseCreatable,
-        ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>
+        ISupportsGettingByParent<ISqlDatabase, ISqlServer, ISqlManager>,
+        ISupportsListingByParent<ISqlDatabase, ISqlServer, ISqlManager>
     {
         ///GENMHASH:810ADAE06099EC51B2E3C858F502369C:0FCD47CBCD9128C3D4A03458C5796741
         internal SqlDatabasesImpl(IDatabasesOperations innerCollection, ISqlManager manager)
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:CD989F8A79EC70D56C4F5154E2B8BE11:57462F0C7FF757AFBBFD3B3561C9F9ED
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(IGroupableResource sqlServer)
+        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(ISqlServer sqlServer)
         {
             return new List<ISqlDatabase>(this.ListByParent(sqlServer));
         }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:6B5394D9B9C62E3B4A3B037DD27B7A20:466DF29CB4850E0593B3C691F625BC2C
-        public ISqlDatabase GetBySqlServer(IGroupableResource sqlServer, string name)
+        public ISqlDatabase GetBySqlServer(ISqlServer sqlServer, string name)
         {
             return this.GetByParent(sqlServer, name);
         }
@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlDatabaseImpl(
                 databaseName,
                 inner,
-                innerCollection).WithExistingParentResource(resourceGroupName, sqlServerName);
+                innerCollection,
+                Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:36E87C79062474D6AB62B46DAD7396F9
@@ -98,7 +99,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlDatabaseImpl(
                 name,
                 inner,
-                this.innerCollection);
+                innerCollection,
+                Manager);
         }
 
         ///GENMHASH:CA9C77E2E75D4B5516D4A63CB7215DC7:D226C70930A9D702B9E8BCF068F33C76
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 return null;
             }
 
-            return new SqlWarehouseImpl(inner.Name, inner, this.innerCollection);
+            return new SqlWarehouseImpl(inner.Name, inner, this.innerCollection, Manager);
         }
     }
 }

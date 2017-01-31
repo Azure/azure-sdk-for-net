@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
     /// (Note: this interface is not intended to be implemented by user code).
     /// </summary>
     /// <typeparam name="">The type of the resources listed.</typeparam>
-    public interface ISupportsListingByParent<T> 
+    public interface ISupportsListingByParent<T, ParentT, ManagerT> where ParentT : IGroupableResource<ManagerT>
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group.
@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T> ListByParent(IGroupableResource parentResource);
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T> ListByParent(ParentT parentResource);
 
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Task<Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T>> ListByParentAsync(IGroupableResource parentResource, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

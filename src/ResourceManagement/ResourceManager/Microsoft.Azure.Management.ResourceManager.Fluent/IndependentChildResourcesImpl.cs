@@ -13,10 +13,11 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="InnerCollection">The inner type of the collection object.</typeparam>
     /// <typeparam name="Manager">The manager type for this resource provider type.</typeparam>
 
-    public abstract partial class IndependentChildResourcesImpl<T, ImplT, InnerT, InnerCollectionT, ManagerT> :
-        IndependentChildrenImpl<T,ImplT,InnerT, InnerCollectionT, ManagerT>
+    public abstract partial class IndependentChildResourcesImpl<T, ImplT, InnerT, InnerCollectionT, ManagerT, ParentT> :
+        IndependentChildrenImpl<T,ImplT,InnerT, InnerCollectionT, ManagerT, ParentT>
         where T : class, IHasId
         where ImplT : T
+        where ParentT : IGroupableResource<ManagerT>
     {
         ///GENMHASH:74E72052324700D906F1B847F422F81F:0FCD47CBCD9128C3D4A03458C5796741
         public IndependentChildResourcesImpl(InnerCollectionT innerCollection, ManagerT manager) : base(innerCollection, manager)

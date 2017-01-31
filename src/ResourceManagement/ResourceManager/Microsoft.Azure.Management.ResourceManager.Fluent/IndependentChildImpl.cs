@@ -18,15 +18,22 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
     /// <typeparam name="InnerModel">Azure inner resource class type.</typeparam>
     /// <typeparam name="FluentModelImpl">The implementation type of the fluent model type.</typeparam>
 
-    public abstract class IndependentChildImpl<IFluentResourceT, FluentParentModelT, InnerResourceT, FluentResourceT, IResourceT, IUpdatableT>  :
+    public abstract class IndependentChildImpl<
+            IFluentResourceT,
+            FluentParentModelT,
+            InnerResourceT,
+            FluentResourceT,
+            IResourceT,
+            IUpdatableT,
+            ManagerT>  :
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT, IUpdatableT>,
-        IIndependentChild,
+        IIndependentChild<ManagerT>,
         IWithParentResource<IFluentResourceT, FluentParentModelT>
         where IResourceT : class
         where IUpdatableT : class
         where IFluentResourceT : class, IResourceT
         where FluentResourceT : class
-        where FluentParentModelT: class, IGroupableResource
+        where FluentParentModelT: class, IGroupableResource<ManagerT>
     {
         private string groupName;
         protected string parentName;
@@ -46,6 +53,8 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         }
 
         public abstract string Id { get; }
+
+        public ManagerT Manager { get; private set; }
 
         ///GENMHASH:EFF5318E694B2A3BB5AEF7CA70DB29A5:7DCE188EC97FDEB5705826627CBEE021
         public ICreatable<IFluentResourceT> WithNewParentResource(ICreatable<FluentParentModelT> parentResourceCreatable)
@@ -100,10 +109,10 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
         /// <param name="name">The name of the resource.</param>
         /// <param name="innerObject">The inner object.</param>
         ///GENMHASH:58893D0094BDB88102F94E73ED2B35FA:2572719AB7F9FA6EF015164D8E50629B
-        protected  IndependentChildImpl(string name, InnerResourceT innerObject)
+        protected  IndependentChildImpl(string name, InnerResourceT innerObject, ManagerT manager)
             : base(name, innerObject)
         {
-
+            Manager = manager;
         }
 
         ///GENMHASH:1617CE892A84D9A577A083793AD878B1:FC7DBEE598C27F6B6A66D7C91DB5A9D3

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure App Service Certificate.
     /// </summary>
     public interface IAppServiceCertificateKeyVaultBinding  :
-        IIndependentChildResource,
+        IIndependentChildResource<IAppServiceManager>,
         IWrapper<Models.AppServiceCertificateInner>
     {
         /// <summary>

@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ISqlWarehouse
     {
         ///GENMHASH:478F77EE25B1DAD41512D7810F424A78:E1ECD7008D29BB72B20EB2538850BB93
-        internal  SqlWarehouseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection)
-            : base(name, innerObject, innerCollection)
+        internal  SqlWarehouseImpl(string name, DatabaseInner innerObject, IDatabasesOperations innerCollection, ISqlManager manager)
+            : base(name, innerObject, innerCollection, manager)
         {
         }
 

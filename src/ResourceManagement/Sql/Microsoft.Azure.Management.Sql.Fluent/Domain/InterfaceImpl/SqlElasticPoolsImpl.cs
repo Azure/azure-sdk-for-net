@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <param name="name">The name of SQLElasticPool.</param>
         /// <return>An immutable representation of the SQLElasticPool.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPools.GetBySqlServer(IGroupableResource sqlServer, string name)
+        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPools.GetBySqlServer(ISqlServer sqlServer, string name)
         {
             return this.GetBySqlServer(sqlServer, name) as Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool;
         }
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <return>The list of SQLElasticPools in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPools.ListBySqlServer(IGroupableResource sqlServer)
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPools.ListBySqlServer(ISqlServer sqlServer)
         {
             return this.ListBySqlServer(sqlServer) as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
         }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <return>The list of resources.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>.ListByParent(string resourceGroupName, string parentName)
+        PagedList<ISqlElasticPool> ISupportsListingByParent<ISqlElasticPool, ISqlServer, ISqlManager>.ListByParent(string resourceGroupName, string parentName)
         {
             return this.ListByParent(resourceGroupName, parentName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
         }
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of resource.</param>
         /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>.GetByParent(string resourceGroup, string parentName, string name)
+        ISqlElasticPool ISupportsGettingByParent<ISqlElasticPool, ISqlServer, ISqlManager>.GetByParent(string resourceGroup, string parentName, string name)
         {
             return this.GetByParent(resourceGroup, parentName, name) as Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool;
         }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <return>An observable to the request.</return>
-        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByParent.DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken)
+        async Task ISupportsDeletingByParent.DeleteByParentAsync(string groupName, string parentName, string name, CancellationToken cancellationToken)
         {
  
             await this.DeleteByParentAsync(groupName, parentName, name, cancellationToken);

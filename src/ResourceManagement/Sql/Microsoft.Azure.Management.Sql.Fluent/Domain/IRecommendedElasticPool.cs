@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         IWrapper<Models.RecommendedElasticPoolInner>,
         IHasResourceGroup,
         IHasName,
-        IHasId
+        IHasId,
+        IHasManager<ISqlManager>
     {
         /// <summary>
         /// Gets the list of Azure SQL Databases in this pool. Expanded property.

@@ -20,7 +20,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             DeploymentSlotImpl,
             SiteInner,
             IWebAppsOperations,
-            IAppServiceManager>,
+            IAppServiceManager,
+            IWebApp>,
         IDeploymentSlots
     {
         private WebAppImpl parent;
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:5C4D08699E1ECDDF02A498EE458BCCC7
         protected override DeploymentSlotImpl WrapModel(string name)
         {
-            var deploymentSlot = new DeploymentSlotImpl(name, new SiteInner(), null, parent, innerCollection, manager, serviceClient);
+            var deploymentSlot = new DeploymentSlotImpl(name, new SiteInner(), null, parent, innerCollection, Manager, serviceClient);
 
             deploymentSlot.WithRegion(parent.RegionName);
             deploymentSlot.WithExistingResourceGroup(parent.ResourceGroupName);
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return null;
             }
-            return new DeploymentSlotImpl(inner.Name, inner, inner.SiteConfig, parent, innerCollection, manager, serviceClient);
+            return new DeploymentSlotImpl(inner.Name, inner, inner.SiteConfig, parent, innerCollection, Manager, serviceClient);
         }
 
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:03C8C385071EDDC2007A3CC169E2B327

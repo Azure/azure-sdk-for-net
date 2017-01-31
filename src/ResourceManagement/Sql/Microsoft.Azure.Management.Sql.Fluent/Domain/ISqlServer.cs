@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Server.
     /// </summary>
     public interface ISqlServer  :
-        IGroupableResource,
+        IGroupableResource<ISqlManager>,
         IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
         IUpdatable<SqlServer.Update.IUpdate>,
         IHasManager<Microsoft.Azure.Management.Sql.Fluent.SqlManager>,

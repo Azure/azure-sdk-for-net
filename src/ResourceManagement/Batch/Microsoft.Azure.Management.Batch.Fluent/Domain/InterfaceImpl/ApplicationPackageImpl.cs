@@ -15,15 +15,15 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         {
             get
             { 
-            return this.State();
+                return this.State();
             }
         }
         /// <returns>the name of application package.</returns>
-        string Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Name
+        string IHasName.Name
         {
             get
             { 
-            return this.Name() as string;
+                return this.Name() as string;
             }
         }
         /// <returns>the date when last time this application package was activate.</returns>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         {
             get
             { 
-            return this.LastActivationTime();
+                return this.LastActivationTime();
             }
         }
         /// <summary>

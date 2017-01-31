@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// An immutable client-side representation of an Azure app service certificate.
     /// </summary>
     public interface IAppServiceCertificate  :
-        IGroupableResource,
+        IGroupableResource<IAppServiceManager>,
         IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>,
         IWrapper<Models.CertificateInner>
     {

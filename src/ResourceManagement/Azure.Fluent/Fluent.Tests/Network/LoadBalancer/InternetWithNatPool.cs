@@ -17,7 +17,7 @@ namespace Azure.Tests.Network.LoadBalancer
     /// <summary>
     /// Internet-facing LB test with NAT pool test. 
     /// </summary>
-    public class InternetWithNatPool : TestTemplate<ILoadBalancer, ILoadBalancers>
+    public class InternetWithNatPool : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIpAddresses pips;
         private IVirtualMachines vms;

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
         /// <param name="networkResource">Instance of Network object.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of Redis Cache definition.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithSubnet(IGroupableResource networkResource, string subnetName);
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithSubnet(IHasId networkResource, string subnetName);
 
         /// <summary>
         /// Sets Redis Cache static IP. Required when deploying a Redis Cache inside an existing Azure Virtual Network.

@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxFbGFzdGljUG9vbHNJbXBs
     internal partial class SqlElasticPoolsImpl :
-        IndependentChildResourcesImpl<ISqlElasticPool, SqlElasticPoolImpl, ElasticPoolInner, IElasticPoolsOperations, ISqlManager>,
+        IndependentChildResourcesImpl<ISqlElasticPool, SqlElasticPoolImpl, ElasticPoolInner, IElasticPoolsOperations, ISqlManager, ISqlServer>,
         ISqlElasticPoolsCreatable,
-        ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
-        ISupportsListingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>
+        ISupportsGettingByParent<ISqlElasticPool, ISqlServer, ISqlManager>,
+        ISupportsListingByParent<ISqlElasticPool, ISqlServer, ISqlManager>
     {
         private IDatabasesOperations databasesInner;
         private DatabasesImpl databasesImpl;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:CD989F8A79EC70D56C4F5154E2B8BE11:57462F0C7FF757AFBBFD3B3561C9F9ED
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> ListBySqlServer(IGroupableResource sqlServer)
+        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> ListBySqlServer(ISqlServer sqlServer)
         {
             return new List<ISqlElasticPool>(this.ListByParent(sqlServer));
         }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:6B5394D9B9C62E3B4A3B037DD27B7A20:466DF29CB4850E0593B3C691F625BC2C
-        public ISqlElasticPool GetBySqlServer(IGroupableResource sqlServer, string name)
+        public ISqlElasticPool GetBySqlServer(ISqlServer sqlServer, string name)
         {
             return this.GetByParent(sqlServer, name);
         }
@@ -78,9 +78,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlElasticPoolImpl(
                 elasticPoolName,
                 inner,
-                this.innerCollection,
-                this.databasesInner,
-                this.databasesImpl).WithExistingParentResource(resourceGroupName, sqlServerName);
+                innerCollection,
+                databasesInner,
+                databasesImpl,
+                Manager).WithExistingParentResource(resourceGroupName, sqlServerName);
         }
 
         ///GENMHASH:C32C5A59EBD92E91959156A49A8C1A95:36E87C79062474D6AB62B46DAD7396F9
@@ -104,7 +105,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 inner,
                 this.innerCollection,
                 this.databasesInner,
-                this.databasesImpl);
+                this.databasesImpl,
+                Manager);
         }
 
         ///GENMHASH:65E1EEA76A912450419ABE12725FBF0C:C1932F9E97EA48EA7DFD2036427E4E31
@@ -115,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 return null;
             }
 
-            return new SqlElasticPoolImpl(inner.Name, inner, this.innerCollection, this.databasesInner, this.databasesImpl);
+            return new SqlElasticPoolImpl(inner.Name, inner, this.innerCollection, this.databasesInner, this.databasesImpl, Manager);
         }
     }
 }

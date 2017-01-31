@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnNxbC5pbXBsZW1lbnRhdGlvbi5TcWxGaXJld2FsbFJ1bGVJbXBs
     internal partial class SqlFirewallRuleImpl :
-        IndependentChildImpl<ISqlFirewallRule, ISqlServer, ServerFirewallRuleInner, SqlFirewallRuleImpl, IHasId, IUpdate>,
+        IndependentChildImpl<ISqlFirewallRule, ISqlServer, ServerFirewallRuleInner, SqlFirewallRuleImpl, IHasId, IUpdate, ISqlManager>,
         ISqlFirewallRule,
         IDefinition,
         IUpdate,
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:A6DA29F5B33635B6B2AB7A6DA20A0B2B:FC20F8BEAA0D65FFE9DA4206313524DE
-        internal SqlFirewallRuleImpl(string name, ServerFirewallRuleInner innerObject, IServersOperations innerCollection)
-            : base(name, innerObject)
+        internal SqlFirewallRuleImpl(string name, ServerFirewallRuleInner innerObject, IServersOperations innerCollection, ISqlManager manager)
+            : base(name, innerObject, manager)
         {
             this.innerCollection = innerCollection;
         }

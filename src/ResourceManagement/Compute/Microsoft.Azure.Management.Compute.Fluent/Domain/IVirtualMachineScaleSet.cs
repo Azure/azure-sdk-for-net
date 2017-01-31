@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>
     public interface IVirtualMachineScaleSet  :
-        IGroupableResource,
+        IGroupableResource<IComputeManager>,
         IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IWrapper<Models.VirtualMachineScaleSetInner>,
         IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>

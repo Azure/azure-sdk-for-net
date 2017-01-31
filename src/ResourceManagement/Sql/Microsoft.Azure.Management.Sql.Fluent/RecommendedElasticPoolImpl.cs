@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:2EE5EC6E56E27CC62928F7FDA722AB08
         public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Databases()
         {
-            return this.Inner.Databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner)).ToList();
+            return this.Inner.Databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, databasesInner, Manager)).ToList();
         }
 
         ///GENMHASH:F018FD6E531156DFCBAA9FAE7F4D8519:F548C4892951BC9F8563B941B288836A
@@ -41,13 +41,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:3C9B0CE07C64DBB8CF2AEF14E330501A:2E8B0A743655F7A17FCDF72496CA11B0
         internal RecommendedElasticPoolImpl(RecommendedElasticPoolInner innerObject,
             IDatabasesOperations databasesInner,
-            IRecommendedElasticPoolsOperations recommendedElasticPoolsInner)
+            IRecommendedElasticPoolsOperations recommendedElasticPoolsInner,
+            ISqlManager manager)
             : base(innerObject)
         {
             this.databasesInner = databasesInner;
             this.recommendedElasticPoolsInner = recommendedElasticPoolsInner;
-            this.resourceId = ResourceId.FromString(this.Inner.Id);
+            resourceId = ResourceId.FromString(Inner.Id);
+            Manager = manager;
         }
+
+        public ISqlManager Manager { get; private set; }
 
         ///GENMHASH:88F495E6170B34BE98D7ECF345A40578:945958DE33096D51BB9DD38A7F3CDAD0
         public double Dtu()
@@ -75,7 +79,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 this.SqlServerName(),
                 this.Name());
 
-            return databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner)).ToList();
+            return databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(databaseInner.Name, databaseInner, databasesInner, Manager)).ToList();
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:887D95D040FBCBF81B9BA7419D7F3A39
@@ -118,7 +122,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 this.Name(),
                 databaseName);
 
-            return new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner);
+            return new SqlDatabaseImpl(databaseInner.Name, databaseInner, this.databasesInner, Manager);
         }
 
         ///GENMHASH:77909FCEE2BCE7A1585A5D65D695B384:13846C17B14D55E5F3A4AE220EAFBEDC

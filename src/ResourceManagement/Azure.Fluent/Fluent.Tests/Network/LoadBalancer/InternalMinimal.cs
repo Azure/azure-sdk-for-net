@@ -15,7 +15,7 @@ namespace Azure.Tests.Network.LoadBalancer
     /// <summary>
     /// Internal minimalistic LB test.
     /// </summary>
-    public class InternalMinimal : TestTemplate<ILoadBalancer, ILoadBalancers>
+    public class InternalMinimal : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IVirtualMachines vms;
         private IAvailabilitySets availabilitySets;

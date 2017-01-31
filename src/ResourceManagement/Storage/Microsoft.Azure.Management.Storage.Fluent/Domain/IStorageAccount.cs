@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// An immutable client-side representation of an Azure storage account.
     /// </summary>
     public interface IStorageAccount  :
-        IGroupableResource,
+        IGroupableResource<IStorageManager>,
         IRefreshable<IStorageAccount>,
         IUpdatable<StorageAccount.Update.IUpdate>,
         IWrapper<Management.Storage.Fluent.Models.StorageAccountInner>
