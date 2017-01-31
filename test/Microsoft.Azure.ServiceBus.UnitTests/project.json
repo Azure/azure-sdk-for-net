@@ -36,8 +36,6 @@
         "dnxcore50",
         "portable-net46+win8"
       ]
-    },
-    "net451": {
     }
   }
 }
