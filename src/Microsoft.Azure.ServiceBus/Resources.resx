@@ -183,4 +183,7 @@
   <data name="RuleFilterNotSupported" xml:space="preserve">
     <value>Provided rule filter {0} is not supported. Supported values are: {1}, {2}</value>
   </data>
+  <data name="PeekLockModeRequired" xml:space="preserve">
+    <value>This operation is only supported for a message receiver in 'PeekLock' receive mode.</value>
+  </data>
 </root>

@@ -41,7 +41,6 @@ namespace Microsoft.Azure.ServiceBus
         IDictionary<string, object> properties;
         string publisher;
 
-        // TODO: ReceiveContext receiveContext;
         ReceiverHeaders receiverHeaders;
         string replyTo;
         string replyToSessionId;
@@ -331,8 +330,7 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 this.ThrowIfDisposed();
-
-                // TODO: this.ThrowIfNotLocked();
+                this.ThrowIfNotLocked();
                 return this.receiverHeaders.LockedUntilUtc;
             }
 
@@ -346,8 +344,6 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        // TODO:Fix expected exception list once CSDMain# 220699 is fixed
-
         /// <summary>Gets the lock token assigned by Service Bus to this message.</summary>
         /// <value>The lock token assigned by Service Bus to this message.</value>
         /// <exception cref="System.ObjectDisposedException">Thrown if the message is in disposed state.</exception>
@@ -357,8 +353,7 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 this.ThrowIfDisposed();
-
-                // TODO: this.ThrowIfNotLocked();
+                this.ThrowIfNotLocked();
                 return this.receiverHeaders.LockToken;
             }
 
@@ -1406,14 +1401,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="FxTrace.Exception"> Thrown when as error. </exception>
         void ThrowIfNotLocked()
         {
-            if (this.Receiver == null)
+            if (this.Receiver != null && this.Receiver.ReceiveMode == ReceiveMode.ReceiveAndDelete)
             {
-                throw Fx.Exception.AsError(new InvalidOperationException("The operation cannot be completed because the receiver is null."));
+                throw Fx.Exception.AsError(new InvalidOperationException(Resources.PeekLockModeRequired));
             }
 
-            if (this.Receiver.ReceiveMode == ReceiveMode.ReceiveAndDelete)
+            if (this.receiverHeaders == null || this.receiverHeaders.LockToken == Guid.Empty)
             {
-                throw Fx.Exception.AsError(new InvalidOperationException("The operation is only supported in 'PeekLock' receive mode."));
+                throw Fx.Exception.AsError(new InvalidOperationException());
             }
         }
 

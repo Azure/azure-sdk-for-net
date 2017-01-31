@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("EntityNameLengthExceedsLimit", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Failed to serialize the session state because its state stream has been partially consumed..
         /// </summary>
@@ -122,6 +122,7 @@ namespace Microsoft.Azure.ServiceBus {
             }
         }
         
+        /// <summary>
         ///    Looks up a localized string similar to The entity name or path contains an invalid character &apos;{0}&apos;. The supplied value is &apos;{1}&apos;..
         /// </summary>
         public static string InvalidCharacterInEntityName {
@@ -148,6 +149,7 @@ namespace Microsoft.Azure.ServiceBus {
             }
         }
         
+        /// <summary>
         ///    Looks up a localized string similar to &apos;{0}&apos; is not a supported type..
         /// </summary>
         public static string NotSupportedPropertyType {
@@ -155,7 +157,7 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("NotSupportedPropertyType", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to The session lock has expired on the MessageSession. Accept a new MessageSession..
         /// </summary>
@@ -164,7 +166,8 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("SessionLockExpiredOnMessageSession", resourceCulture);
             }
         }
-        
+
+        /// <summary>
         ///    Looks up a localized string similar to Provided rule filter {0} is not supported. Supported values are: {1}, {2}.
         /// </summary>
         public static string RuleFilterNotSupported {
@@ -172,7 +175,16 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("RuleFilterNotSupported", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///    Looks up a localized string similar to This operation is only supported for a message receiver in &apos;PeekLock&apos; receive mode..
+        /// </summary>
+        public static string PeekLockModeRequired {
+            get {
+                return ResourceManager.GetString("PeekLockModeRequired", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///    Looks up a localized string similar to The length of the filter action statement is {0}, which exceeds the maximum length of {1}..
         /// </summary>
