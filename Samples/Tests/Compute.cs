@@ -16,7 +16,7 @@ namespace Samples.Tests
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVirtualMachinesInParallelTest()
         {
@@ -27,7 +27,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVMsUsingCustomImageOrSpecializedVHDTest()
         {
@@ -38,7 +38,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ListVirtualMachineExtensionImagesTest()
         {
@@ -49,7 +49,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ListVirtualMachineImagesTest()
         {

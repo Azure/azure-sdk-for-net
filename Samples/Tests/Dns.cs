@@ -16,7 +16,7 @@ namespace Samples.Tests
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact(Skip = "TODO: Record test with pre-configured DNS")]
         [Trait("Samples", "Dns")]
         public void ManageDnsTest()
         {

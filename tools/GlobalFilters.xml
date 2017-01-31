@@ -135,11 +135,12 @@
         <string>\\OneBox\\</string>
         <string>ART\\TSATest</string>
         <string>ART\\TSATest</string>
-        <string>KeyVault\\Microsoft.Azure.KeyVault.Tests\\SessionRecords</string>
-    <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPrivateComplex.json</string>
-    <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPrivateMinimal.json</string>
-    <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPublicComplex.json</string>
-    <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPublicMinimal.json</string>
+        <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPrivateComplex.json</string>
+        <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPrivateMinimal.json</string>
+        <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPublicComplex.json</string>
+        <string>ResourceManagement\\Azure.Fluent\\Fluent.Tests\\SessionRecords\\Azure.Tests.AzureTests\\TestAppGatewaysPublicMinimal.json</string>
+        <string>TestResults\\Fluent.xml</string>
+        <string>TestResults\\Sample.Tests.xml</string>
       </Filters>
     </ResourceFilter>
   </ResourceSearchFilters>

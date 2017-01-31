@@ -1,0 +1,850 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourcegroups/rgnemv56a56522b40eb?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlZ3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWI/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "84420a34-b662-47bb-8f8d-f0fc774e9a56"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb\",\r\n  \"name\": \"rgnemv56a56522b40eb\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "191"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "c574ad5f-45e1-4cf0-951d-cb3358313ad0"
+        ],
+        "x-ms-correlation-request-id": [
+          "c574ad5f-45e1-4cf0-951d-cb3358313ad0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213209Z:c574ad5f-45e1-4cf0-951d-cb3358313ad0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvdmF1bHQxYzAzNjA0NTJlYTI/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": []\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "221"
+        ],
+        "x-ms-client-request-id": [
+          "7823e7e8-97c7-474c-835c-344f6f620c42"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2\",\r\n  \"name\": \"vault1c0360452ea2\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [],\r\n    \"enabledForDeployment\": false,\r\n    \"vaultUri\": \"https://vault1c0360452ea2.vault.azure.net\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:10 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.148"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "8f1f3f34-f2e6-411d-8523-19a1957a2695"
+        ],
+        "x-ms-correlation-request-id": [
+          "8f1f3f34-f2e6-411d-8523-19a1957a2695"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213211Z:8f1f3f34-f2e6-411d-8523-19a1957a2695"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvdmF1bHQxYzAzNjA0NTJlYTI/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"vaultUri\": \"https://vault1c0360452ea2.vault.azure.net\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"get\",\r\n            \"list\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": false\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "633"
+        ],
+        "x-ms-client-request-id": [
+          "4d372c97-52f0-4dd9-a345-37463b0529d4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2\",\r\n  \"name\": \"vault1c0360452ea2\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"get\",\r\n            \"list\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": false,\r\n    \"vaultUri\": \"https://vault1c0360452ea2.vault.azure.net/\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.148"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "86f7248f-d374-45e0-8919-7980e49a7939"
+        ],
+        "x-ms-correlation-request-id": [
+          "86f7248f-d374-45e0-8919-7980e49a7939"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213212Z:86f7248f-d374-45e0-8919-7980e49a7939"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvdmF1bHQxYzAzNjA0NTJlYTI/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"vaultUri\": \"https://vault1c0360452ea2.vault.azure.net/\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"get\",\r\n            \"list\",\r\n            \"all\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForTemplateDeployment\": true\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "696"
+        ],
+        "x-ms-client-request-id": [
+          "4aae79df-9fe1-4246-b0cf-8f2e19762bfd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2\",\r\n  \"name\": \"vault1c0360452ea2\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"get\",\r\n            \"list\",\r\n            \"all\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"vaultUri\": \"https://vault1c0360452ea2.vault.azure.net/\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.148"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "982183fb-e360-425e-9617-da425af7e819"
+        ],
+        "x-ms-correlation-request-id": [
+          "982183fb-e360-425e-9617-da425af7e819"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213212Z:982183fb-e360-425e-9617-da425af7e819"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/72f988bf-86f1-41af-91ab-2d7cd011db47/servicePrincipals?$filter=servicePrincipalNames/any(c:c%20eq%20'db2b2faa-5626-455b-ac5a-0ee3e9337312')&api-version=1.6",
+      "EncodedRequestUri": "LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny9zZXJ2aWNlUHJpbmNpcGFscz8kZmlsdGVyPXNlcnZpY2VQcmluY2lwYWxOYW1lcy9hbnkoYzpjJTIwZXElMjAnZGIyYjJmYWEtNTYyNi00NTViLWFjNWEtMGVlM2U5MzM3MzEyJykmYXBpLXZlcnNpb249MS42",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "17587c9a-76e2-4407-94d6-9e3754552eb9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/$metadata#directoryObjects/Microsoft.DirectoryServices.ServicePrincipal\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.DirectoryServices.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n      \"deletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"addIns\": [],\r\n      \"alternativeNames\": [],\r\n      \"appDisplayName\": \"azure-cli-2016-12-23-01-11-17\",\r\n      \"appId\": \"db2b2faa-5626-455b-ac5a-0ee3e9337312\",\r\n      \"appOwnerTenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"appRoleAssignmentRequired\": false,\r\n      \"appRoles\": [],\r\n      \"displayName\": \"azure-cli-2016-12-23-01-11-17\",\r\n      \"errorUrl\": null,\r\n      \"homepage\": \"http://azure-cli-2016-12-23-01-11-17\",\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"oauth2Permissions\": [\r\n        {\r\n          \"adminConsentDescription\": \"Allow the application to access azure-cli-2016-12-23-01-11-17 on behalf of the signed-in user.\",\r\n          \"adminConsentDisplayName\": \"Access azure-cli-2016-12-23-01-11-17\",\r\n          \"id\": \"820d620f-8507-4746-87bd-d60ecca99ae7\",\r\n          \"isEnabled\": true,\r\n          \"type\": \"User\",\r\n          \"userConsentDescription\": \"Allow the application to access azure-cli-2016-12-23-01-11-17 on your behalf.\",\r\n          \"userConsentDisplayName\": \"Access azure-cli-2016-12-23-01-11-17\",\r\n          \"value\": \"user_impersonation\"\r\n        }\r\n      ],\r\n      \"passwordCredentials\": [],\r\n      \"preferredTokenSigningKeyThumbprint\": null,\r\n      \"publisherName\": \"Microsoft\",\r\n      \"replyUrls\": [],\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"http://azure-cli-2016-12-23-01-11-17\",\r\n        \"db2b2faa-5626-455b-ac5a-0ee3e9337312\"\r\n      ],\r\n      \"servicePrincipalType\": \"Application\",\r\n      \"tags\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1510"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "205iQVRaHUic8hjIzh3NI505cT01Msw5PmTxuGGIngo="
+        ],
+        "request-id": [
+          "6b734cad-3d98-41cb-856a-7b7056b0fd5e"
+        ],
+        "client-request-id": [
+          "6e5ee322-14ae-4922-b7b6-3954e78e2178"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.6"
+        ],
+        "ocp-aad-session-key": [
+          "Gk03xY6S1cljsvGBZBsL4KQwaf3ZnchmjbI93xCzbD2r3Wndz_fLPWNA5QGpK_wVMlKrqXQ5nVAvKMpiYG0bF-9c-rb7TqhtqLdUSOm-YMyyrvs_bADp8ZIhUXFxJCIK.PUzI5DTAF0f2RvYVK4aBDpR6evu956z1SpseNY3Tqms"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Duration": [
+          "1696973"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/72f988bf-86f1-41af-91ab-2d7cd011db47/servicePrincipals?$filter=servicePrincipalNames/any(c:c%20eq%20'db2b2faa-5626-455b-ac5a-0ee3e9337312')&api-version=1.6",
+      "EncodedRequestUri": "LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny9zZXJ2aWNlUHJpbmNpcGFscz8kZmlsdGVyPXNlcnZpY2VQcmluY2lwYWxOYW1lcy9hbnkoYzpjJTIwZXElMjAnZGIyYjJmYWEtNTYyNi00NTViLWFjNWEtMGVlM2U5MzM3MzEyJykmYXBpLXZlcnNpb249MS42",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "20f30629-6aaa-4983-960f-0675e6af800b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/$metadata#directoryObjects/Microsoft.DirectoryServices.ServicePrincipal\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.DirectoryServices.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n      \"deletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"addIns\": [],\r\n      \"alternativeNames\": [],\r\n      \"appDisplayName\": \"azure-cli-2016-12-23-01-11-17\",\r\n      \"appId\": \"db2b2faa-5626-455b-ac5a-0ee3e9337312\",\r\n      \"appOwnerTenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"appRoleAssignmentRequired\": false,\r\n      \"appRoles\": [],\r\n      \"displayName\": \"azure-cli-2016-12-23-01-11-17\",\r\n      \"errorUrl\": null,\r\n      \"homepage\": \"http://azure-cli-2016-12-23-01-11-17\",\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"oauth2Permissions\": [\r\n        {\r\n          \"adminConsentDescription\": \"Allow the application to access azure-cli-2016-12-23-01-11-17 on behalf of the signed-in user.\",\r\n          \"adminConsentDisplayName\": \"Access azure-cli-2016-12-23-01-11-17\",\r\n          \"id\": \"820d620f-8507-4746-87bd-d60ecca99ae7\",\r\n          \"isEnabled\": true,\r\n          \"type\": \"User\",\r\n          \"userConsentDescription\": \"Allow the application to access azure-cli-2016-12-23-01-11-17 on your behalf.\",\r\n          \"userConsentDisplayName\": \"Access azure-cli-2016-12-23-01-11-17\",\r\n          \"value\": \"user_impersonation\"\r\n        }\r\n      ],\r\n      \"passwordCredentials\": [],\r\n      \"preferredTokenSigningKeyThumbprint\": null,\r\n      \"publisherName\": \"Microsoft\",\r\n      \"replyUrls\": [],\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"http://azure-cli-2016-12-23-01-11-17\",\r\n        \"db2b2faa-5626-455b-ac5a-0ee3e9337312\"\r\n      ],\r\n      \"servicePrincipalType\": \"Application\",\r\n      \"tags\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1510"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:12 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "ob5MfgM/paATdU07erorYq4RLE1A2vGZUIqL/xduZaE="
+        ],
+        "request-id": [
+          "20cac095-0e0a-4884-8ebe-cdbad7a64858"
+        ],
+        "client-request-id": [
+          "c43d7127-8e76-4fe4-8c35-66cc3952822b"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.6"
+        ],
+        "ocp-aad-session-key": [
+          "Cp-jeIf6v-kpHVgpaxZmwD_qrz8r9L247o6v0hvwC5Lfl-cZj-y5KpzpLpt2kZJCdgi8JXPfyGvdhAudPrKylddZJLjNOtO2YeRvdmM8Kvk31mB8IiWUTMDkAqMXv5FR.IhIK6V9G6iQf4n0hGsbF3JWN35UFESPylK2uuQ9LmKw"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Duration": [
+          "3419469"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault2f0c28449a2b?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvdmF1bHQyZjBjMjg0NDlhMmI/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"list\",\r\n            \"get\",\r\n            \"decrypt\"\r\n          ],\r\n          \"secrets\": [\r\n            \"get\"\r\n          ]\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "559"
+        ],
+        "x-ms-client-request-id": [
+          "4e2e55ee-d1b7-4dd8-a08a-dff294183418"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault2f0c28449a2b\",\r\n  \"name\": \"vault2f0c28449a2b\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"list\",\r\n            \"get\",\r\n            \"decrypt\"\r\n          ],\r\n          \"secrets\": [\r\n            \"get\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": false,\r\n    \"vaultUri\": \"https://vault2f0c28449a2b.vault.azure.net\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.148"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-request-id": [
+          "cbfe1d12-50b3-42cf-bb32-5a8968ce5923"
+        ],
+        "x-ms-correlation-request-id": [
+          "cbfe1d12-50b3-42cf-bb32-5a8968ce5923"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213214Z:cbfe1d12-50b3-42cf-bb32-5a8968ce5923"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHM/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e83ce717-b19d-4313-853b-d2f693fc25ac"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault2f0c28449a2b\",\r\n      \"name\": \"vault2f0c28449a2b\",\r\n      \"type\": \"Microsoft.KeyVault/vaults\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"family\": \"A\",\r\n          \"name\": \"standard\"\r\n        },\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"accessPolicies\": [\r\n          {\r\n            \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n            \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n            \"permissions\": {\r\n              \"keys\": [\r\n                \"list\",\r\n                \"get\",\r\n                \"decrypt\"\r\n              ],\r\n              \"secrets\": [\r\n                \"get\"\r\n              ]\r\n            }\r\n          }\r\n        ],\r\n        \"enabledForDeployment\": false,\r\n        \"vaultUri\": \"https://vault2f0c28449a2b.vault.azure.net/\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2\",\r\n      \"name\": \"vault1c0360452ea2\",\r\n      \"type\": \"Microsoft.KeyVault/vaults\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"family\": \"A\",\r\n          \"name\": \"standard\"\r\n        },\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"accessPolicies\": [\r\n          {\r\n            \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n            \"objectId\": \"00cff7d5-f4b6-4d56-aa39-491e2e657f54\",\r\n            \"permissions\": {\r\n              \"keys\": [\r\n                \"all\"\r\n              ],\r\n              \"secrets\": [\r\n                \"get\",\r\n                \"list\",\r\n                \"all\"\r\n              ]\r\n            }\r\n          }\r\n        ],\r\n        \"enabledForDeployment\": true,\r\n        \"enabledForTemplateDeployment\": true,\r\n        \"vaultUri\": \"https://vault1c0360452ea2.vault.azure.net/\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults?api-version=2015-06-01&%24skiptoken=3Y9da4MwGEb%2fSxi7WoyKUSvIcKz7Vhh1G91d1FfrRxJJorSW%2fve6v7Gbc%2fXAec4ZCTiaj1b0GkVntE12%2bdcORehgzKgjQjgTrAEOwlhsmRRYpeRET4UuVTuaVgpNSuptai%2bguAIIseeGJS4KZ4NDd8MoBerWQUAUaDmpEp6VnEZNVCOAz9Rn1KeuW3g2FGRUcm4rUJqkbamklrWx3uH0zabBkPmP%2bp6NLZ7XySqOXduh2Pax7dze6H59I3sQccWfnOLl8%2fTbPXRp19jZ43BI%2bWuM7tDP9p%2fEHfdLsmRdYmf527DP17jL5Qo%3d\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-original-request-ids": [
+          "",
+          ""
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-request-id": [
+          "5a2b2381-b208-447c-beaa-22e9f90503fa"
+        ],
+        "x-ms-correlation-request-id": [
+          "5a2b2381-b208-447c-beaa-22e9f90503fa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213214Z:5a2b2381-b208-447c-beaa-22e9f90503fa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault1c0360452ea2?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvdmF1bHQxYzAzNjA0NTJlYTI/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "abae6c60-67e6-45dc-af1e-2afaeb9253c2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.148"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-request-id": [
+          "10e99588-02e4-4338-9216-9deb5ce9caf2"
+        ],
+        "x-ms-correlation-request-id": [
+          "10e99588-02e4-4338-9216-9deb5ce9caf2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213215Z:10e99588-02e4-4338-9216-9deb5ce9caf2"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/rgnemv56a56522b40eb/providers/Microsoft.KeyVault/vaults/vault2f0c28449a2b?api-version=2015-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWIvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvdmF1bHQyZjBjMjg0NDlhMmI/YXBpLXZlcnNpb249MjAxNS0wNi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "da07cbdf-c90c-4f2a-b82b-4fa9d942adea"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.KeyVault.Fluent.KeyVaultManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.148"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-request-id": [
+          "d95d8bde-4b92-4771-b208-dffdbf375c2f"
+        ],
+        "x-ms-correlation-request-id": [
+          "d95d8bde-4b92-4771-b208-dffdbf375c2f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213215Z:d95d8bde-4b92-4771-b208-dffdbf375c2f"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourcegroups/rgnemv56a56522b40eb?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlZ3JvdXBzL3JnbmVtdjU2YTU2NTIyYjQwZWI/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c9816745-ef18-4b44-98ac-e7fa559e76ec"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR05FTVY1NkE1NjUyMkI0MEVCLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2016-02-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-request-id": [
+          "26c54641-23fc-43b7-8a16-8a34c4431c4c"
+        ],
+        "x-ms-correlation-request-id": [
+          "26c54641-23fc-43b7-8a16-8a34c4431c4c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213216Z:26c54641-23fc-43b7-8a16-8a34c4431c4c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SR05FTVY1NkE1NjUyMkI0MEVCLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUjA1RlRWWTFOa0UxTmpVeU1rSTBNRVZDTFZkRlUxUlZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lkMlZ6ZEhWekluMD9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resource.Fluent.ResourceManagementClient/1.0.0-beta50"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 21:32:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-request-id": [
+          "be402b33-a0e2-40b2-8f46-4a1ea58a4288"
+        ],
+        "x-ms-correlation-request-id": [
+          "be402b33-a0e2-40b2-8f46-4a1ea58a4288"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170131T213246Z:be402b33-a0e2-40b2-8f46-4a1ea58a4288"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "ManageKeyVaultTest": [
+      "vault1c0360452ea2",
+      "vault2f0c28449a2b",
+      "rgnemv56a56522b40eb"
+    ]
+  },
+  "Variables": {
+    "ServicePrincipal": "db2b2faa-5626-455b-ac5a-0ee3e9337312",
+    "AADTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "SubscriptionId": "c549f475-dee8-428c-bb19-829a55e52f77"
+  }
+}
