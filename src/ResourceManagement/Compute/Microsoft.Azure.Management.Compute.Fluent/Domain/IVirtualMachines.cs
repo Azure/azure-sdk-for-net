@@ -3,8 +3,9 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using VirtualMachine.Definition;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to virtual machine management API.
@@ -52,6 +53,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The name of the resource group the virtual machine is in.</param>
         /// <param name="name">The virtual machine name.</param>
         void Start(string groupName, string name);
+
+        /// <summary>
+        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// </summary>
+        /// <param name="groupName">The resource group name.</param>
+        /// <param name="name">The virtual machine name.</param>
+        void MigrateToManaged(string groupName, string name);
 
         /// <summary>
         /// Generalize the virtual machine.

@@ -26,6 +26,7 @@ using System.Reflection;
 using Microsoft.Rest.Azure;
 using Azure.Tests;
 using System.Diagnostics;
+using Renci.SshNet;
 
 namespace Fluent.Tests.Common
 {
@@ -297,6 +298,26 @@ namespace Fluent.Tests.Common
             return (handler is T1 || (handler.InnerHandler != null
                 && handler.InnerHandler is DelegatingHandler
                 && HandlerContains<T1>(handler.InnerHandler as DelegatingHandler)));
+        }
+
+        public static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                return;
+            }
+            using (var sshClient = new SshClient(host, port, userName, password))
+            {
+                Console.WriteLine("Trying to de-provision: " + host);
+                sshClient.Connect();
+                var commandToExecute = "sudo waagent -deprovision+user --force";
+                using (var command = sshClient.CreateCommand(commandToExecute))
+                {
+                    var commandOutput = command.Execute();
+                    Console.WriteLine(commandOutput);
+                }
+                sshClient.Disconnect();
+            }
         }
     }
 }

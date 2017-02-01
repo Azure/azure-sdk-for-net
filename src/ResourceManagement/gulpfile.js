@@ -6,9 +6,10 @@ var fs = require('fs');
 
 var mappings = {
     'compute': {
-        'dir': 'Compute/Microsoft.Azure.Management.Fluent.Compute',
-        'source': 'arm-compute/2016-03-30/swagger/compute.json',
-        'package': 'Microsoft.Azure.Management.Fluent.Compute',
+         'dir': 'Compute/Microsoft.Azure.Management.Compute.Fluent',
+        'source': 'arm-compute/CompositeComputeClient.json',
+        'package': 'Microsoft.Azure.Management.Compute.Fluent',
+        'composite': true,
         'args': '-FT 1'
     },
     'storage': {

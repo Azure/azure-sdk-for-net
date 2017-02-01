@@ -9,7 +9,6 @@ using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
-using System.Linq;
 
 namespace ManageVirtualMachine
 {
@@ -71,8 +70,8 @@ namespace ManageVirtualMachine
 
                 windowsVM.Update()
                         .WithNewDataDisk(10)
-                        .DefineNewDataDisk(DataDiskName)
-                            .WithSizeInGB(20)
+                        .DefineUnmanagedDataDisk(DataDiskName)
+                            .WithNewVhd(20)
                             .WithCaching(CachingTypes.ReadWrite)
                             .Attach()
                         .Apply();
@@ -81,7 +80,7 @@ namespace ManageVirtualMachine
                 Utilities.PrintVirtualMachine(windowsVM);
 
                 windowsVM.Update()
-                    .WithoutDataDisk(DataDiskName)
+                    .WithoutUnmanagedDataDisk(DataDiskName)
                     .Apply();
 
                 Utilities.Log("Detached data disk " + DataDiskName + " from VM " + windowsVM.Id);
@@ -96,10 +95,10 @@ namespace ManageVirtualMachine
 
                 Utilities.Log("De-allocated VM: " + windowsVM.Id);
 
-                var dataDisk = windowsVM.DataDisks.First();
+                var dataDisk = windowsVM.DataDisks[0];
 
                 windowsVM.Update()
-                            .UpdateDataDisk(dataDisk.Name)
+                            .UpdateUnmanagedDataDisk(dataDisk.Name)
                             .WithSizeInGB(30)
                             .Parent()
                         .Apply();
@@ -117,7 +116,7 @@ namespace ManageVirtualMachine
                 }
 
                 windowsVM.Update()
-                        .WithOsDiskSizeInGb(osDiskSizeInGb + 10)
+                        .WithOSDiskSizeInGB(osDiskSizeInGb + 10)
                         .Apply();
 
                 Utilities.Log("Expanded VM " + windowsVM.Id + "'s OS disk to " + (osDiskSizeInGb + 10));

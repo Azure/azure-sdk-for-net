@@ -113,6 +113,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.InnerCollection.Redeploy(groupName, name);
         }
 
+        ///GENMHASH:7DBF1DD4080EA265532035CF9FB8D313:1A99BFC30D31869BE5E39DD7E4E0639D
+        public void MigrateToManaged(string groupName, string name)
+        {
+            this.InnerCollection.ConvertToManagedDisks(groupName, name);
+        }
+
         ///GENMHASH:E5D7B16A7B6C705114CC71E8BB2B20E1:6975A84E6594FF8DEA88E6C992B0B500
         public string Capture(string groupName, string name, string containerName, string vhdPrefix, bool overwriteVhd)
         {

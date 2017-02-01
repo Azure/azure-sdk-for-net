@@ -7,6 +7,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     using System.Collections.Generic;
 
     /// <summary>
+    /// The entirety of virtual machine scale set extension update as a part of parent virtual machine scale set update.
+    /// </summary>
+    public interface IUpdate  :
+        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IUpdate>,
+        IWithAutoUpgradeMinorVersion,
+        IWithSettings
+    {
+    }
+
+    /// <summary>
     /// The stage of a virtual machine scale set extension update allowing to enable or disable auto upgrade of the
     /// extension when when a new minor version of virtual machine scale set extension image gets published.
     /// </summary>
@@ -23,16 +33,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate WithoutMinorVersionAutoUpgrade();
-    }
-
-    /// <summary>
-    /// The entirety of virtual machine scale set extension update as a part of parent virtual machine scale set update.
-    /// </summary>
-    public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IUpdate>,
-        IWithAutoUpgradeMinorVersion,
-        IWithSettings
-    {
     }
 
     /// <summary>

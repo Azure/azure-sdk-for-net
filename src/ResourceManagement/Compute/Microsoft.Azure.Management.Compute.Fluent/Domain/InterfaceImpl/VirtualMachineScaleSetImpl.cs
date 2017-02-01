@@ -6,7 +6,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Models;
+    using VirtualMachineScaleSet.DefinitionManaged;
+    using VirtualMachineScaleSet.DefinitionManagedOrUnmanaged;
     using VirtualMachineScaleSet.Definition;
+    using VirtualMachineScaleSet.DefinitionUnmanaged;
     using VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Network.Fluent.Models;
@@ -19,284 +22,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class VirtualMachineScaleSetImpl 
     {
         /// <summary>
-        /// Specifies the name prefix to use for auto-generating the names for the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="namePrefix">The prefix for the auto-generated names of the virtual machines in the scale set.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithComputerNamePrefix.WithComputerNamePrefix(string namePrefix)
-        {
-            return this.WithComputerNamePrefix(namePrefix) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
-        /// of an Internet-facing load balancer.
-        /// </summary>
-        /// <param name="natPoolNames">The names of existing inbound NAT pools.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
-        {
-            return this.WithoutPrimaryInternetFacingLoadBalancerNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithApply;
-        }
-
-        /// <summary>
-        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
-        /// of the internal load balancer.
-        /// </summary>
-        /// <param name="natPoolNames">The names of existing inbound NAT pools.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
-        {
-            return this.WithoutPrimaryInternalLoadBalancerNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithApply;
-        }
-
-        /// <summary>
-        /// Associates the specified internal load balancer inbound NAT pools with the the primary network interface of
-        /// the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="natPoolNames">The names of existing inbound NAT pools in the selected load balancer.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
-        {
-            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithApply;
-        }
-
-        /// <summary>
         /// Specifies the SSH root user name for the Linux virtual machine.
         /// </summary>
         /// <param name="rootUserName">The Linux SSH root user name. This must follow the required naming convention for Linux user name.</param>
         /// <return>The next stage of the Linux virtual machine definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKey VirtualMachineScaleSet.Definition.IWithLinuxRootUsername.WithRootUsername(string rootUserName)
+        VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameUnmanaged.WithRootUsername(string rootUserName)
         {
-            return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKey;
-        }
-
-        /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
-        }
-
-        /// <summary>
-        /// Removes the associations between the primary network interface configuration and the specfied backends
-        /// of the Internet-facing load balancer.
-        /// </summary>
-        /// <param name="backendNames">Existing backend names.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
-        {
-            return this.WithoutPrimaryInternetFacingLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithApply;
-        }
-
-        /// <summary>
-        /// Removes the associations between the primary network interface configuration and the specified backends
-        /// of the internal load balancer.
-        /// </summary>
-        /// <param name="backendNames">Existing backend names.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
-        {
-            return this.WithoutPrimaryInternalLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithApply;
-        }
-
-        /// <summary>
-        /// Associates inbound NAT pools of the selected Internet-facing load balancer with the primary network interface
-        /// of the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="natPoolNames">The names of existing inbound NAT pools on the selected load balancer.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
-        {
-            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer;
-        }
-
-        /// <summary>
-        /// Associates the specified inbound NAT pools of the selected internal load balancer with the primary network
-        /// interface of the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="natPoolNames">Inbound NAT pools names existing on the selected load balancer.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
-        {
-            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
-        }
-
-        /// <summary>
-        /// Specifies the SSH public key.
-        /// Each call to this method adds the given public key to the list of VM's public keys.
-        /// </summary>
-        /// <param name="publicKey">An SSH public key in the PEM format.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxCreate VirtualMachineScaleSet.Definition.IWithLinuxCreate.WithSsh(string publicKey)
-        {
-            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreate;
-        }
-
-        /// <summary>
-        /// Associates the specified internal load balancer backends with the primary network interface of the
-        /// virtual machines in the scale set.
-        /// </summary>
-        /// <param name="backendNames">The names of existing backends on the selected load balancer.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
-        {
-            return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool;
-        }
-
-        /// <summary>
-        /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
-        /// in the scale set.
-        /// </summary>
-        /// <param name="name">The name of the storage account.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(string name)
-        {
-            return this.WithNewStorageAccount(name) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
-        /// in the scale set.
-        /// </summary>
-        /// <param name="creatable">The storage account definition in a creatable stage.</param>
-        /// <return>The next stage in the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
-        {
-            return this.WithNewStorageAccount(creatable) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Specifies an existing StorageAccount for the OS and data disk VHDs of
-        /// the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="storageAccount">An existing storage account.</param>
-        /// <return>The next stage in the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
-        {
-            return this.WithExistingStorageAccount(storageAccount) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Removes the extension with the specified name from the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithExtension.WithoutExtension(string name)
-        {
-            return this.WithoutExtension(name) as VirtualMachineScaleSet.Update.IWithApply;
-        }
-
-        /// <summary>
-        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="name">The reference name for the extension.</param>
-        /// <return>The first stage of the extension reference update.</return>
-        VirtualMachineScaleSetExtension.Update.IUpdate VirtualMachineScaleSet.Update.IWithExtension.UpdateExtension(string name)
-        {
-            return this.UpdateExtension(name) as VirtualMachineScaleSetExtension.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="name">The reference name for an extension.</param>
-        /// <return>The first stage of the extension reference definition.</return>
-        VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSet.Update.IWithExtension.DefineNewExtension(string name)
-        {
-            return this.DefineNewExtension(name) as VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<VirtualMachineScaleSet.Update.IWithApply>;
-        }
-
-        /// <summary>
-        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="name">The reference name for the extension.</param>
-        /// <return>The first stage of the extension reference definition.</return>
-        VirtualMachineScaleSetExtension.Definition.IBlank<VirtualMachineScaleSet.Definition.IWithCreate> VirtualMachineScaleSet.Definition.IWithExtension.DefineNewExtension(string name)
-        {
-            return this.DefineNewExtension(name) as VirtualMachineScaleSetExtension.Definition.IBlank<VirtualMachineScaleSet.Definition.IWithCreate>;
-        }
-
-        /// <summary>
-        /// Specifies the administrator password for the Windows virtual machine.
-        /// </summary>
-        /// <param name="adminPassword">The administrator password. This must follow the criteria for Azure Windows VM password.</param>
-        /// <return>The stage representing creatable Windows VM definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsAdminPassword.WithAdminPassword(string adminPassword)
-        {
-            return this.WithAdminPassword(adminPassword) as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
-        }
-
-        /// <summary>
-        /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
-        /// scale set.
-        /// This will replace the current internet-facing load balancer associated with the virtual machines in the
-        /// scale set (if any).
-        /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
-        /// network interface of the virtual machines unless a subset of them is selected in the next stages.
-        /// </summary>
-        /// <param name="loadBalancer">The primary Internet-facing load balancer.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer.WithExistingPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
-        {
-            return this.WithExistingPrimaryInternetFacingLoadBalancer(loadBalancer) as VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool;
-        }
-
-        /// <summary>
-        /// Specifies the SSH public key.
-        /// Each call to this method adds the given public key to the list of VM's public keys.
-        /// </summary>
-        /// <param name="publicKey">The SSH public key in PEM format.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxCreate VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKey.WithSsh(string publicKey)
-        {
-            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreate;
-        }
-
-        /// <summary>
-        /// Specifies the SSH root password for the Linux virtual machine.
-        /// </summary>
-        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
-        /// <return>The next stage of the Linux virtual machine definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxCreate VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKey.WithRootPassword(string rootPassword)
-        {
-            return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreate;
-        }
-
-        /// <summary>
-        /// Associates the specified Internet-facing load balancer backends with the primary network interface of the
-        /// virtual machines in the scale set.
-        /// </summary>
-        /// <param name="backendNames">The backend names.</param>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
-        {
-            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool;
-        }
-
-        /// <summary>
-        /// Associates the specified backends of the selected load balancer with the primary network interface of the
-        /// virtual machines in the scale set.
-        /// </summary>
-        /// <param name="backendNames">The names of existing backends in the selected load balancer.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
-        {
-            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool;
-        }
-
-        /// <summary>
-        /// Associate an existing virtual network subnet with the primary network interface of the virtual machines
-        /// in the scale set.
-        /// </summary>
-        /// <param name="network">An existing virtual network.</param>
-        /// <param name="subnetName">The subnet name.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer VirtualMachineScaleSet.Definition.IWithNetworkSubnet.WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
-        {
-            return this.WithExistingPrimaryNetworkSubnet(network, subnetName) as VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer;
+            return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged;
         }
 
         /// <summary>
@@ -311,13 +43,227 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the administrator user name for the Windows virtual machine.
+        /// Disables over-provisioning of virtual machines.
         /// </summary>
-        /// <param name="adminUserName">The Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
-        /// <return>The stage representing creatable Linux VM definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsAdminPassword VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername.WithAdminUsername(string adminUserName)
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOverProvision.WithoutOverProvisioning()
         {
-            return this.WithAdminUsername(adminUserName) as VirtualMachineScaleSet.Definition.IWithWindowsAdminPassword;
+            return this.WithoutOverProvisioning() as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Enables or disables over-provisioning of virtual machines in the scale set.
+        /// </summary>
+        /// <param name="enabled">
+        /// True if enabling over-0provisioning of virtual machines in the
+        /// scale set, otherwise false.
+        /// </param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvision(bool enabled)
+        {
+            return this.WithOverProvision(enabled) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Enables over-provisioning of virtual machines.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvisioning()
+        {
+            return this.WithOverProvisioning() as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">The SSH public key in PEM format.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies the SSH root password for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyUnmanaged.WithRootPassword(string rootPassword)
+        {
+            return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged;
+        }
+
+        /// <summary>
+        /// Associate internal load balancer inbound NAT pools with the the primary network interface of the
+        /// scale set virtual machine.
+        /// </summary>
+        /// <param name="natPoolNames">Inbound NAT pool names.</param>
+        /// <return>The next stage of the virtual machine scale set definition.</return>
+        VirtualMachineScaleSet.Definition.IWithOS VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
+        {
+            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Definition.IWithOS;
+        }
+
+        /// <summary>
+        /// Specifies the SSH root user name for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootUserName">The Linux SSH root user name. This must follow the required naming convention for Linux user name.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged.WithRootUsername(string rootUserName)
+        {
+            return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged;
+        }
+
+        /// <summary>
+        /// Updates the size of a managed data disk with the given lun.
+        /// </summary>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="newSizeInGB">The new size of the disk.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithDataDiskUpdated(int lun, int newSizeInGB)
+        {
+            return this.WithDataDiskUpdated(lun, newSizeInGB) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Updates the size and caching type of a managed data disk with the given lun.
+        /// </summary>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="newSizeInGB">The new size of the disk.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType)
+        {
+            return this.WithDataDiskUpdated(lun, newSizeInGB, cachingType) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Updates the size, caching type and storage account type of a managed data disk with the given lun.
+        /// </summary>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="newSizeInGB">The new size of the disk.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <param name="storageAccountType">The storage account type.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            return this.WithDataDiskUpdated(lun, newSizeInGB, cachingType, storageAccountType) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given size.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB)
+        {
+            return this.WithNewDataDisk(sizeInGB) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given settings.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk.</param>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType)
+        {
+            return this.WithNewDataDisk(sizeInGB, lun, cachingType) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given settings.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk.</param>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <param name="storageAccountType">The storage account type.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            return this.WithNewDataDisk(sizeInGB, lun, cachingType, storageAccountType) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Detaches managed data disk with the given lun from the virtual machine scale set instances.
+        /// </summary>
+        /// <param name="lun">The disk lun.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithManagedDataDisk.WithoutDataDisk(int lun)
+        {
+            return this.WithoutDataDisk(lun) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Specifies the data disk to be created from the data disk image in the virtual machine image.
+        /// </summary>
+        /// <param name="imageLun">The lun of the source data disk image.</param>
+        /// <return>The next stage of virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDiskFromImage(int imageLun)
+        {
+            return this.WithNewDataDiskFromImage(imageLun) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the data disk to be created from the data disk image in the virtual machine image.
+        /// </summary>
+        /// <param name="imageLun">The lun of the source data disk image.</param>
+        /// <param name="newSizeInGB">The new size that overrides the default size specified in the data disk image.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The next stage of virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDiskFromImage(int imageLun, int newSizeInGB, CachingTypes cachingType)
+        {
+            return this.WithNewDataDiskFromImage(imageLun, newSizeInGB, cachingType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the data disk to be created from the data disk image in the virtual machine image.
+        /// </summary>
+        /// <param name="imageLun">The lun of the source data disk image.</param>
+        /// <param name="newSizeInGB">The new size that overrides the default size specified in the data disk image.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <param name="storageAccountType">The storage account type.</param>
+        /// <return>The next stage of virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDiskFromImage(int imageLun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            return this.WithNewDataDiskFromImage(imageLun, newSizeInGB, cachingType, storageAccountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given size.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk.</param>
+        /// <return>The next stage of virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB)
+        {
+            return this.WithNewDataDisk(sizeInGB) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given settings.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk.</param>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The next stage of virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType)
+        {
+            return this.WithNewDataDisk(sizeInGB, lun, cachingType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given settings.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk.</param>
+        /// <param name="lun">The disk lun.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <param name="storageAccountType">The storage account type.</param>
+        /// <return>The next stage of virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDataDisk.WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            return this.WithNewDataDisk(sizeInGB, lun, cachingType, storageAccountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
         }
 
         /// <summary>
@@ -327,9 +273,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="offer">The offer of the image.</param>
         /// <param name="sku">The SKU of the image.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxRootUsername VirtualMachineScaleSet.Definition.IWithOS.WithLatestLinuxImage(string publisher, string offer, string sku)
+        VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithLatestLinuxImage(string publisher, string offer, string sku)
         {
-            return this.WithLatestLinuxImage(publisher, offer, sku) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsername;
+            return this.WithLatestLinuxImage(publisher, offer, sku) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged;
         }
 
         /// <summary>
@@ -337,9 +283,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="imageUrl">The url the the VHD.</param>
         /// <return>The next stage of the virtual machine scale set definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxRootUsername VirtualMachineScaleSet.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
+        VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
         {
-            return this.WithStoredLinuxImage(imageUrl) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsername;
+            return this.WithStoredLinuxImage(imageUrl) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameUnmanaged;
         }
 
         /// <summary>
@@ -347,9 +293,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="imageReference">Describes the publisher, offer, SKU and version of the market-place image.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxRootUsername VirtualMachineScaleSet.Definition.IWithOS.WithSpecificLinuxImageVersion(ImageReference imageReference)
+        VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithSpecificLinuxImageVersion(ImageReference imageReference)
         {
-            return this.WithSpecificLinuxImageVersion(imageReference) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsername;
+            return this.WithSpecificLinuxImageVersion(imageReference) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies the id of a Linux custom image to be used.
+        /// </summary>
+        /// <param name="customImageId">The resource id of the custom image.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged VirtualMachineScaleSet.Definition.IWithOS.WithLinuxCustomImage(string customImageId)
+        {
+            return this.WithLinuxCustomImage(customImageId) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged;
         }
 
         /// <summary>
@@ -359,9 +315,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="offer">Specifies the offer of the image.</param>
         /// <param name="sku">Specifies the SKU of the image.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername VirtualMachineScaleSet.Definition.IWithOS.WithLatestWindowsImage(string publisher, string offer, string sku)
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithLatestWindowsImage(string publisher, string offer, string sku)
         {
-            return this.WithLatestWindowsImage(publisher, offer, sku) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername;
+            return this.WithLatestWindowsImage(publisher, offer, sku) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies the id of a Windows custom image to be used.
+        /// </summary>
+        /// <param name="customImageId">The resource id of the custom image.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManaged VirtualMachineScaleSet.Definition.IWithOS.WithWindowsCustomImage(string customImageId)
+        {
+            return this.WithWindowsCustomImage(customImageId) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManaged;
         }
 
         /// <summary>
@@ -369,9 +335,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="knownImage">A known market-place image.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername VirtualMachineScaleSet.Definition.IWithOS.WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
         {
-            return this.WithPopularWindowsImage(knownImage) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername;
+            return this.WithPopularWindowsImage(knownImage) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged;
         }
 
         /// <summary>
@@ -379,9 +345,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="imageReference">Describes publisher, offer, SKU and version of the marketplace image.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername VirtualMachineScaleSet.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
         {
-            return this.WithSpecificWindowsImageVersion(imageReference) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername;
+            return this.WithSpecificWindowsImageVersion(imageReference) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged;
         }
 
         /// <summary>
@@ -389,9 +355,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="knownImage">A known market-place image.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithLinuxRootUsername VirtualMachineScaleSet.Definition.IWithOS.WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
+        VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
         {
-            return this.WithPopularLinuxImage(knownImage) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsername;
+            return this.WithPopularLinuxImage(knownImage) as VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManagedOrUnmanaged;
         }
 
         /// <summary>
@@ -400,19 +366,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="imageUrl">The URL of the VHD.</param>
         /// <return>The next stage of the virtual machine scale set definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername VirtualMachineScaleSet.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameUnmanaged VirtualMachineScaleSet.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
         {
-            return this.WithStoredWindowsImage(imageUrl) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsername;
-        }
-
-        /// <summary>
-        /// Specifies the virtual machine scale set upgrade policy mode.
-        /// </summary>
-        /// <param name="upgradeMode">An upgrade policy mode.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithUpgradePolicy.WithUpgradeMode(UpgradeMode upgradeMode)
-        {
-            return this.WithUpgradeMode(upgradeMode) as VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithStoredWindowsImage(imageUrl) as VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameUnmanaged;
         }
 
         /// <summary>
@@ -456,21 +412,60 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Associate an existing virtual network subnet with the primary network interface of the virtual machines
+        /// in the scale set.
+        /// </summary>
+        /// <param name="network">An existing virtual network.</param>
+        /// <param name="subnetName">The subnet name.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer VirtualMachineScaleSet.Definition.IWithNetworkSubnet.WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
+        {
+            return this.WithExistingPrimaryNetworkSubnet(network, subnetName) as VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer;
+        }
+
+        /// <summary>
+        /// Specifies the administrator user name for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminUserName">The Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
+        /// <return>The stage representing creatable Linux VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged.WithAdminUsername(string adminUserName)
+        {
+            return this.WithAdminUsername(adminUserName) as VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManagedOrUnmanaged;
+        }
+
+        /// <return>The next stage of a unmanaged disk based virtual machine scale set definition.</return>
+        VirtualMachineScaleSet.Definition.IWithUnmanagedCreate VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged.WithUnmanagedDisks()
+        {
+            return this.WithUnmanagedDisks() as VirtualMachineScaleSet.Definition.IWithUnmanagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged;
+        }
+
+        /// <summary>
         /// Enables automatic updates.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithAutoUpdate()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithAutoUpdate()
         {
-            return this.WithAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
         /// Disables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithoutVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutVmAgent()
         {
-            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -479,18 +474,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="listener">A WinRm listener.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithWinRm(WinRMListener listener)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithWinRm(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
         /// Disables automatic updates.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithoutAutoUpdate()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithoutAutoUpdate()
         {
-            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -498,28 +493,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="timeZone">A time zone.</param>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithTimeZone(string timeZone)
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithTimeZone(string timeZone)
         {
-            return this.WithTimeZone(timeZone) as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithTimeZone(timeZone) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
         /// Enables the VM agent.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithWindowsCreate VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithVmAgent()
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged.WithVmAgent()
         {
-            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreate;
-        }
-
-        /// <summary>
-        /// Specifies the custom data for the virtual machine scale set.
-        /// </summary>
-        /// <param name="base64EncodedCustomData">The base64 encoded custom data.</param>
-        /// <return>The next stage in the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithCustomData.WithCustomData(string base64EncodedCustomData)
-        {
-            return this.WithCustomData(base64EncodedCustomData) as VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
@@ -540,6 +525,261 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithCapacity.WithCapacity(int capacity)
         {
             return this.WithCapacity(capacity) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Enables automatic updates.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithAutoUpdate()
+        {
+            return this.WithAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Disables the VM agent.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutVmAgent()
+        {
+            return this.WithoutVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Specifies the WinRM listener.
+        /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
+        /// </summary>
+        /// <param name="listener">A WinRm listener.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithWinRm(WinRMListener listener)
+        {
+            return this.WithWinRm(listener) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Disables automatic updates.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithoutAutoUpdate()
+        {
+            return this.WithoutAutoUpdate() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Specifies the time zone for the virtual machines to use.
+        /// </summary>
+        /// <param name="timeZone">A time zone.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithTimeZone(string timeZone)
+        {
+            return this.WithTimeZone(timeZone) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Enables the VM agent.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged.WithVmAgent()
+        {
+            return this.WithVmAgent() as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">The SSH public key in PEM format.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged;
+        }
+
+        /// <summary>
+        /// Specifies the SSH root password for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithRootPassword(string rootPassword)
+        {
+            return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged;
+        }
+
+        /// <summary>
+        /// Begins the description of an update of an existing unmanaged data disk of this virtual machine.
+        /// </summary>
+        /// <param name="name">The name of the disk.</param>
+        /// <return>The stage representing updating configuration for  data disk.</return>
+        VirtualMachineScaleSetUnmanagedDataDisk.Update.IUpdate VirtualMachineScaleSet.Update.IWithUnmanagedDataDisk.UpdateUnmanagedDataDisk(string name)
+        {
+            return this.UpdateUnmanagedDataDisk(name) as VirtualMachineScaleSetUnmanagedDataDisk.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Begins definition of a unmanaged data disk to be attached to the virtual machine scale set.
+        /// </summary>
+        /// <param name="name">The name for the data disk.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition.IBlank<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSet.Update.IWithUnmanagedDataDisk.DefineUnmanagedDataDisk(string name)
+        {
+            return this.DefineUnmanagedDataDisk(name) as VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition.IBlank<VirtualMachineScaleSet.Update.IWithApply>;
+        }
+
+        /// <summary>
+        /// Specifies that a new blank unmanaged data disk needs to be attached to virtual machine scale set.
+        /// </summary>
+        /// <param name="sizeInGB">The disk size in GB.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithUnmanagedDataDisk.WithNewUnmanagedDataDisk(int sizeInGB)
+        {
+            return this.WithNewUnmanagedDataDisk(sizeInGB) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Detaches a unmanaged data disk with the given name from the virtual machine scale set.
+        /// </summary>
+        /// <param name="name">The name of the data disk to remove.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithUnmanagedDataDisk.WithoutUnmanagedDataDisk(string name)
+        {
+            return this.WithoutUnmanagedDataDisk(name) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Detaches a unmanaged data disk with the given logical unit number from the virtual machine scale set.
+        /// </summary>
+        /// <param name="lun">The logical unit number of the data disk to remove.</param>
+        /// <return>The next stage of virtual machine scale set update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithUnmanagedDataDisk.WithoutUnmanagedDataDisk(int lun)
+        {
+            return this.WithoutUnmanagedDataDisk(lun) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Begins definition of a unmanaged data disk to be attached to the virtual machine scale set.
+        /// </summary>
+        /// <param name="name">The name for the data disk.</param>
+        /// <return>The stage representing configuration for the unmanaged data disk.</return>
+        VirtualMachineScaleSetUnmanagedDataDisk.Definition.IBlank<VirtualMachineScaleSet.Definition.IWithUnmanagedCreate> VirtualMachineScaleSet.Definition.IWithUnmanagedDataDisk.DefineUnmanagedDataDisk(string name)
+        {
+            return this.DefineUnmanagedDataDisk(name) as VirtualMachineScaleSetUnmanagedDataDisk.Definition.IBlank<VirtualMachineScaleSet.Definition.IWithUnmanagedCreate>;
+        }
+
+        /// <summary>
+        /// Specifies that a new blank unmanaged data disk needs to be attached to virtual machine scale set.
+        /// </summary>
+        /// <param name="sizeInGB">The disk size in GB.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithUnmanagedCreate VirtualMachineScaleSet.Definition.IWithUnmanagedDataDisk.WithNewUnmanagedDataDisk(int sizeInGB)
+        {
+            return this.WithNewUnmanagedDataDisk(sizeInGB) as VirtualMachineScaleSet.Definition.IWithUnmanagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the load balancer to be used as the internal load balancer for the virtual machines in the
+        /// scale set.
+        /// This will replace the current internal load balancer associated with the virtual machines in the
+        /// scale set (if any).
+        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
+        /// network interface of the virtual machines in the scale set unless subset of them is selected in the next stages.
+        /// </p>.
+        /// </summary>
+        /// <param name="loadBalancer">The primary Internet-facing load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer.WithExistingPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            return this.WithExistingPrimaryInternalLoadBalancer(loadBalancer) as VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool;
+        }
+
+        /// <summary>
+        /// Specifies the internal load balancer whose backends and/or NAT pools can be assigned to the primary network
+        /// interface of the virtual machines in the scale set.
+        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
+        /// network interface of the virtual machines in the scale set, unless subset of them is selected in the next stages.
+        /// </summary>
+        /// <param name="loadBalancer">An existing internal load balancer.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithExistingPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            return this.WithExistingPrimaryInternalLoadBalancer(loadBalancer) as VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool;
+        }
+
+        /// <summary>
+        /// Specifies that no internal load balancer should be associated with the primary network interfaces of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithOS VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        {
+            return this.WithoutPrimaryInternalLoadBalancer() as VirtualMachineScaleSet.Definition.IWithOS;
+        }
+
+        /// <summary>
+        /// Specifies the administrator password for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminPassword">The administrator password. This must follow the criteria for Azure Windows VM password.</param>
+        /// <return>The stage representing creatable Windows VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordUnmanaged.WithAdminPassword(string adminPassword)
+        {
+            return this.WithAdminPassword(adminPassword) as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
+        /// in the scale set.
+        /// </summary>
+        /// <param name="name">The name of the storage account.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(string name)
+        {
+            return this.WithNewStorageAccount(name) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
+        /// in the scale set.
+        /// </summary>
+        /// <param name="creatable">The storage account definition in a creatable stage.</param>
+        /// <return>The next stage in the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
+        {
+            return this.WithNewStorageAccount(creatable) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies an existing StorageAccount for the OS and data disk VHDs of
+        /// the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="storageAccount">An existing storage account.</param>
+        /// <return>The next stage in the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
+        {
+            return this.WithExistingStorageAccount(storageAccount) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
+        /// scale set.
+        /// This will replace the current internet-facing load balancer associated with the virtual machines in the
+        /// scale set (if any).
+        /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
+        /// network interface of the virtual machines unless a subset of them is selected in the next stages.
+        /// </summary>
+        /// <param name="loadBalancer">The primary Internet-facing load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer.WithExistingPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            return this.WithExistingPrimaryInternetFacingLoadBalancer(loadBalancer) as VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool;
+        }
+
+        /// <summary>
+        /// Specifies the name prefix to use for auto-generating the names for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="namePrefix">The prefix for the auto-generated names of the virtual machines in the scale set.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithComputerNamePrefix.WithComputerNamePrefix(string namePrefix)
+        {
+            return this.WithComputerNamePrefix(namePrefix) as VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -574,6 +814,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
+        /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfaces()
+        {
+            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+        }
+
         /// <return>
         /// The virtual network associated with the primary network interfaces of the virtual machines
         /// in the scale set.
@@ -585,6 +831,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Network.Fluent.INetwork Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.GetPrimaryNetwork()
         {
             return this.GetPrimaryNetwork() as Microsoft.Azure.Management.Network.Fluent.INetwork;
+        }
+
+        /// <summary>
+        /// List the network interface associated with a specific virtual machine instance in the scale set.
+        /// </summary>
+        /// <param name="virtualMachineInstanceId">The instance id.</param>
+        /// <return>The network interfaces.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        {
+            return this.ListNetworkInterfacesByInstanceId(virtualMachineInstanceId) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
         }
 
         /// <summary>
@@ -777,6 +1033,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets true if managed disk is used for the virtual machine scale set's disks (os, data).
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.IsManagedDiskEnabled
+        {
+            get
+            {
+                return this.IsManagedDiskEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets a network interface associated with a virtual machine scale set instance.
+        /// </summary>
+        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
+        /// <param name="name">The network interface name.</param>
+        /// <return>The network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.GetNetworkInterfaceByInstanceId(string instanceId, string name)
+        {
+            return this.GetNetworkInterfaceByInstanceId(instanceId, name) as Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface;
+        }
+
+        /// <summary>
         /// Gets the storage profile.
         /// </summary>
         Models.VirtualMachineScaleSetStorageProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.StorageProfile
@@ -826,7 +1104,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the number of virtual machine instances in the scale set.
         /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Capacity
+        long Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Capacity
         {
             get
             {
@@ -845,53 +1123,124 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Associate internal load balancer inbound NAT pools with the the primary network interface of the
-        /// scale set virtual machine.
+        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
+        /// of an Internet-facing load balancer.
         /// </summary>
-        /// <param name="natPoolNames">Inbound NAT pool names.</param>
-        /// <return>The next stage of the virtual machine scale set definition.</return>
-        VirtualMachineScaleSet.Definition.IWithOS VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
-        {
-            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Definition.IWithOS;
-        }
-
-        /// <summary>
-        /// Specifies the load balancer to be used as the internal load balancer for the virtual machines in the
-        /// scale set.
-        /// This will replace the current internal load balancer associated with the virtual machines in the
-        /// scale set (if any).
-        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
-        /// network interface of the virtual machines in the scale set unless subset of them is selected in the next stages.
-        /// </p>.
-        /// </summary>
-        /// <param name="loadBalancer">The primary Internet-facing load balancer.</param>
+        /// <param name="natPoolNames">The names of existing inbound NAT pools.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer.WithExistingPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
         {
-            return this.WithExistingPrimaryInternalLoadBalancer(loadBalancer) as VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool;
+            return this.WithoutPrimaryInternetFacingLoadBalancerNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithApply;
         }
 
         /// <summary>
-        /// Specifies the internal load balancer whose backends and/or NAT pools can be assigned to the primary network
-        /// interface of the virtual machines in the scale set.
-        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
-        /// network interface of the virtual machines in the scale set, unless subset of them is selected in the next stages.
+        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
+        /// of the internal load balancer.
         /// </summary>
-        /// <param name="loadBalancer">An existing internal load balancer.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithExistingPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        /// <param name="natPoolNames">The names of existing inbound NAT pools.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
         {
-            return this.WithExistingPrimaryInternalLoadBalancer(loadBalancer) as VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool;
+            return this.WithoutPrimaryInternalLoadBalancerNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsCreateManagedOrUnmanaged.WithUnmanagedDisks()
+        {
+            return this.WithUnmanagedDisks() as VirtualMachineScaleSet.Definition.IWithWindowsCreateUnmanaged;
         }
 
         /// <summary>
-        /// Specifies that no internal load balancer should be associated with the primary network interfaces of the
+        /// Specifies the SSH public key.
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">The SSH public key in PEM format.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies the SSH root password for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootPassword">The SSH root password. This must follow the criteria for Azure Linux VM password.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged.WithRootPassword(string rootPassword)
+        {
+            return this.WithRootPassword(rootPassword) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManagedOrUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies the storage account type for managed Os disk.
+        /// </summary>
+        /// <param name="accountType">The storage account type.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDiskOptionals.WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        {
+            return this.WithOsDiskStorageAccountType(accountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the default caching type for the managed data disks.
+        /// </summary>
+        /// <param name="storageAccountType">The storage account type.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDiskOptionals.WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType)
+        {
+            return this.WithDataDiskDefaultStorageAccountType(storageAccountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Specifies the default caching type for the managed data disks.
+        /// </summary>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDiskOptionals.WithDataDiskDefaultCachingType(CachingTypes cachingType)
+        {
+            return this.WithDataDiskDefaultCachingType(cachingType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+        }
+
+        /// <summary>
+        /// Associates the specified internal load balancer backends with the primary network interface of the
         /// virtual machines in the scale set.
         /// </summary>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithOS VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        /// <param name="backendNames">The names of existing backends on the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithoutPrimaryInternalLoadBalancer() as VirtualMachineScaleSet.Definition.IWithOS;
+            return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool;
+        }
+
+        /// <summary>
+        /// Associates the specified Internet-facing load balancer backends with the primary network interface of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <param name="backendNames">The backend names.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        {
+            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool;
+        }
+
+        /// <summary>
+        /// Associates the specified backends of the selected load balancer with the primary network interface of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <param name="backendNames">The names of existing backends in the selected load balancer.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        {
+            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool;
+        }
+
+        /// <summary>
+        /// Specifies the administrator user name for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminUserName">The Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
+        /// <return>The stage representing creatable Linux VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameUnmanaged.WithAdminUsername(string adminUserName)
+        {
+            return this.WithAdminUsername(adminUserName) as VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordUnmanaged;
         }
 
         /// <summary>
@@ -912,6 +1261,78 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskCaching(CachingTypes cachingType)
         {
             return this.WithOsDiskCaching(cachingType) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
+        /// This removes the association between primary network interface configuration and all the backends and
+        /// inbound NAT pools in the load balancer.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        {
+            return this.WithoutPrimaryInternetFacingLoadBalancer() as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Removes the association between the internal load balancer and the primary network interface configuration.
+        /// This removes the association between primary network interface configuration and all the backends and
+        /// inbound NAT pools in the load balancer.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        {
+            return this.WithoutPrimaryInternalLoadBalancer() as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Specifies the virtual machine scale set upgrade policy mode.
+        /// </summary>
+        /// <param name="upgradeMode">An upgrade policy mode.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithUpgradePolicy.WithUpgradeMode(UpgradeMode upgradeMode)
+        {
+            return this.WithUpgradeMode(upgradeMode) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the administrator password for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminPassword">The administrator password. This must follow the criteria for Azure Windows VM password.</param>
+        /// <return>The stage representing creatable Windows VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManagedOrUnmanaged VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManagedOrUnmanaged.WithAdminPassword(string adminPassword)
+        {
+            return this.WithAdminPassword(adminPassword) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManagedOrUnmanaged;
+        }
+
+        /// <summary>
+        /// Specifies the administrator user name for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminUserName">The Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
+        /// <return>The stage representing creatable Linux VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManaged VirtualMachineScaleSet.Definition.IWithWindowsAdminUsernameManaged.WithAdminUsername(string adminUserName)
+        {
+            return this.WithAdminUsername(adminUserName) as VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManaged;
+        }
+
+        /// <summary>
+        /// Refreshes the resource to sync with Azure.
+        /// </summary>
+        /// <return>The refreshed resource.</return>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>.Refresh()
+        {
+            return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet;
+        }
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateUnmanaged;
         }
 
         /// <summary>
@@ -937,56 +1358,143 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Disables over-provisioning of virtual machines.
+        /// Removes the extension with the specified name from the virtual machines in the scale set.
         /// </summary>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOverProvision.WithoutOverProvisioning()
-        {
-            return this.WithoutOverProvisioning() as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Enables or disables over-provisioning of virtual machines in the scale set.
-        /// </summary>
-        /// <param name="enabled">
-        /// True if enabling over-0provisioning of virtual machines in the
-        /// scale set, otherwise false.
-        /// </param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvision(bool enabled)
-        {
-            return this.WithOverProvision(enabled) as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Enables over-provisioning of virtual machines.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvisioning()
-        {
-            return this.WithOverProvisioning() as VirtualMachineScaleSet.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
-        /// This removes the association between primary network interface configuration and all the backends and
-        /// inbound NAT pools in the load balancer.
-        /// </summary>
+        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
         /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithExtension.WithoutExtension(string name)
         {
-            return this.WithoutPrimaryInternetFacingLoadBalancer() as VirtualMachineScaleSet.Update.IWithApply;
+            return this.WithoutExtension(name) as VirtualMachineScaleSet.Update.IWithApply;
         }
 
         /// <summary>
-        /// Removes the association between the internal load balancer and the primary network interface configuration.
-        /// This removes the association between primary network interface configuration and all the backends and
-        /// inbound NAT pools in the load balancer.
+        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
         /// </summary>
-        /// <return>The next stage of the update.</return>
-        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        /// <param name="name">The reference name for the extension.</param>
+        /// <return>The first stage of the extension reference update.</return>
+        VirtualMachineScaleSetExtension.Update.IUpdate VirtualMachineScaleSet.Update.IWithExtension.UpdateExtension(string name)
         {
-            return this.WithoutPrimaryInternalLoadBalancer() as VirtualMachineScaleSet.Update.IWithApply;
+            return this.UpdateExtension(name) as VirtualMachineScaleSetExtension.Update.IUpdate;
         }
+
+        /// <summary>
+        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="name">The reference name for an extension.</param>
+        /// <return>The first stage of the extension reference definition.</return>
+        VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<VirtualMachineScaleSet.Update.IWithApply> VirtualMachineScaleSet.Update.IWithExtension.DefineNewExtension(string name)
+        {
+            return this.DefineNewExtension(name) as VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<VirtualMachineScaleSet.Update.IWithApply>;
+        }
+
+        /// <summary>
+        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="name">The reference name for the extension.</param>
+        /// <return>The first stage of the extension reference definition.</return>
+        VirtualMachineScaleSetExtension.Definition.IBlank<VirtualMachineScaleSet.Definition.IWithCreate> VirtualMachineScaleSet.Definition.IWithExtension.DefineNewExtension(string name)
+        {
+            return this.DefineNewExtension(name) as VirtualMachineScaleSetExtension.Definition.IBlank<VirtualMachineScaleSet.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Associates the specified internal load balancer inbound NAT pools with the the primary network interface of
+        /// the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">The names of existing inbound NAT pools in the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
+        {
+            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Specifies the administrator password for the Windows virtual machine.
+        /// </summary>
+        /// <param name="adminPassword">The administrator password. This must follow the criteria for Azure Windows VM password.</param>
+        /// <return>The stage representing creatable Windows VM definition.</return>
+        VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged VirtualMachineScaleSet.Definition.IWithWindowsAdminPasswordManaged.WithAdminPassword(string adminPassword)
+        {
+            return this.WithAdminPassword(adminPassword) as VirtualMachineScaleSet.Definition.IWithWindowsCreateManaged;
+        }
+
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specfied backends
+        /// of the Internet-facing load balancer.
+        /// </summary>
+        /// <param name="backendNames">Existing backend names.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        {
+            return this.WithoutPrimaryInternetFacingLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specified backends
+        /// of the internal load balancer.
+        /// </summary>
+        /// <param name="backendNames">Existing backend names.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithApply VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
+        {
+            return this.WithoutPrimaryInternalLoadBalancerBackends(backendNames) as VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Associates inbound NAT pools of the selected Internet-facing load balancer with the primary network interface
+        /// of the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">The names of existing inbound NAT pools on the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
+        {
+            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer;
+        }
+
+        /// <summary>
+        /// Associates the specified inbound NAT pools of the selected internal load balancer with the primary network
+        /// interface of the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">Inbound NAT pools names existing on the selected load balancer.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
+        {
+            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
+        }
+
+        /// <summary>
+        /// Specifies the custom data for the virtual machine scale set.
+        /// </summary>
+        /// <param name="base64EncodedCustomData">The base64 encoded custom data.</param>
+        /// <return>The next stage in the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithCustomData.WithCustomData(string base64EncodedCustomData)
+        {
+            return this.WithCustomData(base64EncodedCustomData) as VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachineScaleSet.Definition.IWithLinuxCreateManaged;
+        }
+
+        /// <summary>
+        /// Specifies the SSH root user name for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootUserName">The Linux SSH root user name. This must follow the required naming convention for Linux user name.</param>
+        /// <return>The next stage of the Linux virtual machine definition.</return>
+        VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged.WithRootUsername(string rootUserName)
+        {
+            return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged;
+        }
+    }
+
+    internal partial class ManagedDataDiskCollection 
+    {
     }
 }

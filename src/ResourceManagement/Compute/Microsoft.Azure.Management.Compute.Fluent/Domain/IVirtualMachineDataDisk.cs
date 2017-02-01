@@ -6,21 +6,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>
-    /// A data disk of a virtual machine.
+    /// A managed data disk of a virtual machine.
     /// </summary>
     public interface IVirtualMachineDataDisk  :
         IWrapper<Models.DataDisk>,
-        IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
+        IHasName,
+        IHasId
     {
-        /// <summary>
-        /// Gets Uri to the source virtual hard disk user image from which this disk was created.
-        /// null will be returned if this disk is not based on an image.
-        /// </summary>
-        /// <summary>
-        /// Gets the uri of the source vhd image.
-        /// </summary>
-        string SourceImageUri { get; }
-
         /// <summary>
         /// Gets the size of this data disk in GB.
         /// </summary>
@@ -38,12 +30,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the caching type.
         /// </summary>
-        Models.CachingTypes CachingType { get; }
+        Models.CachingTypes? CachingType { get; }
 
         /// <summary>
-        /// Gets uri to the virtual hard disk backing this data disk.
+        /// Gets the storage account type of the disk.
         /// </summary>
-        string VhdUri { get; }
+        Models.StorageAccountTypes? StorageAccountType { get; }
 
         /// <summary>
         /// Gets the creation method used while creating this disk.

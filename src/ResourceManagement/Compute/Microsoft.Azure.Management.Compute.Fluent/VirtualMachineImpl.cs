@@ -1,33 +1,38 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using Microsoft.Azure.Management.Compute.Fluent.Models;
+using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent;
-    using Models;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using VirtualMachine.Definition;
-    using Microsoft.Azure.Management.Storage.Fluent;
-    using VirtualMachine.Update;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
-    using System.Threading;
-    using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition;
-    using Microsoft.Azure.Management.Resource.Fluent;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Newtonsoft.Json;
-    using System.Text.RegularExpressions;
-    using System;
-
     /// <summary>
     /// The implementation for VirtualMachine and its create and update interfaces.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbXBs
-    internal partial class VirtualMachineImpl  :
-        GroupableResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine, Models.VirtualMachineInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl, IComputeManager, VirtualMachine.Definition.IWithGroup, VirtualMachine.Definition.IWithNetwork, VirtualMachine.Definition.IWithCreate, VirtualMachine.Update.IUpdate>,
+    internal partial class VirtualMachineImpl :
+        GroupableResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine,
+            Models.VirtualMachineInner,
+            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineImpl,
+            IComputeManager,
+            VirtualMachine.Definition.IWithGroup,
+            VirtualMachine.Definition.IWithNetwork,
+            VirtualMachine.Definition.IWithCreate,
+            VirtualMachine.Update.IUpdate>,
         IVirtualMachine,
-        VirtualMachine.Definition.IDefinition,
+        VirtualMachine.DefinitionManagedOrUnmanaged.IDefinitionManagedOrUnmanaged,
+        VirtualMachine.DefinitionManaged.IDefinitionManaged,
+        VirtualMachine.DefinitionUnmanaged.IDefinitionUnmanaged,
         VirtualMachine.Update.IUpdate
     {
         private readonly IVirtualMachinesOperations client;
@@ -45,13 +50,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IList<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
-        private IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> dataDisks;
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
+        private bool isUnmanagedDiskSelected;
+        private IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> unmanagedDataDisks;
+        private ManagedDataDiskCollection managedDataDisks;
 
-        ///GENMHASH:0A331C2401291DF824493E64F2798884:AEA9DF2AAC2CFE9730BD7A00060D84F9
+        ///GENMHASH:0A331C2401291DF824493E64F2798884:D3B04C536032C2BDC056A8F85225875E
         internal VirtualMachineImpl(string name,
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
@@ -71,14 +78,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.creatableSecondaryNetworkInterfaceKeys = new List<string>();
             this.existingSecondaryNetworkInterfacesToAssociate = new List<INetworkInterface>();
             this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(extensionsClient, this);
+            this.managedDataDisks = new ManagedDataDiskCollection(this);
             InitializeDataDisks();
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:6F7E72CD01C24BD732735CFACEA35424
+        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:4C74CDEFBB89F8ADB720DB2B740C1AB3
         public override IVirtualMachine Refresh()
         {
             var response = client.Get(ResourceGroupName, Name);
-
             SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
@@ -90,6 +97,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public void Deallocate()
         {
             this.client.Deallocate(this.ResourceGroupName, this.Name);
+
         }
 
         ///GENMHASH:0745971EF3F2CE7276C7E535722C5E6C:F7A7B3A36B61441CF0850BDE432A2805
@@ -120,25 +128,33 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public void Redeploy()
         {
             this.client.Redeploy(this.ResourceGroupName, this.Name);
+
+        }
+
+        ///GENMHASH:BF8CE5C594210A476EF389DC52B15805:2795B67DFA718D9C0FFC69E152857591
+        public void MigrateToManaged()
+        {
+            this.client.ConvertToManagedDisks(this.ResourceGroupName, this.Name);
+            this.Refresh();
         }
 
         ///GENMHASH:842FBE4DCB8BFE1B50632DBBE157AEA8:B5262187B60CE486998F800E9A96B659
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes() 
+        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes()
         {
             return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
-                this.Name), innerSize =>
-                {
-                    return new VirtualMachineSizeImpl(innerSize);
-                });
+            this.Name), innerSize =>
+            {
+                return new VirtualMachineSizeImpl(innerSize);
+            });
         }
 
         ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC
-        public string Capture(string containerName, string vhdPreifx, bool overwriteVhd)
+        public string Capture(string containerName, string vhdPrefix, bool overwriteVhd)
         {
             VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
             parameters.DestinationContainerName = containerName;
             parameters.OverwriteVhds = overwriteVhd;
-            parameters.VhdPrefix = vhdPreifx;
+            parameters.VhdPrefix = vhdPrefix;
             VirtualMachineCaptureResultInner captureResult = this.client.Capture(this.ResourceGroupName, this.Name, parameters);
             return JsonConvert.SerializeObject(captureResult.Output);
         }
@@ -152,10 +168,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.virtualMachineInstanceView;
         }
 
-        #region Setters
-
         ///GENMHASH:3FAB18211D6DAAAEF5CA426426D16F0C:AD7170076BCB5437E69B77AC63B3373E
-        public VirtualMachineImpl WithNewPrimaryNetwork(ICreatable<INetwork> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
             this.nicDefinitionWithPrivateIp = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithNewPrimaryNetwork(creatable);
@@ -203,7 +217,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:12E96FEFBC60AB582A0B69EBEEFD1E59:C1EAF0B5EE0258D48F9956AEFBA1EA2D
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
+        public VirtualMachineImpl WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
@@ -242,7 +256,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:6C6E9480071A571B23369210C67E4329:BAD887D9D5A633B4D6DE3058819C017C
-        public VirtualMachineImpl WithNewPrimaryNetworkInterface(ICreatable<INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable)
         {
             this.creatablePrimaryNetworkInterfaceKey = creatable.Key;
             this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
@@ -267,33 +281,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0B0B068704882D0210B822A215F5536D:D1A7C8363353BBD6CD981B3F2D3565F3
         public VirtualMachineImpl WithStoredWindowsImage(string imageUrl)
         {
-            VirtualHardDisk userImageVhd = new VirtualHardDisk()
-            {
-                Uri = imageUrl
-            };
+            VirtualHardDisk userImageVhd = new VirtualHardDisk();
+            userImageVhd.Uri = imageUrl;
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
             this.Inner.StorageProfile.OsDisk.Image = userImageVhd;
             // For platform image osType will be null, azure will pick it from the image metadata.
             this.Inner.StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
-            this.Inner.OsProfile.WindowsConfiguration = new WindowsConfiguration()
-            {
-                // sets defaults for "Stored(User)Image" or "VM(Platform)Image"
-                ProvisionVMAgent = true,
-                EnableAutomaticUpdates = true
-            };
+            this.Inner.OsProfile.WindowsConfiguration = new WindowsConfiguration();
+            // sets defaults for "Stored(User)Image" or "VM(Platform)Image"
+            this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
         }
 
-        ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:A85188B583788ED2462CA3FB7BD1E5B9
+        ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:8E0FB1EEED9F15976FCF3F34580897D3
         public VirtualMachineImpl WithStoredLinuxImage(string imageUrl)
         {
-            VirtualHardDisk userImageVhd = new VirtualHardDisk()
-            {
-                Uri = imageUrl
-            };
+            VirtualHardDisk userImageVhd = new VirtualHardDisk();
+            userImageVhd.Uri = imageUrl;
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
             this.Inner.StorageProfile.OsDisk.Image = userImageVhd;
-            // For platform image osType will be null, azure will pick it from the image metadata.
+            // For platform | custom image osType will be null, azure will pick it from the image metadata.
+            // But for stored image, osType needs to be specified explicitly
+            //
             this.Inner.StorageProfile.OsDisk.OsType = OperatingSystemTypes.Linux;
             this.Inner.OsProfile.LinuxConfiguration = new LinuxConfiguration();
             return this;
@@ -311,25 +321,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return WithSpecificLinuxImageVersion(knownImage.ImageReference());
         }
 
-        ///GENMHASH:4A7665D6C5D507E115A9A8E551801DB6:79BD1EC9C57E036BC474695931D3A393
+        ///GENMHASH:4A7665D6C5D507E115A9A8E551801DB6:AD810F1DA749F7286A899D037376A9E3
         public VirtualMachineImpl WithSpecificWindowsImageVersion(ImageReference imageReference)
         {
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner.StorageProfile.ImageReference = imageReference;
-            this.Inner.OsProfile.WindowsConfiguration = new WindowsConfiguration()
-            {
-                // sets defaults for "Stored(User)Image" or "VM(Platform)Image"
-                ProvisionVMAgent = true,
-                EnableAutomaticUpdates = true
-            };
+            this.Inner.StorageProfile.ImageReference = imageReference.Inner;
+            this.Inner.OsProfile.WindowsConfiguration = new WindowsConfiguration();
+            // sets defaults for "Stored(User)Image" or "VM(Platform)Image"
+            this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
         }
 
-        ///GENMHASH:B2876749E60D892750D75C97943BBB13:19F6D3CB49C5070B017EF845A7D475B7
+        ///GENMHASH:B2876749E60D892750D75C97943BBB13:23C60ED2B7F40C8320F1091338191A7F
         public VirtualMachineImpl WithSpecificLinuxImageVersion(ImageReference imageReference)
         {
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner.StorageProfile.ImageReference = imageReference;
+            this.Inner.StorageProfile.ImageReference = imageReference.Inner;
             this.Inner.OsProfile.LinuxConfiguration = new LinuxConfiguration();
             this.isMarketplaceLinuxImage = true;
             return this;
@@ -338,39 +346,73 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3874257232804C74BD7501DE2BE2F0E9:742DE46D93113DBA276B0A311D52D664
         public VirtualMachineImpl WithLatestWindowsImage(string publisher, string offer, string sku)
         {
-            ImageReference imageReference = new ImageReference()
-            {
-                Publisher = publisher,
-                Offer = offer,
-                Sku = sku,
-                Version = "latest"
-            };
+            ImageReference imageReference = new ImageReference();
+            imageReference.Publisher = publisher;
+            imageReference.Offer = offer;
+            imageReference.Sku = sku;
+            imageReference.Version = "latest";
             return WithSpecificWindowsImageVersion(imageReference);
         }
 
         ///GENMHASH:6D51A334B57DF882E890FEBA9887BE77:3A21A7EF50A9FC7A93D7C8AEFA8F3130
         public VirtualMachineImpl WithLatestLinuxImage(string publisher, string offer, string sku)
         {
-            ImageReference imageReference = new ImageReference()
-            {
-                Publisher = publisher,
-                Offer = offer,
-                Sku = sku,
-                Version = "latest"
-            };
+            ImageReference imageReference = new ImageReference();
+            imageReference.Publisher = publisher;
+            imageReference.Offer = offer;
+            imageReference.Sku = sku;
+            imageReference.Version = "latest";
             return WithSpecificLinuxImageVersion(imageReference);
         }
 
-        ///GENMHASH:B295590F27A70564841BB66C74BFA5A5:94DD4E3CAAEC40963C3D578A0FA53770
-        public VirtualMachineImpl WithOsDisk(string osDiskUrl, OperatingSystemTypes osType)
+        ///GENMHASH:F24EFD30F0D04113B41EA2C36B55F059:944E1D0765AA783776E77434132D18AA
+        public VirtualMachineImpl WithWindowsCustomImage(string customImageId)
         {
-            VirtualHardDisk osDisk = new VirtualHardDisk()
-            {
-                Uri = osDiskUrl
-            };
+            ImageReferenceInner imageReferenceInner = new ImageReferenceInner();
+            imageReferenceInner.Id = customImageId;
+            this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+            this.Inner.StorageProfile.ImageReference = imageReferenceInner;
+            this.Inner.OsProfile.WindowsConfiguration = new WindowsConfiguration();
+            // sets defaults for "Stored(User)Image", "VM(Platform | Custom)Image"
+            this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
+            return this;
+        }
+
+
+        ///GENMHASH:CE03CDBD07CA3BD7500B36B206A91A4A:5BEEBF6F7B101075BFFD1089DC6B2D0F
+        public VirtualMachineImpl WithLinuxCustomImage(string customImageId)
+        {
+            ImageReferenceInner imageReferenceInner = new ImageReferenceInner();
+            imageReferenceInner.Id = customImageId;
+            this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+            this.Inner.StorageProfile.ImageReference = imageReferenceInner;
+            this.Inner.OsProfile.LinuxConfiguration = new LinuxConfiguration();
+            this.isMarketplaceLinuxImage = true;
+            return this;
+        }
+
+        ///GENMHASH:57A0D9F7821CCF113A2473B139EA6535:A5202C2E2CECEF8345A7B13AA2F45579
+        public VirtualMachineImpl WithSpecializedOsUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
+        {
+            VirtualHardDisk osVhd = new VirtualHardDisk();
+            osVhd.Uri = osDiskUrl;
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.Attach;
-            this.Inner.StorageProfile.OsDisk.Vhd = osDisk;
+            this.Inner.StorageProfile.OsDisk.Vhd = osVhd;
             this.Inner.StorageProfile.OsDisk.OsType = osType;
+            this.Inner.StorageProfile.OsDisk.ManagedDisk = null;
+            return this;
+        }
+
+        ///GENMHASH:1F74902637AB57C68DF7BEB69565D69F:E405AA329DD9CF5E18080043D36F5E0A
+        public VirtualMachineImpl WithSpecializedOsDisk(IDisk disk, OperatingSystemTypes osType)
+        {
+            ManagedDiskParametersInner diskParametersInner = new ManagedDiskParametersInner();
+            diskParametersInner.Id = disk.Id;
+            this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.Attach;
+            this.Inner.StorageProfile.OsDisk.ManagedDisk = diskParametersInner;
+            this.Inner.StorageProfile.OsDisk.OsType = osType;
+            this.Inner.StorageProfile.OsDisk.Vhd = null;
             return this;
         }
 
@@ -387,6 +429,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.Inner.OsProfile.AdminUsername = adminUsername;
             return this;
         }
+
 
         ///GENMHASH:9BBA27913235B4504FD9F07549E645CC:7C9396228419D56BC31B8BC248BB451A
         public VirtualMachineImpl WithSsh(string publicKeyData)
@@ -439,7 +482,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     Listeners = new List<WinRMListener>()
                 };
             }
-
             this.Inner.OsProfile
                 .WindowsConfiguration
                 .WinRM
@@ -490,38 +532,91 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:89DEE527C9AED179FFFF9E5303751431
-        public VirtualMachineImpl WithOsDiskCaching(CachingTypes cachingType)
+        ///GENMHASH:68806A9EFF9AE1233F4E313BFAB88A1E:89DEE527C9AED179FFFF9E5303751431
+        public VirtualMachineImpl WithOSDiskCaching(CachingTypes cachingType)
         {
             this.Inner.StorageProfile.OsDisk.Caching = cachingType;
             return this;
         }
 
-        ///GENMHASH:6AD476CF269D3B37CBD6D308C3557D31:A518E6F6C484957225ED2708C83AA8BA
+        ///GENMHASH:6AD476CF269D3B37CBD6D308C3557D31:16840EEFCED2B5791EEB29EDAE4CB087
         public VirtualMachineImpl WithOsDiskVhdLocation(string containerName, string vhdName)
         {
-            var storageProfile = this.Inner.StorageProfile;
-            var osDisk = storageProfile.OsDisk;
-            if (this.IsOSDiskFromImage(osDisk))
+            // Sets the native (un-managed) disk backing virtual machine OS disk
+            //
+            if (IsManagedDiskEnabled())
             {
-                var osVhd = new VirtualHardDisk();
-                if (this.IsOSDiskFromPlatformImage(storageProfile))
-                {
-                    // OS Disk from 'Platform image' requires explicit storage account to be specified.
-                    osVhd.Uri = this.TemporaryBlobUrl(containerName, vhdName);
-                }
-                else if (this.IsOSDiskFromCustomImage(osDisk))
-                {
-                    // 'Captured image' and 'Bring your own feature image' has a restriction that the
-                    // OS disk based on these images should reside in the same storage account as the
-                    // image.
-                    Uri sourceCustomImageUrl = new Uri(osDisk.Image.Uri);
-                    Uri destinationVhdUrl = new Uri(new Uri($"{sourceCustomImageUrl.Scheme}://{sourceCustomImageUrl.Host}"), 
-                        $"{containerName}/{vhdName}");
-                    osVhd.Uri = destinationVhdUrl.ToString();
-                }
+                return this;
+            }
+            StorageProfile storageProfile = this.Inner.StorageProfile;
+            OSDisk osDisk = storageProfile.OsDisk;
+            // Setting native (un-managed) disk backing virtual machine OS disk is valid only when
+            // the virtual machine is created from image.
+            //
+            if (!this.IsOSDiskFromImage(osDisk))
+            {
+                return this;
+            }
+            // Exclude custom user image as they won't support using native (un-managed) disk to back
+            // virtual machine OS disk.
+            //
+            if (this.IsOsDiskFromCustomImage(storageProfile))
+            {
+                return this;
+            }
+            // OS Disk from 'Platform image' requires explicit storage account to be specified.
+            //
+            if (this.IsOSDiskFromPlatformImage(storageProfile))
+            {
+                VirtualHardDisk osVhd = new VirtualHardDisk();
+                osVhd.Uri = TemporaryBlobUrl(containerName, vhdName);
+                this.Inner.StorageProfile.OsDisk.Vhd = osVhd;
+                return this;
+            }
+            // 'Stored image' and 'Bring your own feature image' has a restriction that the native
+            // disk backing OS disk based on these images should reside in the same storage account
+            // as the image.
+            if (this.IsOSDiskFromStoredImage(storageProfile))
+            {
+                VirtualHardDisk osVhd = new VirtualHardDisk();
+                Uri sourceCustomImageUrl = new Uri(osDisk.Image.Uri);
+                Uri destinationVhdUrl = new Uri(new Uri($"{sourceCustomImageUrl.Scheme}://{sourceCustomImageUrl.Host}"),
+                    $"{containerName}/{vhdName}");
+                osVhd.Uri = destinationVhdUrl.ToString();
                 this.Inner.StorageProfile.OsDisk.Vhd = osVhd;
             }
+            return this;
+        }
+
+        ///GENMHASH:90924DCFADE551C6E90B738982E6C2F7:279439FCFF8597A1B86C671E92AB9C4F
+        public VirtualMachineImpl WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        {
+            if (this.Inner.StorageProfile.OsDisk.ManagedDisk == null)
+            {
+                this.Inner
+                .StorageProfile
+                .OsDisk
+                .ManagedDisk = new ManagedDiskParametersInner();
+            }
+            this.Inner
+                .StorageProfile
+                .OsDisk
+                .ManagedDisk
+                .StorageAccountType = accountType;
+            return this;
+        }
+
+        ///GENMHASH:621A22301B3EB5233E9DB4ED5BEC5735:E8427EEC4ACC25554660EF889ECD07A2
+        public VirtualMachineImpl WithDataDiskDefaultCachingType(CachingTypes cachingType)
+        {
+            this.managedDataDisks.SetDefaultCachingType(cachingType);
+            return this;
+        }
+
+        ///GENMHASH:B37B5DD609CF1DB836ABB9CBB32E93E3:EBFBB1CB0457C2978B29376127013BE6
+        public VirtualMachineImpl WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType)
+        {
+            this.managedDataDisks.SetDefaultStorageAccountType(storageAccountType);
             return this;
         }
 
@@ -532,8 +627,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:D94BB1D4150B88A53D339C0C39080239:4FFC5F3F684247159297E3463471B6EA
-        public VirtualMachineImpl WithOsDiskSizeInGb(int size)
+        ///GENMHASH:48CC3BB0EDCE9EE56CB8FEBA4DD9E903:4FFC5F3F684247159297E3463471B6EA
+        public VirtualMachineImpl WithOSDiskSizeInGB(int size)
         {
             this.Inner.StorageProfile.OsDisk.DiskSizeGB = size;
             return this;
@@ -546,28 +641,298 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:7D2AE1FD40DE7AA5C025215CCF888244:8119D68DCFB9E48F50E14B259CD54572
-        public DataDiskImpl DefineNewDataDisk(string name)
+        ///GENMHASH:821D92F0F65352C735EB6081A9BEA9DC:D57B8D7D879942E6738D5D4440AE7921
+        public UnmanagedDataDiskImpl DefineUnmanagedDataDisk(string name)
         {
-            return DataDiskImpl.PrepareDataDisk(name, DiskCreateOptionTypes.Empty, this);
+            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VM_Both_Managed_And_Uumanaged_Disk_Not_Allowed);
+            return UnmanagedDataDiskImpl.PrepareDataDisk(name, this);
         }
 
-        ///GENMHASH:47118A0FBA688F04890006E53850FB04:24FFE683F1FA191C954B0D6960F70CD1
-        public DataDiskImpl DefineExistingDataDisk(string name)
+        ///GENMHASH:D4AA1D687C6ADC8E82CF97490E7E2840:4AA0CB7C28989E00E5658781AA7B4944
+        public VirtualMachineImpl WithNewUnmanagedDataDisk(int sizeInGB)
         {
-            return DataDiskImpl.PrepareDataDisk(name, DiskCreateOptionTypes.Attach, this);
+            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VM_Both_Managed_And_Uumanaged_Disk_Not_Allowed);
+            return DefineUnmanagedDataDisk(null)
+                .WithNewVhd(sizeInGB)
+                .Attach();
         }
 
-        ///GENMHASH:5B486E3124D02F072D2CC6D621C20A6A:1332CD0D7E03C6DD8D3AB312EDA9B829
-        public VirtualMachineImpl WithNewDataDisk(int? sizeInGB)
+        ///GENMHASH:D5B97545D30FE11F617914568F503B7C:EF873831879537CFDC6AB3A92D1B32E1
+        public VirtualMachineImpl WithExistingUnmanagedDataDisk(string storageAccountName, string containerName, string vhdName)
         {
-            return WithDataDisk(DataDiskImpl.CreateNewDataDisk(sizeInGB.HasValue ? sizeInGB.Value : 0, this));
+            //$ throwIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VM_BOTH_MANAGED_AND_UNMANAGED_DISK_NOT_ALLOWED);
+            return DefineUnmanagedDataDisk(null)
+                .WithExistingVhd(storageAccountName, containerName, vhdName)
+                .Attach();
         }
 
-        ///GENMHASH:EFBF3F38387CEC365187D7057A42EA95:03436F973A14B431E7F2897F2CD39997
-        public VirtualMachineImpl WithExistingDataDisk(string storageAccountName, string containerName, string vhdName)
+
+        ///GENMHASH:986009C9CE2533065F3AE9DC169521A5:FB9664669ECF7CF62DE326E69D76F5DE
+        public VirtualMachineImpl WithoutUnmanagedDataDisk(string name)
         {
-            return WithDataDisk(DataDiskImpl.CreateFromExistingDisk(storageAccountName, containerName, vhdName, this)); ;
+            // Its ok not to throw here, since in general 'withoutXX' can be NOP
+            int idx = -1;
+            foreach (IVirtualMachineDataDisk dataDisk in this.unmanagedDataDisks)
+            {
+                idx++;
+                if (dataDisk.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    this.unmanagedDataDisks.RemoveAt(idx);
+                    this.Inner.StorageProfile.DataDisks.RemoveAt(idx);
+                    break;
+                }
+            }
+            return this;
+        }
+
+        ///GENMHASH:54D3B4BD3F03BEE3E2ACA4B49D0F23C0:1476C04BA42BC075365EAA5629BAD60A
+        public VirtualMachineImpl WithoutUnmanagedDataDisk(int lun)
+        {
+            // Its ok not to throw here, since in general 'withoutXX' can be NOP
+            int idx = -1;
+            foreach (IVirtualMachineDataDisk dataDisk in this.unmanagedDataDisks)
+            {
+                idx++;
+                if (dataDisk.Lun == lun)
+                {
+                    this.unmanagedDataDisks.RemoveAt(idx);
+                    this.Inner.StorageProfile.DataDisks.RemoveAt(idx);
+                    break;
+                }
+            }
+            return this;
+        }
+
+        ///GENMHASH:429C59D407353456A6B5003023273BD7:15F5523485D6FBD0739BA14B1BBC4FAD
+        public UnmanagedDataDiskImpl UpdateUnmanagedDataDisk(string name)
+        {
+            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VM_No_Unmanaged_Disk_To_Update);
+            foreach (IVirtualMachineDataDisk dataDisk in this.unmanagedDataDisks)
+            {
+                if (dataDisk.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return (UnmanagedDataDiskImpl)dataDisk;
+                }
+            }
+            throw new Exception("A data disk with name  '" + name + "' not found");
+        }
+
+        ///GENMHASH:ED389F29DE6EBB941FA1654A4421A870:EFA122C6179091039C9A2EC452DF4EBB
+        public VirtualMachineImpl WithNewDataDisk(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IDisk> creatable)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
+            this.managedDataDisks.NewDisksToAttach.Add(creatable.Key, new DataDisk()
+            {
+                Lun = -1
+            });
+            return this;
+        }
+
+        ///GENMHASH:AF80B886368560BF40BD597B1A4C0333:269383EDE2B9B5C9085729DEEBBDCCF9
+        public VirtualMachineImpl WithNewDataDisk(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IDisk> creatable, int lun, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
+            this.managedDataDisks.NewDisksToAttach.Add(creatable.Key, new DataDisk()
+            {
+                Lun = lun,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:674F68CEE727AFB7E6F6D9C7FADE1175:DD2D09ACF9139B1967714865BD1D48FB
+        public VirtualMachineImpl WithNewDataDisk(int sizeInGB)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            this.managedDataDisks.ImplicitDisksToAssociate.Add(new DataDisk()
+            {
+                Lun = -1,
+                DiskSizeGB = sizeInGB
+            });
+            return this;
+        }
+
+        ///GENMHASH:B213E98FA6979257F6E6F61C9B5E550B:17763285B1830F7E43D5411D6D535DE5
+        public VirtualMachineImpl WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            this.managedDataDisks.ImplicitDisksToAssociate.Add(new DataDisk()
+            {
+                Lun = lun,
+                DiskSizeGB = sizeInGB,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:1D3A0A89681FFD35007B24FCED6BF299:A69C7823EE7EC5B383A6E9CA6366F777
+        public VirtualMachineImpl WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            ManagedDiskParametersInner managedDiskParameters = new ManagedDiskParametersInner();
+            managedDiskParameters.StorageAccountType = storageAccountType;
+            this.managedDataDisks.ImplicitDisksToAssociate.Add(new DataDisk()
+            {
+                Lun = lun,
+                DiskSizeGB = sizeInGB,
+                Caching = cachingType,
+                ManagedDisk = managedDiskParameters
+            });
+            return this;
+        }
+
+        ///GENMHASH:780DFAACAB0C49C5480A9653F0D1B16F:CD32B2E3A381F3A5162D15E662EAE22E
+        public VirtualMachineImpl WithExistingDataDisk(IDisk disk)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            ManagedDiskParametersInner managedDiskParameters = new ManagedDiskParametersInner();
+            managedDiskParameters.Id = disk.Id;
+            this.managedDataDisks.ExistingDisksToAttach.Add(new DataDisk()
+            {
+                Lun = -1,
+                ManagedDisk = managedDiskParameters
+            });
+            return this;
+        }
+
+        ///GENMHASH:C0B5162CF8CEAACE1539900D43997C4E:ABA2632CB438B4020F743732E9561257
+        public VirtualMachineImpl WithExistingDataDisk(IDisk disk, int lun, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            ManagedDiskParametersInner managedDiskParameters = new ManagedDiskParametersInner();
+            managedDiskParameters.Id = disk.Id;
+            this.managedDataDisks.ExistingDisksToAttach.Add(new DataDisk()
+            {
+                Lun = lun,
+                ManagedDisk = managedDiskParameters,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:EE587883AA52548AF30AC4624CC57C2A:7255A6270AEAD6441F6727139E21D862
+        public VirtualMachineImpl WithExistingDataDisk(IDisk disk, int newSizeInGB, int lun, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_Both_Unmanaged_And_Managed_Disk_Not_Allowed);
+            ManagedDiskParametersInner managedDiskParameters = new ManagedDiskParametersInner();
+            managedDiskParameters.Id = disk.Id;
+            this.managedDataDisks.ExistingDisksToAttach.Add(new DataDisk()
+            {
+                Lun = lun,
+                DiskSizeGB = newSizeInGB,
+                ManagedDisk = managedDiskParameters,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:89EFB8F9AFBDF98FFAD5606983F59A03:39E3B69A49E68069F2BF73DCEFF3A443
+        public VirtualMachineImpl WithNewDataDiskFromImage(int imageLun)
+        {
+            this.managedDataDisks.NewDisksFromImage.Add(new DataDisk
+            {
+                Lun = imageLun
+            });
+            return this;
+        }
+
+        ///GENMHASH:92519C2F478984EF05C22A5573361AFE:0CF3D5F4C913309400D9221477B87E1F
+        public VirtualMachineImpl WithNewDataDiskFromImage(int imageLun, int newSizeInGB, CachingTypes cachingType)
+        {
+            this.managedDataDisks.NewDisksFromImage.Add(new DataDisk
+            {
+                Lun = imageLun,
+                DiskSizeGB = newSizeInGB,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:BABD7F4E5FDF4ECA60DB2F163B33F4C7:17AC541DFB3C3AEDF45259848089B054
+        public VirtualMachineImpl WithNewDataDiskFromImage(int imageLun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            ManagedDiskParametersInner managedDiskParameters = new ManagedDiskParametersInner();
+            managedDiskParameters.StorageAccountType = storageAccountType;
+            this.managedDataDisks.NewDisksFromImage.Add(new DataDisk()
+            {
+                Lun = imageLun,
+                DiskSizeGB = newSizeInGB,
+                ManagedDisk = managedDiskParameters,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:9C4A541B9A2E22540116BFA125189F57:2F8856B5F0BA5E1B741D68C6CED48D9A
+        public VirtualMachineImpl WithoutDataDisk(int lun)
+        {
+            if (!IsManagedDiskEnabled())
+            {
+                return this;
+            }
+            this.managedDataDisks.DiskLunsToRemove.Add(lun);
+            return this;
+        }
+
+        ///GENMHASH:6EBC495ACCF47FA1132C69EF861BEF04:6A0D8974E32FFD5CEB2A606AAC5ABD0C
+        public VirtualMachineImpl WithDataDiskUpdated(int lun, int newSizeInGB)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_No_Managed_Disk_To_Update);
+            DataDisk dataDisk = GetDataDiskInner(lun);
+            if (dataDisk == null)
+            {
+                throw new InvalidOperationException($"A data disk with name '{lun}' not found");
+            }
+            dataDisk.DiskSizeGB = newSizeInGB;
+            return this;
+        }
+
+        ///GENMHASH:986681CB5EE945646F08E34410E1B451:75034EB3465BEE513D2E786B0825570E
+        public VirtualMachineImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_No_Managed_Disk_To_Update);
+            DataDisk dataDisk = GetDataDiskInner(lun);
+            if (dataDisk == null)
+            {
+                throw new NotSupportedException($"A data disk with name '{lun}' not found");
+            }
+            dataDisk.DiskSizeGB = newSizeInGB;
+            dataDisk.Caching = cachingType;
+            return this;
+        }
+
+        ///GENMHASH:63310A9035013C60AE73F35617BBA53F:12AB266B41186EDE8208FC5E5DF264FB
+        public VirtualMachineImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VM_No_Managed_Disk_To_Update);
+            DataDisk dataDisk = GetDataDiskInner(lun);
+            if (dataDisk == null)
+            {
+                throw new NotSupportedException($"A data disk with name '{lun}' not found");
+            }
+            dataDisk.DiskSizeGB = newSizeInGB;
+            dataDisk.Caching = cachingType;
+            dataDisk.ManagedDisk.StorageAccountType = storageAccountType;
+            return this;
+        }
+
+        ///GENMHASH:0B0C2470711F6450D4872789FDEB62A0:59AC96236BCAC9172D6EBEE9467C487B
+        private DataDisk GetDataDiskInner(int lun)
+        {
+            if (this.Inner.StorageProfile.DataDisks == null)
+            {
+                return null;
+            }
+            foreach (var dataDiskInner in this.StorageProfile().DataDisks)
+            {
+                if (dataDiskInner.Lun == lun)
+                {
+                    return dataDiskInner;
+                }
+            }
+            return null;
         }
 
         ///GENMHASH:2DC51FEC3C45675856B4AC1D97BECBFD:03CBC8ECAD4A07D8AE9ABC931CB422F4
@@ -609,10 +974,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+
         ///GENMHASH:B0D2BED63AF533A1F9AA9D14B66DDA1E:49A8C40E80E0F9117A98775EBC1A348C
-        public VirtualMachineImpl WithNewAvailabilitySet(ICreatable<IAvailabilitySet> creatable)
+        public VirtualMachineImpl WithNewAvailabilitySet(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> creatable)
         {
-            // This method's effect is NOT additive.
             if (this.creatableAvailabilitySetKey == null)
             {
                 this.creatableAvailabilitySetKey = creatable.Key;
@@ -621,21 +986,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:0BFC73C37B3D941247E33A0B1AC6113E:AFB68D0A012B99563ED93968E32F9185
+        ///GENMHASH:0BFC73C37B3D941247E33A0B1AC6113E:391711091FE21C5DAD7F2EAE81567FB0
         public VirtualMachineImpl WithNewAvailabilitySet(string name)
         {
-            AvailabilitySet.Definition.IWithGroup definitionWithGroup  = base.Manager.AvailabilitySets.Define(name)
+            AvailabilitySet.Definition.IWithGroup definitionWithGroup = base.Manager
+                .AvailabilitySets
+                .Define(name)
                 .WithRegion(this.RegionName);
-            AvailabilitySet.Definition.IWithCreate definitionAfterGroup;
+            AvailabilitySet.Definition.IWithSku definitionWithSku;
             if (this.newGroup != null)
             {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);
+                definitionWithSku = definitionWithGroup.WithNewResourceGroup(this.newGroup);
             }
             else
             {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.ResourceGroupName);
+                definitionWithSku = definitionWithGroup.WithExistingResourceGroup(this.ResourceGroupName);
             }
-            return this.WithNewAvailabilitySet(definitionAfterGroup);
+            ICreatable<IAvailabilitySet> creatable;
+            if (IsManagedDiskEnabled())
+            {
+                creatable = definitionWithSku.WithSku(AvailabilitySetSkuTypes.Aligned);
+            }
+            else
+            {
+                creatable = definitionWithSku.WithSku(AvailabilitySetSkuTypes.Classic);
+            }
+            return this.WithNewAvailabilitySet(creatable);
         }
 
         ///GENMHASH:F2733A66EF0AF45C62E9C44FD29CC576:FC9409B8E6841C279554A2938B4E9F12
@@ -646,7 +1022,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:720FC1AD6CE12835DF562FA21CBA22C1:8E210E27AC5BBEFD085A05D8458DC632
-        public VirtualMachineImpl WithNewSecondaryNetworkInterface(ICreatable<INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable)
         {
             this.creatableSecondaryNetworkInterfaceKeys.Add(creatable.Key);
             this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
@@ -660,73 +1036,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:D7A14F2EFF1E4165DA55EF07B6C19534:85E4528E76EBEB2F2002B48ABD89A8E5
-        public VirtualMachineExtensionImpl DefineNewExtension(string name)
-        {
-            return this.virtualMachineExtensions.Define(name);
-        }
-
-        ///GENMHASH:1407F91229E79AD8F5E77DA1F8111134:A705DBA44C7F93E8FD30D4D46B5C47F4
-        public VirtualMachineImpl WithoutDataDisk(string name)
-        {
-            int idx = -1;
-            foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
-            {
-                idx++;
-                if (dataDisk.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    this.dataDisks.RemoveAt(idx);
-                    this.Inner.StorageProfile.DataDisks.RemoveAt(idx);
-                    break;
-                }
-            }
-
-            return this;
-        }
-
-        ///GENMHASH:9C4A541B9A2E22540116BFA125189F57:994143012DF019B8AF6069397616F64D
-        public VirtualMachineImpl WithoutDataDisk(int lun)
-        {
-            int idx = -1;
-            foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
-            {
-                idx++;
-                if (dataDisk.Lun == lun)
-                {
-                    this.dataDisks.RemoveAt(idx);
-                    this.Inner.StorageProfile.DataDisks.RemoveAt(idx);
-                    break;
-                }
-            }
-
-            return this;
-        }
-
-        ///GENMHASH:DF7522D26901A7CA01A508515FE0BB4E:8B3C60E4C29138E35737BCE44C0CB258
-        public DataDiskImpl UpdateDataDisk(string name)
-        {
-            foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
-            {
-                if (dataDisk.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return (DataDiskImpl)dataDisk;
-                }
-            }
-
-            throw new Exception("A data disk with name  '" + name + "' not found");
-        }
-
         ///GENMHASH:1B6EFD4FB09DB19A9365B92299382732:6E8FA7A8D0E6C28DD34AA5ED876E9C3F
         public VirtualMachineImpl WithoutSecondaryNetworkInterface(string name)
         {
             if (this.Inner.NetworkProfile != null
-            && this.Inner.NetworkProfile.NetworkInterfaces != null)
+                && this.Inner.NetworkProfile.NetworkInterfaces != null)
             {
                 int idx = -1;
                 foreach (NetworkInterfaceReferenceInner nicReference in this.Inner.NetworkProfile.NetworkInterfaces)
                 {
                     idx++;
-                    if (!nicReference.Primary == true
+                    if (nicReference.Primary.HasValue
+                        && !nicReference.Primary == true
                         && name.Equals(ResourceUtils.NameFromResourceId(nicReference.Id), StringComparison.OrdinalIgnoreCase))
                     {
                         this.Inner.NetworkProfile.NetworkInterfaces.RemoveAt(idx);
@@ -735,6 +1056,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
             return this;
+        }
+
+        ///GENMHASH:D7A14F2EFF1E4165DA55EF07B6C19534:85E4528E76EBEB2F2002B48ABD89A8E5
+        public VirtualMachineExtensionImpl DefineNewExtension(string name)
+        {
+            return this.virtualMachineExtensions.Define(name);
         }
 
         ///GENMHASH:E7610DABE1E75344D9E0DBC0332E7F96:A6222B1A3B3DAF08C7A0DB8408674E80
@@ -750,7 +1077,69 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        #endregion
+        ///GENMHASH:4154589CF64AC591DEDEA5AD2CE5AB3E:0D1CED8472F2D89553DFD9B987FDC9E4
+        public VirtualMachineImpl WithPlan(PurchasePlan plan)
+        {
+            this.Inner.Plan = new Plan()
+            {
+                Publisher = plan.Publisher,
+                Product = plan.Product,
+                Name = plan.Name
+            };
+            return this;
+        }
+
+        ///GENMHASH:168EACA3A73F047931B326C48BD71C2D:25C0F05C248DCD851959044BB5CDA543
+        public VirtualMachineImpl WithPromotionalPlan(PurchasePlan plan, string promotionCode)
+        {
+            this.WithPlan(plan);
+            this.Inner.Plan.PromotionCode = promotionCode;
+            return this;
+        }
+
+        ///GENMHASH:ED2B5B9A3A19B5A8C2C3E6E1CDBF9402:6A6DEBF76624FF70612A6981A86CC468
+        public VirtualMachineImpl WithUnmanagedDisks()
+        {
+            this.isUnmanagedDiskSelected = true;
+            return this;
+        }
+
+        ///GENMHASH:C81171F34FA85CED80852E725FF8B7A4:56767F3A519F0DF8AB9F685ABA15F2E4
+        public bool IsManagedDiskEnabled()
+        {
+            if (IsOsDiskFromCustomImage(this.Inner.StorageProfile))
+            {
+                return true;
+            }
+
+            if (IsOSDiskAttachedManaged(this.Inner.StorageProfile.OsDisk))
+            {
+                return true;
+            }
+            if (IsOSDiskFromStoredImage(this.Inner.StorageProfile))
+            {
+                return false;
+            }
+            if (IsOSDiskAttachedUnmanaged(this.Inner.StorageProfile.OsDisk))
+            {
+                return false;
+            }
+            if (IsOSDiskFromPlatformImage(this.Inner.StorageProfile))
+            {
+                if (this.isUnmanagedDiskSelected)
+                {
+                    return false;
+                }
+            }
+            if (IsInCreateMode)
+            {
+                return true;
+            }
+            else
+            {
+                return this.Inner.StorageProfile.OsDisk.Vhd == null;
+            }
+        }
 
         ///GENMHASH:3EFB25CB32AC4B416B8E0501FDE1DBE9:9063BC00A181FC49D367F4FD1F0EB371
         public string ComputerName()
@@ -767,7 +1156,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public VirtualMachineSizeTypes Size()
         {
             return VirtualMachineSizeTypes.Parse(Inner.HardwareProfile.VmSize);
-            
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:AACA43FF0E9DA39D6993719C23FB0486
@@ -776,16 +1164,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Inner.StorageProfile.OsDisk.OsType.Value;
         }
 
-        ///GENMHASH:D97CA4262C0C853895BFF5AD2FE910FE:75A04C61F19354FB4BFDE8310A43BE22
-        public string OsDiskVhdUri()
+        ///GENMHASH:E6371CFFB9CB09E08DD4757D639CBF27:976273E359EA5250C90646DEEB682652
+        public string OsUnmanagedDiskVhdUri()
         {
+            if (IsManagedDiskEnabled())
+            {
+                return null;
+            }
             return Inner.StorageProfile.OsDisk.Vhd.Uri;
         }
 
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:1604791894B0C3EF16EEDF56536B8B70
         public CachingTypes OsDiskCachingType()
         {
-                return Inner.StorageProfile.OsDisk.Caching.Value;
+            return Inner.StorageProfile.OsDisk.Caching.Value;
         }
 
         ///GENMHASH:034DA366E39060AAD75E1DA786657383:65EDBB2144C128EB0C43030D512C5EED
@@ -797,14 +1189,59 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 // size was not explicitly set by the user.
                 return 0;
             }
-
             return Inner.StorageProfile.OsDisk.DiskSizeGB.Value;
         }
 
-        ///GENMHASH:353C54F9ADAEAEDD54EE4F0AACF9DF9B:ED32C59FD33B2B1F38D38B903D623AF6
-        public IList<IVirtualMachineDataDisk> DataDisks()
+        ///GENMHASH:E5CADE85564466522E512C04EB3F57B6:086F150AD4D805B10FE2EDCCE4784829
+        public StorageAccountTypes? OsDiskStorageAccountType()
         {
-            return this.dataDisks;
+            if (!IsManagedDiskEnabled() || this.StorageProfile().OsDisk.ManagedDisk == null)
+            {
+                return null;
+            }
+            return this.StorageProfile().OsDisk.ManagedDisk.StorageAccountType;
+        }
+
+        ///GENMHASH:C6D786A0345B2C4ADB349E573A0BF6C7:E98CE6464DD63DE655EAFA519D693285
+        public string OsDiskId()
+        {
+            if (!IsManagedDiskEnabled())
+            {
+                return null;
+            }
+            return this.StorageProfile().OsDisk.ManagedDisk.Id;
+        }
+
+        ///GENMHASH:0F25C4AF79F7680F2CB3C57410B5BC20:FFF5003A8246F7DB1BDBE31636E6CE9C
+        public IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> UnmanagedDataDisks()
+        {
+            Dictionary<int, IVirtualMachineUnmanagedDataDisk> dataDisks = new Dictionary<int, IVirtualMachineUnmanagedDataDisk>();
+            if (!IsManagedDiskEnabled())
+            {
+                foreach (var dataDisk in this.unmanagedDataDisks)
+                {
+                    dataDisks.Add(dataDisk.Lun, dataDisk);
+                }
+            }
+            return dataDisks;
+        }
+
+        ///GENMHASH:353C54F9ADAEAEDD54EE4F0AACF9DF9B:E5641D026D42E80470787BB2990E88CE
+        public IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> DataDisks()
+        {
+            Dictionary<int, IVirtualMachineDataDisk> dataDisks = new Dictionary<int, IVirtualMachineDataDisk>();
+            if (IsManagedDiskEnabled())
+            {
+                var innerDataDisks = this.Inner.StorageProfile.DataDisks;
+                if (innerDataDisks != null)
+                {
+                    foreach (var innerDataDisk in innerDataDisks)
+                    {
+                        dataDisks.Add(innerDataDisk.Lun, new VirtualMachineDataDiskImpl(innerDataDisk));
+                    }
+                }
+            }
+            return dataDisks;
         }
 
         ///GENMHASH:2A7ACF9E7DA59ECB74A3F0607B98CEA8:46FD353C4642C823383ED54BCE79C710
@@ -826,7 +1263,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:606A3D349546DF27E3A091C321476658:DC63C44DC2A2862C6AC14F711DCB1EFA
-        public List<string> NetworkInterfaceIds()
+        public IList<string> NetworkInterfaceIds()
         {
             List<string> nicIds = new List<string>();
             foreach (NetworkInterfaceReferenceInner nicRef in Inner.NetworkProfile.NetworkInterfaces)
@@ -841,7 +1278,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             IList<NetworkInterfaceReferenceInner> nicRefs = this.Inner.NetworkProfile.NetworkInterfaces;
             String primaryNicRefId = null;
-
             if (nicRefs.Count == 1)
             {
                 // One NIC so assume it to be primary
@@ -857,20 +1293,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 // Find primary interface as flagged by Azure
                 foreach (NetworkInterfaceReferenceInner nicRef in Inner.NetworkProfile.NetworkInterfaces)
                 {
-                    if (nicRef.Primary != null && nicRef.Primary == true)
+                    if (nicRef.Primary != null && nicRef.Primary.HasValue && nicRef.Primary == true)
                     {
                         primaryNicRefId = nicRef.Id;
                         break;
                     }
                 }
-
                 // If Azure didn't flag any NIC as primary then assume the first one
                 if (primaryNicRefId == null)
                 {
                     primaryNicRefId = nicRefs[0].Id;
                 }
             }
-
             return primaryNicRefId;
         }
 
@@ -881,7 +1315,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return Inner.AvailabilitySet.Id;
             }
-
             return null;
         }
 
@@ -946,19 +1379,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:74D6BC0CA5239D9979A6C4F61D973616:C90E0C1B7FFF1EE7A6D2A1D595F52BE7
         public PowerState PowerState()
         {
-            return Microsoft.Azure.Management.Compute.Fluent.PowerState.FromInstanceView(InstanceView());
+            return Fluent.PowerState.FromInstanceView(this.InstanceView());
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:696F8827B1A96E7F4EC00ACFB6F1A5D3
-        public override async Task<IVirtualMachine> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:272F8DA403745EB8C8C6DCCD8A4778E2
+        public override async Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
             {
-                SetOSDiskAndOSProfileDefaults();
+                SetOSDiskDefaults();
+                SetOSProfileDefaults();
                 SetHardwareProfileDefaults();
             }
-
-            DataDiskImpl.SetDataDisksDefaults(this.dataDisks, this.vmName);
+            if (IsManagedDiskEnabled())
+            {
+                managedDataDisks.SetDataDisksDefaults();
+            }
+            else
+            {
+                UnmanagedDataDiskImpl.SetDataDisksDefaults(this.unmanagedDataDisks, this.vmName);
+            }
             await HandleStorageSettingsAsync();
             HandleNetworkSettings();
             HandleAvailabilitySettings();
@@ -971,50 +1411,133 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F0BA5F3F27F923CBF88531E8051E2766:3A9860E56B386DEBF12E9494C009C2A3
-        internal VirtualMachineImpl WithExtension (VirtualMachineExtensionImpl extension)
+        internal VirtualMachineImpl WithExtension(VirtualMachineExtensionImpl extension)
         {
             this.virtualMachineExtensions.AddExtension(extension);
             return this;
         }
 
-        ///GENMHASH:282FF4452DF4CF09F73806B54DF00772:E90B7357DA7CC668442CE4AD7063D31F
-        internal VirtualMachineImpl WithDataDisk (DataDiskImpl dataDisk)
+        ///GENMHASH:935C3974286F7E329FEE80FBDDC054A4:A1DADF029D57D1765F6994801B1B1197
+        internal VirtualMachineImpl WithUnmanagedDataDisk(UnmanagedDataDiskImpl dataDisk)
         {
             this.Inner
                 .StorageProfile
                 .DataDisks
                 .Add(dataDisk.Inner);
-            this.dataDisks.Add(dataDisk);
+            this.unmanagedDataDisks
+                .Add(dataDisk);
             return this;
         }
 
-        ///GENMHASH:8200C3AA2986ADE3279CEB6CF0EA96D9:CC52783B24A47119F0F16A03CED2F5D7
-        private void SetOSDiskAndOSProfileDefaults()
+        ///GENMHASH:F8B60EFFDA7AE3E1DE1C427665105067:0C39F05B8A560CA80F8F94A7A6DC6D17
+        private void SetOSDiskDefaults()
         {
-            if (!IsInCreateMode)
+            if (IsInUpdateMode())
             {
                 return;
             }
-
-            OSDisk osDisk = this.Inner.StorageProfile.OsDisk;
+            StorageProfile storageProfile = this.Inner.StorageProfile;
+            OSDisk osDisk = storageProfile.OsDisk;
             if (IsOSDiskFromImage(osDisk))
             {
-                if (osDisk.Vhd == null)
+                // ODDisk CreateOption: FROM_IMAGE
+                //
+                if (IsManagedDiskEnabled())
                 {
-                    // Sets the OS disk VHD for "UserImage" and "VM(Platform)Image"
-                    WithOsDiskVhdLocation("vhds", $"{this.vmName}-os-disk-{Guid.NewGuid().ToString()}.vhd");
+                    // Note:
+                    // Managed disk
+                    //     Supported: PlatformImage and CustomImage
+                    //     UnSupported: StoredImage
+                    //
+                    if (osDisk.ManagedDisk == null)
+                    {
+                        osDisk.ManagedDisk = new ManagedDiskParametersInner();
+                    }
+                    if (osDisk.ManagedDisk.StorageAccountType == null)
+                    {
+                        osDisk.ManagedDisk
+                            .StorageAccountType = StorageAccountTypes.StandardLRS;
+                    }
+                    osDisk.Vhd = null;
+                    // We won't set osDisk.Name() explicitly for managed disk, if it is null CRP generates unique
+                    // name for the disk resource within the resource group.
                 }
-                OSProfile osProfile = this.Inner.OsProfile;
+                else
+                {
+                    // Note:
+                    // Native (un-managed) disk
+                    //     Supported: PlatformImage and StoredImage
+                    //     UnSupported: CustomImage
+                    //
+                    if (IsOSDiskFromPlatformImage(storageProfile)
+                        || IsOSDiskFromStoredImage(storageProfile))
+                    {
+                        if (osDisk.Vhd == null)
+                        {
+                            string osDiskVhdContainerName = "vhds";
+                            string osDiskVhdName = this.vmName + "-os-disk-" + Guid.NewGuid().ToString() + ".Vhd";
+                            WithOsDiskVhdLocation(osDiskVhdContainerName, osDiskVhdName);
+                        }
+                        osDisk.ManagedDisk = null;
+                    }
+                    if (osDisk.Name == null)
+                    {
+                        WithOsDiskName(this.vmName + "-os-disk");
+                    }
+                }
+            }
+            else
+            {
+                // ODDisk CreateOption: ATTACH
+                //
+                if (IsManagedDiskEnabled())
+                {
+                    // In case of attach, it is not allowed to change the storage account type of the
+                    // managed disk.
+                    //
+                    if (osDisk.ManagedDisk != null)
+                    {
+                        osDisk.ManagedDisk.StorageAccountType = null;
+                    }
+                    osDisk.Vhd = null;
+                }
+                else
+                {
+                    osDisk.ManagedDisk = null;
+                }
+            }
+            if (osDisk.Caching == null)
+            {
+                WithOSDiskCaching(CachingTypes.ReadWrite);
+            }
+        }
+
+        ///GENMHASH:67723971057BB45E3F0FFEB5B7B65F34:0E41FE124CF67BA67B6A50BC9B9B57B0
+        private void SetOSProfileDefaults()
+        {
+            if (IsInUpdateMode())
+            {
+                return;
+            }
+            StorageProfile storageProfile = this.Inner.StorageProfile;
+            OSDisk osDisk = storageProfile.OsDisk;
+            if (IsOSDiskFromImage(osDisk))
+            {
+                // ODDisk CreateOption: FROM_IMAGE
+                //
                 if (osDisk.OsType == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
                 {
-                    // linux image: User or marketplace linux image
+                    // linux image: PlatformImage | CustomImage | StoredImage
+                    //
+                    OSProfile osProfile = this.Inner.OsProfile;
                     if (osProfile.LinuxConfiguration == null)
                     {
                         osProfile.LinuxConfiguration = new LinuxConfiguration();
                     }
-                    this.Inner.OsProfile.LinuxConfiguration.DisablePasswordAuthentication = osProfile.AdminPassword == null;
+                    this.Inner.OsProfile
+                        .LinuxConfiguration
+                        .DisablePasswordAuthentication = osProfile.AdminPassword == null;
                 }
-
                 if (this.Inner.OsProfile.ComputerName == null)
                 {
                     // VM name cannot contain only numeric values and cannot exceed 15 chars
@@ -1034,30 +1557,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
             else
             {
-                // Compute has a new restriction that OS Profile property need to set null
-                // when an VM's OS disk is ATTACH-ed to a Specialized VHD
+                // ODDisk CreateOption: ATTACH
+                //
+                // OS Profile must be set to null when an VM's OS disk is ATTACH-ed to a managed disk or
+                // Specialized VHD
+                //
                 this.Inner.OsProfile = null;
-            }
-
-            if (osDisk.Caching == null)
-            {
-                WithOsDiskCaching(CachingTypes.ReadWrite);
-            }
-
-            if (osDisk.Name == null)
-            {
-                this.WithOsDiskName(this.vmName + "-os-disk");
             }
         }
 
-        ///GENMHASH:BAA70B10A8929783F1FC5D60B4D80538:1862E80AB426A8462EF7CCA1F526D1E1
+        ///GENMHASH:BAA70B10A8929783F1FC5D60B4D80538:733856474CD1EBA8B9EB83FA7C73D293
         private void SetHardwareProfileDefaults()
         {
             if (!IsInCreateMode)
             {
                 return;
             }
-
             HardwareProfile hardwareProfile = this.Inner.HardwareProfile;
             if (hardwareProfile.VmSize == null)
             {
@@ -1065,7 +1580,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        ///GENMHASH:E9830BD8841F5F66740928BA7AA21EB0:73D58ABB761C4FD3FB4A9FB8F09D4AD9
+        ///GENMHASH:E9830BD8841F5F66740928BA7AA21EB0:5C7D9BC8E92D9076657ED7BB4C691583
         private async Task HandleStorageSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IStorageAccount storageAccount = null;
@@ -1087,29 +1602,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 .CreateAsync();
             }
 
-            if (IsInCreateMode)
+            if (!IsManagedDiskEnabled())
             {
-                if (this.IsOSDiskFromPlatformImage(this.Inner.StorageProfile))
+                if (IsInCreateMode)
                 {
-                    string uri = this.Inner.StorageProfile.OsDisk.Vhd.Uri;
-                    if (uri.StartsWith("{storage-base-url}"))
+                    if (this.IsOSDiskFromPlatformImage(this.Inner.StorageProfile))
                     {
-                        uri = uri.Remove(0, "{storage-base-url}".Length).Insert(0,
-                            storageAccount.EndPoints.Primary.Blob);
+                        string uri = this.Inner.StorageProfile.OsDisk.Vhd.Uri;
+                        if (uri.StartsWith("{storage-base-url}"))
+                        {
+                            uri = uri.Remove(0, "{storage-base-url}".Length).Insert(0,
+                                storageAccount.EndPoints.Primary.Blob);
+                        }
+                        this.Inner.StorageProfile.OsDisk.Vhd.Uri = uri;
                     }
-                    this.Inner.StorageProfile.OsDisk.Vhd.Uri = uri;
-                }
-                DataDiskImpl.EnsureDisksVhdUri(this.dataDisks, storageAccount, this.vmName);
-            }
-            else
-            {
-                if (storageAccount != null)
-                {
-                    DataDiskImpl.EnsureDisksVhdUri(this.dataDisks, storageAccount, this.vmName);
+                    UnmanagedDataDiskImpl.EnsureDisksVhdUri(this.unmanagedDataDisks, storageAccount, this.vmName);
                 }
                 else
                 {
-                    DataDiskImpl.EnsureDisksVhdUri(this.dataDisks, this.vmName);
+                    if (storageAccount != null)
+                    {
+                        UnmanagedDataDiskImpl.EnsureDisksVhdUri(this.unmanagedDataDisks, storageAccount, this.vmName);
+                    }
+                    else
+                    {
+                        UnmanagedDataDiskImpl.EnsureDisksVhdUri(this.unmanagedDataDisks, this.vmName);
+                    }
                 }
             }
         }
@@ -1165,7 +1683,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return;
             }
-
             IAvailabilitySet availabilitySet = null;
             if (this.creatableAvailabilitySetKey != null)
             {
@@ -1187,32 +1704,40 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        ///GENMHASH:0F7707B8B59F80529877E77CA52B31EB:08513201BFA3D2D10C66596B1206149C
+        ///GENMHASH:0F7707B8B59F80529877E77CA52B31EB:6699FB156B9D992393D42B866A411897
         private bool OsDiskRequiresImplicitStorageAccountCreation()
         {
-            if (this.creatableStorageAccountKey != null
-                    || this.existingStorageAccountToAssociate != null
-                    || !this.IsInCreateMode)
+            if (IsManagedDiskEnabled())
             {
                 return false;
             }
-            return this.IsOSDiskFromPlatformImage(this.Inner.StorageProfile);
-        }
-
-        ///GENMHASH:E54BC4A600C7D7F1F1FE5ECD633F9B03:53D1A8A0AD2043B84D4E532A83CF8FA2
-        private bool DataDisksRequiresImplicitStorageAccountCreation()
-        {
             if (this.creatableStorageAccountKey != null
                 || this.existingStorageAccountToAssociate != null
-                || this.dataDisks.Count == 0)
+                || !IsInCreateMode)
             {
                 return false;
             }
+            return IsOSDiskFromPlatformImage(this.Inner.StorageProfile);
+        }
 
-            bool hasEmptyVhd = false;
-            foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
+        ///GENMHASH:E54BC4A600C7D7F1F1FE5ECD633F9B03:25941EB989277B5A8346038827B5F346
+        private bool DataDisksRequiresImplicitStorageAccountCreation()
+        {
+            if (IsManagedDiskEnabled())
             {
-                if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty)
+                return false;
+            }
+            if (this.creatableStorageAccountKey != null
+                || this.existingStorageAccountToAssociate != null
+                || this.unmanagedDataDisks.Count == 0)
+            {
+                return false;
+            }
+            bool hasEmptyVhd = false;
+            foreach (var dataDisk in this.unmanagedDataDisks)
+            {
+                if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty
+                    || dataDisk.CreationMethod == DiskCreateOptionTypes.FromImage)
                 {
                     if (dataDisk.Inner.Vhd == null)
                     {
@@ -1221,17 +1746,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     }
                 }
             }
-
             if (IsInCreateMode)
             {
                 return hasEmptyVhd;
             }
-
             if (hasEmptyVhd)
             {
                 // In update mode, if any of the data disk has vhd uri set then use same container
                 // to store this disk, no need to create a storage account implicitly.
-                foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
+                foreach (var dataDisk in this.unmanagedDataDisks)
                 {
                     if (dataDisk.CreationMethod == DiskCreateOptionTypes.Attach && dataDisk.Inner.Vhd != null)
                     {
@@ -1240,20 +1763,33 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
                 return true;
             }
-
             return false;
         }
 
         /// <summary>
-        /// Checks whether the OS disk is directly attached to a VHD.
+        /// Checks whether the OS disk is directly attached to a unmanaged VHD.
         /// </summary>
         /// <param name="osDisk">The osDisk value in the storage profile.</param>
-        /// <return>True if the OS disk is attached to a VHD, false otherwise.</return>
-
-        ///GENMHASH:0ED4CA225B0A1048DF1630BBB905CABF:E131DE14687B0FC1C69A169BDE13FE68
-        private bool IsOSDiskAttached(OSDisk osDisk)
+        /// <return>True if the OS disk is attached to a unmanaged VHD, false otherwise.</return>
+        ///GENMHASH:6CAC7BFC25EF528C827BF922106219DC:721D04FDAA4169ED19C4CC3CCA1A2EDC
+        private bool IsOSDiskAttachedUnmanaged(OSDisk osDisk)
         {
-            return osDisk.CreateOption == DiskCreateOptionTypes.Attach;
+            return osDisk.CreateOption == DiskCreateOptionTypes.Attach
+                && osDisk.Vhd != null
+                && osDisk.Vhd.Uri != null;
+        }
+
+        /// <summary>
+        /// Checks whether the OS disk is directly attached to a managed disk.
+        /// </summary>
+        /// <param name="osDisk">The osDisk value in the storage profile.</param>
+        /// <return>True if the OS disk is attached to a managed disk, false otherwise.</return>
+        ///GENMHASH:854EABA33961F7FA017100E1888B2F8F:4738C912BD9ED6489A96318D934E8BC9
+        private bool IsOSDiskAttachedManaged(OSDisk osDisk)
+        {
+            return osDisk.CreateOption == DiskCreateOptionTypes.Attach
+                && osDisk.ManagedDisk != null
+                && osDisk.ManagedDisk.Id != null;
         }
 
         /// <summary>
@@ -1261,7 +1797,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="osDisk">The osDisk value in the storage profile.</param>
         /// <return>True if the OS disk is configured to use image from PIR or custom image.</return>
-
         ///GENMHASH:2BC5DC58EDF7989592189AD8B4E29C17:4CD85EE98AD4F7CBC33994D722986AE5
         private bool IsOSDiskFromImage(OSDisk osDisk)
         {
@@ -1273,23 +1808,46 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="storageProfile">The storage profile.</param>
         /// <return>True if the OS disk is configured to be based on platform image.</return>
-
-        ///GENMHASH:78EB0F392606FADDDAFE3E594B6F4E7F:EC985B78EECA34D134228416A96997F8
+        ///GENMHASH:78EB0F392606FADDDAFE3E594B6F4E7F:8A0B58C5E0133CF29412CD658BAF8289
         private bool IsOSDiskFromPlatformImage(StorageProfile storageProfile)
         {
-            return IsOSDiskFromImage(storageProfile.OsDisk) && storageProfile.ImageReference != null;
+            ImageReferenceInner imageReference = storageProfile.ImageReference;
+            return IsOSDiskFromImage(storageProfile.OsDisk)
+            && imageReference != null
+            && imageReference.Publisher != null
+            && imageReference.Offer != null
+            && imageReference.Sku != null
+            && imageReference.Version != null;
         }
 
         /// <summary>
-        /// Checks whether the OS disk is based on an custom image ('captured' or 'bring your own feature').
+        /// Checks whether the OS disk is based on a CustomImage.
+        /// A custom image is represented by com.microsoft.azure.management.compute.VirtualMachineCustomImage.
         /// </summary>
-        /// <param name="osDisk">The osDisk value in the storage profile.</param>
-        /// <return>True if the OS disk is configured to use custom image ('captured' or 'bring your own feature').</return>
-
-        ///GENMHASH:6ECB87AED370EEF376897E9E3C4BE1C9:9ED794F35129AD9597F3C0434390D657
-        private bool IsOSDiskFromCustomImage(OSDisk osDisk)
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <return>True if the OS disk is configured to be based on custom image.</return>
+        ///GENMHASH:441A8F22C03964CEECA8AFEBA8740C9C:F979E27E10A5C3D262E33101E3EF232A
+        private bool IsOsDiskFromCustomImage(StorageProfile storageProfile)
         {
-            return IsOSDiskFromImage(osDisk) && osDisk.Image != null && osDisk.Image.Uri != null;
+            ImageReferenceInner imageReference = storageProfile.ImageReference;
+            return IsOSDiskFromImage(storageProfile.OsDisk)
+                && imageReference != null
+                && imageReference.Id != null;
+        }
+
+        /// <summary>
+        /// Checks whether the OS disk is based on a stored image ('captured' or 'bring your own feature').
+        /// A stored image is created by calling VirtualMachine.capture(String, String, boolean).
+        /// </summary>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <return>True if the OS disk is configured to use custom image ('captured' or 'bring your own feature').</return>
+        ///GENMHASH:195FC3E4B41990335C260656FB0A8071:F51CCA18341E6B7F7C44FBF50F4BFC68
+        private bool IsOSDiskFromStoredImage(StorageProfile storageProfile)
+        {
+            OSDisk osDisk = storageProfile.OsDisk;
+            return IsOSDiskFromImage(osDisk)
+                && osDisk.Image != null
+                && osDisk.Image.Uri != null;
         }
 
         ///GENMHASH:8143A53E487619B77CA38F74DEA81560:B603F79C83B2E3EB33CD223B542FC5BB
@@ -1318,23 +1876,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 .WithPrimaryPrivateIpAddressDynamic();
         }
 
-        ///GENMHASH:5D074C2BCA5877F1D6C918952020AA65:3A678A2280962ABD06FEAAD671D67F7D
-        private void InitializeDataDisks()
-        {
-            if (this.Inner.StorageProfile.DataDisks == null)
-            {
-                this.Inner
-                    .StorageProfile
-                    .DataDisks = new List<DataDisk>();
-            }
-
-            this.dataDisks = new List<IVirtualMachineDataDisk>();
-            foreach (DataDisk dataDiskInner in this.StorageProfile().DataDisks)
-            {
-                this.dataDisks.Add(new DataDiskImpl(dataDiskInner, this));
-            }
-        }
-
         ///GENMHASH:528DB7AD001AA15B5C463269BA0A948C:86593E909D0CD3E320C19512D2A5F96A
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork PreparePrimaryNetworkInterface(string name)
         {
@@ -1354,10 +1895,322 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return definitionAfterGroup;
         }
 
+        ///GENMHASH:5D074C2BCA5877F1D6C918952020AA65:1F2CEECDB6231FC6883D5B321DFBE9BF
+        private void InitializeDataDisks()
+        {
+            if (this.Inner.StorageProfile.DataDisks == null)
+            {
+                this.Inner
+                    .StorageProfile
+                    .DataDisks = new List<DataDisk>();
+            }
+            this.isUnmanagedDiskSelected = false;
+            this.managedDataDisks.Clear();
+            this.unmanagedDataDisks = new List<IVirtualMachineUnmanagedDataDisk>();
+            if (!IsManagedDiskEnabled())
+            {
+                foreach (var dataDiskInner in this.StorageProfile().DataDisks)
+                {
+                    this.unmanagedDataDisks.Add(new UnmanagedDataDiskImpl(dataDiskInner, this));
+                }
+            }
+        }
+
         ///GENMHASH:7F6A7E961EA5A11F2B8013E54123A7D0:C1CDD6BC19A1D800E2865E3DC44941E1
         private void ClearCachedRelatedResources()
         {
             this.virtualMachineInstanceView = null;
+        }
+
+        ///GENMHASH:15C87FF18F2D92A7CA828FB69E15D8F4:FAB35812CDE5256B5EEDB90655E51B75
+        private void ThrowIfManagedDiskEnabled(string message)
+        {
+            if (this.IsManagedDiskEnabled())
+            {
+                throw new NotSupportedException(message);
+            }
+        }
+
+        ///GENMHASH:CD7DD8B4BD138F5F21FC2A082781B05E:DF7F973BA6DA44DB874A039E8656D907
+        private void ThrowIfManagedDiskDisabled(string message)
+        {
+            if (!this.IsManagedDiskEnabled())
+            {
+                throw new NotSupportedException(message);
+            }
+        }
+
+        ///GENMHASH:B521ECE36A8645ACCD4603A46DF73D20:6C43F204834714CB74740068BED95D98
+        private bool IsInUpdateMode()
+        {
+            return !this.IsInCreateMode;
+        }
+
+        ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbXBsLk1hbmFnZWREYXRhRGlza0NvbGxlY3Rpb24=
+        partial class ManagedDataDiskCollection
+        {
+            public IDictionary<string, Models.DataDisk> NewDisksToAttach;
+            public IList<Models.DataDisk> ExistingDisksToAttach;
+            public IList<Models.DataDisk> ImplicitDisksToAssociate;
+            public IList<int> DiskLunsToRemove;
+            public IList<Models.DataDisk> NewDisksFromImage;
+            private VirtualMachineImpl vm;
+            private CachingTypes? defaultCachingType;
+            private StorageAccountTypes? defaultStorageAccountType;
+
+            ///GENMHASH:CA7F491172B86E1C8B0D8508E4161245:D1D4C18FF276F4E074EBD85D149B5349
+            internal void SetDataDisksDefaults()
+            {
+                VirtualMachineInner vmInner = this.vm.Inner;
+                if (IsPending())
+                {
+                    if (vmInner.StorageProfile.DataDisks == null)
+                    {
+                        vmInner.StorageProfile.DataDisks = new List<DataDisk>();
+                    }
+                    var dataDisks = vmInner.StorageProfile.DataDisks;
+                    var usedLuns = new HashSet<int>();
+                    // Get all used luns
+                    //
+                    foreach (var dataDisk in dataDisks)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    foreach (var dataDisk in this.NewDisksToAttach.Values)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    foreach (var dataDisk in this.ExistingDisksToAttach)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    foreach (var dataDisk in this.ImplicitDisksToAssociate)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    foreach (var dataDisk in this.NewDisksFromImage)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    // Func to get the next available lun
+                    //
+                    Func<int> nextLun = () =>
+                    {
+                        int l = 0;
+                        while (usedLuns.Contains(l))
+                        {
+                            l++;
+                        }
+                        usedLuns.Add(l);
+                        return l;
+                    };
+                    SetAttachableNewDataDisks(nextLun);
+                    SetAttachableExistingDataDisks(nextLun);
+                    SetImplicitDataDisks(nextLun);
+                    SetImageBasedDataDisks();
+                    RemoveDataDisks();
+                }
+                if (vmInner.StorageProfile.DataDisks != null
+                    && vmInner.StorageProfile.DataDisks.Count == 0)
+                {
+                    if (vm.IsInCreateMode)
+                    {
+                        // If there is no data disks at all, then setting it to null rather than [] is necessary.
+                        // This is for take advantage of CRP's implicit creation of the data disks if the image has
+                        // more than one data disk image(s).
+                        //
+                        vmInner.StorageProfile.DataDisks = null;
+                    }
+                }
+                this.Clear();
+            }
+
+            ///GENMHASH:0829442EB7C4FFD252C60EC2CCEF6312:62D273A513407F6CCA06E06DD3D01589
+            internal void SetAttachableNewDataDisks(Func<int> nextLun)
+            {
+                var dataDisks = vm.Inner.StorageProfile.DataDisks;
+                foreach (var entry in this.NewDisksToAttach)
+                {
+                    var managedDisk = (IDisk)vm.CreatedResource(entry.Key);
+                    DataDisk dataDisk = entry.Value;
+                    dataDisk.CreateOption = DiskCreateOptionTypes.Attach;
+                    if (dataDisk.Lun == -1)
+                    {
+                        dataDisk.Lun = nextLun();
+                    }
+                    dataDisk.ManagedDisk = new ManagedDiskParametersInner();
+                    dataDisk.ManagedDisk.Id = managedDisk.Id;
+                    if (dataDisk.Caching == null)
+                    {
+                        dataDisk.Caching = GetDefaultCachingType();
+                    }
+                    // Don't set default storage account type for the attachable managed disks, it is already
+                    // defined in the managed disk and not allowed to change.
+                    dataDisk.Name = null;
+                    dataDisks.Add(dataDisk);
+                }
+            }
+
+            ///GENMHASH:BDEEEC08EF65465346251F0F99D16258:03DF97ED7F5E19A604383CDB6F977583
+            internal void Clear()
+            {
+                NewDisksToAttach.Clear();
+                ExistingDisksToAttach.Clear();
+                ImplicitDisksToAssociate.Clear();
+                DiskLunsToRemove.Clear();
+            }
+
+            ///GENMHASH:0E80C978BE389A20F8B9BDDCBC308EBF:F8C8996370B742865324C10D4FF7ACF4
+            internal void SetImplicitDataDisks(Func<int> nextLun)
+            {
+                var dataDisks = vm.Inner.StorageProfile.DataDisks;
+                foreach (var dataDisk in this.ImplicitDisksToAssociate)
+                {
+                    dataDisk.CreateOption = DiskCreateOptionTypes.Empty;
+                    if (dataDisk.Lun == -1)
+                    {
+                        dataDisk.Lun = nextLun();
+                    }
+                    if (dataDisk.Caching == null)
+                    {
+                        dataDisk.Caching = GetDefaultCachingType();
+                    }
+                    if (dataDisk.ManagedDisk == null)
+                    {
+                        dataDisk.ManagedDisk = new ManagedDiskParametersInner();
+                    }
+                    if (dataDisk.ManagedDisk.StorageAccountType == null)
+                    {
+                        dataDisk.ManagedDisk.StorageAccountType = GetDefaultStorageAccountType();
+                    }
+                    dataDisk.Name = null;
+                    dataDisks.Add(dataDisk);
+                }
+            }
+
+            ///GENMHASH:EC209EBA0DF87A8C3CEA3D68742EA90D:5A0A84D8C0755F9E394C7D219CCD1CA5
+            internal bool IsPending()
+            {
+                return NewDisksToAttach.Count > 0
+                    || ExistingDisksToAttach.Count > 0
+                    || ImplicitDisksToAssociate.Count > 0
+                    || DiskLunsToRemove.Count > 0;
+            }
+
+            ///GENMHASH:1B972065A6AA6248776B41DE6F26CB8F:E48C33EDF09F7C0FF8274C18F487CABF
+            internal void SetAttachableExistingDataDisks(Func<int> nextLun)
+            {
+                var dataDisks = vm.Inner.StorageProfile.DataDisks;
+                foreach (var dataDisk in this.ExistingDisksToAttach)
+                {
+                    dataDisk.CreateOption = DiskCreateOptionTypes.Attach;
+                    if (dataDisk.Lun == -1)
+                    {
+                        dataDisk.Lun = nextLun();
+                    }
+                    if (dataDisk.Caching == null)
+                    {
+                        dataDisk.Caching = GetDefaultCachingType();
+                    }
+                    // Don't set default storage account type for the attachable managed disks, it is already
+                    // defined in the managed disk and not allowed to change.
+                    dataDisk.Name = null;
+                    dataDisks.Add(dataDisk);
+                }
+            }
+
+            ///GENMHASH:E896A9714FD3ED579D3A806B2D670211:9EC21D752F2334263B0BF51F5BEF2FE2
+            internal void SetDefaultStorageAccountType(StorageAccountTypes defaultStorageAccountType)
+            {
+                this.defaultStorageAccountType = defaultStorageAccountType;
+            }
+
+            ///GENMHASH:77E6B131587760C1313B68052BA1F959:3583CA6C895B07FD3877A9CFC685B07B
+            internal CachingTypes GetDefaultCachingType()
+            {
+                if (defaultCachingType == null)
+                {
+                    return CachingTypes.ReadWrite;
+                }
+                return defaultCachingType.Value;
+            }
+
+            ///GENMHASH:B33308470B073DF5A31970C4C53291A4:4521033F354DF5B57E3BD39652BD8FF9
+            internal void SetImageBasedDataDisks()
+            {
+                var dataDisks = vm.Inner.StorageProfile.DataDisks;
+                foreach (var dataDisk in this.NewDisksFromImage)
+                {
+                    dataDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+                    // Don't set default caching type for the disk, either user has to specify it explicitly or let CRP pick
+                    // it from the image
+                    // Don't set default storage account type for the disk, either user has to specify it explicitly or let
+                    // CRP pick it from the image
+                    dataDisk.Name = null;
+                    dataDisks.Add(dataDisk);
+                }
+            }
+
+            ///GENMHASH:C474BAF5F2762CA941D8C01DC8F0A2CB:123893CCEC4625CDE4B7BCBFC68DCF5B
+            internal void SetDefaultCachingType(CachingTypes cachingType)
+            {
+                this.defaultCachingType = cachingType;
+            }
+
+            ///GENMHASH:8F31500456F297BA5B51A162318FE60B:D8B2ED5EFB9DF0321EAAF10ACCE8A1C3
+            internal void RemoveDataDisks()
+            {
+                var dataDisks = vm.Inner.StorageProfile.DataDisks;
+                foreach (var lun in this.DiskLunsToRemove)
+                {
+                    int indexToRemove = 0;
+                    foreach (var dataDisk in dataDisks)
+                    {
+                        if (dataDisk.Lun == lun)
+                        {
+                            dataDisks.RemoveAt(indexToRemove);
+                            break;
+                        }
+                        indexToRemove++;
+                    }
+                }
+            }
+
+            ///GENMHASH:647794DB64052F8555CB8ABDABF9F24D:419FDCEEC4AAB55470C80A42C1D69868
+            internal StorageAccountTypes GetDefaultStorageAccountType()
+            {
+                if (defaultStorageAccountType == null)
+                {
+                    return StorageAccountTypes.StandardLRS;
+                }
+                return defaultStorageAccountType.Value;
+            }
+
+            ///GENMHASH:F6F68BF2F3D740A8BBA2AA1A30D0B189:428C729973EF037C0B0B7EF8BA639DD8
+            internal ManagedDataDiskCollection(VirtualMachineImpl vm)
+            {
+                this.vm = vm;
+                this.NewDisksToAttach = new Dictionary<string, DataDisk>();
+                this.ExistingDisksToAttach = new List<DataDisk>();
+                this.ImplicitDisksToAssociate = new List<DataDisk>();
+                this.NewDisksFromImage = new List<DataDisk>();
+                this.DiskLunsToRemove = new List<int>();
+            }
         }
     }
 }

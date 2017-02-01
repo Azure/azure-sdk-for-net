@@ -2,13 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for AvailabilitySet and its create and update interfaces.
@@ -17,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class AvailabilitySetImpl : GroupableResource<IAvailabilitySet,
         AvailabilitySetInner,
         AvailabilitySetImpl,
-        IComputeManager, 
+        IComputeManager,
         AvailabilitySet.Definition.IWithGroup,
         AvailabilitySet.Definition.IWithCreate,
         AvailabilitySet.Definition.IWithCreate,
@@ -69,6 +68,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:BFC85CD3DA2E7E01EDB277A99CA8A8DE
         public async override Task<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (this.Inner.PlatformFaultDomainCount == null)
+            {
+                this.Inner.PlatformFaultDomainCount = 2;
+            }
+            if (this.Inner.PlatformUpdateDomainCount == null)
+            {
+                this.Inner.PlatformUpdateDomainCount = 5;
+            }
             var availabilitySetInner = await client.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
@@ -95,6 +102,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public AvailabilitySetImpl WithUpdateDomainCount(int updateDomainCount)
         {
             Inner.PlatformUpdateDomainCount = updateDomainCount;
+            return this;
+        }
+
+        ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:76F4D314E5BB1E6DEE9BFF0081B150DC
+        public AvailabilitySetSkuTypes Sku()
+        {
+            if (this.Inner.Sku != null && this.Inner.Sku.Name != null)
+            {
+                return AvailabilitySetSkuTypes.Parse(this.Inner.Sku.Name);
+            }
+            return null;
+        }
+
+        ///GENMHASH:53AB73C440C52ADA0E332540DA0BEEB4:F6990CB6AF41DB826958D5810A250621
+        public AvailabilitySetImpl WithSku(AvailabilitySetSkuTypes skuType)
+        {
+            if (this.Inner.Sku == null)
+            {
+                this.Inner.Sku = new Sku();
+            }
+            this.Inner.Sku.Name = skuType.ToString();
             return this;
         }
     }

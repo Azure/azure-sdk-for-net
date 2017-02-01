@@ -245,10 +245,6 @@ namespace ManageVirtualMachineScaleSet
                 virtualMachineScaleSet.Restart();
                 Utilities.Log("re-started virtual machine scale set");
             }
-            catch (Exception f)
-            {
-                Utilities.Log(f);
-            }
             finally
             {
                 try

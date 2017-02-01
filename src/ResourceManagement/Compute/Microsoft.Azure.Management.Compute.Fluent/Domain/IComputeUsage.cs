@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure compute resource usage info object.
     /// </summary>
     public interface IComputeUsage  :
-        IWrapper<Models.Usage>
+        IWrapper<Usage>
     {
         /// <summary>
         /// Gets the unit of measurement.
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the maximum count of the resources that can be allocated in the
         /// subscription.
         /// </summary>
-        int Limit { get; }
+        long Limit { get; }
 
         /// <summary>
         /// Gets the name of the type of usage.

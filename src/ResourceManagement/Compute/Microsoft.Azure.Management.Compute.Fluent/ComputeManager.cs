@@ -3,13 +3,11 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
-using Microsoft.Rest;
-using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Compute.Fluent;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -29,6 +27,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IAvailabilitySets availabilitySets;
         private IVirtualMachineScaleSets virtualMachineScaleSets;
         private IComputeUsages usages;
+        private IDisks disks;
+        private ISnapshots snapshots;
+        private IVirtualMachineCustomImages virtualMachineCustomImages;
         #endregion
 
         #region ctrs
@@ -172,18 +173,63 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 return usages;
             }
         }
+
+        public IDisks Disks
+        {
+            get
+            {
+                if (disks == null)
+                {
+                    disks = new DisksImpl(this.client.Disks, this);
+                }
+                return disks;
+            }
+        }
+
+        public ISnapshots Snapshots
+        {
+            get
+            {
+                if (snapshots == null)
+                {
+                    snapshots = new SnapshotsImpl(this.client.Snapshots, this);
+                }
+                return snapshots;
+            }
+        }
+
+        public IVirtualMachineCustomImages VirtualMachineCustomImages
+        {
+            get
+            {
+                if (virtualMachineCustomImages == null)
+                {
+                    virtualMachineCustomImages = new VirtualMachineCustomImagesImpl(this.client.Images, this);
+                }
+                return virtualMachineCustomImages;
+            }
+        }
         #endregion
     }
 
     public interface IComputeManager : IManagerBase
     {
         IVirtualMachines VirtualMachines { get; }
+
         IVirtualMachineImages VirtualMachineImages { get; }
 
         IVirtualMachineExtensionImages VirtualMachineExtensionImages { get; }
 
         IAvailabilitySets AvailabilitySets { get; }
+
         IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
+
         IComputeUsages Usages { get; }
+
+        IDisks Disks { get; }
+
+        ISnapshots Snapshots { get; }
+
+        IVirtualMachineCustomImages VirtualMachineCustomImages { get; }
     }
 }

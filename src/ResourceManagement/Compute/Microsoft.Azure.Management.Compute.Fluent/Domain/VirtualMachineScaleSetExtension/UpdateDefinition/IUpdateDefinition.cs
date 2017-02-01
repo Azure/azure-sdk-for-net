@@ -7,6 +7,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
 
     /// <summary>
+    /// The stage of a virtual machine scale set extension definition allowing to specify the type of the virtual machine
+    /// scale set extension version this extension is based on.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IWithVersion<ParentT> 
+    {
+        /// <summary>
+        /// Specifies the version of the virtual machine scale set image extension.
+        /// </summary>
+        /// <param name="extensionImageVersionName">A version name.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithVersion(string extensionImageVersionName);
+    }
+
+    /// <summary>
     /// The stage of a virtual machine scale set extension allowing to specify an extension image or the name of the
     /// virtual machine extension publisher.
     /// </summary>
@@ -20,41 +35,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
         /// <param name="image">An extension image.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithImage(IVirtualMachineExtensionImage image);
-    }
-
-    /// <summary>
-    /// The stage of a virtual machine scale set extension definition allowing to enable or disable auto upgrade of the
-    /// extension when when a new minor version of virtual machine scale set extension image gets published.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAutoUpgradeMinorVersion<ParentT> 
-    {
-        /// <summary>
-        /// Enables auto upgrading of the extension with minor versions.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithMinorVersionAutoUpgrade();
-
-        /// <summary>
-        /// Disables auto upgrade of the extension with minor versions.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithoutMinorVersionAutoUpgrade();
-    }
-
-    /// <summary>
-    /// The stage of a virtual machine scale set extension definition allowing to specify the publisher of the
-    /// virtual machine scale set extension image this extension is based on.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithPublisher<ParentT> 
-    {
-        /// <summary>
-        /// Specifies the name of the virtual machine scale set extension image publisher.
-        /// </summary>
-        /// <param name="extensionImagePublisherName">The publisher name.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithType<ParentT> WithPublisher(string extensionImagePublisherName);
     }
 
     /// <summary>
@@ -95,18 +75,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     }
 
     /// <summary>
-    /// The stage of a virtual machine scale set extension definition allowing to specify the type of the virtual machine
-    /// scale set extension version this extension is based on.
+    /// The stage of a virtual machine scale set extension definition allowing to specify the publisher of the
+    /// virtual machine scale set extension image this extension is based on.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithVersion<ParentT> 
+    public interface IWithPublisher<ParentT> 
     {
         /// <summary>
-        /// Specifies the version of the virtual machine scale set image extension.
+        /// Specifies the name of the virtual machine scale set extension image publisher.
         /// </summary>
-        /// <param name="extensionImageVersionName">A version name.</param>
+        /// <param name="extensionImagePublisherName">The publisher name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithVersion(string extensionImageVersionName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithType<ParentT> WithPublisher(string extensionImagePublisherName);
     }
 
     /// <summary>
@@ -143,6 +123,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     public interface IBlank<ParentT>  :
         IWithImageOrPublisher<ParentT>
     {
+    }
+
+    /// <summary>
+    /// The stage of a virtual machine scale set extension definition allowing to enable or disable auto upgrade of the
+    /// extension when when a new minor version of virtual machine scale set extension image gets published.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IWithAutoUpgradeMinorVersion<ParentT> 
+    {
+        /// <summary>
+        /// Enables auto upgrading of the extension with minor versions.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithMinorVersionAutoUpgrade();
+
+        /// <summary>
+        /// Disables auto upgrade of the extension with minor versions.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IWithAttach<ParentT> WithoutMinorVersionAutoUpgrade();
     }
 
     /// <summary>
