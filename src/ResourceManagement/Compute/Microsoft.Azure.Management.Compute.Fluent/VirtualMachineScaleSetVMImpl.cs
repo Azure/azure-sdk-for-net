@@ -83,10 +83,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.DeallocateAsync().Wait();
         }
 
+        ///GENMHASH:C6D786A0345B2C4ADB349E573A0BF6C7:424FABAED1A1FB32529BDB97BA59F68B
+        public string OsDiskId()
+        {
+            if (this.StorageProfile().OsDisk.ManagedDisk != null) {
+                return this.StorageProfile().OsDisk.ManagedDisk.Id;
+            }
+            return null;
+        }
         ///GENMHASH:8442F1C1132907DE46B62B277F4EE9B7:605B8FC69F180AFC7CE18C754024B46C
         public string Type()
         {
             return this.Inner.Type;
+        }
+
+        ///GENMHASH:587521C895259D4E7D0CF85C856FAC07:C76E3E483B143BFC4A8EE606EB6528EB
+        public bool IsOSBasedOnStoredImage()
+        {
+            if (this.Inner.StorageProfile.OsDisk != null
+                && this.Inner.StorageProfile.OsDisk.Image != null) {
+                    return this.Inner.StorageProfile.OsDisk.Image.Uri != null;
+            }
+            return false;
         }
 
         ///GENMHASH:74D6BC0CA5239D9979A6C4F61D973616:C90E0C1B7FFF1EE7A6D2A1D595F52BE7
@@ -95,10 +113,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Microsoft.Azure.Management.Compute.Fluent.PowerState.FromInstanceView(this.InstanceView());
         }
 
-        ///GENMHASH:F80DBECC128264AD2E1D6546D7B09EB3:01DE0FF46DCB4DD3745B7173E66AFDB6
-        public bool IsOsBasedOnPlatformImage()
+        ///GENMHASH:D87BE38C22213620113C494887C4E7A5:D03D475816B7640DB91E173AB784F92E
+        public bool IsOSBasedOnPlatformImage()
         {
-            return this.PlatformImageReference() != null;
+            ImageReferenceInner imageReference = this.Inner.StorageProfile.ImageReference;
+            if (imageReference != null
+                && imageReference.Publisher != null
+                && imageReference.Sku != null
+                && imageReference.Offer != null
+                && imageReference.Version != null) {
+                    return true;
+            }
+            return false;
         }
 
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:4C15A2B31C3EDC9F84F5ED384B0E13D8
@@ -132,6 +158,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 .NetworkProfile
                 .NetworkInterfaces
                 .Select(nic => nic.Id).ToList();
+        }
+
+        ///GENMHASH:0F25C4AF79F7680F2CB3C57410B5BC20:2961B19806B66277EDC7F0108699F60A
+        public IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> UnmanagedDataDisks()
+        {
+            var dataDisks = new Dictionary<int, IVirtualMachineUnmanagedDataDisk>();
+            if (!IsManagedDiskEnabled()) {
+                var innerDataDisks = this.Inner.StorageProfile.DataDisks;
+                 if (innerDataDisks != null) {
+                    foreach(var innerDataDisk in innerDataDisks)  {
+                        dataDisks.Add(innerDataDisk.Lun, new UnmanagedDataDiskImpl(innerDataDisk, null));
+                    }
+                }
+            }
+            return dataDisks;
         }
 
         ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:58ABB710ED036C0D7836493A79C470A9
@@ -198,6 +239,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return false;
         }
 
+        ///GENMHASH:353C54F9ADAEAEDD54EE4F0AACF9DF9B:E5641D026D42E80470787BB2990E88CE
+        public IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> DataDisks()
+        {
+            var dataDisks = new Dictionary<int, IVirtualMachineDataDisk>();
+            if (IsManagedDiskEnabled()) {
+                var innerDataDisks = this.Inner.StorageProfile.DataDisks;
+                if (innerDataDisks != null) {
+                    foreach(var innerDataDisk in innerDataDisks)  {
+                        dataDisks.Add(innerDataDisk.Lun, new VirtualMachineDataDiskImpl(innerDataDisk));
+                    }
+                }
+            }
+            return dataDisks;
+        }
+
         ///GENMHASH:6A2970A94B2DD4A859B00B9B9D9691AD:4208AEB8137598AB1A39881825F4406A
         public Region Region()
         {
@@ -228,6 +284,34 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Inner.OsProfile;
         }
 
+        ///GENMHASH:C81171F34FA85CED80852E725FF8B7A4:DC67B5E3F89220C14D74534C08A18508
+        public bool IsManagedDiskEnabled()
+        {
+            if (IsOSBasedOnCustomImage()) {
+                return true;
+            }
+            if (IsOSBasedOnStoredImage()) {
+                return false;
+            }
+            if (IsOSBasedOnPlatformImage()) {
+                if (this.Inner.StorageProfile.OsDisk != null
+                    && this.Inner.StorageProfile.OsDisk.Vhd != null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        ///GENMHASH:8E2DA12AB303713C4BA64A07598D0087:04A0306A47BA0DD3BBE5C08A1E81FAD8
+        public bool IsOSBasedOnCustomImage()
+        {
+            ImageReferenceInner imageReference = this.Inner.StorageProfile.ImageReference;
+            if (imageReference != null
+                && imageReference.Id != null) {
+                return true;
+            }
+            return false;
+        }
         ///GENMHASH:128FD79E8DC783A2FF49FDFCCE4187DD:343C0BEE1A4B7107E587437CC211D9EC
         public string CustomImageVhdUri()
         {
@@ -252,10 +336,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 cancellationToken);
         }
 
-        ///GENMHASH:D49CFB6F544192733FF4EC93E412EF97:2FFF55F1D47FDA3AA92B579EE7A51EA2
-        public IVirtualMachineImage GetPlatformImage()
+        ///GENMHASH:C17430880D0D3E4CD7536005368289EE:5B9C55C0C450DF2195470AEEB28D0F94
+        public IVirtualMachineCustomImage GetOSCustomImage()
         {
-            if (this.IsOsBasedOnPlatformImage()) {
+            if (this.IsOSBasedOnCustomImage()) {
+                ImageReferenceInner imageReference = this.Inner.StorageProfile.ImageReference;
+                return this.computeManager.VirtualMachineCustomImages.GetById(imageReference.Id);
+            }
+            return null;
+        }
+
+        ///GENMHASH:077DF73596603F9C1F30534877CA30CC:08AA97C707E56F0C013D95C82566A832
+        public IVirtualMachineImage GetOSPlatformImage()
+        {
+            if (this.IsOSBasedOnPlatformImage())
+            {
                 ImageReference imageReference = this.PlatformImageReference();
                 return this.computeManager.VirtualMachineImages.GetImage(this.Region(),
                     imageReference.Publisher,
@@ -343,7 +438,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:3ABC41CDC1AC150E4431F11073623E1A:CE1EF18259254D728183B6023A6CBE91
         public ImageReference PlatformImageReference()
         {
-            return this.Inner.StorageProfile.ImageReference;
+            if (IsOSBasedOnPlatformImage()) {
+                return new ImageReference(this.Inner.StorageProfile.ImageReference);
+            }
+            return null;
+        }
+
+        ///GENMHASH:E6371CFFB9CB09E08DD4757D639CBF27:8AE50992E9627A3D3844895445A18A8D
+        public string OsUnmanagedDiskVhdUri()
+        {
+            if (this.Inner.StorageProfile.OsDisk.Vhd != null) {
+                return this.Inner.StorageProfile.OsDisk.Vhd.Uri;
+            }
+            return null;
         }
 
         ///GENMHASH:D689C0F3639A0E935C55CB38C26FAAFD:E6911DC70A59F96D2F88F3FF5122E38B
@@ -456,6 +563,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
         {
             return this.Parent.ListNetworkInterfacesByInstanceId(this.InstanceId());
+        }
+
+        ///GENMHASH:C0264E6C83F004DCB85510D507BABF23:343C0BEE1A4B7107E587437CC211D9EC
+        public string StoredImageUnmanagedVhdUri()
+        {
+            if (this.Inner.StorageProfile.OsDisk.Image != null)
+            {
+                return this.Inner.StorageProfile.OsDisk.Image.Uri;
+            }
+            return null;
         }
     }
 }

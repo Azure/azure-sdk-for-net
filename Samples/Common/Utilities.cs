@@ -17,6 +17,7 @@ using System.Text;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -236,6 +237,62 @@ namespace Microsoft.Azure.Management.Samples.Common
             Utilities.Log(info.ToString());
         }
 
+        public static void PrintVirtualMachineCustomImage(IVirtualMachineCustomImage image)
+        {
+            var builder = new StringBuilder().Append("Virtual machine custom image: ").Append(image.Id)
+            .Append("Name: ").Append(image.Name)
+            .Append("\n\tResource group: ").Append(image.ResourceGroupName)
+            .Append("\n\tCreated from virtual machine: ").Append(image.SourceVirtualMachineId);
+
+            builder.Append("\n\tOS disk image: ")
+                    .Append("\n\t\tOperating system: ").Append(image.OsDiskImage.OsType)
+                    .Append("\n\t\tOperating system state: ").Append(image.OsDiskImage.OsState)
+                    .Append("\n\t\tCaching: ").Append(image.OsDiskImage.Caching)
+                    .Append("\n\t\tSize (GB): ").Append(image.OsDiskImage.DiskSizeGB);
+            if (image.IsCreatedFromVirtualMachine)
+            {
+                builder.Append("\n\t\tSource virtual machine: ").Append(image.SourceVirtualMachineId);
+            }
+            if (image.OsDiskImage.ManagedDisk != null)
+            {
+                builder.Append("\n\t\tSource managed disk: ").Append(image.OsDiskImage.ManagedDisk.Id);
+            }
+            if (image.OsDiskImage.Snapshot != null)
+            {
+                builder.Append("\n\t\tSource snapshot: ").Append(image.OsDiskImage.Snapshot.Id);
+            }
+            if (image.OsDiskImage.BlobUri != null)
+            {
+                builder.Append("\n\t\tSource un-managed vhd: ").Append(image.OsDiskImage.BlobUri);
+            }
+            if (image.DataDiskImages != null)
+            {
+                foreach (var diskImage  in image.DataDiskImages.Values)
+                {
+                    builder.Append("\n\tDisk Image (Lun) #: ").Append(diskImage.Lun)
+                            .Append("\n\t\tCaching: ").Append(diskImage.Caching)
+                            .Append("\n\t\tSize (GB): ").Append(diskImage.DiskSizeGB);
+                    if (image.IsCreatedFromVirtualMachine)
+                    {
+                        builder.Append("\n\t\tSource virtual machine: ").Append(image.SourceVirtualMachineId);
+                    }
+                    if (diskImage.ManagedDisk != null)
+                    {
+                        builder.Append("\n\t\tSource managed disk: ").Append(diskImage.ManagedDisk.Id);
+                    }
+                    if (diskImage.Snapshot != null)
+                    {
+                        builder.Append("\n\t\tSource snapshot: ").Append(diskImage.Snapshot.Id);
+                    }
+                    if (diskImage.BlobUri != null)
+                    {
+                        builder.Append("\n\t\tSource un-managed vhd: ").Append(diskImage.BlobUri);
+                    }
+                }
+            }
+            Log(builder.ToString());
+        }
+
         public static void PrintVirtualMachine(IVirtualMachine virtualMachine)
         {
             var storageProfile = new StringBuilder().Append("\n\tStorageProfile: ");
@@ -292,9 +349,19 @@ namespace Microsoft.Azure.Management.Samples.Common
                     storageProfile.Append("\n\t\t\tCreateOption: ").Append(disk.CreateOption);
                     storageProfile.Append("\n\t\t\tDiskSizeGB: ").Append(disk.DiskSizeGB);
                     storageProfile.Append("\n\t\t\tLun: ").Append(disk.Lun);
-                    if (disk.Vhd.Uri != null)
+                    if (virtualMachine.IsManagedDiskEnabled)
                     {
-                        storageProfile.Append("\n\t\t\tVhd Uri: ").Append(disk.Vhd.Uri);
+                        if (disk.ManagedDisk != null)
+                        {
+                            storageProfile.Append("\n\t\t\tManaged Disk Id: ").Append(disk.ManagedDisk.Id);
+                        }
+                    }
+                    else
+                    {
+                        if (disk.Vhd.Uri != null)
+                        {
+                            storageProfile.Append("\n\t\t\tVhd Uri: ").Append(disk.Vhd.Uri);
+                        }
                     }
                     if (disk.Image != null)
                     {
@@ -357,8 +424,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static string CreateRandomName(string namePrefix)
         {
-            var root = Guid.NewGuid().ToString().Replace("-", "");
-            return $"{namePrefix}{root.ToLower().Substring(0, 3)}{(DateTime.UtcNow.Millisecond % 10000000L)}";
+            return SdkContext.RandomResourceName(namePrefix, 30);
         }
 
         public static void PrintAvailabilitySet(IAvailabilitySet resource)
@@ -1093,7 +1159,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void Print(IDnsZone dnsZone)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             builder.Append("Dns Zone: ").Append(dnsZone.Id)
                     .Append("\n\tName (Top level domain): ").Append(dnsZone.Name)
                     .Append("\n\tResource group: ").Append(dnsZone.ResourceGroupName)

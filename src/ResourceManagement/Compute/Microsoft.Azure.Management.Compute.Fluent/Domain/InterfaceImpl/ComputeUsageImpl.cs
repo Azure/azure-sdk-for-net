@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the maximum count of the resources that can be allocated in the
         /// subscription.
         /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Limit
+        long Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Limit
         {
             get
             {

@@ -2,9 +2,49 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition
 {
+    using Microsoft.Azure.Management.Compute.Fluent;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Compute.Fluent;
+
+    /// <summary>
+    /// The first stage of a virtual machine extension definition.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
+    public interface IBlank<ParentT>  :
+        IWithImageOrPublisher<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine extension definition allowing to specify the type of the virtual machine
+    /// extension version this extension is based on.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IWithVersion<ParentT> 
+    {
+        /// <summary>
+        /// Specifies the version of the virtual machine image extension.
+        /// </summary>
+        /// <param name="extensionImageVersionName">The version name.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithVersion(string extensionImageVersionName);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine extension allowing to specify extension image or specify name of the
+    /// virtual machine extension publisher.
+    /// </summary>
+    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
+    public interface IWithImageOrPublisher<ParentT>  :
+        IWithPublisher<ParentT>
+    {
+        /// <summary>
+        /// Specifies the virtual machine extension image to use.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithImage(IVirtualMachineExtensionImage image);
+    }
 
     /// <summary>
     /// The stage of the virtual machine extension definition allowing to specify the publisher of the
@@ -22,26 +62,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
     }
 
     /// <summary>
-    /// The stage of the virtual machine extension definition allowing to enable or disable auto upgrade of the
-    /// extension when when a new minor version of virtual machine extension image gets published.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithAutoUpgradeMinorVersion<ParentT> 
-    {
-        /// <summary>
-        /// Enables auto upgrade of the extension.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithMinorVersionAutoUpgrade();
-
-        /// <summary>
-        /// Disables auto upgrade of the extension.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithoutMinorVersionAutoUpgrade();
-    }
-
-    /// <summary>
     /// The entirety of a virtual machine extension definition as a part of parent update.
     /// </summary>
     /// <typeparam name="Parent">The return type of the final Attachable.attach().</typeparam>
@@ -52,15 +72,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
         IWithType<ParentT>,
         IWithVersion<ParentT>,
         IWithAttach<ParentT>
-    {
-    }
-
-    /// <summary>
-    /// The first stage of a virtual machine extension definition.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of the final WithAttach.attach().</typeparam>
-    public interface IBlank<ParentT>  :
-        IWithImageOrPublisher<ParentT>
     {
     }
 
@@ -102,18 +113,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
     }
 
     /// <summary>
-    /// The stage of the virtual machine extension definition allowing to specify the type of the virtual machine
-    /// extension version this extension is based on.
+    /// The stage of the virtual machine extension definition allowing to enable or disable auto upgrade of the
+    /// extension when when a new minor version of virtual machine extension image gets published.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithVersion<ParentT> 
+    public interface IWithAutoUpgradeMinorVersion<ParentT> 
     {
         /// <summary>
-        /// Specifies the version of the virtual machine image extension.
+        /// Enables auto upgrade of the extension.
         /// </summary>
-        /// <param name="extensionImageVersionName">The version name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithVersion(string extensionImageVersionName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithMinorVersionAutoUpgrade();
+
+        /// <summary>
+        /// Disables auto upgrade of the extension.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithoutMinorVersionAutoUpgrade();
     }
 
     /// <summary>
@@ -139,21 +155,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
     }
 
     /// <summary>
-    /// The stage of the virtual machine extension definition allowing to specify the type of the virtual machine
-    /// extension image this extension is based on.
-    /// </summary>
-    /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithType<ParentT> 
-    {
-        /// <summary>
-        /// Specifies the type of the virtual machine extension image.
-        /// </summary>
-        /// <param name="extensionImageTypeName">The image type name.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithVersion<ParentT> WithType(string extensionImageTypeName);
-    }
-
-    /// <summary>
     /// The final stage of the virtual machine extension definition.
     /// At this stage, any remaining optional settings can be specified, or the virtual machine extension definition
     /// can be attached to the parent virtual machine definition using VirtualMachineExtension.UpdateDefinitionStages.WithAttach.attach().
@@ -168,18 +169,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Upda
     }
 
     /// <summary>
-    /// The stage of the virtual machine extension allowing to specify extension image or specify name of the
-    /// virtual machine extension publisher.
+    /// The stage of the virtual machine extension definition allowing to specify the type of the virtual machine
+    /// extension image this extension is based on.
     /// </summary>
     /// <typeparam name="Parent">The return type of WithAttach.attach().</typeparam>
-    public interface IWithImageOrPublisher<ParentT>  :
-        IWithPublisher<ParentT>
+    public interface IWithType<ParentT> 
     {
         /// <summary>
-        /// Specifies the virtual machine extension image to use.
+        /// Specifies the type of the virtual machine extension image.
         /// </summary>
-        /// <param name="image">The image.</param>
+        /// <param name="extensionImageTypeName">The image type name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithImage(IVirtualMachineExtensionImage image);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithVersion<ParentT> WithType(string extensionImageTypeName);
     }
 }

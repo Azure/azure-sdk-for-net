@@ -33,6 +33,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Resource.Fluent.Core.Region Location { get; }
 
         /// <summary>
+        /// Gets the resource id of this image.
+        /// </summary>
+        string Id { get; }
+
+        /// <summary>
         /// Gets the commercial name of the virtual machine image (SKU).
         /// </summary>
         string Sku { get; }
@@ -40,12 +45,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the image reference representing the publisher, offer, SKU and version of the virtual machine image.
         /// </summary>
-        Models.ImageReference ImageReference { get; }
+        ImageReference ImageReference { get; }
 
         /// <summary>
-        /// Gets data disk images in the virtual machine image.
+        /// Gets data disk images in the virtual machine image, indexed by the disk lun.
         /// </summary>
-        System.Collections.Generic.IList<Models.DataDiskImage> DataDiskImages { get; }
+        System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage> DataDiskImages { get; }
 
         /// <summary>
         /// Gets the version of the virtual machine image.

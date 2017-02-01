@@ -125,5 +125,75 @@ namespace Samples.Tests
                 ManageVirtualMachinesInParallelWithNetwork.Program.RunSample(rollUpClient);
             }
         }
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void CreateVirtualMachineUsingCustomImageFromVHDTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                CreateVirtualMachineUsingCustomImageFromVHD.Program.RunSample(rollUpClient);
+            }
+        }
+
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void CreateVirtualMachineUsingCustomImageFromVMTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                CreateVirtualMachineUsingCustomImageFromVM.Program.RunSample(rollUpClient);
+            }
+        }
+
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void CreateVirtualMachineUsingSpecializedDiskFromSnapshotTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                CreateVirtualMachineUsingSpecializedDiskFromSnapshot.Program.RunSample(rollUpClient);
+            }
+        }
+
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void CreateVirtualMachineUsingSpecializedDiskFromVhdTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                CreateVirtualMachineUsingSpecializedDiskFromVhd.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void ManageVirtualMachineWithDiskTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageVirtualMachineWithDisk.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void MigrateVirtualMachineTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                MigrateVirtualMachine.Program.RunSample(rollUpClient);
+            }
+        }
+
     }
 }

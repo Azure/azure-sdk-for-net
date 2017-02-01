@@ -20,6 +20,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets the resource id of this image.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Id
+        {
+            get
+            {
+                return this.Id();
+            }
+        }
+
+        /// <summary>
         /// Gets the version of the virtual machine image.
         /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Version
@@ -64,13 +75,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets data disk images in the virtual machine image.
+        /// Gets data disk images in the virtual machine image, indexed by the disk lun.
         /// </summary>
-        System.Collections.Generic.IList<Models.DataDiskImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.DataDiskImages
+        System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.DataDiskImages
         {
             get
             {
-                return this.DataDiskImages() as System.Collections.Generic.IList<Models.DataDiskImage>;
+                return this.DataDiskImages() as System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage>;
             }
         }
 
@@ -99,11 +110,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the image reference representing the publisher, offer, SKU and version of the virtual machine image.
         /// </summary>
-        Models.ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.ImageReference
+        ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.ImageReference
         {
             get
             {
-                return this.ImageReference() as Models.ImageReference;
+                return this.ImageReference() as ImageReference;
             }
         }
     }

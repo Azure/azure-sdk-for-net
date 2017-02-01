@@ -5,6 +5,7 @@ using Azure.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -30,7 +31,7 @@ namespace Azure.Tests.Network.LoadBalancer
             [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
-            loadBalancerHelper = new LoadBalancerHelper(methodName);
+            loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
             this.vms = vms;
             this.networks = networks;
 			this.availabilitySets = availabilitySets;

@@ -46,8 +46,9 @@ namespace Fluent.Tests.Compute
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012Datacenter)
                         .WithAdminUsername("Foo12")
                         .WithAdminPassword("BaR@12!Foo")
+                        .WithUnmanagedDisks()
+                        .WithOSDiskCaching(CachingTypes.ReadWrite)
                         .WithSize(VirtualMachineSizeTypes.StandardD3)
-                        .WithOsDiskCaching(CachingTypes.ReadWrite)
                         .WithOsDiskName("javatest")
                         .Create();
 
@@ -137,6 +138,7 @@ namespace Fluent.Tests.Compute
                                 .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                                 .WithRootUsername("tirekicker")
                                 .WithRootPassword("BaR@12!#")
+                                .WithUnmanagedDisks()
                                 .WithNewStorageAccount(storageAccountCreatable);
                         virtualMachineCreatables.Add(virtualMachineCreatable);
                     }
@@ -222,6 +224,7 @@ namespace Fluent.Tests.Compute
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername(username)
                     .WithRootPassword(password)
+                    .WithUnmanagedDisks()
                     .WithCustomData(cloudInitEncodedString)
                     .Create();
 
@@ -270,6 +273,7 @@ namespace Fluent.Tests.Compute
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(username)
                         .WithRootPassword(password)
+                        .WithUnmanagedDisks()
                         .Create();
 
                     var publicIpAddress = virtualMachine.GetPrimaryPublicIpAddress();

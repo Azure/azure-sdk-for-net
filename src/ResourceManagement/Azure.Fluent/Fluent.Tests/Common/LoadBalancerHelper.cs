@@ -59,7 +59,8 @@ namespace Azure.Tests.Common
             // Define an availability set for the VMs
             var availabilitySetDefinition = availabilitySets.Define("as" + TestId)
                 .WithRegion(Region)
-                .WithExistingResourceGroup(GroupName);
+                .WithExistingResourceGroup(GroupName)
+                .WithSku(AvailabilitySetSkuTypes.Aligned);
 
             // Create the requested number of VM definitions
             string userName = "testuser" + TestId;

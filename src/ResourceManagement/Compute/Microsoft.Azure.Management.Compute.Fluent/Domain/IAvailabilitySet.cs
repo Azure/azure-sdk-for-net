@@ -33,6 +33,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         System.Collections.Generic.IList<Models.InstanceViewStatus> Statuses { get; }
 
         /// <summary>
+        /// Gets the availability set sku.
+        /// </summary>
+        Models.AvailabilitySetSkuTypes Sku { get; }
+
+        /// <summary>
         /// Gets the update domain count of this availability set.
         /// </summary>
         int UpdateDomainCount { get; }

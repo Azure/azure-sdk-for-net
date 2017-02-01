@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Core
             Inner = inner;
         }
 
-        public InnerT Inner
+        public virtual InnerT Inner
         {
             get; private set;
         }

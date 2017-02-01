@@ -2,16 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
 {
-    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
     /// <summary>
-    /// The first stage of an availability set definition.
+    /// Container interface for all the definitions related to an availability set.
     /// </summary>
-    public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup>
+    public interface IDefinition  :
+        IBlank,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup,
+        IWithCreate
     {
     }
 
@@ -20,19 +23,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
     /// </summary>
     public interface IWithGroup  :
         Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>
-    {
-    }
-
-    /// <summary>
-    /// The stage of an availability set definition which contains all the minimum required inputs for
-    /// the resource to be created (via WithCreate.create()), but also allows
-    /// for any other optional settings to be specified.
-    /// </summary>
-    public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>,
-        IWithUpdateDomainCount,
-        IWithFaultDomainCount
     {
     }
 
@@ -50,6 +40,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
     }
 
     /// <summary>
+    /// The first stage of an availability set definition.
+    /// </summary>
+    public interface IBlank  :
+        IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the availability set definition allowing enable or disable for managed disk.
+    /// </summary>
+    public interface IWithSku 
+    {
+        /// <summary>
+        /// Specifies the sku type for the availability set.
+        /// </summary>
+        /// <param name="skuType">The sku type.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate WithSku(AvailabilitySetSkuTypes skuType);
+    }
+
+    /// <summary>
     /// The stage of the availability set definition allowing to specify the update domain count.
     /// </summary>
     public interface IWithUpdateDomainCount 
@@ -63,12 +74,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
     }
 
     /// <summary>
-    /// Container interface for all the definitions related to an availability set.
+    /// The stage of an availability set definition which contains all the minimum required inputs for
+    /// the resource to be created (via WithCreate.create()), but also allows
+    /// for any other optional settings to be specified.
     /// </summary>
-    public interface IDefinition  :
-        IBlank,
-        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup,
-        IWithCreate
+    public interface IWithCreate  :
+        ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>,
+        IWithUpdateDomainCount,
+        IWithFaultDomainCount,
+        IWithSku
     {
     }
 }
