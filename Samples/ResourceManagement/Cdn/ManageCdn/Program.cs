@@ -179,10 +179,19 @@ namespace ManageCdn
 
         private static HttpResponseMessage CheckAddress(string url)
         {
-            using (var client = new HttpClient())
+            try
             {
-                return client.GetAsync(url).Result;
+                using (var client = new HttpClient())
+                {
+                    return client.GetAsync(url).Result;
+                }
             }
+            catch(Exception ex)
+            {
+                Utilities.Log(ex);
+            }
+
+            return null;
         }
     }
 }

@@ -17,6 +17,7 @@ using System.Text;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -38,7 +39,14 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static void Log(object obj)
         {
-            LoggerMethod.Invoke(obj.ToString());
+            if (obj != null)
+            {
+                LoggerMethod.Invoke(obj.ToString());
+            }
+            else
+            {
+                LoggerMethod.Invoke("(null)");
+            }
         }
 
         public static void Log()
@@ -357,8 +365,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         public static string CreateRandomName(string namePrefix)
         {
-            var root = Guid.NewGuid().ToString().Replace("-", "");
-            return $"{namePrefix}{root.ToLower().Substring(0, 3)}{(DateTime.UtcNow.Millisecond % 10000000L)}";
+            return SdkContext.RandomResourceName(namePrefix, 30);
         }
 
         public static void PrintAvailabilitySet(IAvailabilitySet resource)
