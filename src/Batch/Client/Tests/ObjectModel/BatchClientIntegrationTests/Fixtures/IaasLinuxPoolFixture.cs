@@ -48,7 +48,7 @@
                 ImageReference imageReference = ubuntuSku.VerifiedImageReferences.First(ubuntuImageScanner);
 
                 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
-                    imageReference: imageReference,
+                    imageReference,
                     nodeAgentSkuId: ubuntuSku.Id);
 
                 currentPool = this.client.PoolOperations.CreatePool(

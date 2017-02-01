@@ -65,7 +65,7 @@
 
             // used for tests of StartTask(info)
             st.ResourceFiles = new List<ResourceFile> { new ResourceFile("https://manoj123.blob.core.windows.net/mpi/MSMpiSetup.exe", "MSMpiSetup.exe") };  // TODO: remove the dependency on magic blob.  bring this into project and use filestaging or something
-            st.RunElevated = true;
+            st.UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.Admin));
             st.WaitForSuccess = true;
             newPool.StartTask = st;
 
@@ -188,7 +188,7 @@
                                 IPagedEnumerable<SubtaskInformation> results = myCompletedTask.ListSubtasks();
 
                                 subtasks = results.ToList();
-                                if (subtasks.All(t => t.State == TaskState.Completed))
+                                if (subtasks.All(t => t.State == SubtaskState.Completed))
                                 {
                                     break;
                                 }
@@ -283,7 +283,7 @@
                                 IPagedEnumerable<SubtaskInformation> results = batchCli.JobOperations.ListSubtasks(jobId, myCompletedTask.Id);
 
                                 subtasks = results.ToList();
-                                if (subtasks.All(t => t.State == TaskState.Completed))
+                                if (subtasks.All(t => t.State == SubtaskState.Completed))
                                 {
                                     break;
                                 }
@@ -624,9 +624,9 @@
 
                             foreach (NodeFile curFile in curTask.ListNodeFiles(recursive: true))
                             {
-                                this.testOutputHelper.WriteLine("    filename: " + curFile.Name);
+                                this.testOutputHelper.WriteLine("    filename: " + curFile.Path);
 
-                                if (curFile.Name.IndexOf("localWords.txt", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                                if (curFile.Path.IndexOf("localWords.txt", StringComparison.InvariantCultureIgnoreCase) >= 0)
                                 {
                                     Assert.False(foundLocalWords);
                                     foundLocalWords = true;
@@ -930,27 +930,33 @@
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
                     string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
-
-                    //Create the job
-                    CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
-                    cloudJob.PoolInformation = new PoolInformation { PoolId = this.poolFixture.PoolId };
-                    this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
-                    cloudJob.Commit();
-
-                    //Create a task
-                    const string taskId = "T1";
-                    
-                    CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"set\"")
+                    try
                     {
-                        DisplayName = "name",
-                        AuthenticationTokenSettings = new AuthenticationTokenSettings { Access = AccessScope.Job }
-                    };
+                        //Create the job
+                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                        cloudJob.PoolInformation = new PoolInformation { PoolId = this.poolFixture.PoolId };
+                        this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                        cloudJob.Commit();
 
-                    batchCli.JobOperations.AddTask(jobId, taskToAdd);
+                        //Create a task
+                        const string taskId = "T1";
 
-                    CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
-                    
-                    Assert.Equal(AccessScope.Job, task.AuthenticationTokenSettings.Access);
+                        CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"set\"")
+                        {
+                            DisplayName = "name",
+                            AuthenticationTokenSettings = new AuthenticationTokenSettings { Access = AccessScope.Job }
+                        };
+
+                        batchCli.JobOperations.AddTask(jobId, taskToAdd);
+
+                        CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
+
+                        Assert.Equal(AccessScope.Job, task.AuthenticationTokenSettings.Access);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
                 }
             };
 

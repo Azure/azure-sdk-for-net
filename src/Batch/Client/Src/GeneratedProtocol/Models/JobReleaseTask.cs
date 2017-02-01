@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// directory for the Job Release task on the compute node. After this
         /// time, the Batch service may delete the task directory and all its
         /// contents.</param>
-        /// <param name="runElevated">Whether to run the Job Release task in
-        /// elevated mode.</param>
-        public JobReleaseTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), bool? runElevated = default(bool?))
+        /// <param name="userIdentity">The user identity under which the Job
+        /// Release task runs.</param>
+        public JobReleaseTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
         {
             Id = id;
             CommandLine = commandLine;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             EnvironmentSettings = environmentSettings;
             MaxWallClockTime = maxWallClockTime;
             RetentionTime = retentionTime;
-            RunElevated = runElevated;
+            UserIdentity = userIdentity;
         }
 
         /// <summary>
@@ -141,13 +141,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the Job Release task in elevated mode.
+        /// Gets or sets the user identity under which the Job Release task
+        /// runs.
         /// </summary>
         /// <remarks>
-        /// The default value is false.
+        /// If omitted, the task runs as a non-administrative user unique to
+        /// the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
-        public bool? RunElevated { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
         /// Validate the object.

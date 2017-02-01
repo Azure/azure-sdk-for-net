@@ -47,7 +47,7 @@
                                 new Protocol.Models.CertificateReference(
                                     thumbprint: "1234",
                                     thumbprintAlgorithm: "SHA1",
-                                    storeLocation: Protocol.Models.CertificateStoreLocation.Currentuser,
+                                    storeLocation: Protocol.Models.CertificateStoreLocation.CurrentUser,
                                     storeName: "My",
                                     visibility: new List<Protocol.Models.CertificateVisibility?>
                                         {

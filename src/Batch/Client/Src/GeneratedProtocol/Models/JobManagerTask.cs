@@ -48,14 +48,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         /// <param name="killJobOnCompletion">Whether completion of the Job
         /// Manager task signifies completion of the entire job.</param>
-        /// <param name="runElevated">Whether to run the Job Manager task in
-        /// elevated mode. The default value is false.</param>
+        /// <param name="userIdentity">The user identity under which the Job
+        /// Manager task runs.</param>
         /// <param name="runExclusive">Whether the Job Manager task requires
         /// exclusive use of the compute node where it runs.</param>
         /// <param name="applicationPackageReferences">A list of application
         /// packages that the Batch service will deploy to the compute node
         /// before running the command line.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), bool? runElevated = default(bool?), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
+        /// <param name="authenticationTokenSettings">The settings for an
+        /// authentication token that the task can use to perform Batch service
+        /// operations.</param>
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -64,9 +67,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             EnvironmentSettings = environmentSettings;
             Constraints = constraints;
             KillJobOnCompletion = killJobOnCompletion;
-            RunElevated = runElevated;
+            UserIdentity = userIdentity;
             RunExclusive = runExclusive;
             ApplicationPackageReferences = applicationPackageReferences;
+            AuthenticationTokenSettings = authenticationTokenSettings;
         }
 
         /// <summary>
@@ -143,7 +147,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job Manager creates a set of tasks but then takes no further role
         /// in their execution. The default value is true. If you are using the
         /// onAllTasksComplete and onTaskFailure attributes to control job
-        /// lifetime, and using the job manager task only to create the tasks
+        /// lifetime, and using the Job Manager task only to create the tasks
         /// for the job (not to monitor progress), then it is important to set
         /// killJobOnCompletion to false.
         /// </remarks>
@@ -151,11 +155,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? KillJobOnCompletion { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the Job Manager task in elevated mode.
-        /// The default value is false.
+        /// Gets or sets the user identity under which the Job Manager task
+        /// runs.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
-        public bool? RunElevated { get; set; }
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to
+        /// the task.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
         /// Gets or sets whether the Job Manager task requires exclusive use of
@@ -191,6 +199,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the task
+        /// can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with
+        /// an authentication token which can be used to authenticate Batch
+        /// service operations without requiring an account access key. The
+        /// token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment
+        /// variable. The operations that the task can carry out using the
+        /// token depend on the settings. For example, a task can request job
+        /// permissions in order to add other tasks to the job, or check the
+        /// status of the job or of other tasks under the job.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "authenticationTokenSettings")]
+        public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

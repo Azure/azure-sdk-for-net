@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     {
         [System.Runtime.Serialization.EnumMember(Value = "success")]
         Success,
-        [System.Runtime.Serialization.EnumMember(Value = "clienterror")]
-        Clienterror,
-        [System.Runtime.Serialization.EnumMember(Value = "servererror")]
-        Servererror,
+        [System.Runtime.Serialization.EnumMember(Value = "clientError")]
+        ClientError,
+        [System.Runtime.Serialization.EnumMember(Value = "serverError")]
+        ServerError,
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 case TaskAddStatus.Success:
                     return "success";
-                case TaskAddStatus.Clienterror:
-                    return "clienterror";
-                case TaskAddStatus.Servererror:
-                    return "servererror";
+                case TaskAddStatus.ClientError:
+                    return "clientError";
+                case TaskAddStatus.ServerError:
+                    return "serverError";
                 case TaskAddStatus.Unmapped:
                     return "unmapped";
             }
@@ -61,10 +61,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 case "success":
                     return TaskAddStatus.Success;
-                case "clienterror":
-                    return TaskAddStatus.Clienterror;
-                case "servererror":
-                    return TaskAddStatus.Servererror;
+                case "clientError":
+                    return TaskAddStatus.ClientError;
+                case "serverError":
+                    return TaskAddStatus.ServerError;
                 case "unmapped":
                     return TaskAddStatus.Unmapped;
             }

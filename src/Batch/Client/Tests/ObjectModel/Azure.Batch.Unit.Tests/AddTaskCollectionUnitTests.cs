@@ -141,7 +141,7 @@
                     {
                         new Protocol.Models.TaskAddResult(Protocol.Models.TaskAddStatus.Success, "foo"),
                         new Protocol.Models.TaskAddResult(
-                            Protocol.Models.TaskAddStatus.Clienterror,
+                            Protocol.Models.TaskAddStatus.ClientError,
                             failingTaskId,
                             error: new Protocol.Models.BatchError(
                                 expectedCode,

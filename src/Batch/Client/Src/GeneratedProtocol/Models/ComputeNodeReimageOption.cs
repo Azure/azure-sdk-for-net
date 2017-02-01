@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Requeue,
         [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskcompletion")]
-        Taskcompletion,
-        [System.Runtime.Serialization.EnumMember(Value = "retaineddata")]
-        Retaineddata
+        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        TaskCompletion,
+        [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
+        RetainedData
     }
     internal static class ComputeNodeReimageOptionEnumExtension
     {
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "requeue";
                 case ComputeNodeReimageOption.Terminate:
                     return "terminate";
-                case ComputeNodeReimageOption.Taskcompletion:
-                    return "taskcompletion";
-                case ComputeNodeReimageOption.Retaineddata:
-                    return "retaineddata";
+                case ComputeNodeReimageOption.TaskCompletion:
+                    return "taskCompletion";
+                case ComputeNodeReimageOption.RetainedData:
+                    return "retainedData";
             }
             return null;
         }
@@ -63,10 +63,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeReimageOption.Requeue;
                 case "terminate":
                     return ComputeNodeReimageOption.Terminate;
-                case "taskcompletion":
-                    return ComputeNodeReimageOption.Taskcompletion;
-                case "retaineddata":
-                    return ComputeNodeReimageOption.Retaineddata;
+                case "taskCompletion":
+                    return ComputeNodeReimageOption.TaskCompletion;
+                case "retainedData":
+                    return ComputeNodeReimageOption.RetainedData;
             }
             return null;
         }

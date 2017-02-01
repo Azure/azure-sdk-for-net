@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeAddUserOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeAddUserOptions != null)
             {
                 clientRequestId = computeNodeAddUserOptions.ClientRequestId;
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeDeleteUserOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeDeleteUserOptions != null)
             {
                 clientRequestId = computeNodeDeleteUserOptions.ClientRequestId;
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -622,7 +622,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeUpdateUserOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeUpdateUserOptions != null)
             {
                 clientRequestId = computeNodeUpdateUserOptions.ClientRequestId;
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -872,7 +872,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeGetOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeGetOptions != null)
             {
                 clientRequestId = computeNodeGetOptions.ClientRequestId;
@@ -950,7 +950,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1094,7 +1094,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeRebootOption'>
         /// When to reboot the compute node and what to do with currently running
         /// tasks. The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskcompletion', 'retaineddata'
+        /// 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeRebootOptions'>
         /// Additional parameters for the operation
@@ -1136,7 +1136,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeRebootOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeRebootOptions != null)
             {
                 clientRequestId = computeNodeRebootOptions.ClientRequestId;
@@ -1216,7 +1216,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1350,7 +1350,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeReimageOption'>
         /// When to reimage the compute node and what to do with currently running
         /// tasks. The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskcompletion', 'retaineddata'
+        /// 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeReimageOptions'>
         /// Additional parameters for the operation
@@ -1392,7 +1392,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeReimageOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeReimageOptions != null)
             {
                 clientRequestId = computeNodeReimageOptions.ClientRequestId;
@@ -1472,7 +1472,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1601,7 +1601,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeDisableSchedulingOption'>
         /// What to do with currently running tasks when disabling task scheduling on
         /// the compute node. The default value is requeue. Possible values include:
-        /// 'requeue', 'terminate', 'taskcompletion'
+        /// 'requeue', 'terminate', 'taskCompletion'
         /// </param>
         /// <param name='computeNodeDisableSchedulingOptions'>
         /// Additional parameters for the operation
@@ -1643,7 +1643,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeDisableSchedulingOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeDisableSchedulingOptions != null)
             {
                 clientRequestId = computeNodeDisableSchedulingOptions.ClientRequestId;
@@ -1723,7 +1723,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1889,7 +1889,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeEnableSchedulingOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeEnableSchedulingOptions != null)
             {
                 clientRequestId = computeNodeEnableSchedulingOptions.ClientRequestId;
@@ -1962,7 +1962,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2130,7 +2130,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeGetRemoteLoginSettingsOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeGetRemoteLoginSettingsOptions != null)
             {
                 clientRequestId = computeNodeGetRemoteLoginSettingsOptions.ClientRequestId;
@@ -2203,7 +2203,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2390,7 +2390,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeGetRemoteDesktopOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeGetRemoteDesktopOptions != null)
             {
                 clientRequestId = computeNodeGetRemoteDesktopOptions.ClientRequestId;
@@ -2463,7 +2463,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2639,7 +2639,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = computeNodeListOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeListOptions != null)
             {
                 clientRequestId = computeNodeListOptions.ClientRequestId;
@@ -2725,7 +2725,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2890,7 +2890,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (computeNodeListNextOptions != null)
             {
                 clientRequestId = computeNodeListNextOptions.ClientRequestId;
@@ -2951,7 +2951,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {

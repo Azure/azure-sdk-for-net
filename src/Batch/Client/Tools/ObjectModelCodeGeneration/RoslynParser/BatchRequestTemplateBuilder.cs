@@ -57,6 +57,7 @@
             return identifierText.Equals("customHeaders") ||
                 identifierText.Equals("cancellationToken") ||
                 identifierText.Equals("nextPageLink") ||
+                identifierText.Equals("filePath") ||
                 identifierText.EndsWith("Id") ||
                 identifierText.EndsWith("Name") ||
                 identifierText.Contains("thumbprint");

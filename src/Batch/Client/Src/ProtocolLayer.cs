@@ -35,12 +35,12 @@
 
         private const int StreamCopyBufferSize = 4096; //This is the same as the default for Stream.CopyToAsync()
 
-        private static Models.NodeFile CreateNodeFromHeadersType(string fileName, Models.IProtocolNodeFile protocolNodeFile)
+        private static Models.NodeFile CreateNodeFileFromHeadersType(string filePath, Models.IProtocolNodeFile protocolNodeFile)
         {
             Models.NodeFile file = new Models.NodeFile()
                 {
                     IsDirectory = protocolNodeFile.OcpBatchFileIsdirectory,
-                    Name = fileName,
+                    Name = filePath,
                     Properties = new Models.FileProperties()
                         {
                             ContentLength = protocolNodeFile.ContentLength.GetValueOrDefault(),
@@ -644,7 +644,7 @@
         public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             Stream stream,
             GetFileRequestByteRange byteRange,
             BehaviorManager bhMgr,
@@ -660,7 +660,7 @@
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetFromTaskWithHttpMessagesAsync(
                     jobId,
                     taskId,
-                    fileName,
+                    filePath,
                     request.Options,
                     request.CustomHeaders,
                     lambdaCancelToken);
@@ -673,7 +673,7 @@
 
             var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>()
                 {
-                    Body = CreateNodeFromHeadersType(fileName, response.Headers),
+                    Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
                     RequestId = response.RequestId,
                     Headers = response.Headers,
                 };
@@ -681,19 +681,19 @@
             return result;
         }
 
-        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesByTask(
+        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromTaskHeaders>> GetNodeFilePropertiesByTask(
             string jobId,
             string taskId,
-            string fileName,
+            string filePath,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             var request = new FileGetNodeFilePropertiesFromTaskBatchRequest(this._client, cancellationToken);
 
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetNodeFilePropertiesFromTaskWithHttpMessagesAsync(
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetPropertiesFromTaskWithHttpMessagesAsync(
                     jobId,
                     taskId,
-                    fileName,
+                    filePath,
                     request.Options,
                     request.CustomHeaders,
                     lambdaCancelToken);
@@ -703,9 +703,9 @@
             //Force disposal of the response because the HEAD request doesn't read the body stream, which leaves the connection open. Disposing forces a close of the connection
             using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
-                var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>()
+                var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromTaskHeaders>()
                     {
-                        Body = CreateNodeFromHeadersType(fileName, response.Headers),
+                        Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
                         RequestId = response.RequestId,
                         Headers = response.Headers,
                     };
@@ -1249,14 +1249,14 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationHeaderResponse<Models.FileDeleteFromTaskHeaders>> DeleteNodeFileByTask(string jobId, string taskId, string fileName, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationHeaderResponse<Models.FileDeleteFromTaskHeaders>> DeleteNodeFileByTask(string jobId, string taskId, string filePath, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new FileDeleteFromTaskBatchRequest(this._client, recursive, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.DeleteFromTaskWithHttpMessagesAsync(
                 jobId,
                 taskId,
-                fileName,
+                filePath,
                 request.Parameters,
                 request.Options,
                 request.CustomHeaders,
@@ -1336,14 +1336,14 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationHeaderResponse<Models.FileDeleteFromComputeNodeHeaders>> DeleteNodeFileByNode(string poolId, string computeNodeId, string fileName, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationHeaderResponse<Models.FileDeleteFromComputeNodeHeaders>> DeleteNodeFileByNode(string poolId, string computeNodeId, string filePath, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new FileDeleteFromComputeNodeBatchRequest(this._client, recursive, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.DeleteFromComputeNodeWithHttpMessagesAsync(
                 poolId,
                 computeNodeId,
-                fileName,
+                filePath,
                 request.Parameters,
                 request.Options,
                 request.CustomHeaders,
@@ -1358,7 +1358,7 @@
         public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>> GetNodeFileByNode(
             string poolId,
             string computeNodeId,
-            string fileName,
+            string filePath,
             Stream stream,
             GetFileRequestByteRange byteRange,
             BehaviorManager bhMgr,
@@ -1374,7 +1374,7 @@
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetFromComputeNodeWithHttpMessagesAsync(
                     poolId,
                     computeNodeId,
-                    fileName,
+                    filePath,
                     request.Options,
                     request.CustomHeaders,
                     lambdaCancelToken);
@@ -1387,7 +1387,7 @@
 
             var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>()
             {
-                Body = CreateNodeFromHeadersType(fileName, response.Headers),
+                Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
                 RequestId = response.RequestId,
                 Headers = response.Headers
             };
@@ -1395,19 +1395,19 @@
             return result;
         }
 
-        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesByNode(
+        public async Task<AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesByNode(
             string poolId,
             string computeNodeId,
-            string fileName,
+            string filePath,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             var request = new FileGetNodeFilePropertiesFromComputeNodeBatchRequest(this._client, cancellationToken);
 
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetNodeFilePropertiesFromComputeNodeWithHttpMessagesAsync(
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.File.GetPropertiesFromComputeNodeWithHttpMessagesAsync(
                 poolId,
                 computeNodeId,
-                fileName,
+                filePath,
                 request.Options,
                 request.CustomHeaders,
                 lambdaCancelToken);
@@ -1417,9 +1417,9 @@
             //Force disposal of the response because the HEAD request doesn't read the body stream, which leaves the connection open. Disposing forces a close of the connection
             using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
-                var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>()
+                var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromComputeNodeHeaders>()
                     {
-                        Body = CreateNodeFromHeadersType(fileName, response.Headers),
+                        Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
                         RequestId = response.RequestId,
                         Headers = response.Headers
                     };
@@ -1464,11 +1464,11 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllJobsLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new JobGetAllJobsLifetimeStatisticsBatchRequest(this._client, cancellationToken);
 
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.GetAllJobsLifetimeStatisticsWithHttpMessagesAsync(
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.GetAllLifetimeStatisticsWithHttpMessagesAsync(
                 request.Options,
                 request.CustomHeaders,
                 lambdaCancelToken);
@@ -1478,11 +1478,11 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllPoolsLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new PoolGetAllPoolsLifetimeStatisticsBatchRequest(this._client, cancellationToken);
 
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.GetAllPoolsLifetimeStatisticsWithHttpMessagesAsync(
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.GetAllLifetimeStatisticsWithHttpMessagesAsync(
                 request.Options,
                 request.CustomHeaders,
                 lambdaCancelToken);
@@ -1508,7 +1508,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetrics(
+        public Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListUsageMetricsHeaders>> ListPoolUsageMetrics(
             DateTime? startTime,
             DateTime? endTime,
             string skipToken,
@@ -1516,7 +1516,7 @@
             DetailLevel detailLevel,
             CancellationToken cancellationToken)
         {
-            Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListPoolUsageMetricsHeaders>> asyncTask;
+            Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListUsageMetricsHeaders>> asyncTask;
 
             if (string.IsNullOrEmpty(skipToken))
             {
@@ -1527,7 +1527,7 @@
                 request.Options.StartTime = startTime;
                 request.Options.EndTime = endTime;
 
-                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.ListPoolUsageMetricsWithHttpMessagesAsync(
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.ListUsageMetricsWithHttpMessagesAsync(
                     request.Options,
                     request.CustomHeaders,
                     lambdaCancelToken);
@@ -1537,7 +1537,7 @@
             else
             {
                 var request = new PoolListPoolUsageMetricsNextBatchRequest(this._client, cancellationToken);
-                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.ListPoolUsageMetricsNextWithHttpMessagesAsync(skipToken, request.Options, request.CustomHeaders, lambdaCancelToken);
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.ListUsageMetricsNextWithHttpMessagesAsync(skipToken, request.Options, request.CustomHeaders, lambdaCancelToken);
 
                 asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
             }

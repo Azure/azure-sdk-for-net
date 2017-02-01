@@ -37,8 +37,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// nodes to be removed from the specified pool.</param>
         /// <param name="resizeTimeout">The timeout for removal of compute
         /// nodes to the pool.</param>
-        /// <param name="nodeDeallocationOption">When to remove compute nodes
-        /// and what to do with currently running tasks.</param>
+        /// <param name="nodeDeallocationOption">Determines what to do with a
+        /// node and its running task(s) after it has been selected for
+        /// deallocation.</param>
         public NodeRemoveParameter(System.Collections.Generic.IList<string> nodeList, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
             NodeList = nodeList;
@@ -66,12 +67,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets when to remove compute nodes and what to do with
-        /// currently running tasks.
+        /// Gets or sets determines what to do with a node and its running
+        /// task(s) after it has been selected for deallocation.
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskcompletion', 'retaineddata'
+        /// 'terminate', 'taskCompletion', 'retainedData'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }

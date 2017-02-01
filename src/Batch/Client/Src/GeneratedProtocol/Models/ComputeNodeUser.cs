@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An user account on a compute node.
+    /// A user account on a compute node.
     /// </summary>
     public partial class ComputeNodeUser
     {

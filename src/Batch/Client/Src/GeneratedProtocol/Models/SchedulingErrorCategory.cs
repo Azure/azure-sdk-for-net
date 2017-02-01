@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SchedulingErrorCategory
     {
-        [System.Runtime.Serialization.EnumMember(Value = "usererror")]
-        Usererror,
-        [System.Runtime.Serialization.EnumMember(Value = "servererror")]
-        Servererror,
+        [System.Runtime.Serialization.EnumMember(Value = "userError")]
+        UserError,
+        [System.Runtime.Serialization.EnumMember(Value = "serverError")]
+        ServerError,
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case SchedulingErrorCategory.Usererror:
-                    return "usererror";
-                case SchedulingErrorCategory.Servererror:
-                    return "servererror";
+                case SchedulingErrorCategory.UserError:
+                    return "userError";
+                case SchedulingErrorCategory.ServerError:
+                    return "serverError";
                 case SchedulingErrorCategory.Unmapped:
                     return "unmapped";
             }
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "usererror":
-                    return SchedulingErrorCategory.Usererror;
-                case "servererror":
-                    return SchedulingErrorCategory.Servererror;
+                case "userError":
+                    return SchedulingErrorCategory.UserError;
+                case "serverError":
+                    return SchedulingErrorCategory.ServerError;
                 case "unmapped":
                     return SchedulingErrorCategory.Unmapped;
             }

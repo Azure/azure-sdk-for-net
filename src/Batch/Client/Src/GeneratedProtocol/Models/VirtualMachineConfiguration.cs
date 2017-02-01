@@ -36,15 +36,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the VirtualMachineConfiguration
         /// class.
         /// </summary>
-        /// <param name="imageReference">A reference to the Azure Virtual
-        /// Machines Marketplace image to use.</param>
         /// <param name="nodeAgentSKUId">The SKU of the Batch node agent to be
         /// provisioned on compute nodes in the pool.</param>
+        /// <param name="imageReference">A reference to the Azure Virtual
+        /// Machines Marketplace image to use.</param>
+        /// <param name="osDisk">A reference to the OS disk image to
+        /// use.</param>
         /// <param name="windowsConfiguration">Windows operating system
         /// settings on the virtual machine.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
+        public VirtualMachineConfiguration(string nodeAgentSKUId, ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
             ImageReference = imageReference;
+            OsDisk = osDisk;
             NodeAgentSKUId = nodeAgentSKUId;
             WindowsConfiguration = windowsConfiguration;
         }
@@ -53,8 +56,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace
         /// image to use.
         /// </summary>
+        /// <remarks>
+        /// This property and osDisk are mutually exclusive and one of the
+        /// properties must be specified.
+        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference to the OS disk image to use.
+        /// </summary>
+        /// <remarks>
+        /// This property can be specified only if the Batch account was
+        /// created with its poolAllocationMode property set to
+        /// 'UserSubscription'. This property and imageReference are mutually
+        /// exclusive and one of the properties must be specified.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osDisk")]
+        public OSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Batch node agent to be provisioned on
@@ -78,8 +97,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// machine.
         /// </summary>
         /// <remarks>
-        /// This property must not be specified if the imageReference property
-        /// specifies a Linux OS image.
+        /// This property must not be specified if the imageReference or osDisk
+        /// property specifies a Linux OS image.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }
@@ -92,10 +111,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ImageReference == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ImageReference");
-            }
             if (NodeAgentSKUId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NodeAgentSKUId");
@@ -103,6 +118,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.ImageReference != null)
             {
                 this.ImageReference.Validate();
+            }
+            if (this.OsDisk != null)
+            {
+                this.OsDisk.Validate();
             }
         }
     }

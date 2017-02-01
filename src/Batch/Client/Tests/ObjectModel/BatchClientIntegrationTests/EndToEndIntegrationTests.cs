@@ -157,7 +157,7 @@
 
                         foreach (NodeFile curFile in myCompletedTask.ListNodeFiles(recursive: true))
                         {
-                            this.testOutputHelper.WriteLine("    Filename: " + curFile.Name);
+                            this.testOutputHelper.WriteLine("    FilePath: " + curFile.Path);
                         }
 
                         // confirm the files are there
@@ -228,7 +228,7 @@
             // look to see if the file is in the list
             foreach (NodeFile curFile in files)
             {
-                if (curFile.Name.IndexOf(fileName, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                if (curFile.Path.IndexOf(fileName, StringComparison.InvariantCultureIgnoreCase) >= 0)
                 {
                     return true;
                 }
@@ -535,8 +535,8 @@
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
-                    JobStatistics jobStatistics = batchCli.JobOperations.GetAllJobsLifetimeStatistics();
-                    PoolStatistics poolStatistics = batchCli.PoolOperations.GetAllPoolsLifetimeStatistics();
+                    JobStatistics jobStatistics = batchCli.JobOperations.GetAllLifetimeStatistics();
+                    PoolStatistics poolStatistics = batchCli.PoolOperations.GetAllLifetimeStatistics();
 
                     Assert.NotNull(jobStatistics);
                     Assert.NotNull(poolStatistics);

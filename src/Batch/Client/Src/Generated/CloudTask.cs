@@ -56,11 +56,11 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<Common.TaskState?> PreviousStateProperty;
             public readonly PropertyAccessor<DateTime?> PreviousStateTransitionTimeProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
-            public readonly PropertyAccessor<bool?> RunElevatedProperty;
             public readonly PropertyAccessor<Common.TaskState?> StateProperty;
             public readonly PropertyAccessor<DateTime?> StateTransitionTimeProperty;
             public readonly PropertyAccessor<TaskStatistics> StatisticsProperty;
             public readonly PropertyAccessor<string> UrlProperty;
+            public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.Batch
                 this.PreviousStateProperty = this.CreatePropertyAccessor<Common.TaskState?>("PreviousState", BindingAccess.None);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor<bool?>("RunElevated", BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor<Common.TaskState?>("State", BindingAccess.None);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
                 this.StatisticsProperty = this.CreatePropertyAccessor<TaskStatistics>("Statistics", BindingAccess.None);
                 this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CloudTask protocolObject) : base(BindingState.Bound)
@@ -172,10 +172,6 @@ namespace Microsoft.Azure.Batch
                     ResourceFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.ResourceFiles),
                     "ResourceFiles",
                     BindingAccess.Read);
-                this.RunElevatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.RunElevated,
-                    "RunElevated",
-                    BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.State),
                     "State",
@@ -191,6 +187,10 @@ namespace Microsoft.Azure.Batch
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
                     "Url",
+                    BindingAccess.Read);
+                this.UserIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o).Freeze()),
+                    "UserIdentity",
                     BindingAccess.Read);
             }
         }
@@ -453,15 +453,6 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
-        /// </summary>
-        public bool? RunElevated
-        {
-            get { return this.propertyContainer.RunElevatedProperty.Value; }
-            set { this.propertyContainer.RunElevatedProperty.Value = value; }
-        }
-
-        /// <summary>
         /// Gets the current state of the task.
         /// </summary>
         public Common.TaskState? State
@@ -495,6 +486,18 @@ namespace Microsoft.Azure.Batch
         public string Url
         {
             get { return this.propertyContainer.UrlProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the user identity under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to the task
+        /// </remarks>
+        public UserIdentity UserIdentity
+        {
+            get { return this.propertyContainer.UserIdentityProperty.Value; }
+            set { this.propertyContainer.UserIdentityProperty.Value = value; }
         }
 
         #endregion // CloudTask
@@ -535,7 +538,7 @@ namespace Microsoft.Azure.Batch
                 Id = this.Id,
                 MultiInstanceSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.MultiInstanceSettings, (o) => o.GetTransportObject()),
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
-                RunElevated = this.RunElevated,
+                UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };
 
             return result;

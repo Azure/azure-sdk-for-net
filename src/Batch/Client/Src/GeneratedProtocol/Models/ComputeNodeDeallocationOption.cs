@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Requeue,
         [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskcompletion")]
-        Taskcompletion,
-        [System.Runtime.Serialization.EnumMember(Value = "retaineddata")]
-        Retaineddata
+        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        TaskCompletion,
+        [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
+        RetainedData
     }
     internal static class ComputeNodeDeallocationOptionEnumExtension
     {
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "requeue";
                 case ComputeNodeDeallocationOption.Terminate:
                     return "terminate";
-                case ComputeNodeDeallocationOption.Taskcompletion:
-                    return "taskcompletion";
-                case ComputeNodeDeallocationOption.Retaineddata:
-                    return "retaineddata";
+                case ComputeNodeDeallocationOption.TaskCompletion:
+                    return "taskCompletion";
+                case ComputeNodeDeallocationOption.RetainedData:
+                    return "retainedData";
             }
             return null;
         }
@@ -63,10 +63,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeDeallocationOption.Requeue;
                 case "terminate":
                     return ComputeNodeDeallocationOption.Terminate;
-                case "taskcompletion":
-                    return ComputeNodeDeallocationOption.Taskcompletion;
-                case "retaineddata":
-                    return ComputeNodeDeallocationOption.Retaineddata;
+                case "taskCompletion":
+                    return ComputeNodeDeallocationOption.TaskCompletion;
+                case "retainedData":
+                    return ComputeNodeDeallocationOption.RetainedData;
             }
             return null;
         }

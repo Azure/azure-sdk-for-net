@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the status of the add task request.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'success', 'clienterror', 'servererror',
+        /// Possible values include: 'success', 'clientError', 'serverError',
         /// 'unmapped'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "status")]

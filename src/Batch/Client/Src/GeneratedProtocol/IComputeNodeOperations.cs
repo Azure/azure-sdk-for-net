@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeRebootOption'>
         /// When to reboot the compute node and what to do with currently
         /// running tasks. The default value is requeue. Possible values
-        /// include: 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeRebootOptions'>
         /// Additional parameters for the operation
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeReimageOption'>
         /// When to reimage the compute node and what to do with currently
         /// running tasks. The default value is requeue. Possible values
-        /// include: 'requeue', 'terminate', 'taskcompletion', 'retaineddata'
+        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeReimageOptions'>
         /// Additional parameters for the operation
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeDisableSchedulingOption'>
         /// What to do with currently running tasks when disabling task
         /// scheduling on the compute node. The default value is requeue.
-        /// Possible values include: 'requeue', 'terminate', 'taskcompletion'
+        /// Possible values include: 'requeue', 'terminate', 'taskCompletion'
         /// </param>
         /// <param name='computeNodeDisableSchedulingOptions'>
         /// Additional parameters for the operation

@@ -363,7 +363,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(DependencyAction.Satisfy, boundTask.ExitConditions.Default.DependencyAction);
                 Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions = new ExitConditions());
                 Assert.Throws<InvalidOperationException>(() => boundTask.DependsOn = new TaskDependencies(new List<string>(), new List<TaskIdRange>()));
-                Assert.Throws<InvalidOperationException>(() => boundTask.RunElevated = true);
+                Assert.Throws<InvalidOperationException>(() => boundTask.UserIdentity = new UserIdentity("abc"));
                 Assert.Throws<InvalidOperationException>(() => boundTask.CommandLine = "Cannot change command line");
                 Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions.Default = new ExitOptions() { JobAction = JobAction.Terminate });
             }

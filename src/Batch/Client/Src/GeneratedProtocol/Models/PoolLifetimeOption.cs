@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum PoolLifetimeOption
     {
-        [System.Runtime.Serialization.EnumMember(Value = "jobschedule")]
-        Jobschedule,
+        [System.Runtime.Serialization.EnumMember(Value = "jobSchedule")]
+        JobSchedule,
         [System.Runtime.Serialization.EnumMember(Value = "job")]
         Job,
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case PoolLifetimeOption.Jobschedule:
-                    return "jobschedule";
+                case PoolLifetimeOption.JobSchedule:
+                    return "jobSchedule";
                 case PoolLifetimeOption.Job:
                     return "job";
                 case PoolLifetimeOption.Unmapped:
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "jobschedule":
-                    return PoolLifetimeOption.Jobschedule;
+                case "jobSchedule":
+                    return PoolLifetimeOption.JobSchedule;
                 case "job":
                     return PoolLifetimeOption.Job;
                 case "unmapped":

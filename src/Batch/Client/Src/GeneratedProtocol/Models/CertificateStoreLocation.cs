@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CertificateStoreLocation
     {
-        [System.Runtime.Serialization.EnumMember(Value = "currentuser")]
-        Currentuser,
-        [System.Runtime.Serialization.EnumMember(Value = "localmachine")]
-        Localmachine,
+        [System.Runtime.Serialization.EnumMember(Value = "currentUser")]
+        CurrentUser,
+        [System.Runtime.Serialization.EnumMember(Value = "localMachine")]
+        LocalMachine,
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case CertificateStoreLocation.Currentuser:
-                    return "currentuser";
-                case CertificateStoreLocation.Localmachine:
-                    return "localmachine";
+                case CertificateStoreLocation.CurrentUser:
+                    return "currentUser";
+                case CertificateStoreLocation.LocalMachine:
+                    return "localMachine";
                 case CertificateStoreLocation.Unmapped:
                     return "unmapped";
             }
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "currentuser":
-                    return CertificateStoreLocation.Currentuser;
-                case "localmachine":
-                    return CertificateStoreLocation.Localmachine;
+                case "currentUser":
+                    return CertificateStoreLocation.CurrentUser;
+                case "localMachine":
+                    return CertificateStoreLocation.LocalMachine;
                 case "unmapped":
                     return CertificateStoreLocation.Unmapped;
             }

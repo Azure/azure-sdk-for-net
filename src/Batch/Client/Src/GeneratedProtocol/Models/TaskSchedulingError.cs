@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the category of the task scheduling error.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'usererror', 'servererror', 'unmapped'
+        /// Possible values include: 'userError', 'serverError', 'unmapped'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "category")]
         public SchedulingErrorCategory Category { get; set; }

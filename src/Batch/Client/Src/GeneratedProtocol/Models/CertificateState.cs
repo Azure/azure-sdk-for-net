@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Active,
         [System.Runtime.Serialization.EnumMember(Value = "deleting")]
         Deleting,
-        [System.Runtime.Serialization.EnumMember(Value = "deletefailed")]
-        Deletefailed
+        [System.Runtime.Serialization.EnumMember(Value = "deleteFailed")]
+        DeleteFailed
     }
     internal static class CertificateStateEnumExtension
     {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "active";
                 case CertificateState.Deleting:
                     return "deleting";
-                case CertificateState.Deletefailed:
-                    return "deletefailed";
+                case CertificateState.DeleteFailed:
+                    return "deleteFailed";
             }
             return null;
         }
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return CertificateState.Active;
                 case "deleting":
                     return CertificateState.Deleting;
-                case "deletefailed":
-                    return CertificateState.Deletefailed;
+                case "deleteFailed":
+                    return CertificateState.DeleteFailed;
             }
             return null;
         }

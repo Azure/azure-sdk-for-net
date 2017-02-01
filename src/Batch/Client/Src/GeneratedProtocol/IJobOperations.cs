@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// the account, from account creation to the last update time of the
         /// statistics.
         /// </remarks>
-        /// <param name='jobGetAllJobsLifetimeStatisticsOptions'>
+        /// <param name='jobGetAllLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<JobStatistics,JobGetAllJobsLifetimeStatisticsHeaders>> GetAllJobsLifetimeStatisticsWithHttpMessagesAsync(JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<JobStatistics,JobGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes a job.
         /// </summary>
@@ -188,12 +188,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The ID of the job to disable.
         /// </param>
         /// <param name='disableTasks'>
-        /// What to do with active tasks associated with the job. Possible
-        /// values are: requeue – Terminate running tasks and requeue them. The
-        /// tasks will run again when the job is enabled. terminate – Terminate
-        /// running tasks. The tasks will not run again. wait – Allow currently
-        /// running tasks to complete. Possible values include: 'requeue',
-        /// 'terminate', 'wait'
+        /// What to do with active tasks associated with the job. requeue -
+        /// Terminate running tasks and requeue them. The tasks will run again
+        /// when the job is enabled. terminate - Terminate running tasks. The
+        /// tasks will not run again. wait - Allow currently running tasks to
+        /// complete. Possible values include: 'requeue', 'terminate', 'wait'
         /// </param>
         /// <param name='jobDisableOptions'>
         /// Additional parameters for the operation

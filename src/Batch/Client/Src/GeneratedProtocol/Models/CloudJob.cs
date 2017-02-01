@@ -261,11 +261,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// tasks in the job are in the completed state.
         /// </summary>
         /// <remarks>
-        /// Permitted values are: noaction – do nothing. The job remains active
-        /// unless terminated or disabled by some other means. terminatejob –
-        /// terminate the job. The job's terminateReason is set to
-        /// 'AllTasksComplete'. The default is noaction. Possible values
-        /// include: 'noAction', 'terminateJob'
+        /// noAction - do nothing. The job remains active unless terminated or
+        /// disabled by some other means. terminateJob - terminate the job. The
+        /// job's terminateReason is set to 'AllTasksComplete'. The default is
+        /// noAction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
@@ -277,12 +276,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// count, or if it had a scheduling error.
         /// </summary>
         /// <remarks>
-        /// Permitted values are: noaction – do nothing.
-        /// performexitoptionsjobaction – take the action associated with the
-        /// task exit condition in the task's exitConditions collection. (This
-        /// may still result in no action being taken, if that is what the task
-        /// specifies.) The default is noaction. Possible values include:
-        /// 'noAction', 'performExitOptionsJobAction'
+        /// noAction - do nothing. performExitOptionsJobAction - take the
+        /// action associated with the task exit condition in the task's
+        /// exitConditions collection. (This may still result in no action
+        /// being taken, if that is what the task specifies.) The default is
+        /// noAction. Possible values include: 'noAction',
+        /// 'performExitOptionsJobAction'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }

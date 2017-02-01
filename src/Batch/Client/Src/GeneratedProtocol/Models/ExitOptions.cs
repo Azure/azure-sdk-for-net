@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// How the Batch service should respond to a particular exit condition.
+    /// Specifies how the Batch service responds to a particular exit
+    /// condition.
     /// </summary>
     public partial class ExitOptions
     {
@@ -35,28 +36,47 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="jobAction">An action to take on the job containing the
         /// task, if the task completes with the given exit condition and the
-        /// job’s onTaskFailed property is
-        /// 'performexitoptionsjobaction'.</param>
-        public ExitOptions(JobAction? jobAction = default(JobAction?))
+        /// job's onTaskFailed property is
+        /// 'performExitOptionsJobAction'.</param>
+        /// <param name="dependencyAction">An action that the Batch service
+        /// performs on tasks that depend on this task.</param>
+        public ExitOptions(JobAction? jobAction = default(JobAction?), DependencyAction? dependencyAction = default(DependencyAction?))
         {
             JobAction = jobAction;
+            DependencyAction = dependencyAction;
         }
 
         /// <summary>
         /// Gets or sets an action to take on the job containing the task, if
-        /// the task completes with the given exit condition and the job’s
-        /// onTaskFailed property is 'performexitoptionsjobaction'.
+        /// the task completes with the given exit condition and the job's
+        /// onTaskFailed property is 'performExitOptionsJobAction'.
         /// </summary>
         /// <remarks>
         /// The default is none for exit code 0 and terminate for all other
-        /// exit conditions. It is an error to specify this if the job's
-        /// onTaskFailed is noaction. The add task request fails with an
-        /// invalid property value error; if you are calling the REST API
-        /// directly, the HTTP status code is 400 (Bad Request). Possible
-        /// values include: 'none', 'disable', 'terminate'
+        /// exit conditions. If the job's onTaskFailed property is noAction,
+        /// then specify this property returns an error. The add task request
+        /// fails with an invalid property value error;; if you are calling the
+        /// REST API directly, the HTTP status code is 400 (Bad Request).
+        /// Possible values include: 'none', 'disable', 'terminate'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "jobAction")]
         public JobAction? JobAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action that the Batch service performs on tasks
+        /// that depend on this task.
+        /// </summary>
+        /// <remarks>
+        /// The default is 'satisfy' for exit code 0, and 'block' for all other
+        /// exit conditions. If the job's usesTaskDependencies property is set
+        /// to false, then specifying the dependencyAction property returns an
+        /// error. The add task request fails with an invalid property value
+        /// error; if you are calling the REST API directly, the HTTP status
+        /// code is 400  (Bad Request). Possible values include: 'satisfy',
+        /// 'block'
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dependencyAction")]
+        public DependencyAction? DependencyAction { get; set; }
 
     }
 }

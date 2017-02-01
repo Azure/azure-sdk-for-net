@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the certificate.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'active', 'deleting', 'deletefailed'
+        /// Possible values include: 'active', 'deleting', 'deleteFailed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public CertificateState? State { get; set; }
@@ -103,8 +103,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property is not set if the certificate is in its initial
-        /// Active state. Possible values include: 'active', 'deleting',
-        /// 'deletefailed'
+        /// active state. Possible values include: 'active', 'deleting',
+        /// 'deleteFailed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
         public CertificateState? PreviousState { get; set; }
