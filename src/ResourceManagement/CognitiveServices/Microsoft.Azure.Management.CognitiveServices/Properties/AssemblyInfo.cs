@@ -20,7 +20,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides Microsoft Azure Cognitive Services management functions for managing Microsoft Azure Cognitive Services accounts.")]
 
 [assembly: AssemblyVersion("0.2.0.0")]
-[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

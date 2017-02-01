@@ -1216,6 +1216,7 @@ namespace Scheduler.Test.ScenarioTests
                 var brokerMessageProperties = new ServiceBusBrokeredMessageProperties()
                 {
                     ContentType = contentType,
+                    TimeToLive = TimeSpan.FromSeconds(5),
                 };
                 var customMessageProperties = new Dictionary<string, string>();
                 customMessageProperties.Add("customMessagePropertyName", "customMessagePropertyValue");

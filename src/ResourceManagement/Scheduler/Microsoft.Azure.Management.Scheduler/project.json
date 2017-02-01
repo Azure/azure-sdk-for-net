@@ -1,5 +1,5 @@
 {
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Provides job collection and job management capabilities for Microsoft Azure Scheduler.",
   "authors": [ "Microsoft" ],
   

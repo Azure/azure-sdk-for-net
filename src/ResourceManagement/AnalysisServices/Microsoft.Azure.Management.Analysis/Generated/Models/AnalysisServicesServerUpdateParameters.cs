@@ -26,9 +26,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Initializes a new instance of the
         /// AnalysisServicesServerUpdateParameters class.
         /// </summary>
-        /// <param name="sku">Sku of the Analysis Services resource</param>
-        /// <param name="tags">Key value pairs of additional properties that
-        /// can ebe specified</param>
+        /// <param name="sku">The SKU of the Analysis Services
+        /// resource.</param>
+        /// <param name="tags">Key-value pairs of additional provisioning
+        /// properties.</param>
         public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators))
         {
             Sku = sku;
@@ -37,14 +38,13 @@ namespace Microsoft.Azure.Management.Analysis.Models
         }
 
         /// <summary>
-        /// Gets or sets sku of the Analysis Services resource
+        /// Gets or sets the SKU of the Analysis Services resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public ResourceSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets key value pairs of additional properties that can ebe
-        /// specified
+        /// Gets or sets key-value pairs of additional provisioning properties.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }

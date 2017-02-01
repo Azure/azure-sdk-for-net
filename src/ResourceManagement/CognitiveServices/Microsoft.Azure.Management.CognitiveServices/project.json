@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0-preview",
+  "version": "0.2.1-preview",
   "description": "Microsoft Azure Management Cognitive Services Library",
   "authors": [ "Microsoft" ],
 
@@ -23,12 +23,6 @@
 
   "frameworks": {
     "net45": {
-      "frameworkAssemblies": {
-        "System.Collections": "",
-        "System.Linq.Expressions": "",
-        "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": ""
-      },
       "dependencies": {
         "Microsoft.Rest.ClientRuntime": "[2.1.0,3.0.0)",
         "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"

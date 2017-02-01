@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the secret.
+        /// Gets or sets the secret, return value will always be empty.
         /// </summary>
         [JsonProperty(PropertyName = "secret")]
         public string Secret { get; set; }
