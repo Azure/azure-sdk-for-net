@@ -16,12 +16,14 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Runtime.CompilerServices;
 using Azure.Tests;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Management.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 
 namespace Fluent.Tests.Compute
 {
     public class VirtualMachineScaleSetTests
     {
-        private readonly string location = "eastus";
+        private readonly Region Location = Region.USEast;
 
         [Fact]
         public void CanCreateVirtualMachineScaleSetWithCustomScriptExtension()
@@ -39,22 +41,22 @@ namespace Fluent.Tests.Compute
 
                 IResourceGroup resourceGroup = azure.ResourceGroups
                     .Define(rgName)
-                    .WithRegion(location)
+                    .WithRegion(Location)
                     .Create();
 
                 INetwork network = azure
                     .Networks
                     .Define(TestUtilities.GenerateName("vmssvnet"))
-                    .WithRegion(location)
+                    .WithRegion(Location)
                     .WithExistingResourceGroup(resourceGroup)
                     .WithAddressSpace("10.0.0.0/28")
                     .WithSubnet("subnet1", "10.0.0.0/28")
                     .Create();
 
-                ILoadBalancer publicLoadBalancer = CreateHttpLoadBalancers(azure, resourceGroup, "1");
+                ILoadBalancer publicLoadBalancer = CreateHttpLoadBalancers(azure, resourceGroup, "1", Location);
                 IVirtualMachineScaleSet virtualMachineScaleSet = azure.VirtualMachineScaleSets
                         .Define(vmssName)
-                        .WithRegion(location)
+                        .WithRegion(Location)
                         .WithExistingResourceGroup(resourceGroup)
                         .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
                         .WithExistingPrimaryNetworkSubnet(network, "subnet1")
@@ -63,6 +65,7 @@ namespace Fluent.Tests.Compute
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername("jvuser")
                         .WithRootPassword("123OData!@#123")
+                        .WithUnmanagedDisks()
                         .WithNewStorageAccount(TestUtilities.GenerateName("stg"))
                         .WithNewStorageAccount(TestUtilities.GenerateName("stg2"))
                         .DefineNewExtension("CustomScriptForLinux")
@@ -105,19 +108,19 @@ namespace Fluent.Tests.Compute
 
                 IResourceGroup resourceGroup = azure.ResourceGroups
                     .Define(rgName)
-                    .WithRegion(location)
+                    .WithRegion(Location)
                     .Create();
 
                 INetwork network = azure
                     .Networks
                     .Define("vmssvnet")
-                    .WithRegion(location)
+                    .WithRegion(Location)
                     .WithExistingResourceGroup(resourceGroup)
                     .WithAddressSpace("10.0.0.0/28")
                     .WithSubnet("subnet1", "10.0.0.0/28")
                     .Create();
 
-                ILoadBalancer publicLoadBalancer = createInternetFacingLoadBalancer(azure, resourceGroup, "1");
+                ILoadBalancer publicLoadBalancer = CreateInternetFacingLoadBalancer(azure, resourceGroup, "1");
                 List<string> backends = new List<string>();
                 foreach (string backend in publicLoadBalancer.Backends.Keys)
                 {
@@ -127,7 +130,7 @@ namespace Fluent.Tests.Compute
 
                 IVirtualMachineScaleSet virtualMachineScaleSet = azure.VirtualMachineScaleSets
                     .Define(vmss_name)
-                    .WithRegion(location)
+                    .WithRegion(Location)
                     .WithExistingResourceGroup(resourceGroup)
                     .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
                     .WithExistingPrimaryNetworkSubnet(network, "subnet1")
@@ -137,6 +140,7 @@ namespace Fluent.Tests.Compute
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                     .WithRootUsername("jvuser")
                     .WithRootPassword("123OData!@#123")
+                    .WithUnmanagedDisks()
                     .WithNewStorageAccount(TestUtilities.GenerateName("stg"))
                     .WithNewStorageAccount(TestUtilities.GenerateName("stg3"))
                     .Create();
@@ -232,7 +236,7 @@ namespace Fluent.Tests.Compute
                 virtualMachineScaleSet
                     .Update()
                     .WithExistingPrimaryInternalLoadBalancer(internalLoadBalancer)
-                    .WithoutPrimaryInternalLoadBalancerNatPools(inboundNatPoolToRemove) // Remove one NatPool
+                    .WithoutPrimaryInternetFacingLoadBalancerNatPools(inboundNatPoolToRemove) // Remove one NatPool
                     .Apply();
 
                 virtualMachineScaleSet = azure
@@ -323,12 +327,12 @@ namespace Fluent.Tests.Compute
                 Assert.Equal(vm.OsType, OperatingSystemTypes.Linux);
                 Assert.NotNull(vm.ComputerName.StartsWith(vmScaleSet.ComputerNamePrefix));
                 Assert.True(vm.IsLinuxPasswordAuthenticationEnabled);
-                Assert.True(vm.IsOsBasedOnPlatformImage);
-                Assert.Null(vm.CustomImageVhdUri);
+                Assert.True(vm.IsOSBasedOnPlatformImage);
+                Assert.Null(vm.StoredImageUnmanagedVhdUri);
                 Assert.False(vm.IsWindowsAutoUpdateEnabled);
                 Assert.False(vm.IsWindowsVmAgentProvisioned);
                 Assert.True(vm.AdministratorUserName.Equals("jvuser", StringComparison.OrdinalIgnoreCase));
-                var vmImage = vm.GetPlatformImage();
+                var vmImage = vm.GetOSPlatformImage();
                 Assert.NotNull(vmImage);
                 Assert.Equal(vm.Extensions.Count(), vmScaleSet.Extensions.Count);
                 Assert.NotNull(vm.PowerState);
@@ -358,7 +362,7 @@ namespace Fluent.Tests.Compute
         }
 
 
-        private ILoadBalancer createInternetFacingLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id, [CallerMemberName] string methodName = "testframework_failed")
+        private ILoadBalancer CreateInternetFacingLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id, [CallerMemberName] string methodName = "testframework_failed")
         {
             string loadBalancerName = TestUtilities.GenerateName("extlb" + id + "-", methodName);
             string publicIpName = "pip-" + loadBalancerName;
@@ -370,14 +374,14 @@ namespace Fluent.Tests.Compute
 
             IPublicIpAddress publicIpAddress = azure.PublicIpAddresses
                 .Define(publicIpName)
-                .WithRegion(location)
+                .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
                 .WithLeafDomainLabel(publicIpName)
                 .Create();
 
             ILoadBalancer loadBalancer = azure.LoadBalancers
                 .Define(loadBalancerName)
-                .WithRegion(location)
+                .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
                 .DefinePublicFrontend(frontendName)
                 .WithExistingPublicIpAddress(publicIpAddress)
@@ -438,8 +442,12 @@ namespace Fluent.Tests.Compute
             return loadBalancer;
         }
 
-        private ILoadBalancer CreateInternalLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup,
-                                                INetwork network, string id, [CallerMemberName] string methodName = "testframework_failed")
+        private ILoadBalancer CreateInternalLoadBalancer(
+            IAzure azure,
+            IResourceGroup resourceGroup,
+            INetwork network,
+            string id,
+            [CallerMemberName] string methodName = "testframework_failed")
         {
             string loadBalancerName = TestUtilities.GenerateName("InternalLb" + id + "-", methodName);
             string privateFrontEndName = loadBalancerName + "-FE1";
@@ -451,7 +459,7 @@ namespace Fluent.Tests.Compute
 
             ILoadBalancer loadBalancer = azure.LoadBalancers
                 .Define(loadBalancerName)
-                .WithRegion(location)
+                .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
                 .DefinePrivateFrontend(privateFrontEndName)
                     .WithExistingSubnet(network, subnetName)
@@ -516,7 +524,12 @@ namespace Fluent.Tests.Compute
             return loadBalancer;
         }
 
-        private ILoadBalancer CreateHttpLoadBalancers(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id, [CallerMemberName] string methodName = "testframework_failed")
+        public static ILoadBalancer CreateHttpLoadBalancers(
+            IAzure azure,
+            IResourceGroup resourceGroup,
+            string id,
+            Region location,
+            [CallerMemberName] string methodName = "testframework_failed")
         {
             string loadBalancerName = TestUtilities.GenerateName("extlb" + id + "-", methodName);
             string publicIpName = "pip-" + loadBalancerName;

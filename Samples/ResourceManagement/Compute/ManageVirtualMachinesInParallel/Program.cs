@@ -87,10 +87,6 @@ namespace ManageVirtualMachinesInParallel
 
                 Utilities.Log($"Created VM: took {(endTime - startTime).TotalSeconds} seconds");
             }
-            catch (Exception ex)
-            {
-                Utilities.Log(ex);
-            }
             finally
             {
                 Utilities.Log($"Deleting resource group : {rgName}");

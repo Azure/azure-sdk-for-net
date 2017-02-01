@@ -127,7 +127,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
 
                 Utilities.PrintVirtualMachine(linuxVM2);
 
-                var specializedVhd = linuxVM2.OsDiskVhdUri;
+                var specializedVhd = linuxVM2.OsUnmanagedDiskVhdUri;
                 //=============================================================
                 // Deleting the virtual machine
                 Utilities.Log("Deleting VM: " + linuxVM2.Id);
@@ -150,7 +150,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
-                        .WithOsDisk(specializedVhd, OperatingSystemTypes.Linux) // New user credentials cannot be specified
+                        .WithSpecializedOsUnmanagedDisk(specializedVhd, OperatingSystemTypes.Linux) // New user credentials cannot be specified
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)         // when attaching a specialized VHD
                         .Create();
 

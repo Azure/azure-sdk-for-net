@@ -36,6 +36,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets the availability set sku.
+        /// </summary>
+        Models.AvailabilitySetSkuTypes Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.Sku
+        {
+            get
+            {
+                return this.Sku() as Models.AvailabilitySetSkuTypes;
+            }
+        }
+
+        /// <summary>
         /// Gets the resource IDs of the virtual machines in the availability set.
         /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.VirtualMachineIds
@@ -84,6 +95,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         AvailabilitySet.Definition.IWithCreate AvailabilitySet.Definition.IWithUpdateDomainCount.WithUpdateDomainCount(int updateDomainCount)
         {
             return this.WithUpdateDomainCount(updateDomainCount) as AvailabilitySet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the sku type for the availability set.
+        /// </summary>
+        /// <param name="skuType">The sku type.</param>
+        /// <return>The next stage of the definition.</return>
+        AvailabilitySet.Update.IUpdate AvailabilitySet.Update.IWithSku.WithSku(AvailabilitySetSkuTypes skuType)
+        {
+            return this.WithSku(skuType) as AvailabilitySet.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the sku type for the availability set.
+        /// </summary>
+        /// <param name="skuType">The sku type.</param>
+        /// <return>The next stage of the definition.</return>
+        AvailabilitySet.Definition.IWithCreate AvailabilitySet.Definition.IWithSku.WithSku(AvailabilitySetSkuTypes skuType)
+        {
+            return this.WithSku(skuType) as AvailabilitySet.Definition.IWithCreate;
         }
     }
 }

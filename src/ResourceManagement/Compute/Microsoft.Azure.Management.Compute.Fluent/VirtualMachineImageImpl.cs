@@ -56,6 +56,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.imageReference;
         }
 
+        ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:7DECE31892F905458F7A5F7C5B963D8F
+        public string Id()
+        {
+            if (this.Inner == null) {
+                return null;
+            }
+            return this.Inner.Id;
+        }
+
         ///GENMHASH:A85BBC58BA3B783F90EB92B75BD97D51:B0F0BE5FE7AB84929ACF2368E8415A69
         public Region Location()
         {

@@ -20,6 +20,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IHasNetworkInterfaces
     {
         /// <summary>
+        /// Gets true if managed disk is used for the virtual machine's disks (os, data).
+        /// </summary>
+        bool IsManagedDiskEnabled { get; }
+
+        /// <summary>
         /// Gets the virtual machine unique id.
         /// </summary>
         string VmId { get; }
@@ -42,6 +47,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <return>The refreshed instance view.</return>
         Models.VirtualMachineInstanceView RefreshInstanceView();
+
+        /// <summary>
+        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// </summary>
+        void MigrateToManaged();
+
+        /// <summary>
+        /// Gets resource id of the managed disk backing OS disk.
+        /// </summary>
+        string OsDiskId { get; }
 
         /// <summary>
         /// Gets the licenseType value.
@@ -108,8 +123,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         int OsDiskSize { get; }
 
         /// <summary>
+        /// Gets the unmanaged data disks associated with this virtual machine, indexed by lun.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> UnmanagedDataDisks { get; }
+
+        /// <summary>
         /// Restart the virtual machine.
-        /// =.
         /// </summary>
         void Restart();
 
@@ -129,6 +148,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string Capture(string containerName, string vhdPrefix, bool overwriteVhd);
 
         /// <summary>
+        /// Gets the uri to the vhd file backing this virtual machine's operating system disk.
+        /// </summary>
+        string OsUnmanagedDiskVhdUri { get; }
+
+        /// <summary>
         /// Gets the provisioningState value.
         /// </summary>
         string ProvisioningState { get; }
@@ -141,6 +165,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <return>The resource ID of the public IP address associated with this virtual machine's primary network interface.</return>
         string GetPrimaryPublicIpAddressId();
+
+        /// <summary>
+        /// Gets the storage account type of the managed disk backing Os disk.
+        /// </summary>
+        Models.StorageAccountTypes? OsDiskStorageAccountType { get; }
 
         /// <summary>
         /// Gets the extensions attached to the Azure Virtual Machine.
@@ -171,14 +200,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.StorageProfile StorageProfile { get; }
 
         /// <summary>
-        /// Gets the uri to the vhd file backing this virtual machine's operating system disk.
+        /// Gets the managed data disks associated with this virtual machine, indexed by lun.
         /// </summary>
-        string OsDiskVhdUri { get; }
-
-        /// <summary>
-        /// Gets the list of data disks attached to this virtual machine.
-        /// </summary>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> DataDisks { get; }
+        System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> DataDisks { get; }
 
         /// <summary>
         /// Gets Returns id to the availability set this virtual machine associated with.

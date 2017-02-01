@@ -1,61 +1,80 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
-    using Microsoft.Azure.Management.Storage.Fluent;
-    using VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.Network.Fluent;
-    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
-    using VirtualMachineScaleSet.Definition;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent;
-    using System.Threading.Tasks;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
-    using System.Threading;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using Models;
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using System;
+    using System.Threading.Tasks;
+    using VirtualMachineScaleSet.DefinitionManaged;
+    using VirtualMachineScaleSet.DefinitionManagedOrUnmanaged;
+    using VirtualMachineScaleSet.DefinitionUnmanaged;
+    using VirtualMachineScaleSet.Update;
 
     /// <summary>
     /// Implementation of VirtualMachineScaleSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEltcGw=
     internal partial class VirtualMachineScaleSetImpl :
-        GroupableParentResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet, Models.VirtualMachineScaleSetInner, Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl, IComputeManager, VirtualMachineScaleSet.Definition.IWithGroup, VirtualMachineScaleSet.Definition.IWithSku, VirtualMachineScaleSet.Definition.IWithCreate, VirtualMachineScaleSet.Update.IWithApply>,
+        GroupableParentResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet,
+            Models.VirtualMachineScaleSetInner,
+            Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetImpl,
+            IComputeManager,
+            VirtualMachineScaleSet.Definition.IWithGroup,
+            VirtualMachineScaleSet.Definition.IWithSku,
+            VirtualMachineScaleSet.Definition.IWithCreate,
+            VirtualMachineScaleSet.Update.IWithApply>,
         IVirtualMachineScaleSet,
-        IDefinition,
+        IDefinitionManagedOrUnmanaged,
+        IDefinitionManaged,
+        IDefinitionUnmanaged,
         IUpdate
     {
         // Clients
         private IVirtualMachineScaleSetsOperations client;
+
         private IVirtualMachineScaleSetVMsOperations vmInstancesClient;
         private IStorageManager storageManager;
         private INetworkManager networkManager;
+
         // used to generate unique name for any dependency resources
         private IResourceNamer namer;
+
         private bool isMarketplaceLinuxImage = false;
+
         // name of an existing subnet in the primary network to use
         private string existingPrimaryNetworkSubnetNameToAssociate;
+
         // unique key of a creatable storage accounts to be used for virtual machines child resources that
         // requires storage [OS disk]
         private List<string> creatableStorageAccountKeys = new List<string>();
+
         // reference to an existing storage account to be used for virtual machines child resources that
         // requires storage [OS disk]
         private List<IStorageAccount> existingStorageAccountsToAssociate = new List<IStorageAccount>();
+
         // Name of the container in the storage account to use to store the disks
         private string vhdContainerName;
+
         // the child resource extensions
         private IDictionary<string, IVirtualMachineScaleSetExtension> extensions;
+
         // reference to the primary and internal internet facing load balancer
         private ILoadBalancer primaryInternetFacingLoadBalancer;
+
         private ILoadBalancer primaryInternalLoadBalancer;
+
         // Load balancer specific variables used during update
         private bool removePrimaryInternetFacingLoadBalancerOnUpdate;
+
         private bool removePrimaryInternalLoadBalancerOnUpdate;
         private ILoadBalancer primaryInternetFacingLoadBalancerToAttachOnUpdate;
         private ILoadBalancer primaryInternalLoadBalancerToAttachOnUpdate;
@@ -67,8 +86,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private List<string> primaryInternetFacingLBInboundNatPoolsToAddOnUpdate = new List<string>();
         private List<string> primaryInternalLBBackendsToAddOnUpdate = new List<string>();
         private List<string> primaryInternalLBInboundNatPoolsToAddOnUpdate = new List<string>();
+        private bool isUnmanagedDiskSelected;
+        private ManagedDataDiskCollection managedDataDisks;
 
-        ///GENMHASH:F0C80BE7722CB6620CCF10F060FE486B:9C152084C68269BCEA950F9F22FF2153
+        ///GENMHASH:F0C80BE7722CB6620CCF10F060FE486B:C5CB976F0B76FD0A094017AD226F4439
         internal VirtualMachineScaleSetImpl(
             string name,
             VirtualMachineScaleSetInner innerModel,
@@ -83,76 +104,144 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.namer = SdkContext.CreateResourceNamer(this.Name);
+            this.managedDataDisks = new ManagedDataDiskCollection(this);
         }
 
-        ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:3AA1543C2E39D6E6D148C51D89E3B4C6
-        protected override void InitializeChildrenFromInner()
+        ///GENMHASH:AAC1F72971316317A21BEC14F977DEDE:ABC059395726B5D6BEB36206C2DDA144
+        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
-            this.extensions = new Dictionary<string, IVirtualMachineScaleSetExtension>();
-            if (this.Inner.VirtualMachineProfile.ExtensionProfile != null
-               && this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions != null)
+            if (this.IsInCreateMode)
             {
-                foreach (var innerExtenison in this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions)
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
+                RemoveAllBackendAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, defaultPrimaryIpConfig);
+                AssociateBackEndsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
+                        defaultPrimaryIpConfig,
+                        backendNames);
+            }
+            else
+            {
+                AddToList(this.primaryInternetFacingLBBackendsToAddOnUpdate, backendNames);
+            }
+            return this;
+        }
+
+        ///GENMHASH:42E5559F93A5ECA057CA5F045A1C8057:C9C1A747426C7D8AEF7280B613F858AE
+        public PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        {
+            return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(this.ResourceGroupName, this.Name, virtualMachineInstanceId);
+        }
+
+        ///GENMHASH:99E12A9D1F6C67E6350163C75A02C0CF:EB015A0D5BB20773EED2BA22F09DBFE4
+        private static void RemoveLoadBalancerAssociationFromIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        {
+            RemoveAllBackendAssociationFromIpConfiguration(loadBalancer, ipConfig);
+            RemoveAllInboundNatPoolAssociationFromIpConfiguration(loadBalancer, ipConfig);
+        }
+
+        ///GENMHASH:0B86CB1DFA370E0EF503AA943BA12699:72153688799C022C061CCB2A43E36DC0
+        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancer()
+        {
+            if (this.IsInUpdateMode())
+            {
+                this.removePrimaryInternetFacingLoadBalancerOnUpdate = true;
+            }
+            return this;
+        }
+
+        ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
+        public void PowerOff()
+        {
+            this.client.PowerOff(this.ResourceGroupName, this.Name);
+        }
+
+        ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:51AD565B2270FC1F9104F1A5BC632E24
+        public VirtualMachineScaleSetImpl WithStoredLinuxImage(string imageUrl)
+        {
+            VirtualHardDisk userImageVhd = new VirtualHardDisk();
+            userImageVhd.Uri = imageUrl;
+            this.Inner
+                    .VirtualMachineProfile
+                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+            this.Inner
+                    .VirtualMachineProfile
+                    .StorageProfile.OsDisk.Image = userImageVhd;
+            // For platform image osType will be null, azure will pick it from the image metadata.
+            this.Inner
+                    .VirtualMachineProfile
+                    .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Linux;
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile.LinuxConfiguration = new LinuxConfiguration();
+            return this;
+        }
+
+        ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
+        public void Deallocate()
+        {
+            this.client.Deallocate(this.ResourceGroupName, this.Name);
+        }
+
+        ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
+        public VirtualMachineScaleSetImpl WithOsDiskCaching(CachingTypes cachingType)
+        {
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.Caching = cachingType;
+            return this;
+        }
+
+        ///GENMHASH:C8D0FD360C8F8A611F6F85F99CDE83D0:C73CD8C0F99ACCAB4E6C5579E1D974E4
+        private static void RemoveAllInboundNatPoolAssociationFromIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        {
+            List<SubResource> toRemove = new List<SubResource>();
+            foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
+            {
+                if (subResource.Id.ToLower().StartsWith(loadBalancer.Id.ToLower() + "/"))
                 {
-                    this.extensions.Add(innerExtenison.Name, new VirtualMachineScaleSetExtensionImpl(innerExtenison, this));
+                    toRemove.Add(subResource);
                 }
+            }
+            foreach (SubResource subResource in toRemove)
+            {
+                ipConfig.LoadBalancerInboundNatPools.Remove(subResource);
             }
         }
 
-        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:B5D7FA290CD4B78F425E5D837D1426C5
-        protected override void BeforeCreating()
+        ///GENMHASH:FD824AC9D26C404162A9EEEE0B9A4489:B9DC6752667EC750602BB3CBA2F9F1A0
+        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
-            if (this.extensions.Count > 0)
+            if (this.IsInCreateMode)
             {
-                this.Inner.VirtualMachineProfile
-                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
-                    {
-                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
-                    };
-                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
-                {
-                    this.Inner.VirtualMachineProfile
-                        .ExtensionProfile
-                        .Extensions.Add(extension.Inner);
-                }
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
+                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                        defaultPrimaryIpConfig);
+                AssociateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
+                        defaultPrimaryIpConfig,
+                        natPoolNames);
             }
+            else
+            {
+                AddToList(this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate, natPoolNames);
+            }
+            return this;
         }
 
-        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7E3A196C87869BA2C348FE60F0D489C9
-        protected override async Task<VirtualMachineScaleSetInner> CreateInnerAsync()
+        ///GENMHASH:2E38406EB22698CAE339875C7D4BDD7E:258FD1D5537E0DC025DC120D7BC231E2
+        internal VirtualMachineScaleSetImpl WithUnmanagedDataDisk(VirtualMachineScaleSetUnmanagedDataDiskImpl unmanagedDisk)
         {
-            this.SetOSDiskAndOSProfileDefaults();
-            this.SetPrimaryIpConfigurationSubnet();
-            this.SetPrimaryIpConfigurationBackendsAndInboundNatPools();
-            await HandleOSDiskContainersAsync();
-            return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
-        }
-
-        ///GENMHASH:F91F57741BB7E185BF012523964DEED0:89445F7853BF795F5610E29A0AD00373
-        protected override void AfterCreating()
-        {
-            this.ClearCachedProperties();
-            this.InitializeChildrenFromInner();
-        }
-
-        #region Getters
-
-        ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:B38C06867B5D878680004A07BD077546
-        public int Capacity()
-        {
-            return (int)this.Inner.Sku.Capacity.Value;
-        }
-
-        ///GENMHASH:38EF4A7AB82168A6DD38F533747DA9D5:362113C4E307F07B620E363B30115839
-        public string ComputerNamePrefix()
-        {
-            return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
-        }
-
-        ///GENMHASH:AFF08018A4055EA21949F6479B3BCCA0:4175296A99E4DC787679DF89D1FABCD5
-        public VirtualMachineScaleSetNetworkProfile NetworkProfile()
-        {
-            return this.Inner.VirtualMachineProfile.NetworkProfile;
+            if (this.Inner.VirtualMachineProfile.StorageProfile.DataDisks == null)
+            {
+                this.Inner
+                .VirtualMachineProfile
+                .StorageProfile
+                .DataDisks = new List<VirtualMachineScaleSetDataDisk>();
+            }
+            IList<VirtualMachineScaleSetDataDisk> dataDisks = this.Inner
+                .VirtualMachineProfile
+                .StorageProfile
+                .DataDisks;
+            dataDisks.Add(unmanagedDisk.Inner);
+            return this;
         }
 
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:FFF894943EBDE56EEC0675ADF0891867
@@ -161,103 +250,157 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching.Value;
         }
 
-        ///GENMHASH:39841E710EB7DD7AE8E99B918CA0EEEA:C48030ECFE011DCB363EBC211AAE918D
-        public string OsDiskName()
+        ///GENMHASH:C5EB453493B1100152604C49B4350246:13A96702474EC693EFE5444489CDEDCC
+        public VirtualMachineScaleSetImpl WithOsDiskName(string name)
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
-
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.Name = name;
+            return this;
         }
 
-        ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:637A809EDFD013CAD03D1C7CE71A5FD8
-        public OperatingSystemTypes OsType()
+        ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:CEAEE81352B41505EB71BF5E42D2A3B6
+        public VirtualMachineScaleSetSkuTypes Sku()
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.Value;
+            return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
         }
 
-        ///GENMHASH:33905CDEAEEF3BB750202A2D6D557629:6C42C71E7F1E361AE09BA585BFB11328
-        public bool OverProvisionEnabled()
+        ///GENMHASH:B2876749E60D892750D75C97943BBB13:00E375F5DFA1F92EE59D32432D8BB9AD
+        public VirtualMachineScaleSetImpl WithSpecificLinuxImageVersion(ImageReference imageReference)
         {
-            return this.Inner.OverProvision.Value;
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.ImageReference = imageReference.Inner;
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.LinuxConfiguration = new LinuxConfiguration();
+            this.isMarketplaceLinuxImage = true;
+            return this;
         }
 
-        ///GENMHASH:E3A33B29616A6EAF518CC10EA90B45C7:191C8844004D95B6F7362BD81543FE33
-        public ILoadBalancer GetPrimaryInternalLoadBalancer()
+        ///GENMHASH:1E53238DF79E665335390B7452E9A04C:341F8A896942EC0102DC34824A8AED9B
+        public VirtualMachineScaleSetImpl WithoutExtension(string name)
         {
-            if (this.primaryInternalLoadBalancer == null)
+            if (this.extensions.ContainsKey(name))
             {
-                LoadCurrentPrimaryLoadBalancersIfAvailable();
+                this.extensions.Remove(name);
             }
-            return this.primaryInternalLoadBalancer;
+            return this;
         }
 
-        ///GENMHASH:83A8BCB96B7881DAF693D324E0E9BAAE:83FB521120A40493EBC9C3BFCC730829
-        public ILoadBalancer GetPrimaryInternetFacingLoadBalancer()
+        /// <summary>
+        /// Checks whether the OS disk is based on a stored image ('captured' or 'bring your own feature').
+        /// </summary>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <return>True if the OS disk is configured to use custom image ('captured' or 'bring your own feature').</return>
+        ///GENMHASH:013BB4FB645C080F536E8E117C28F1AD:B153E6EE63AB77BCE2C751BD7243E659
+        private bool IsOSDiskFromStoredImage(VirtualMachineScaleSetStorageProfile storageProfile)
         {
-            if (this.primaryInternetFacingLoadBalancer == null)
+            VirtualMachineScaleSetOSDisk osDisk = storageProfile.OsDisk;
+            return IsOSDiskFromImage(osDisk)
+                && osDisk.Image != null
+            && osDisk.Image.Uri != null;
+        }
+
+        ///GENMHASH:E7610DABE1E75344D9E0DBC0332E7F96:92F04FC0178BF91F20DF542F454DC302
+        public VirtualMachineScaleSetExtensionImpl UpdateExtension(string name)
+        {
+            IVirtualMachineScaleSetExtension value = null;
+            if (!this.extensions.TryGetValue(name, out value))
             {
-                LoadCurrentPrimaryLoadBalancersIfAvailable();
+                throw new ArgumentException("Extension with name '" + name + "' not found");
             }
-            return this.primaryInternetFacingLoadBalancer;
+            return (VirtualMachineScaleSetExtensionImpl)value;
         }
 
-        ///GENMHASH:A890CDCD402F1815F0ACD6293C3C115C:8FEE8350E44B2F78F72EE527639CDC76
-        public INetwork GetPrimaryNetwork()
+        ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:438AB79E7DABFF084F3F25050C0B0DCB
+        public VirtualMachineScaleSetImpl WithoutVmAgent()
         {
-                string subnetId = PrimaryNicDefaultIPConfiguration().Subnet.Id;
-                string virtualNetworkId = ResourceUtils.ParentResourcePathFromResourceId(subnetId);
-                return this.networkManager
-                        .Networks
-                        .GetById(virtualNetworkId);
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            return this;
         }
 
-        ///GENMHASH:8E925C4949ADC5B976067DDC58BE3E3C:D2243C739D20D636DF7C32705C2B6CAF
-        public IVirtualMachineScaleSetVMs VirtualMachines()
+        ///GENMHASH:ACFF159DD59B63FA783C8B3D4A7A36F5:86B1B0C90A3820575D5746DAF454199B
+        public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
         {
-            return new VirtualMachineScaleSetVMsImpl(this, this.vmInstancesClient, this.Manager);
+            this.existingPrimaryNetworkSubnetNameToAssociate = MergePath(network.Id, "subnets", subnetName);
+            return this;
         }
 
-        ///GENMHASH:1E2CA1FC9878A5C0B08DAAE75CBAD541:CA4C4022D33F6F7487EF6C4ECA5FF3D3
-        public IDictionary<string, ILoadBalancerBackend> ListPrimaryInternalLoadBalancerBackends()
+        ///GENMHASH:C7EEDB0D031020E6FE0ADF5003AD9EF3:08412BF58A15F18D9122928A38242D9E
+        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancer()
         {
-            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            if (this.IsInUpdateMode())
             {
-                return GetBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
-                        PrimaryNicDefaultIPConfiguration());
+                this.removePrimaryInternalLoadBalancerOnUpdate = true;
             }
-            return new Dictionary<string, ILoadBalancerBackend>();
+            return this;
         }
 
-        ///GENMHASH:ADE83EE6665AFEEF1CA076067FC2BAB1:901C9A9B6E5CC49CB120EDA00E46E94E
-        public IDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
+        ///GENMHASH:6E6D232E3678D03B3716EA09F0ADD0A9:660BA6BD38564D432FD56906D5F71954
+        private static void RemoveBackendsFromIpConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] backendNames)
         {
-            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            List<SubResource> toRemove = new List<SubResource>();
+            foreach (string backendName in backendNames)
             {
-                return GetInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
-                        PrimaryNicDefaultIPConfiguration());
+                string backendPoolId = MergePath(loadBalancerId, "backendAddressPools", backendName);
+                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
+                {
+                    if (subResource.Id.Equals(backendPoolId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        toRemove.Add(subResource);
+                        break;
+                    }
+                }
             }
-            return new Dictionary<string, ILoadBalancerInboundNatPool>();
+            foreach (SubResource subResource in toRemove)
+            {
+                ipConfig.LoadBalancerBackendAddressPools.Remove(subResource);
+            }
         }
 
-        ///GENMHASH:8371720B72164AB21B88202FD4561610:9ECD956712FBC7CB9A976884F3BEAB45
-        public IDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListPrimaryInternetFacingLoadBalancerBackends()
+        /// <summary>
+        /// Checks whether the OS disk is based on an platform image (image in PIR).
+        /// </summary>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <return>True if the OS disk is configured to be based on platform image.</return>
+        ///GENMHASH:B4160179254ABD9C885CF5B824F69A10:8A0B58C5E0133CF29412CD658BAF8289
+        private bool IsOSDiskFromPlatformImage(VirtualMachineScaleSetStorageProfile storageProfile)
         {
-            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
-            {
-                return GetBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                        PrimaryNicDefaultIPConfiguration());
-            }
-            return new Dictionary<string, ILoadBalancerBackend>();
+            ImageReferenceInner imageReference = storageProfile.ImageReference;
+            return IsOSDiskFromImage(storageProfile.OsDisk)
+                && imageReference != null
+                && imageReference.Publisher != null
+                && imageReference.Offer != null
+                && imageReference.Sku != null
+                && imageReference.Version != null;
         }
 
-        ///GENMHASH:2127E32A8F02C513138DB1208F98C806:1DD59433AF6ED9834170252D06569286
-        public IDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
+        ///GENMHASH:CD7DD8B4BD138F5F21FC2A082781B05E:DF7F973BA6DA44DB874A039E8656D907
+        private void ThrowIfManagedDiskDisabled(string message)
         {
-            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            if (!this.IsManagedDiskEnabled())
             {
-                return GetInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                        PrimaryNicDefaultIPConfiguration());
+                throw new NotSupportedException(message);
             }
-            return new Dictionary<string, ILoadBalancerInboundNatPool>();
+        }
+
+        ///GENMHASH:EC363135C0A3366C1FA98226F4AE5D05:894AACC37E5DFF8EECFF47C4ACFBFB70
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Extensions()
+        {
+            return this.extensions as IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension>;
+        }
+
+        ///GENMHASH:EB45314951D6F0A225DF2E0CC4444647:31CE7DD3ED015A2C03AF72E95A38202E
+        internal VirtualMachineScaleSetImpl WithExtension(VirtualMachineScaleSetExtensionImpl extension)
+        {
+            this.extensions.Add(extension.Name(), extension);
+            return this;
         }
 
         ///GENMHASH:85147EF10797D4C57F7D765BDFEAE89E:65DEB6D772EFEFA23B2E9C18CCAB48DC
@@ -271,10 +414,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return new List<string>();
         }
 
-        ///GENMHASH:7F0A9CB4CB6BBC98F72CF50A81EBFBF4:3C12806E439FD7F02ABD5EEE521A9AB0
-        public VirtualMachineScaleSetStorageProfile StorageProfile()
+        /// <summary>
+        /// Checks whether the OS disk is based on an image (image from PIR or custom image [captured, bringYourOwnFeature]).
+        /// </summary>
+        /// <param name="osDisk">The osDisk value in the storage profile.</param>
+        /// <return>True if the OS disk is configured to use image from PIR or custom image.</return>
+        ///GENMHASH:B97D8C3B1AC557A077AC173B1DB0B348:4CD85EE98AD4F7CBC33994D722986AE5
+        private bool IsOSDiskFromImage(VirtualMachineScaleSetOSDisk osDisk)
         {
-            return this.Inner.VirtualMachineProfile.StorageProfile;
+            return osDisk.CreateOption == DiskCreateOptionTypes.FromImage;
         }
 
         ///GENMHASH:062EA8E95730159A684C56D3DFCB4846:2E75CE480B794ADCA106E649FAD94DB6
@@ -284,87 +432,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Inner.UpgradePolicy.Mode.Value;
         }
 
-        ///GENMHASH:FD4CE9D235CA642C8185D0844177DDFB:D7E2129941B29E412D9F2124F2BAE432
-        public IList<string> VhdContainers()
-        {
-            if (this.Inner.VirtualMachineProfile.StorageProfile != null
-                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
-                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
-            }
-            return new List<string>();
-        }
-
-        ///GENMHASH:CAFE3044E63DB355E0097F6FD22A0282:600739A4DD068DBA0CF85CC076E9111F
-        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus()
-        {
-            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
-            {
-                return this.client.ListSkusNext(nextLink);
-            });
-
-            return PagedListConverter.Convert<VirtualMachineScaleSetSku, IVirtualMachineScaleSetSku>(innerPagedList, inner =>
-            {
-                return new VirtualMachineScaleSetSkuImpl(inner);
-            });
-        }
-
-        ///GENMHASH:EC363135C0A3366C1FA98226F4AE5D05:894AACC37E5DFF8EECFF47C4ACFBFB70
-        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Extensions()
-        {
-            return this.extensions as IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension>;
-        }
-
-        ///GENMHASH:F792F6C8C594AA68FA7A0FCA92F55B55:CEAEE81352B41505EB71BF5E42D2A3B6
-        public VirtualMachineScaleSetSkuTypes Sku()
-        {
-            return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
-        }
-
         ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:48A72DF34AA591EEC3FD96876F4C2258
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
+        public PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces()
         {
             return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSet(this.ResourceGroupName, this.Name);
         }
 
-        ///GENMHASH:42E5559F93A5ECA057CA5F045A1C8057:C9C1A747426C7D8AEF7280B613F858AE
-        public PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId)
+        ///GENMHASH:ADE83EE6665AFEEF1CA076067FC2BAB1:901C9A9B6E5CC49CB120EDA00E46E94E
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
         {
-            return this.networkManager.NetworkInterfaces.ListByVirtualMachineScaleSetInstanceId(this.ResourceGroupName, this.Name, virtualMachineInstanceId);
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            {
+                return GetInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
+                        PrimaryNicDefaultIPConfiguration());
+            }
+            return new Dictionary<string, ILoadBalancerInboundNatPool>();
         }
 
-        ///GENMHASH:9E11BB028D83D0EF7340685F19FBA340:E9A91314DAD8267710EFDE4AAE671CCF
-        public Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface GetNetworkInterfaceByInstanceId(string instanceId, string name)
+        ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:B38C06867B5D878680004A07BD077546
+        public long Capacity()
         {
-            return this.networkManager.NetworkInterfaces.GetByVirtualMachineScaleSetInstanceId(this.ResourceGroupName,
-                this.Name,
-                instanceId,
-                name);
-        }
-
-        #endregion
-
-        #region Withers
-
-        ///GENMHASH:CE408710AAEBD9F32D9AA9DB3280112C:DE7951813645A18DB8AC5B2A48405BD0
-        public VirtualMachineScaleSetImpl WithSku(VirtualMachineScaleSetSkuTypes skuType)
-        {
-            this.Inner.Sku = skuType.Sku;
-            return this;
-        }
-
-        ///GENMHASH:C28C7D09D57FFF72FA8A6AEC7292936E:58BB80E4580D65A5E408E4BA250168E1
-        public VirtualMachineScaleSetImpl WithSku(IVirtualMachineScaleSetSku sku)
-        {
-            return this.WithSku(sku.SkuType);
-        }
-
-        ///GENMHASH:ACFF159DD59B63FA783C8B3D4A7A36F5:86B1B0C90A3820575D5746DAF454199B
-        public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
-        {
-            this.existingPrimaryNetworkSubnetNameToAssociate = MergePath(network.Id, "subnets", subnetName);
-            return this;
+            return (int)this.Inner.Sku.Capacity.Value;
         }
 
         ///GENMHASH:5357697C243DBDD2060BF2C164461C10:CCFD65A9998AF06471C50E7F44A70A67
@@ -388,41 +476,297 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:AAC1F72971316317A21BEC14F977DEDE:ABC059395726B5D6BEB36206C2DDA144
-        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        ///GENMHASH:D7A14F2EFF1E4165DA55EF07B6C19534:7212B561D81BB0678D70A3F6EF38FA07
+        public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
         {
-            if (this.IsInCreateMode)
-            {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                RemoveAllBackendAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, defaultPrimaryIpConfig);
-                AssociateBackEndsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        backendNames);
-            }
-            else
-            {
-                AddToList(this.primaryInternetFacingLBBackendsToAddOnUpdate, backendNames);
-            }
+            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
+        }
+
+        ///GENMHASH:F2FFAF5448D7DFAFBE00130C62E87053:F7407CEA3D12779F169A4F2984ACFC2B
+        public VirtualMachineScaleSetImpl WithRootPassword(string password)
+        {
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile
+                    .AdminPassword = password;
             return this;
         }
 
-        ///GENMHASH:FD824AC9D26C404162A9EEEE0B9A4489:B9DC6752667EC750602BB3CBA2F9F1A0
-        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
+        /// <summary>
+        /// Checks whether the OS disk is based on a CustomImage.
+        /// A custom image is represented by com.microsoft.azure.management.compute.VirtualMachineCustomImage.
+        /// </summary>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <return>True if the OS disk is configured to be based on custom image.</return>
+        ///GENMHASH:F53D85CC99C2482FBAB2FEB42F5A129A:F979E27E10A5C3D262E33101E3EF232A
+        private bool IsOsDiskFromCustomImage(VirtualMachineScaleSetStorageProfile storageProfile)
         {
-            if (this.IsInCreateMode)
+            ImageReferenceInner imageReference = storageProfile.ImageReference;
+            return IsOSDiskFromImage(storageProfile.OsDisk)
+                && imageReference != null
+                && imageReference.Id != null;
+        }
+
+        ///GENMHASH:0ACBCB3C1F81BA37F134262122B79DA2:A4F154B483C36885CF45861AA9C1885F
+        private void LoadCurrentPrimaryLoadBalancersIfAvailable()
+        {
+            if (this.primaryInternetFacingLoadBalancer != null && this.primaryInternalLoadBalancer != null)
             {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                        defaultPrimaryIpConfig);
-                AssociateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        natPoolNames);
+                return;
+            }
+
+            string firstLoadBalancerId = null;
+            VirtualMachineScaleSetIPConfigurationInner ipConfig = PrimaryNicDefaultIPConfiguration();
+            if (ipConfig.LoadBalancerBackendAddressPools.Count > 0)
+            {
+                firstLoadBalancerId = ResourceUtils
+                        .ParentResourcePathFromResourceId(ipConfig.LoadBalancerBackendAddressPools.ElementAt(0).Id);
+            }
+
+            if (firstLoadBalancerId == null && ipConfig.LoadBalancerInboundNatPools.Count > 0)
+            {
+                firstLoadBalancerId = ResourceUtils
+                        .ParentResourcePathFromResourceId(ipConfig.LoadBalancerInboundNatPools.ElementAt(0).Id);
+            }
+
+            if (firstLoadBalancerId == null)
+            {
+                return;
+            }
+
+            ILoadBalancer loadBalancer1 = this.networkManager
+                .LoadBalancers
+                .GetById(firstLoadBalancerId);
+            if (loadBalancer1.PublicIpAddressIds != null && loadBalancer1.PublicIpAddressIds.Count > 0)
+            {
+                this.primaryInternetFacingLoadBalancer = loadBalancer1;
             }
             else
             {
-                AddToList(this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate, natPoolNames);
+                this.primaryInternalLoadBalancer = loadBalancer1;
             }
+
+            string secondLoadBalancerId = null;
+            foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
+            {
+                if (!subResource.Id.ToLower().StartsWith(firstLoadBalancerId.ToLower()))
+                {
+                    secondLoadBalancerId = ResourceUtils
+                            .ParentResourcePathFromResourceId(subResource.Id);
+                    break;
+                }
+            }
+
+            if (secondLoadBalancerId == null)
+            {
+                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
+                {
+                    if (!subResource.Id.ToLower().StartsWith(firstLoadBalancerId.ToLower()))
+                    {
+                        secondLoadBalancerId = ResourceUtils
+                                .ParentResourcePathFromResourceId(subResource.Id);
+                        break;
+                    }
+                }
+            }
+
+            if (secondLoadBalancerId == null)
+            {
+                return;
+            }
+
+            ILoadBalancer loadBalancer2 = this.networkManager
+            .LoadBalancers
+            .GetById(secondLoadBalancerId);
+            if (loadBalancer2.PublicIpAddressIds != null && loadBalancer2.PublicIpAddressIds.Count > 0)
+            {
+                this.primaryInternetFacingLoadBalancer = loadBalancer2;
+            }
+            else
+            {
+                this.primaryInternalLoadBalancer = loadBalancer2;
+            }
+        }
+
+        ///GENMHASH:C9A8EFD03D810995DC8CE56B0EFD441D:E7976D224D54D6C1BB8B22CE27B71F44
+        public VirtualMachineScaleSetImpl WithOverProvision(bool enabled)
+        {
+            this.Inner
+                    .Overprovision = enabled;
             return this;
+        }
+
+        ///GENMHASH:801A53D3DABA33CC92425D2203FD9242:023B6E0293C3EE52841DA58E9038A4E6
+        private static IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> GetInboundNatPoolsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        {
+            String loadBalancerId = loadBalancer.Id;
+            Dictionary<string, ILoadBalancerInboundNatPool> attachedInboundNatPools = new Dictionary<string, ILoadBalancerInboundNatPool>();
+            var lbInboundNatPools = loadBalancer.InboundNatPools;
+            foreach (ILoadBalancerInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
+            {
+                String inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
+                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
+                {
+                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        attachedInboundNatPools.Add(lbInboundNatPool.Name, lbInboundNatPool);
+                    }
+                }
+            }
+            return attachedInboundNatPools;
+        }
+
+        ///GENMHASH:98B10909018928720DBCCEBE53E08820:75A4D7D6FD5B54E56A4949AE30530D27
+        public VirtualMachineScaleSetImpl WithoutAutoUpdate()
+        {
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
+            return this;
+        }
+
+        ///GENMHASH:AD16DA08B5E002AC14DA8E4DF1A29686:7CAC61F59FB870FA1BA64452A78CD17B
+        private static void RemoveAllBackendAssociationFromIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        {
+            List<SubResource> toRemove = new List<SubResource>();
+            foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
+            {
+                if (subResource.Id.ToLower().StartsWith(loadBalancer.Id.ToLower() + "/"))
+                {
+                    toRemove.Add(subResource);
+                }
+            }
+
+            foreach (SubResource subResource in toRemove)
+            {
+                ipConfig.LoadBalancerBackendAddressPools.Remove(subResource);
+            }
+        }
+
+        ///GENMHASH:27AD431A042600C45C4C0CA529477319:47186F09CC543669168F4089A11F6E5E
+        private static void AssociateInboundNATPoolsToIpConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] inboundNatPools)
+        {
+            List<SubResource> inboundNatPoolSubResourcesToAssociate = new List<SubResource>();
+            foreach (string inboundNatPool in inboundNatPools)
+            {
+                string inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", inboundNatPool);
+                bool found = false;
+                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
+                {
+                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    inboundNatPoolSubResourcesToAssociate.Add(new SubResource
+                    {
+                        Id = inboundNatPoolId
+                    });
+                }
+            }
+            foreach (SubResource backendSubResource in inboundNatPoolSubResourcesToAssociate)
+            {
+                ipConfig.LoadBalancerInboundNatPools.Add(backendSubResource);
+            }
+        }
+
+        ///GENMHASH:5DCF4E29F6EA4E300D272317D5090075:2CECE7F3DC203120ADD63663E7930758
+        private static void RemoveInboundNatPoolsFromIpConfiguration(string loadBalancerId, VirtualMachineScaleSetIPConfigurationInner ipConfig, params string[] inboundNatPoolNames)
+        {
+            List<SubResource> toRemove = new List<SubResource>();
+            foreach (string natPoolName in inboundNatPoolNames)
+            {
+                string inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", natPoolName);
+                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
+                {
+                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        toRemove.Add(subResource);
+                        break;
+                    }
+                }
+            }
+            foreach (SubResource subResource in toRemove)
+            {
+                ipConfig.LoadBalancerInboundNatPools.Remove(subResource);
+            }
+        }
+
+        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
+        public void Restart()
+        {
+            this.client.Restart(this.ResourceGroupName, this.Name);
+        }
+
+        ///GENMHASH:5880487AA9218E8DF536932A49A0ACDD:35850B81E88D88D68766589B9671E590
+        public VirtualMachineScaleSetImpl WithNewStorageAccount(string name)
+        {
+            Storage.Fluent.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
+                    .StorageAccounts
+                    .Define(name)
+                    .WithRegion(this.RegionName);
+            ICreatable<IStorageAccount> definitionAfterGroup;
+            if (this.newGroup != null)
+            {
+                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);
+            }
+            else
+            {
+                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.ResourceGroupName);
+            }
+            return WithNewStorageAccount(definitionAfterGroup);
+        }
+
+        ///GENMHASH:2DC51FEC3C45675856B4AC1D97BECBFD:625251347BC517ED9D6E5D9755FBF00B
+        public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
+        {
+            this.creatableStorageAccountKeys.Add(creatable.Key);
+            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Resource.Fluent.Core.IHasId>);
+            return this;
+        }
+
+        ///GENMHASH:F91F57741BB7E185BF012523964DEED0:89445F7853BF795F5610E29A0AD00373
+        protected override void AfterCreating()
+        {
+            this.ClearCachedProperties();
+            this.InitializeChildrenFromInner();
+        }
+
+        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:9A047B4B22E09AEB6344D4F23EC361E5
+        public override IVirtualMachineScaleSet Refresh()
+        {
+            var response = client.Get(this.ResourceGroupName,
+                this.Name);
+            SetInner(response);
+            this.ClearCachedProperties();
+            this.InitializeChildrenFromInner();
+            return this;
+        }
+
+        ///GENMHASH:0B0C2470711F6450D4872789FDEB62A0:27733295CC242C366636316AC58FC2D3
+        private VirtualMachineScaleSetDataDisk GetDataDiskInner(int lun)
+        {
+            VirtualMachineScaleSetStorageProfile storageProfile = this
+                .Inner
+                .VirtualMachineProfile
+                .StorageProfile;
+            IList<VirtualMachineScaleSetDataDisk> dataDisks = storageProfile
+                .DataDisks;
+            if (dataDisks == null)
+            {
+                return null;
+            }
+            foreach (var dataDisk in dataDisks)
+            {
+                if (dataDisk.Lun == lun)
+                {
+                    return dataDisk;
+                }
+            }
+            return null;
         }
 
         ///GENMHASH:F074773AE211BBEB7F46B598EA72155B:7704FB8C0D7ED4D767CE8138EA441588
@@ -478,6 +822,91 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:89EFB8F9AFBDF98FFAD5606983F59A03:E986803721702DC6EF28DDC04CC96CD1
+        public VirtualMachineScaleSetImpl WithNewDataDiskFromImage(int imageLun)
+        {
+            this.managedDataDisks.newDisksFromImage.Add(new VirtualMachineScaleSetDataDisk()
+            {
+                Lun = imageLun
+            });
+            return this;
+        }
+
+        ///GENMHASH:92519C2F478984EF05C22A5573361AFE:D60066031CF6D3EF0D84A196BD186C4C
+        public VirtualMachineScaleSetImpl WithNewDataDiskFromImage(int imageLun, int newSizeInGB, CachingTypes cachingType)
+        {
+            this.managedDataDisks.newDisksFromImage.Add(new VirtualMachineScaleSetDataDisk()
+            {
+                Lun = imageLun,
+                DiskSizeGB = newSizeInGB,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:BABD7F4E5FDF4ECA60DB2F163B33F4C7:70147D65554CF848675D35124D742DB0
+        public VirtualMachineScaleSetImpl WithNewDataDiskFromImage(int imageLun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            VirtualMachineScaleSetManagedDiskParameters managedDiskParameters = new VirtualMachineScaleSetManagedDiskParameters();
+            managedDiskParameters.StorageAccountType = storageAccountType;
+            this.managedDataDisks.newDisksFromImage.Add(new VirtualMachineScaleSetDataDisk()
+            {
+                Lun = imageLun,
+                DiskSizeGB = newSizeInGB,
+                ManagedDisk = managedDiskParameters,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:7F0A9CB4CB6BBC98F72CF50A81EBFBF4:3C12806E439FD7F02ABD5EEE521A9AB0
+        public VirtualMachineScaleSetStorageProfile StorageProfile()
+        {
+            return this.Inner.VirtualMachineProfile.StorageProfile;
+        }
+
+        ///GENMHASH:3874257232804C74BD7501DE2BE2F0E9:D48844CD7D7EEEF909BD7006D3A7E439
+        public VirtualMachineScaleSetImpl WithLatestWindowsImage(string publisher, string offer, string sku)
+        {
+            ImageReference imageReference = new ImageReference()
+            {
+                Publisher = publisher,
+                Offer = offer,
+                Sku = sku,
+                Version = "version"
+            };
+            return WithSpecificWindowsImageVersion(imageReference);
+        }
+
+        ///GENMHASH:2127E32A8F02C513138DB1208F98C806:1DD59433AF6ED9834170252D06569286
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
+        {
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            {
+                return GetInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                        PrimaryNicDefaultIPConfiguration());
+            }
+            return new Dictionary<string, ILoadBalancerInboundNatPool>();
+        }
+
+        ///GENMHASH:8CB9B7EEE4A4226A6F5BBB2958CC5E81:A9181EF01C6B9C8C3CB92E9F535B6236
+        public VirtualMachineScaleSetImpl WithExistingStorageAccount(IStorageAccount storageAccount)
+        {
+            this.existingStorageAccountsToAssociate.Add(storageAccount);
+            return this;
+        }
+
+        ///GENMHASH:821D92F0F65352C735EB6081A9BEA9DC:73A06E6EEB10BE4D76DAA1F7DE189BD6
+        public VirtualMachineScaleSetUnmanagedDataDiskImpl DefineUnmanagedDataDisk(string name)
+        {
+            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VMSS_Both_Managed_And_Unmanaged_Disk_Not_Allowed);
+            VirtualMachineScaleSetDataDisk dataDiskInner = new VirtualMachineScaleSetDataDisk();
+            dataDiskInner.Lun = -1;
+            dataDiskInner.Name = name;
+            dataDiskInner.CreateOption = DiskCreateOptionTypes.Empty;
+            return new VirtualMachineScaleSetUnmanagedDataDiskImpl(dataDiskInner, this);
+        }
+
         ///GENMHASH:3DF1B6140B6B4ECBFA96FE642F2CD144:CCED3778DD625697E59E50F8F58EAFD7
         public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
@@ -497,288 +926,34 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:44218FC054E9DD430ECE7417A9705EB2:2DB39ADE66ABE6DB110EEDB9C63E2DB3
-        public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
+        ///GENMHASH:F24EFD30F0D04113B41EA2C36B55F059:9662F39CFDAE2D5E028F6D055A529B1F
+        public VirtualMachineScaleSetImpl WithWindowsCustomImage(string customImageId)
         {
-            if (this.IsInCreateMode)
-            {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
-                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
-                        defaultPrimaryIpConfig);
-                AssociateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        natPoolNames);
-            }
-            else
-            {
-                AddToList(this.primaryInternalLBInboundNatPoolsToAddOnUpdate, natPoolNames);
-            }
-            return this;
-        }
-
-        ///GENMHASH:C7EEDB0D031020E6FE0ADF5003AD9EF3:08412BF58A15F18D9122928A38242D9E
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancer()
-        {
-            if (this.IsInUpdateMode())
-            {
-                this.removePrimaryInternalLoadBalancerOnUpdate = true;
-            }
-            return this;
-        }
-
-        ///GENMHASH:0B86CB1DFA370E0EF503AA943BA12699:72153688799C022C061CCB2A43E36DC0
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancer()
-        {
-            if (this.IsInUpdateMode())
-            {
-                this.removePrimaryInternetFacingLoadBalancerOnUpdate = true;
-            }
-            return this;
-        }
-
-        ///GENMHASH:7CC775D2FD3FE91AF2002BEF58F09719:99855FF2EE95AA6F2863BA16C5E195B6
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
-        {
-            AddToList(this.primaryInternetFacingLBBackendsToRemoveOnUpdate, backendNames);
-            return this;
-        }
-
-        ///GENMHASH:BC7873AAD73CC4C7525B7C9F39F3F121:A055D9C6DB5164F68AE250D30F989A3F
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
-        {
-            AddToList(this.primaryInternalLBBackendsToRemoveOnUpdate, backendNames);
-            return this;
-        }
-
-        ///GENMHASH:B899054CADDD4C764670C53E2A300590:6FB961EBF4FEC9C5343282A34D18848B
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
-        {
-            AddToList(this.primaryInternalLBInboundNatPoolsToRemoveOnUpdate, natPoolNames);
-            return this;
-        }
-
-        ///GENMHASH:BF5FD367567995AC0C50DACEDECE61BD:038D6D03640016D71036DDBF325D8E0F
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
-        {
-            AddToList(this.primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate, natPoolNames);
-            return this;
-        }
-
-        ///GENMHASH:8FDBCB5DF6AFD1594DF170521CE46D5F:4DF21C8BC272D1C368C4F1F79237B3D0
-        public VirtualMachineScaleSetImpl WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
-        {
-            return WithSpecificWindowsImageVersion(knownImage.ImageReference());
-        }
-
-        ///GENMHASH:3874257232804C74BD7501DE2BE2F0E9:D48844CD7D7EEEF909BD7006D3A7E439
-        public VirtualMachineScaleSetImpl WithLatestWindowsImage(string publisher, string offer, string sku)
-        {
-            ImageReference imageReference = new ImageReference
-            {
-                Publisher = publisher,
-                Offer = offer,
-                Sku = sku,
-                Version = "latest"
-            };
-            return WithSpecificWindowsImageVersion(imageReference);
-        }
-
-        ///GENMHASH:4A7665D6C5D507E115A9A8E551801DB6:34766ED2773D600054F8D54E17BAE777
-        public VirtualMachineScaleSetImpl WithSpecificWindowsImageVersion(ImageReference imageReference)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.ImageReference = imageReference;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration = new WindowsConfiguration()
-                    {
-                        // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-                        ProvisionVMAgent = true,
-                        EnableAutomaticUpdates = true
-                    };
-            return this;
-        }
-
-        ///GENMHASH:0B0B068704882D0210B822A215F5536D:243E7BC061CB4C21AF430343B3ACCDAA
-        public VirtualMachineScaleSetImpl WithStoredWindowsImage(string imageUrl)
-        {
-            VirtualHardDisk userImageVhd = new VirtualHardDisk()
-            {
-                Uri = imageUrl
-            };
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Image = userImageVhd;
-            // For platform image osType will be null, azure will pick it from the image metadata.
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration = new WindowsConfiguration()
-                    {
-                        // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-                        ProvisionVMAgent = true,
-                        EnableAutomaticUpdates = true
-                    };
-            return this;
-        }
-
-        ///GENMHASH:9177073080371FB82A479834DA14F493:CB0A5903865A994CFC26F01586B9FD22
-        public VirtualMachineScaleSetImpl WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
-        {
-            return WithSpecificLinuxImageVersion(knownImage.ImageReference());
-        }
-
-        ///GENMHASH:6D51A334B57DF882E890FEBA9887BE77:7C195F155B243BEB1BF2C9C922692404
-        public VirtualMachineScaleSetImpl WithLatestLinuxImage(string publisher, string offer, string sku)
-        {
-            ImageReference imageReference = new ImageReference
-            {
-                Publisher = publisher,
-                Offer = offer,
-                Sku = sku,
-                Version = "latest"
-            };
-            return WithSpecificLinuxImageVersion(imageReference);
-        }
-
-        ///GENMHASH:B2876749E60D892750D75C97943BBB13:8A00469CB79E03A6AEE1700CD469F036
-        public VirtualMachineScaleSetImpl WithSpecificLinuxImageVersion(ImageReference imageReference)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.ImageReference = imageReference;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.LinuxConfiguration = new LinuxConfiguration();
-            this.isMarketplaceLinuxImage = true;
-            return this;
-        }
-
-        ///GENMHASH:976BC0FCB9812014FA27474FCF6A694F:51AD565B2270FC1F9104F1A5BC632E24
-        public VirtualMachineScaleSetImpl WithStoredLinuxImage(string imageUrl)
-        {
-            VirtualHardDisk userImageVhd = new VirtualHardDisk();
-            userImageVhd.Uri = imageUrl;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Image = userImageVhd;
-            // For platform image osType will be null, azure will pick it from the image metadata.
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Linux;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.LinuxConfiguration = new LinuxConfiguration();
-            return this;
-        }
-
-        ///GENMHASH:D5F141800B409906045662B0DD536DE4:26BA1C1FFB483992498725C1ED900BA1
-        public VirtualMachineScaleSetImpl WithRootUsername(string rootUserName)
-        {
+            ImageReferenceInner imageReferenceInner = new ImageReferenceInner();
+            imageReferenceInner.Id = customImageId;
             this.Inner
                 .VirtualMachineProfile
-                .OsProfile
-                .AdminUsername = rootUserName;
-            return this;
-        }
-
-        ///GENMHASH:F2FFAF5448D7DFAFBE00130C62E87053:F7407CEA3D12779F169A4F2984ACFC2B
-        public VirtualMachineScaleSetImpl WithRootPassword(string password)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .AdminPassword = password;
-            return this;
-        }
-
-        ///GENMHASH:0E3F9BC2C5C0DB936DBA634A972BC916:26BA1C1FFB483992498725C1ED900BA1
-        public VirtualMachineScaleSetImpl WithAdminUsername(string adminUserName)
-        {
+                .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
             this.Inner
                 .VirtualMachineProfile
-                .OsProfile
-                .AdminUsername = adminUserName;
-            return this;
-        }
-
-        ///GENMHASH:5810786355B161A5CD254C9E3BE76524:F7407CEA3D12779F169A4F2984ACFC2B
-        public VirtualMachineScaleSetImpl WithAdminPassword(string password)
-        {
+                .StorageProfile.ImageReference = imageReferenceInner;
             this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .AdminPassword = password;
-            return this;
-        }
-
-        ///GENMHASH:9BBA27913235B4504FD9F07549E645CC:0BF9F49BB572288259C5C2CF97915D33
-        public VirtualMachineScaleSetImpl WithSsh(string publicKeyData)
-        {
-            VirtualMachineScaleSetOSProfile osProfile = this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile;
-            if (osProfile.LinuxConfiguration.Ssh == null)
-            {
-                SshConfiguration sshConfiguration = new SshConfiguration();
-                sshConfiguration.PublicKeys = new List<SshPublicKey>();
-                osProfile.LinuxConfiguration.Ssh = sshConfiguration;
-            }
-            SshPublicKey sshPublicKey = new SshPublicKey();
-            sshPublicKey.KeyData = publicKeyData;
-            sshPublicKey.Path = "/home/" + osProfile.AdminUsername + "/.ssh/authorized_keys";
-            osProfile.LinuxConfiguration.Ssh.PublicKeys.Add(sshPublicKey);
-            return this;
-        }
-
-        ///GENMHASH:3CAA43EAEEB81309EADF54AA78725296:E14EB64EB306A8F5A0DF21CD2E85782B
-        public VirtualMachineScaleSetImpl WithVmAgent()
-        {
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration = new WindowsConfiguration();
+            // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
             this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
             return this;
         }
 
-        ///GENMHASH:F16446581B25DFD00E74CB1193EBF605:438AB79E7DABFF084F3F25050C0B0DCB
-        public VirtualMachineScaleSetImpl WithoutVmAgent()
+        ///GENMHASH:90924DCFADE551C6E90B738982E6C2F7:8E8BCFD08143E85B586E9D48D32AF4E0
+        public VirtualMachineScaleSetImpl WithOsDiskStorageAccountType(StorageAccountTypes accountType)
         {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
-            return this;
-        }
-
-        ///GENMHASH:A50ABE2E1C931A4A3E6C46728ECA9763:0D2CCE10FD77C080849AE0BE069DCC7D
-        public VirtualMachineScaleSetImpl WithAutoUpdate()
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
-            return this;
-        }
-
-        ///GENMHASH:98B10909018928720DBCCEBE53E08820:75A4D7D6FD5B54E56A4949AE30530D27
-        public VirtualMachineScaleSetImpl WithoutAutoUpdate()
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
+            this.managedDataDisks.SetDefaultStorageAccountType(accountType);
             return this;
         }
 
@@ -791,398 +966,49 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:78969D0BA29AFC39123F017955CEE8EE
-        public VirtualMachineScaleSetImpl WithWinRm(WinRMListener listener)
+        ///GENMHASH:E50F40651A5B1AF20BC79D94DD871BC0:8D097652777E7CA886C41C25ADBEAA28
+        private static string MergePath(params string[] segments)
         {
-            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
+            StringBuilder builder = new StringBuilder();
+            foreach (string segment in segments)
             {
-                WinRMConfiguration winRMConfiguration = new WinRMConfiguration();
-                this.Inner
-                        .VirtualMachineProfile
-                        .OsProfile.WindowsConfiguration.WinRM = winRMConfiguration;
+                string tmp = segment;
+                while (tmp.Length > 1 && tmp.EndsWith("/"))
+                {
+                    tmp = tmp.Substring(0, tmp.Length - 1);
+                }
+
+                if (tmp.Length > 0)
+                {
+                    builder.Append(tmp);
+                    builder.Append("/");
+                }
             }
 
-            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM.Listeners == null)
+            string merged = builder.ToString();
+            if (merged.EndsWith("/"))
             {
-                this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .WindowsConfiguration.WinRM
-                    .Listeners = new List<WinRMListener>();
+                merged = merged.Substring(0, merged.Length - 1);
             }
-
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .WindowsConfiguration
-                    .WinRM
-                    .Listeners
-                    .Add(listener);
-            return this;
+            return merged;
         }
 
-        ///GENMHASH:E8024524BA316DC9DEEB983B272ABF81:35404321E1B27D532B34DF57EB311A9E
-        public VirtualMachineScaleSetImpl WithCustomData(string base64EncodedCustomData)
+        ///GENMHASH:CE03CDBD07CA3BD7500B36B206A91A4A:592F5357F294A567BF101FAB341C6CCA
+        public VirtualMachineScaleSetImpl WithLinuxCustomImage(string customImageId)
         {
+            ImageReferenceInner imageReferenceInner = new ImageReferenceInner();
+            imageReferenceInner.Id = customImageId;
             this.Inner
                 .VirtualMachineProfile
-                .OsProfile
-                .CustomData = base64EncodedCustomData;
-            return this;
-        }
-
-        ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
-        public VirtualMachineScaleSetImpl WithOsDiskCaching(CachingTypes cachingType)
-        {
+                .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
             this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Caching = cachingType;
-            return this;
-        }
-
-        ///GENMHASH:C5EB453493B1100152604C49B4350246:13A96702474EC693EFE5444489CDEDCC
-        public VirtualMachineScaleSetImpl WithOsDiskName(string name)
-        {
+                .VirtualMachineProfile
+                .StorageProfile.ImageReference = imageReferenceInner;
             this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Name = name;
+                .VirtualMachineProfile
+                .OsProfile.LinuxConfiguration = new LinuxConfiguration();
+            this.isMarketplaceLinuxImage = true;
             return this;
-        }
-
-        ///GENMHASH:7BA741621F15820BA59476A9CFEBBD88:395C45C93AFFE4737734EBBF09A6B2AF
-        public VirtualMachineScaleSetImpl WithComputerNamePrefix(string namePrefix)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .ComputerNamePrefix = namePrefix;
-            return this;
-        }
-
-        ///GENMHASH:D7FDEEE05B0AD7938194763373E58DCF:B966166E0B6ED23B8FE875ADCB3E96A7
-        public VirtualMachineScaleSetImpl WithUpgradeMode(UpgradeMode upgradeMode)
-        {
-            this.Inner
-                    .UpgradePolicy
-                    .Mode = upgradeMode;
-            return this;
-        }
-
-        ///GENMHASH:C9A8EFD03D810995DC8CE56B0EFD441D:2CAE9E848FD32118B304BEAAC0B5066D
-        public VirtualMachineScaleSetImpl WithOverProvision(bool enabled)
-        {
-            this.Inner
-                    .OverProvision = enabled;
-            return this;
-        }
-
-        ///GENMHASH:CBF523A860AE839D0C4D7384E636EA3A:FBFD113A504A5E7AC32C778EDF3C9726
-        public VirtualMachineScaleSetImpl WithoutOverProvisioning()
-        {
-            return this.WithOverProvision(false);
-        }
-
-        ///GENMHASH:D05B148D26960ED1D8EF344B16F36F78:00EC0F6EA3A819049F5C89068A74593C
-        public VirtualMachineScaleSetImpl WithOverProvisioning()
-        {
-            return this.WithOverProvision(true);
-        }
-
-        ///GENMHASH:085C052B5E99B190740EE6AF70CF4D53:4F450AB75A3E01A0CCB9AFBF4F23BE28
-        public VirtualMachineScaleSetImpl WithCapacity(int capacity)
-        {
-            this.Inner
-                    .Sku.Capacity = capacity;
-            return this;
-        }
-
-        ///GENMHASH:5880487AA9218E8DF536932A49A0ACDD:35850B81E88D88D68766589B9671E590
-        public VirtualMachineScaleSetImpl WithNewStorageAccount(string name)
-        {
-            Storage.Fluent.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
-                    .StorageAccounts
-                    .Define(name)
-                    .WithRegion(this.RegionName);
-            ICreatable<IStorageAccount> definitionAfterGroup;
-            if (this.newGroup != null)
-            {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);
-            }
-            else
-            {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.ResourceGroupName);
-            }
-            return WithNewStorageAccount(definitionAfterGroup);
-        }
-
-        ///GENMHASH:2DC51FEC3C45675856B4AC1D97BECBFD:625251347BC517ED9D6E5D9755FBF00B
-        public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
-        {
-            this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Resource.Fluent.Core.IHasId>);
-            return this;
-        }
-
-        ///GENMHASH:8CB9B7EEE4A4226A6F5BBB2958CC5E81:A9181EF01C6B9C8C3CB92E9F535B6236
-        public VirtualMachineScaleSetImpl WithExistingStorageAccount(IStorageAccount storageAccount)
-        {
-            this.existingStorageAccountsToAssociate.Add(storageAccount);
-            return this;
-        }
-
-        ///GENMHASH:D7A14F2EFF1E4165DA55EF07B6C19534:7212B561D81BB0678D70A3F6EF38FA07
-        public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
-        {
-            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
-        }
-
-        ///GENMHASH:EB45314951D6F0A225DF2E0CC4444647:31CE7DD3ED015A2C03AF72E95A38202E
-        internal VirtualMachineScaleSetImpl WithExtension(VirtualMachineScaleSetExtensionImpl extension)
-        {
-            this.extensions.Add(extension.Name(), extension);
-            return this;
-        }
-
-        ///GENMHASH:E7610DABE1E75344D9E0DBC0332E7F96:92F04FC0178BF91F20DF542F454DC302
-        public VirtualMachineScaleSetExtensionImpl UpdateExtension(string name)
-        {
-            IVirtualMachineScaleSetExtension value = null;
-            if (!this.extensions.TryGetValue(name, out value))
-            {
-                throw new ArgumentException("Extension with name '" + name + "' not found");
-            }
-            return (VirtualMachineScaleSetExtensionImpl)value;
-        }
-
-        ///GENMHASH:1E53238DF79E665335390B7452E9A04C:341F8A896942EC0102DC34824A8AED9B
-        public VirtualMachineScaleSetImpl WithoutExtension(string name)
-        {
-            if (this.extensions.ContainsKey(name))
-            {
-                this.extensions.Remove(name);
-            }
-            return this;
-        }
-
-        #endregion
-
-        #region Actions
-
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:9A047B4B22E09AEB6344D4F23EC361E5
-        public override IVirtualMachineScaleSet Refresh()
-        {
-            var response = client.Get(this.ResourceGroupName,
-                this.Name);
-            SetInner(response);
-            this.ClearCachedProperties();
-            this.InitializeChildrenFromInner();
-            return this;
-        }
-
-        ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
-        public void Deallocate()
-        {
-            this.client.Deallocate(this.ResourceGroupName, this.Name);
-        }
-
-        ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
-        public void PowerOff()
-        {
-            this.client.PowerOff(this.ResourceGroupName, this.Name);
-        }
-
-        ///GENMHASH:DB561BC9EF939094412065B65EB3D2EA:323D5930D438D7B746B03A2AB231B061
-        public void Reimage()
-        {
-            this.client.Reimage(this.ResourceGroupName, this.Name);
-        }
-
-        ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
-        public void Restart()
-        {
-            this.client.Restart(this.ResourceGroupName, this.Name);
-        }
-
-        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
-        public void Start()
-        {
-            this.client.Start(this.ResourceGroupName, this.Name);
-        }
-
-        #endregion
-
-        #region Helpers
-
-        ///GENMHASH:B521ECE36A8645ACCD4603A46DF73D20:6C43F204834714CB74740068BED95D98
-        private bool IsInUpdateMode()
-        {
-            return !this.IsInCreateMode;
-        }
-
-        ///GENMHASH:8200C3AA2986ADE3279CEB6CF0EA96D9:902A99F7BBADF1A8D66E6AE021D9D37D
-        private void SetOSDiskAndOSProfileDefaults()
-        {
-            if (this.IsInUpdateMode())
-            {
-                return;
-            }
-
-            if (this.Inner.Sku.Capacity == null)
-            {
-                this.WithCapacity(2);
-            }
-
-            if (this.Inner.UpgradePolicy == null
-                    || this.Inner.UpgradePolicy.Mode == null)
-            {
-                this.Inner.UpgradePolicy = new UpgradePolicy
-                {
-                    Mode = UpgradeMode.Automatic
-                };
-            }
-
-            VirtualMachineScaleSetOSProfile osProfile = this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile;
-            // linux image: Custom or marketplace linux image
-            if ((this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType != null
-                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType == OperatingSystemTypes.Linux) || this.isMarketplaceLinuxImage)
-            {
-                if (osProfile.LinuxConfiguration == null)
-                {
-                    osProfile.LinuxConfiguration = new LinuxConfiguration();
-                }
-                osProfile
-                    .LinuxConfiguration
-                    .DisablePasswordAuthentication = osProfile.AdminPassword == null;
-            }
-
-            if (this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
-            {
-                this.WithOsDiskCaching(CachingTypes.ReadWrite);
-            }
-
-            if (this.OsDiskName() == null)
-            {
-                this.WithOsDiskName(this.Name + "-os-disk");
-            }
-
-            if (this.ComputerNamePrefix() == null)
-            {
-                // VM name cannot contain only numeric values and cannot exceed 15 chars
-                if ((new Regex(@"^\d+$")).IsMatch(this.Name))
-                {
-                    this.WithComputerNamePrefix(SdkContext.RandomResourceName("vmss-vm", 12));
-                }
-                else if (this.Name.Length <= 12)
-                {
-                    this.WithComputerNamePrefix(this.Name + "-vm");
-                }
-                else
-                {
-                    this.WithComputerNamePrefix(SdkContext.RandomResourceName("vmss-vm", 12));
-                }
-            }
-        }
-
-        ///GENMHASH:F60C5902A709BFEB700B6B3CCE5663A8:76A3EB6FFB2F9BFB55AE1B46314EF027
-        private bool IsCustomImage(VirtualMachineScaleSetStorageProfile storageProfile)
-        {
-            return storageProfile.OsDisk.Image != null
-                    && storageProfile.OsDisk.Image.Uri != null;
-        }
-
-        ///GENMHASH:A3BEF34E904F3350A24482F5F0F6C369:DA52BB75B8BFDF93918E03080D37DEF6
-        private async Task HandleOSDiskContainersAsync()
-        {
-            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile;
-            if (IsCustomImage(storageProfile))
-            {
-                // There is a restriction currently that virtual machine's disk cannot be stored in multiple storage accounts
-                // if scale set is based on custom image. Remove this check once azure start supporting it.
-                storageProfile.OsDisk
-                        .VhdContainers
-                        .Clear();
-                await Task.Yield();
-                return;
-            }
-
-            if (this.IsInCreateMode
-                && this.creatableStorageAccountKeys.Count == 0
-                && this.existingStorageAccountsToAssociate.Count == 0)
-            {
-                IStorageAccount storageAccount = await this.storageManager.StorageAccounts
-                        .Define(this.namer.RandomName("stg", 24))
-                        .WithRegion(this.RegionName)
-                        .WithExistingResourceGroup(this.ResourceGroupName)
-                        .CreateAsync();
-                String containerName = vhdContainerName;
-                if (containerName == null)
-                {
-                    containerName = "vhds";
-                }
-                storageProfile.OsDisk
-                        .VhdContainers
-                        .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
-                vhdContainerName = null;
-                creatableStorageAccountKeys.Clear();
-                existingStorageAccountsToAssociate.Clear();
-                return;
-            }
-            else
-            {
-                string containerName = this.vhdContainerName;
-                if (containerName == null)
-                {
-                    foreach (string containerUrl in storageProfile.OsDisk.VhdContainers)
-                    {
-                        containerName = containerUrl.Substring(containerUrl.LastIndexOf("/") + 1);
-                        break;
-                    }
-                }
-
-                if (containerName == null)
-                {
-                    containerName = "vhds";
-                }
-
-                foreach (string storageAccountKey in this.creatableStorageAccountKeys)
-                {
-                    IStorageAccount storageAccount = (IStorageAccount)CreatedResource(storageAccountKey);
-                    storageProfile.OsDisk
-                            .VhdContainers
-                            .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
-                }
-
-                foreach (IStorageAccount storageAccount in this.existingStorageAccountsToAssociate)
-                {
-                    storageProfile.OsDisk
-                            .VhdContainers
-                            .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
-                }
-
-                this.vhdContainerName = null;
-                this.creatableStorageAccountKeys.Clear();
-                this.existingStorageAccountsToAssociate.Clear();
-            }
-        }
-
-        ///GENMHASH:8EC66BEFDF0AB45D9707306C2856E7C8:31CFCE6190972DAB49A6CC439CE9500F
-        private void SetPrimaryIpConfigurationSubnet()
-        {
-            if (this.IsInUpdateMode())
-            {
-                return;
-            }
-
-            VirtualMachineScaleSetIPConfigurationInner ipConfig = this.PrimaryNicDefaultIPConfiguration();
-            ipConfig.Subnet = new ApiEntityReference
-            {
-                Id = this.existingPrimaryNetworkSubnetNameToAssociate
-            };
-            this.existingPrimaryNetworkSubnetNameToAssociate = null;
         }
 
         ///GENMHASH:2582ED197AB392F5EC837F6BC8FE2FF0:29B4432F98CD641D0280C31D00CAFB2D
@@ -1318,85 +1144,390 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.primaryInternalLoadBalancer = null;
         }
 
-        ///GENMHASH:0ACBCB3C1F81BA37F134262122B79DA2:A4F154B483C36885CF45861AA9C1885F
-        private void LoadCurrentPrimaryLoadBalancersIfAvailable()
+        ///GENMHASH:33905CDEAEEF3BB750202A2D6D557629:DB1E6EAD0CBA02A64BE5E2EE1AE862FC
+        public bool OverProvisionEnabled()
         {
-            if (this.primaryInternetFacingLoadBalancer != null && this.primaryInternalLoadBalancer != null)
+            return this.Inner.Overprovision.Value;
+        }
+
+        ///GENMHASH:6EBC495ACCF47FA1132C69EF861BEF04:D2A5B97B4B994A8E4E51963BF644DE4B
+        public VirtualMachineScaleSetImpl WithDataDiskUpdated(int lun, int newSizeInGB)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_No_Managed_Disk_To_Update);
+            VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
+            if (dataDisk == null)
+            {
+                throw new InvalidOperationException(String.Format("A data disk with lun '%d' not found", lun));
+            }
+            dataDisk.DiskSizeGB = newSizeInGB;
+            return this;
+        }
+
+        ///GENMHASH:986681CB5EE945646F08E34410E1B451:FFA40AD18912F7256B5D3D5734676714
+        public VirtualMachineScaleSetImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_No_Managed_Disk_To_Update);
+            VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
+            if (dataDisk == null)
+            {
+                throw new InvalidOperationException(String.Format("A data disk with lun '%d' not found", lun));
+            }
+            dataDisk.DiskSizeGB = newSizeInGB;
+            dataDisk.Caching = cachingType;
+            return this;
+        }
+
+        ///GENMHASH:63310A9035013C60AE73F35617BBA53F:EE9555A6CB519B9EA087D92E2ACDAAE2
+        public VirtualMachineScaleSetImpl WithDataDiskUpdated(int lun, int newSizeInGB, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_No_Managed_Disk_To_Update);
+            VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
+            if (dataDisk == null)
+            {
+                throw new InvalidOperationException(String.Format("A data disk with lun '%d' not found", lun));
+            }
+            dataDisk.DiskSizeGB = newSizeInGB;
+            dataDisk.Caching = cachingType;
+            dataDisk.ManagedDisk.StorageAccountType = storageAccountType;
+            return this;
+        }
+
+        ///GENMHASH:AFF08018A4055EA21949F6479B3BCCA0:4175296A99E4DC787679DF89D1FABCD5
+        public VirtualMachineScaleSetNetworkProfile NetworkProfile()
+        {
+            return this.Inner.VirtualMachineProfile.NetworkProfile;
+        }
+
+        ///GENMHASH:408E3AC8FC1959B99618665484BFE199:6DCFB156DC060B1BEBD0F007DDD76D62
+        private void SetOSDiskDefault()
+        {
+            if (IsInUpdateMode())
             {
                 return;
             }
-
-            string firstLoadBalancerId = null;
-            VirtualMachineScaleSetIPConfigurationInner ipConfig = PrimaryNicDefaultIPConfiguration();
-            if (ipConfig.LoadBalancerBackendAddressPools.Count > 0)
+            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner.VirtualMachineProfile.StorageProfile;
+            VirtualMachineScaleSetOSDisk osDisk = storageProfile.OsDisk;
+            if (IsOSDiskFromImage(osDisk))
             {
-                firstLoadBalancerId = ResourceUtils
-                        .ParentResourcePathFromResourceId(ipConfig.LoadBalancerBackendAddressPools.ElementAt(0).Id);
-            }
-
-            if (firstLoadBalancerId == null && ipConfig.LoadBalancerInboundNatPools.Count > 0)
-            {
-                firstLoadBalancerId = ResourceUtils
-                        .ParentResourcePathFromResourceId(ipConfig.LoadBalancerInboundNatPools.ElementAt(0).Id);
-            }
-
-            if (firstLoadBalancerId == null)
-            {
-                return;
-            }
-
-            ILoadBalancer loadBalancer1 = this.networkManager
-                .LoadBalancers
-                .GetById(firstLoadBalancerId);
-            if (loadBalancer1.PublicIpAddressIds != null && loadBalancer1.PublicIpAddressIds.Count > 0)
-            {
-                this.primaryInternetFacingLoadBalancer = loadBalancer1;
-            }
-            else
-            {
-                this.primaryInternalLoadBalancer = loadBalancer1;
-            }
-
-            string secondLoadBalancerId = null;
-            foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-            {
-                if (!subResource.Id.ToLower().StartsWith(firstLoadBalancerId.ToLower()))
+                // ODDisk CreateOption: FROM_IMAGE
+                //
+                if (IsManagedDiskEnabled())
                 {
-                    secondLoadBalancerId = ResourceUtils
-                            .ParentResourcePathFromResourceId(subResource.Id);
-                    break;
-                }
-            }
-
-            if (secondLoadBalancerId == null)
-            {
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (!subResource.Id.ToLower().StartsWith(firstLoadBalancerId.ToLower()))
+                    // Note:
+                    // Managed disk
+                    //     Supported: PlatformImage and CustomImage
+                    //     UnSupported: StoredImage
+                    //
+                    if (osDisk.ManagedDisk == null)
                     {
-                        secondLoadBalancerId = ResourceUtils
-                                .ParentResourcePathFromResourceId(subResource.Id);
-                        break;
+                        osDisk.ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters();
+                    }
+                    if (osDisk.ManagedDisk.StorageAccountType == null)
+                    {
+                        osDisk.ManagedDisk
+                            .StorageAccountType = StorageAccountTypes.StandardLRS;
+                    }
+                    osDisk.VhdContainers = null;
+                    // We won't set osDisk.Name() explicitly for managed disk, if it is null CRP generates unique
+                    // name for the disk resource within the resource group.
+                }
+                else
+                {
+                    // Note:
+                    // Native (un-managed) disk
+                    //     Supported: PlatformImage and StoredImage
+                    //     UnSupported: CustomImage
+                    //
+                    osDisk.ManagedDisk = null;
+                    if (osDisk.Name == null)
+                    {
+                        WithOsDiskName(this.Name + "-os-disk");
                     }
                 }
             }
-
-            if (secondLoadBalancerId == null)
+            else
             {
-                return;
+                // NOP [ODDisk CreateOption: ATTACH, ATTACH is not supported for VMSS]
             }
-
-            ILoadBalancer loadBalancer2 = this.networkManager
-            .LoadBalancers
-            .GetById(secondLoadBalancerId);
-            if (loadBalancer2.PublicIpAddressIds != null && loadBalancer2.PublicIpAddressIds.Count > 0)
+            if (this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
             {
-                this.primaryInternetFacingLoadBalancer = loadBalancer2;
+                WithOsDiskCaching(CachingTypes.ReadWrite);
+            }
+        }
+
+        ///GENMHASH:8FDBCB5DF6AFD1594DF170521CE46D5F:4DF21C8BC272D1C368C4F1F79237B3D0
+        public VirtualMachineScaleSetImpl WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
+        {
+            return WithSpecificWindowsImageVersion(knownImage.ImageReference());
+        }
+
+        ///GENMHASH:8371720B72164AB21B88202FD4561610:9ECD956712FBC7CB9A976884F3BEAB45
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListPrimaryInternetFacingLoadBalancerBackends()
+        {
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            {
+                return GetBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
+                        PrimaryNicDefaultIPConfiguration());
+            }
+            return new Dictionary<string, ILoadBalancerBackend>();
+        }
+
+        ///GENMHASH:5810786355B161A5CD254C9E3BE76524:F7407CEA3D12779F169A4F2984ACFC2B
+        public VirtualMachineScaleSetImpl WithAdminPassword(string password)
+        {
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile
+                    .AdminPassword = password;
+            return this;
+        }
+
+        ///GENMHASH:83A8BCB96B7881DAF693D324E0E9BAAE:83FB521120A40493EBC9C3BFCC730829
+        public ILoadBalancer GetPrimaryInternetFacingLoadBalancer()
+        {
+            if (this.primaryInternetFacingLoadBalancer == null)
+            {
+                LoadCurrentPrimaryLoadBalancersIfAvailable();
+            }
+            return this.primaryInternetFacingLoadBalancer;
+        }
+
+        ///GENMHASH:B899054CADDD4C764670C53E2A300590:038D6D03640016D71036DDBF325D8E0F
+        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
+        {
+            AddToList(this.primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate, natPoolNames);
+            return this;
+        }
+
+        ///GENMHASH:9BBA27913235B4504FD9F07549E645CC:0BF9F49BB572288259C5C2CF97915D33
+        public VirtualMachineScaleSetImpl WithSsh(string publicKeyData)
+        {
+            VirtualMachineScaleSetOSProfile osProfile = this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile;
+            if (osProfile.LinuxConfiguration.Ssh == null)
+            {
+                SshConfiguration sshConfiguration = new SshConfiguration();
+                sshConfiguration.PublicKeys = new List<SshPublicKey>();
+                osProfile.LinuxConfiguration.Ssh = sshConfiguration;
+            }
+            SshPublicKey sshPublicKey = new SshPublicKey();
+            sshPublicKey.KeyData = publicKeyData;
+            sshPublicKey.Path = "/home/" + osProfile.AdminUsername + "/.ssh/authorized_keys";
+            osProfile.LinuxConfiguration.Ssh.PublicKeys.Add(sshPublicKey);
+            return this;
+        }
+
+        ///GENMHASH:864D8E4C8CD2E86906490FEDA8FB3F2B:8DBC7BDC302D2B4665D3623CB5CE6F9B
+        private static IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> GetBackendsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer, VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        {
+            string loadBalancerId = loadBalancer.Id;
+            Dictionary<string, ILoadBalancerBackend> attachedBackends = new Dictionary<string, ILoadBalancerBackend>();
+            var lbBackends = loadBalancer.Backends;
+            foreach (ILoadBalancerBackend lbBackend in lbBackends.Values)
+            {
+                string backendId = MergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
+                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
+                {
+                    if (subResource.Id.Equals(backendId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        attachedBackends.Add(lbBackend.Name, lbBackend);
+                    }
+                }
+            }
+            return attachedBackends;
+        }
+
+        ///GENMHASH:38EF4A7AB82168A6DD38F533747DA9D5:362113C4E307F07B620E363B30115839
+        public string ComputerNamePrefix()
+        {
+            return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
+        }
+
+        ///GENMHASH:44218FC054E9DD430ECE7417A9705EB2:2DB39ADE66ABE6DB110EEDB9C63E2DB3
+        public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
+        {
+            if (this.IsInCreateMode)
+            {
+                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.PrimaryNicDefaultIPConfiguration();
+                RemoveAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
+                        defaultPrimaryIpConfig);
+                AssociateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
+                        defaultPrimaryIpConfig,
+                        natPoolNames);
             }
             else
             {
-                this.primaryInternalLoadBalancer = loadBalancer2;
+                AddToList(this.primaryInternalLBInboundNatPoolsToAddOnUpdate, natPoolNames);
             }
+            return this;
+        }
+
+        ///GENMHASH:0B0B068704882D0210B822A215F5536D:243E7BC061CB4C21AF430343B3ACCDAA
+        public VirtualMachineScaleSetImpl WithStoredWindowsImage(string imageUrl)
+        {
+            VirtualHardDisk userImageVhd = new VirtualHardDisk();
+            userImageVhd.Uri = imageUrl;
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.Image = userImageVhd;
+            // For platform image osType will be null, azure will pick it from the image metadata.
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration = new WindowsConfiguration();
+            // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
+            return this;
+        }
+
+        ///GENMHASH:CAFE3044E63DB355E0097F6FD22A0282:600739A4DD068DBA0CF85CC076E9111F
+        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus()
+        {
+            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
+            {
+                return this.client.ListSkusNext(nextLink);
+            });
+
+            return PagedListConverter.Convert<VirtualMachineScaleSetSku, IVirtualMachineScaleSetSku>(innerPagedList, inner =>
+            {
+                return new VirtualMachineScaleSetSkuImpl(inner);
+            });
+        }
+
+        ///GENMHASH:B521ECE36A8645ACCD4603A46DF73D20:6C43F204834714CB74740068BED95D98
+        private bool IsInUpdateMode()
+        {
+            return !this.IsInCreateMode;
+        }
+
+        ///GENMHASH:CE408710AAEBD9F32D9AA9DB3280112C:DE7951813645A18DB8AC5B2A48405BD0
+        public VirtualMachineScaleSetImpl WithSku(VirtualMachineScaleSetSkuTypes skuType)
+        {
+            this.Inner.Sku = skuType.Sku;
+            return this;
+        }
+
+        ///GENMHASH:C28C7D09D57FFF72FA8A6AEC7292936E:58BB80E4580D65A5E408E4BA250168E1
+        public VirtualMachineScaleSetImpl WithSku(IVirtualMachineScaleSetSku sku)
+        {
+            return this.WithSku(sku.SkuType);
+        }
+
+        ///GENMHASH:9177073080371FB82A479834DA14F493:CB0A5903865A994CFC26F01586B9FD22
+        public VirtualMachineScaleSetImpl WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
+        {
+            return WithSpecificLinuxImageVersion(knownImage.ImageReference());
+        }
+
+        ///GENMHASH:6D51A334B57DF882E890FEBA9887BE77:7C195F155B243BEB1BF2C9C922692404
+        public VirtualMachineScaleSetImpl WithLatestLinuxImage(string publisher, string offer, string sku)
+        {
+            ImageReference imageReference = new ImageReference();
+            imageReference.Publisher = publisher;
+            imageReference.Offer = offer;
+            imageReference.Sku = sku;
+            imageReference.Version = "latest";
+            return WithSpecificLinuxImageVersion(imageReference);
+        }
+
+        ///GENMHASH:CBF523A860AE839D0C4D7384E636EA3A:FBFD113A504A5E7AC32C778EDF3C9726
+        public VirtualMachineScaleSetImpl WithoutOverProvisioning()
+        {
+            return this.WithOverProvision(false);
+        }
+
+        ///GENMHASH:7CC775D2FD3FE91AF2002BEF58F09719:99855FF2EE95AA6F2863BA16C5E195B6
+        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        {
+            AddToList(this.primaryInternetFacingLBBackendsToRemoveOnUpdate, backendNames);
+            return this;
+        }
+
+        ///GENMHASH:4A7665D6C5D507E115A9A8E551801DB6:2F9DC0F45AE7B5E40E42D209F813E9DD
+        public VirtualMachineScaleSetImpl WithSpecificWindowsImageVersion(ImageReference imageReference)
+        {
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+            this.Inner
+                .VirtualMachineProfile
+                .StorageProfile.ImageReference = imageReference.Inner;
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration = new WindowsConfiguration();
+            // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
+            return this;
+        }
+
+        ///GENMHASH:8EC66BEFDF0AB45D9707306C2856E7C8:31CFCE6190972DAB49A6CC439CE9500F
+        private void SetPrimaryIpConfigurationSubnet()
+        {
+            if (this.IsInUpdateMode())
+            {
+                return;
+            }
+            VirtualMachineScaleSetIPConfigurationInner ipConfig = this.PrimaryNicDefaultIPConfiguration();
+            ipConfig.Subnet = new ApiEntityReference
+            {
+                Id = this.existingPrimaryNetworkSubnetNameToAssociate
+            };
+            this.existingPrimaryNetworkSubnetNameToAssociate = null;
+        }
+
+        ///GENMHASH:C81171F34FA85CED80852E725FF8B7A4:8AADBD78C0C1C88EB899BC43FF6E8A1E
+        public bool IsManagedDiskEnabled()
+        {
+            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner.VirtualMachineProfile.StorageProfile;
+            if (IsOsDiskFromCustomImage(storageProfile))
+            {
+                return true;
+            }
+            if (IsOSDiskFromStoredImage(storageProfile))
+            {
+                return false;
+            }
+            if (IsOSDiskFromPlatformImage(storageProfile))
+            {
+                if (this.isUnmanagedDiskSelected)
+                {
+                    return false;
+                }
+            }
+            if (IsInCreateMode)
+            {
+                return true;
+            }
+            else
+            {
+                var vhdContainers = storageProfile
+                .OsDisk
+                .VhdContainers;
+                return vhdContainers == null || vhdContainers.Count == 0;
+            }
+        }
+
+        ///GENMHASH:B37B5DD609CF1DB836ABB9CBB32E93E3:EBFBB1CB0457C2978B29376127013BE6
+        public VirtualMachineScaleSetImpl WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType)
+        {
+            this.managedDataDisks.SetDefaultStorageAccountType(storageAccountType);
+            return this;
         }
 
         ///GENMHASH:938517A3FC2059570C8EA6BFD0A7E151:78F7A73923F62410889B71C234EDE483
@@ -1406,7 +1537,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     .VirtualMachineProfile
                     .NetworkProfile
                     .NetworkInterfaceConfigurations;
-
             foreach (VirtualMachineScaleSetNetworkConfigurationInner nicConfiguration in nicConfigurations)
             {
                 if (nicConfiguration.Primary.HasValue && nicConfiguration.Primary == true)
@@ -1427,6 +1557,625 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
             throw new Exception("Could not find the primary nic configuration or an IP configuration in it");
+        }
+
+        ///GENMHASH:986009C9CE2533065F3AE9DC169521A5:31DD88A2E62A45DFF8AD50C30CFA00A6
+        public VirtualMachineScaleSetImpl WithoutUnmanagedDataDisk(string name)
+        {
+            if (IsManagedDiskEnabled())
+            {
+                // Its ok not to throw here, since in general 'withoutXX' can be NOP
+                return this;
+            }
+            VirtualMachineScaleSetStorageProfile storageProfile = this
+                .Inner
+                .VirtualMachineProfile
+                .StorageProfile;
+            IList<VirtualMachineScaleSetDataDisk> dataDisks = storageProfile
+                .DataDisks;
+            if (dataDisks != null)
+            {
+                int idx = -1;
+                foreach (var dataDisk in dataDisks)
+                {
+                    idx++;
+                    if (dataDisk.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        storageProfile.DataDisks.RemoveAt(idx);
+                        break;
+                    }
+                }
+            }
+            return this;
+        }
+
+        ///GENMHASH:54D3B4BD3F03BEE3E2ACA4B49D0F23C0:0BCE569691510B196041995279EF5907
+        public VirtualMachineScaleSetImpl WithoutUnmanagedDataDisk(int lun)
+        {
+            if (IsManagedDiskEnabled())
+            {
+                // Its ok not to throw here, since in general 'withoutXX' can be NOP
+                return this;
+            }
+            VirtualMachineScaleSetStorageProfile storageProfile = this
+                .Inner
+                .VirtualMachineProfile
+                .StorageProfile;
+            IList<VirtualMachineScaleSetDataDisk> dataDisks = storageProfile
+                .DataDisks;
+            if (dataDisks != null)
+            {
+                int idx = -1;
+                foreach (var dataDisk in dataDisks)
+                {
+                    idx++;
+                    if (dataDisk.Lun == lun)
+                    {
+                        storageProfile.DataDisks.RemoveAt(idx);
+                        break;
+                    }
+                }
+            }
+            return this;
+        }
+
+        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:B5D7FA290CD4B78F425E5D837D1426C5
+        protected override void BeforeCreating()
+        {
+            if (this.extensions.Count > 0)
+            {
+                this.Inner.VirtualMachineProfile
+                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
+                    {
+                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
+                    };
+                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
+                {
+                    this.Inner.VirtualMachineProfile
+                        .ExtensionProfile
+                        .Extensions.Add(extension.Inner);
+                }
+            }
+        }
+
+        ///GENMHASH:FD4CE9D235CA642C8185D0844177DDFB:D7E2129941B29E412D9F2124F2BAE432
+        public IList<string> VhdContainers()
+        {
+            if (this.Inner.VirtualMachineProfile.StorageProfile != null
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
+            {
+                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
+            }
+            return new List<string>();
+        }
+
+        ///GENMHASH:67723971057BB45E3F0FFEB5B7B65F34:314C13CB065F185378CB337F9FEEC400
+        private void SetOSProfileDefaults()
+        {
+            if (IsInUpdateMode())
+            {
+                return;
+            }
+            if (this.Inner.Sku.Capacity == null)
+            {
+                this.WithCapacity(2);
+            }
+            if (this.Inner.UpgradePolicy == null
+                || this.Inner.UpgradePolicy.Mode == null)
+            {
+                this.Inner.UpgradePolicy = new UpgradePolicy();
+                this.Inner.UpgradePolicy.Mode = UpgradeMode.Automatic;
+            }
+            VirtualMachineScaleSetOSProfile osProfile = this.Inner
+                .VirtualMachineProfile
+                .OsProfile;
+            VirtualMachineScaleSetOSDisk osDisk = this.Inner.VirtualMachineProfile.StorageProfile.OsDisk;
+            if (IsOSDiskFromImage(osDisk))
+            {
+                // ODDisk CreateOption: FROM_IMAGE
+                //
+                if (this.OsType() == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
+                {
+                    if (osProfile.LinuxConfiguration == null)
+                    {
+                        osProfile.LinuxConfiguration = new LinuxConfiguration();
+                    }
+                    osProfile
+                        .LinuxConfiguration
+                        .DisablePasswordAuthentication = osProfile.AdminPassword == null;
+                }
+                if (this.ComputerNamePrefix() == null)
+                {
+                    // VM name cannot contain only numeric values and cannot exceed 15 chars
+                    if ((new Regex(@"^\d+$")).IsMatch(this.Name))
+                    {
+                        this.WithComputerNamePrefix(SdkContext.RandomResourceName("vmss-vm", 12));
+                    }
+                    else if (this.Name.Length <= 12)
+                    {
+                        this.WithComputerNamePrefix(this.Name + "-vm");
+                    }
+                    else
+                    {
+                        this.WithComputerNamePrefix(SdkContext.RandomResourceName("vmss-vm", 12));
+                    }
+                }
+            }
+            else
+            {
+                // NOP [ODDisk CreateOption: ATTACH, ATTACH is not supported for VMSS]
+                this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile = null;
+            }
+        }
+
+        ///GENMHASH:A890CDCD402F1815F0ACD6293C3C115C:8FEE8350E44B2F78F72EE527639CDC76
+        public INetwork GetPrimaryNetwork()
+        {
+            string subnetId = PrimaryNicDefaultIPConfiguration().Subnet.Id;
+            string virtualNetworkId = ResourceUtils.ParentResourcePathFromResourceId(subnetId);
+            return this.networkManager
+                    .Networks
+                    .GetById(virtualNetworkId);
+        }
+
+        ///GENMHASH:8E925C4949ADC5B976067DDC58BE3E3C:D2243C739D20D636DF7C32705C2B6CAF
+        public IVirtualMachineScaleSetVMs VirtualMachines()
+        {
+            return new VirtualMachineScaleSetVMsImpl(this, this.vmInstancesClient, this.Manager);
+        }
+
+        ///GENMHASH:D5F141800B409906045662B0DD536DE4:26BA1C1FFB483992498725C1ED900BA1
+        public VirtualMachineScaleSetImpl WithRootUsername(string rootUserName)
+        {
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile
+                .AdminUsername = rootUserName;
+            return this;
+        }
+
+        ///GENMHASH:D7FDEEE05B0AD7938194763373E58DCF:B966166E0B6ED23B8FE875ADCB3E96A7
+        public VirtualMachineScaleSetImpl WithUpgradeMode(UpgradeMode upgradeMode)
+        {
+            this.Inner
+                    .UpgradePolicy
+                    .Mode = upgradeMode;
+            return this;
+        }
+
+        ///GENMHASH:EBD956A6D9170606742388660BDAF883:0632C1C1A1EE3CCF1E3F260984431012
+        private static void AddToList<T>(List<T> list, params T[] items)
+        {
+            foreach (T item in items)
+            {
+                list.Add(item);
+            }
+        }
+
+        ///GENMHASH:1E2CA1FC9878A5C0B08DAAE75CBAD541:CA4C4022D33F6F7487EF6C4ECA5FF3D3
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListPrimaryInternalLoadBalancerBackends()
+        {
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            {
+                return GetBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
+                        PrimaryNicDefaultIPConfiguration());
+            }
+            return new Dictionary<string, ILoadBalancerBackend>();
+        }
+
+        ///GENMHASH:DB561BC9EF939094412065B65EB3D2EA:323D5930D438D7B746B03A2AB231B061
+        public void Reimage()
+        {
+            this.client.Reimage(this.ResourceGroupName, this.Name);
+        }
+
+        ///GENMHASH:7BA741621F15820BA59476A9CFEBBD88:395C45C93AFFE4737734EBBF09A6B2AF
+        public VirtualMachineScaleSetImpl WithComputerNamePrefix(string namePrefix)
+        {
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile
+                    .ComputerNamePrefix = namePrefix;
+            return this;
+        }
+
+        ///GENMHASH:A50ABE2E1C931A4A3E6C46728ECA9763:0D2CCE10FD77C080849AE0BE069DCC7D
+        public VirtualMachineScaleSetImpl WithAutoUpdate()
+        {
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
+            return this;
+        }
+
+        private async Task HandleOSDiskContainersAsync()
+        {
+            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner
+                    .VirtualMachineProfile
+                    .StorageProfile;
+            if (IsManagedDiskEnabled())
+            {
+                storageProfile.OsDisk.VhdContainers = null;
+                return;
+            }
+
+            if (IsOSDiskFromStoredImage(storageProfile))
+            {
+                // There is a restriction currently that virtual machine's disk cannot be stored in multiple storage
+                // accounts if scale set is based on stored image. Remove this check once azure start supporting it.
+                //
+                if (storageProfile.OsDisk.VhdContainers != null)
+                {
+                    storageProfile.OsDisk
+                        .VhdContainers
+                        .Clear();
+                }
+                return;
+            }
+
+            if (this.IsInCreateMode
+                && this.creatableStorageAccountKeys.Count == 0
+                && this.existingStorageAccountsToAssociate.Count == 0)
+            {
+                IStorageAccount storageAccount = await this.storageManager.StorageAccounts
+                        .Define(this.namer.RandomName("stg", 24))
+                        .WithRegion(this.RegionName)
+                        .WithExistingResourceGroup(this.ResourceGroupName)
+                        .CreateAsync();
+                String containerName = vhdContainerName;
+                if (containerName == null)
+                {
+                    containerName = "vhds";
+                }
+                storageProfile.OsDisk
+                        .VhdContainers
+                        .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
+                vhdContainerName = null;
+                creatableStorageAccountKeys.Clear();
+                existingStorageAccountsToAssociate.Clear();
+                return;
+            }
+            else
+            {
+                string containerName = this.vhdContainerName;
+                if (containerName == null)
+                {
+                    foreach (string containerUrl in storageProfile.OsDisk.VhdContainers)
+                    {
+                        containerName = containerUrl.Substring(containerUrl.LastIndexOf("/") + 1);
+                        break;
+                    }
+                }
+
+                if (containerName == null)
+                {
+                    containerName = "vhds";
+                }
+
+                foreach (string storageAccountKey in this.creatableStorageAccountKeys)
+                {
+                    IStorageAccount storageAccount = (IStorageAccount)CreatedResource(storageAccountKey);
+                    storageProfile.OsDisk
+                            .VhdContainers
+                            .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
+                }
+
+                foreach (IStorageAccount storageAccount in this.existingStorageAccountsToAssociate)
+                {
+                    storageProfile.OsDisk
+                            .VhdContainers
+                            .Add(MergePath(storageAccount.EndPoints.Primary.Blob, containerName));
+                }
+
+                this.vhdContainerName = null;
+                this.creatableStorageAccountKeys.Clear();
+                this.existingStorageAccountsToAssociate.Clear();
+            }
+        }
+
+        ///GENMHASH:15C87FF18F2D92A7CA828FB69E15D8F4:FAB35812CDE5256B5EEDB90655E51B75
+        private void ThrowIfManagedDiskEnabled(string message)
+        {
+            if (this.IsManagedDiskEnabled())
+            {
+                throw new NotSupportedException(message);
+            }
+        }
+
+        ///GENMHASH:39841E710EB7DD7AE8E99B918CA0EEEA:C48030ECFE011DCB363EBC211AAE918D
+        public string OsDiskName()
+        {
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
+        }
+
+        ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:637A809EDFD013CAD03D1C7CE71A5FD8
+        public OperatingSystemTypes OsType()
+        {
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.GetValueOrDefault();
+        }
+
+        ///GENMHASH:F7E8AD723108078BE0FE19CD860DD3D3:78969D0BA29AFC39123F017955CEE8EE
+        public VirtualMachineScaleSetImpl WithWinRm(WinRMListener listener)
+        {
+            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
+            {
+                WinRMConfiguration winRMConfiguration = new WinRMConfiguration();
+                this.Inner
+                        .VirtualMachineProfile
+                        .OsProfile.WindowsConfiguration.WinRM = winRMConfiguration;
+            }
+            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM.Listeners == null)
+            {
+                this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile
+                    .WindowsConfiguration.WinRM
+                    .Listeners = new List<WinRMListener>();
+            }
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile
+                    .WindowsConfiguration
+                    .WinRM
+                    .Listeners
+                    .Add(listener);
+            return this;
+        }
+
+        ///GENMHASH:E8024524BA316DC9DEEB983B272ABF81:35404321E1B27D532B34DF57EB311A9E
+        public VirtualMachineScaleSetImpl WithCustomData(string base64EncodedCustomData)
+        {
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile
+                .CustomData = base64EncodedCustomData;
+            return this;
+        }
+
+        ///GENMHASH:7AD7A06F139BA844A9B0CC9596C66F00:6CC5B2412B485510418552D419E955F9
+        private static void AssociateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
+                                                                   VirtualMachineScaleSetIPConfigurationInner ipConfig)
+        {
+            var backends = loadBalancer.Backends.Values;
+
+            string[] backendNames = new string[backends.Count()];
+            int i = 0;
+            foreach (ILoadBalancerBackend backend in backends)
+            {
+                backendNames[i] = backend.Name;
+                i++;
+            }
+
+            AssociateBackEndsToIpConfiguration(loadBalancer.Id,
+                    ipConfig,
+                    backendNames);
+
+            var inboundNatPools = loadBalancer.InboundNatPools.Values;
+            string[] natPoolNames = new string[inboundNatPools.Count()];
+            i = 0;
+            foreach (ILoadBalancerInboundNatPool inboundNatPool in inboundNatPools)
+            {
+                natPoolNames[i] = inboundNatPool.Name;
+                i++;
+            }
+
+            AssociateInboundNATPoolsToIpConfiguration(loadBalancer.Id,
+                    ipConfig,
+                    natPoolNames);
+        }
+
+        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:B8E11C7D3FD0F8058EC1203B18D3671D
+        protected override async Task<VirtualMachineScaleSetInner> CreateInnerAsync()
+        {
+            if (IsInCreateMode)
+            {
+                this.SetOSProfileDefaults();
+                this.SetOSDiskDefault();
+            }
+            this.SetPrimaryIpConfigurationSubnet();
+            this.SetPrimaryIpConfigurationBackendsAndInboundNatPools();
+            if (IsManagedDiskEnabled())
+            {
+                this.managedDataDisks.SetDataDisksDefaults();
+            }
+            else
+            {
+                IList<VirtualMachineScaleSetDataDisk> dataDisks = this.Inner
+                .VirtualMachineProfile
+                .StorageProfile
+                .DataDisks;
+                VirtualMachineScaleSetUnmanagedDataDiskImpl.SetDataDisksDefaults(dataDisks, this.Name);
+            }
+            await HandleOSDiskContainersAsync();
+            return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+        }
+
+        ///GENMHASH:621A22301B3EB5233E9DB4ED5BEC5735:E8427EEC4ACC25554660EF889ECD07A2
+        public VirtualMachineScaleSetImpl WithDataDiskDefaultCachingType(CachingTypes cachingType)
+        {
+            this.managedDataDisks.SetDefaultCachingType(cachingType);
+            return this;
+        }
+
+        ///GENMHASH:BC7873AAD73CC4C7525B7C9F39F3F121:A055D9C6DB5164F68AE250D30F989A3F
+        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
+        {
+            AddToList(this.primaryInternalLBBackendsToRemoveOnUpdate, backendNames);
+            return this;
+        }
+
+        ///GENMHASH:085C052B5E99B190740EE6AF70CF4D53:4F450AB75A3E01A0CCB9AFBF4F23BE28
+        public VirtualMachineScaleSetImpl WithCapacity(int capacity)
+        {
+            this.Inner
+                    .Sku.Capacity = capacity;
+            return this;
+        }
+
+        ///GENMHASH:ED2B5B9A3A19B5A8C2C3E6E1CDBF9402:6A6DEBF76624FF70612A6981A86CC468
+        public VirtualMachineScaleSetImpl WithUnmanagedDisks()
+        {
+            this.isUnmanagedDiskSelected = true;
+            return this;
+        }
+
+        ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:3AA1543C2E39D6E6D148C51D89E3B4C6
+        protected override void InitializeChildrenFromInner()
+        {
+            this.extensions = new Dictionary<string, IVirtualMachineScaleSetExtension>();
+            if (this.Inner.VirtualMachineProfile.ExtensionProfile != null
+               && this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions != null)
+            {
+                foreach (var innerExtenison in this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions)
+                {
+                    this.extensions.Add(innerExtenison.Name, new VirtualMachineScaleSetExtensionImpl(innerExtenison, this));
+                }
+            }
+        }
+
+        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
+        public void Start()
+        {
+            this.client.Start(this.ResourceGroupName, this.Name);
+        }
+
+        ///GENMHASH:E3A33B29616A6EAF518CC10EA90B45C7:191C8844004D95B6F7362BD81543FE33
+        public ILoadBalancer GetPrimaryInternalLoadBalancer()
+        {
+            if (this.primaryInternalLoadBalancer == null)
+            {
+                LoadCurrentPrimaryLoadBalancersIfAvailable();
+            }
+            return this.primaryInternalLoadBalancer;
+        }
+
+        ///GENMHASH:D4AA1D687C6ADC8E82CF97490E7E2840:E7F70DBA43E66E25DD839711AFE080E2
+        public VirtualMachineScaleSetImpl WithNewUnmanagedDataDisk(int sizeInGB)
+        {
+            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VMSS_Both_Managed_And_Unmanaged_Disk_Not_Allowed);
+            this.DefineUnmanagedDataDisk(null)
+                .WithSizeInGB(sizeInGB)
+                .Attach();
+            return this;
+        }
+
+        ///GENMHASH:674F68CEE727AFB7E6F6D9C7FADE1175:9D8CEFD984A116AE33BB221254786FA5
+        public VirtualMachineScaleSetImpl WithNewDataDisk(int sizeInGB)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_Both_Unmanaged_And_Managed_Disk_Not_Aallowed);
+            this.managedDataDisks.implicitDisksToAssociate.Add(new VirtualMachineScaleSetDataDisk()
+            {
+                Lun = -1,
+                DiskSizeGB = sizeInGB
+            });
+            return this;
+        }
+
+        ///GENMHASH:B213E98FA6979257F6E6F61C9B5E550B:AAA573249324CF7B1EBD45AD10721744
+        public VirtualMachineScaleSetImpl WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_Both_Unmanaged_And_Managed_Disk_Not_Aallowed);
+            this.managedDataDisks.implicitDisksToAssociate.Add(new VirtualMachineScaleSetDataDisk()
+            {
+                Lun = lun,
+                DiskSizeGB = sizeInGB,
+                Caching = cachingType
+            });
+            return this;
+        }
+
+        ///GENMHASH:1D3A0A89681FFD35007B24FCED6BF299:96D67639BA263640D554DB8A3CC5D75C
+        public VirtualMachineScaleSetImpl WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType)
+        {
+            ThrowIfManagedDiskDisabled(ManagedUnmanagedDiskErrors.VMSS_Both_Unmanaged_And_Managed_Disk_Not_Aallowed);
+            VirtualMachineScaleSetManagedDiskParameters managedDiskParameters = new VirtualMachineScaleSetManagedDiskParameters();
+            managedDiskParameters.StorageAccountType = storageAccountType;
+            this.managedDataDisks.implicitDisksToAssociate.Add(new VirtualMachineScaleSetDataDisk()
+            {
+                Lun = lun,
+                DiskSizeGB = sizeInGB,
+                Caching = cachingType,
+                ManagedDisk = managedDiskParameters
+            });
+            return this;
+        }
+
+        ///GENMHASH:3CAA43EAEEB81309EADF54AA78725296:E14EB64EB306A8F5A0DF21CD2E85782B
+        public VirtualMachineScaleSetImpl WithVmAgent()
+        {
+            this.Inner
+                    .VirtualMachineProfile
+                    .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
+            return this;
+        }
+
+        ///GENMHASH:429C59D407353456A6B5003023273BD7:81295BAE0BB8359DEDF4992847106629
+        public VirtualMachineScaleSetUnmanagedDataDiskImpl UpdateUnmanagedDataDisk(string name)
+        {
+            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VMSS_No_Unmanaged_Disk_To_Update);
+            VirtualMachineScaleSetStorageProfile storageProfile = this
+                .Inner
+                .VirtualMachineProfile
+                .StorageProfile;
+            var dataDisks = storageProfile
+                .DataDisks;
+            if (dataDisks != null)
+            {
+                foreach (var dataDisk in dataDisks)
+                {
+                    if (dataDisk.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return new VirtualMachineScaleSetUnmanagedDataDiskImpl(dataDisk, this);
+                    }
+                }
+            }
+            throw new ArgumentException("A data disk with name  '" + name + "' not found");
+        }
+
+        ///GENMHASH:9E11BB028D83D0EF7340685F19FBA340:E9A91314DAD8267710EFDE4AAE671CCF
+        public IVirtualMachineScaleSetNetworkInterface GetNetworkInterfaceByInstanceId(string instanceId, string name)
+        {
+            return this.networkManager.NetworkInterfaces.GetByVirtualMachineScaleSetInstanceId(this.ResourceGroupName,
+                this.Name,
+                instanceId,
+                name);
+        }
+
+        ///GENMHASH:BF5FD367567995AC0C50DACEDECE61BD:6FB961EBF4FEC9C5343282A34D18848B
+        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
+        {
+            AddToList(this.primaryInternalLBInboundNatPoolsToRemoveOnUpdate, natPoolNames);
+            return this;
+        }
+
+        ///GENMHASH:0E3F9BC2C5C0DB936DBA634A972BC916:26BA1C1FFB483992498725C1ED900BA1
+        public VirtualMachineScaleSetImpl WithAdminUsername(string adminUserName)
+        {
+            this.Inner
+                .VirtualMachineProfile
+                .OsProfile
+                .AdminUsername = adminUserName;
+            return this;
+        }
+
+        ///GENMHASH:D05B148D26960ED1D8EF344B16F36F78:00EC0F6EA3A819049F5C89068A74593C
+        public VirtualMachineScaleSetImpl WithOverProvisioning()
+        {
+            return this.WithOverProvision(true);
+        }
+
+        ///GENMHASH:9C4A541B9A2E22540116BFA125189F57:2F8856B5F0BA5E1B741D68C6CED48D9A
+        public VirtualMachineScaleSetImpl WithoutDataDisk(int lun)
+        {
+            if (!IsManagedDiskEnabled())
+            {
+                return this;
+            }
+            this.managedDataDisks.diskLunsToRemove.Add(lun);
+            return this;
         }
 
         ///GENMHASH:C4918DA109F597102F1B013B0137F3A2:671581C8F41182347B219436B693EB8A
@@ -1462,250 +2211,218 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        ///GENMHASH:27AD431A042600C45C4C0CA529477319:47186F09CC543669168F4089A11F6E5E
-        private static void AssociateInboundNATPoolsToIpConfiguration(string loadBalancerId,
-                                                        VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                        params string[] inboundNatPools)
-        {
-            List<SubResource> inboundNatPoolSubResourcesToAssociate = new List<SubResource>();
-            foreach (string inboundNatPool in inboundNatPools)
-            {
-                string inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", inboundNatPool);
-                bool found = false;
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    inboundNatPoolSubResourcesToAssociate.Add(new SubResource
-                    {
-                        Id = inboundNatPoolId
-                    });
-                }
-            }
-
-            foreach (SubResource backendSubResource in inboundNatPoolSubResourcesToAssociate)
-            {
-                ipConfig.LoadBalancerInboundNatPools.Add(backendSubResource);
-            }
-        }
-
-        ///GENMHASH:864D8E4C8CD2E86906490FEDA8FB3F2B:8DBC7BDC302D2B4665D3623CB5CE6F9B
-        private static IDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> GetBackendsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
-                                                                                     VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            string loadBalancerId = loadBalancer.Id;
-            IDictionary<string, ILoadBalancerBackend> attachedBackends = new Dictionary<string, ILoadBalancerBackend>();
-            var lbBackends = loadBalancer.Backends;
-            foreach (ILoadBalancerBackend lbBackend in lbBackends.Values)
-            {
-                string backendId = MergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
-                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-                {
-                    if (subResource.Id.Equals(backendId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        attachedBackends.Add(lbBackend.Name, lbBackend);
-                    }
-                }
-            }
-            return attachedBackends;
-        }
-
-        ///GENMHASH:801A53D3DABA33CC92425D2203FD9242:023B6E0293C3EE52841DA58E9038A4E6
-        private static IDictionary<string, Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> GetInboundNatPoolsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
-                                                                                                   VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            String loadBalancerId = loadBalancer.Id;
-            IDictionary<string, ILoadBalancerInboundNatPool> attachedInboundNatPools = new Dictionary<string, ILoadBalancerInboundNatPool>();
-            var lbInboundNatPools = loadBalancer.InboundNatPools;
-            foreach (ILoadBalancerInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
-            {
-                String inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        attachedInboundNatPools.Add(lbInboundNatPool.Name, lbInboundNatPool);
-                    }
-                }
-            }
-            return attachedInboundNatPools;
-        }
-
-        ///GENMHASH:7AD7A06F139BA844A9B0CC9596C66F00:6CC5B2412B485510418552D419E955F9
-        private static void AssociateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
-                                                                   VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            var backends = loadBalancer.Backends.Values;
-
-            string[] backendNames = new string[backends.Count()];
-            int i = 0;
-            foreach (ILoadBalancerBackend backend in backends)
-            {
-                backendNames[i] = backend.Name;
-                i++;
-            }
-
-            AssociateBackEndsToIpConfiguration(loadBalancer.Id,
-                    ipConfig,
-                    backendNames);
-
-            var inboundNatPools = loadBalancer.InboundNatPools.Values;
-            string[] natPoolNames = new string[inboundNatPools.Count()];
-            i = 0;
-            foreach (ILoadBalancerInboundNatPool inboundNatPool in inboundNatPools)
-            {
-                natPoolNames[i] = inboundNatPool.Name;
-                i++;
-            }
-
-            AssociateInboundNATPoolsToIpConfiguration(loadBalancer.Id,
-                    ipConfig,
-                    natPoolNames);
-        }
-
-        ///GENMHASH:99E12A9D1F6C67E6350163C75A02C0CF:EB015A0D5BB20773EED2BA22F09DBFE4
-        private static void RemoveLoadBalancerAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
-                                                                             VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            RemoveAllBackendAssociationFromIpConfiguration(loadBalancer, ipConfig);
-            RemoveAllInboundNatPoolAssociationFromIpConfiguration(loadBalancer, ipConfig);
-        }
-
-        ///GENMHASH:AD16DA08B5E002AC14DA8E4DF1A29686:7CAC61F59FB870FA1BA64452A78CD17B
-        private static void RemoveAllBackendAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
-                                                                           VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-            {
-                if (subResource.Id.ToLower().StartsWith(loadBalancer.Id.ToLower() + "/"))
-                {
-                    toRemove.Add(subResource);
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerBackendAddressPools.Remove(subResource);
-            }
-        }
-
-        ///GENMHASH:C8D0FD360C8F8A611F6F85F99CDE83D0:C73CD8C0F99ACCAB4E6C5579E1D974E4
-        private static void RemoveAllInboundNatPoolAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
-                                                                                  VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-            {
-                if (subResource.Id.ToLower().StartsWith(loadBalancer.Id.ToLower() + "/"))
-                {
-                    toRemove.Add(subResource);
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerInboundNatPools.Remove(subResource);
-            }
-        }
-
-        ///GENMHASH:6E6D232E3678D03B3716EA09F0ADD0A9:660BA6BD38564D432FD56906D5F71954
-        private static void RemoveBackendsFromIpConfiguration(string loadBalancerId,
-                                                       VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                       params string[] backendNames)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (string backendName in backendNames)
-            {
-                string backendPoolId = MergePath(loadBalancerId, "backendAddressPools", backendName);
-                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-                {
-                    if (subResource.Id.Equals(backendPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        toRemove.Add(subResource);
-                        break;
-                    }
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerBackendAddressPools.Remove(subResource);
-            }
-        }
-
-        ///GENMHASH:5DCF4E29F6EA4E300D272317D5090075:2CECE7F3DC203120ADD63663E7930758
-        private static void RemoveInboundNatPoolsFromIpConfiguration(string loadBalancerId,
-                                                              VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                              params string[] inboundNatPoolNames)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (string natPoolName in inboundNatPoolNames)
-            {
-                string inboundNatPoolId = MergePath(loadBalancerId, "inboundNatPools", natPoolName);
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        toRemove.Add(subResource);
-                        break;
-                    }
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerInboundNatPools.Remove(subResource);
-            }
-        }
-
-        ///GENMHASH:EBD956A6D9170606742388660BDAF883:0632C1C1A1EE3CCF1E3F260984431012
-        private static void AddToList<T>(List<T> list, params T[] items)
-        {
-            foreach (T item in items)
-            {
-                list.Add(item);
-            }
-        }
-
-        ///GENMHASH:E50F40651A5B1AF20BC79D94DD871BC0:8D097652777E7CA886C41C25ADBEAA28
-        private static string MergePath(params string[] segments)
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach (string segment in segments)
-            {
-                string tmp = segment;
-                while (tmp.Length > 1 && tmp.EndsWith("/"))
-                {
-                    tmp = tmp.Substring(0, tmp.Length - 1);
-                }
-
-                if (tmp.Length > 0)
-                {
-                    builder.Append(tmp);
-                    builder.Append("/");
-                }
-            }
-
-            string merged = builder.ToString();
-            if (merged.EndsWith("/"))
-            {
-                merged = merged.Substring(0, merged.Length - 1);
-            }
-            return merged;
-        }
-
         VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>.Update()
         {
             return this;
         }
 
-        #endregion
+        ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldEltcGwuTWFuYWdlZERhdGFEaXNrQ29sbGVjdGlvbg==
+        internal partial class ManagedDataDiskCollection
+        {
+            public IList<Models.VirtualMachineScaleSetDataDisk> implicitDisksToAssociate;
+            public IList<int> diskLunsToRemove;
+            public IList<Models.VirtualMachineScaleSetDataDisk> newDisksFromImage;
+            private VirtualMachineScaleSetImpl vmss;
+            private CachingTypes? defaultCachingType;
+            private StorageAccountTypes? defaultStorageAccountType;
+
+            internal ManagedDataDiskCollection(VirtualMachineScaleSetImpl vmss)
+            {
+                this.vmss = vmss;
+                this.implicitDisksToAssociate = new List<VirtualMachineScaleSetDataDisk>();
+                this.diskLunsToRemove = new List<int>();
+                this.newDisksFromImage = new List<VirtualMachineScaleSetDataDisk>();
+            }
+
+            ///GENMHASH:E896A9714FD3ED579D3A806B2D670211:9EC21D752F2334263B0BF51F5BEF2FE2
+            internal void SetDefaultStorageAccountType(StorageAccountTypes defaultStorageAccountType)
+            {
+                this.defaultStorageAccountType = defaultStorageAccountType;
+            }
+
+            ///GENMHASH:CA7F491172B86E1C8B0D8508E4161245:48D903B27EEF73A7FA2C1B3E0E47B216
+            internal void SetDataDisksDefaults()
+            {
+                VirtualMachineScaleSetStorageProfile storageProfile = this.vmss
+                    .Inner
+                    .VirtualMachineProfile
+                    .StorageProfile;
+                if (IsPending())
+                {
+                    if (storageProfile.DataDisks == null)
+                    {
+                        storageProfile.DataDisks = new List<VirtualMachineScaleSetDataDisk>();
+                    }
+                    var dataDisks = storageProfile.DataDisks;
+                    HashSet<int> usedLuns = new HashSet<int>();
+                    // Get all used luns
+                    //
+                    foreach (var dataDisk in dataDisks)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    foreach (var dataDisk in this.implicitDisksToAssociate)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    foreach (var dataDisk in this.newDisksFromImage)
+                    {
+                        if (dataDisk.Lun != -1)
+                        {
+                            usedLuns.Add(dataDisk.Lun);
+                        }
+                    }
+                    // Func to get the next available lun
+                    //
+                    Func<int> nextLun = () =>
+                    {
+                        int l = 0;
+                        while (usedLuns.Contains(l))
+                        {
+                            l++;
+                        }
+                        usedLuns.Add(l);
+                        return l;
+                    };
+                    SetImplicitDataDisks(nextLun);
+                    SetImageBasedDataDisks();
+                    RemoveDataDisks();
+                }
+                if (storageProfile.DataDisks != null
+                    && storageProfile.DataDisks.Count == 0)
+                {
+                    if (vmss.IsInCreateMode)
+                    {
+                        // If there is no data disks at all, then setting it to null rather than [] is necessary.
+                        // This is for take advantage of CRP's implicit creation of the data disks if the image has
+                        // more than one data disk image(s).
+                        //
+                        storageProfile.DataDisks = null;
+                    }
+                }
+                this.Clear();
+            }
+
+            ///GENMHASH:77E6B131587760C1313B68052BA1F959:3583CA6C895B07FD3877A9CFC685B07B
+            private CachingTypes GetDefaultCachingType()
+            {
+                if (defaultCachingType == null || !defaultCachingType.HasValue)
+                {
+                    return CachingTypes.ReadWrite;
+                }
+                return defaultCachingType.Value;
+            }
+
+            ///GENMHASH:B33308470B073DF5A31970C4C53291A4:3ED328226BD857CB73174798CB8638CC
+            private void SetImageBasedDataDisks()
+            {
+                VirtualMachineScaleSetStorageProfile storageProfile = this.vmss
+                    .Inner
+                    .VirtualMachineProfile
+                    .StorageProfile;
+                var dataDisks = storageProfile.DataDisks;
+                foreach (var dataDisk in this.newDisksFromImage)
+                {
+                    dataDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+                    // Don't set default caching type for the disk, either user has to specify it explicitly or let CRP pick
+                    // it from the image
+                    dataDisk.Name = null;
+                    dataDisks.Add(dataDisk);
+                }
+            }
+
+            ///GENMHASH:BDEEEC08EF65465346251F0F99D16258:7FA0EAA436FE9B4E519F2A6F85491919
+            private void Clear()
+            {
+                implicitDisksToAssociate.Clear();
+                diskLunsToRemove.Clear();
+                newDisksFromImage.Clear();
+            }
+
+            ///GENMHASH:C474BAF5F2762CA941D8C01DC8F0A2CB:123893CCEC4625CDE4B7BCBFC68DCF5B
+            internal void SetDefaultCachingType(CachingTypes cachingType)
+            {
+                this.defaultCachingType = cachingType;
+            }
+
+            ///GENMHASH:8F31500456F297BA5B51A162318FE60B:B2C684FBABF2AB3AFDFCC790ACB99D8C
+            private void RemoveDataDisks()
+            {
+                VirtualMachineScaleSetStorageProfile storageProfile = this.vmss
+                    .Inner
+                    .VirtualMachineProfile
+                    .StorageProfile;
+                var dataDisks = storageProfile.DataDisks;
+                foreach (var lun in this.diskLunsToRemove)
+                {
+                    int indexToRemove = 0;
+                    foreach (var dataDisk in dataDisks)
+                    {
+                        if (dataDisk.Lun == lun)
+                        {
+                            dataDisks.RemoveAt(indexToRemove);
+                            break;
+                        }
+                        indexToRemove++;
+                    }
+                }
+            }
+
+            ///GENMHASH:647794DB64052F8555CB8ABDABF9F24D:419FDCEEC4AAB55470C80A42C1D69868
+            private StorageAccountTypes GetDefaultStorageAccountType()
+            {
+                if (defaultStorageAccountType == null || !defaultStorageAccountType.HasValue)
+                {
+                    return StorageAccountTypes.StandardLRS;
+                }
+                return defaultStorageAccountType.Value;
+            }
+
+            ///GENMHASH:0E80C978BE389A20F8B9BDDCBC308EBF:0EC63377965A94AB9FD183B5A71C65E2
+            private void SetImplicitDataDisks(Func<int> nextLun)
+            {
+                VirtualMachineScaleSetStorageProfile storageProfile = this.vmss
+                    .Inner
+                    .VirtualMachineProfile
+                    .StorageProfile;
+                var dataDisks = storageProfile.DataDisks;
+                foreach (var dataDisk in this.implicitDisksToAssociate)
+                {
+                    dataDisk.CreateOption = DiskCreateOptionTypes.Empty;
+                    if (dataDisk.Lun == -1)
+                    {
+                        dataDisk.Lun = nextLun();
+                    }
+                    if (dataDisk.Caching == null)
+                    {
+                        dataDisk.Caching = GetDefaultCachingType();
+                    }
+                    if (dataDisk.ManagedDisk == null)
+                    {
+                        dataDisk.ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters();
+                    }
+                    if (dataDisk.ManagedDisk.StorageAccountType == null)
+                    {
+                        dataDisk.ManagedDisk.StorageAccountType = GetDefaultStorageAccountType();
+                    }
+                    dataDisk.Name = null;
+                    dataDisks.Add(dataDisk);
+                }
+            }
+
+            ///GENMHASH:EC209EBA0DF87A8C3CEA3D68742EA90D:99000851407BA5F5FA9785B299474B9E
+            private bool IsPending()
+            {
+                return implicitDisksToAssociate.Count > 0
+                    || diskLunsToRemove.Count > 0
+                    || newDisksFromImage.Count > 0;
+            }
+        }
     }
 }

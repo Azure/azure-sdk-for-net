@@ -4,8 +4,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Models;
+    using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
@@ -108,6 +109,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets vhd uri of the custom image that the virtual machine instance operating system is based on,
+        /// null will be returned if the operating system is based on platform image.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.StoredImageUnmanagedVhdUri
+        {
+            get
+            {
+                return this.StoredImageUnmanagedVhdUri();
+            }
+        }
+
+        /// <summary>
         /// Gets resource id of primary network interface associated with virtual machine instance.
         /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PrimaryNetworkInterfaceId
@@ -135,18 +148,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.WindowsTimeZone();
-            }
-        }
-
-        /// <summary>
-        /// Gets true if the operating system of the virtual machine instance is based on platform image,
-        /// false if based on custom image.
-        /// </summary>
-        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsOsBasedOnPlatformImage
-        {
-            get
-            {
-                return this.IsOsBasedOnPlatformImage();
             }
         }
 
@@ -220,6 +221,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets resource id of the managed disk backing OS disk.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsDiskId
+        {
+            get
+            {
+                return this.OsDiskId();
+            }
+        }
+
+        /// <return>
+        /// The platform image that the virtual machine instance operating system is based on, null be
+        /// returned otherwise.
+        /// </return>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.GetOSPlatformImage()
+        {
+            return this.GetOSPlatformImage() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage;
+        }
+
+        /// <summary>
         /// Gets the list of resource id of network interface associated with the virtual machine instance.
         /// </summary>
         System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.NetworkInterfaceIds
@@ -271,6 +292,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets true if the operating system of the virtual machine instance is based on custom image.
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsOSBasedOnCustomImage
+        {
+            get
+            {
+                return this.IsOSBasedOnCustomImage();
+            }
+        }
+
+        /// <summary>
         /// Gets the diagnostics profile of the virtual machine instance.
         /// </summary>
         Models.DiagnosticsProfile Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DiagnosticsProfile
@@ -279,6 +311,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return this.DiagnosticsProfile() as Models.DiagnosticsProfile;
             }
+        }
+
+        /// <return>
+        /// The custom image that the virtual machine instance operating system is based on, null be
+        /// returned otherwise.
+        /// </return>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.GetOSCustomImage()
+        {
+            return this.GetOSCustomImage() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage;
         }
 
         /// <summary>
@@ -294,11 +335,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets reference to the platform image that the virtual machine instance operating system is based on,
         /// null will be returned if the operating system is based on custom image.
         /// </summary>
-        Models.ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PlatformImageReference
+        ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PlatformImageReference
         {
             get
             {
-                return this.PlatformImageReference() as Models.ImageReference;
+                return this.PlatformImageReference() as ImageReference;
             }
         }
 
@@ -331,6 +372,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets true if the operating system of the virtual machine instance is based on platform image.
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsOSBasedOnPlatformImage
+        {
+            get
+            {
+                return this.IsOSBasedOnPlatformImage();
+            }
+        }
+
+        /// <summary>
         /// Gets the sku of the virtual machine instance, this will be sku used while creating the parent
         /// virtual machine scale set.
         /// </summary>
@@ -339,6 +391,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.Sku() as Models.Sku;
+            }
+        }
+
+        /// <summary>
+        /// Gets the managed data disks associated with this virtual machine instance, indexed by lun.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DataDisks
+        {
+            get
+            {
+                return this.DataDisks() as System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk>;
+            }
+        }
+
+        /// <summary>
+        /// Gets the unmanaged data disks associated with this virtual machine instance, indexed by lun.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.UnmanagedDataDisks
+        {
+            get
+            {
+                return this.UnmanagedDataDisks() as System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk>;
             }
         }
 
@@ -353,15 +427,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>
-        /// The platform image that the virtual machine instance operating system is based on, null be
-        /// returned if the operating system is based on custom image.
-        /// </return>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.GetPlatformImage()
-        {
-            return this.GetPlatformImage() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage;
-        }
-
         /// <summary>
         /// Gets true if this is a Linux virtual machine and password based login is enabled, false otherwise.
         /// </summary>
@@ -373,6 +438,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
+        /// <return>The network interfaces associated with this virtual machine instance.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ListNetworkInterfaces()
+        {
+            return this.ListNetworkInterfaces() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>;
+        }
+
         /// <summary>
         /// Gets the operating system type.
         /// </summary>
@@ -381,6 +452,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.OsType();
+            }
+        }
+
+        /// <summary>
+        /// Gets true if managed disk is used for the virtual machine's disks (os, data).
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsManagedDiskEnabled
+        {
+            get
+            {
+                return this.IsManagedDiskEnabled();
             }
         }
 
@@ -412,6 +494,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.PowerState() as Microsoft.Azure.Management.Compute.Fluent.PowerState;
+            }
+        }
+
+        /// <summary>
+        /// Gets true if the operating system of the virtual machine instance is based on stored image.
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.IsOSBasedOnStoredImage
+        {
+            get
+            {
+                return this.IsOSBasedOnStoredImage();
             }
         }
 
@@ -470,6 +563,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets a network interface associated with this virtual machine instance.
+        /// </summary>
+        /// <param name="name">The name of the network interface.</param>
+        /// <return>The network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.GetNetworkInterface(string name)
+        {
+            return this.GetNetworkInterface(name) as Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface;
+        }
+
+        /// <summary>
         /// Gets the extensions associated with the virtual machine instance, indexed by name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.Extensions
@@ -490,25 +593,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets vhd uri of the custom image that the virtual machine instance operating system is based on,
-        /// null will be returned if the operating system is based on platform image.
-        /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.CustomImageVhdUri
-        {
-            get
-            {
-                return this.CustomImageVhdUri();
-            }
-        }
-
-        /// <summary>
         /// Gets vhd uri to the operating system disk.
         /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsDiskVhdUri
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.OsUnmanagedDiskVhdUri
         {
             get
             {
-                return this.OsDiskVhdUri();
+                return this.OsUnmanagedDiskVhdUri();
             }
         }
 

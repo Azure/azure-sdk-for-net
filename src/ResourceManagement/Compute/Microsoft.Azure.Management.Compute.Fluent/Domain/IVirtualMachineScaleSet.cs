@@ -19,6 +19,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>
     {
         /// <summary>
+        /// List the network interface associated with a specific virtual machine instance in the scale set.
+        /// </summary>
+        /// <param name="virtualMachineInstanceId">The instance id.</param>
+        /// <return>The network interfaces.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId);
+
+        /// <summary>
+        /// Gets true if managed disk is used for the virtual machine scale set's disks (os, data).
+        /// </summary>
+        bool IsManagedDiskEnabled { get; }
+
+        /// <summary>
         /// Gets the URL to storage containers that store the VHDs of the virtual machines in the scale set.
         /// </summary>
         System.Collections.Generic.IList<string> VhdContainers { get; }
@@ -30,6 +42,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void PowerOff();
+
+        /// <return>The network interfaces associated with all virtual machine instances in a scale set.</return>
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
 
         /// <summary>
         /// Shuts down the virtual machines in the scale set and releases its compute resources.
@@ -64,7 +79,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the number of virtual machine instances in the scale set.
         /// </summary>
-        int Capacity { get; }
+        long Capacity { get; }
 
         /// <summary>
         /// Gets true if over provision is enabled for the virtual machines, false otherwise.
@@ -162,26 +177,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus();
 
         /// <summary>
-        /// List the network interface associated with a specific virtual machine instance in the scale set.
-        /// </summary>
-        /// <param name="virtualMachineInstanceId">The instance id.</param>
-        /// <return>The network interfaces.</return>
-        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfacesByInstanceId(string virtualMachineInstanceId);
-
-        /// <return>
-        /// the network interfaces associated with all virtual machine instances in a scale set
-        /// </return>
-        PagedList<IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
-
-        /// <summary>
-        /// Gets a network interface associated with a virtual machine scale set instance.
-        /// </summary>
-        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
-        /// <param name="name">The network interface name.</param>
-        /// <return>The network interface.</return>
-        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface GetNetworkInterfaceByInstanceId(string instanceId, string name);
-
-        /// <summary>
         /// Gets the extensions attached to the virtual machines in the scale set.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Extensions { get; }
@@ -199,6 +194,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the storage profile.
         /// </summary>
         Models.VirtualMachineScaleSetStorageProfile StorageProfile { get; }
+
+        /// <summary>
+        /// Gets a network interface associated with a virtual machine scale set instance.
+        /// </summary>
+        /// <param name="instanceId">The virtual machine scale set vm instance id.</param>
+        /// <param name="name">The network interface name.</param>
+        /// <return>The network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface GetNetworkInterfaceByInstanceId(string instanceId, string name);
 
         /// <return>
         /// The internet-facing load balancer's inbound NAT pool associated with the primary network interface

@@ -128,10 +128,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
-        /// <return>An observable to the request.</return>
+        /// <return>A completable indicates completion or exception of the request.</return>
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
- 
             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 

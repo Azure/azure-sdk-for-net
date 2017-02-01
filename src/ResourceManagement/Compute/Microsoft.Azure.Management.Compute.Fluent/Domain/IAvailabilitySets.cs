@@ -3,8 +3,9 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using AvailabilitySet.Definition;
+    using Models;
     using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
-    using Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
 
     /// <summary>
     /// Entry point to availability set management API.

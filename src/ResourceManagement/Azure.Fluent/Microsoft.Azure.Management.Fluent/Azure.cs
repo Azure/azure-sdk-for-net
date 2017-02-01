@@ -271,6 +271,30 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IVirtualMachineCustomImages VirtualMachineCustomImages
+        {
+            get
+            {
+                return computeManager.VirtualMachineCustomImages;
+            }
+        }
+
+        public IDisks Disks
+        {
+            get
+            {
+                return computeManager.Disks;
+            }
+        }
+
+        public ISnapshots Snapshots
+        {
+            get
+            {
+                return computeManager.Snapshots;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -482,5 +506,11 @@ namespace Microsoft.Azure.Management.Fluent
         IWebApps WebApps { get; }
 
         IAppServiceManager AppServices { get; }
+
+        IVirtualMachineCustomImages VirtualMachineCustomImages { get; }
+
+        IDisks Disks { get; }
+
+        ISnapshots Snapshots { get; }
     }
 }

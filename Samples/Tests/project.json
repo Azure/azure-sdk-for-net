@@ -117,6 +117,12 @@
     "ManageSqlDatabasesAcrossDifferentDataCenters": "1.0.0-*",
     "ManageSqlFirewallRules": "1.0.0-*",
     "ManageStorageAccount": "1.0.0-*",
-    "ManageTrafficManager": "1.0.0-*"
+    "ManageTrafficManager": "1.0.0-*",
+    "CreateVirtualMachineUsingCustomImageFromVHD": "1.0.0-*",
+    "CreateVirtualMachineUsingCustomImageFromVM": "1.0.0-*",
+    "CreateVirtualMachineUsingSpecializedDiskFromSnapshot": "1.0.0-*",
+    "CreateVirtualMachineUsingSpecializedDiskFromVhd": "1.0.0-*",
+    "ManageVirtualMachineWithDisk": "1.0.0-*",
+    "MigrateVirtualMachine": "1.0.0-*"
   }
 }

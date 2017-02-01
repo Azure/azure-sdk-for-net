@@ -59,10 +59,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="name">The name of the resource.</param>
-        /// <return>An observable to the request.</return>
+        /// <return>A completable indicates completion or exception of the request.</return>
         async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
- 
             await this.DeleteByGroupAsync(groupName, name, cancellationToken);
         }
 
@@ -117,6 +116,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
  
             this.Redeploy(groupName, name);
+        }
+
+        /// <summary>
+        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// </summary>
+        /// <param name="groupName">The resource group name.</param>
+        /// <param name="name">The virtual machine name.</param>
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.MigrateToManaged(string groupName, string name)
+        {
+             this.MigrateToManaged(groupName, name);
         }
 
         /// <summary>
