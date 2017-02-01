@@ -152,7 +152,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [Flags]
-        internal enum MessageMembers : int
+        internal enum MessageMembers
         {
             // public get/set members
             MessageId = 1,
@@ -572,7 +572,7 @@ namespace Microsoft.Azure.ServiceBus
 
                 if (value == DateTime.MaxValue)
                 {
-                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException("ScheduledEnqueueTimeUtc"));
+                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException(nameof(this.ScheduledEnqueueTimeUtc)));
                 }
 
                 this.initializedMembers |= MessageMembers.ScheduledEnqueueTimeUtc;
@@ -718,7 +718,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (value < 0)
                 {
-                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException("PartitionId"));
+                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException(nameof(this.PartitionId)));
                 }
 
                 this.ThrowIfDisposed();
@@ -742,7 +742,7 @@ namespace Microsoft.Azure.ServiceBus
             set
             {
                 this.ThrowIfDisposed();
-                BrokeredMessage.ValidatePartitionKey("Publisher", value);
+                BrokeredMessage.ValidatePartitionKey(nameof(this.Publisher), value);
                 if (value != null)
                 {
                     this.ThrowIfDominatingPropertyIsNotEqualToNonNullDormantProperty(MessageMembers.Publisher, MessageMembers.PartitionKey, value, this.partitionKey);
@@ -828,13 +828,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary> Gets a value indicating whether this object is lock token set. </summary>
         /// <value> true if this object is lock token set, false if not. </value>
-        internal bool IsLockTokenSet
-        {
-            get
-            {
-                return (this.initializedMembers & MessageMembers.LockToken) != 0;
-            }
-        }
+        internal bool IsLockTokenSet => (this.initializedMembers & MessageMembers.LockToken) != 0;
 
         /// <summary> Gets the identifier of the body. </summary>
         /// <value> The identifier of the body. </value>
@@ -1061,13 +1055,13 @@ namespace Microsoft.Azure.ServiceBus
                 return null;
             }
 
-            List<IDisposable> clonedDisposables = new List<IDisposable>();
+            var clonedDisposables = new List<IDisposable>();
             foreach (IDisposable obj in disposables)
             {
-                ICloneable cloneable = obj as ICloneable;
+                var cloneable = obj as ICloneable;
                 if (cloneable != null)
                 {
-                    object clone = cloneable.Clone();
+                    var clone = cloneable.Clone();
                     Fx.Assert(clone is IDisposable, "cloned object must also implement IDisposable");
                     clonedDisposables.Add((IDisposable)clone);
                 }
@@ -1077,7 +1071,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal object ClearBodyObject()
         {
-            object obj = this.bodyObject;
+            var obj = this.bodyObject;
             this.bodyObject = null;
             return obj;
         }

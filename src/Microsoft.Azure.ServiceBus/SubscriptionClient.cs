@@ -166,7 +166,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public async Task<BrokeredMessage> ReceiveBySequenceNumberAsync(long sequenceNumber)
         {
-            IList<BrokeredMessage> messages = await this.ReceiveBySequenceNumberAsync(new long[] { sequenceNumber });
+            IList<BrokeredMessage> messages = await this.ReceiveBySequenceNumberAsync(new[] { sequenceNumber });
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task CompleteAsync(Guid lockToken)
         {
-            return this.CompleteAsync(new Guid[] { lockToken });
+            return this.CompleteAsync(new[] { lockToken });
         }
 
         public Task CompleteAsync(IEnumerable<Guid> lockTokens)
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task AbandonAsync(Guid lockToken)
         {
-            return this.InnerReceiver.AbandonAsync(new Guid[] { lockToken });
+            return this.InnerReceiver.AbandonAsync(new[] { lockToken });
         }
 
         public Task<MessageSession> AcceptMessageSessionAsync()
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public async Task<MessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
         {
-            MessageSession session = null;
+            MessageSession session;
 
             MessagingEventSource.Log.AcceptMessageSessionStart(this.ClientId, sessionId);
 
@@ -270,12 +270,12 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task DeferAsync(Guid lockToken)
         {
-            return this.InnerReceiver.DeferAsync(new Guid[] { lockToken });
+            return this.InnerReceiver.DeferAsync(new[] { lockToken });
         }
 
         public Task DeadLetterAsync(Guid lockToken)
         {
-            return this.InnerReceiver.DeadLetterAsync(new Guid[] { lockToken });
+            return this.InnerReceiver.DeadLetterAsync(new[] { lockToken });
         }
 
         public Task<DateTime> RenewMessageLockAsync(Guid lockToken)

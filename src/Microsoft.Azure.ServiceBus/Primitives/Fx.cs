@@ -265,10 +265,6 @@ namespace Microsoft.Azure.ServiceBus
                 [Conditional("CODE_ANALYSIS")]
                 public sealed class BlockingAttribute : Attribute
                 {
-                    public BlockingAttribute()
-                    {
-                    }
-
                     public string CancelMethod { get; set; }
 
                     public Type CancelDeclaringType { get; set; }

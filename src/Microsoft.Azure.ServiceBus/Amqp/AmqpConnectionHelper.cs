@@ -26,11 +26,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             AmqpSettings settings = new AmqpSettings();
             if (useSslStreamSecurity && !useWebSockets && sslStreamUpgrade)
             {
-                TlsTransportSettings tlsSettings = new TlsTransportSettings();
-                tlsSettings.CertificateValidationCallback = certificateValidationCallback;
-                tlsSettings.TargetHost = sslHostName;
+                var tlsSettings = new TlsTransportSettings
+                {
+                    CertificateValidationCallback = certificateValidationCallback,
+                    TargetHost = sslHostName
+                };
 
-                TlsTransportProvider tlsProvider = new TlsTransportProvider(tlsSettings);
+                var tlsProvider = new TlsTransportProvider(tlsSettings);
                 tlsProvider.Versions.Add(new AmqpVersion(amqpVersion));
                 settings.TransportProviders.Add(tlsProvider);
             }
@@ -47,9 +49,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 }
                 else if (networkCredential != null)
                 {
-                    SaslPlainHandler plainHandler = new SaslPlainHandler();
-                    plainHandler.AuthenticationIdentity = networkCredential.UserName;
-                    plainHandler.Password = networkCredential.Password;
+                    var plainHandler = new SaslPlainHandler
+                    {
+                        AuthenticationIdentity = networkCredential.UserName,
+                        Password = networkCredential.Password
+                    };
                     saslProvider.AddHandler(plainHandler);
                 }
                 else

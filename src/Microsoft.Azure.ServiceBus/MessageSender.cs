@@ -5,8 +5,6 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
 
     public abstract class MessageSender : ClientEntity
@@ -27,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task SendAsync(BrokeredMessage brokeredMessage)
         {
-            return this.SendAsync(new BrokeredMessage[] { brokeredMessage });
+            return this.SendAsync(new[] { brokeredMessage });
         }
 
         public async Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)

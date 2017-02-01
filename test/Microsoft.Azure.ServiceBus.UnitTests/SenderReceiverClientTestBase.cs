@@ -7,7 +7,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -103,7 +102,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Receive Again and Check delivery count
             receivedMessages = await messageReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
-            int count = receivedMessages.Where((message) => message.DeliveryCount == 3).Count();
+            int count = receivedMessages.Count(message => message.DeliveryCount == 3);
             Assert.True(count == receivedMessages.Count());
 
             // Complete messages
@@ -157,7 +156,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 lastSequenceNumber = message.SequenceNumber;
             }
 
-            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
+            await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
         }
 
         protected async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(MessageSender messageSender, MessageReceiver messageReceiver, int messageCount)

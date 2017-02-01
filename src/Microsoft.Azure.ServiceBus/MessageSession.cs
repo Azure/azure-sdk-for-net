@@ -7,7 +7,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
-    using Amqp;
 
     public abstract class MessageSession : MessageReceiver
     {

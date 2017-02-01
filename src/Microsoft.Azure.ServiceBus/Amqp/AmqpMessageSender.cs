@@ -147,7 +147,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     null);
             request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
 
-            var response = await this.ExecuteRequestResponseAsync(request);
+            var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
+
+            if (response.StatusCode != AmqpResponseStatusCode.OK)
+            {
+                throw response.ToMessagingContractException();
+            }
         }
 
         ArraySegment<byte> GetNextDeliveryTag()

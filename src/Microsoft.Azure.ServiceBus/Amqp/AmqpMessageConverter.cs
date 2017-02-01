@@ -16,26 +16,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     static class AmqpMessageConverter
     {
-        public const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
-        public const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
-        public const string SequenceNumberName = "x-opt-sequence-number";
-        public const string OffsetName = "x-opt-offset";
-        public const string LockTokenName = "x-opt-lock-token";
-        public const string LockedUntilName = "x-opt-locked-until";
-        public const string PublisherName = "x-opt-publisher";
-        public const string PartitionKeyName = "x-opt-partition-key";
-        public const string PartitionIdName = "x-opt-partition-id";
-        public const string PrefilteredMessageHeadersName = "x-opt-prefiltered-headers";
-        public const string PrefilteredMessagePropertiesName = "x-opt-prefiltered-properties";
-        public const string DeadLetterSourceName = "x-opt-deadletter-source";
-        public const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
-        public const string UriName = AmqpConstants.Vendor + ":uri";
-        public const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
+        const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
+        const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
+        const string SequenceNumberName = "x-opt-sequence-number";
+        const string OffsetName = "x-opt-offset";
+        const string LockedUntilName = "x-opt-locked-until";
+        const string PublisherName = "x-opt-publisher";
+        const string PartitionKeyName = "x-opt-partition-key";
+        const string PartitionIdName = "x-opt-partition-id";
+        const string DeadLetterSourceName = "x-opt-deadletter-source";
+        const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
+        const string UriName = AmqpConstants.Vendor + ":uri";
+        const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
         const int GuidSize = 16;
 
         public static AmqpMessage BrokeredMessagesToAmqpMessage(IEnumerable<BrokeredMessage> brokeredMessages, bool batchable)
         {
-            AmqpMessage amqpMessage = null;
+            AmqpMessage amqpMessage;
             AmqpMessage firstAmqpMessage = null;
             BrokeredMessage firstBrokeredMessage = null;
             List<Data> dataList = null;

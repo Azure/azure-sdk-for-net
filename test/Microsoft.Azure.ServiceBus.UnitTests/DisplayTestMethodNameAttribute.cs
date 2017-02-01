@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public override void Before(MethodInfo methodUnderTest)
         {
-            TestUtility.Log($"Begin {methodUnderTest.DeclaringType}.{methodUnderTest.Name} on {PlatformServices.Default.Application.RuntimeFramework.ToString()}");
+            TestUtility.Log($"Begin {methodUnderTest.DeclaringType}.{methodUnderTest.Name} on {PlatformServices.Default.Application.RuntimeFramework}");
             base.Before(methodUnderTest);
         }
 

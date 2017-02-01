@@ -3,7 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;

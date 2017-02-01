@@ -8,7 +8,6 @@ namespace Microsoft.Azure.ServiceBus
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Transport;
     using Microsoft.Azure.ServiceBus.Amqp;
-    using Microsoft.Azure.ServiceBus.Primitives;
 
     public abstract class ServiceBusConnection
     {

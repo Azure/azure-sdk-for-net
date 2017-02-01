@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             MessagingEventSource.Log.MessageReceiveStart(this.ClientId, maxMessageCount);
 
-            IList<BrokeredMessage> messages = null;
+            IList<BrokeredMessage> messages;
             try
             {
                 messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime);
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.ServiceBus
 
             MessagingEventSource.Log.MessageReceiveBySequenceNumberStart(this.ClientId, count, sequenceNumbers);
 
-            IList<BrokeredMessage> messages = null;
+            IList<BrokeredMessage> messages;
             try
             {
                 messages = await this.OnReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.ThrowIfNotPeekLockMode();
 
-            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, new Guid[] { lockToken });
+            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, new[] { lockToken });
 
-            DateTime lockedUntilUtc = DateTime.MinValue;
+            DateTime lockedUntilUtc;
             try
             {
                 lockedUntilUtc = await this.OnRenewLockAsync(lockToken).ConfigureAwait(false);
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>A batch of messages peeked.</returns>
         public async Task<IList<BrokeredMessage>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
         {
-            IList<BrokeredMessage> messages = null;
+            IList<BrokeredMessage> messages;
 
             MessagingEventSource.Log.MessagePeekStart(this.ClientId, fromSequenceNumber, messageCount);
             try

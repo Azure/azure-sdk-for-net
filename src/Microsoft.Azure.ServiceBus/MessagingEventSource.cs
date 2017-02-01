@@ -7,7 +7,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Tracing;
-    using System.Linq;
 
     [SuppressMessage(
         "Microsoft.StyleCop.CSharp.OrderingRules",

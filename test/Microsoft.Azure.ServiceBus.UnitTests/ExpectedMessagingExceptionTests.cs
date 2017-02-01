@@ -51,11 +51,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await queueClient.SendAsync(new BrokeredMessage() { MessageId = messageId, SessionId = sessionId });
+            await queueClient.SendAsync(new BrokeredMessage
+                { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 MessageSession messageSession = await queueClient.AcceptMessageSessionAsync(sessionId);
-                Assert.NotNull((object)messageSession);
+            Assert.NotNull(messageSession);
 
                 var message = await messageSession.ReceiveAsync();
                 Assert.True(message.MessageId == messageId);
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
 
                 messageSession = await queueClient.AcceptMessageSessionAsync(sessionId);
-                Assert.NotNull((object)messageSession);
+            Assert.NotNull(messageSession);
 
                 message = await messageSession.ReceiveAsync();
                 TestUtility.Log($"Received Message: SessionId: {messageSession.SessionId}");
