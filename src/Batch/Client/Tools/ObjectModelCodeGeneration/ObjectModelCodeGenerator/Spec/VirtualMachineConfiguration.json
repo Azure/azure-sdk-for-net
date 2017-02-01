@@ -8,10 +8,10 @@
             "Type": "ImageReference",
             "Name": "ImageReference",
             "SummaryComment": "A reference to the Azure Virtual Machines Marketplace image to use.",
-            "RemarksComment": null,
+            "RemarksComment": "This property and <see cref=\"OSDisk\"/> are mutually exclusive and one of the properties must be specified.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required"
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
         },
@@ -28,6 +28,21 @@
           "Value": {
             "Type": "string",
             "Name": "NodeAgentSKUId"
+          }
+        },
+        {
+          "Key": {
+            "Type": "OSDisk",
+            "Name": "OSDisk",
+            "SummaryComment": "A reference to the OS disk image to use.",
+            "RemarksComment": "This property can be specified only if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. This property and <see cref=\"ImageReference\"/> are mutually exclusive and one of the properties must be specified.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional"
+          },
+          "Value": {
+            "Type": "Models.OsDisk",
+            "Name": "OsDisk"
           }
         },
         {

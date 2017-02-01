@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// response includes all pools that existed in the account in the time
         /// range of the returned aggregation intervals.
         /// </remarks>
-        /// <param name='poolListPoolUsageMetricsOptions'>
+        /// <param name='poolListUsageMetricsOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetricsWithHttpMessagesAsync(PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsWithHttpMessagesAsync(PoolListUsageMetricsOptions poolListUsageMetricsOptions = default(PoolListUsageMetricsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the
         /// specified account.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// in the account, from account creation to the last update time of
         /// the statistics.
         /// </remarks>
-        /// <param name='poolGetAllPoolsLifetimeStatisticsOptions'>
+        /// <param name='poolGetAllLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<PoolStatistics,PoolGetAllPoolsLifetimeStatisticsHeaders>> GetAllPoolsLifetimeStatisticsWithHttpMessagesAsync(PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<PoolStatistics,PoolGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Adds a pool to the specified account.
         /// </summary>
@@ -521,7 +521,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='poolListPoolUsageMetricsNextOptions'>
+        /// <param name='poolListUsageMetricsNextOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetricsNextWithHttpMessagesAsync(string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsNextWithHttpMessagesAsync(string nextPageLink, PoolListUsageMetricsNextOptions poolListUsageMetricsNextOptions = default(PoolListUsageMetricsNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists all of the pools in the specified account.
         /// </summary>

@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using Models = Microsoft.Azure.Batch.Protocol.Models;
-using System.Threading;
-
 namespace Microsoft.Azure.Batch
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Threading;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
     using Microsoft.Rest.Azure;
 
@@ -62,7 +60,7 @@ namespace Microsoft.Azure.Batch
                 this._jobOperations.ParentBatchClient.ProtocolLayer.GetNodeFileByTask(
                     _jobId, 
                     _taskId, 
-                    base.Name, 
+                    base.Path, 
                     stream,
                     byteRange,
                     bhMgr, 
@@ -76,7 +74,7 @@ namespace Microsoft.Azure.Batch
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(base.CustomBehaviors, additionalBehaviors);
 
-            var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(_jobId, _taskId, base.Name, recursive, bhMgr, cancellationToken);
+            var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.DeleteNodeFileByTask(_jobId, _taskId, base.Path, recursive, bhMgr, cancellationToken);
 
             await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
         }
@@ -90,15 +88,15 @@ namespace Microsoft.Azure.Batch
             // create the behavior managaer
             BehaviorManager bhMgr = new BehaviorManager(base.CustomBehaviors, additionalBehaviors, detailLevel);
 
-            System.Threading.Tasks.Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>> asyncTask = 
+            System.Threading.Tasks.Task<AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromTaskHeaders>> asyncTask = 
                 this._jobOperations.ParentBatchClient.ProtocolLayer.GetNodeFilePropertiesByTask(
                     _jobId, 
                     _taskId, 
-                    this.Name, 
+                    this.Path, 
                     bhMgr, 
                     cancellationToken);
 
-            AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+            AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromTaskHeaders> response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
 
             // immediately available to all threads
             System.Threading.Interlocked.Exchange(ref base.fileItemBox, new FileItemBox(response.Body));

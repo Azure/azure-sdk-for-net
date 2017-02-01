@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Requeue,
         [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskcompletion")]
-        Taskcompletion,
-        [System.Runtime.Serialization.EnumMember(Value = "retaineddata")]
-        Retaineddata
+        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        TaskCompletion,
+        [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
+        RetainedData
     }
     internal static class ComputeNodeRebootOptionEnumExtension
     {
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "requeue";
                 case ComputeNodeRebootOption.Terminate:
                     return "terminate";
-                case ComputeNodeRebootOption.Taskcompletion:
-                    return "taskcompletion";
-                case ComputeNodeRebootOption.Retaineddata:
-                    return "retaineddata";
+                case ComputeNodeRebootOption.TaskCompletion:
+                    return "taskCompletion";
+                case ComputeNodeRebootOption.RetainedData:
+                    return "retainedData";
             }
             return null;
         }
@@ -63,10 +63,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeRebootOption.Requeue;
                 case "terminate":
                     return ComputeNodeRebootOption.Terminate;
-                case "taskcompletion":
-                    return ComputeNodeRebootOption.Taskcompletion;
-                case "retaineddata":
-                    return ComputeNodeRebootOption.Retaineddata;
+                case "taskCompletion":
+                    return ComputeNodeRebootOption.TaskCompletion;
+                case "retainedData":
+                    return ComputeNodeRebootOption.RetainedData;
             }
             return null;
         }

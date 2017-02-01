@@ -796,15 +796,15 @@
             internal IList<Protocol.Models.PoolUsageMetrics> _poolUsageMetricsList;
 
             // returns our response... the fake
-            private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListPoolUsageMetricsHeaders>> NewFunc(CancellationToken token)
+            private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>> NewFunc(CancellationToken token)
             {
-                var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListPoolUsageMetricsHeaders>()
+                var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>()
                     {
 
                         Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
                     };
 
-                return System.Threading.Tasks.Task.FromResult<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListPoolUsageMetricsHeaders>>(response);
+                return System.Threading.Tasks.Task.FromResult(response);
             }
 
             // replaces the func with our own func

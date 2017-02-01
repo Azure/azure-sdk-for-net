@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Requeue,
         [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskcompletion")]
-        Taskcompletion
+        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        TaskCompletion
     }
     internal static class DisableComputeNodeSchedulingOptionEnumExtension
     {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "requeue";
                 case DisableComputeNodeSchedulingOption.Terminate:
                     return "terminate";
-                case DisableComputeNodeSchedulingOption.Taskcompletion:
-                    return "taskcompletion";
+                case DisableComputeNodeSchedulingOption.TaskCompletion:
+                    return "taskCompletion";
             }
             return null;
         }
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return DisableComputeNodeSchedulingOption.Requeue;
                 case "terminate":
                     return DisableComputeNodeSchedulingOption.Terminate;
-                case "taskcompletion":
-                    return DisableComputeNodeSchedulingOption.Taskcompletion;
+                case "taskCompletion":
+                    return DisableComputeNodeSchedulingOption.TaskCompletion;
             }
             return null;
         }

@@ -26,8 +26,8 @@
     public partial class FileDeleteFromTaskOptions : ITimeoutOptions { }
     public partial class FileGetFromComputeNodeOptions : ITimeoutOptions { }
     public partial class FileGetFromTaskOptions : ITimeoutOptions { }
-    public partial class FileGetNodeFilePropertiesFromComputeNodeOptions : ITimeoutOptions { }
-    public partial class FileGetNodeFilePropertiesFromTaskOptions : ITimeoutOptions { }
+    public partial class FileGetPropertiesFromComputeNodeOptions : ITimeoutOptions { }
+    public partial class FileGetPropertiesFromTaskOptions : ITimeoutOptions { }
     public partial class FileListFromComputeNodeOptions : ITimeoutOptions, IODataFilter { }
     public partial class FileListFromComputeNodeNextOptions : IOptions { }
     public partial class FileListFromTaskOptions : ITimeoutOptions, IODataFilter { }
@@ -36,7 +36,7 @@
     public partial class JobDeleteOptions : ITimeoutOptions { }
     public partial class JobDisableOptions : ITimeoutOptions { }
     public partial class JobEnableOptions : ITimeoutOptions { }
-    public partial class JobGetAllJobsLifetimeStatisticsOptions : ITimeoutOptions { }
+    public partial class JobGetAllLifetimeStatisticsOptions : ITimeoutOptions { }
     public partial class JobGetOptions : ITimeoutOptions, IODataSelect, IODataExpand { }
     public partial class JobListFromJobScheduleOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }
     public partial class JobListFromJobScheduleNextOptions : IOptions { }
@@ -64,12 +64,12 @@
     public partial class PoolEnableAutoScaleOptions : ITimeoutOptions { }
     public partial class PoolEvaluateAutoScaleOptions : ITimeoutOptions { }
     public partial class PoolExistsOptions : ITimeoutOptions { }
-    public partial class PoolGetAllPoolsLifetimeStatisticsOptions : ITimeoutOptions { }
+    public partial class PoolGetAllLifetimeStatisticsOptions : ITimeoutOptions { }
     public partial class PoolGetOptions : ITimeoutOptions, IODataSelect, IODataExpand { }
     public partial class PoolListOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }
     public partial class PoolListNextOptions : IOptions { }
-    public partial class PoolListPoolUsageMetricsOptions : ITimeoutOptions, IODataFilter { }
-    public partial class PoolListPoolUsageMetricsNextOptions : IOptions { }
+    public partial class PoolListUsageMetricsOptions : ITimeoutOptions, IODataFilter { }
+    public partial class PoolListUsageMetricsNextOptions : IOptions { }
     public partial class PoolPatchOptions : ITimeoutOptions { }
     public partial class PoolResizeOptions : ITimeoutOptions { }
     public partial class PoolStopResizeOptions : ITimeoutOptions { }

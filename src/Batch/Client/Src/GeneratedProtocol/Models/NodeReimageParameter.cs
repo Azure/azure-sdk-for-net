@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskcompletion', 'retaineddata'
+        /// 'terminate', 'taskCompletion', 'retainedData'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeReimageOption")]
         public ComputeNodeReimageOption? NodeReimageOption { get; set; }

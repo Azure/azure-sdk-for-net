@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// typical purpose is to control and/or monitor job execution, for
         /// example by deciding what additional tasks to run, determining when
         /// the work is complete, etc. (However, a Job Manager task is not
-        /// restricted to these activities – it is a fully-fledged task in the
+        /// restricted to these activities - it is a fully-fledged task in the
         /// system and perform whatever actions are required for the job.) For
         /// example, a Job Manager task might download a file specified as a
         /// parameter, analyze the contents of that file and submit additional
@@ -185,15 +185,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// Note that if a job contains no tasks, then all tasks are considered
-        /// complete. This option is therefore most commonly used with a job
-        /// manager task; if you want to use automatic job termination without
-        /// a job manager, you should initially set onAllTasksComplete to
-        /// noaction and update the job properties to set onAllTasksComplete to
-        /// terminatejob once you have finished adding tasks. Permitted values
-        /// are: noaction – do nothing. The job remains active unless
-        /// terminated or disabled by some other means. terminatejob –
-        /// terminate the job. The job’s terminateReason is set to
-        /// 'AllTasksComplete'. The default is noaction. Possible values
+        /// complete. This option is therefore most commonly used with a Job
+        /// Manager task; if you want to use automatic job termination without
+        /// a Job Manager, you should initially set onAllTasksComplete to
+        /// noAction and update the job properties to set onAllTasksComplete to
+        /// terminateJob once you have finished adding tasks. Permitted values
+        /// are: noAction - do nothing. The job remains active unless
+        /// terminated or disabled by some other means. terminateJob -
+        /// terminate the job. The job's terminateReason is set to
+        /// 'AllTasksComplete'. The default is noAction. Possible values
         /// include: 'noAction', 'terminateJob'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
@@ -206,12 +206,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// count, or if it had a scheduling error.
         /// </summary>
         /// <remarks>
-        /// Permitted values are: noaction – do nothing.
-        /// performexitoptionsjobaction – take the action associated with the
-        /// task exit condition in the task's exitConditions collection. (This
-        /// may still result in no action being taken, if that is what the task
-        /// specifies.) The default is noaction. Possible values include:
-        /// 'noAction', 'performExitOptionsJobAction'
+        /// noAction - do nothing. performExitOptionsJobAction - take the
+        /// action associated with the task exit condition in the task's
+        /// exitConditions collection. (This may still result in no action
+        /// being taken, if that is what the task specifies.) The default is
+        /// noAction. Possible values include: 'noAction',
+        /// 'performExitOptionsJobAction'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }

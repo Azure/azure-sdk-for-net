@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobPatchParameter class.
         /// </summary>
         /// <param name="priority">The priority of the job.</param>
-        /// <param name="onAllTasksComplete">Specifies an action the Batch
-        /// service should take when all tasks in the job are in the completed
+        /// <param name="onAllTasksComplete">The action the Batch service
+        /// should take when all tasks in the job are in the completed
         /// state.</param>
         /// <param name="constraints">The execution constraints for the
         /// job.</param>
@@ -64,12 +64,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies an action the Batch service should take when
-        /// all tasks in the job are in the completed state.
+        /// Gets or sets the action the Batch service should take when all
+        /// tasks in the job are in the completed state.
         /// </summary>
         /// <remarks>
         /// If omitted, the completion behavior is left unchanged. You may not
-        /// change the value from terminatejob to noaction – that is, once you
+        /// change the value from terminateJob to noAction - that is, once you
         /// have engaged automatic job termination, you cannot turn it off
         /// again. If you try to do this, the request fails with an 'invalid
         /// property value' error response; if you are calling the REST API

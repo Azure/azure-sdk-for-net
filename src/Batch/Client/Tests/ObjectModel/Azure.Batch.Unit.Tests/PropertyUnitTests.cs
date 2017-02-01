@@ -131,6 +131,7 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(ImageReference), typeof(Protocol.Models.ImageReference), "SkuId", "Sku"),
 
                 new ComparerPropertyMapping(typeof(VirtualMachineConfiguration), typeof(Protocol.Models.VirtualMachineConfiguration), "NodeAgentSkuId", "NodeAgentSKUId"),
+                new ComparerPropertyMapping(typeof(VirtualMachineConfiguration), typeof(Protocol.Models.VirtualMachineConfiguration), "OSDisk", "OsDisk"),
 
                 new ComparerPropertyMapping(typeof(TaskSchedulingPolicy), typeof(Protocol.Models.TaskSchedulingPolicy), "ComputeNodeFillType", "NodeFillType"),
             };
@@ -662,7 +663,7 @@ namespace Azure.Batch.Unit.Tests
             Protocol.Models.AutoPoolSpecification protoAutoPoolSpecification = new Protocol.Models.AutoPoolSpecification
             {
                 KeepAlive = true,
-                PoolLifetimeOption = Protocol.Models.PoolLifetimeOption.Jobschedule,
+                PoolLifetimeOption = Protocol.Models.PoolLifetimeOption.JobSchedule,
                 AutoPoolIdPrefix = "Matt",
                 Pool = new Protocol.Models.PoolSpecification
                 {

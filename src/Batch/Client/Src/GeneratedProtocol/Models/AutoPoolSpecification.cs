@@ -69,12 +69,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// multiple jobs on a schedule are assigned to pools.
         /// </summary>
         /// <remarks>
-        /// When the pool lifetime scope is jobschedule level, the Batch
-        /// service keeps track of the last autopool created for the
-        /// jobschedule, and deletes that pool when the jobschedule completes.
+        /// When the pool lifetime scope is jobSchedule level, the Batch
+        /// service keeps track of the last autopool created for the job
+        /// schedule, and deletes that pool when the job schedule completes.
         /// Batch will also delete this pool if the user updates the auto pool
         /// specification in a way that changes this lifetime. Possible values
-        /// include: 'jobschedule', 'job', 'unmapped'
+        /// include: 'jobSchedule', 'job', 'unmapped'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "poolLifetimeOption")]
         public PoolLifetimeOption PoolLifetimeOption { get; set; }

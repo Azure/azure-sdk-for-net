@@ -67,9 +67,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// run concurrently on a single compute node in the pool.</param>
         /// <param name="taskSchedulingPolicy">How the Batch service
         /// distributes tasks between compute nodes in the pool.</param>
+        /// <param name="userAccounts">The list of user accounts to be created
+        /// on each node in the pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
-        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
+        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Id = id;
             DisplayName = displayName;
@@ -88,6 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             ApplicationPackageReferences = applicationPackageReferences;
             MaxTasksPerNode = maxTasksPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
+            UserAccounts = userAccounts;
             Metadata = metadata;
         }
 
@@ -143,7 +146,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property and virtualMachineConfiguration are mutually
-        /// exclusive and one of the properties must be specified.
+        /// exclusive and one of the properties must be specified. This
+        /// property cannot be specified if the Batch account was created with
+        /// its poolAllocationMode property set to 'UserSubscription'.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
@@ -264,9 +269,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Linux compute nodes, the certificates are stored in a directory
         /// inside the task working directory and an environment variable
         /// AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this
-        /// location. For certificates with visibility of remoteuser, a certs
-        /// directory is created in the user's home directory (e.g.,
-        /// /home/<user-name>/certs) where certificates are placed.
+        /// location. For certificates with visibility of 'remoteUser', a
+        /// 'certs' directory is created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) and certificates are placed in that
+        /// directory.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
         public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
@@ -299,6 +305,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user accounts to be created on each node
+        /// in the pool.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userAccounts")]
+        public System.Collections.Generic.IList<UserAccount> UserAccounts { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool as
@@ -363,13 +376,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 this.TaskSchedulingPolicy.Validate();
             }
-            if (this.Metadata != null)
+            if (this.UserAccounts != null)
             {
-                foreach (var element2 in this.Metadata)
+                foreach (var element2 in this.UserAccounts)
                 {
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element3 in this.Metadata)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

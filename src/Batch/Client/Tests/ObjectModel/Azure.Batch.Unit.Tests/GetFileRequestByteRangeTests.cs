@@ -44,8 +44,8 @@ namespace Azure.Batch.Unit.Tests
         {
             await VerifyOcpRangeSetWhenDownloadingFileAsync<
                 FileGetNodeFilePropertiesFromTaskBatchRequest,
-                FileGetNodeFilePropertiesFromTaskOptions,
-                FileGetNodeFilePropertiesFromTaskHeaders,
+                FileGetPropertiesFromTaskOptions,
+                FileGetPropertiesFromTaskHeaders,
                 FileGetFromTaskBatchRequest,
                 FileGetFromTaskOptions,
                 FileGetFromTaskHeaders>(
@@ -60,8 +60,8 @@ namespace Azure.Batch.Unit.Tests
         {
             await VerifyOcpRangeSetWhenDownloadingFileAsync<
                 FileGetNodeFilePropertiesFromTaskBatchRequest,
-                FileGetNodeFilePropertiesFromTaskOptions,
-                FileGetNodeFilePropertiesFromTaskHeaders,
+                FileGetPropertiesFromTaskOptions,
+                FileGetPropertiesFromTaskHeaders,
                 FileGetFromTaskBatchRequest,
                 FileGetFromTaskOptions,
                 FileGetFromTaskHeaders>(
@@ -76,8 +76,8 @@ namespace Azure.Batch.Unit.Tests
         {
             await VerifyOcpRangeSetWhenDownloadingFileAsync<
                 FileGetNodeFilePropertiesFromComputeNodeBatchRequest,
-                FileGetNodeFilePropertiesFromComputeNodeOptions,
-                FileGetNodeFilePropertiesFromComputeNodeHeaders,
+                FileGetPropertiesFromComputeNodeOptions,
+                FileGetPropertiesFromComputeNodeHeaders,
                 FileGetFromComputeNodeBatchRequest,
                 FileGetFromComputeNodeOptions,
                 FileGetFromComputeNodeHeaders>(
@@ -92,8 +92,8 @@ namespace Azure.Batch.Unit.Tests
         {
             await VerifyOcpRangeSetWhenDownloadingFileAsync<
                 FileGetNodeFilePropertiesFromComputeNodeBatchRequest,
-                FileGetNodeFilePropertiesFromComputeNodeOptions,
-                FileGetNodeFilePropertiesFromComputeNodeHeaders,
+                FileGetPropertiesFromComputeNodeOptions,
+                FileGetPropertiesFromComputeNodeHeaders,
                 FileGetFromComputeNodeBatchRequest,
                 FileGetFromComputeNodeOptions,
                 FileGetFromComputeNodeHeaders>(

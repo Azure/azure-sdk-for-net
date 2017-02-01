@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='poolListPoolUsageMetricsOptions'>
+            /// <param name='poolListUsageMetricsOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<PoolUsageMetrics> ListPoolUsageMetrics(this IPoolOperations operations, PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions))
+            public static Microsoft.Rest.Azure.IPage<PoolUsageMetrics> ListUsageMetrics(this IPoolOperations operations, PoolListUsageMetricsOptions poolListUsageMetricsOptions = default(PoolListUsageMetricsOptions))
             {
-                return ((IPoolOperations)operations).ListPoolUsageMetricsAsync(poolListPoolUsageMetricsOptions).GetAwaiter().GetResult();
+                return ((IPoolOperations)operations).ListUsageMetricsAsync(poolListUsageMetricsOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,15 +58,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='poolListPoolUsageMetricsOptions'>
+            /// <param name='poolListUsageMetricsOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>> ListPoolUsageMetricsAsync(this IPoolOperations operations, PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>> ListUsageMetricsAsync(this IPoolOperations operations, PoolListUsageMetricsOptions poolListUsageMetricsOptions = default(PoolListUsageMetricsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListPoolUsageMetricsWithHttpMessagesAsync(poolListPoolUsageMetricsOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListUsageMetricsWithHttpMessagesAsync(poolListUsageMetricsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -83,12 +83,12 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='poolGetAllPoolsLifetimeStatisticsOptions'>
+            /// <param name='poolGetAllLifetimeStatisticsOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static PoolStatistics GetAllPoolsLifetimeStatistics(this IPoolOperations operations, PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions))
+            public static PoolStatistics GetAllLifetimeStatistics(this IPoolOperations operations, PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions))
             {
-                return ((IPoolOperations)operations).GetAllPoolsLifetimeStatisticsAsync(poolGetAllPoolsLifetimeStatisticsOptions).GetAwaiter().GetResult();
+                return ((IPoolOperations)operations).GetAllLifetimeStatisticsAsync(poolGetAllLifetimeStatisticsOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,15 +102,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='poolGetAllPoolsLifetimeStatisticsOptions'>
+            /// <param name='poolGetAllLifetimeStatisticsOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<PoolStatistics> GetAllPoolsLifetimeStatisticsAsync(this IPoolOperations operations, PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<PoolStatistics> GetAllLifetimeStatisticsAsync(this IPoolOperations operations, PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetAllPoolsLifetimeStatisticsWithHttpMessagesAsync(poolGetAllPoolsLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAllLifetimeStatisticsWithHttpMessagesAsync(poolGetAllLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -893,12 +893,12 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='poolListPoolUsageMetricsNextOptions'>
+            /// <param name='poolListUsageMetricsNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<PoolUsageMetrics> ListPoolUsageMetricsNext(this IPoolOperations operations, string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions))
+            public static Microsoft.Rest.Azure.IPage<PoolUsageMetrics> ListUsageMetricsNext(this IPoolOperations operations, string nextPageLink, PoolListUsageMetricsNextOptions poolListUsageMetricsNextOptions = default(PoolListUsageMetricsNextOptions))
             {
-                return ((IPoolOperations)operations).ListPoolUsageMetricsNextAsync(nextPageLink, poolListPoolUsageMetricsNextOptions).GetAwaiter().GetResult();
+                return ((IPoolOperations)operations).ListUsageMetricsNextAsync(nextPageLink, poolListUsageMetricsNextOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -916,15 +916,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='poolListPoolUsageMetricsNextOptions'>
+            /// <param name='poolListUsageMetricsNextOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>> ListPoolUsageMetricsNextAsync(this IPoolOperations operations, string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>> ListUsageMetricsNextAsync(this IPoolOperations operations, string nextPageLink, PoolListUsageMetricsNextOptions poolListUsageMetricsNextOptions = default(PoolListUsageMetricsNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListPoolUsageMetricsNextWithHttpMessagesAsync(nextPageLink, poolListPoolUsageMetricsNextOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListUsageMetricsNextWithHttpMessagesAsync(nextPageLink, poolListUsageMetricsNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

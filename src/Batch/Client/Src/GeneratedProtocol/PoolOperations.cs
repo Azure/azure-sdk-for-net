@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// includes all pools that existed in the account in the time range of the
         /// returned aggregation intervals.
         /// </remarks>
-        /// <param name='poolListPoolUsageMetricsOptions'>
+        /// <param name='poolListUsageMetricsOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -84,51 +84,51 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetricsWithHttpMessagesAsync(PoolListPoolUsageMetricsOptions poolListPoolUsageMetricsOptions = default(PoolListPoolUsageMetricsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsWithHttpMessagesAsync(PoolListUsageMetricsOptions poolListUsageMetricsOptions = default(PoolListUsageMetricsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             System.DateTime? startTime = default(System.DateTime?);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                startTime = poolListPoolUsageMetricsOptions.StartTime;
+                startTime = poolListUsageMetricsOptions.StartTime;
             }
             System.DateTime? endTime = default(System.DateTime?);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                endTime = poolListPoolUsageMetricsOptions.EndTime;
+                endTime = poolListUsageMetricsOptions.EndTime;
             }
             string filter = default(string);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                filter = poolListPoolUsageMetricsOptions.Filter;
+                filter = poolListUsageMetricsOptions.Filter;
             }
             int? maxResults = default(int?);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                maxResults = poolListPoolUsageMetricsOptions.MaxResults;
+                maxResults = poolListUsageMetricsOptions.MaxResults;
             }
             int? timeout = default(int?);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                timeout = poolListPoolUsageMetricsOptions.Timeout;
+                timeout = poolListUsageMetricsOptions.Timeout;
             }
-            string clientRequestId = default(string);
-            if (poolListPoolUsageMetricsOptions != null)
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (poolListUsageMetricsOptions != null)
             {
-                clientRequestId = poolListPoolUsageMetricsOptions.ClientRequestId;
+                clientRequestId = poolListUsageMetricsOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                returnClientRequestId = poolListPoolUsageMetricsOptions.ReturnClientRequestId;
+                returnClientRequestId = poolListUsageMetricsOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (poolListPoolUsageMetricsOptions != null)
+            if (poolListUsageMetricsOptions != null)
             {
-                ocpDate = poolListPoolUsageMetricsOptions.OcpDate;
+                ocpDate = poolListUsageMetricsOptions.OcpDate;
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListPoolUsageMetrics", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListUsageMetrics", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolListPoolUsageMetricsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolListUsageMetricsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Statistics are aggregated across all pools that have ever existed in the
         /// account, from account creation to the last update time of the statistics.
         /// </remarks>
-        /// <param name='poolGetAllPoolsLifetimeStatisticsOptions'>
+        /// <param name='poolGetAllLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -365,31 +365,31 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<PoolStatistics,PoolGetAllPoolsLifetimeStatisticsHeaders>> GetAllPoolsLifetimeStatisticsWithHttpMessagesAsync(PoolGetAllPoolsLifetimeStatisticsOptions poolGetAllPoolsLifetimeStatisticsOptions = default(PoolGetAllPoolsLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<PoolStatistics,PoolGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
-            if (poolGetAllPoolsLifetimeStatisticsOptions != null)
+            if (poolGetAllLifetimeStatisticsOptions != null)
             {
-                timeout = poolGetAllPoolsLifetimeStatisticsOptions.Timeout;
+                timeout = poolGetAllLifetimeStatisticsOptions.Timeout;
             }
-            string clientRequestId = default(string);
-            if (poolGetAllPoolsLifetimeStatisticsOptions != null)
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (poolGetAllLifetimeStatisticsOptions != null)
             {
-                clientRequestId = poolGetAllPoolsLifetimeStatisticsOptions.ClientRequestId;
+                clientRequestId = poolGetAllLifetimeStatisticsOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (poolGetAllPoolsLifetimeStatisticsOptions != null)
+            if (poolGetAllLifetimeStatisticsOptions != null)
             {
-                returnClientRequestId = poolGetAllPoolsLifetimeStatisticsOptions.ReturnClientRequestId;
+                returnClientRequestId = poolGetAllLifetimeStatisticsOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (poolGetAllPoolsLifetimeStatisticsOptions != null)
+            if (poolGetAllLifetimeStatisticsOptions != null)
             {
-                ocpDate = poolGetAllPoolsLifetimeStatisticsOptions.OcpDate;
+                ocpDate = poolGetAllLifetimeStatisticsOptions.OcpDate;
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetAllPoolsLifetimeStatistics", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetAllLifetimeStatistics", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -529,7 +529,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<PoolStatistics,PoolGetAllPoolsLifetimeStatisticsHeaders>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<PoolStatistics,PoolGetAllLifetimeStatisticsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -556,7 +556,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolGetAllPoolsLifetimeStatisticsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolGetAllLifetimeStatisticsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
@@ -625,7 +625,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolAddOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolAddOptions != null)
             {
                 clientRequestId = poolAddOptions.ClientRequestId;
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -870,7 +870,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolListOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolListOptions != null)
             {
                 clientRequestId = poolListOptions.ClientRequestId;
@@ -959,7 +959,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1144,7 +1144,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolDeleteOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolDeleteOptions != null)
             {
                 clientRequestId = poolDeleteOptions.ClientRequestId;
@@ -1239,7 +1239,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1424,7 +1424,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolExistsOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolExistsOptions != null)
             {
                 clientRequestId = poolExistsOptions.ClientRequestId;
@@ -1519,7 +1519,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1718,7 +1718,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolGetOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolGetOptions != null)
             {
                 clientRequestId = poolGetOptions.ClientRequestId;
@@ -1823,7 +1823,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2039,7 +2039,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolPatchOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolPatchOptions != null)
             {
                 clientRequestId = poolPatchOptions.ClientRequestId;
@@ -2135,7 +2135,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2326,7 +2326,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolDisableAutoScaleOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolDisableAutoScaleOptions != null)
             {
                 clientRequestId = poolDisableAutoScaleOptions.ClientRequestId;
@@ -2397,7 +2397,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2565,7 +2565,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolEnableAutoScaleOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolEnableAutoScaleOptions != null)
             {
                 clientRequestId = poolEnableAutoScaleOptions.ClientRequestId;
@@ -2661,7 +2661,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2871,7 +2871,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolEvaluateAutoScaleOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolEvaluateAutoScaleOptions != null)
             {
                 clientRequestId = poolEvaluateAutoScaleOptions.ClientRequestId;
@@ -2948,7 +2948,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3145,7 +3145,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolResizeOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolResizeOptions != null)
             {
                 clientRequestId = poolResizeOptions.ClientRequestId;
@@ -3241,7 +3241,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3439,7 +3439,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolStopResizeOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolStopResizeOptions != null)
             {
                 clientRequestId = poolStopResizeOptions.ClientRequestId;
@@ -3534,7 +3534,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3736,7 +3736,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolUpdatePropertiesOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolUpdatePropertiesOptions != null)
             {
                 clientRequestId = poolUpdatePropertiesOptions.ClientRequestId;
@@ -3808,7 +3808,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3988,7 +3988,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolUpgradeOSOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolUpgradeOSOptions != null)
             {
                 clientRequestId = poolUpgradeOSOptions.ClientRequestId;
@@ -4089,7 +4089,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -4296,7 +4296,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = poolRemoveNodesOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolRemoveNodesOptions != null)
             {
                 clientRequestId = poolRemoveNodesOptions.ClientRequestId;
@@ -4392,7 +4392,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -4553,7 +4553,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='poolListPoolUsageMetricsNextOptions'>
+        /// <param name='poolListUsageMetricsNextOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -4577,26 +4577,26 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>> ListPoolUsageMetricsNextWithHttpMessagesAsync(string nextPageLink, PoolListPoolUsageMetricsNextOptions poolListPoolUsageMetricsNextOptions = default(PoolListPoolUsageMetricsNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsNextWithHttpMessagesAsync(string nextPageLink, PoolListUsageMetricsNextOptions poolListUsageMetricsNextOptions = default(PoolListUsageMetricsNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (nextPageLink == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
-            if (poolListPoolUsageMetricsNextOptions != null)
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (poolListUsageMetricsNextOptions != null)
             {
-                clientRequestId = poolListPoolUsageMetricsNextOptions.ClientRequestId;
+                clientRequestId = poolListUsageMetricsNextOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (poolListPoolUsageMetricsNextOptions != null)
+            if (poolListUsageMetricsNextOptions != null)
             {
-                returnClientRequestId = poolListPoolUsageMetricsNextOptions.ReturnClientRequestId;
+                returnClientRequestId = poolListUsageMetricsNextOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (poolListPoolUsageMetricsNextOptions != null)
+            if (poolListUsageMetricsNextOptions != null)
             {
-                ocpDate = poolListPoolUsageMetricsNextOptions.OcpDate;
+                ocpDate = poolListUsageMetricsNextOptions.OcpDate;
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -4610,7 +4610,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListPoolUsageMetricsNext", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListUsageMetricsNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -4644,7 +4644,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -4728,7 +4728,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -4755,7 +4755,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolListPoolUsageMetricsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolListUsageMetricsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
@@ -4809,7 +4809,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (poolListNextOptions != null)
             {
                 clientRequestId = poolListNextOptions.ClientRequestId;
@@ -4870,7 +4870,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {

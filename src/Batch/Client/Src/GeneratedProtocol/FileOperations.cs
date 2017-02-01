@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='taskId'>
         /// The ID of the task whose file you want to delete.
         /// </param>
-        /// <param name='fileName'>
+        /// <param name='filePath'>
         /// The path to the task file that you want to delete.
         /// </param>
         /// <param name='recursive'>
-        /// Whether to delete children of a directory. If the fileName parameter
+        /// Whether to delete children of a directory. If the filePath parameter
         /// represents a directory instead of a file, you can set recursive to true to
         /// delete the directory and all of the files and subdirectories in it. If
         /// recursive is false then the directory must be empty or deletion will fail.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileDeleteFromTaskHeaders>> DeleteFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileDeleteFromTaskHeaders>> DeleteFromTaskWithHttpMessagesAsync(string jobId, string taskId, string filePath, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (jobId == null)
             {
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "taskId");
             }
-            if (fileName == null)
+            if (filePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "fileName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = fileDeleteFromTaskOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileDeleteFromTaskOptions != null)
             {
                 clientRequestId = fileDeleteFromTaskOptions.ClientRequestId;
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("taskId", taskId);
-                tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("recursive", recursive);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
@@ -148,10 +148,10 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{fileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{filePath}").ToString();
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
-            _url = _url.Replace("{fileName}", System.Uri.EscapeDataString(fileName));
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (recursive != null)
             {
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='taskId'>
         /// The ID of the task whose file you want to retrieve.
         /// </param>
-        /// <param name='fileName'>
+        /// <param name='filePath'>
         /// The path to the task file that you want to get the content of.
         /// </param>
         /// <param name='fileGetFromTaskOptions'>
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,FileGetFromTaskHeaders>> GetFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,FileGetFromTaskHeaders>> GetFromTaskWithHttpMessagesAsync(string jobId, string taskId, string filePath, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (jobId == null)
             {
@@ -350,9 +350,9 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "taskId");
             }
-            if (fileName == null)
+            if (filePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "fileName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = fileGetFromTaskOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileGetFromTaskOptions != null)
             {
                 clientRequestId = fileGetFromTaskOptions.ClientRequestId;
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("taskId", taskId);
-                tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
@@ -415,10 +415,10 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{fileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{filePath}").ToString();
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
-            _url = _url.Replace("{fileName}", System.Uri.EscapeDataString(fileName));
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -605,10 +605,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='taskId'>
         /// The ID of the task whose file you want to get the properties of.
         /// </param>
-        /// <param name='fileName'>
+        /// <param name='filePath'>
         /// The path to the task file that you want to get the properties of.
         /// </param>
-        /// <param name='fileGetNodeFilePropertiesFromTaskOptions'>
+        /// <param name='fileGetPropertiesFromTaskOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -629,7 +629,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesFromTaskWithHttpMessagesAsync(string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetPropertiesFromTaskHeaders>> GetPropertiesFromTaskWithHttpMessagesAsync(string jobId, string taskId, string filePath, FileGetPropertiesFromTaskOptions fileGetPropertiesFromTaskOptions = default(FileGetPropertiesFromTaskOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (jobId == null)
             {
@@ -639,43 +639,43 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "taskId");
             }
-            if (fileName == null)
+            if (filePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "fileName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
-            if (fileGetNodeFilePropertiesFromTaskOptions != null)
+            if (fileGetPropertiesFromTaskOptions != null)
             {
-                timeout = fileGetNodeFilePropertiesFromTaskOptions.Timeout;
+                timeout = fileGetPropertiesFromTaskOptions.Timeout;
             }
-            string clientRequestId = default(string);
-            if (fileGetNodeFilePropertiesFromTaskOptions != null)
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (fileGetPropertiesFromTaskOptions != null)
             {
-                clientRequestId = fileGetNodeFilePropertiesFromTaskOptions.ClientRequestId;
+                clientRequestId = fileGetPropertiesFromTaskOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (fileGetNodeFilePropertiesFromTaskOptions != null)
+            if (fileGetPropertiesFromTaskOptions != null)
             {
-                returnClientRequestId = fileGetNodeFilePropertiesFromTaskOptions.ReturnClientRequestId;
+                returnClientRequestId = fileGetPropertiesFromTaskOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (fileGetNodeFilePropertiesFromTaskOptions != null)
+            if (fileGetPropertiesFromTaskOptions != null)
             {
-                ocpDate = fileGetNodeFilePropertiesFromTaskOptions.OcpDate;
+                ocpDate = fileGetPropertiesFromTaskOptions.OcpDate;
             }
             System.DateTime? ifModifiedSince = default(System.DateTime?);
-            if (fileGetNodeFilePropertiesFromTaskOptions != null)
+            if (fileGetPropertiesFromTaskOptions != null)
             {
-                ifModifiedSince = fileGetNodeFilePropertiesFromTaskOptions.IfModifiedSince;
+                ifModifiedSince = fileGetPropertiesFromTaskOptions.IfModifiedSince;
             }
             System.DateTime? ifUnmodifiedSince = default(System.DateTime?);
-            if (fileGetNodeFilePropertiesFromTaskOptions != null)
+            if (fileGetPropertiesFromTaskOptions != null)
             {
-                ifUnmodifiedSince = fileGetNodeFilePropertiesFromTaskOptions.IfUnmodifiedSince;
+                ifUnmodifiedSince = fileGetPropertiesFromTaskOptions.IfUnmodifiedSince;
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("taskId", taskId);
-                tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
@@ -694,14 +694,14 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("ifModifiedSince", ifModifiedSince);
                 tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetNodeFilePropertiesFromTask", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetPropertiesFromTask", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{fileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{filePath}").ToString();
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
-            _url = _url.Replace("{fileName}", System.Uri.EscapeDataString(fileName));
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -739,7 +739,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -839,7 +839,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromTaskHeaders>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetPropertiesFromTaskHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -848,7 +848,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileGetNodeFilePropertiesFromTaskHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileGetPropertiesFromTaskHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
@@ -875,11 +875,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeId'>
         /// The ID of the compute node from which you want to delete the file.
         /// </param>
-        /// <param name='fileName'>
+        /// <param name='filePath'>
         /// The path to the file that you want to delete.
         /// </param>
         /// <param name='recursive'>
-        /// Whether to delete children of a directory. If the fileName parameter
+        /// Whether to delete children of a directory. If the filePath parameter
         /// represents a directory instead of a file, you can set recursive to true to
         /// delete the directory and all of the files and subdirectories in it. If
         /// recursive is false then the directory must be empty or deletion will fail.
@@ -905,7 +905,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileDeleteFromComputeNodeHeaders>> DeleteFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileDeleteFromComputeNodeHeaders>> DeleteFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string filePath, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (poolId == null)
             {
@@ -915,9 +915,9 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nodeId");
             }
-            if (fileName == null)
+            if (filePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "fileName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -928,7 +928,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = fileDeleteFromComputeNodeOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileDeleteFromComputeNodeOptions != null)
             {
                 clientRequestId = fileDeleteFromComputeNodeOptions.ClientRequestId;
@@ -952,7 +952,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("poolId", poolId);
                 tracingParameters.Add("nodeId", nodeId);
-                tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("recursive", recursive);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
@@ -963,10 +963,10 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{fileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{filePath}").ToString();
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
-            _url = _url.Replace("{fileName}", System.Uri.EscapeDataString(fileName));
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (recursive != null)
             {
@@ -1008,7 +1008,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1128,7 +1128,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeId'>
         /// The ID of the compute node that contains the file.
         /// </param>
-        /// <param name='fileName'>
+        /// <param name='filePath'>
         /// The path to the task file that you want to get the content of.
         /// </param>
         /// <param name='fileGetFromComputeNodeOptions'>
@@ -1155,7 +1155,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,FileGetFromComputeNodeHeaders>> GetFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,FileGetFromComputeNodeHeaders>> GetFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string filePath, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (poolId == null)
             {
@@ -1165,9 +1165,9 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nodeId");
             }
-            if (fileName == null)
+            if (filePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "fileName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1178,7 +1178,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = fileGetFromComputeNodeOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileGetFromComputeNodeOptions != null)
             {
                 clientRequestId = fileGetFromComputeNodeOptions.ClientRequestId;
@@ -1217,7 +1217,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("poolId", poolId);
                 tracingParameters.Add("nodeId", nodeId);
-                tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
@@ -1230,10 +1230,10 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{fileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{filePath}").ToString();
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
-            _url = _url.Replace("{fileName}", System.Uri.EscapeDataString(fileName));
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1271,7 +1271,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1420,10 +1420,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <param name='nodeId'>
         /// The ID of the compute node that contains the file.
         /// </param>
-        /// <param name='fileName'>
+        /// <param name='filePath'>
         /// The path to the compute node file that you want to get the properties of.
         /// </param>
-        /// <param name='fileGetNodeFilePropertiesFromComputeNodeOptions'>
+        /// <param name='fileGetPropertiesFromComputeNodeOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -1444,7 +1444,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromComputeNodeHeaders>> GetNodeFilePropertiesFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetPropertiesFromComputeNodeHeaders>> GetPropertiesFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string filePath, FileGetPropertiesFromComputeNodeOptions fileGetPropertiesFromComputeNodeOptions = default(FileGetPropertiesFromComputeNodeOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (poolId == null)
             {
@@ -1454,43 +1454,43 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nodeId");
             }
-            if (fileName == null)
+            if (filePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "fileName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
-            if (fileGetNodeFilePropertiesFromComputeNodeOptions != null)
+            if (fileGetPropertiesFromComputeNodeOptions != null)
             {
-                timeout = fileGetNodeFilePropertiesFromComputeNodeOptions.Timeout;
+                timeout = fileGetPropertiesFromComputeNodeOptions.Timeout;
             }
-            string clientRequestId = default(string);
-            if (fileGetNodeFilePropertiesFromComputeNodeOptions != null)
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (fileGetPropertiesFromComputeNodeOptions != null)
             {
-                clientRequestId = fileGetNodeFilePropertiesFromComputeNodeOptions.ClientRequestId;
+                clientRequestId = fileGetPropertiesFromComputeNodeOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (fileGetNodeFilePropertiesFromComputeNodeOptions != null)
+            if (fileGetPropertiesFromComputeNodeOptions != null)
             {
-                returnClientRequestId = fileGetNodeFilePropertiesFromComputeNodeOptions.ReturnClientRequestId;
+                returnClientRequestId = fileGetPropertiesFromComputeNodeOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (fileGetNodeFilePropertiesFromComputeNodeOptions != null)
+            if (fileGetPropertiesFromComputeNodeOptions != null)
             {
-                ocpDate = fileGetNodeFilePropertiesFromComputeNodeOptions.OcpDate;
+                ocpDate = fileGetPropertiesFromComputeNodeOptions.OcpDate;
             }
             System.DateTime? ifModifiedSince = default(System.DateTime?);
-            if (fileGetNodeFilePropertiesFromComputeNodeOptions != null)
+            if (fileGetPropertiesFromComputeNodeOptions != null)
             {
-                ifModifiedSince = fileGetNodeFilePropertiesFromComputeNodeOptions.IfModifiedSince;
+                ifModifiedSince = fileGetPropertiesFromComputeNodeOptions.IfModifiedSince;
             }
             System.DateTime? ifUnmodifiedSince = default(System.DateTime?);
-            if (fileGetNodeFilePropertiesFromComputeNodeOptions != null)
+            if (fileGetPropertiesFromComputeNodeOptions != null)
             {
-                ifUnmodifiedSince = fileGetNodeFilePropertiesFromComputeNodeOptions.IfUnmodifiedSince;
+                ifUnmodifiedSince = fileGetPropertiesFromComputeNodeOptions.IfUnmodifiedSince;
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -1501,7 +1501,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("poolId", poolId);
                 tracingParameters.Add("nodeId", nodeId);
-                tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
@@ -1509,14 +1509,14 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("ifModifiedSince", ifModifiedSince);
                 tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetNodeFilePropertiesFromComputeNode", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetPropertiesFromComputeNode", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{fileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{filePath}").ToString();
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
-            _url = _url.Replace("{fileName}", System.Uri.EscapeDataString(fileName));
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -1554,7 +1554,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1654,7 +1654,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetNodeFilePropertiesFromComputeNodeHeaders>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<FileGetPropertiesFromComputeNodeHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -1663,7 +1663,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileGetNodeFilePropertiesFromComputeNodeHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileGetPropertiesFromComputeNodeHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
@@ -1747,7 +1747,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = fileListFromTaskOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileListFromTaskOptions != null)
             {
                 clientRequestId = fileListFromTaskOptions.ClientRequestId;
@@ -1835,7 +1835,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2029,7 +2029,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = fileListFromComputeNodeOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileListFromComputeNodeOptions != null)
             {
                 clientRequestId = fileListFromComputeNodeOptions.ClientRequestId;
@@ -2117,7 +2117,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2282,7 +2282,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileListFromTaskNextOptions != null)
             {
                 clientRequestId = fileListFromTaskNextOptions.ClientRequestId;
@@ -2343,7 +2343,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2508,7 +2508,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (fileListFromComputeNodeNextOptions != null)
             {
                 clientRequestId = fileListFromComputeNodeNextOptions.ClientRequestId;
@@ -2569,7 +2569,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {

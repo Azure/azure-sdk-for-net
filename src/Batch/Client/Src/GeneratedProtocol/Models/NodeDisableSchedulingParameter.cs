@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskcompletion'
+        /// 'terminate', 'taskCompletion'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDisableSchedulingOption")]
         public DisableComputeNodeSchedulingOption? NodeDisableSchedulingOption { get; set; }

@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Batch
         private readonly DateTime? endTime;
         private readonly int? exitCode;
         private readonly int? id;
-        private readonly Common.TaskState? previousState;
+        private readonly Common.SubtaskState? previousState;
         private readonly DateTime? previousStateTransitionTime;
         private readonly TaskSchedulingError schedulingError;
         private readonly DateTime? startTime;
-        private readonly Common.TaskState? state;
+        private readonly Common.SubtaskState? state;
         private readonly DateTime? stateTransitionTime;
 
         #region Constructors
@@ -52,11 +52,11 @@ namespace Microsoft.Azure.Batch
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
             this.id = protocolObject.Id;
-            this.previousState = UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.PreviousState);
+            this.previousState = UtilitiesInternal.MapNullableEnum<Models.SubtaskState, Common.SubtaskState>(protocolObject.PreviousState);
             this.previousStateTransitionTime = protocolObject.PreviousStateTransitionTime;
             this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
             this.startTime = protocolObject.StartTime;
-            this.state = UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.State);
+            this.state = UtilitiesInternal.MapNullableEnum<Models.SubtaskState, Common.SubtaskState>(protocolObject.State);
             this.stateTransitionTime = protocolObject.StateTransitionTime;
         }
 
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the previous state of the subtask. This property is not set if the subtask is in its initial active state.
         /// </summary>
-        public Common.TaskState? PreviousState
+        public Common.SubtaskState? PreviousState
         {
             get { return this.previousState; }
         }
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the current state of the subtask.
         /// </summary>
-        public Common.TaskState? State
+        public Common.SubtaskState? State
         {
             get { return this.state; }
         }

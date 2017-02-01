@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <remarks>
         /// If you try to delete a certificate that is being used by a pool or
         /// compute node, the status of the certificate changes to
-        /// deletefailed. If you decide that you want to continue using the
+        /// deleteFailed. If you decide that you want to continue using the
         /// certificate, you can use this operation to set the status of the
         /// certificate back to active. If you intend to delete the
         /// certificate, you do not need to run this operation after the
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// removed from existing compute nodes in that pool until they
         /// restart), and no running tasks depend on the certificate. If you
         /// try to delete a certificate that is in use, the deletion fails. The
-        /// certificate status changes to deletefailed. You can use Cancel
+        /// certificate status changes to deleteFailed. You can use Cancel
         /// Delete Certificate to set the status back to active if you decide
         /// that you want to continue using the certificate.
         /// </remarks>

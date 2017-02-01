@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the job as metadata.</param>
-        /// <param name="onAllTasksComplete">Specifies an action the Batch
-        /// service should take when all tasks in the job are in the completed
+        /// <param name="onAllTasksComplete">The action the Batch service
+        /// should take when all tasks in the job are in the completed
         /// state.</param>
         public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
@@ -99,14 +99,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies an action the Batch service should take when
-        /// all tasks in the job are in the completed state.
+        /// Gets or sets the action the Batch service should take when all
+        /// tasks in the job are in the completed state.
         /// </summary>
         /// <remarks>
-        /// If omitted, the completion behavior is set to noaction. If the
-        /// current value is terminatejob, this is an error because a job's
-        /// completion behavior may not be changed from terminatejob to
-        /// noaction. Possible values include: 'noAction', 'terminateJob'
+        /// If omitted, the completion behavior is set to noAction. If the
+        /// current value is terminateJob, this is an error because a job's
+        /// completion behavior may not be changed from terminateJob to
+        /// noAction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }

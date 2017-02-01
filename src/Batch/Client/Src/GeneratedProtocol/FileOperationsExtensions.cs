@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskId'>
             /// The ID of the task whose file you want to delete.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the filePath parameter
             /// represents a directory instead of a file, you can set recursive to true to
             /// delete the directory and all of the files and subdirectories in it. If
             /// recursive is false then the directory must be empty or deletion will fail.
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='fileDeleteFromTaskOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static FileDeleteFromTaskHeaders DeleteFromTask(this IFileOperations operations, string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions))
+            public static FileDeleteFromTaskHeaders DeleteFromTask(this IFileOperations operations, string jobId, string taskId, string filePath, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions))
             {
-                return ((IFileOperations)operations).DeleteFromTaskAsync(jobId, taskId, fileName, recursive, fileDeleteFromTaskOptions).GetAwaiter().GetResult();
+                return ((IFileOperations)operations).DeleteFromTaskAsync(jobId, taskId, filePath, recursive, fileDeleteFromTaskOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,11 +67,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskId'>
             /// The ID of the task whose file you want to delete.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the filePath parameter
             /// represents a directory instead of a file, you can set recursive to true to
             /// delete the directory and all of the files and subdirectories in it. If
             /// recursive is false then the directory must be empty or deletion will fail.
@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<FileDeleteFromTaskHeaders> DeleteFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<FileDeleteFromTaskHeaders> DeleteFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string filePath, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.DeleteFromTaskWithHttpMessagesAsync(jobId, taskId, fileName, recursive, fileDeleteFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteFromTaskWithHttpMessagesAsync(jobId, taskId, filePath, recursive, fileDeleteFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -102,15 +102,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskId'>
             /// The ID of the task whose file you want to retrieve.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to get the content of.
             /// </param>
             /// <param name='fileGetFromTaskOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static System.IO.Stream GetFromTask(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions))
+            public static System.IO.Stream GetFromTask(this IFileOperations operations, string jobId, string taskId, string filePath, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions))
             {
-                return ((IFileOperations)operations).GetFromTaskAsync(jobId, taskId, fileName, fileGetFromTaskOptions).GetAwaiter().GetResult();
+                return ((IFileOperations)operations).GetFromTaskAsync(jobId, taskId, filePath, fileGetFromTaskOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskId'>
             /// The ID of the task whose file you want to retrieve.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to get the content of.
             /// </param>
             /// <param name='fileGetFromTaskOptions'>
@@ -134,9 +134,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<System.IO.Stream> GetFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<System.IO.Stream> GetFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string filePath, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                var _result = await operations.GetFromTaskWithHttpMessagesAsync(jobId, taskId, fileName, fileGetFromTaskOptions, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.GetFromTaskWithHttpMessagesAsync(jobId, taskId, filePath, fileGetFromTaskOptions, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -153,15 +153,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskId'>
             /// The ID of the task whose file you want to get the properties of.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to get the properties of.
             /// </param>
-            /// <param name='fileGetNodeFilePropertiesFromTaskOptions'>
+            /// <param name='fileGetPropertiesFromTaskOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static FileGetNodeFilePropertiesFromTaskHeaders GetNodeFilePropertiesFromTask(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions))
+            public static FileGetPropertiesFromTaskHeaders GetPropertiesFromTask(this IFileOperations operations, string jobId, string taskId, string filePath, FileGetPropertiesFromTaskOptions fileGetPropertiesFromTaskOptions = default(FileGetPropertiesFromTaskOptions))
             {
-                return ((IFileOperations)operations).GetNodeFilePropertiesFromTaskAsync(jobId, taskId, fileName, fileGetNodeFilePropertiesFromTaskOptions).GetAwaiter().GetResult();
+                return ((IFileOperations)operations).GetPropertiesFromTaskAsync(jobId, taskId, filePath, fileGetPropertiesFromTaskOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,18 +176,18 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskId'>
             /// The ID of the task whose file you want to get the properties of.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to get the properties of.
             /// </param>
-            /// <param name='fileGetNodeFilePropertiesFromTaskOptions'>
+            /// <param name='fileGetPropertiesFromTaskOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<FileGetNodeFilePropertiesFromTaskHeaders> GetNodeFilePropertiesFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<FileGetPropertiesFromTaskHeaders> GetPropertiesFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string filePath, FileGetPropertiesFromTaskOptions fileGetPropertiesFromTaskOptions = default(FileGetPropertiesFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetNodeFilePropertiesFromTaskWithHttpMessagesAsync(jobId, taskId, fileName, fileGetNodeFilePropertiesFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPropertiesFromTaskWithHttpMessagesAsync(jobId, taskId, filePath, fileGetPropertiesFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -205,11 +205,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nodeId'>
             /// The ID of the compute node from which you want to delete the file.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the filePath parameter
             /// represents a directory instead of a file, you can set recursive to true to
             /// delete the directory and all of the files and subdirectories in it. If
             /// recursive is false then the directory must be empty or deletion will fail.
@@ -217,9 +217,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='fileDeleteFromComputeNodeOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static FileDeleteFromComputeNodeHeaders DeleteFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions))
+            public static FileDeleteFromComputeNodeHeaders DeleteFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string filePath, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions))
             {
-                return ((IFileOperations)operations).DeleteFromComputeNodeAsync(poolId, nodeId, fileName, recursive, fileDeleteFromComputeNodeOptions).GetAwaiter().GetResult();
+                return ((IFileOperations)operations).DeleteFromComputeNodeAsync(poolId, nodeId, filePath, recursive, fileDeleteFromComputeNodeOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -234,11 +234,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nodeId'>
             /// The ID of the compute node from which you want to delete the file.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the file that you want to delete.
             /// </param>
             /// <param name='recursive'>
-            /// Whether to delete children of a directory. If the fileName parameter
+            /// Whether to delete children of a directory. If the filePath parameter
             /// represents a directory instead of a file, you can set recursive to true to
             /// delete the directory and all of the files and subdirectories in it. If
             /// recursive is false then the directory must be empty or deletion will fail.
@@ -249,9 +249,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<FileDeleteFromComputeNodeHeaders> DeleteFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<FileDeleteFromComputeNodeHeaders> DeleteFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string filePath, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.DeleteFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, fileName, recursive, fileDeleteFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, filePath, recursive, fileDeleteFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -269,15 +269,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nodeId'>
             /// The ID of the compute node that contains the file.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to get the content of.
             /// </param>
             /// <param name='fileGetFromComputeNodeOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static System.IO.Stream GetFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions))
+            public static System.IO.Stream GetFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string filePath, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions))
             {
-                return ((IFileOperations)operations).GetFromComputeNodeAsync(poolId, nodeId, fileName, fileGetFromComputeNodeOptions).GetAwaiter().GetResult();
+                return ((IFileOperations)operations).GetFromComputeNodeAsync(poolId, nodeId, filePath, fileGetFromComputeNodeOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nodeId'>
             /// The ID of the compute node that contains the file.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the task file that you want to get the content of.
             /// </param>
             /// <param name='fileGetFromComputeNodeOptions'>
@@ -301,9 +301,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<System.IO.Stream> GetFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<System.IO.Stream> GetFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string filePath, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                var _result = await operations.GetFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, fileName, fileGetFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.GetFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, filePath, fileGetFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -320,15 +320,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nodeId'>
             /// The ID of the compute node that contains the file.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the compute node file that you want to get the properties of.
             /// </param>
-            /// <param name='fileGetNodeFilePropertiesFromComputeNodeOptions'>
+            /// <param name='fileGetPropertiesFromComputeNodeOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static FileGetNodeFilePropertiesFromComputeNodeHeaders GetNodeFilePropertiesFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions))
+            public static FileGetPropertiesFromComputeNodeHeaders GetPropertiesFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string filePath, FileGetPropertiesFromComputeNodeOptions fileGetPropertiesFromComputeNodeOptions = default(FileGetPropertiesFromComputeNodeOptions))
             {
-                return ((IFileOperations)operations).GetNodeFilePropertiesFromComputeNodeAsync(poolId, nodeId, fileName, fileGetNodeFilePropertiesFromComputeNodeOptions).GetAwaiter().GetResult();
+                return ((IFileOperations)operations).GetPropertiesFromComputeNodeAsync(poolId, nodeId, filePath, fileGetPropertiesFromComputeNodeOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -343,18 +343,18 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nodeId'>
             /// The ID of the compute node that contains the file.
             /// </param>
-            /// <param name='fileName'>
+            /// <param name='filePath'>
             /// The path to the compute node file that you want to get the properties of.
             /// </param>
-            /// <param name='fileGetNodeFilePropertiesFromComputeNodeOptions'>
+            /// <param name='fileGetPropertiesFromComputeNodeOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<FileGetNodeFilePropertiesFromComputeNodeHeaders> GetNodeFilePropertiesFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<FileGetPropertiesFromComputeNodeHeaders> GetPropertiesFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string filePath, FileGetPropertiesFromComputeNodeOptions fileGetPropertiesFromComputeNodeOptions = default(FileGetPropertiesFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetNodeFilePropertiesFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, fileName, fileGetNodeFilePropertiesFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPropertiesFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, filePath, fileGetPropertiesFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

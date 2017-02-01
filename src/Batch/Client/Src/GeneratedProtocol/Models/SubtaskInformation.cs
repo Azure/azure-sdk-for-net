@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// subtask.</param>
         /// <param name="previousStateTransitionTime">The time at which the
         /// subtask entered its previous state.</param>
-        public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?))
+        public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), SubtaskState? state = default(SubtaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), SubtaskState? previousState = default(SubtaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?))
         {
             Id = id;
             NodeInfo = nodeInfo;
@@ -124,11 +124,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the subtask.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'active', 'preparing', 'running',
-        /// 'completed'
+        /// Possible values include: 'preparing', 'running', 'completed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
-        public TaskState? State { get; set; }
+        public SubtaskState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the subtask entered its current
@@ -142,11 +141,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property is not set if the subtask is in its initial running
-        /// state. Possible values include: 'active', 'preparing', 'running',
-        /// 'completed'
+        /// state. Possible values include: 'preparing', 'running', 'completed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
-        public TaskState? PreviousState { get; set; }
+        public SubtaskState? PreviousState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the subtask entered its previous

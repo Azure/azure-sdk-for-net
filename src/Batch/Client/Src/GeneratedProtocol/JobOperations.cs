@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Statistics are aggregated across all jobs that have ever existed in the
         /// account, from account creation to the last update time of the statistics.
         /// </remarks>
-        /// <param name='jobGetAllJobsLifetimeStatisticsOptions'>
+        /// <param name='jobGetAllLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -83,31 +83,31 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<JobStatistics,JobGetAllJobsLifetimeStatisticsHeaders>> GetAllJobsLifetimeStatisticsWithHttpMessagesAsync(JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<JobStatistics,JobGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
-            if (jobGetAllJobsLifetimeStatisticsOptions != null)
+            if (jobGetAllLifetimeStatisticsOptions != null)
             {
-                timeout = jobGetAllJobsLifetimeStatisticsOptions.Timeout;
+                timeout = jobGetAllLifetimeStatisticsOptions.Timeout;
             }
-            string clientRequestId = default(string);
-            if (jobGetAllJobsLifetimeStatisticsOptions != null)
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (jobGetAllLifetimeStatisticsOptions != null)
             {
-                clientRequestId = jobGetAllJobsLifetimeStatisticsOptions.ClientRequestId;
+                clientRequestId = jobGetAllLifetimeStatisticsOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (jobGetAllJobsLifetimeStatisticsOptions != null)
+            if (jobGetAllLifetimeStatisticsOptions != null)
             {
-                returnClientRequestId = jobGetAllJobsLifetimeStatisticsOptions.ReturnClientRequestId;
+                returnClientRequestId = jobGetAllLifetimeStatisticsOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (jobGetAllJobsLifetimeStatisticsOptions != null)
+            if (jobGetAllLifetimeStatisticsOptions != null)
             {
-                ocpDate = jobGetAllJobsLifetimeStatisticsOptions.OcpDate;
+                ocpDate = jobGetAllLifetimeStatisticsOptions.OcpDate;
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetAllJobsLifetimeStatistics", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetAllLifetimeStatistics", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<JobStatistics,JobGetAllJobsLifetimeStatisticsHeaders>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<JobStatistics,JobGetAllLifetimeStatisticsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<JobGetAllJobsLifetimeStatisticsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<JobGetAllLifetimeStatisticsHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobDeleteOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobDeleteOptions != null)
             {
                 clientRequestId = jobDeleteOptions.ClientRequestId;
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -634,7 +634,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobGetOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobGetOptions != null)
             {
                 clientRequestId = jobGetOptions.ClientRequestId;
@@ -739,7 +739,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -954,7 +954,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobPatchOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobPatchOptions != null)
             {
                 clientRequestId = jobPatchOptions.ClientRequestId;
@@ -1050,7 +1050,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1258,7 +1258,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobUpdateOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobUpdateOptions != null)
             {
                 clientRequestId = jobUpdateOptions.ClientRequestId;
@@ -1354,7 +1354,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1520,11 +1520,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The ID of the job to disable.
         /// </param>
         /// <param name='disableTasks'>
-        /// What to do with active tasks associated with the job. Possible values are:
-        /// requeue – Terminate running tasks and requeue them. The tasks will run
-        /// again when the job is enabled. terminate – Terminate running tasks. The
-        /// tasks will not run again. wait – Allow currently running tasks to complete.
-        /// Possible values include: 'requeue', 'terminate', 'wait'
+        /// What to do with active tasks associated with the job. requeue - Terminate
+        /// running tasks and requeue them. The tasks will run again when the job is
+        /// enabled. terminate - Terminate running tasks. The tasks will not run again.
+        /// wait - Allow currently running tasks to complete. Possible values include:
+        /// 'requeue', 'terminate', 'wait'
         /// </param>
         /// <param name='jobDisableOptions'>
         /// Additional parameters for the operation
@@ -1562,7 +1562,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobDisableOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobDisableOptions != null)
             {
                 clientRequestId = jobDisableOptions.ClientRequestId;
@@ -1660,7 +1660,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1859,7 +1859,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobEnableOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobEnableOptions != null)
             {
                 clientRequestId = jobEnableOptions.ClientRequestId;
@@ -1954,7 +1954,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2149,7 +2149,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobTerminateOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobTerminateOptions != null)
             {
                 clientRequestId = jobTerminateOptions.ClientRequestId;
@@ -2251,7 +2251,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2457,7 +2457,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobAddOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobAddOptions != null)
             {
                 clientRequestId = jobAddOptions.ClientRequestId;
@@ -2527,7 +2527,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2702,7 +2702,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobListOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobListOptions != null)
             {
                 clientRequestId = jobListOptions.ClientRequestId;
@@ -2791,7 +2791,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -2985,7 +2985,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobListFromJobScheduleOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobListFromJobScheduleOptions != null)
             {
                 clientRequestId = jobListFromJobScheduleOptions.ClientRequestId;
@@ -3076,7 +3076,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3271,7 +3271,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = jobListPreparationAndReleaseTaskStatusOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobListPreparationAndReleaseTaskStatusOptions != null)
             {
                 clientRequestId = jobListPreparationAndReleaseTaskStatusOptions.ClientRequestId;
@@ -3357,7 +3357,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3522,7 +3522,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobListNextOptions != null)
             {
                 clientRequestId = jobListNextOptions.ClientRequestId;
@@ -3583,7 +3583,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3748,7 +3748,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobListFromJobScheduleNextOptions != null)
             {
                 clientRequestId = jobListFromJobScheduleNextOptions.ClientRequestId;
@@ -3809,7 +3809,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -3980,7 +3980,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (jobListPreparationAndReleaseTaskStatusNextOptions != null)
             {
                 clientRequestId = jobListPreparationAndReleaseTaskStatusNextOptions.ClientRequestId;
@@ -4041,7 +4041,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {

@@ -41,20 +41,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// line.</param>
         /// <param name="environmentSettings">A list of environment variable
         /// settings for the start task.</param>
-        /// <param name="runElevated">Whether to run the start task in elevated
-        /// mode. The default value is false.</param>
+        /// <param name="userIdentity">The user identity under which the start
+        /// task runs.</param>
         /// <param name="maxTaskRetryCount">The maximum number of times the
         /// task may be retried.</param>
         /// <param name="waitForSuccess">Whether the Batch service should wait
         /// for the start task to complete successfully (that is, to exit with
         /// exit code 0) before scheduling any tasks on the compute
         /// node.</param>
-        public StartTask(string commandLine, System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), bool? runElevated = default(bool?), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
+        public StartTask(string commandLine, System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
         {
             CommandLine = commandLine;
             ResourceFiles = resourceFiles;
             EnvironmentSettings = environmentSettings;
-            RunElevated = runElevated;
+            UserIdentity = userIdentity;
             MaxTaskRetryCount = maxTaskRetryCount;
             WaitForSuccess = waitForSuccess;
         }
@@ -87,11 +87,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the start task in elevated mode. The
-        /// default value is false.
+        /// Gets or sets the user identity under which the start task runs.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
-        public bool? RunElevated { get; set; }
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to
+        /// the task.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of times the task may be retried.

@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         /// <param name="constraints">The execution constraints that apply to
         /// this task.</param>
-        /// <param name="runElevated">Whether to run the task in elevated
-        /// mode.</param>
+        /// <param name="userIdentity">The user identity under which the task
+        /// runs.</param>
         /// <param name="multiInstanceSettings">An object that indicates that
         /// the task is a multi-instance task, and contains information about
         /// how to run the multi-instance task.</param>
@@ -59,7 +59,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="applicationPackageReferences">A list of application
         /// packages that the Batch service will deploy to the compute node
         /// before running the command line.</param>
-        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
+        /// <param name="authenticationTokenSettings">The settings for an
+        /// authentication token that the task can use to perform Batch service
+        /// operations.</param>
+        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -69,10 +72,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             EnvironmentSettings = environmentSettings;
             AffinityInfo = affinityInfo;
             Constraints = constraints;
-            RunElevated = runElevated;
+            UserIdentity = userIdentity;
             MultiInstanceSettings = multiInstanceSettings;
             DependsOn = dependsOn;
             ApplicationPackageReferences = applicationPackageReferences;
+            AuthenticationTokenSettings = authenticationTokenSettings;
         }
 
         /// <summary>
@@ -159,13 +163,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
+        /// Gets or sets the user identity under which the task runs.
         /// </summary>
         /// <remarks>
-        /// The default value is false.
+        /// If omitted, the task runs as a non-administrative user unique to
+        /// the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
-        public bool? RunElevated { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
         /// Gets or sets an object that indicates that the task is a
@@ -179,9 +184,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the tasks that this task depends on.
         /// </summary>
         /// <remarks>
-        /// The task will not be scheduled until all depended-on tasks have
-        /// completed successfully. (If any depended-on tasks fail and exhaust
-        /// their retry counts, the task will never be scheduled.) If the job
+        /// This task will not be scheduled until all tasks that it depends on
+        /// have completed successfully. If any of those tasks fail and exhaust
+        /// their retry counts, this task will never be scheduled. If the job
         /// does not have usesTaskDependencies set to true, and this element is
         /// present, the request fails with error code
         /// TaskDependenciesNotSpecifiedOnJob.
@@ -195,6 +200,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for an authentication token that the task
+        /// can use to perform Batch service operations.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, the Batch service provides the task with
+        /// an authentication token which can be used to authenticate Batch
+        /// service operations without requiring an account access key. The
+        /// token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment
+        /// variable. The operations that the task can carry out using the
+        /// token depend on the settings. For example, a task can request job
+        /// permissions in order to add other tasks to the job, or check the
+        /// status of the job or of other tasks under the job.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "authenticationTokenSettings")]
+        public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

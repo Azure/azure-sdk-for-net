@@ -21,31 +21,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for ListPoolUsageMetrics operation.
+    /// Defines headers for GetAllLifetimeStatistics operation.
     /// </summary>
-    public partial class PoolListPoolUsageMetricsHeaders
+    public partial class PoolGetAllLifetimeStatisticsHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the PoolListPoolUsageMetricsHeaders
-        /// class.
+        /// Initializes a new instance of the
+        /// PoolGetAllLifetimeStatisticsHeaders class.
         /// </summary>
-        public PoolListPoolUsageMetricsHeaders() { }
+        public PoolGetAllLifetimeStatisticsHeaders() { }
 
         /// <summary>
-        /// Initializes a new instance of the PoolListPoolUsageMetricsHeaders
-        /// class.
+        /// Initializes a new instance of the
+        /// PoolGetAllLifetimeStatisticsHeaders class.
         /// </summary>
         /// <param name="clientRequestId">The client-request-id provided by the
         /// client during the request. This will be returned only if the
         /// return-client-request-id parameter was set to true.</param>
-        /// <param name="requestId">This header uniquely identifies the request
-        /// that was made and can be used for troubleshooting the request. If a
-        /// request is consistently failing and you have verified that the
-        /// request is properly formulated, you may use this value to report
-        /// the error to Microsoft. In your report, include the value of this
-        /// header, the approximate time that the request was made, the Batch
-        /// account against which the request was made, and the region that
-        /// account resides in.</param>
+        /// <param name="requestId">A unique identifier for the request that
+        /// was made to the Batch service. If a request is consistently failing
+        /// and you have verified that the request is properly formulated, you
+        /// may use this value to report the error to Microsoft. In your
+        /// report, include the value of this request ID, the approximate time
+        /// that the request was made, the Batch account against which the
+        /// request was made, and the region that account resides in.</param>
         /// <param name="eTag">The ETag HTTP response header. This is an opaque
         /// string. You can use it to detect whether the resource has changed
         /// between requests. In particular, you can pass the ETag to one of
@@ -53,7 +52,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If-None-Match headers.</param>
         /// <param name="lastModified">The time at which the resource was last
         /// modified.</param>
-        public PoolListPoolUsageMetricsHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
+        public PoolGetAllLifetimeStatisticsHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
         {
             ClientRequestId = clientRequestId;
             RequestId = requestId;
@@ -67,20 +66,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// return-client-request-id parameter was set to true.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
-        public string ClientRequestId { get; set; }
+        public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets this header uniquely identifies the request that was
-        /// made and can be used for troubleshooting the request. If a request
-        /// is consistently failing and you have verified that the request is
-        /// properly formulated, you may use this value to report the error to
-        /// Microsoft. In your report, include the value of this header, the
-        /// approximate time that the request was made, the Batch account
-        /// against which the request was made, and the region that account
-        /// resides in.
+        /// Gets or sets a unique identifier for the request that was made to
+        /// the Batch service. If a request is consistently failing and you
+        /// have verified that the request is properly formulated, you may use
+        /// this value to report the error to Microsoft. In your report,
+        /// include the value of this request ID, the approximate time that the
+        /// request was made, the Batch account against which the request was
+        /// made, and the region that account resides in.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
-        public string RequestId { get; set; }
+        public System.Guid? RequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag HTTP response header. This is an opaque

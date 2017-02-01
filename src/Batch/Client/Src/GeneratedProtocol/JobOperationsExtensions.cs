@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobGetAllJobsLifetimeStatisticsOptions'>
+            /// <param name='jobGetAllLifetimeStatisticsOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static JobStatistics GetAllJobsLifetimeStatistics(this IJobOperations operations, JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions))
+            public static JobStatistics GetAllLifetimeStatistics(this IJobOperations operations, JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions))
             {
-                return ((IJobOperations)operations).GetAllJobsLifetimeStatisticsAsync(jobGetAllJobsLifetimeStatisticsOptions).GetAwaiter().GetResult();
+                return ((IJobOperations)operations).GetAllLifetimeStatisticsAsync(jobGetAllLifetimeStatisticsOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,15 +56,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobGetAllJobsLifetimeStatisticsOptions'>
+            /// <param name='jobGetAllLifetimeStatisticsOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<JobStatistics> GetAllJobsLifetimeStatisticsAsync(this IJobOperations operations, JobGetAllJobsLifetimeStatisticsOptions jobGetAllJobsLifetimeStatisticsOptions = default(JobGetAllJobsLifetimeStatisticsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<JobStatistics> GetAllLifetimeStatisticsAsync(this IJobOperations operations, JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetAllJobsLifetimeStatisticsWithHttpMessagesAsync(jobGetAllJobsLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAllLifetimeStatisticsWithHttpMessagesAsync(jobGetAllLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -298,11 +298,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// What to do with active tasks associated with the job. Possible values are:
-            /// requeue – Terminate running tasks and requeue them. The tasks will run
-            /// again when the job is enabled. terminate – Terminate running tasks. The
-            /// tasks will not run again. wait – Allow currently running tasks to complete.
-            /// Possible values include: 'requeue', 'terminate', 'wait'
+            /// What to do with active tasks associated with the job. requeue - Terminate
+            /// running tasks and requeue them. The tasks will run again when the job is
+            /// enabled. terminate - Terminate running tasks. The tasks will not run again.
+            /// wait - Allow currently running tasks to complete. Possible values include:
+            /// 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
             /// Additional parameters for the operation
@@ -332,11 +332,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// What to do with active tasks associated with the job. Possible values are:
-            /// requeue – Terminate running tasks and requeue them. The tasks will run
-            /// again when the job is enabled. terminate – Terminate running tasks. The
-            /// tasks will not run again. wait – Allow currently running tasks to complete.
-            /// Possible values include: 'requeue', 'terminate', 'wait'
+            /// What to do with active tasks associated with the job. requeue - Terminate
+            /// running tasks and requeue them. The tasks will run again when the job is
+            /// enabled. terminate - Terminate running tasks. The tasks will not run again.
+            /// wait - Allow currently running tasks to complete. Possible values include:
+            /// 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
             /// Additional parameters for the operation

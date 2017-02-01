@@ -84,10 +84,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node.
         /// </summary>
         /// <remarks>
-        /// Possible values are: running – the task is currently running
-        /// (including retrying). completed – the task has exited, or the Batch
-        /// service was unable to start the task due to scheduling errors.
-        /// Possible values include: 'running', 'completed'
+        /// running - the task is currently running (including retrying).
+        /// completed - the task has exited, or the Batch service was unable to
+        /// start the task due to scheduling errors. Possible values include:
+        /// 'running', 'completed'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public JobReleaseTaskState State { get; set; }

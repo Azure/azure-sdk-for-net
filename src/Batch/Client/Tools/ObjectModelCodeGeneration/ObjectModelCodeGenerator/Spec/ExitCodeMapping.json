@@ -14,7 +14,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
+          "Value": null
         },
         {
           "Key": {
@@ -26,7 +26,7 @@
             "ConstructorArgumentType": "Required",
             "HideSetter": true
           },
-          "Value": null,
-        },
+          "Value": null
+        }
       ]
     }

@@ -39,14 +39,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Creating,
         [System.Runtime.Serialization.EnumMember(Value = "starting")]
         Starting,
-        [System.Runtime.Serialization.EnumMember(Value = "waitingforstarttask")]
-        Waitingforstarttask,
-        [System.Runtime.Serialization.EnumMember(Value = "starttaskfailed")]
-        Starttaskfailed,
+        [System.Runtime.Serialization.EnumMember(Value = "waitingForStartTask")]
+        WaitingForStartTask,
+        [System.Runtime.Serialization.EnumMember(Value = "startTaskFailed")]
+        StartTaskFailed,
         [System.Runtime.Serialization.EnumMember(Value = "unknown")]
         Unknown,
-        [System.Runtime.Serialization.EnumMember(Value = "leavingpool")]
-        Leavingpool,
+        [System.Runtime.Serialization.EnumMember(Value = "leavingPool")]
+        LeavingPool,
         [System.Runtime.Serialization.EnumMember(Value = "offline")]
         Offline
     }
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "creating";
                 case ComputeNodeState.Starting:
                     return "starting";
-                case ComputeNodeState.Waitingforstarttask:
-                    return "waitingforstarttask";
-                case ComputeNodeState.Starttaskfailed:
-                    return "starttaskfailed";
+                case ComputeNodeState.WaitingForStartTask:
+                    return "waitingForStartTask";
+                case ComputeNodeState.StartTaskFailed:
+                    return "startTaskFailed";
                 case ComputeNodeState.Unknown:
                     return "unknown";
-                case ComputeNodeState.Leavingpool:
-                    return "leavingpool";
+                case ComputeNodeState.LeavingPool:
+                    return "leavingPool";
                 case ComputeNodeState.Offline:
                     return "offline";
             }
@@ -105,14 +105,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeState.Creating;
                 case "starting":
                     return ComputeNodeState.Starting;
-                case "waitingforstarttask":
-                    return ComputeNodeState.Waitingforstarttask;
-                case "starttaskfailed":
-                    return ComputeNodeState.Starttaskfailed;
+                case "waitingForStartTask":
+                    return ComputeNodeState.WaitingForStartTask;
+                case "startTaskFailed":
+                    return ComputeNodeState.StartTaskFailed;
                 case "unknown":
                     return ComputeNodeState.Unknown;
-                case "leavingpool":
-                    return ComputeNodeState.Leavingpool;
+                case "leavingPool":
+                    return ComputeNodeState.LeavingPool;
                 case "offline":
                     return ComputeNodeState.Offline;
             }

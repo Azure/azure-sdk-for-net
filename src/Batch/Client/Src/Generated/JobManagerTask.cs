@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<bool?> KillJobOnCompletionProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
-            public readonly PropertyAccessor<bool?> RunElevatedProperty;
             public readonly PropertyAccessor<bool?> RunExclusiveProperty;
+            public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Batch
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>("KillJobOnCompletion", BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor<bool?>("RunElevated", BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>("RunExclusive", BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
@@ -100,14 +100,14 @@ namespace Microsoft.Azure.Batch
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
                     "ResourceFiles",
                     BindingAccess.Read | BindingAccess.Write);
-                this.RunElevatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.RunElevated,
-                    "RunElevated",
-                    BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor(
                     protocolObject.RunExclusive,
                     "RunExclusive",
                     BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o).Freeze()),
+                    "UserIdentity",
+                    BindingAccess.Read);
             }
         }
 
@@ -244,21 +244,24 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets whether to run the task in elevated mode.
-        /// </summary>
-        public bool? RunElevated
-        {
-            get { return this.propertyContainer.RunElevatedProperty.Value; }
-            set { this.propertyContainer.RunElevatedProperty.Value = value; }
-        }
-
-        /// <summary>
         /// Gets or sets whether the Job Manager task requires exclusive use of the compute node where it runs.
         /// </summary>
         public bool? RunExclusive
         {
             get { return this.propertyContainer.RunExclusiveProperty.Value; }
             set { this.propertyContainer.RunExclusiveProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the user identity under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to the task
+        /// </remarks>
+        public UserIdentity UserIdentity
+        {
+            get { return this.propertyContainer.UserIdentityProperty.Value; }
+            set { this.propertyContainer.UserIdentityProperty.Value = value; }
         }
 
         #endregion // JobManagerTask
@@ -296,8 +299,8 @@ namespace Microsoft.Azure.Batch
                 Id = this.Id,
                 KillJobOnCompletion = this.KillJobOnCompletion,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
-                RunElevated = this.RunElevated,
                 RunExclusive = this.RunExclusive,
+                UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };
 
             return result;

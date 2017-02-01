@@ -41,22 +41,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
         /// <param name="returnClientRequestId">Whether the server should
         /// return the client-request-id in the response.</param>
-        /// <param name="ocpDate">The time the request was issued. If not
-        /// specified, this header will be automatically populated with the
-        /// current system clock time.</param>
-        /// <param name="ifMatch">An ETag is specified. Specify this header to
-        /// perform the operation only if the resource's ETag is an exact match
-        /// as specified.</param>
-        /// <param name="ifNoneMatch">An ETag is specified. Specify this header
-        /// to perform the operation only if the resource's ETag does not match
-        /// the specified ETag.</param>
-        /// <param name="ifModifiedSince">Specify this header to perform the
-        /// operation only if the resource has been modified since the
-        /// specified date/time.</param>
-        /// <param name="ifUnmodifiedSince">Specify this header to perform the
-        /// operation only if the resource has not been modified since the
-        /// specified date/time.</param>
-        public JobDeleteOptions(int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?))
+        /// <param name="ocpDate">The time the request was issued. Client
+        /// libraries typically set this to the current system clock time; set
+        /// it explicitly if you are calling the REST API directly.</param>
+        /// <param name="ifMatch">An ETag value associated with the version of
+        /// the resource known to the client. The operation will be performed
+        /// only if the resource's current ETag on the service exactly matches
+        /// the value specified by the client.</param>
+        /// <param name="ifNoneMatch">An ETag value associated with the version
+        /// of the resource known to the client. The operation will be
+        /// performed only if the resource's current ETag on the service does
+        /// not match the value specified by the client.</param>
+        /// <param name="ifModifiedSince">A timestamp indicating the last
+        /// modified time of the resource known to the client. The operation
+        /// will be performed only if the resource on the service has been
+        /// modified since the specified time.</param>
+        /// <param name="ifUnmodifiedSince">A timestamp indicating the last
+        /// modified time of the resource known to the client. The operation
+        /// will be performed only if the resource on the service has not been
+        /// modified since the specified time.</param>
+        public JobDeleteOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?))
         {
             Timeout = timeout;
             ClientRequestId = clientRequestId;
@@ -81,7 +85,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
-        public string ClientRequestId { get; set; }
+        public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the client-request-id
@@ -91,41 +95,47 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets the time the request was issued. If not specified,
-        /// this header will be automatically populated with the current system
-        /// clock time.
+        /// Gets or sets the time the request was issued. Client libraries
+        /// typically set this to the current system clock time; set it
+        /// explicitly if you are calling the REST API directly.
         /// </summary>
         [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public System.DateTime? OcpDate { get; set; }
 
         /// <summary>
-        /// Gets or sets an ETag is specified. Specify this header to perform
-        /// the operation only if the resource's ETag is an exact match as
-        /// specified.
+        /// Gets or sets an ETag value associated with the version of the
+        /// resource known to the client. The operation will be performed only
+        /// if the resource's current ETag on the service exactly matches the
+        /// value specified by the client.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string IfMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets an ETag is specified. Specify this header to perform
-        /// the operation only if the resource's ETag does not match the
-        /// specified ETag.
+        /// Gets or sets an ETag value associated with the version of the
+        /// resource known to the client. The operation will be performed only
+        /// if the resource's current ETag on the service does not match the
+        /// value specified by the client.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string IfNoneMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets specify this header to perform the operation only if
-        /// the resource has been modified since the specified date/time.
+        /// Gets or sets a timestamp indicating the last modified time of the
+        /// resource known to the client. The operation will be performed only
+        /// if the resource on the service has been modified since the
+        /// specified time.
         /// </summary>
         [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public System.DateTime? IfModifiedSince { get; set; }
 
         /// <summary>
-        /// Gets or sets specify this header to perform the operation only if
-        /// the resource has not been modified since the specified date/time.
+        /// Gets or sets a timestamp indicating the last modified time of the
+        /// resource known to the client. The operation will be performed only
+        /// if the resource on the service has not been modified since the
+        /// specified time.
         /// </summary>
         [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
         [Newtonsoft.Json.JsonProperty(PropertyName = "")]

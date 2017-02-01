@@ -47,6 +47,7 @@
     <Compile Include="AsyncListSubtasks.cs" />
     <Compile Include="Auth\BatchTokenCredentials.cs" />
     <Compile Include="CertificateReference.cs" />
+    <Compile Include="Common\Enumerations\ElevationLevel.cs" />
     <Compile Include="Common\Enumerations\DependencyAction.cs" />
     <Compile Include="Common\Enumerations\JobAction.cs" />
     <Compile Include="Common\Enumerations\AccessScope.cs" />
@@ -54,6 +55,9 @@
     <Compile Include="Common\Enumerations\OnAllTasksComplete.cs" />
     <Compile Include="Common\Enumerations\OSType.cs" />
     <Compile Include="Common\Enumerations\AddTaskStatus.cs" />
+    <Compile Include="Common\Enumerations\AutoUserScope.cs" />
+    <Compile Include="Common\Enumerations\CachingType.cs" />
+    <Compile Include="Common\Enumerations\SubtaskState.cs" />
     <Compile Include="FileStaging\FileStagingUtils.cs" />
     <Compile Include="GetFileRequestByteRange.cs" />
     <Compile Include="ImageReference.cs" />
@@ -162,6 +166,7 @@
     <Compile Include="CloudJobSchedule.cs" />
     <Compile Include="TaskStateMonitor.cs" />
     <Compile Include="ConcurrentChangeTrackedList.cs" />
+    <Compile Include="UserIdentity.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="ComputeNodeUser.cs" />
     <Compile Include="ComputeNode.cs" />
@@ -182,6 +187,7 @@
       <DependentUpon>BatchClientErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\Async.cs" />
+    <Compile Include="VirtualMachineConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Protocol\BatchClientErrorMessages.resx">

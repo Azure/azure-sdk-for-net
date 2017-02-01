@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = certificateAddOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (certificateAddOptions != null)
             {
                 clientRequestId = certificateAddOptions.ClientRequestId;
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = certificateListOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (certificateListOptions != null)
             {
                 clientRequestId = certificateListOptions.ClientRequestId;
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -556,7 +556,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </summary>
         /// <remarks>
         /// If you try to delete a certificate that is being used by a pool or compute
-        /// node, the status of the certificate changes to deletefailed. If you decide
+        /// node, the status of the certificate changes to deleteFailed. If you decide
         /// that you want to continue using the certificate, you can use this operation
         /// to set the status of the certificate back to active. If you intend to
         /// delete the certificate, you do not need to run this operation after the
@@ -609,7 +609,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = certificateCancelDeletionOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (certificateCancelDeletionOptions != null)
             {
                 clientRequestId = certificateCancelDeletionOptions.ClientRequestId;
@@ -682,7 +682,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -804,7 +804,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// certificate from a pool, it is not removed from existing compute nodes in
         /// that pool until they restart), and no running tasks depend on the
         /// certificate. If you try to delete a certificate that is in use, the
-        /// deletion fails. The certificate status changes to deletefailed. You can use
+        /// deletion fails. The certificate status changes to deleteFailed. You can use
         /// Cancel Delete Certificate to set the status back to active if you decide
         /// that you want to continue using the certificate.
         /// </remarks>
@@ -854,7 +854,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = certificateDeleteOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (certificateDeleteOptions != null)
             {
                 clientRequestId = certificateDeleteOptions.ClientRequestId;
@@ -927,7 +927,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1095,7 +1095,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 timeout = certificateGetOptions.Timeout;
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (certificateGetOptions != null)
             {
                 clientRequestId = certificateGetOptions.ClientRequestId;
@@ -1173,7 +1173,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1339,7 +1339,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
-            string clientRequestId = default(string);
+            System.Guid? clientRequestId = default(System.Guid?);
             if (certificateListNextOptions != null)
             {
                 clientRequestId = certificateListNextOptions.ClientRequestId;
@@ -1400,7 +1400,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {

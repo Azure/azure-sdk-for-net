@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="commandLine">The command line of the Job Preparation
         /// task.</param>
-        /// <param name="id">A string that uniquely identifies the job
-        /// preparation task within the job.</param>
+        /// <param name="id">A string that uniquely identifies the Job
+        /// Preparation task within the job.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
         /// will download to the compute node before running the command
         /// line.</param>
@@ -48,12 +48,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="waitForSuccess">Whether the Batch service should wait
         /// for the Job Preparation task to complete successfully before
         /// scheduling any other tasks of the job on the compute node.</param>
-        /// <param name="runElevated">Whether to run the Job Preparation task
-        /// in elevated mode. The default value is false.</param>
+        /// <param name="userIdentity">The user identity under which the Job
+        /// Preparation task runs.</param>
         /// <param name="rerunOnNodeRebootAfterSuccess">Whether the Batch
         /// service should rerun the Job Preparation task after a compute node
         /// reboots.</param>
-        public JobPreparationTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), bool? runElevated = default(bool?), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
+        public JobPreparationTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
         {
             Id = id;
             CommandLine = commandLine;
@@ -61,12 +61,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             EnvironmentSettings = environmentSettings;
             Constraints = constraints;
             WaitForSuccess = waitForSuccess;
-            RunElevated = runElevated;
+            UserIdentity = userIdentity;
             RerunOnNodeRebootAfterSuccess = rerunOnNodeRebootAfterSuccess;
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the job preparation
+        /// Gets or sets a string that uniquely identifies the Job Preparation
         /// task within the job.
         /// </summary>
         /// <remarks>
@@ -143,11 +143,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? WaitForSuccess { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to run the Job Preparation task in elevated
-        /// mode. The default value is false.
+        /// Gets or sets the user identity under which the Job Preparation task
+        /// runs.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
-        public bool? RunElevated { get; set; }
+        /// <remarks>
+        /// If omitted, the task runs as a non-administrative user unique to
+        /// the task.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
         /// Gets or sets whether the Batch service should rerun the Job

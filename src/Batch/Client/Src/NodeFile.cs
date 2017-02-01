@@ -76,7 +76,19 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the name of the file.
         /// </summary>
+        [Obsolete("Obsolete as of 02/2017. Use Path instead.")]
         public string Name
+        {
+            get
+            {
+                return this.fileItemBox.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the path of the file.
+        /// </summary>
+        public string Path
         {
             get
             {

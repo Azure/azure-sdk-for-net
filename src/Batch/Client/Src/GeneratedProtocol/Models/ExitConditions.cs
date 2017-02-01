@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// if the task fails with a scheduling error.</param>
         /// <param name="defaultProperty">How the Batch service should respond
         /// if the task fails with an exit condition not covered by any of the
-        /// other properties – that is, any nonzero exit code not listed in the
+        /// other properties - that is, any nonzero exit code not listed in the
         /// exitCodes or exitCodeRanges collection, or a scheduling error if
         /// the schedulingError property is not present.</param>
         public ExitConditions(System.Collections.Generic.IList<ExitCodeMapping> exitCodes = default(System.Collections.Generic.IList<ExitCodeMapping>), System.Collections.Generic.IList<ExitCodeRangeMapping> exitCodeRanges = default(System.Collections.Generic.IList<ExitCodeRangeMapping>), ExitOptions schedulingError = default(ExitOptions), ExitOptions defaultProperty = default(ExitOptions))
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets how the Batch service should respond if the task fails
-        /// with an exit condition not covered by any of the other properties –
+        /// with an exit condition not covered by any of the other properties -
         /// that is, any nonzero exit code not listed in the exitCodes or
         /// exitCodeRanges collection, or a scheduling error if the
         /// schedulingError property is not present.

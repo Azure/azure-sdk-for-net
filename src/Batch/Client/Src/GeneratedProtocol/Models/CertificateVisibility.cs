@@ -25,12 +25,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CertificateVisibility
     {
-        [System.Runtime.Serialization.EnumMember(Value = "starttask")]
-        Starttask,
+        [System.Runtime.Serialization.EnumMember(Value = "startTask")]
+        StartTask,
         [System.Runtime.Serialization.EnumMember(Value = "task")]
         Task,
-        [System.Runtime.Serialization.EnumMember(Value = "remoteuser")]
-        Remoteuser,
+        [System.Runtime.Serialization.EnumMember(Value = "remoteUser")]
+        RemoteUser,
         [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case CertificateVisibility.Starttask:
-                    return "starttask";
+                case CertificateVisibility.StartTask:
+                    return "startTask";
                 case CertificateVisibility.Task:
                     return "task";
-                case CertificateVisibility.Remoteuser:
-                    return "remoteuser";
+                case CertificateVisibility.RemoteUser:
+                    return "remoteUser";
                 case CertificateVisibility.Unmapped:
                     return "unmapped";
             }
@@ -59,12 +59,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "starttask":
-                    return CertificateVisibility.Starttask;
+                case "startTask":
+                    return CertificateVisibility.StartTask;
                 case "task":
                     return CertificateVisibility.Task;
-                case "remoteuser":
-                    return CertificateVisibility.Remoteuser;
+                case "remoteUser":
+                    return CertificateVisibility.RemoteUser;
                 case "unmapped":
                     return CertificateVisibility.Unmapped;
             }

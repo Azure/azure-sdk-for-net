@@ -84,11 +84,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// run concurrently on a single compute node in the pool.</param>
         /// <param name="taskSchedulingPolicy">How the Batch service
         /// distributes tasks between compute nodes in the pool.</param>
+        /// <param name="userAccounts">The list of user accounts to be created
+        /// on each node in the pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
         /// <param name="stats">Utilization and resource usage statistics for
         /// the entire lifetime of the pool.</param>
-        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ResizeError resizeError = default(ResizeError), int? currentDedicated = default(int?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
+        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ResizeError resizeError = default(ResizeError), int? currentDedicated = default(int?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
         {
             Id = id;
             DisplayName = displayName;
@@ -118,6 +120,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             ApplicationPackageReferences = applicationPackageReferences;
             MaxTasksPerNode = maxTasksPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
+            UserAccounts = userAccounts;
             Metadata = metadata;
             Stats = stats;
         }
@@ -183,15 +186,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the pool.
         /// </summary>
         /// <remarks>
-        /// Possible values are: active – The pool is available to run tasks
-        /// subject to the availability of compute nodes. deleting – The user
-        /// has requested that the pool be deleted, but the delete operation
-        /// has not yet completed. upgrading – The user has requested that the
-        /// operating system of the pool's nodes be upgraded, but the upgrade
-        /// operation has not yet completed (that is, some nodes in the pool
-        /// have not yet been upgraded). While upgrading, the pool may be able
-        /// to run tasks (with reduced capacity) but this is not guaranteed.
-        /// Possible values include: 'active', 'deleting', 'upgrading'
+        /// active - The pool is available to run tasks subject to the
+        /// availability of compute nodes. deleting - The user has requested
+        /// that the pool be deleted, but the delete operation has not yet
+        /// completed. upgrading - The user has requested that the operating
+        /// system of the pool's nodes be upgraded, but the upgrade operation
+        /// has not yet completed (that is, some nodes in the pool have not yet
+        /// been upgraded). While upgrading, the pool may be able to run tasks
+        /// (with reduced capacity) but this is not guaranteed. Possible values
+        /// include: 'active', 'deleting', 'upgrading'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public PoolState? State { get; set; }
@@ -206,15 +209,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the pool is resizing.
         /// </summary>
         /// <remarks>
-        /// Possible values are: steady – The pool is not resizing. There are
-        /// no changes to the number of nodes in the pool in progress. A pool
-        /// enters this state when it is created and when no operations are
-        /// being performed on the pool to change the number of dedicated
-        /// nodes. resizing - The pool is resizing; that is, compute nodes are
-        /// being added to or removed from the pool. stopping - The pool was
-        /// resizing, but the user has requested that the resize be stopped,
-        /// but the stop request has not yet been completed. Possible values
-        /// include: 'steady', 'resizing', 'stopping'
+        /// steady - The pool is not resizing. There are no changes to the
+        /// number of nodes in the pool in progress. A pool enters this state
+        /// when it is created and when no operations are being performed on
+        /// the pool to change the number of dedicated nodes. resizing - The
+        /// pool is resizing; that is, compute nodes are being added to or
+        /// removed from the pool. stopping - The pool was resizing, but the
+        /// user has requested that the resize be stopped, but the stop request
+        /// has not yet been completed. Possible values include: 'steady',
+        /// 'resizing', 'stopping'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "allocationState")]
         public AllocationState? AllocationState { get; set; }
@@ -254,7 +257,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property and virtualMachineConfiguration are mutually
-        /// exclusive and one of the properties must be specified.
+        /// exclusive and one of the properties must be specified. This
+        /// property cannot be specified if the Batch account was created with
+        /// its poolAllocationMode property set to 'UserSubscription'.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
@@ -387,9 +392,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Linux compute nodes, the certificates are stored in a directory
         /// inside the task working directory and an environment variable
         /// AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this
-        /// location. For certificates with visibility of remoteuser, a certs
-        /// directory is created in the user's home directory (e.g.,
-        /// /home/<user-name>/certs) where certificates are placed.
+        /// location. For certificates with visibility of 'remoteUser', a
+        /// 'certs' directory is created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) and certificates are placed in that
+        /// directory.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
         public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
@@ -414,6 +420,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user accounts to be created on each node
+        /// in the pool.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userAccounts")]
+        public System.Collections.Generic.IList<UserAccount> UserAccounts { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool as
@@ -477,13 +490,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 this.TaskSchedulingPolicy.Validate();
             }
-            if (this.Metadata != null)
+            if (this.UserAccounts != null)
             {
-                foreach (var element2 in this.Metadata)
+                foreach (var element2 in this.UserAccounts)
                 {
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (this.Metadata != null)
+            {
+                foreach (var element3 in this.Metadata)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }
