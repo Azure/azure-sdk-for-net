@@ -1,0 +1,265 @@
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+namespace CustomerInsights.Tests.Tests
+{
+    using System;
+    using System.Linq;
+    using System.Net;
+    using System.Threading;
+
+    using Microsoft.Azure.Management.CustomerInsights;
+    using Microsoft.Azure.Management.CustomerInsights.Models;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+    using Xunit;
+
+    public class RoleAssignmentScenarioTests
+    {
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        static RoleAssignmentScenarioTests()
+        {
+            HubName = AppSettings.HubName;
+            ResourceGroupName = AppSettings.ResourceGroupName;
+        }
+
+        /// <summary>
+        ///     Hub Name
+        /// </summary>
+        private static readonly string HubName;
+
+        /// <summary>
+        ///     Reosurce Group Name
+        /// </summary>
+        private static readonly string ResourceGroupName;
+
+        [Fact]
+        public void CrudRoleAssignmentFullCycle()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
+
+                var assignmentName = TestUtilities.GenerateName("assignmentName");
+
+                var rbacResourceFormat = new RoleAssignmentResourceFormat
+                                             {
+                                                 Role = RoleTypes.Admin,
+                                                 Principals =
+                                                     new[]
+                                                         {
+                                                             new AssignmentPrincipal
+                                                                 {
+                                                                     PrincipalType = "User",
+                                                                     PrincipalId = Guid.NewGuid().ToString("N")
+                                                                 },
+                                                             new AssignmentPrincipal
+                                                                 {
+                                                                     PrincipalType = "User",
+                                                                     PrincipalId = Guid.NewGuid().ToString("N")
+                                                                 }
+                                                         }
+                                             };
+                var response = aciClient.RoleAssignments.CreateOrUpdate(
+                    ResourceGroupName,
+                    HubName,
+                    assignmentName,
+                    rbacResourceFormat);
+
+                Assert.Equal(
+                    "Microsoft.CustomerInsights/hubs/RoleAssignments",
+                    response.Type,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(response.Name, HubName + "/" + assignmentName, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(response.Role, RoleTypes.Admin);
+                Assert.Equal(response.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
+                Assert.True(response.Principals.Count == 2);
+
+                var getRbacResource = aciClient.RoleAssignments.Get(ResourceGroupName, HubName, assignmentName);
+
+                Assert.Equal(
+                    "Microsoft.CustomerInsights/hubs/RoleAssignments",
+                    getRbacResource.Type,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(getRbacResource.Name, HubName + "/" + assignmentName, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(getRbacResource.Role, RoleTypes.Admin);
+                Assert.True(getRbacResource.Principals.Count == 2);
+                Assert.Equal(getRbacResource.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
+
+                var rbacResourceUpdateFormat = new RoleAssignmentResourceFormat
+                                                   {
+                                                       Role = RoleTypes.Admin,
+                                                       Principals =
+                                                           new[]
+                                                               {
+                                                                   new AssignmentPrincipal
+                                                                       {
+                                                                           PrincipalType = "User",
+                                                                           PrincipalId = Guid.NewGuid().ToString("N")
+                                                                       }
+                                                               }
+                                                   };
+                var updateRbacresponse = aciClient.RoleAssignments.CreateOrUpdate(
+                    ResourceGroupName,
+                    HubName,
+                    assignmentName,
+                    rbacResourceUpdateFormat);
+
+                Assert.Equal(
+                    "Microsoft.CustomerInsights/hubs/RoleAssignments",
+                    updateRbacresponse.Type,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(updateRbacresponse.Name, HubName + "/" + assignmentName, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(updateRbacresponse.Role, RoleTypes.Admin);
+                Assert.Equal(updateRbacresponse.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
+                Assert.True(updateRbacresponse.Principals.Count == 1);
+                var getUpdateRbacResource1 = aciClient.RoleAssignments.Get(ResourceGroupName, HubName, assignmentName);
+
+                Assert.Equal(
+                    "Microsoft.CustomerInsights/hubs/RoleAssignments",
+                    getUpdateRbacResource1.Type,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(
+                    getUpdateRbacResource1.Name,
+                    HubName + "/" + assignmentName,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(getUpdateRbacResource1.Role, RoleTypes.Admin);
+                Assert.Equal(getUpdateRbacResource1.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
+                Assert.True(getUpdateRbacResource1.Principals.Count == 1);
+
+                var rbacResourceUpdateFormat2 = new RoleAssignmentResourceFormat
+                                                    {
+                                                        Role = RoleTypes.Reader,
+                                                        Principals =
+                                                            new[]
+                                                                {
+                                                                    new AssignmentPrincipal
+                                                                        {
+                                                                            PrincipalType = "User",
+                                                                            PrincipalId = Guid.NewGuid().ToString("N")
+                                                                        }
+                                                                }
+                                                    };
+
+                try
+                {
+                    aciClient.RoleAssignments.CreateOrUpdate(
+                        ResourceGroupName,
+                        HubName,
+                        assignmentName,
+                        rbacResourceUpdateFormat2);
+                }
+                catch (Exception exception)
+                {
+                    Assert.Equal(
+                        ((CloudException)exception).Response.ReasonPhrase,
+                        "Bad Request",
+                        StringComparer.OrdinalIgnoreCase);
+                }
+
+                var deleteRbacResource =
+                    aciClient.RoleAssignments.DeleteWithHttpMessagesAsync(ResourceGroupName, HubName, assignmentName)
+                        .Result;
+                Assert.Equal(HttpStatusCode.Accepted, deleteRbacResource.Response.StatusCode);
+            }
+        }
+
+        [Fact]
+        public void ListRoleAssignmentInHub()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
+
+                var assignmentName1 = TestUtilities.GenerateName("assignmentName1");
+                var assignmentName2 = TestUtilities.GenerateName("assignmentName2");
+
+                var rbacResourceFormat1 = new RoleAssignmentResourceFormat
+                                              {
+                                                  Role = RoleTypes.Admin,
+                                                  Principals =
+                                                      new[]
+                                                          {
+                                                              new AssignmentPrincipal
+                                                                  {
+                                                                      PrincipalType = "User",
+                                                                      PrincipalId = Guid.NewGuid().ToString("N")
+                                                                  }
+                                                          }
+                                              };
+                var rbacResourceFormat2 = new RoleAssignmentResourceFormat
+                                              {
+                                                  Role = RoleTypes.Admin,
+                                                  Principals =
+                                                      new[]
+                                                          {
+                                                              new AssignmentPrincipal
+                                                                  {
+                                                                      PrincipalType = "User",
+                                                                      PrincipalId = Guid.NewGuid().ToString("N")
+                                                                  }
+                                                          }
+                                              };
+
+                aciClient.RoleAssignments.CreateOrUpdate(
+                    ResourceGroupName,
+                    HubName,
+                    assignmentName1,
+                    rbacResourceFormat1);
+                aciClient.RoleAssignments.CreateOrUpdate(
+                    ResourceGroupName,
+                    HubName,
+                    assignmentName2,
+                    rbacResourceFormat2);
+
+                var result = aciClient.RoleAssignments.ListByHub(ResourceGroupName, HubName);
+                Assert.True(result.ToList().Count >= 2);
+
+                Assert.True(
+                    result.ToList()
+                        .Any(rbacAssignmentReturned => assignmentName1 == rbacAssignmentReturned.AssignmentName)
+                    && result.ToList()
+                        .Any(rbacAssignmentReturned => assignmentName2 == rbacAssignmentReturned.AssignmentName)
+                    && result.ToList()
+                        .Any(
+                            rbacAssignmentReturned =>
+                                "microsoft.customerinsights/hubs/roleassignments"
+                                == rbacAssignmentReturned.Type.ToLower()));
+            }
+        }
+
+        [Fact]
+        public void ListRolesInHub()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var aciClient = context.GetServiceClient<CustomerInsightsManagementClient>();
+
+                var result = aciClient.Roles.ListByHub(ResourceGroupName, HubName);
+                Assert.True(result.ToList().Count == 6);
+                Assert.True(
+                    (result.ToList()[0].RoleName.ToLower() == "admin")
+                    && (result.ToList()[1].RoleName.ToLower() == "reader")
+                    && (result.ToList()[2].RoleName.ToLower() == "metadataadmin")
+                    && (result.ToList()[3].RoleName.ToLower() == "metadatareader")
+                    && (result.ToList()[4].RoleName.ToLower() == "dataadmin")
+                    && (result.ToList()[5].RoleName.ToLower() == "datareader"));
+            }
+        }
+    }
+}
