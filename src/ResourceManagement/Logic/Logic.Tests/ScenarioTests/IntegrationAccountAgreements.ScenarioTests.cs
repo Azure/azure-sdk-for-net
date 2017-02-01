@@ -354,7 +354,6 @@ namespace Test.Azure.Management.Logic
             var agreement = new IntegrationAccountAgreement
             {
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountAgreementName,
                 Tags = tags,
                 Metadata = integrationAccountAgreementName,
                 AgreementType = agreementType,
@@ -405,7 +404,6 @@ namespace Test.Azure.Management.Logic
             var agreement = new IntegrationAccountAgreement
             {
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountAgreementName,
                 Tags = tags,
                 Metadata = integrationAccountAgreementName,
                 AgreementType = agreementType,

@@ -113,7 +113,6 @@ namespace Test.Azure.Management.Logic
                     integrationAccountPartnerName, new IntegrationAccountPartner
                     {
                         Location = Constants.DefaultLocation,
-                        Name = integrationAccountPartnerName,
                         Metadata = "updated",
                         PartnerType = PartnerType.B2B,
                         Content = new PartnerContent
@@ -218,7 +217,6 @@ namespace Test.Azure.Management.Logic
             var partner = new IntegrationAccountPartner
             {
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountPartnerName,
                 Tags = tags,
                 PartnerType = PartnerType.B2B,
                 Metadata = integrationAccountPartnerName,

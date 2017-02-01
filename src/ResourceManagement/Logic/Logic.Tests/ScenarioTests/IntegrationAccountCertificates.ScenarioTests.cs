@@ -82,7 +82,6 @@ namespace Test.Azure.Management.Logic
 
                 var certificateInstance = new IntegrationAccountCertificate
                 {
-                    Name = integrationAccountCertificateName,
                     Location = "brazilsouth",
                     PublicCertificate = Convert.ToBase64String(cert.RawData)
                 };
@@ -296,7 +295,6 @@ namespace Test.Azure.Management.Logic
 
             var certificate = new IntegrationAccountCertificate
             {
-                Name = integrationAccountCertificateName,
                 Location = "brazilsouth",
                 Key = new KeyVaultKeyReference
                 {

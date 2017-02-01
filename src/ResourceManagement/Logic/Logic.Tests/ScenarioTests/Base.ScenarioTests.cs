@@ -62,7 +62,6 @@ namespace Test.Azure.Management.Logic
                     Name = IntegrationAccountSkuName.Standard
                 },                
                 Properties = new JObject(),
-                Name = integrationAccountName,
                 Location = Constants.DefaultLocation
             };
             return createdAccount;

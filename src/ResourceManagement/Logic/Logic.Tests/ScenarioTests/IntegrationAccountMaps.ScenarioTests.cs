@@ -125,7 +125,6 @@ namespace Test.Azure.Management.Logic
                     {
                         ContentType = "application/xml",
                         Location = Constants.DefaultLocation,
-                        Name = integrationAccountMapName,
                         MapType = MapType.Xslt,
                         Content = this.MapContent,
                         Metadata = "meta-data"
@@ -219,7 +218,6 @@ namespace Test.Azure.Management.Logic
             {
                 ContentType = "application/xml",
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountMapName,
                 Tags = new Dictionary<string, string>()
                 {
                     {"integrationAccountMapName", integrationAccountMapName}

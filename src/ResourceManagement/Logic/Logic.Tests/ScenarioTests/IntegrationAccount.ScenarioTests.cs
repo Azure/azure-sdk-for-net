@@ -82,8 +82,7 @@ namespace Test.Azure.Management.Logic
                         {
                             Name = IntegrationAccountSkuName.Standard
                         },
-                        Properties = new JObject(),
-                        Name = integrationAccountName
+                        Properties = new JObject()
                     });
 
                 Assert.NotNull(updatedAccount);

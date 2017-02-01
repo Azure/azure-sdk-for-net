@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account resource.
+    /// </summary>
     public partial class IntegrationAccountResource : IResource
     {
         /// <summary>
@@ -36,22 +39,22 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets the resource id.
+        /// Gets the resource id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource name.
+        /// Gets the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource type.
+        /// Gets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource location.

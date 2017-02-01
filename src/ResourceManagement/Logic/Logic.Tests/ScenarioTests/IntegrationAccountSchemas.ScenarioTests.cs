@@ -135,7 +135,6 @@ namespace Test.Azure.Management.Logic
                     {
                         ContentType = "application/xml",
                         Location = Constants.DefaultLocation,
-                        Name = integrationAccountSchemaName,
                         SchemaType = SchemaType.Xml,
                         Content = this.SchemaContent
                     });
@@ -227,9 +226,8 @@ namespace Test.Azure.Management.Logic
             {
                 ContentType = "application/xml",
                 Location = Constants.DefaultLocation,
-                Name = integrationAccountSchemaName,
                 Tags = tags,
-                SchemaType = SchemaType.Xml,                
+                SchemaType = SchemaType.Xml,
                 Content = this.SchemaContent,
                 Metadata = integrationAccountSchemaName
             };
