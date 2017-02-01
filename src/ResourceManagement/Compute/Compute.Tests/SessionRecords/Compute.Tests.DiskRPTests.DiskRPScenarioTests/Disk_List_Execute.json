@@ -1,0 +1,1157 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourcegroups/crptestar3548?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlZ3JvdXBzL2NycHRlc3RhcjM1NDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "51b66a19-1d09-4d3a-aaf4-101309f6fc77"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548\",\r\n  \"name\": \"crptestar3548\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "179"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "3e29d626-edcf-4424-a6e3-b14774464e35"
+        ],
+        "x-ms-correlation-request-id": [
+          "3e29d626-edcf-4424-a6e3-b14774464e35"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001031Z:3e29d626-edcf-4424-a6e3-b14774464e35"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:31 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourcegroups/crptestar934?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlZ3JvdXBzL2NycHRlc3RhcjkzND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "03135ff3-ab2a-47af-b7eb-bfbe19b308b0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934\",\r\n  \"name\": \"crptestar934\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "177"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "6e4bec2d-0cbe-4d5b-80f2-fa3d10124389"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e4bec2d-0cbe-4d5b-80f2-fa3d10124389"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001032Z:6e4bec2d-0cbe-4d5b-80f2-fa3d10124389"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:32 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks/diskrp7266?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjM1NDgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2Rpc2tzL2Rpc2tycDcyNjY/YXBpLXZlcnNpb249MjAxNi0wNC0zMC1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "229"
+        ],
+        "x-ms-client-request-id": [
+          "64137d7c-ddfb-4044-833b-f0f5d62d8de2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"timeCreated\": \"2016-03-21T17:10:34.8329319-07:00\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"diskState\": \"Unattached\"\r\n  },\r\n  \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks/diskrp7266\",\r\n  \"name\": \"diskrp7266\",\r\n  \"type\": \"Microsoft.Compute/disks\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "558"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "88e4ae2e-2473-4861-9ebb-5ce8e1e3bb96"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2a77126-3744-4205-b000-4c112740951b"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001035Z:e2a77126-3744-4205-b000-4c112740951b"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks/diskrp3046?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjM1NDgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2Rpc2tzL2Rpc2tycDMwNDY/YXBpLXZlcnNpb249MjAxNi0wNC0zMC1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "229"
+        ],
+        "x-ms-client-request-id": [
+          "f84268ad-0c8f-4b2d-923f-55e3421ee6ff"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"timeCreated\": \"2016-03-21T17:10:36.7391954-07:00\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"diskState\": \"Unattached\"\r\n  },\r\n  \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks/diskrp3046\",\r\n  \"name\": \"diskrp3046\",\r\n  \"type\": \"Microsoft.Compute/disks\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "558"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "da68cef8-2592-4ee1-aafd-d4813b22e471"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "f1ac4a88-f12c-434e-a773-e037343e2416"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001037Z:f1ac4a88-f12c-434e-a773-e037343e2416"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:36 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks/diskrp7266?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjkzNC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZGlza3MvZGlza3JwNzI2Nj9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "229"
+        ],
+        "x-ms-client-request-id": [
+          "de079a03-dab5-4b42-b260-eeed62ddcf58"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"timeCreated\": \"2016-03-21T17:10:38.2704747-07:00\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"diskState\": \"Unattached\"\r\n  },\r\n  \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks/diskrp7266\",\r\n  \"name\": \"diskrp7266\",\r\n  \"type\": \"Microsoft.Compute/disks\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "557"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "c745fae8-a12c-43da-922c-1b8b08cac1a6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "dbe302b9-fcb0-41ec-a76f-ef0d60a82b9e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001038Z:dbe302b9-fcb0-41ec-a76f-ef0d60a82b9e"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:37 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks/diskrp3046?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjkzNC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZGlza3MvZGlza3JwMzA0Nj9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "229"
+        ],
+        "x-ms-client-request-id": [
+          "852b00d6-eb0c-4ad4-aca8-832822caf9d0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_LRS\",\r\n    \"timeCreated\": \"2016-03-21T17:10:39.7235886-07:00\",\r\n    \"osType\": \"Windows\",\r\n    \"osState\": \"Generalized\",\r\n    \"creationData\": {\r\n      \"createOption\": \"Empty\"\r\n    },\r\n    \"diskSizeGB\": 5,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"diskState\": \"Unattached\"\r\n  },\r\n  \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks/diskrp3046\",\r\n  \"name\": \"diskrp3046\",\r\n  \"type\": \"Microsoft.Compute/disks\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "557"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "48f3a6c8-3983-4d60-88be-1d5a4fb09b46"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "63e9eee2-da2b-47e2-a961-4e9af8bde78f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001039Z:63e9eee2-da2b-47e2-a961-4e9af8bde78f"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjM1NDgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL2Rpc2tzP2FwaS12ZXJzaW9uPTIwMTYtMDQtMzAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "78a2662a-cf6d-4f4e-89c0-18243aa19ac0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:36.7391954-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks/diskrp3046\",\r\n      \"name\": \"diskrp3046\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:34.8329319-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar3548/providers/Microsoft.Compute/disks/diskrp7266\",\r\n      \"name\": \"diskrp7266\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1288"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "3e3ea2a2-b1fb-4514-98d1-31a7f6f00ac2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "9c7ec0e1-6cc8-477d-ab80-46152d4ae2d1"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001040Z:9c7ec0e1-6cc8-477d-ab80-46152d4ae2d1"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlR3JvdXBzL2NycHRlc3RhcjkzNC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvZGlza3M/YXBpLXZlcnNpb249MjAxNi0wNC0zMC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d38335c4-6f7a-4495-a537-2e00d10a7c80"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:39.7235886-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks/diskrp3046\",\r\n      \"name\": \"diskrp3046\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:38.2704747-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/crptestar934/providers/Microsoft.Compute/disks/diskrp7266\",\r\n      \"name\": \"diskrp7266\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1286"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "599b2ec3-0049-454e-9952-a6eb87b7bce2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "0e5d19ef-bf2b-405f-8e08-c48133ca30af"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001040Z:0e5d19ef-bf2b-405f-8e08-c48133ca30af"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/providers/Microsoft.Compute/disks?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9kaXNrcz9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "338d5ef8-a6ce-4e36-bac8-fd8f4e9e09e8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T17:47:13.731842-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR317/providers/Microsoft.Compute/disks/diskrp9379\",\r\n      \"name\": \"diskrp9379\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"tageKey\": \"tagvalue\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T09:59:52.3120727-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR3307/providers/Microsoft.Compute/disks/diskrp5866\",\r\n      \"name\": \"diskrp5866\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:36.7391954-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR3548/providers/Microsoft.Compute/disks/diskrp3046\",\r\n      \"name\": \"diskrp3046\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:34.8329319-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR3548/providers/Microsoft.Compute/disks/diskrp7266\",\r\n      \"name\": \"diskrp7266\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-19T15:58:44.1119088-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR4735/providers/Microsoft.Compute/disks/diskrp2202\",\r\n      \"name\": \"diskrp2202\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T13:48:02.1695166-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR4861/providers/Microsoft.Compute/disks/diskrp5371\",\r\n      \"name\": \"diskrp5371\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T10:18:52.9029519-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR5045/providers/Microsoft.Compute/disks/diskrp8858\",\r\n      \"name\": \"diskrp8858\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T17:30:02.8496716-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR5392/providers/Microsoft.Compute/disks/diskrp9739\",\r\n      \"name\": \"diskrp9739\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"tageKey\": \"tagvalue\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T16:03:30.9416438-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR6469/providers/Microsoft.Compute/disks/diskrp5200\",\r\n      \"name\": \"diskrp5200\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T16:01:08.1031604-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR695/providers/Microsoft.Compute/disks/diskrp3606\",\r\n      \"name\": \"diskrp3606\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T18:41:28.0703859-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR7771/providers/Microsoft.Compute/disks/diskrp2504\",\r\n      \"name\": \"diskrp2504\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"tageKey\": \"tagvalue\"\r\n      }\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T10:11:32.9885741-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR8467/providers/Microsoft.Compute/disks/diskrp6132\",\r\n      \"name\": \"diskrp6132\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T14:08:10.880884-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR8719/providers/Microsoft.Compute/disks/diskrp5818\",\r\n      \"name\": \"diskrp5818\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-17T10:06:15.128549-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR8955/providers/Microsoft.Compute/disks/diskrp8183\",\r\n      \"name\": \"diskrp8183\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T15:59:08.4617266-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR931/providers/Microsoft.Compute/disks/diskrp369\",\r\n      \"name\": \"diskrp369\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T15:59:09.3680073-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR931/providers/Microsoft.Compute/disks/diskrp5658\",\r\n      \"name\": \"diskrp5658\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:39.7235886-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR934/providers/Microsoft.Compute/disks/diskrp3046\",\r\n      \"name\": \"diskrp3046\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-21T17:10:38.2704747-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR934/providers/Microsoft.Compute/disks/diskrp7266\",\r\n      \"name\": \"diskrp7266\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-16T18:38:49.1611431-07:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 5,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/CRPTESTAR9997/providers/Microsoft.Compute/disks/diskrp4996\",\r\n      \"name\": \"diskrp4996\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:15:00.8261223-08:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"FromImage\",\r\n          \"imageReference\": {\r\n            \"id\": \"/Subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/Providers/Microsoft.Compute/Locations/West US/Publishers/RDFE-Test-Microsoft-Windows-Server-Group/ArtifactTypes/VMImage/Offers/Windows/Skus/Windows-Server-2012-R2-Datacenter/Versions/latest\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest0b9hrcgy9xd93vv8\",\r\n      \"name\": \"crptest0b9hrcgy9xd93vv8\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:15:00.8261223-08:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"FromImage\",\r\n          \"imageReference\": {\r\n            \"id\": \"/Subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/Providers/Microsoft.Compute/Locations/West US/Publishers/RDFE-Test-Microsoft-Windows-Server-Group/ArtifactTypes/VMImage/Offers/Windows/Skus/Windows-Server-2012-R2-Datacenter/Versions/latest\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest2uwa9i73adv8o4vy\",\r\n      \"name\": \"crptest2uwa9i73adv8o4vy\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-10T12:20:11.7583714-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestzc81iwpuxbivkd\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest2vha9r6ys83\",\r\n      \"name\": \"crptest2vha9r6ys83\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:58:55.4531804-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptest1ncr58me4mld\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest3t0gypwb5vjyh\",\r\n      \"name\": \"crptest3t0gypwb5vjyh\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:20:21.3594512-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest4uplxrzje9m\",\r\n      \"name\": \"crptest4uplxrzje9m\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:15:00.8104499-08:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"FromImage\",\r\n          \"imageReference\": {\r\n            \"id\": \"/Subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/Providers/Microsoft.Compute/Locations/West US/Publishers/RDFE-Test-Microsoft-Windows-Server-Group/ArtifactTypes/VMImage/Offers/Windows/Skus/Windows-Server-2012-R2-Datacenter/Versions/latest\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest4uptueostnx15\",\r\n      \"name\": \"crptest4uptueostnx15\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:58:55.4219296-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestbr39m5wa4mhhx4\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest5nhma57laa5c4dav\",\r\n      \"name\": \"crptest5nhma57laa5c4dav\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-08T18:50:12.8832198-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptest7dvpjx5btnq2ax7e\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest64v7fpqo4ru43\",\r\n      \"name\": \"crptest64v7fpqo4ru43\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:58:55.4375558-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestkh9wdgeuise7\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest7la4remu3c3zly4x\",\r\n      \"name\": \"crptest7la4remu3c3zly4x\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:32:41.3172869-08:00\",\r\n        \"osType\": \"Windows\",\r\n        \"osState\": \"Generalized\",\r\n        \"creationData\": {\r\n          \"createOption\": \"FromImage\",\r\n          \"imageReference\": {\r\n            \"id\": \"/Subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/Providers/Microsoft.Compute/Locations/West US/Publishers/RDFE-Test-Microsoft-Windows-Server-Group/ArtifactTypes/VMImage/Offers/Windows/Skus/Windows-Server-2012-R2-Datacenter/Versions/latest\"\r\n          }\r\n        },\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest83ly47hcdumm\",\r\n      \"name\": \"crptest83ly47hcdumm\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:31:46.8637599-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestcvfyn4s2gqbjdjo\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptest9bpzguobsrcgpo\",\r\n      \"name\": \"crptest9bpzguobsrcgpo\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T14:11:50.569017-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestk0odut423pqdj\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestbdk5zvwmuko095\",\r\n      \"name\": \"crptestbdk5zvwmuko095\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:32:41.30167-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestnrasbnvq2ig5c5d2\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestbgpom190qmks4q3\",\r\n      \"name\": \"crptestbgpom190qmks4q3\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:31:46.8481485-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestcvfyn4s2gqbjdjo\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestce9we9ntacbwran\",\r\n      \"name\": \"crptestce9we9ntacbwran\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-08T18:50:12.8832198-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptest6939kpwozjyz\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptesthqhb3v9nu1emp\",\r\n      \"name\": \"crptesthqhb3v9nu1emp\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T14:11:50.569017-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestw5qh3ogw0nuzw\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptesthyq15tndm4x9ck\",\r\n      \"name\": \"crptesthyq15tndm4x9ck\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-10T12:20:11.7427454-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptest1ei5oeoye9se\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptesti0bzlcm3qe9biz\",\r\n      \"name\": \"crptesti0bzlcm3qe9biz\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-08T18:50:12.8519676-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestz18w18g8yncsbj\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestiv7611bmn0ixbxo\",\r\n      \"name\": \"crptestiv7611bmn0ixbxo\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:41:45.6471079-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestfnj3ierw35510p7h\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestjfzdxi7zk56lbjz\",\r\n      \"name\": \"crptestjfzdxi7zk56lbjz\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T14:04:00.6188256-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestjjb7yokw6l1g12hz\",\r\n      \"name\": \"crptestjjb7yokw6l1g12hz\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:20:21.3594512-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestkuqkssc5dhxuj\",\r\n      \"name\": \"crptestkuqkssc5dhxuj\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T14:04:00.6188256-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestlh6zcbriapgtwb\",\r\n      \"name\": \"crptestlh6zcbriapgtwb\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T14:11:50.5533736-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestw5qh3ogw0nuzw\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestpdaubqnfrfj\",\r\n      \"name\": \"crptestpdaubqnfrfj\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:31:46.8637599-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestrvnua1shweel\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestqqjzn53y68jg\",\r\n      \"name\": \"crptestqqjzn53y68jg\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:20:21.3750506-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestrjsqakfiobai\",\r\n      \"name\": \"crptestrjsqakfiobai\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:15:00.8261223-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestkbibcmomsl5\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestumfge3g5k8yyk8e\",\r\n      \"name\": \"crptestumfge3g5k8yyk8e\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:41:45.6471079-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestbu2fbun50zm5pv6\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestv3kf2tjasva6h02\",\r\n      \"name\": \"crptestv3kf2tjasva6h02\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T14:04:00.6188256-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Unattached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestv6obds9ittondyo\",\r\n      \"name\": \"crptestv6obds9ittondyo\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:15:00.8104499-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestbw5mee023xnck4t\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestvyd3p84yt1vbx8\",\r\n      \"name\": \"crptestvyd3p84yt1vbx8\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:15:00.8261223-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestftcuwhkvc9y4\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestwr5w4z4yng7\",\r\n      \"name\": \"crptestwr5w4z4yng7\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T12:41:45.6471079-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestbu2fbun50zm5pv6\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestx4ybivlhgwbe7zk\",\r\n      \"name\": \"crptestx4ybivlhgwbe7zk\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com:443/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/providers/Microsoft.Compute/disks?api-version=2016-04-30-preview&$skiptoken=b857ed7b-c56c-4b20-9ca0-2fabe5a4501f!/Subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/ResourceGroups/DISKRPARMTEST/Disks/CRPTESTZ0BZIEUQ9QJ\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "35771"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "15b9fc46-e11d-492c-b70b-98720225958e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "7524e943-3e3e-4d0c-b150-9f7647946dc3"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001040Z:7524e943-3e3e-4d0c-b150-9f7647946dc3"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/providers/Microsoft.Compute/disks?api-version=2016-04-30-preview&$skiptoken=b857ed7b-c56c-4b20-9ca0-2fabe5a4501f!/Subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/ResourceGroups/DISKRPARMTEST/Disks/CRPTESTZ0BZIEUQ9QJ",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9kaXNrcz9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXcmJHNraXB0b2tlbj1iODU3ZWQ3Yi1jNTZjLTRiMjAtOWNhMC0yZmFiZTVhNDUwMWYhL1N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L1Jlc291cmNlR3JvdXBzL0RJU0tSUEFSTVRFU1QvRGlza3MvQ1JQVEVTVFowQlpJRVVROVFK",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7f309586-32cc-45fa-8427-89faf7e39cf2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-03-10T12:20:11.7583714-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/diskrparmtest/providers/Microsoft.Compute/virtualMachines/crptestw1fo5n1fcj03t\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/DISKRPARMTEST/providers/Microsoft.Compute/disks/crptestz0bzieuq9qj\",\r\n      \"name\": \"crptestz0bzieuq9qj\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:45:06.8384835-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/xrprgtestxeuxif/providers/Microsoft.Compute/virtualMachines/crptestvwmn1tm1c8w34\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/XRPRGTESTXEUXIF/providers/Microsoft.Compute/disks/crptest2chk6f70q9ejxgi\",\r\n      \"name\": \"crptest2chk6f70q9ejxgi\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:45:06.8541141-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/xrprgtestxeuxif/providers/Microsoft.Compute/virtualMachines/crptesttpcn63pdlz7bysl9\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/XRPRGTESTXEUXIF/providers/Microsoft.Compute/disks/crpteste7iza4zkupppl6dg\",\r\n      \"name\": \"crpteste7iza4zkupppl6dg\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:45:06.8384835-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/xrprgtestxeuxif/providers/Microsoft.Compute/virtualMachines/crptestvn9hslvrxcc\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/XRPRGTESTXEUXIF/providers/Microsoft.Compute/disks/crptestwwld3ngyj7civs\",\r\n      \"name\": \"crptestwwld3ngyj7civs\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:29:33.2543799-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/zyxy/providers/Microsoft.Compute/virtualMachines/crptestqqam6pw5xvcd31\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/ZYXY/providers/Microsoft.Compute/disks/crptest9ziffx8h2zz55x\",\r\n      \"name\": \"crptest9ziffx8h2zz55x\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:29:33.270003-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/zyxy/providers/Microsoft.Compute/virtualMachines/crptesteax602aunjy\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/ZYXY/providers/Microsoft.Compute/disks/crptestingyxpqxrvfi9s\",\r\n      \"name\": \"crptestingyxpqxrvfi9s\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_LRS\",\r\n        \"timeCreated\": \"2016-02-29T10:29:33.270003-08:00\",\r\n        \"creationData\": {\r\n          \"createOption\": \"Empty\"\r\n        },\r\n        \"diskSizeGB\": 10,\r\n        \"ownerId\": \"subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/zyxy/providers/Microsoft.Compute/virtualMachines/crptestgkdjkqt8t5865\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"diskState\": \"Attached\"\r\n      },\r\n      \"id\": \"/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourceGroups/ZYXY/providers/Microsoft.Compute/disks/crptestqod86hhf15is\",\r\n      \"name\": \"crptestqod86hhf15is\",\r\n      \"type\": \"Microsoft.Compute/disks\",\r\n      \"location\": \"West US\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5280"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "df8a7560-8cde-4786-a2f1-384644265158_131021413800020466"
+        ],
+        "x-ms-request-id": [
+          "c2d28d01-a194-4571-9a14-eda35b3d2d4d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "ec03698b-a013-4a8b-b14e-556ec86e2e19"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001040Z:ec03698b-a013-4a8b-b14e-556ec86e2e19"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourcegroups/crptestar3548?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlZ3JvdXBzL2NycHRlc3RhcjM1NDg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "410b21f3-0313-463b-80e4-8cc75e068624"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "8a2b541a-e085-4c5c-9b90-ef989b3be269"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a2b541a-e085-4c5c-9b90-ef989b3be269"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001041Z:8a2b541a-e085-4c5c-9b90-ef989b3be269"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:10:41 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl6TlRRNExWZEZVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pZDJWemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "853c09d9-1cb1-4741-a1be-c406d2f5f732"
+        ],
+        "x-ms-correlation-request-id": [
+          "853c09d9-1cb1-4741-a1be-c406d2f5f732"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001112Z:853c09d9-1cb1-4741-a1be-c406d2f5f732"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:11:11 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl6TlRRNExWZEZVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pZDJWemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "6e534d5b-3013-47d8-9ab7-92e2d9c6007a"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e534d5b-3013-47d8-9ab7-92e2d9c6007a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001142Z:6e534d5b-3013-47d8-9ab7-92e2d9c6007a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:11:42 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl6TlRRNExWZEZVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pZDJWemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "49308503-34d8-4e0a-ad5b-e62b2ad691de"
+        ],
+        "x-ms-correlation-request-id": [
+          "49308503-34d8-4e0a-ad5b-e62b2ad691de"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001212Z:49308503-34d8-4e0a-ad5b-e62b2ad691de"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:12:12 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIzNTQ4LVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl6TlRRNExWZEZVMVJWVXlJc0ltcHZZa3h2WTJGMGFXOXVJam9pZDJWemRIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "f33e32fb-f18b-4504-9198-1f85ca1e7636"
+        ],
+        "x-ms-correlation-request-id": [
+          "f33e32fb-f18b-4504-9198-1f85ca1e7636"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001242Z:f33e32fb-f18b-4504-9198-1f85ca1e7636"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:12:42 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/resourcegroups/crptestar934?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L3Jlc291cmNlZ3JvdXBzL2NycHRlc3RhcjkzND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "87334092-49e9-4c5a-b42e-04e5225a20dc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "622c8f2b-c60d-440d-94da-076b6acacb4a"
+        ],
+        "x-ms-correlation-request-id": [
+          "622c8f2b-c60d-440d-94da-076b6acacb4a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001243Z:622c8f2b-c60d-440d-94da-076b6acacb4a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:12:43 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkk1TXpRdFYwVlRWRlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTWlmUT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-request-id": [
+          "5c33df6d-947b-468f-9e86-49cb8e7d72bf"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c33df6d-947b-468f-9e86-49cb8e7d72bf"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001314Z:5c33df6d-947b-468f-9e86-49cb8e7d72bf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:13:13 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkk1TXpRdFYwVlRWRlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTWlmUT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-request-id": [
+          "4c089ba0-a153-438f-b59d-d9b39f04e515"
+        ],
+        "x-ms-correlation-request-id": [
+          "4c089ba0-a153-438f-b59d-d9b39f04e515"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001344Z:4c089ba0-a153-438f-b59d-d9b39f04e515"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:13:44 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkk1TXpRdFYwVlRWRlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTWlmUT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-request-id": [
+          "ed30cb54-a0de-4dcd-8b1b-e123721115bf"
+        ],
+        "x-ms-correlation-request-id": [
+          "ed30cb54-a0de-4dcd-8b1b-e123721115bf"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001414Z:ed30cb54-a0de-4dcd-8b1b-e123721115bf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:14:13 GMT"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/11f81b7f-1881-4c46-af70-25b3ab0c2368/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI5MzQtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFmODFiN2YtMTg4MS00YzQ2LWFmNzAtMjViM2FiMGMyMzY4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkk1TXpRdFYwVlRWRlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTWlmUT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-request-id": [
+          "d6ae74cd-a204-4532-83f5-82d5135b868a"
+        ],
+        "x-ms-correlation-request-id": [
+          "d6ae74cd-a204-4532-83f5-82d5135b868a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHCENTRALUS:20160322T001444Z:d6ae74cd-a204-4532-83f5-82d5135b868a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 Mar 2016 00:14:44 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "Disk_List_Execute": [
+      "crptestar3548",
+      "crptestar934",
+      "diskrp7266",
+      "diskrp3046"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "11f81b7f-1881-4c46-af70-25b3ab0c2368"
+  }
+}
