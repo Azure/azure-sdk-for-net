@@ -532,5 +532,146 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.WriteEvent(44, clientId, exception);
         }
+
+        [NonEvent]
+        public void ScheduleMessageStart(string clientId, DateTimeOffset scheduleEnqueueTimeUtc)
+        {
+            if (this.IsEnabled())
+            {
+                this.ScheduleMessageException(clientId, scheduleEnqueueTimeUtc.ToString());
+            }
+        }
+
+        [Event(49, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
+        public void ScheduleMessageStart(string clientId, string scheduleEnqueueTimeUtc)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(49, clientId, scheduleEnqueueTimeUtc);
+            }
+        }
+
+        [Event(50, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync done.")]
+        public void ScheduleMessageStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(50, clientId);
+            }
+        }
+
+        [NonEvent]
+        public void ScheduleMessageException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.ScheduleMessageException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(51, Level = EventLevel.Error, Message = "{0}: ScheduleMessageAsync Exception: {1}.")]
+        void ScheduleMessageException(string clientId, string exception)
+        {
+            this.WriteEvent(51, clientId, exception);
+        }
+
+        [Event(52, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync start. SequenceNumber = {1}")]
+        public void CancelScheduledMessageStart(string clientId, long sequenceNumber)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(52, clientId, sequenceNumber);
+            }
+        }
+
+        [Event(53, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync done.")]
+        public void CancelScheduledMessageStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(53, clientId);
+            }
+        }
+
+        [NonEvent]
+        public void CancelScheduledMessageException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.CancelScheduledMessageException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(54, Level = EventLevel.Error, Message = "{0}: CancelScheduledMessageAsync Exception: {1}.")]
+        void CancelScheduledMessageException(string clientId, string exception)
+        {
+            this.WriteEvent(54, clientId, exception);
+        }
+
+        [Event(55, Level = EventLevel.Informational, Message = "{0}: AddRuleAsync start. RuleName = {1}")]
+        public void AddRuleStart(string clientId, string ruleName)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(55, clientId, ruleName);
+            }
+        }
+
+        [Event(56, Level = EventLevel.Informational, Message = "{0}: AddRuleAsync done.")]
+        public void AddRuleStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(56, clientId);
+            }
+        }
+
+        [NonEvent]
+        public void AddRuleException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AddRuleException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(57, Level = EventLevel.Error, Message = "{0}: AddRuleAsync Exception: {1}.")]
+        void AddRuleException(string clientId, string exception)
+        {
+            this.WriteEvent(57, clientId, exception);
+        }
+
+        [Event(58, Level = EventLevel.Informational, Message = "{0}: RemoveRuleAsync start. RuleName = {1}")]
+        public void RemoveRuleStart(string clientId, string ruleName)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(58, clientId, ruleName);
+            }
+        }
+
+        [Event(59, Level = EventLevel.Informational, Message = "{0}: RemoveRuleAsync done.")]
+        public void RemoveRuleStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(59, clientId);
+            }
+        }
+
+        [NonEvent]
+        public void RemoveRuleException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.RemoveRuleException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(60, Level = EventLevel.Error, Message = "{0}: RemoveRuleAsync Exception: {1}.")]
+        void RemoveRuleException(string clientId, string exception)
+        {
+            this.WriteEvent(60, clientId, exception);
+        }
     }
 }

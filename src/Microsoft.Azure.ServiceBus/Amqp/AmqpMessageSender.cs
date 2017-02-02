@@ -132,6 +132,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 {
                     sequenceNumbers = response.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
                 }
+                else
+                {
+                    response.ToMessagingContractException();
+                }
 
                 return sequenceNumbers?.FirstOrDefault() ?? 0;
             }

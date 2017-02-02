@@ -299,7 +299,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="description">The rule description that provides metadata of the rule to add.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public Task AddRuleAsync(RuleDescription description)
+        public async Task AddRuleAsync(RuleDescription description)
         {
             if (description == null)
             {
@@ -307,8 +307,19 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             description.ValidateDescriptionName();
+            MessagingEventSource.Log.AddRuleStart(this.ClientId, description.Name);
 
-            return this.OnAddRuleAsync(description);
+            try
+            {
+                await this.OnAddRuleAsync(description).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.AddRuleException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.AddRuleStop(this.ClientId);
         }
 
         /// <summary>
@@ -316,14 +327,26 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="ruleName">The name of the rule.</param>
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public Task RemoveRuleAsync(string ruleName)
+        public async Task RemoveRuleAsync(string ruleName)
         {
             if (string.IsNullOrWhiteSpace(ruleName))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(ruleName));
             }
 
-            return this.OnRemoveRuleAsync(ruleName);
+            MessagingEventSource.Log.RemoveRuleStart(this.ClientId, ruleName);
+
+            try
+            {
+                await this.OnRemoveRuleAsync(ruleName).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.RemoveRuleException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.RemoveRuleStop(this.ClientId);
         }
 
         protected MessageReceiver CreateMessageReceiver()

@@ -10,9 +10,9 @@ namespace Microsoft.Azure.ServiceBus
     public abstract class MessageSender : ClientEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1126:PrefixCallsCorrectly",
-            Justification = "This is not a method call, but a type.")]
+             "StyleCop.CSharp.ReadabilityRules",
+             "SA1126:PrefixCallsCorrectly",
+             Justification = "This is not a method call, but a type.")]
         protected MessageSender(TimeSpan operationTimeout)
             : base(nameof(MessageSender) + StringUtility.GetRandomString())
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageSendStop(this.ClientId);
         }
 
-        public Task<long> ScheduleMessageAsync(BrokeredMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
+        public async Task<long> ScheduleMessageAsync(BrokeredMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
             if (message == null)
             {
@@ -63,12 +63,38 @@ namespace Microsoft.Azure.ServiceBus
 
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
             MessageSender.ValidateMessage(message);
-            return this.OnScheduleMessageAsync(message);
+            MessagingEventSource.Log.ScheduleMessageStart(this.ClientId, scheduleEnqueueTimeUtc);
+            long result;
+
+            try
+            {
+                result = await this.OnScheduleMessageAsync(message).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.ScheduleMessageException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.ScheduleMessageStop(this.ClientId);
+            return result;
         }
 
-        public Task CancelScheduledMessageAsync(long sequenceNumber)
+        public async Task CancelScheduledMessageAsync(long sequenceNumber)
         {
-            return this.OnCancelScheduledMessageAsync(sequenceNumber);
+            MessagingEventSource.Log.CancelScheduledMessageStart(this.ClientId, sequenceNumber);
+
+            try
+            {
+                await this.OnCancelScheduledMessageAsync(sequenceNumber).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.CancelScheduledMessageException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.CancelScheduledMessageStop(this.ClientId);
         }
 
         protected abstract Task OnSendAsync(IEnumerable<BrokeredMessage> brokeredMessages);
