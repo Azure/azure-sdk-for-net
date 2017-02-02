@@ -28,6 +28,7 @@
         public const string DummyBaseUrl = "testbatch://batch-test.windows-int.net";
         public const string DummyAccountName = "Dummy";
         public const string DummyAccountKey = "ZmFrZQ==";
+        public const string DummyToken = "ZmFrZQ==";
 
         public static BatchSharedKeyCredentials CreateDummySharedKeyCredential()
         {
