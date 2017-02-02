@@ -60,7 +60,6 @@
     <Compile Include="Common\Enumerations\SubtaskState.cs" />
     <Compile Include="FileStaging\FileStagingUtils.cs" />
     <Compile Include="GetFileRequestByteRange.cs" />
-    <Compile Include="ImageReference.cs" />
     <Compile Include="IPropertyMetadata.cs" />
     <Compile Include="IReadOnly.cs" />
     <Compile Include="AddTaskCollectionResultHandler.cs" />
