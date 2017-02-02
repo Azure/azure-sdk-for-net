@@ -14,7 +14,7 @@
 
 ﻿using System;
 using System.Collections.Generic;
-
+﻿
 namespace Microsoft.Azure.Batch
 {
     /// <summary>
@@ -111,6 +111,13 @@ namespace Microsoft.Azure.Batch
         {
             Protocol.BatchCredentials proxyCredentials = new Protocol.BatchSharedKeyCredential(customerCredentials.AccountName, customerCredentials.KeyValue);
             this.ProtocolLayer = new ProtocolLayer(customerCredentials.BaseUrl, proxyCredentials);
+        }
+
+        private BatchClient(Auth.BatchTokenCredentials authCredentials)
+            : this()
+        {
+            Protocol.BatchCredentials proxyCredentials = new Protocol.BatchTokenCredential(authCredentials.TokenProvider);
+            this.ProtocolLayer = new ProtocolLayer(authCredentials.BaseUrl, proxyCredentials);
         }
 
         private BatchClient(Protocol.BatchServiceClient customRestClient)
@@ -248,6 +255,42 @@ namespace Microsoft.Azure.Batch
         public static BatchClient Open(Auth.BatchSharedKeyCredentials credentials)
         {
             using (System.Threading.Tasks.Task<BatchClient> asyncTask = OpenAsync(credentials))
+            {
+                // wait for completion
+                BatchClient bc = asyncTask.WaitAndUnaggregateException();
+
+                return bc;
+            }
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="BatchClient"/>.
+        /// </summary>
+        /// <param name="authTokenCredentials">"The Batch account credentials.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        public static System.Threading.Tasks.Task<BatchClient> OpenAsync(Auth.BatchTokenCredentials authTokenCredentials)
+        {
+            if (null == authTokenCredentials)
+            {
+                throw new ArgumentNullException(nameof(authTokenCredentials));
+            }
+
+            BatchClient newBatchCli = new BatchClient(authTokenCredentials);
+            System.Threading.Tasks.Task<BatchClient> retTask = System.Threading.Tasks.Task.FromResult<BatchClient>(newBatchCli);
+            return retTask;
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="BatchClient" />.
+        /// </summary>
+        /// <remarks>
+        /// This is a blocking call. For a non-blocking equivalent, see <see cref="OpenAsync(Auth.BatchSharedKeyCredentials)"/>
+        /// </remarks>
+        /// <param name="authTokenCredentials">The instance of <see cref="Microsoft.Rest.TokenCredentials"/>.</param>
+        /// <returns>An instance of <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/>.</returns>
+        public static BatchClient Open(Auth.BatchTokenCredentials authTokenCredentials)
+        {
+            using (System.Threading.Tasks.Task<BatchClient> asyncTask = OpenAsync(authTokenCredentials))
             {
                 // wait for completion
                 BatchClient bc = asyncTask.WaitAndUnaggregateException();

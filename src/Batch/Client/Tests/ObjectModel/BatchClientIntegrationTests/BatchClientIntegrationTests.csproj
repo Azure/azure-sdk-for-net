@@ -136,6 +136,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationTest.cs" />
     <Compile Include="Application\ApplicationPackageFixture.cs" />
     <Compile Include="Application\ApplicationPackagesReferencesOnTasksIntegrationTests.cs" />
     <Compile Include="CloudJobIntegrationTests.cs" />
