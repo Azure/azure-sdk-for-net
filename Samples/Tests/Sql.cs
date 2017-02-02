@@ -16,7 +16,7 @@ namespace Samples.Tests
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "Sql")]
         public void ManageSqlDatabaseTest()
         {
@@ -27,7 +27,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "Sql")]
         public void ManageSqlDatabaseInElasticPoolTest()
         {
@@ -38,7 +38,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "Sql")]
         public void ManageSqlDatabasesAcrossDifferentDataCentersTest()
         {
@@ -49,7 +49,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "Sql")]
         public void ManageSqlFirewallRulesTest()
         {

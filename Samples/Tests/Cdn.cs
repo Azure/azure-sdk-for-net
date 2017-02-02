@@ -16,7 +16,7 @@ namespace Samples.Tests
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Cdn")]
         public void ManageCdnTest()
         {

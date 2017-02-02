@@ -2,7 +2,7 @@
   "version": "1.0.0-*",
   
   "buildOptions": {
-    "compile": "../../../tools/DisableTestRunParallel.cs"
+    "compile": "../../tools/DisableTestRunParallel.cs"
   },
 
   "testRunner": "xunit",

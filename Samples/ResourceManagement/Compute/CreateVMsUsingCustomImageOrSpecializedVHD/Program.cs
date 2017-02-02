@@ -71,7 +71,8 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("Created a Linux VM: " + linuxVM.Id);
                 Utilities.PrintVirtualMachine(linuxVM);
 
-                Utilities.Log("SSH into the VM [" + linuxVM.GetPrimaryPublicIpAddress().Fqdn + "]");
+                var fqdnString = linuxVM.GetPrimaryPublicIpAddress().Fqdn;
+                Utilities.Log("SSH into the VM [" + fqdnString + "]");
                 Utilities.Log("and run 'sudo waagent -deprovision+user' to prepare it for capturing");
                 Utilities.Log("after that press 'Enter' to continue.");
                 Utilities.ReadLine();

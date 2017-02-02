@@ -42,7 +42,7 @@ namespace ManageVirtualMachineWithDisk
             {
                 // Creates an empty data disk to attach to the virtual machine
                 //
-                Console.WriteLine("Creating an empty managed disk");
+                Utilities.Log("Creating an empty managed disk");
 
                 var dataDisk1 = azure.Disks.Define(Utilities.CreateRandomName("dsk-"))
                         .WithRegion(region)
@@ -51,7 +51,7 @@ namespace ManageVirtualMachineWithDisk
                         .WithSizeInGB(50)
                         .Create();
 
-                Console.WriteLine("Created managed disk");
+                Utilities.Log("Created managed disk");
 
                 // Prepare first creatable data disk
                 //
@@ -73,7 +73,7 @@ namespace ManageVirtualMachineWithDisk
                 //======================================================================
                 // Create a Linux VM using a PIR image with managed OS and Data disks
 
-                Console.WriteLine("Creating a managed Linux VM");
+                Utilities.Log("Creating a managed Linux VM");
 
                 var linuxVM = azure.VirtualMachines.Define(linuxVmName1)
                         .WithRegion(region)
@@ -96,13 +96,13 @@ namespace ManageVirtualMachineWithDisk
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
-                Console.WriteLine("Created a Linux VM with managed OS and data disks: " + linuxVM.Id);
+                Utilities.Log("Created a Linux VM with managed OS and data disks: " + linuxVM.Id);
                 Utilities.PrintVirtualMachine(linuxVM);
 
                 //======================================================================
                 // Update the virtual machine by detaching two data disks with lun 3 and 4 and adding one
 
-                Console.WriteLine("Updating Linux VM");
+                Utilities.Log("Updating Linux VM");
 
                 var lun3DiskId = linuxVM.DataDisks[3].Id;
 
@@ -112,27 +112,27 @@ namespace ManageVirtualMachineWithDisk
                         .WithNewDataDisk(200)
                         .Apply();
 
-                Console.WriteLine("Updated Linux VM: " + linuxVM.Id);
+                Utilities.Log("Updated Linux VM: " + linuxVM.Id);
                 Utilities.PrintVirtualMachine(linuxVM);
 
                 // ======================================================================
                 // Delete a managed disk
 
                 var disk = azure.Disks.GetById(lun3DiskId);
-                Console.WriteLine("Delete managed disk: " + disk.Id);
+                Utilities.Log("Delete managed disk: " + disk.Id);
 
                 azure.Disks.DeleteByGroup(disk.ResourceGroupName, disk.Name);
 
-                Console.WriteLine("Deleted managed disk");
+                Utilities.Log("Deleted managed disk");
 
                 //======================================================================
                 // Deallocate the virtual machine
 
-                Console.WriteLine("De-allocate Linux VM");
+                Utilities.Log("De-allocate Linux VM");
 
                 linuxVM.Deallocate();
 
-                Console.WriteLine("De-allocated Linux VM");
+                Utilities.Log("De-allocated Linux VM");
 
                 //======================================================================
                 // Resize the OS and Data Disks
@@ -145,50 +145,50 @@ namespace ManageVirtualMachineWithDisk
                     dataDisks.Add(dataDisk);
                 }
 
-                Console.WriteLine("Update OS disk: " + osDisk.Id);
+                Utilities.Log("Update OS disk: " + osDisk.Id);
 
                 osDisk.Update()
                         .WithSizeInGB(2 * osDisk.SizeInGB)
                         .Apply();
 
-                Console.WriteLine("OS disk updated");
+                Utilities.Log("OS disk updated");
 
                 foreach (var dataDisk in dataDisks)
                 {
-                    Console.WriteLine("Update data disk: " + dataDisk.Id);
+                    Utilities.Log("Update data disk: " + dataDisk.Id);
 
                     dataDisk.Update()
                             .WithSizeInGB(dataDisk.SizeInGB + 10)
                             .Apply();
 
-                    Console.WriteLine("Data disk updated");
+                    Utilities.Log("Data disk updated");
                 }
 
                 //======================================================================
                 // Starting the virtual machine
 
-                Console.WriteLine("Starting Linux VM");
+                Utilities.Log("Starting Linux VM");
 
                 linuxVM.Start();
 
-                Console.WriteLine("Started Linux VM");
+                Utilities.Log("Started Linux VM");
                 Utilities.PrintVirtualMachine(linuxVM);
             }
             finally
             {
                 try
                 {
-                    Console.WriteLine("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting Resource Group: " + rgName);
                     azure.ResourceGroups.DeleteByName(rgName);
-                    Console.WriteLine("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
                 catch (Exception g)
                 {
-                    Console.WriteLine(g);
+                    Utilities.Log(g);
                 }
             }
         }

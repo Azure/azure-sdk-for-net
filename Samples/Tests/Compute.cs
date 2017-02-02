@@ -38,7 +38,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ListVirtualMachineExtensionImagesTest()
         {
@@ -49,7 +49,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ListVirtualMachineImagesTest()
         {

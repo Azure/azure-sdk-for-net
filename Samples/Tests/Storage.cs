@@ -16,7 +16,7 @@ namespace Samples.Tests
             Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "Storage")]
         public void ManageStorageAccountTest()
         {
