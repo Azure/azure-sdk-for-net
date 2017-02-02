@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// Gets the virtual machine child extension resources.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
-        public IList<VirtualMachineExtensionInner> Resources { get; protected set; }
+        public IList<VirtualMachineExtensionInner> Resources { get; private set; }
 
         /// <summary>
         /// Validate the object.
