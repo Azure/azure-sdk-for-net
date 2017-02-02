@@ -896,17 +896,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:821D92F0F65352C735EB6081A9BEA9DC:73A06E6EEB10BE4D76DAA1F7DE189BD6
-        public VirtualMachineScaleSetUnmanagedDataDiskImpl DefineUnmanagedDataDisk(string name)
-        {
-            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VMSS_Both_Managed_And_Unmanaged_Disk_Not_Allowed);
-            VirtualMachineScaleSetDataDisk dataDiskInner = new VirtualMachineScaleSetDataDisk();
-            dataDiskInner.Lun = -1;
-            dataDiskInner.Name = name;
-            dataDiskInner.CreateOption = DiskCreateOptionTypes.Empty;
-            return new VirtualMachineScaleSetUnmanagedDataDiskImpl(dataDiskInner, this);
-        }
-
         ///GENMHASH:3DF1B6140B6B4ECBFA96FE642F2CD144:CCED3778DD625697E59E50F8F58EAFD7
         public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
@@ -1559,66 +1548,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             throw new Exception("Could not find the primary nic configuration or an IP configuration in it");
         }
 
-        ///GENMHASH:986009C9CE2533065F3AE9DC169521A5:31DD88A2E62A45DFF8AD50C30CFA00A6
-        public VirtualMachineScaleSetImpl WithoutUnmanagedDataDisk(string name)
-        {
-            if (IsManagedDiskEnabled())
-            {
-                // Its ok not to throw here, since in general 'withoutXX' can be NOP
-                return this;
-            }
-            VirtualMachineScaleSetStorageProfile storageProfile = this
-                .Inner
-                .VirtualMachineProfile
-                .StorageProfile;
-            IList<VirtualMachineScaleSetDataDisk> dataDisks = storageProfile
-                .DataDisks;
-            if (dataDisks != null)
-            {
-                int idx = -1;
-                foreach (var dataDisk in dataDisks)
-                {
-                    idx++;
-                    if (dataDisk.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        storageProfile.DataDisks.RemoveAt(idx);
-                        break;
-                    }
-                }
-            }
-            return this;
-        }
-
-        ///GENMHASH:54D3B4BD3F03BEE3E2ACA4B49D0F23C0:0BCE569691510B196041995279EF5907
-        public VirtualMachineScaleSetImpl WithoutUnmanagedDataDisk(int lun)
-        {
-            if (IsManagedDiskEnabled())
-            {
-                // Its ok not to throw here, since in general 'withoutXX' can be NOP
-                return this;
-            }
-            VirtualMachineScaleSetStorageProfile storageProfile = this
-                .Inner
-                .VirtualMachineProfile
-                .StorageProfile;
-            IList<VirtualMachineScaleSetDataDisk> dataDisks = storageProfile
-                .DataDisks;
-            if (dataDisks != null)
-            {
-                int idx = -1;
-                foreach (var dataDisk in dataDisks)
-                {
-                    idx++;
-                    if (dataDisk.Lun == lun)
-                    {
-                        storageProfile.DataDisks.RemoveAt(idx);
-                        break;
-                    }
-                }
-            }
-            return this;
-        }
-
         ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:B5D7FA290CD4B78F425E5D837D1426C5
         protected override void BeforeCreating()
         {
@@ -1821,7 +1750,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 && this.existingStorageAccountsToAssociate.Count == 0)
             {
                 IStorageAccount storageAccount = await this.storageManager.StorageAccounts
-                        .Define(this.namer.RandomName("stg", 24))
+                        .Define(this.namer.RandomName("stg", 24).Replace("-", ""))
                         .WithRegion(this.RegionName)
                         .WithExistingResourceGroup(this.ResourceGroupName)
                         .CreateAsync();
@@ -2052,16 +1981,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.primaryInternalLoadBalancer;
         }
 
-        ///GENMHASH:D4AA1D687C6ADC8E82CF97490E7E2840:E7F70DBA43E66E25DD839711AFE080E2
-        public VirtualMachineScaleSetImpl WithNewUnmanagedDataDisk(int sizeInGB)
-        {
-            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VMSS_Both_Managed_And_Unmanaged_Disk_Not_Allowed);
-            this.DefineUnmanagedDataDisk(null)
-                .WithSizeInGB(sizeInGB)
-                .Attach();
-            return this;
-        }
-
         ///GENMHASH:674F68CEE727AFB7E6F6D9C7FADE1175:9D8CEFD984A116AE33BB221254786FA5
         public VirtualMachineScaleSetImpl WithNewDataDisk(int sizeInGB)
         {
@@ -2110,29 +2029,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     .VirtualMachineProfile
                     .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
             return this;
-        }
-
-        ///GENMHASH:429C59D407353456A6B5003023273BD7:81295BAE0BB8359DEDF4992847106629
-        public VirtualMachineScaleSetUnmanagedDataDiskImpl UpdateUnmanagedDataDisk(string name)
-        {
-            ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VMSS_No_Unmanaged_Disk_To_Update);
-            VirtualMachineScaleSetStorageProfile storageProfile = this
-                .Inner
-                .VirtualMachineProfile
-                .StorageProfile;
-            var dataDisks = storageProfile
-                .DataDisks;
-            if (dataDisks != null)
-            {
-                foreach (var dataDisk in dataDisks)
-                {
-                    if (dataDisk.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return new VirtualMachineScaleSetUnmanagedDataDiskImpl(dataDisk, this);
-                    }
-                }
-            }
-            throw new ArgumentException("A data disk with name  '" + name + "' not found");
         }
 
         ///GENMHASH:9E11BB028D83D0EF7340685F19FBA340:E9A91314DAD8267710EFDE4AAE671CCF

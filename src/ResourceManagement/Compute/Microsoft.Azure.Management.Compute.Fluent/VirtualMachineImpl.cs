@@ -672,7 +672,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             // Its ok not to throw here, since in general 'withoutXX' can be NOP
             int idx = -1;
-            foreach (IVirtualMachineDataDisk dataDisk in this.unmanagedDataDisks)
+            foreach (var dataDisk in this.unmanagedDataDisks)
             {
                 idx++;
                 if (dataDisk.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
@@ -690,7 +690,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             // Its ok not to throw here, since in general 'withoutXX' can be NOP
             int idx = -1;
-            foreach (IVirtualMachineDataDisk dataDisk in this.unmanagedDataDisks)
+            foreach (var dataDisk in this.unmanagedDataDisks)
             {
                 idx++;
                 if (dataDisk.Lun == lun)
@@ -707,7 +707,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public UnmanagedDataDiskImpl UpdateUnmanagedDataDisk(string name)
         {
             ThrowIfManagedDiskEnabled(ManagedUnmanagedDiskErrors.VM_No_Unmanaged_Disk_To_Update);
-            foreach (IVirtualMachineDataDisk dataDisk in this.unmanagedDataDisks)
+            foreach (var dataDisk in this.unmanagedDataDisks)
             {
                 if (dataDisk.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase))
                 {
@@ -1005,11 +1005,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             ICreatable<IAvailabilitySet> creatable;
             if (IsManagedDiskEnabled())
             {
-                creatable = definitionWithSku.WithSku(AvailabilitySetSkuTypes.Aligned);
+                creatable = definitionWithSku.WithSku(AvailabilitySetSkuTypes.Managed);
             }
             else
             {
-                creatable = definitionWithSku.WithSku(AvailabilitySetSkuTypes.Classic);
+                creatable = definitionWithSku.WithSku(AvailabilitySetSkuTypes.Unmanaged);
             }
             return this.WithNewAvailabilitySet(creatable);
         }
@@ -1600,7 +1600,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.DataDisksRequiresImplicitStorageAccountCreation())
             {
                 storageAccount = await this.storageManager.StorageAccounts
-                .Define(this.namer.RandomName("stg", 24))
+                .Define(this.namer.RandomName("stg", 24).Replace("-", ""))
                 .WithRegion(this.RegionName)
                 .WithExistingResourceGroup(this.ResourceGroupName)
                 .CreateAsync();

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ManageVirtualMachineScaleSet")]
+[assembly: AssemblyProduct("ManageVirtualMachine")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -19,4 +19,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9ec5e7a6-9fb3-45f4-a1b7-5c2f52148a8b")]
+[assembly: Guid("9c9ecadb-f0f8-4172-b5b6-3fa073559841")]

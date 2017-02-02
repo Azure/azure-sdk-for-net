@@ -47,7 +47,7 @@ namespace ManageAvailabilitySet
                         .WithNewResourceGroup(rgName)
                         .WithFaultDomainCount(2)
                         .WithUpdateDomainCount(4)
-                        .WithSku(AvailabilitySetSkuTypes.Aligned)
+                        .WithSku(AvailabilitySetSkuTypes.Managed)
                         .WithTag("cluster", "Windowslinux")
                         .WithTag("tag1", "tag1val")
                         .Create();

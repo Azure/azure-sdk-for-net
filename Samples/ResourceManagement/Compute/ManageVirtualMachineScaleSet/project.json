@@ -5,7 +5,7 @@
   },
 
   "dependencies": {
-    "Common": "1.0.0-*", 
+    "Common": "1.0.0-*",
     "Microsoft.Azure.Management.Fluent": {
       "target": "project",
       "type": "build"
