@@ -493,7 +493,7 @@ namespace Microsoft.Azure.Management.HDInsight
             if ((clusterCreateParameters.OSType == OSType.Linux) &&
                 (clusterCreateParameters.ClusterType.Equals("Sandbox", StringComparison.OrdinalIgnoreCase)))
             {
-                var devSkuHeadNode = new Role
+                var sandboxHeadNode = new Role
                 {
                     Name = "headnode",
                     TargetInstanceCount = 1,
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     VirtualNetworkProfile = vnetProfile,
                     ScriptActions = headnodeactions
                 };
-                roles.Add(devSkuHeadNode);
+                roles.Add(sandboxHeadNode);
                 return roles;
             }
             var headNodeSize = GetHeadNodeSize(clusterCreateParameters);

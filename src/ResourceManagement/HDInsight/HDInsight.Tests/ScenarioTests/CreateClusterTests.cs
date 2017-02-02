@@ -422,37 +422,6 @@ namespace HDInsight.Tests
                 Assert.Equal(result.StatusCode, HttpStatusCode.OK);
                 Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
-        }
-
-        [Fact]
-        public void TestCreateLinuxDevSkuCluster()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (var context = UndoContext.Current)
-            {
-                context.Start();
-
-                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
-                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
-                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
-
-                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
-                cluster.ClusterType = "Sandbox";
-                cluster.Version = "3.5";
-                const string dnsname = "hdisdk-DevSkuLinuxClusterTest";
-
-                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
-                Assert.Equal(dnsname, createresponse.Cluster.Name);
-
-                client.Clusters.Get(resourceGroup, dnsname);
-                Assert.NotNull(createresponse.Cluster.Properties.ClusterDefinition.ComponentVersion);
-
-                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
-                var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
-            }
-        }
+        }       
     }
 }
