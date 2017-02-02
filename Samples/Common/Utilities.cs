@@ -376,26 +376,34 @@ namespace Microsoft.Azure.Management.Samples.Common
                     }
                 }
             }
-
-            var osProfile = new StringBuilder().Append("\n\tOSProfile: ");
-            osProfile.Append("\n\t\tComputerName:").Append(virtualMachine.OsProfile?.ComputerName);
-            if (virtualMachine.OsProfile?.WindowsConfiguration != null)
+            StringBuilder osProfile;
+            if (virtualMachine.OsProfile != null)
             {
-                osProfile.Append("\n\t\t\tWindowsConfiguration: ");
-                osProfile.Append("\n\t\t\t\tProvisionVMAgent: ")
-                        .Append(virtualMachine.OsProfile?.WindowsConfiguration?.ProvisionVMAgent);
-                osProfile.Append("\n\t\t\t\tEnableAutomaticUpdates: ")
-                        .Append(virtualMachine.OsProfile?.WindowsConfiguration?.EnableAutomaticUpdates);
-                osProfile.Append("\n\t\t\t\tTimeZone: ")
-                        .Append(virtualMachine.OsProfile?.WindowsConfiguration?.TimeZone);
+                osProfile = new StringBuilder().Append("\n\tOSProfile: ");
+
+                osProfile.Append("\n\t\tComputerName:").Append(virtualMachine.OsProfile.ComputerName);
+                if (virtualMachine.OsProfile.WindowsConfiguration != null)
+                {
+                    osProfile.Append("\n\t\t\tWindowsConfiguration: ");
+                    osProfile.Append("\n\t\t\t\tProvisionVMAgent: ")
+                            .Append(virtualMachine.OsProfile.WindowsConfiguration.ProvisionVMAgent);
+                    osProfile.Append("\n\t\t\t\tEnableAutomaticUpdates: ")
+                            .Append(virtualMachine.OsProfile.WindowsConfiguration.EnableAutomaticUpdates);
+                    osProfile.Append("\n\t\t\t\tTimeZone: ")
+                            .Append(virtualMachine.OsProfile.WindowsConfiguration.TimeZone);
+                }
+                if (virtualMachine.OsProfile.LinuxConfiguration != null)
+                {
+                    osProfile.Append("\n\t\t\tLinuxConfiguration: ");
+                    osProfile.Append("\n\t\t\t\tDisablePasswordAuthentication: ")
+                            .Append(virtualMachine.OsProfile.LinuxConfiguration.DisablePasswordAuthentication);
+                }
+            }
+            else
+            {
+                osProfile = new StringBuilder().Append("\n\tOSProfile: null");
             }
 
-            if (virtualMachine.OsProfile?.LinuxConfiguration != null)
-            {
-                osProfile.Append("\n\t\t\tLinuxConfiguration: ");
-                osProfile.Append("\n\t\t\t\tDisablePasswordAuthentication: ")
-                        .Append(virtualMachine.OsProfile?.LinuxConfiguration?.DisablePasswordAuthentication);
-            }
 
             var networkProfile = new StringBuilder().Append("\n\tNetworkProfile: ");
             foreach (var networkInterfaceId in virtualMachine.NetworkInterfaceIds)

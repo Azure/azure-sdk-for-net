@@ -1504,6 +1504,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 else
                 {
                     osDisk.ManagedDisk = null;
+                    if (osDisk.Name == null)
+                    {
+                        WithOsDiskName(this.vmName + "-os-disk");
+                    }
                 }
             }
             if (osDisk.Caching == null)

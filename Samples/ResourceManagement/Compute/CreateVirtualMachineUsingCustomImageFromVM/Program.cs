@@ -38,7 +38,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVM
             var customImageName = Utilities.CreateRandomName("img");
             var rgName = Utilities.CreateRandomName("rgCOMV");
             var publicIpDnsLabel = Utilities.CreateRandomName("pip");
-            var apacheInstallScript = "https://raw.Githubusercontent.Com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.Sh";
+            var apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.sh";
             var apacheInstallCommand = "bash install_apache.Sh";
             var apacheInstallScriptUris = new List<string>();
             apacheInstallScriptUris.Add(apacheInstallScript);
@@ -183,7 +183,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVM
                 {
                     var dataDisk = azure.Disks.GetById(disk.Id);
                     var dataDiskSasUri = dataDisk.GrantAccess(24 * 60);
-                    Utilities.Log(String.Format("Data disk (lun: %d) SAS Uri: %s", disk.Lun, dataDiskSasUri));
+                    Utilities.Log($"Data disk (lun: {disk.Lun}) SAS Uri: {dataDiskSasUri}");
                 }
 
                 //=============================================================

@@ -54,8 +54,7 @@ namespace ManageWebAppStorageAccountConnection
 
                 var accountKey = storageAccount.GetKeys().FirstOrDefault().Value;
 
-                string connectionString = String.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}",
-                        storageAccount.Name, accountKey);
+                var connectionString = $"DefaultEndpointsProtocol=https;AccountName={storageAccount.Name};AccountKey={accountKey}";
 
                 Utilities.Log("Created storage account " + storageAccount.Name);
 
