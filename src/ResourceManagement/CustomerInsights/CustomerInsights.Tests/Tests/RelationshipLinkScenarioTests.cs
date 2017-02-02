@@ -47,7 +47,7 @@ namespace CustomerInsights.Tests.Tests
         /// </summary>
         private static readonly string ResourceGroupName;
 
-        [Fact(Skip = "TODO: Enable this after RelationshipLink functionalities are stable.")]
+        [Fact]
         public void CrdRelationshipLinkFullCycle()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -256,7 +256,7 @@ namespace CustomerInsights.Tests.Tests
                     aciClient.RelationshipLinks.DeleteWithHttpMessagesAsync(
                         ResourceGroupName,
                         HubName,
-                        relationshipName).Result;
+                        relationshipLinkName).Result;
                 Assert.Equal(HttpStatusCode.OK, deleteRelationshipResult.Response.StatusCode);
             }
         }
