@@ -15,8 +15,10 @@
 ﻿namespace BatchClientIntegrationTests.Fixtures
 {
     using System.Collections.Generic;
+    using BatchTestCommon;
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Common;
     using Xunit;
 
     public class PaasWindowsPoolFixture : PoolFixture
@@ -41,6 +43,12 @@
                     VMSize,
                     passConfiguration,
                     targetDedicated: 1);
+                var password = TestUtilities.GenerateRandomPassword();
+                currentPool.UserAccounts = new List<UserAccount>()
+                    {
+                        new UserAccount(AdminUserAccountName, password, ElevationLevel.Admin),
+                        new UserAccount(NonAdminUserAccountName, password, ElevationLevel.NonAdmin),
+                    };
 
                 StartTask st = new StartTask("cmd /c hostname");
 

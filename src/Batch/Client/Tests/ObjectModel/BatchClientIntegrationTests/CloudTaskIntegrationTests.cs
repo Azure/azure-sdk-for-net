@@ -995,6 +995,57 @@
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TaskRunsOnSharedUserAccount()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+                    const string adminTaskId = "adminTask";
+                    const string nonAdminTaskId = "nonAdminTask";
+                    try
+                    {
+                        CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = this.poolFixture.PoolId });
+                        job.Commit();
+
+                        Func<string, string, CloudTask> createTask = (taskId, userName) =>
+                        {
+                            //The magic command below will succeed on an admin account but fail for a non-admin account
+                            CloudTask task = new CloudTask(taskId, "cmd /c net session >nul 2>&1")
+                            {
+                                UserIdentity = new UserIdentity(userName)
+                            };
+                            return task;
+                        };
+
+                        var adminTask = createTask(adminTaskId, PoolFixture.AdminUserAccountName);
+                        var nonAdminTask = createTask(nonAdminTaskId, PoolFixture.NonAdminUserAccountName);
+                        batchCli.JobOperations.AddTask(jobId, new List<CloudTask> { adminTask, nonAdminTask });
+
+                        var tasks = batchCli.JobOperations.ListTasks(jobId);
+
+                        batchCli.Utilities.CreateTaskStateMonitor().WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
+
+                        var boundAdminTask = batchCli.JobOperations.GetTask(jobId, adminTaskId);
+                        var boundNonAdminTask = batchCli.JobOperations.GetTask(jobId, nonAdminTaskId);
+
+                        Assert.Equal(0, boundAdminTask.ExecutionInformation.ExitCode);
+                        Assert.NotEqual(0, boundNonAdminTask.ExecutionInformation.ExitCode);
+
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
     }
 
     public class IntegrationCloudTaskTestsWithoutSharedPool

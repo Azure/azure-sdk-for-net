@@ -785,6 +785,90 @@
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestPoolCreatedWithUserAccountsSucceeds()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    string poolId = "TestPoolCreatedWithUserAccounts" + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var nodeUserPassword = TestUtilities.GenerateRandomPassword();
+                        //Create a pool
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated);
+                        pool.UserAccounts = new List<UserAccount>()
+                        {
+                            new UserAccount("test1", nodeUserPassword),
+                            new UserAccount("test2", nodeUserPassword, ElevationLevel.NonAdmin),
+                            new UserAccount("test3", nodeUserPassword, ElevationLevel.Admin),
+                            new UserAccount("test4", nodeUserPassword, sshPrivateKey: "AAAA=="),
+                        };
+                        pool.Commit();
+
+                        CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
+
+                        Assert.Equal(pool.UserAccounts.Count, boundPool.UserAccounts.Count);
+                        var results = pool.UserAccounts.Zip(boundPool.UserAccounts, (expected, actual) => new { Submitted = expected, Returned = actual });
+                        foreach (var result in results)
+                        {
+                            Assert.Equal(result.Submitted.Name, result.Returned.Name);
+                            Assert.Null(result.Returned.Password);
+                            Assert.Equal(result.Submitted.ElevationLevel ?? ElevationLevel.NonAdmin, result.Returned.ElevationLevel);
+                            Assert.Equal(result.Submitted.SshPrivateKey, result.Returned.SshPrivateKey);
+                        }
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestPoolCreatedOSDiskFailsWithExpectedError()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    string poolId = "TestPoolCreatedWithOSDisk" + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+                        var imageUris = new List<string> { "https://example.test" };
+
+                        //Create a pool
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                imageDetails.NodeAgentSku.Id,
+                                osDisk: new OSDisk(imageUris)),
+                            targetDedicated);
+                        var exception = Assert.Throws<BatchException>(() => pool.Commit());
+                        Assert.Equal("abc", exception.RequestInformation.BatchError.Code);
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
         #region Test helpers
 
         /// <summary>
