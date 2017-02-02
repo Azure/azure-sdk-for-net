@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The parameters schema of integration account map.
+    /// </summary>
     public partial class IntegrationAccountMapPropertiesParametersSchema
     {
         /// <summary>

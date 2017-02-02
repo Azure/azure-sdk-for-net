@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 envelope override settings.
+    /// </summary>
     public partial class X12EnvelopeOverride
     {
         /// <summary>

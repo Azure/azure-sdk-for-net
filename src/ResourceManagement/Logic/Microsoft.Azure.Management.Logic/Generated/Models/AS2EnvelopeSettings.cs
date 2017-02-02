@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The AS2 agreement envelope settings.
+    /// </summary>
     public partial class AS2EnvelopeSettings
     {
         /// <summary>

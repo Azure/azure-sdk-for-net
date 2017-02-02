@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account AS2 agreement content.
+    /// </summary>
     public partial class AS2AgreementContent
     {
         /// <summary>

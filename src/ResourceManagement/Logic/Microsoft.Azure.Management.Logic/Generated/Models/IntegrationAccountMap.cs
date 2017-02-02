@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account map.
+    /// </summary>
     [JsonTransformation]
     public partial class IntegrationAccountMap : IntegrationAccountResource
     {
@@ -48,6 +51,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public MapType? MapType { get; set; }
 
         /// <summary>
+        /// Gets or sets the parameters schema of integration account map.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parametersSchema")]
         public IntegrationAccountMapPropertiesParametersSchema ParametersSchema { get; set; }

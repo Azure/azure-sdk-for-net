@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow trigger filter.
+    /// </summary>
     public partial class WorkflowTriggerFilter
     {
         /// <summary>

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account content hash details.
+    /// </summary>
     public partial class IntegrationAccountContentHash
     {
         /// <summary>
@@ -35,7 +38,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         }
 
         /// <summary>
-        /// Gets or sets the conetnt hash algorithm.
+        /// Gets or sets the content hash algorithm.
         /// </summary>
         [JsonProperty(PropertyName = "algorithm")]
         public string Algorithm { get; set; }

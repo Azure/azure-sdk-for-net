@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Edifact agreement framing settings.
+    /// </summary>
     public partial class EdifactFramingSettings
     {
         /// <summary>

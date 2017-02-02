@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The reference to the key vault key.
+    /// </summary>
     public partial class KeyVaultKeyReference
     {
         /// <summary>

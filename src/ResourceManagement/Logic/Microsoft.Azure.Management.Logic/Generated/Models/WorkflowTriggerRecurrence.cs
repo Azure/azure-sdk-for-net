@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow trigger recurrence.
+    /// </summary>
     public partial class WorkflowTriggerRecurrence
     {
         /// <summary>

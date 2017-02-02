@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 message filter for odata query.
+    /// </summary>
     public partial class X12MessageFilter
     {
         /// <summary>

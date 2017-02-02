@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The X12 message identifier.
+    /// </summary>
     public partial class X12MessageIdentifier
     {
         /// <summary>

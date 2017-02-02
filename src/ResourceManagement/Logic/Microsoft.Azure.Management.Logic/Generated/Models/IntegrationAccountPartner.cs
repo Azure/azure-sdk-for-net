@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The integration account partner.
+    /// </summary>
     [JsonTransformation]
     public partial class IntegrationAccountPartner : IntegrationAccountResource
     {

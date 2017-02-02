@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The workflow version.
+    /// </summary>
     [JsonTransformation]
     public partial class WorkflowVersion : Resource
     {
