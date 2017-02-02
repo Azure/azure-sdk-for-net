@@ -26,6 +26,7 @@
     using Microsoft.Azure.Batch.Protocol;
     using Microsoft.Rest.Azure;
     using Protocol.BatchRequests;
+    using Rest;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
 
     internal class ProtocolLayer : IProtocolLayer
@@ -65,7 +66,7 @@
         /// </summary>
         /// <param name="baseURL"></param>
         /// <param name="credentials"></param>
-        internal ProtocolLayer(string baseURL, Protocol.BatchCredentials credentials)
+        internal ProtocolLayer(string baseURL, ServiceClientCredentials credentials)
         {
             this._client = new Protocol.BatchServiceClient(new Uri(baseURL), credentials);
             this._client.HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(InternalConstants.UserAgentProductName, Assembly.GetExecutingAssembly().GetName().Version.ToString()));

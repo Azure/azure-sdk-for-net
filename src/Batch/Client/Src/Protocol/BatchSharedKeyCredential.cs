@@ -29,11 +29,12 @@ namespace Microsoft.Azure.Batch.Protocol
     using System.Threading.Tasks;
     using System.Web;
     using Microsoft.Azure.Batch.Utils;
+    using Rest;
 
     /// <summary>
     /// Shared key credentials for an Azure Batch account.
     /// </summary>
-    public class BatchSharedKeyCredential : BatchCredentials
+    public class BatchSharedKeyCredential : ServiceClientCredentials
     {
         private const string OCPDateHeaderString = "ocp-date";
 
@@ -59,12 +60,12 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Signs a HTTP request with the current <see cref="BatchCredentials"/>.
+        /// Signs a HTTP request with the current credentials.
         /// </summary>
-        /// <param name="httpRequest">The HTTP request to be signed.</param>
+        /// <param name="httpRequest">The HTTP request</param>
         /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> for the request.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous signing operation.</returns>
-        public override Task SignRequestAsync(HttpRequestMessage httpRequest, System.Threading.CancellationToken cancellationToken)
+        public override Task ProcessHttpRequestAsync(HttpRequestMessage httpRequest, CancellationToken cancellationToken)
         {
             if (httpRequest == null)
             {
@@ -172,17 +173,6 @@ namespace Microsoft.Azure.Batch.Protocol
             httpRequest.Headers.Authorization = new AuthenticationHeaderValue("SharedKey", this.AccountName + ":" + signedSignature);
 
             return Async.CompletedTask;
-        }
-
-        /// <summary>
-        /// Signs a HTTP request with the current <see cref="BatchCredentials"/>.
-        /// </summary>
-        /// <param name="request">The HTTP request</param>
-        /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> for the request.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous signing operation.</returns>
-        public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            return this.SignRequestAsync(request, cancellationToken);
         }
     }
 }

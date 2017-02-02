@@ -22,6 +22,7 @@ namespace Azure.Batch.Unit.Tests
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
     using Xunit;
 
     public class BatchClientUnitTest
@@ -44,7 +45,7 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task BatchAuthTokenIsSentToTheService_ClientCreatedWithFuncToken()
         {
-            BatchTokenCredential tokenCredentials = new BatchTokenCredential(() => Task.FromResult("foo"));
+            var tokenCredentials = new TokenCredentials(new BatchTokenProvider(() => Task.FromResult("foo")));
 
             HttpRequestMessage capturedRequest = null;
 
@@ -71,11 +72,11 @@ namespace Azure.Batch.Unit.Tests
         public async Task AuthTokenIsBeingSentOnEveryCallToTheService()
         {
             int count = 0;
-            BatchTokenCredential tokenCredentials = new BatchTokenCredential(() =>
+            var tokenCredentials = new TokenCredentials(new BatchTokenProvider(() =>
             {
                 count++;
                 return Task.FromResult("foo");
-            });
+            }));
 
             using (var restClient = new BatchServiceClient(tokenCredentials, new FakeHttpClientHandler(req => new HttpResponseMessage(HttpStatusCode.Accepted))))
             {
@@ -92,7 +93,7 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task BatchAuthTokenIsSentToTheService_ClientCreatedWithToken()
         {
-            var tokenCredentials = new BatchTokenCredential("foo");
+            var tokenCredentials = new TokenCredentials("foo");
             HttpRequestMessage capturedRequest = null;
 
             var fakeHttpClientHandler = new FakeHttpClientHandler(req => 
