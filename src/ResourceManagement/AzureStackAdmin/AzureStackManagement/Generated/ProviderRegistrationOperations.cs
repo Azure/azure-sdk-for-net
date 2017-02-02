@@ -194,10 +194,7 @@ namespace Microsoft.AzureStack.Management
                         propertiesValue["providerLocation"] = parameters.ProviderRegistration.Properties.ProviderLocation;
                     }
                     
-                    if (parameters.ProviderRegistration.Properties.RoutingResourceManagerType != null)
-                    {
-                        propertiesValue["routingResourceManagerType"] = parameters.ProviderRegistration.Properties.RoutingResourceManagerType.Value.ToString();
-                    }
+                    propertiesValue["routingResourceManagerType"] = parameters.ProviderRegistration.Properties.RoutingResourceManagerType.ToString();
                     
                     if (parameters.ProviderRegistration.Properties.Enabled != null)
                     {

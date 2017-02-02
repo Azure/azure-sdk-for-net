@@ -156,12 +156,12 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._resourceTypes = value; }
         }
         
-        private Microsoft.AzureStack.Management.Models.ResourceManagerType? _routingResourceManagerType;
+        private ResourceManagerType _routingResourceManagerType;
         
         /// <summary>
         /// Optional. Gets or sets the resource manager type.
         /// </summary>
-        public Microsoft.AzureStack.Management.Models.ResourceManagerType? RoutingResourceManagerType
+        public ResourceManagerType RoutingResourceManagerType
         {
             get { return this._routingResourceManagerType; }
             set { this._routingResourceManagerType = value; }
