@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using Newtonsoft.Json.Linq;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 
@@ -57,6 +58,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(UserName)
                         .WithRootPassword(Password)
+                        .WithUnmanagedDisks()
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .DefineNewExtension("CustomScriptForLinux")
                             .WithPublisher("Microsoft.OSTCExtensions")
@@ -71,11 +73,8 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("Created a Linux VM: " + linuxVM.Id);
                 Utilities.PrintVirtualMachine(linuxVM);
 
-                var fqdnString = linuxVM.GetPrimaryPublicIpAddress().Fqdn;
-                Utilities.Log("SSH into the VM [" + fqdnString + "]");
-                Utilities.Log("and run 'sudo waagent -deprovision+user' to prepare it for capturing");
-                Utilities.Log("after that press 'Enter' to continue.");
-                Utilities.ReadLine();
+                // De-provision the virtual machine
+                DeprovisionAgentInLinuxVM(linuxVM.GetPrimaryPublicIpAddress().Fqdn, 22, UserName, Password);
 
                 //=============================================================
                 // Deallocate the virtual machine
@@ -168,6 +167,22 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 {
                     Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
+            }
+        }
+
+        protected static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
+        {
+            using (var sshClient = new SshClient(host, port, userName, password))
+            {
+                Utilities.Log("Trying to de-provision: " + host);
+                sshClient.Connect();
+                var commandToExecute = "sudo waagent -deprovision+user --force";
+                using (var command = sshClient.CreateCommand(commandToExecute))
+                {
+                    var commandOutput = command.Execute();
+                    Utilities.Log(commandOutput);
+                }
+                sshClient.Disconnect();
             }
         }
 

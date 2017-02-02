@@ -37,7 +37,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
 
             var rgName = Utilities.CreateRandomName("rgCOMV");
             var publicIpDnsLabel = Utilities.CreateRandomName("pip");
-            var apacheInstallScript = "https://raw.Githubusercontent.Com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.Sh";
+            var apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.sh";
             var apacheInstallCommand = "bash install_apache.Sh";
 
             var apacheInstallScriptUris = new List<string>();
@@ -62,6 +62,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                         .WithRootPassword(password)
                         .WithNewDataDisk(100)
                         .WithNewDataDisk(100, 1, CachingTypes.ReadWrite)
+                        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .DefineNewExtension("CustomScriptForLinux")
                             .WithPublisher("Microsoft.OSTCExtensions")
                             .WithType("CustomScriptForLinux")
@@ -70,7 +71,6 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                             .WithPublicSetting("fileUris", apacheInstallScriptUris)
                             .WithPublicSetting("commandToExecute", apacheInstallCommand)
                             .Attach()
-                        .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
                 Utilities.Log("Created a Linux VM with managed OS and data disks: " + linuxVM.Id);
@@ -97,7 +97,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                 //=============================================================
                 // Create Snapshot from the OS managed disk
 
-                Utilities.Log(String.Format("Creating managed snapshot from the managed disk (holding specialized OS): %s ", osDisk.Id));
+                Utilities.Log($"Creating managed snapshot from the managed disk (holding specialized OS): {osDisk.Id}");
 
                 var osSnapshot = azure.Snapshots.Define(managedOSSnapshotName)
                         .WithRegion(region)
@@ -115,7 +115,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                 var i = 0;
                 foreach (var dataDisk in dataDisks)
                 {
-                    Utilities.Log(String.Format("Creating managed snapshot from the managed disk (holding data): %s ", dataDisk.Id));
+                    Utilities.Log($"Creating managed snapshot from the managed disk (holding data): {dataDisk.Id} ");
 
                     var dataSnapshot = azure.Snapshots.Define(managedDataDiskSnapshotPrefix + "-" + i)
                             .WithRegion(region)
@@ -152,7 +152,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromSnapshot
                 i = 0;
                 foreach (var dataSnapshot in dataSnapshots)
                 {
-                    Utilities.Log(String.Format("Creating managed disk from the Data snapshot: %s ", dataSnapshot.Id));
+                    Utilities.Log($"Creating managed disk from the Data snapshot: {dataSnapshot.Id} ");
 
                     var dataDisk = azure.Disks.Define(managedNewDataDiskNamePrefix + "-" + i)
                             .WithRegion(region)

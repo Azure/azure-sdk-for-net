@@ -1157,7 +1157,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
             if (dataDisk == null)
             {
-                throw new InvalidOperationException(String.Format("A data disk with lun '%d' not found", lun));
+                throw new InvalidOperationException($"A data disk with lun '{lun}' not found");
             }
             dataDisk.DiskSizeGB = newSizeInGB;
             return this;
@@ -1170,7 +1170,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
             if (dataDisk == null)
             {
-                throw new InvalidOperationException(String.Format("A data disk with lun '%d' not found", lun));
+                throw new InvalidOperationException($"A data disk with lun '{lun}' not found");
             }
             dataDisk.DiskSizeGB = newSizeInGB;
             dataDisk.Caching = cachingType;
@@ -1184,7 +1184,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             VirtualMachineScaleSetDataDisk dataDisk = GetDataDiskInner(lun);
             if (dataDisk == null)
             {
-                throw new InvalidOperationException(String.Format("A data disk with lun '%d' not found", lun));
+                throw new InvalidOperationException($"A data disk with lun '{lun}' not found");
             }
             dataDisk.DiskSizeGB = newSizeInGB;
             dataDisk.Caching = cachingType;

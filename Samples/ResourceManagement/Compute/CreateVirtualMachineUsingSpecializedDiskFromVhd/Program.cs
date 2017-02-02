@@ -34,7 +34,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromVhd
             var rgName = Utilities.CreateRandomName("rgCOMV");
             var publicIpDnsLabel = Utilities.CreateRandomName("pip");
 
-            var apacheInstallScript = "https://raw.Githubusercontent.Com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.Sh";
+            var apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.sh";
             var apacheInstallCommand = "bash install_apache.Sh";
             var apacheInstallScriptUris = new List<string>();
             apacheInstallScriptUris.Add(apacheInstallScript);
@@ -97,7 +97,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromVhd
                 //=============================================================
                 // Create Managed disk from the specialized OS VHD
 
-                Utilities.Log(String.Format("Creating managed disk from the specialized OS VHD: %s ", specializedOSVhdUri));
+                Utilities.Log($"Creating managed disk from the specialized OS VHD: {specializedOSVhdUri} ");
 
                 var osDisk = azure.Disks.Define(managedOSDiskName)
                         .WithRegion(region)
@@ -116,7 +116,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromVhd
                 var i = 0;
                 foreach (String dataVhdUri  in  dataVhdUris)
                 {
-                    Utilities.Log(String.Format("Creating managed disk from the Data VHD: %s ", dataVhdUri));
+                    Utilities.Log($"Creating managed disk from the Data VHD: {dataVhdUri}");
 
                     var dataDisk = azure.Disks.Define(managedDataDiskNamePrefix + "-" + i)
                             .WithRegion(region)
@@ -178,7 +178,7 @@ namespace CreateVirtualMachineUsingSpecializedDiskFromVhd
                 {
                     var dataDisk = azure.Disks.GetById(diskId);
                     var dataDiskSasUri = dataDisk.GrantAccess(24 * 60);
-                    Utilities.Log(String.Format("Data disk SAS Uri: %s", dataDiskSasUri));
+                    Utilities.Log($"Data disk SAS Uri: {dataDiskSasUri}");
                 }
             }
             finally

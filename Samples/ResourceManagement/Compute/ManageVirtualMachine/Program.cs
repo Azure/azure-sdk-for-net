@@ -50,6 +50,7 @@ namespace ManageVirtualMachine
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
                         .WithAdminUsername(UserName)
                         .WithAdminPassword(Password)
+                        .WithUnmanagedDisks()
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
                 var endTime = DateTimeOffset.Now.UtcDateTime;
@@ -69,7 +70,7 @@ namespace ManageVirtualMachine
                 // Update - Attach data disks
 
                 windowsVM.Update()
-                        .WithNewDataDisk(10)
+                        .WithNewUnmanagedDataDisk(10)
                         .DefineUnmanagedDataDisk(DataDiskName)
                             .WithNewVhd(20)
                             .WithCaching(CachingTypes.ReadWrite)
