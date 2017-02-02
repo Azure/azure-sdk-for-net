@@ -66,7 +66,7 @@ namespace CustomerInsights.Tests.Tests
                                                               {
                                                                       {
                                                                           "connectionKeyVaultUrl",
-                                                                          $"vault=off;DefaultEndpointsProtocol=https;AccountName=ucidemoblob;AccountKey=ZRq84a2OL/Er3F6zkDDh9ZcZSRQvdYngv5Dw8Sm3zHXARKcFMMS2DEvZSFqX4g7ycE1m0KJh9CR8jZAwWhhDyg=="
+                                                                          $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
                                                                       }
                                                               }
                                                   };
@@ -118,7 +118,7 @@ namespace CustomerInsights.Tests.Tests
                                                                {
                                                                        {
                                                                            "connectionKeyVaultUrl",
-                                                                           $"vault=off;DefaultEndpointsProtocol=https;AccountName=ucidemoblob;AccountKey=ZRq84a2OL/Er3F6zkDDh9ZcZSRQvdYngv5Dw8Sm3zHXARKcFMMS2DEvZSFqX4g7ycE1m0KJh9CR8jZAwWhhDyg=="
+                                                                           $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
                                                                        }
                                                                }
                                                    };
@@ -134,7 +134,7 @@ namespace CustomerInsights.Tests.Tests
                                                                {
                                                                        {
                                                                            "connectionKeyVaultUrl",
-                                                                           $"vault=off;DefaultEndpointsProtocol=https;AccountName=ucidemoblob;AccountKey=ZRq84a2OL/Er3F6zkDDh9ZcZSRQvdYngv5Dw8Sm3zHXARKcFMMS2DEvZSFqX4g7ycE1m0KJh9CR8jZAwWhhDyg=="
+                                                                           $"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX"
                                                                        }
                                                                }
                                                    };
