@@ -86,6 +86,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             return storageStagingCredentials;
         }
 
+        public static string GenerateRandomPassword()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
         #endregion
 
         #region Custom assert methods

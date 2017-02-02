@@ -452,6 +452,8 @@ namespace Azure.Batch.Unit.Tests
             List<Type> typesWithIReadOnlyBase = GetTypesWhichImplementInterface(iReadOnlyType.Assembly, iReadOnlyType, requirePublicConstructor: false).ToList();
             foreach (Type type in typesWithIReadOnlyBase)
             {
+                this.testOutputHelper.WriteLine("Reading/Setting properties of type: {0}", type.ToString());
+
                 //Create an instance of that type
                 IReadOnly objectUnderTest = this.customizedObjectFactory.CreateInstance<IReadOnly>(type);
 
@@ -460,8 +462,6 @@ namespace Azure.Batch.Unit.Tests
 
                 //Get the properties for the object under test
                 IEnumerable<PropertyInfo> properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-                this.testOutputHelper.WriteLine("Reading/Setting properties of type: {0}", type.ToString());
 
                 foreach (PropertyInfo property in properties.Where(p => p.Name != "CustomBehaviors"))
                 {
