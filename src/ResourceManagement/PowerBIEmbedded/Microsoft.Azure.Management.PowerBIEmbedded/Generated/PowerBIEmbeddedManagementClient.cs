@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         {
             this.WorkspaceCollections = new WorkspaceCollectionsOperations(this);
             this.Workspaces = new WorkspacesOperations(this);
-            this.BaseUri = new Uri("http://management.azure.com");
+            this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-01-29";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
