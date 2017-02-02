@@ -5,17 +5,22 @@ using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 
-namespace ManageVirtualMachine
+namespace ManageVirtualMachineWithUnmanagedDisks
 {
     public class Program
     {
+        private const string UserName = "tirekicker";
+        private const string Password = "12NewPA$$w0rd!";
+        private const string DataDiskName = "disk2";
+
         /**
          * Azure Compute sample for managing virtual machines -
-         *  - Create a virtual machine with managed OS Disk
+         *  - Create a virtual machine
          *  - Start a virtual machine
          *  - Stop a virtual machine
          *  - Restart a virtual machine
@@ -29,87 +34,57 @@ namespace ManageVirtualMachine
          */
         public static void RunSample(IAzure azure)
         {
-            var region = Region.USWestCentral;
-            var windowsVmName = Utilities.CreateRandomName("wVM");
-            var linuxVmName = Utilities.CreateRandomName("lVM");
-            var rgName = Utilities.CreateRandomName("rgCOMV");
-            var userName = "tirekicker";
-            var password = "12NewPA$$w0rd!";
-
+            string rgName = SdkContext.RandomResourceName("rgCOMV", 24);
+            string windowsVMName = SdkContext.RandomResourceName("wVM", 24);
+            string linuxVMName = SdkContext.RandomResourceName("lVM", 24);
             try
             {
-                //=============================================================
-                // Create a Windows virtual machine
+                var startTime = DateTimeOffset.Now.UtcDateTime;
 
-                // Prepare a creatable data disk for VM
-                //
-                var dataDiskCreatable = azure.Disks.Define(Utilities.CreateRandomName("dsk-"))
-                        .WithRegion(region)
-                        .WithExistingResourceGroup(rgName)
-                        .WithData()
-                        .WithSizeInGB(100);
-
-                // Create a data disk to attach to VM
-                //
-                var dataDisk = azure.Disks.Define(Utilities.CreateRandomName("dsk-"))
-                        .WithRegion(region)
-                        .WithNewResourceGroup(rgName)
-                        .WithData()
-                        .WithSizeInGB(50)
-                        .Create();
-
-                Utilities.Log("Creating a Windows VM");
-
-                var t1 = new DateTime();
-
-                var windowsVM = azure.VirtualMachines.Define(windowsVmName)
-                        .WithRegion(region)
+                var windowsVM = azure.VirtualMachines.Define(windowsVMName)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
                         .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
-                        .WithAdminUsername(userName)
-                        .WithAdminPassword(password)
-                        .WithNewDataDisk(10)
-                        .WithNewDataDisk(dataDiskCreatable)
-                        .WithExistingDataDisk(dataDisk)
+                        .WithAdminUsername(UserName)
+                        .WithAdminPassword(Password)
+                        .WithUnmanagedDisks()
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
+                var endTime = DateTimeOffset.Now.UtcDateTime;
 
-                var t2 = new DateTime();
-                Utilities.Log($"Created VM: (took {(t2 - t1).TotalSeconds} seconds) " + windowsVM.Id);
-                // Print virtual machine details
+                Utilities.Log($"Created VM: took {(endTime - startTime).TotalSeconds} seconds");
+
                 Utilities.PrintVirtualMachine(windowsVM);
 
-                //=============================================================
-                // Update - Tag the virtual machine
-
                 windowsVM.Update()
-                        .WithTag("who-rocks", "java")
+                        .WithTag("who-rocks", "open source")
                         .WithTag("where", "on azure")
                         .Apply();
 
                 Utilities.Log("Tagged VM: " + windowsVM.Id);
 
                 //=============================================================
-                // Update - Add data disk
+                // Update - Attach data disks
 
                 windowsVM.Update()
-                        .WithNewDataDisk(10)
+                        .WithNewUnmanagedDataDisk(10)
+                        .DefineUnmanagedDataDisk(DataDiskName)
+                            .WithNewVhd(20)
+                            .WithCaching(CachingTypes.ReadWrite)
+                            .Attach()
                         .Apply();
 
-                Utilities.Log("Added a data disk to VM" + windowsVM.Id);
+                Utilities.Log("Attached a new data disk" + DataDiskName + " to VM" + windowsVM.Id);
                 Utilities.PrintVirtualMachine(windowsVM);
 
-                //=============================================================
-                // Update - detach data disk
-
                 windowsVM.Update()
-                        .WithoutDataDisk(0)
-                        .Apply();
+                    .WithoutUnmanagedDataDisk(DataDiskName)
+                    .Apply();
 
-                Utilities.Log("Detached data disk at lun 0 from VM " + windowsVM.Id);
+                Utilities.Log("Detached data disk " + DataDiskName + " from VM " + windowsVM.Id);
 
                 //=============================================================
                 // Update - Resize (expand) the data disk
@@ -121,19 +96,33 @@ namespace ManageVirtualMachine
 
                 Utilities.Log("De-allocated VM: " + windowsVM.Id);
 
-                //=============================================================
-                // Update - Expand the OS and data disks
-
-                Utilities.Log("Resize OS and data disks");
+                var dataDisk = windowsVM.UnmanagedDataDisks[0];
 
                 windowsVM.Update()
-                        .WithOSDiskSizeInGB(200)
-                        .WithDataDiskUpdated(1, 200)
-                        .WithDataDiskUpdated(2, 200)
+                            .UpdateUnmanagedDataDisk(dataDisk.Name)
+                            .WithSizeInGB(30)
+                            .Parent()
                         .Apply();
 
-                Utilities.Log("Expanded VM " + windowsVM.Id + "'s OS and data disks");
+                //=============================================================
+                // Update - Expand the OS drive size by 10 GB
 
+                int osDiskSizeInGb = windowsVM.OsDiskSize;
+                if (osDiskSizeInGb == 0)
+                {
+                    // Server is not returning the OS Disk size, possible bug in server
+                    Utilities.Log("Server is not returning the OS disk size, possible bug in the server?");
+                    Utilities.Log("Assuming that the OS disk size is 256 GB");
+                    osDiskSizeInGb = 256;
+                }
+
+                windowsVM.Update()
+                        .WithOSDiskSizeInGB(osDiskSizeInGb + 10)
+                        .Apply();
+
+                Utilities.Log("Expanded VM " + windowsVM.Id + "'s OS disk to " + (osDiskSizeInGb + 10));
+
+                //=============================================================
                 // Start the virtual machine
 
                 Utilities.Log("Starting VM " + windowsVM.Id);
@@ -168,16 +157,16 @@ namespace ManageVirtualMachine
 
                 Utilities.Log("Creating a Linux VM in the network");
 
-                var linuxVM = azure.VirtualMachines.Define(linuxVmName)
-                        .WithRegion(region)
+                var linuxVM = azure.VirtualMachines.Define(linuxVMName)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithExistingPrimaryNetwork(network)
                         .WithSubnet("subnet1") // Referencing the default subnet name when no name specified at creation
                         .WithPrimaryPrivateIpAddressDynamic()
                         .WithoutPrimaryPublicIpAddress()
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
-                        .WithRootUsername(userName)
-                        .WithRootPassword(password)
+                        .WithRootUsername(UserName)
+                        .WithRootPassword(Password)
                         .WithSize(VirtualMachineSizeTypes.StandardD3V2)
                         .Create();
 
@@ -212,13 +201,9 @@ namespace ManageVirtualMachine
                     azure.ResourceGroups.DeleteByName(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
-                catch (NullReferenceException)
+                catch (Exception ex)
                 {
-                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
-                }
-                catch (Exception g)
-                {
-                    Utilities.Log(g);
+                    Utilities.Log(ex);
                 }
             }
         }
@@ -229,7 +214,7 @@ namespace ManageVirtualMachine
             {
                 //=============================================================
                 // Authenticate
-                var credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()

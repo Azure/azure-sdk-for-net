@@ -192,7 +192,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         IAppliable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply>,
         IWithManagedDataDisk,
-        IWithUnmanagedDataDisk,
         IWithSku,
         IWithCapacity,
         IWithExtension,
@@ -325,47 +324,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         /// <param name="lun">The disk lun.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutDataDisk(int lun);
-    }
-
-    /// <summary>
-    /// The stage of the virtual machine scale set definition allowing to specify unmanaged data disk.
-    /// </summary>
-    public interface IWithUnmanagedDataDisk 
-    {
-        /// <summary>
-        /// Begins the description of an update of an existing unmanaged data disk of this virtual machine.
-        /// </summary>
-        /// <param name="name">The name of the disk.</param>
-        /// <return>The stage representing updating configuration for  data disk.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update.IUpdate UpdateUnmanagedDataDisk(string name);
-
-        /// <summary>
-        /// Detaches a unmanaged data disk with the given name from the virtual machine scale set.
-        /// </summary>
-        /// <param name="name">The name of the data disk to remove.</param>
-        /// <return>The next stage of virtual machine scale set update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutUnmanagedDataDisk(string name);
-
-        /// <summary>
-        /// Detaches a unmanaged data disk with the given logical unit number from the virtual machine scale set.
-        /// </summary>
-        /// <param name="lun">The logical unit number of the data disk to remove.</param>
-        /// <return>The next stage of virtual machine scale set update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutUnmanagedDataDisk(int lun);
-
-        /// <summary>
-        /// Specifies that a new blank unmanaged data disk needs to be attached to virtual machine scale set.
-        /// </summary>
-        /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The next stage of virtual machine scale set update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithNewUnmanagedDataDisk(int sizeInGB);
-
-        /// <summary>
-        /// Begins definition of a unmanaged data disk to be attached to the virtual machine scale set.
-        /// </summary>
-        /// <param name="name">The name for the data disk.</param>
-        /// <return>The next stage of virtual machine scale set update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply> DefineUnmanagedDataDisk(string name);
     }
 
     /// <summary>

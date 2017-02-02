@@ -1,59 +1,54 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Network.Fluent.Models;
+using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
 
-namespace ManageVirtualMachineScaleSet
+namespace ManageVirtualMachineScaleSetWithUnmanagedDisks
 {
     public class Program
     {
+        private readonly static string httpProbe = "httpProbe";
+        private readonly static string httpsProbe = "httpsProbe";
+        private readonly static string httpLoadBalancingRule = "httpRule";
+        private readonly static string httpsLoadBalancingRule = "httpsRule";
+        private readonly static string natPool50XXto22 = "natPool50XXto22";
+        private readonly static string natPool60XXto23 = "natPool60XXto23";
+        private readonly static string userName = "tirekicker";
+        private readonly static string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
+        private readonly static string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/Samples/ResourceManagement/Compute/ManageVirtualMachineScaleSet/Resources/install_apache.sh";
+        private readonly static string installCommand = "bash install_apache.sh Abc.123x(";
+
         /**
-         * Azure Compute sample for managing virtual machine scale sets with un-managed disks -
+         * Azure Compute sample for managing virtual machine scale sets -
          *  - Create a virtual machine scale set behind an Internet facing load balancer
-         *  - Install Apache Web serversinvirtual machinesinthe virtual machine scale set
-         *  - List the network interfaces associated with the virtual machine scale set
-         *  - List scale set virtual machine instances and SSH collection string
+         *  - Install Apache Web servers in virtual machines in the virtual machine scale set
          *  - Stop a virtual machine scale set
          *  - Start a virtual machine scale set
          *  - Update a virtual machine scale set
          *    - Double the no. of virtual machines
          *  - Restart a virtual machine scale set
          */
-
         public static void RunSample(IAzure azure)
         {
-            var region = Region.USWestCentral;
-            var rgName = SdkContext.RandomResourceName("rgCOVS", 15);
-            var vnetName = SdkContext.RandomResourceName("vnet", 24);
-            var loadBalancerName1 = SdkContext.RandomResourceName("intlb" + "-", 18);
-            var publicIpName = "pip-" + loadBalancerName1;
-            var frontendName = loadBalancerName1 + "-FE1";
-            var backendPoolName1 = loadBalancerName1 + "-BAP1";
-            var backendPoolName2 = loadBalancerName1 + "-BAP2";
+            string vmssName = SdkContext.RandomResourceName("vmss", 24);
+            string storageAccountName1 = SdkContext.RandomResourceName("stg1", 24);
+            string storageAccountName2 = SdkContext.RandomResourceName("stg2", 24);
+            string storageAccountName3 = SdkContext.RandomResourceName("stg3", 24);
+            string rgName = SdkContext.RandomResourceName("rgCOVS", 15);
+            string vnetName = SdkContext.RandomResourceName("vnet", 24);
+            string loadBalancerName1 = SdkContext.RandomResourceName("intlb" + "-", 18);
+            string publicIpName = "pip-" + loadBalancerName1;
+            string frontendName = loadBalancerName1 + "-FE1";
+            string backendPoolName1 = loadBalancerName1 + "-BAP1";
+            string backendPoolName2 = loadBalancerName1 + "-BAP2";
 
-            var httpProbe = "httpProbe";
-            var httpsProbe = "httpsProbe";
-            var httpLoadBalancingRule = "httpRule";
-            var httpsLoadBalancingRule = "httpsRule";
-            var natPool50XXto22 = "natPool50XXto22";
-            var natPool60XXto23 = "natPool60XXto23";
-            var vmssName = SdkContext.RandomResourceName("vmss", 24);
-
-            var userName = "tirekicker";
-            var sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-
-            var apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.sh";
-            var installCommand = "bash install_apache.sh";
-            var fileUris = new List<string>();
-            fileUris.Add(apacheInstallScript);
             try
             {
                 //=============================================================
@@ -61,12 +56,12 @@ namespace ManageVirtualMachineScaleSet
                 Utilities.Log("Creating virtual network with a frontend subnet ...");
 
                 var network = azure.Networks.Define(vnetName)
-                        .WithRegion(region)
+                        .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithAddressSpace("172.16.0.0/16")
                         .DefineSubnet("Front-end")
-                        .WithAddressPrefix("172.16.1.0/24")
-                        .Attach()
+                            .WithAddressPrefix("172.16.1.0/24")
+                            .Attach()
                         .Create();
 
                 Utilities.Log("Created a virtual network");
@@ -78,13 +73,13 @@ namespace ManageVirtualMachineScaleSet
                 Utilities.Log("Creating a public IP address...");
 
                 var publicIpAddress = azure.PublicIpAddresses.Define(publicIpName)
-                        .WithRegion(region)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithLeafDomainLabel(publicIpName)
                         .Create();
 
                 Utilities.Log("Created a public IP address");
-                // Print the virtual network details
+                // Print the IPAddress details
                 Utilities.PrintIpAddress(publicIpAddress);
 
                 //=============================================================
@@ -93,11 +88,11 @@ namespace ManageVirtualMachineScaleSet
                 // Two backend address pools which contain network interfaces for the virtual
                 //  machines to receive HTTP and HTTPS network traffic from the load balancer
                 // Two load balancing rules for HTTP and HTTPS to map public ports on the load
-                //  balancer to portsinthe backend address pool
+                //  balancer to ports in the backend address pool
                 // Two probes which contain HTTP and HTTPS health probes used to check availability
-                //  of virtual machinesinthe backend address pool
+                //  of virtual machines in the backend address pool
                 // Three inbound NAT rules which contain rules that map a public port on the load
-                //  balancer to a port for a specific virtual machineinthe backend address pool
+                //  balancer to a port for a specific virtual machine in the backend address pool
                 //  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23
 
                 Utilities.Log("Creating a Internet facing load balancer with ...");
@@ -105,15 +100,15 @@ namespace ManageVirtualMachineScaleSet
                 Utilities.Log("- Two backend address pools which contain network interfaces for the virtual\n"
                         + "  machines to receive HTTP and HTTPS network traffic from the load balancer");
                 Utilities.Log("- Two load balancing rules for HTTP and HTTPS to map public ports on the load\n"
-                        + "  balancer to portsinthe backend address pool");
+                        + "  balancer to ports in the backend address pool");
                 Utilities.Log("- Two probes which contain HTTP and HTTPS health probes used to check availability\n"
-                        + "  of virtual machinesinthe backend address pool");
+                        + "  of virtual machines in the backend address pool");
                 Utilities.Log("- Two inbound NAT rules which contain rules that map a public port on the load\n"
-                        + "  balancer to a port for a specific virtual machineinthe backend address pool\n"
+                        + "  balancer to a port for a specific virtual machine in the backend address pool\n"
                         + "  - this provides direct VM connectivity for SSH to port 22 and TELNET to port 23");
 
                 var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
-                        .WithRegion(region)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .DefinePublicFrontend(frontendName)
                             .WithExistingPublicIpAddress(publicIpAddress)
@@ -132,7 +127,6 @@ namespace ManageVirtualMachineScaleSet
                             .WithRequestPath("/")
                             .WithPort(443)
                             .Attach()
-
                         // Add two rules that uses above backend and probe
                         .DefineLoadBalancingRule(httpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -148,7 +142,6 @@ namespace ManageVirtualMachineScaleSet
                             .WithProbe(httpsProbe)
                             .WithBackend(backendPoolName2)
                             .Attach()
-
                         // Add nat pools to enable direct VM connectivity for
                         //  SSH to port 22 and TELNET to port 23
                         .DefineInboundNatPool(natPool50XXto22)
@@ -174,12 +167,16 @@ namespace ManageVirtualMachineScaleSet
                 // And, install Apache Web servers on them
 
                 Utilities.Log("Creating virtual machine scale set with three virtual machines"
-                        + "inthe frontend subnet ...");
+                        + " in the frontend subnet ...");
 
-                var t1 = new DateTime();
+                var t1 = DateTime.UtcNow;
 
-                var virtualMachineScaleSet = azure.VirtualMachineScaleSets.Define(vmssName)
-                        .WithRegion(region)
+                var fileUris = new List<string>();
+                fileUris.Add(apacheInstallScript);
+
+                var virtualMachineScaleSet = azure.VirtualMachineScaleSets
+                        .Define(vmssName)
+                        .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
                         .WithSku(VirtualMachineScaleSetSkuTypes.StandardD3v2)
                         .WithExistingPrimaryNetworkSubnet(network, "Front-end")
@@ -190,9 +187,9 @@ namespace ManageVirtualMachineScaleSet
                         .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
                         .WithRootUsername(userName)
                         .WithSsh(sshKey)
-                        .WithNewDataDisk(100)
-                        .WithNewDataDisk(100, 1, CachingTypes.ReadWrite)
-                        .WithNewDataDisk(100, 2, CachingTypes.ReadWrite, StorageAccountTypes.StandardLRS)
+                        .WithNewStorageAccount(storageAccountName1)
+                        .WithNewStorageAccount(storageAccountName2)
+                        .WithNewStorageAccount(storageAccountName3)
                         .WithCapacity(3)
                         // Use a VM extension to install Apache Web servers
                         .DefineNewExtension("CustomScriptForLinux")
@@ -205,53 +202,13 @@ namespace ManageVirtualMachineScaleSet
                             .Attach()
                         .Create();
 
-                var t2 = new DateTime();
+                var t2 = DateTime.UtcNow;
                 Utilities.Log("Created a virtual machine scale set with "
                         + "3 Linux VMs & Apache Web servers on them: (took "
-                        + (t2 - t1).TotalSeconds + " seconds) ");
-                Utilities.Log();
+                        + ((t2 - t1).TotalSeconds) + " seconds) \r\n");
 
                 // Print virtual machine scale set details
                 // Utilities.Print(virtualMachineScaleSet);
-
-                //=============================================================
-                // List virtual machine scale set network interfaces
-
-                Utilities.Log("Listing scale set network interfaces ...");
-                var vmssNics = virtualMachineScaleSet.ListNetworkInterfaces();
-                foreach (var vmssNic in vmssNics)
-                {
-                    Utilities.Log(vmssNic.Id);
-                }
-
-                //=============================================================
-                // List virtual machine scale set instance network interfaces and SSH connection string
-
-                Utilities.Log("Listing scale set virtual machine instance network interfaces and SSH connection string...");
-                foreach (var instance in virtualMachineScaleSet.VirtualMachines.List())
-                {
-                    Utilities.Log("Scale set virtual machine instance #" + instance.InstanceId);
-                    Utilities.Log(instance.Id);
-                    var networkInterfaces = instance.ListNetworkInterfaces();
-                    // Pick the first NIC
-                    var networkInterface = networkInterfaces[0];
-                    foreach (var ipConfig in networkInterface.IpConfigurations.Values)
-                    {
-                        if (ipConfig.IsPrimary)
-                        {
-                            var natRules = ipConfig.ListAssociatedLoadBalancerInboundNatRules();
-                            foreach (var natRule in natRules)
-                            {
-                                if (natRule.BackendPort == 22)
-                                {
-                                    Utilities.Log("SSH connection string: " + userName + "@" + publicIpAddress.Fqdn + ":" + natRule.FrontendPort);
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
 
                 //=============================================================
                 // Stop the virtual machine scale set
@@ -259,23 +216,6 @@ namespace ManageVirtualMachineScaleSet
                 Utilities.Log("Stopping virtual machine scale set ...");
                 virtualMachineScaleSet.PowerOff();
                 Utilities.Log("Stopped virtual machine scale set");
-
-                //=============================================================
-                // Deallocate the virtual machine scale set
-
-                Utilities.Log("De-allocating virtual machine scale set ...");
-                virtualMachineScaleSet.Deallocate();
-                Utilities.Log("De-allocated virtual machine scale set");
-
-                //=============================================================
-                // Update the virtual machine scale set by removing and adding disk
-
-                Utilities.Log("Updating virtual machine scale set managed data disks...");
-                virtualMachineScaleSet.Update()
-                        .WithoutDataDisk(0)
-                        .WithoutDataDisk(200)
-                        .Apply();
-                Utilities.Log("Updated virtual machine scale set");
 
                 //=============================================================
                 // Start the virtual machine scale set
@@ -292,10 +232,10 @@ namespace ManageVirtualMachineScaleSet
                         + "- double the no. of virtual machines ...");
 
                 virtualMachineScaleSet.Update()
-                        .WithCapacity(6)
-                        .Apply();
+                    .WithCapacity(6)
+                    .Apply();
 
-                Utilities.Log("Doubled the no. of virtual machinesin"
+                Utilities.Log("Doubled the no. of virtual machines in "
                         + "the virtual machine scale set");
 
                 //=============================================================
@@ -315,11 +255,11 @@ namespace ManageVirtualMachineScaleSet
                 }
                 catch (NullReferenceException)
                 {
-                    Utilities.Log("Did not create any resourcesinAzure. No clean up is necessary");
+                    Utilities.Log("Did not create any resources in Azure. No clean up is necessary");
                 }
-                catch (Exception g)
+                catch (Exception ex)
                 {
-                    Utilities.Log(g);
+                    Utilities.Log(ex);
                 }
             }
         }

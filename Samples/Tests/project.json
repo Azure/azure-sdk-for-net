@@ -91,9 +91,9 @@
     "ListVirtualMachineExtensionImages": "1.0.0-*",
     "ListVirtualMachineImages": "1.0.0-*",
     "ManageAvailabilitySet": "1.0.0-*",
-    "ManageVirtualMachine": "1.0.0-*",
+    "ManageVirtualMachineWithUnmanagedDisks": "1.0.0-*",
     "ManageVirtualMachineExtension": "1.0.0-*",
-    "ManageVirtualMachineScaleSet": "1.0.0-*",
+    "ManageVirtualMachineScaleSetWithUnmanagedDisks": "1.0.0-*",
     "ManageVirtualMachinesInParallel": "1.0.0-*",
     "ManageVirtualMachinesInParallelWithNetwork": "1.0.0-*",
     "ManageDns": "1.0.0-*",
@@ -123,6 +123,9 @@
     "CreateVirtualMachineUsingSpecializedDiskFromSnapshot": "1.0.0-*",
     "CreateVirtualMachineUsingSpecializedDiskFromVhd": "1.0.0-*",
     "ManageVirtualMachineWithDisk": "1.0.0-*",
-    "MigrateVirtualMachine": "1.0.0-*"
+    "MigrateVirtualMachine": "1.0.0-*",
+    "ManageVirtualMachineScaleSet": "1.0.0-*",
+    "ManageVirtualMachine": "1.0.0-*",
+    "ManageManagedDisks": "1.0.0-*"
   }
 }

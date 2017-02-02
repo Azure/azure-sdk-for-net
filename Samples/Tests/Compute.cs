@@ -73,12 +73,12 @@ namespace Samples.Tests
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
         [Trait("Samples", "Compute")]
-        public void ManageVirtualMachineTest()
+        public void ManageVirtualMachineWithUnmanagedDisksTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachine.Program.RunSample(rollUpClient);
+                ManageVirtualMachineWithUnmanagedDisks.Program.RunSample(rollUpClient);
             }
         }
 
@@ -95,12 +95,12 @@ namespace Samples.Tests
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]
         [Trait("Samples", "Compute")]
-        public void ManageVirtualMachineScaleSetTest()
+        public void ManageVirtualMachineScaleSetWithUnmanagedDisksTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageVirtualMachineScaleSet.Program.RunSample(rollUpClient);
+                ManageVirtualMachineScaleSetWithUnmanagedDisks.Program.RunSample(rollUpClient);
             }
         }
 
@@ -173,7 +173,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact(Skip = "Server bug: disk size cannot be resized down [This sample will not be published]")]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineWithDiskTest()
         {
@@ -195,5 +195,37 @@ namespace Samples.Tests
             }
         }
 
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void ManageVirtualMachineScaleSetTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageVirtualMachineScaleSet.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void ManageVirtualMachineTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageVirtualMachine.Program.RunSample(rollUpClient);
+            }
+        }
+
+        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Trait("Samples", "Compute")]
+        public void ManageManagedDisksTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var rollUpClient = TestHelper.CreateRollupClient();
+                ManageManagedDisks.Program.RunSample(rollUpClient);
+            }
+        }
     }
 }

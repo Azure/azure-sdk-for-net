@@ -40,7 +40,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
             var publicIpDnsLabel = SdkContext.RandomResourceName("pip", 10);
 
             var apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-samples/src/main/resources/install_apache.sh";
-            var apacheInstallCommand = "bash install_apache.Sh";
+            var apacheInstallCommand = "bash install_apache.sh";
             var apacheInstallScriptUris = new List<string>();
             apacheInstallScriptUris.Add(apacheInstallScript);
 

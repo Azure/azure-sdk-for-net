@@ -13,7 +13,8 @@
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0"
-    }
+    },
+    "SSH.NET": "2016.0.0"
   },
 
   "frameworks": {
