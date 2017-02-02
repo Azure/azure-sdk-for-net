@@ -124,10 +124,9 @@
     <Compile Include="PagedEnumerableExtensions.cs" />
     <Compile Include="PagedEnumeratorBase.cs" />
     <Compile Include="Protocol\BatchConstants.cs" />
-    <Compile Include="Protocol\BatchCredentials.cs" />
     <Compile Include="Protocol\BatchRequest.cs" />
     <Compile Include="Protocol\BatchSharedKeyCredential.cs" />
-    <Compile Include="Protocol\BatchTokenCredential.cs" />
+    <Compile Include="Protocol\BatchTokenProvider.cs" />
     <Compile Include="Protocol\Core\Logger.Common.cs" />
     <Compile Include="Protocol\Core\NullType.cs" />
     <Compile Include="Protocol\Core\UriQueryBuilder.cs" />
