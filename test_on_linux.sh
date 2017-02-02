@@ -6,12 +6,14 @@ rootdir="$( cd "$base" && pwd )"
   
 dotnet restore
 
-cd $rootdir/src/ResourceManagement/Azure.Fluent/Fluent.Tests
+echo Running Samples Tests
+cd $rootdir/Samples/Tests
 dotnet restore
 dotnet build --framework netcoreapp1.0
 dotnet test
 
-cd $rootdir/Samples/Tests
+echo Running Fluent Tests
+cd $rootdir/src/ResourceManagement/Azure.Fluent/Fluent.Tests
 dotnet restore
 dotnet build --framework netcoreapp1.0
 dotnet test
