@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     /// created and optionally allow unmanaged data disks specific settings to be specified.
     /// </summary>
     public interface IWithUnmanagedCreate  :
-        IWithUnmanagedDataDisk,
         IWithCreate
     {
     }
@@ -729,26 +728,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
         /// <param name="upgradeMode">An upgrade policy mode.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate WithUpgradeMode(UpgradeMode upgradeMode);
-    }
-
-    /// <summary>
-    /// The stage of the virtual machine scale set definition allowing to specify unmanaged data disk.
-    /// </summary>
-    public interface IWithUnmanagedDataDisk 
-    {
-        /// <summary>
-        /// Specifies that a new blank unmanaged data disk needs to be attached to virtual machine scale set.
-        /// </summary>
-        /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithUnmanagedCreate WithNewUnmanagedDataDisk(int sizeInGB);
-
-        /// <summary>
-        /// Begins definition of a unmanaged data disk to be attached to the virtual machine scale set.
-        /// </summary>
-        /// <param name="name">The name for the data disk.</param>
-        /// <return>The stage representing configuration for the unmanaged data disk.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithUnmanagedCreate> DefineUnmanagedDataDisk(string name);
     }
 
     /// <summary>

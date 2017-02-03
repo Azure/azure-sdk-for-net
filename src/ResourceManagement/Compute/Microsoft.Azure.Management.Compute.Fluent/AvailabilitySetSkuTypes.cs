@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// </summary>
     public class AvailabilitySetSkuTypes : ExpandableStringEnum<AvailabilitySetSkuTypes>
     {
-        public static readonly AvailabilitySetSkuTypes Aligned = Parse("Aligned");
-        public static readonly AvailabilitySetSkuTypes Classic = Parse("Classic");
+        public static readonly AvailabilitySetSkuTypes Managed = Parse("Aligned");
+        public static readonly AvailabilitySetSkuTypes Unmanaged = Parse("Classic");
     }
 }

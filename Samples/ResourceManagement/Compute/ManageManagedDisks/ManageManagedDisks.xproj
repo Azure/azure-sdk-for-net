@@ -7,8 +7,8 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>1fd5e627-b182-47ab-a265-5e3ea19bad63</ProjectGuid>
-    <RootNamespace>ManageVirtualMachine</RootNamespace>
+    <ProjectGuid>e2a95117-52c6-4b02-8c00-24e0b94f0567</ProjectGuid>
+    <RootNamespace>ManageManagedDisks</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
