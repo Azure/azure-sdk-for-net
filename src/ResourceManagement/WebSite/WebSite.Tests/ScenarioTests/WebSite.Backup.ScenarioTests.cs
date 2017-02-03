@@ -28,7 +28,7 @@ namespace WebSites.Tests.ScenarioTests
 {
     public class BackupRestoreScenarioTests : TestBase
     {
-        [Fact(Skip = "Backup/Restore feature is not allowed in current site mode.")]
+        [Fact]
         public void ListBackupsAndScheduledBackupRoundTrip()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -54,8 +54,8 @@ namespace WebSites.Tests.ScenarioTests
                     Location = locationName,
                     Sku = new SkuDescription
                     {
-                        Name = "F1",
-                        Tier = "Free",
+                        Name = "S1",
+                        Tier = "Standard",
                         Capacity = 1
                     }
                 });
@@ -78,6 +78,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 var sr = new BackupRequest()
                 {
+                    Location = locationName,
                     Enabled = false,
                     BackupSchedule = new BackupSchedule()
                     {
@@ -99,7 +100,7 @@ namespace WebSites.Tests.ScenarioTests
                 Assert.Equal(sr.BackupSchedule.FrequencyInterval, backupConfiguration.BackupSchedule.FrequencyInterval);
                 Assert.Equal(sr.BackupSchedule.FrequencyUnit, backupConfiguration.BackupSchedule.FrequencyUnit);
                 Assert.Equal(sr.BackupSchedule.KeepAtLeastOneBackup, backupConfiguration.BackupSchedule.KeepAtLeastOneBackup);
-                Assert.Equal(sr.Name, backupConfiguration.BackupRequestName);
+                Assert.Equal(sr.BackupRequestName, backupConfiguration.BackupRequestName);
 
                 webSitesClient.WebApps.Delete(resourceGroupName, siteName, deleteMetrics: true);
 

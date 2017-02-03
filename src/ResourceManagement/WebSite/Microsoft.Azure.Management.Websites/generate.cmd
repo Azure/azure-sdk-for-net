@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.16.0-Nightly20160406
+set autoRestVersion=1.0.0-Nightly20170124
 if  "%1" == "" (
     set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-web/compositeWebAppClient.json" 
 ) else (
