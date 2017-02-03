@@ -234,17 +234,24 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
 
         protected static void DeprovisionAgentInLinuxVM(string host, int port, string userName, string password)
         {
-            using (var sshClient = new SshClient(host, port, userName, password))
+            try
             {
-                Utilities.Log("Trying to de-provision: " + host);
-                sshClient.Connect();
-                var commandToExecute = "sudo waagent -deprovision+user --force";
-                using (var command = sshClient.CreateCommand(commandToExecute))
+                using (var sshClient = new SshClient(host, port, userName, password))
                 {
-                    var commandOutput = command.Execute();
-                    Utilities.Log(commandOutput);
+                    Utilities.Log("Trying to de-provision: " + host);
+                    sshClient.Connect();
+                    var commandToExecute = "sudo waagent -deprovision+user --force";
+                    using (var command = sshClient.CreateCommand(commandToExecute))
+                    {
+                        var commandOutput = command.Execute();
+                        Utilities.Log(commandOutput);
+                    }
+                    sshClient.Disconnect();
                 }
-                sshClient.Disconnect();
+            }
+            catch (Exception ex)
+            {
+                Utilities.Log(ex);
             }
         }
 

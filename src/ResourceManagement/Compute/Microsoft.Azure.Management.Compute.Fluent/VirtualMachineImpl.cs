@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:BF8CE5C594210A476EF389DC52B15805:2795B67DFA718D9C0FFC69E152857591
-        public void MigrateToManaged()
+        public void ConvertToManaged()
         {
             this.client.ConvertToManagedDisks(this.ResourceGroupName, this.Name);
             this.Refresh();
