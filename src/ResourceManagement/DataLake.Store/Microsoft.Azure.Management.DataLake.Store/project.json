@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "2.0.0-preview",
   "description": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -25,11 +25,11 @@
   "frameworks": {
     "net45": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)" 
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)"
       }
     },
     "netstandard1.5": {
-      "imports": ["dnxcore50"],
+      "imports": [ "dnxcore50" ],
       "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
@@ -37,15 +37,13 @@
         "System.Net.Http": "4.1.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
         "System.Threading.Tasks": "4.0.11",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)"
-      }
-    },
-    "netstandard1.1": {
-      "imports": [ "dnxcore50" ],
-      "buildOptions": { "define": [ "PORTABLE" ] },
-      "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)"
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Threading.Thread": "4.0.0",
+        "System.IO.FileSystem": "4.0.1",
+        "System.IO": "4.1.0",
+        "System.Text.Encoding": "4.0.11",
+        "System.Runtime.Extensions": "4.1.0"
       }
     }
   }
