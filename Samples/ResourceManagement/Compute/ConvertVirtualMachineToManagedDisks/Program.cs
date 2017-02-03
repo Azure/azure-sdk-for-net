@@ -9,7 +9,7 @@ using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Azure.Management.Samples.Common;
 using System;
 
-namespace MigrateVirtualMachine
+namespace ConvertVirtualMachineToManagedDisks
 {
     public class Program
     {
@@ -70,7 +70,7 @@ namespace MigrateVirtualMachine
                 // Migrate the virtual machine
                 Utilities.Log("Migrate VM: " + linuxVM.Id);
 
-                linuxVM.MigrateToManaged();
+                linuxVM.ConvertToManaged();
 
                 Utilities.Log("Migrated VM: " + linuxVM.Id);
 

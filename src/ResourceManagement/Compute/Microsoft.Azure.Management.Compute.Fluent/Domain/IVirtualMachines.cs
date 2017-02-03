@@ -55,11 +55,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Start(string groupName, string name);
 
         /// <summary>
-        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
         /// </summary>
         /// <param name="groupName">The resource group name.</param>
         /// <param name="name">The virtual machine name.</param>
-        void MigrateToManaged(string groupName, string name);
+        void ConvertToManaged(string groupName, string name);
 
         /// <summary>
         /// Generalize the virtual machine.
