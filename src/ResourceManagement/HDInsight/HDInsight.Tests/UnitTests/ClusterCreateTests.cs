@@ -84,11 +84,6 @@ namespace HDInsight.Tests.UnitTests
 
             ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
             var extendedParams = op.GetExtendedClusterCreateParameters(clusterName, clusterCreateParams);
-            AssertRoleProfileMatchesProvided(extendedParams, clusterName);           
-        }
-
-        private void AssertRoleProfileMatchesProvided(ClusterCreateParametersExtended extendedParams, string clusterName)
-        {
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles.Count, 1);
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].HardwareProfile.VmSize, "Standard_D13_V2");
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].Name, "headnode");
