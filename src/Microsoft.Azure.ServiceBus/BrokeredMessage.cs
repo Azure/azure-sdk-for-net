@@ -706,6 +706,9 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary>Specifies if message is a received message or not.</summary>
+        public bool IsReceived => this.receiverHeaders != null;
+
         internal short PartitionId
         {
             get
@@ -827,7 +830,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary> Gets a value indicating whether this object is lock token set. </summary>
-        /// <value> true if this object is lock token set, false if not. </value>
+        /// <value> True if this object is lock token set, false if not. </value>
         internal bool IsLockTokenSet => (this.initializedMembers & MessageMembers.LockToken) != 0;
 
         /// <summary> Gets the identifier of the body. </summary>

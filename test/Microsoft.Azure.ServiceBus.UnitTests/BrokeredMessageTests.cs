@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -104,6 +105,63 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal("id-2", message2.MessageId);
 
             BrokeredMessage.SetMessageIdGenerator(null);
+        }
+
+        public class When_querying_IsReceived_property
+        {
+            [Fact]
+            [DisplayTestMethodName]
+            void Should_return_false_for_message_that_was_not_sent()
+            {
+                var message = new BrokeredMessage();
+                message.Properties["dummy"] = "dummy";
+                Assert.False(message.IsReceived);
+            }
+
+            [Theory]
+            [DisplayTestMethodName]
+            [InlineData(ReceiveMode.ReceiveAndDelete)]
+            [InlineData(ReceiveMode.PeekLock)]
+            async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
+            {
+                var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(Constants.NonPartitionedQueueName), receiveMode);
+                try
+                {
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                    var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                    Assert.True(receivedMessages.First().IsReceived);
+
+                    // TODO: remove when per test cleanup is possible
+                    if (receiveMode == ReceiveMode.PeekLock)
+                    {
+                        await receivedMessages.First().CompleteAsync();
+                    }
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            }
+
+            [Fact]
+            [DisplayTestMethodName]
+            async Task Should_return_true_for_peeked_message()
+            {
+                var queueClient = QueueClient.CreateFromConnectionString(TestUtility.GetEntityConnectionString(Constants.NonPartitionedQueueName), ReceiveMode.PeekLock);
+                try
+                {
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                    var peekedMessage = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
+                    var result = peekedMessage.IsReceived;
+                    Assert.True(result);
+                }
+                finally
+                {
+                    var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                    await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+                    await queueClient.CloseAsync();
+                }
+            }
         }
     }
 }
