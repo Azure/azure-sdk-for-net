@@ -83,7 +83,7 @@ namespace ManageWebAppWithTrafficManager
 
                 Utilities.Log("Creating a self-signed certificate " + pfxPath + "...");
 
-                CreateCertificate(domainName, pfxPath, CERT_PASSWORD);
+                Utilities.CreateCertificate(domainName, pfxPath, CERT_PASSWORD);
 
                 //============================================================
                 // Create 3 app service plans in 3 regions
@@ -272,14 +272,6 @@ namespace ManageWebAppWithTrafficManager
                         .WithBranch("master")
                         .Attach()
                     .Create();
-        }
-
-        private static void CreateCertificate(string domainName, string pfxPath, string password)
-        {
-            string args = string.Format(@".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""", pfxPath, password, domainName);
-            ProcessStartInfo info = new ProcessStartInfo("powershell", args);
-            info.WorkingDirectory = "Asset";
-            Process.Start(info).WaitForExit();
         }
     }
 }

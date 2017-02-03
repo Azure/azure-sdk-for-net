@@ -8,12 +8,11 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class ResourceManager
+    public class ResourceManager : Samples.Tests.TestBase
     {
         public ResourceManager(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact(Skip = "TODO: Assets location needs to be properly set")]

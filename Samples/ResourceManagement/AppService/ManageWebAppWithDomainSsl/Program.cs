@@ -115,7 +115,7 @@ namespace ManageWebAppWithDomainSsl
 
                 Utilities.Log("Creating a self-signed certificate " + pfxPath + "...");
 
-                CreateCertificate(domainName, pfxPath, CertificatePassword);
+                Utilities.CreateCertificate(domainName, pfxPath, CertificatePassword);
 
                 Utilities.Log("Created self-signed certificate " + pfxPath);
 
@@ -200,14 +200,6 @@ namespace ManageWebAppWithDomainSsl
             {
                 return client.GetAsync(url).Result;
             }
-        }
-
-        private static void CreateCertificate(string domainName, string pfxPath, string password)
-        {
-            string args = string.Format(@".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""", pfxPath, password, domainName);
-            ProcessStartInfo info = new ProcessStartInfo("powershell", args);
-            info.WorkingDirectory = "Asset";
-            Process.Start(info).WaitForExit();
         }
     }
 }

@@ -18,18 +18,25 @@ using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent;
 using Microsoft.Azure.Management.Resource.Fluent;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
     public static class Utilities
     {
+        public static bool IsRunningMocked { get;set; }
         public static Action<string> LoggerMethod { get; set; }
         public static Func<string> PauseMethod { get; set; }
+
+        public static string ProjectPath { get; set; }
 
         static Utilities()
         {
             LoggerMethod = Console.WriteLine;
             PauseMethod = Console.ReadLine;
+            ProjectPath = ".";
         }
 
         public static void Log(string message)
@@ -1317,6 +1324,22 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
             Utilities.Log(builder.ToString());
+        }
+
+        public static void CreateCertificate(string domainName, string pfxPath, string password)
+        {
+            if (!IsRunningMocked)
+            {
+                string args = string.Format(
+                    @".\createCert.ps1 -pfxFileName {0} -pfxPassword ""{1}"" -domainName ""{2}""",
+                    pfxPath,
+                    password,
+                    domainName);
+                ProcessStartInfo info = new ProcessStartInfo("powershell", args);
+                string assetPath = Path.Combine(ProjectPath, "Asset");
+                info.WorkingDirectory = assetPath;
+                Process.Start(info).WaitForExit();
+            }
         }
     }
 }

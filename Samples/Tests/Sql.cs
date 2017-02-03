@@ -8,12 +8,11 @@ using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class Sql
+    public class Sql : Samples.Tests.TestBase
     {
         public Sql(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
         [Fact]

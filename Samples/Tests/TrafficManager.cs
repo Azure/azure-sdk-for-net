@@ -3,28 +3,28 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using Microsoft.Azure.Test.HttpRecorder;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Samples.Tests
 {
-    public class TrafficManager
+    public class TrafficManager : Samples.Tests.TestBase
     {
         public TrafficManager(ITestOutputHelper output)
+            : base(output)
         {
-            Microsoft.Azure.Management.Samples.Common.Utilities.LoggerMethod = output.WriteLine;
-            Microsoft.Azure.Management.Samples.Common.Utilities.PauseMethod = TestHelper.ReadLine;
         }
 
-        [Fact(Skip = "TODO: convert to recorded tests")]
+        [Fact]
         [Trait("Samples", "TrafficManager")]
         public void ManageTrafficManagerTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ManageTrafficManager.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageTrafficManager.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
     }
 }
