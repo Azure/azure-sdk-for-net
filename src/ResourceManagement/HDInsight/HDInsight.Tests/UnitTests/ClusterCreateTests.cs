@@ -87,7 +87,7 @@ namespace HDInsight.Tests.UnitTests
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles.Count, 1);
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].HardwareProfile.VmSize, "Standard_D13_V2");
             Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].Name, "headnode");
-            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].TargetInstanceCount, 1);
+            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].TargetInstanceCount, 1);            
         }
     }
 }
