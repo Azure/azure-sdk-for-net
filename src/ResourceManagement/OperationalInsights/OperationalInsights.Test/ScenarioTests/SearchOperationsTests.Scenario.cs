@@ -32,7 +32,9 @@ namespace OperationalInsights.Test.ScenarioTests
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
-                // Rasha's workspace is the only one in int with cold data, which is necessary to test the update search method
+                // Since we are testing search operations, we can't just create a brand new workspace 
+                // because there are no ARM APIs to ingest data to a workspace. 
+                // But any workspace with data ingested should be good for this test.
                 string resourceGroupName = "OI-Default-East-US";
                 string workspaceName = "rasha";
                 int topCount = 25;
@@ -63,6 +65,9 @@ namespace OperationalInsights.Test.ScenarioTests
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
+                // Since we are testing search operations, we can't just create a brand new workspace 
+                // because there are no ARM APIs to ingest data to a workspace. 
+                // But any workspace with data ingested should be good for this test.
                 string resourceGroupName = "mms-eus";
                 string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
 
@@ -83,6 +88,9 @@ namespace OperationalInsights.Test.ScenarioTests
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
+                // Since we are testing search operations, we can't just create a brand new workspace 
+                // because there are no ARM APIs to ingest data to a workspace. 
+                // But any workspace with data ingested should be good for this test.
                 string resourceGroupName = "mms-eus";
                 string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
 
@@ -122,6 +130,9 @@ namespace OperationalInsights.Test.ScenarioTests
             {
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
 
+                // Since we are testing search operations, we can't just create a brand new workspace 
+                // because there are no ARM APIs to ingest data to a workspace. 
+                // But any workspace with data ingested should be good for this test.
                 string resourceGroupName = "mms-eus";
                 string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
                 string newSavedSearchId = "test-new-saved-search-id-2015";

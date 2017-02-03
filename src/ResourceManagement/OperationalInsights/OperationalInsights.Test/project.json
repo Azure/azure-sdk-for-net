@@ -9,7 +9,7 @@
     "projectUrl": "",
     "licenseUrl": "",
   },
-
+  
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
