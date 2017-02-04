@@ -1,9 +1,6 @@
 {
   "projects": [
-    "src/ClientRuntime",
     "src/KeyVault",
-    "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
-    "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
     "src/Search/Microsoft.Azure.Search",
     "src/Search/Microsoft.Azure.Management.Search",
     "src/ResourceManagement/Graph.RBAC/Microsoft.Azure.Graph.RBAC",
