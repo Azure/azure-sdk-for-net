@@ -1655,12 +1655,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
         /// </summary>
-        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.MigrateToManaged()
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ConvertToManaged()
         {
  
-            this.MigrateToManaged();
+            this.ConvertToManaged();
         }
 
         /// <summary>

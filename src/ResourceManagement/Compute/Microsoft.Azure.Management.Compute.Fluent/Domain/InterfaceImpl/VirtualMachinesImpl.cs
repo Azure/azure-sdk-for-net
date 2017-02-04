@@ -119,13 +119,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
         /// </summary>
         /// <param name="groupName">The resource group name.</param>
         /// <param name="name">The virtual machine name.</param>
-        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.MigrateToManaged(string groupName, string name)
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.ConvertToManaged(string groupName, string name)
         {
-             this.MigrateToManaged(groupName, name);
+             this.ConvertToManaged(groupName, name);
         }
 
         /// <summary>

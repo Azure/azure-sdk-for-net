@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.VirtualMachineInstanceView RefreshInstanceView();
 
         /// <summary>
-        /// Migrate the virtual machine with un-managed disks to use managed disk.
+        /// Convert (migrate) the virtual machine with un-managed disks to use managed disk.
         /// </summary>
-        void MigrateToManaged();
+        void ConvertToManaged();
 
         /// <summary>
         /// Gets resource id of the managed disk backing OS disk.

@@ -15,7 +15,7 @@ namespace Samples.Tests
         {
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVirtualMachinesInParallelTest()
         {
@@ -26,7 +26,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVMsUsingCustomImageOrSpecializedVHDTest()
         {
@@ -59,7 +59,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageAvailabilitySetTest()
         {
@@ -70,7 +70,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineWithUnmanagedDisksTest()
         {
@@ -92,7 +92,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineScaleSetWithUnmanagedDisksTest()
         {
@@ -103,7 +103,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachinesInParallelTest()
         {
@@ -114,7 +114,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachinesInParallelWithNetworkTest()
         {
@@ -125,7 +125,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVirtualMachineUsingCustomImageFromVHDTest()
         {
@@ -137,7 +137,7 @@ namespace Samples.Tests
         }
 
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVirtualMachineUsingCustomImageFromVMTest()
         {
@@ -149,7 +149,7 @@ namespace Samples.Tests
         }
 
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVirtualMachineUsingSpecializedDiskFromSnapshotTest()
         {
@@ -161,7 +161,7 @@ namespace Samples.Tests
         }
 
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void CreateVirtualMachineUsingSpecializedDiskFromVhdTest()
         {
@@ -183,18 +183,18 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
-        public void MigrateVirtualMachineTest()
+        public void ConvertVirtualMachineToManagedDisksTest()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                MigrateVirtualMachine.Program.RunSample(rollUpClient);
+                ConvertVirtualMachineToManagedDisks.Program.RunSample(rollUpClient);
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineScaleSetTest()
         {
@@ -205,7 +205,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageVirtualMachineTest()
         {
@@ -216,7 +216,7 @@ namespace Samples.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Assets location needs to be properly set")]
+        [Fact]
         [Trait("Samples", "Compute")]
         public void ManageManagedDisksTest()
         {
